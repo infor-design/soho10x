@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor ToolTip - Widths</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <style>
+		.outfield {
+			border: 1px solid transparent;
+			height: 20px;
+			line-height: 20px;
+			vertical-align: middle;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin: 10px 0;
+		}
+		.blue {
+			border-color: blue;
+		}
+	</style>
+	<script>
+		var $outfields = null;
+
+		$(function () {
+
+			$outfields = $(".outfield");
+			updateTitles();
+
+			// init tooltips and open last one
+			$outfields.inforToolTip();
+		});
+
+		// set titles to elements text
+		function updateTitles() {
+			$outfields.each(function() {
+				$(this).attr('title', $(this).text());
+			});
+		}
+
+		// toggle blue border
+		function toggleBorders() {
+			$outfields.toggleClass("blue");
+		}
+
+		function updateText() {
+			// array of random text
+			var txtArray = [
+				"transaction updated",
+				"short",
+				"",
+				"this is new data from a completed transaction",
+				"lorum",
+				"ipsum",
+				"potato"
+			],
+			min = 0,
+			max = txtArray.length - 1;
+
+			// set text of outfields to a new random phrase
+			$outfields.each(function() {
+				var randIndex = getRandNum(min, max),
+					newText = txtArray[randIndex];
+				$(this).text(newText);
+			});
+
+			// be sure to update titles
+			updateTitles();
+		}
+
+		// returns random number between min and max
+		function getRandNum(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+	</script>
+</head>
+<body>
+	<div class="inforToolbar">
+		<button class="inforTextButton" onclick="toggleBorders()" type="button">Toggle Borders</button>
+		<button class="inforTextButton" onclick="updateText()" type="button">Simulate Transaction</button>
+	</div>
+
+	<div style="padding:30px">
+		<b>Labels</b><hr>
+		<br>
+		<label class="inforDataLabel outfield" style="width:180px; text-align:left;">Here is a lot of text; yes, no, maybe so</label>
+		<br>
+		<label class="inforDataLabel outfield" style="width:180px; text-align:right;">Yes</label>
+		<br>
+		<label class="inforDataLabel outfield" style="width:auto; text-align:left;">No</label>
+		<br>
+		<label class="inforDataLabel outfield" style="width:300px; text-align:right;">Maybe</label>
+		<br>
+		<b>Spans</b><hr>
+		<span class="inforDataLabel outfield" style="width:180px; text-align:left;">Here is a lot of text; yes, no, maybe so</span>
+		<br>
+		<span class="inforDataLabel outfield" style="width:180px; text-align:right;">Yes</span>
+		<br>
+		<span class="inforDataLabel outfield" style="width:auto; text-align:left;">No</span>
+		<br>
+		<span class="inforDataLabel outfield" style="width:300px; text-align:right;">Maybe</span>
+	</div>
+</body>
+</html>

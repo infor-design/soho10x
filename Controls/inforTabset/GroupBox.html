@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<title>inforGroupBox 1 </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<style type="text/css" media="screen">
+		.ModalIcon
+		{
+			margin: 0px;
+			padding: 0px;
+			vertical-align: middle;
+		}
+		.ModalLabelHeader
+		{
+			color: #000000;
+			text-align: right;
+			margin: 0px 2px 8px 8px;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		.FormContent
+		{
+			background-color: white;
+			border: 1px solid #B3B3B3;
+			margin: 10px;
+			padding: 10px;
+		}
+		.alignRight
+		{
+			text-align: right;
+		}
+		.NoBorder
+		{
+			border: none 0;
+		}
+		.Regular
+		{
+			font-family: Arial;
+			font-size: 11px;
+			font-weight: normal;
+		}
+	</style>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script >
+		$().ready(function () {
+			$(".inforToggleButton").inforToggleButton();
+			$(".inforDateField").inforDateField();
+			$(".inforDropDownList").inforDropDownList();
+		});
+	</script>
+</head>
+<body>
+	<form id="form1" runat="server">
+	<div class="inforModuleHeader">
+		<div class="inforModuleHeaderLeft">
+			<span id="lblHeaderModuleTitle" class="inforPageTitleText">Invoice - Master List</span>
+			<span id="lblHeaderRecordId" class="inforModuleRecordIdText"></span>
+		</div>
+		<div class="inforModuleHeaderRight">
+			<button id="btnClose" class="inforModuleCloseButton">
+			</button>
+		</div>
+	</div>
+	<!-- Content -->
+	<div class="inforModuleContentArea">
+		<div class="inforToolbar">
+			<button id="toolbarNew" class="inforIconButton new" title="New" type="button" onclick="return false"
+				disabled="disabled">
+			</button>
+			<button id="toolbarDelete" class="inforIconButton delete" title="Delete Selected Rows"
+				type="button">
+			</button>
+			<input type="button" id="Btn1" value="Bricolage1" onclick="Bricolage1();" style="display: none" />
+			<input type="button" id="Btn2" value="Bricolage2" onclick="Bricolage2();" style="display: none" />
+		</div>
+	</div>
+	<div id="mlContent">
+		<div id="mlDivSearch">
+			<table border="0" cellspacing="4" cellpadding="0" style="margin-left: 16px; margin-top: 4px;">
+				<tr>
+					<td>
+						<img id="btnPlus" align="absmiddle" src="stylesheet/images/btn_collapsed_over.png"
+							style="border-width: 0px;" />
+					</td>
+					<td>
+						<label id="lblSearch" class="inforLabel">
+							Search</label>
+					</td>
+					<td>
+						<input name="txtSearch" type="text" id="txtSearch" class="inforLookupField" />
+					</td>
+					<td>
+						<img id="imgSearchActions" align="absmiddle" src="stylesheet/images/icn_searchlist_enabled.png"
+							style="border-width: 0px;" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- basic and Advanced Panel -->
+	<div id="mlSearchPanel" style="display: block;">
+		<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+					<div class="inforToggleButton" style="margin: 20px">
+						<button id="btnBasicSearch" type="button" onclick="return activateSearchPanel(&#39;B&#39;);">
+							Basic</button>
+						<button id="btnAdvancedSearch" type="button" onclick="return activateSearchPanel(&#39;A&#39;);">
+							Advanced</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="inforGroupBox FormContent" id="mlSearchPanelFormContent" >
+			<div id="mlBasicSearch" style="display: block; width: 100%; height: 75px; overflow: auto;">
+				<div class="infor2ColumnLayout autoLabelWidth">
+					<div class="column1">
+						<span id="mlSearchLbl_1_15442" class="inforLabel">Vendor Identifier</span>
+						<input name="txtBasic_1_15442" type="text" id="txtBasic_1_15442" class="inforTextbox"
+							maxlength="10" />
+						<br />
+						<span id="mlSearchLbl_3_24533" class="inforLabel">Payment Request Number</span>
+						<input name="txtBasic_3_24533" type="text" id="txtBasic_3_24533" class="inforTextbox"
+							maxlength="22" />
+						<br />
+						<span id="mlSearchLbl_5_24702" class="inforLabel">Scheduled Payment Number</span>
+						<input name="txtBasic_5_24702" type="text" id="txtBasic_5_24702" class="inforTextbox"
+							maxlength="7" onchange="return validate_smallint(this, old_value);" onfocus="old_value=this.value;" />
+						<br />
+						<span id="mlSearchLbl_7_24532" class="inforLabel">Payment Request Total Amount</span>
+						<input name="txtBasic_7_24532" type="text" id="txtBasic_7_24532" class="inforTextbox"
+							maxlength="18" onchange="return validate_money(document.getElementById(&#39;txtBasic_7_24532&#39;),document.getElementById(&#39;txtBasic_7_24532twin&#39;), 4, old_value)"
+							onfocus="old_value=this.value;" /><input name="txtBasic_7_24532twin" type="text"
+								id="txtBasic_7_24532twin" style="display: none;" />
+						<br />
+						<span id="mlSearchLbl_9_24286" class="inforLabel">Final Due Date</span>
+						<input name="txtBasic_9_24286" type="text" id="txtBasic_9_24286" class="inforDateField"
+							maxlength="10" onchange="performDateValidation(document.getElementById(&#39;txtBasic_9_24286&#39;),document.getElementById(&#39;txtBasic_9_24286twin&#39;),old_value)"
+							onfocus="old_value=this.value;" /><input name="txtBasic_9_24286twin" type="text"
+								id="txtBasic_9_24286twin" style="display: none;" />
+						<br />
+						<span id="mlSearchLbl_11_24509" class="inforLabel">Payable Entity Identifier</span>
+						<input name="txtBasic_11_24509" type="text" id="txtBasic_11_24509" class="inforTextbox"
+							maxlength="5" />
+						<br />
+						<span id="mlSearchLbl_13_24526" class="inforLabel">Payment Method Identifier</span>
+						<input name="txtBasic_13_24526" type="text" id="txtBasic_13_24526" class="inforTextbox"
+							maxlength="5" />
+						<br />
+						<span id="mlSearchLbl_15_26205" class="inforLabel">Payment Request Voucher Number</span>
+						<input name="txtBasic_15_26205" type="text" id="txtBasic_15_26205" class="inforTextbox"
+							maxlength="15" />
+						<br />
+						<br />
+					</div>
+					<div class="column2">
+						<span id="mlSearchLbl_2_15445" class="inforLabel">Vendor Location Code</span>
+						<input name="txtBasic_2_15445" type="text" id="txtBasic_2_15445" class="inforTextbox" />
+						<br />
+						<span id="mlSearchLbl_4_24531" class="inforLabel">Payment Request Date</span>
+						<input name="txtBasic_4_24531" type="text" id="txtBasic_4_24531" class="inforDateField"
+							maxlength="10" onchange="performDateValidation(document.getElementById(&#39;txtBasic_4_24531&#39;),document.getElementById(&#39;txtBasic_4_24531twin&#39;),old_value)"
+							onfocus="old_value=this.value;" /><input name="txtBasic_4_24531twin" type="text"
+								id="txtBasic_4_24531twin" style="display: none;" />
+						<br />
+						<span id="mlSearchLbl_6_24535" class="inforLabel">Payment Request Status Code</span>
+						<select name="ddlBasic_6_24535" id="ddlBasic_6_24535" class="inforDropDownList">
+							<option value=""></option>
+							<option value="CP">Complete</option>
+							<option value="PD">Paid</option>
+							<option value="OH">On Hold</option>
+							<option value="NA">No Accrual</option>
+							<option value="PA">Partially Paid</option>
+							<option value="CA">Cancelled</option>
+							<option value="RJ">Rejected</option>
+							<option value="PE">Pending</option>
+							<option value="HP">On Hold; Pending</option>
+							<option value="HR">On Hold; Rejected</option>
+							<option value="AP">No Accrual; Pending</option>
+							<option value="AR">No Accrual; Rejected</option>
+							<option value="PP">Complete; Part Pymts</option>
+							<option value="TH">Temp On Hold</option>
+							<option value="IC">Incomplete</option>
+							<option value="AW">Awaiting Match</option>
+							<option value="EX">In Exception</option>
+							<option value="DR">On Draft</option>
+							<option value="D">Deleted</option>
+							<option value="A">Archived</option>
+						</select>
+						<br />
+						<span id="mlSearchLbl_8_24233" class="inforLabel">Discount Due Date</span>
+						<input name="txtBasic_8_24233" type="text" id="txtBasic_8_24233" class="inforDateField"
+							maxlength="10" onchange="performDateValidation(document.getElementById(&#39;txtBasic_8_24233&#39;),document.getElementById(&#39;txtBasic_8_24233twin&#39;),old_value)"
+							onfocus="old_value=this.value;" /><input name="txtBasic_8_24233twin" type="text"
+								id="txtBasic_8_24233twin" style="display: none;" />
+						<br />
+						<span id="mlSearchLbl_10_24840" class="inforLabel">Transaction Currency Code</span>
+						<input name="txtBasic_10_24840" type="text" id="txtBasic_10_24840" class="inforTextbox"
+							maxlength="3" />
+						<br />
+						<span id="mlSearchLbl_12_24149" class="inforLabel">Control Group Identifier</span>
+						<input name="txtBasic_12_24149" type="text" id="txtBasic_12_24149" class="inforTextbox"
+							maxlength="10" />
+						<br />
+						<span id="mlSearchLbl_14_15435" class="inforLabel">User Identifier</span>
+						<input name="txtBasic_14_15435" type="text" id="txtBasic_14_15435" class="inforTextbox"
+							maxlength="30" />
+						<br />
+						<span id="mlSearchLbl_16_15964" class="inforLabel">Funds Exception</span>
+						<select name="ddlBasic_16_15964" id="ddlBasic_16_15964" class="inforDropDownList">
+							<option value=""></option>
+							<option value="Y">Yes</option>
+							<option value="N">No</option>
+						</select>
+						<br />
+						<br />
+					</div>
+				</div>
+			</div>
+			<br />
+			<div style="text-align: center;">
+				<button id="btnActionSearchX" class="inforFormButton" type="button" onclick="actionSearch();">
+					Search</button>
+				<button id="btnActionResetX" class="inforFormButton" type="button" onclick="actionReset();">
+					Reset</button>
+				<button id="btnActionSearchHideX" class="inforFormButton" type="button" onclick="actionSearchHide();">
+					Search and Hide</button>
+				<button id="btnActionSaveSearchX" class="inforFormButton" type="button" onclick="actionSaveSearch();">
+					Save Search</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

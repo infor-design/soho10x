@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" charset="utf-8">
+	<meta charset="utf-8">
+	<title>Infor Form Pattern Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.min.js"></script>
+
+	<script>
+		$(function () {
+			//Initialize the Correct Culture...
+			Globalize.culture("ar-SA");
+
+			$("body").inforForm();
+
+			//example of extending resources
+			Globalize.addCultureInfo( "ar-SA", {
+				messages: {
+					"newString": "إضافة علامة تبويب جديدة"
+				}
+			});
+
+			//Some test examples...
+			$("#dateField").val(Globalize.parseDate( '5/11/1955'));
+			$("#numericField").val(Globalize.format( 1234.567, "n1" ));
+			$("#orderNumber").val(Globalize.localize( "AddNewTab", Globalize.culture().name));
+			$("#soldTo").val(Globalize.localize( "newString", Globalize.culture().name));
+			$("#formButton1").find('.centerSlice').html(Globalize.localize( "AddNewTab", Globalize.culture().name));
+		});
+	</script>
+</head>
+<body style="inforHidden">
+	<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">جديدة</span>
+					<span class="inforModuleRecordIdText">12000001</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton" title="إضافة علامة تبويب"></button>
+					<button class="inforModuleCloseButton" title="إضافة علامة تبويب"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button class="inforIconButton save" title="إضافة علامة تبويب" ></button>
+				<button class="inforIconButton discard" title="إضافة علامة تبويب"></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforIconButton new" title="إضافة علامة تبويب"></button>
+				<button class="inforIconButton delete" title="إضافة علامة تبويب"></button>
+				<button class="inforIconButton refresh" title="إضافة علامة تبويب"></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforIconButton print" title="إضافة علامة تبويب"></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforTextButton" id="approveButton">يب</button>
+				<button class="inforTextButton">إضافة </button>
+			</div>
+
+			<fieldset class="inforFieldSet fullscreen">
+				<legend class="inforExpandButton open"></legend>
+				<span class="inforFieldSetLabel">علامة تبو</span>
+				<div class="content">
+					<div class="infor2ColumnLayout">
+						<div class="column1">
+							<label class="inforLabel" for="orderNumber">علامة تبو</label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
+							<label class="inforLabel" for="soldTo">تبو علامة</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+							<label class="inforLabel" for="location">فيفرييه</label> <input type="text" id="location" class="inforTextbox"/><br>
+							<label class="inforLabel">أفريلo</label>
+							<select class="inforDropDownList" id="dropDown1" >
+								<option value=""></option>
+								<option value="a" selected="selected">فيفرييه</option>
+								<option value="cc">جوييه</option>
+								<option value="mw">أفريل</option>
+								<option value="me">فيفرييه</option>
+								<option value="sp">جوييه</option>
+							 </select><br>
+						</div>
+						<div class="column2">
+							<label class="inforLabel">جوييه</label><input class="inforDateField" id="dateField" type="text" placeholder="حدد كافة ابتداء / الكل" /><br>
+							<label class="inforLabel" for="orderNumber">الأحد</label><input type="text" id="numericField" class="inforTextbox numericOnly required"/><br>
+							<label class="inforLabel" for="soldTo">ص</label><input type="text" id="decimalField" class="inforTextbox decimalOnly" value="1.22"/><br>
+							<button class="inforFormButton" id="formButton1"></button>
+						</div>
+
+					</div>
+				</div>
+			</fieldset>
+
+			<div class="inforTabContainer">
+			  <ul class="inforTabset">
+				<li><a href="#tab1">فيفرييه</a></li>
+				<li><a href="#tab2">الثلاثاء</a></li>
+				<li><a href="#tab3">الجمعة</a></li>
+			  </ul>
+			  <div id="tab1">
+				<p>نقطة معقل تزامناً عن حول. به، قادة والتي برلين، ثم, مما أي قامت طائرات بريطانيا. من تشكيل تحرّك لها, الخاسرة الشّعبين اليابان، من </p>
+				<p>تم, حين وفنلندا بالسيطرة بـ. تكبّد إتفاقية التقليدي ٣٠ بحث, وشعار والديون الأوروبيّون لم تعد. الحرة الألمان شيء ٣٠, سلاح ولكسمبورغ </p>
+			  </div>
+			  <div id="tab2">
+				<p>نقطة معقل تزامناً عن حول. به، قادة والتي برلين، ثم, مما أي قامت طائرات بريطانيا. من تشكيل تحرّك لها, الخاسرة الشّعبين اليابان، من </p>
+				<p>تم, حين وفنلندا بالسيطرة بـ. تكبّد إتفاقية التقليدي ٣٠ بحث, وشعار والديون الأوروبيّون لم تعد. الحرة الألمان شيء ٣٠, سلاح ولكسمبورغ </p>
+			  </div>
+			  <div id="tab3">
+				<p>نقطة معقل تزامناً عن حول. به، قادة والتي برلين، ثم, مما أي قامت طائرات بريطانيا. من تشكيل تحرّك لها, الخاسرة الشّعبين اليابان، من </p>
+				<p>تم, حين وفنلندا بالسيطرة بـ. تكبّد إتفاقية التقليدي ٣٠ بحث, وشعار والديون الأوروبيّون لم تعد. الحرة الألمان شيء ٣٠, سلاح ولكسمبورغ </p>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+</body>
+</html>
+

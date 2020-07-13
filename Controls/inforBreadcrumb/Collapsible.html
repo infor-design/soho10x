@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Bread Crumb - Collapses when Lots of Items</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.min.js"></script>
+
+	<script src="js/inforBreadcrumb.js"></script>
+	<link href="css/inforBreadcrumb.css" rel="stylesheet">
+
+	<script>
+		$(function () {
+			$(".inforBreadcrumb").inforBreadcrumb();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	  <div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+			 <div class="inforModuleHeaderLeft">
+					<span class="inforBreadcrumb">
+						<a class="inforPageTitleText" href="#">Sales Orders</a>
+						<a href="#">SL00090562</a>
+						<a href="#">Details</a>
+						<a href="#">SL00090562</a>
+						<a href="#">Details</a>
+						<a href="#">SL00090562</a>
+						<a href="#">Details</a>
+						<a href="#">SL00090562</a>
+						<a href="#">Details</a>
+						<a href="#">SL00090562</a>
+						<a href="#">Details</a>
+					</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button type="button" class="inforModuleDropDownButton" id = "menuButton"  title="Menu"></button>
+					<button type="button" class="inforModuleSettingsButton" id = "settingsButton"  title="Settings"></button>
+					<button type="button" class="inforModuleCloseButton" id = "closeButton" disabled title="Close"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<!-- Your Module Stuff will Go Here - Color is only presented to show padding. -->
+
+		 </div>
+	 </div>
+</body>
+</html>
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Menu Button</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+
+			var viewModel = {
+				menuOptions: ko.observableArray([			//The Array to use.
+					{key: 'F', name: 'Selected'},
+					{key: 'D', name: 'All'},
+					{key: 'T', name: 'Other...'}
+				]),
+				buttonText: 'Filter'
+			};
+
+			$('#button1').popupmenu({menuId: 'menu1'});
+			ko.applyBindings(viewModel);
+		});
+	</script>
+</head>
+<body>
+	<div class="inforToolbar" >
+		<button type="button" class="inforMenuButton" id="button1" data-bind="translate: buttonText"></button>
+	</div>
+
+	<ul id="menu1" class="inforContextMenu">
+		<!-- ko foreach: menuOptions -->
+			<li><a data-bind="text:name, attr: {href: '#' + key}"></a></li>
+		<!-- /ko -->
+	</ul>
+</body>
+</html>

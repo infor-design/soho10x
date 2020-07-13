@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Datefield Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforDateField.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDateField.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$(".inforDateField").inforDateField();
+		/*
+			$(".inforDateField").inforDateField({position:{
+				my: (Globalize.culture().isRTL ? "right center" : "left center"),
+				at: (Globalize.culture().isRTL ? "left center" : "right center"),
+				offset: (Globalize.culture().isRTL ? "-12 0" : "12 0"),
+				collision: "flipfit"
+		}});*/
+		});
+	</script>
+</head>
+<body style="overflow:scroll;height: 1000px">
+	<input style="left:135px; bottom: 92px; position:absolute;" class="inforDateField" type="text"/>
+</body>
+</html>

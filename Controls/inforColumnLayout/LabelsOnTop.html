@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head >
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Expenses Sample Page</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<fieldset class="inforFieldSet">
+		<div class="inforFieldSetLabel">Additional Information</div>
+		<div class="content">
+			<div class="inforVerticalColumnLayout">
+				<span class="inforTopLabel" for="bookingAgent">Booking Agent</span><br>
+				<input id="bookingAgent" class="inforTextbox"/><br>
+				<label class="inforTopLabel" for="bookingAgent">Notes</label><br>
+				<textarea id="bookingAgent" class="inforTextArea"></textarea>
+			</div>
+			<div class="inforVerticalColumnLayout">
+				<label class="inforTopLabel" for="depDate">Departure Date</label><br>
+				<input id="depDate" class="inforTextbox required"/><br>
+				<label class="inforTopLabel" for="bookingAgent">Arrival Date</label><br>
+				<input id="bookingAgent" class="inforTextbox"/>
+			</div>
+			<div class="inforVerticalColumnLayout">
+				<label for="originType" class="inforTopLabel">Origin Type</label><br>
+					<select id="originType" class="inforDropDownList">
+						<option value="a">All</option>
+						<option value="cc">Consolidated Consortiums</option>
+						<option value="mw">Major Widgets Inc</option>
+						<option value="me">Metrolitan Electric</option>
+						<option value="sp">Speed Services Inc</option>
+					</select><br>
+				<label class="inforTopLabel">Single Source</label><br>
+				<input id="departureDate" class="inforCheckbox"/><br>
+				<label class="inforTopLabel" for="departureDate">Origin</label><br>
+				<input id="departureDate" class="inforTextbox"/><br>
+			</div>
+			<div class="inforVerticalColumnLayout">
+				<label class="inforTopLabel" for="departureDate">Destination</label><br>
+				<input id="departureDate" class="inforTextbox"/>
+			</div>
+			<div class="inforVerticalColumnLayout">
+				<label class="inforTopLabel" for="departureDate">Payment Type</label><br>
+				<input id="departureDate" class="inforTextbox"/><br>
+				<label class="inforTopLabel">Date Field</label><br>
+				<input class="inforDateField" type="text"/>
+			</div>
+		</div>
+	</fieldset>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Using KnockOut with Infor Checkbox</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.debug.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="../inforShared/js/inforKnockout.js"></script>
+
+	<script>
+		$(function () {
+			var viewModel = {
+				isChecked: ko.observable(true),
+				isVisible: ko.observable(true),
+				isEnabled: ko.observable(true),
+				isReadOnly: ko.observable(false)
+			};
+
+			ko.applyBindings(viewModel);
+
+			//show the value...
+			$("#showValue").click(function(){
+				console.log(ko.toJSON(viewModel), $("#checkbox1").prop('checked'), $("#checkbox1").getValue());
+			});
+
+			//change the value in the viewModel
+			$("#changeValue").click(function(){
+				viewModel.isChecked(!viewModel.isChecked());
+			});
+
+			//toggleVisibility
+			$("#toggleVisibility").click(function(){
+				viewModel.isVisible(!viewModel.isVisible());
+			});
+
+			$("#toggleReadonly").click(function(){
+				viewModel.isReadOnly(!viewModel.isReadOnly());
+			});
+
+			$("#toggleDisabled").click(function(){
+				viewModel.isEnabled(!viewModel.isEnabled());
+			});
+		});
+	</script>
+</head>
+<body >
+	<input type="checkbox"  data-bind="checked: isChecked" id="checkbox0" />
+
+	<input type="checkbox" class="inforCheckbox" data-bind="{checked: isChecked}" id="checkbox1" />
+	<label for="checkbox1" class="inforCheckboxLabel">Knockout Checkbox</label><br>
+
+	<br>
+	<button type="button" class="inforFormButton" data-bind="visible: isVisible" id="showValue">Show Value</button>
+	<button type="button" class="inforFormButton" id="changeValue">Change Value</button>
+</body>
+</html>
+

@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Wizard - Basic Example</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link rel="stylesheet" href="css/inforWizard.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforWizard.js"></script>
+	<script src="../inforMessageDialog/js/inforMessageDialog.js"></script>
+
+	<script>
+		$().ready(function() {
+			//uncomment To Test RTL:
+			//Globalize.culture("ar-SA");
+
+			var wiz = $('#wizard1').inforWizard({
+				sequential: true,
+				showTitleBar: false,
+				onFinish: function() {
+					console.log('Done');
+				},
+				onPageLoad: function(index, ui) {
+					console.log(index, ui);
+					ui.inforForm();
+				}
+			});
+
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+
+<div id="myDialog" style="opacity:1">
+	<ul id="wizard1" class="inforWizard" style="width:680px;height:350px;">
+	   <!-- The content goes in here -->
+	   <li class="inforWizardPage" data-title="Source">
+			<div class="autoLabelWidth inforSingleColumnLayout">
+				<label class="inforLabel">Interface Name</label>
+				<input class="inforTextbox" value="CCD No Parsing"/>
+				<br>
+				<label class="inforLabel">Body Processor</label>
+				<input class="inforTextbox" />
+				<br>
+				<label class="inforLabel">Xml Schema</label>
+				<input class="inforTextbox" />
+				<br>
+				<label class="inforLabel">Information System Name</label>
+				<input class="inforTextbox" />
+				<br>
+				<label class="inforLabel">Organization ID</label>
+				<input class="inforTextbox" value="Demi"/>
+				<br>
+				<label class="inforLabel">Message Format</label>
+				<input class="inforTextbox" value="CCD R2" readonly/>
+				<br>
+				<label class="inforLabel">I/O</label>
+				<input class="inforTextbox" value="Inbound" readonly/>
+				<br>
+				<label class="inforLabel">Object Identifier (OID)</label>
+				<input class="inforTextbox" value="Inbound" />
+				<br>
+				<label class="inforLabel">Cloverleaf IP Address</label>
+				<input class="inforTextbox" value="Inbound" />
+				<br>
+				<label class="inforLabel">Source System IP Address</label>
+				<input class="inforTextbox" value="Inbound" />
+			</div>
+	   </li>
+		<li class="inforWizardPage" data-title="More Options">
+				<div class="inforSingleColumnLayout autoLabelWidth">
+					<form id="rdrOptionsForm">
+						<!-- Generate Localized Tables -->
+						<div class="autoLabelWidth inforInlineLayout">
+							<label for="generateLocalizableTable" class="inforLabel">Generate localized tables</label>
+							<input type="checkbox" class="inforCheckbox" name="generateLocalizableTable"/>
+							<input type="text" class="inforTextbox" name="localizeableTableNamePostFix"/>
+						</div><br>
+						<!-- Variation as part of key -->
+						<label class="inforLabel">Include variation as part of key</label>
+						<input type="checkbox" class="inforCheckbox" name="variationApartOfKey"/><br>
+						<!-- Timestamp in all tables -->
+						<label class="inforLabel">Include timestamp in all tables</label>
+						<input type="checkbox" class="inforCheckbox" name="includeTimestampColumnInAllTables"/><br>
+						<!-- Message header fields -->
+						<label class="inforLabel">Include message header fields in each table</label>
+						<input type="checkbox" class="inforCheckbox" name="includeRdrMessageHeaderFieldsInAllTables"/><br>
+					</form>
+				</div>
+			</li>
+		<li class="inforWizardPage" data-title="Inbound Configuration">
+			<div class="autoLabelWidth inforSingleColumnLayout">
+				<label class="inforLabel">Xml Schema</label>
+				<input class="inforTextbox" />
+				<br>
+				<label class="inforLabel">Information System Name</label>
+				<input class="inforTextbox" />
+				<br>
+				<label class="inforLabel">Organization ID</label>
+				<input class="inforTextbox" value="Demi"/>
+				<br>
+				<label class="inforLabel">Message Format</label>
+				<input class="inforTextbox" value="CCD R2" readonly/>
+
+			</div>
+	   </li>
+		<li class="inforWizardPage" data-title="Outbound Configuration">
+			<div class="autoLabelWidth inforSingleColumnLayout">
+				<label class="inforLabel">Organization ID</label>
+				<input class="inforTextbox" value="Demi"/>
+				<br>
+				<label class="inforLabel">Message Format</label>
+				<input class="inforTextbox" value="CCD R2" readonly/>
+				<br>
+				<label class="inforLabel">I/O</label>
+				<input class="inforTextbox" value="Inbound" readonly/>
+				<br>
+				<label class="inforLabel">Object Identifier (OID)</label>
+				<input class="inforTextbox" value="Inbound" />
+				<br>
+				<label class="inforLabel">Cloverleaf IP Address</label>
+				<input class="inforTextbox" value="Inbound" />
+
+			</div>
+	   </li>
+		<li class="inforWizardPage" data-title="Oid Mapping">
+			<div class="autoLabelWidth inforSingleColumnLayout">
+				<label class="inforLabel">Interface Name</label>
+				<input class="inforTextbox" value="CCD No Parsing"/>
+				<br>
+				<label class="inforLabel">Body Processor</label>
+				<input class="inforTextbox" />
+				<br>
+				<label class="inforLabel">Xml Schema</label>
+				<input class="inforTextbox" />
+			</div>
+	   </li>
+	</ul>
+</div>
+</body>
+</html>

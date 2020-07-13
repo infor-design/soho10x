@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Infor PLM Process</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$("select").click(function(){
+				 window.parent.closeNavMenu();
+			});
+		});
+	</script>
+</head>
+<body style="background:white">
+	<select style="left:200px;position: absolute;"  readonly='' >
+		<option value="a">A</option>
+		<option value="b" selected="selected">B</option>
+		<option value="c">C</option>
+		<option value="d">D</option>
+		<option value="e">E</option>
+	</select><br>
+</body>
+</html>

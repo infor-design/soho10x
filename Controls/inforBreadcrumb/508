@@ -1,0 +1,16 @@
+	-Current page is blue (don't user colors)
+	-aria-selected?
+	-need to be able to use the keyboard to expand in expandable version.
+	-for menu button use hasPopup (hidden to text to open a window)
+	-settings 
+		- if opens a page use a link
+		- if opens a popup use a button
+	-role = navigation (html5 nav)
+
+Design 
+	- needs focus indication
+	- new settings buttons
+	http://www.uvd.co.uk/blog/accessible-breadcrumbs-using-aria/
+	
+	
+	

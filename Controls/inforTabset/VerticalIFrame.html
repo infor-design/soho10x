@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Infor Tabsset - Vertical Tabs functionality</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="js/inforTabSet.js" ></script>
+
+	<script>
+		function sizeIFrames(selector) {
+			selector.each(function() {
+				var $iFrame = $(this);
+				//set the max height of this area to the bottom of the form and track any resize events...
+				handleResize($iFrame);
+				$(window).smartresize(function(){
+					handleResize($iFrame);
+				});
+
+				function handleResize($iFrame) {
+					var maxHeight=$(window).height()-$iFrame.offset().top-10;
+					$iFrame.css({"margin-left":"-10px","border":"none"});
+					$iFrame.height(maxHeight);
+					$iFrame.width($(window).width()).show();
+				}
+			});
+		}
+
+		$(function() {
+				sizeIFrames($('iframe'));
+
+			$("#tabs").inforTabset({verticalTabs: true}).on("tabsshow", function(e, ui) {
+				sizeIFrames($(ui.panel).find("iframe"));
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="heading" style="height:40px"></div>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1">Employment</a></li>
+			<li><a href="#tabs-2">Education</a></li>
+			<li><a href="#tabs-3">Skills</a></li>
+			<li><a href="http://www.infor.com">Tab 4</a></li>
+		</ul>
+		<div id="tabs-1"><p>div tab works</p></div>
+		<div id="tabs-2">
+			<iframe  src="Content.html"></iframe>
+		</div>
+		<div id="tabs-3">
+			<iframe src="Content.html"></iframe>
+		</div>
+	</div>
+
+</body>
+</html>

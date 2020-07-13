@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="js/inforDataGrid.js"></script>
+	<script src="js/sampleData.js"></script>
+
+</head>
+
+<body class="inforHidden">
+	<div>
+
+		<form id="gridForm">
+			<div id="inforDataGrid"></div>
+		</form>
+	</div>
+  <ul id="gridRightClickMenu" class="inforContextMenu">
+    <li>
+      <a href="#keys">Account Keys</a>
+      <ul id="keysMenu" class="inforContextMenu">
+        <li><a href="#keyBrowser">Accounting Key Browse</a></li>
+        <li><a href="#copyKeys">Copy Accounting Key</a></li>
+        <li class="disabled"><a href="#pasteKeys">Paste Accounting Key</a></li>
+      </ul>
+    </li>
+    <li ><a href="#copyJournal">Copy Journal Live</a></li>
+    <li class="separator"><a href="#"></a></li>
+    <li><a href="#balanceJournal">Balance Journal</a></li>
+    <li class="disabled"><a href="#checkFunds">Check Funds</a></li>
+    <li><a href="#saveIncomplete">Save as Incomplete</a></li>
+    <li class="separator"><a href="#"></a></li>
+    <li><a href="#findNext">Find Next line in Error</a></li>
+    <li><a href="#goto">Go To Line</a></li>
+    <li class="separator"><a href="#"></a></li>
+    <li>
+      <a href="#editorOptions">Edit Options</a>
+      <ul id="editOptionsMenu" class="inforContextMenu">
+        <li><a href="#option1">Option 1</a></li>
+        <li><a href="#option2">Option 2</a></li>
+        <li><a href="#option3">Option 3</a></li>
+        <li><a href="#option4">Option 4</a></li>
+        <li><a href="#option5">Option 5</a></li>
+        <li><a href="#option6">Option 6</a></li>
+        <li><a href="#option7">Option 7</a></li>
+        <li><a href="#option8">Option 8</a></li>
+        <li><a href="#option9">Option 9</a></li>
+        <li><a href="#option10">Option 10</a></li>
+        <li><a href="#option11">Option 11</a></li>
+        <li><a href="#option12">Option 12</a></li>
+        <li><a href="#option13">Option 13</a></li>
+        <li><a href="#option14">Option 14</a></li>
+        <li><a href="#option15">Option 15</a></li>
+        <li><a href="#option16">Option 16</a></li>
+      </ul>
+    </li>
+    <li><a href="#review">Review Approval Status</a></li>
+    <li  class="disabled"><a href="#directAdjustment">Direct Adjustment</a></li>
+  </ul>
+
+
+	<script>
+
+
+		function testEditability(row, cell, value, columnDef, dataContext) {
+		   return dataContext.city =="Spokane";
+		}
+
+		//Globalize.culture("ar-SA");
+		//Define Your Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
+		columns.push({ id: "city", name: "City", field: "city", width: 125, filterType: TextFilter, selectable: true});
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, filterType: TextFilter});
+		columns.push({ id: "state", name: "State", field: "state", filterType: TextFilter, editability: testEditability, formatter: LinkFormatter, toolTip: "Google State", linkOnClick: "callOnClick(this, '%dataContext.state%')", linkTarget: "_blank", sortable: true });
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, longTextTooltip:  true, formatter: TextCellFormatter, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", filterType: TextFilter, width: 70, formatter: TextCellFormatter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", filterType: TextFilter, width: 60, formatter: TextCellFormatter });
+		columns.push({ id: "territory", name: "Territory", field: "territory", filterType: TextFilter, width: 70, formatter: TextCellFormatter});
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 70 });
+		columns.push({ id: "numberEmployees", name: "No. Employees", field: "numberEmployees", width: 50});
+		columns.push({ id: "isLeedCertified", name: "Leed Cerification", field: "isLeedCertified", width: 50, minWidth:20, maxWidth:80, formatter:CheckboxCellFormatter});
+
+		/* This Sample uses a flat JS Sample Data file. */
+		var data = getSampleData([]);
+
+		function notDrillable(row, cell, value, columnDef, dataContext) {
+		   return dataContext.city == "Greensboro";
+		}
+
+		function callOnClick(control, value) {
+			console.log(control, value);
+		}
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			editable: false,
+			dataset: data,
+			showFilter: false,
+			enableCellRangeSelection: true,
+			enableCellNavigation: true,	//so dbl click works.
+			showCheckboxes: true,
+			multiSelect: true,
+			showFooter: false,
+			showStatusIndicators: true,
+			selectOnRowChange: false,
+			drilldown: function() {
+				alert('drill');
+			}
+		};
+		var grid = $("#inforDataGrid").inforDataGrid(options);
+
+    /*Add a Right Click Menu on a row.*/
+    grid.onContextMenu.subscribe(function (e)
+    {
+      e.preventDefault();
+
+      //hide previous menus
+      $('.popupmenu').hide();
+      var cell = grid.getCellFromEvent(e);
+
+      $(cell).inforContextMenu({
+        menu: 'gridRightClickMenu',
+        trigger: 'immediate',
+        event: e,
+        srcElement: $(grid.getCellNode(cell.row, cell.cell))
+      },
+        function(action, el, pos) {
+          alert('Action: ' + action + ' on row: ' + cell.row );
+      });
+
+      //select row
+      grid.setSelectedRows([cell.row]);
+    });
+
+		$('body').removeClass('inforHidden');
+	</script>
+
+
+</body>
+</html>

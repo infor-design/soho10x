@@ -1,0 +1,283 @@
+.chart-message {
+    background-color: #f4bcbc;
+    color: #383838;
+    padding: 20px;
+    text-align: center;
+}
+.chart-container svg {
+    display: block;
+    margin: 0 auto;
+}
+.chart-container .axis path, .chart-container .axis line {
+    fill: none;
+    shape-rendering: crispedges;
+    stroke: #d8d8d8;
+}
+.chart-container .axis.x .domain {
+    stroke: transparent;
+}
+.chart-container text {
+    -moz-osx-font-smoothing: grayscale;
+    fill: #737373;
+    font-size: 12px;
+    text-rendering: optimizelegibility !important;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+.chart-container .chart-donut-text {
+    font-size: 18px;
+    font-weight: lighter;
+}
+.chart-container .label-line {
+    stroke: #d8d8d8;
+}
+.chart-container .label-circle {
+    fill: #d8d8d8;
+}
+.chart-container .bar, .chart-container .arc {
+    cursor: pointer;
+}
+.chart-container .arc {
+    stroke: #ffffff;
+}
+.chart-container .bar {
+    cursor: pointer;
+    stroke: #ffffff;
+    stroke-width: 1px;
+}
+.chart-container.column-chart .domain {
+    stroke: transparent;
+}
+.chart-container.column-chart .tick line {
+    stroke: #d8d8d8;
+}
+.chart-container.column-chart .tick.is-selected {
+    font-weight: bold;
+}
+.chart-container.column-chart rect {
+    cursor: pointer;
+}
+.chart-container.column-chart rect.is-not-selected {
+    opacity: 0.35;
+}
+.chart-container.line-chart .domain {
+    stroke: transparent;
+}
+.chart-container.line-chart .dot {
+    cursor: pointer;
+}
+.chart-container.line-chart .line-group .line {
+    cursor: pointer;
+}
+.chart-container.line-chart .area {
+    opacity: 0.2;
+    pointer-events: none;
+}
+.chart-container.line-chart .is-not-selected {
+    opacity: 0.35;
+}
+.chart-container .is-hidden {
+    opacity: 0;
+}
+.chart-container .pie path {
+    stroke: #ffffff;
+    stroke-width: 1px;
+}
+.chart-swatch {
+    display: table;
+}
+.chart-swatch .swatch-row {
+    display: table-row;
+    height: 25px;
+}
+.chart-swatch .swatch-row div {
+    border-bottom: 9px solid #333333;
+    display: table-cell;
+    height: 14px;
+    width: 14px;
+}
+.chart-swatch .swatch-row span, .chart-swatch .swatch-row b {
+    color: #ffffff;
+    display: table-cell;
+    line-height: 12px;
+    padding: 0 7px;
+    position: relative;
+    top: -9px;
+}
+
+.chart-swatch .swatch-row span:empty {
+  background-color: transparent;
+}
+
+.chart-swatch .swatch-row b {
+    padding: 0;
+}
+.chart-swatch .swatch-row br {
+    display: block;
+    margin: 5px 0;
+}
+.chart-tooltip-total {
+    color: #ffffff;
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 6px;
+    text-align: center;
+}
+.chart-legend {
+    margin-left: 55px;
+    margin-top: -7px;
+}
+.chart-legend .chart-legend-item {
+    border: 1px solid transparent;
+    float: left;
+    margin-right: 10px;
+    outline: medium none;
+    padding: 7px 6px 4px;
+}
+.chart-legend .chart-legend-item:focus {
+    border-color: #368ac0;
+    box-shadow: 0 0 5px rgba(8, 150, 233, 0.2);
+    outline: medium none;
+}
+.chart-legend .chart-legend-color {
+    display: inline-block;
+    height: 12px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+    width: 12px;
+}
+.chart-legend .chart-legend-item-text {
+    color: #737373;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: auto;
+}
+.sparkline path {
+    fill: none;
+    stroke-width: 2px;
+}
+.sparkline .bar-rect {
+    fill: transparent;
+    stroke-width: 0;
+}
+.sparkline .point {
+    stroke-width: 2;
+}
+.chart-pie {
+    height: inherit;
+    padding: 20px;
+    width: inherit;
+}
+.chart-pie .label-text {
+    font-size: 14px;
+}
+.chart-vertical-bar text {
+    text-align: left;
+}
+.chart-completion-target, .chart-completion {
+    background-color: #d8d8d8;
+    height: 10px;
+    margin-bottom: 70px;
+    width: 100%;
+}
+.chart-completion-target span:not(.audible), .chart-completion span:not(.audible) {
+    font-size: 12px;
+    position: absolute;
+    right: 2px;
+    text-align: right;
+    top: 34px;
+}
+.chart-completion-target .completed, .chart-completion .completed {
+    border-right: 1px solid #d8d8d8;
+    height: 10px;
+    margin-top: -10px;
+    position: relative;
+    transition: width 0.5s ease 0s;
+    width: 50%;
+}
+.chart-completion-target .completed[class="completed"], .chart-completion .completed[class="completed"] {
+    background-color: #66a140;
+}
+.chart-completion-target .completed.primary, .chart-completion .completed.primary {
+    background-color: #368ac0;
+}
+.chart-completion-target .completed.dark, .chart-completion .completed.dark {
+    background-color: #5c5c5c;
+}
+.chart-completion-target .completed[class="completed"] span, .chart-completion .completed[class="completed"] span {
+    color: #66a140;
+    font-weight: bold;
+}
+.chart-completion-target .completed::after, .chart-completion .completed::after {
+    background-color: inherit;
+    content: "";
+    height: 30px;
+    left: 100%;
+    position: absolute;
+    width: 2px;
+}
+.chart-completion-target .target, .chart-completion .target {
+    background-color: #999999;
+    height: 10px;
+    position: relative;
+    transition: width 0.5s ease 0s;
+    width: 60%;
+}
+.chart-completion-target .target span:not(.audible), .chart-completion .target span:not(.audible) {
+    color: #5c5c5c;
+    font-size: 12px;
+    position: absolute;
+    right: -2px;
+    text-align: right;
+    top: 34px;
+}
+.chart-completion-target .target::after, .chart-completion .target::after {
+    background-color: inherit;
+    content: "";
+    height: 30px;
+    left: 100%;
+    position: absolute;
+    width: 2px;
+}
+.chart-completion-target .target-line, .chart-completion .target-line {
+    background-color: #7d5f92;
+    border-radius: 1px;
+    color: transparent;
+    height: 20px;
+    left: 45px;
+    margin-top: -15px;
+    position: relative;
+    width: 5px;
+    z-index: 1;
+}
+.chart-completion {
+    margin-bottom: 25px;
+}
+.chart-completion .completed {
+    margin-top: 15px;
+}
+.chart-completion .completed[class="completed"] {
+    background-color: #579e95;
+}
+.chart-completion .completed.error {
+    background-color: #e84f4f;
+}
+.chart-completion .completed::after {
+    width: 0;
+}
+.colored.label {
+    color: #579e95;
+}
+.colored.label.amethyst07 {
+    background-color: transparent;
+    color: #7d5f92;
+}
+.colored.label span {
+    color: #5c5c5c;
+}
+.svg-patterns {
+    position: fixed;
+    top: -1e+7px;
+}

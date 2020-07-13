@@ -1,0 +1,77 @@
+﻿<html>
+<head>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" media="all" />
+	<link href="css/inforTabset.css" rel="stylesheet" media="all" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTabset.js"></script>
+	<style>
+		.ui-tabs-panel {
+			overflow:hidden !important;	/*Let the scroll bar of the iframe be used*/
+		}
+	</style>
+	<script>
+		//Size the iFramesto fit on the page
+		function sizeIFrames(selector) {
+			selector.each(function() {
+				var $iFrame = $(this);
+				//set the max height of this area to the bottom of the form and track any resize events...
+				handleResize($iFrame);
+				$(window).smartresize(function(){
+					handleResize($iFrame);
+				});
+
+				function handleResize($iFrame) {
+					var maxHeight=$(window).height()-$iFrame.offset().top-10;
+					$iFrame.css({"margin-left":"-10px","border":"none"});
+					$iFrame.height(maxHeight);
+					$iFrame.width($(window).width());
+				}
+				});
+		}
+
+		$(function($) {
+			$('#inforTabContainer').inforTabset({draggable:false,
+					closable:true,
+					editable: false,
+					chevron: false,
+					addButton: false,
+					stretchToFillHeight:false
+				});
+
+			sizeIFrames($('iframe'));
+			$('#inforTabContainer').tabs({
+				show: function (e, ui, newTab) {
+					sizeIFrames($(ui.panel).find("iframe"));
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1">Overview</a></li>
+		<li><a href="#tab2">Items</a></li>
+		<li><a href="#tab3">Notes</a></li>
+	  </ul>
+	  <div id="tab1">
+		<iframe src="http://www.jquery.com/" width="100%" height="100%">
+		  <p>Your browser does not support iframes.</p>
+		</iframe>
+	 </div>
+	 <div id="tab2">
+		<iframe src="http://www.apple.com/" width="100%" height="100%">
+		  <p>Your browser does not support iframes.</p>
+		</iframe>
+	 </div>
+	 <div id="tab3">
+		<iframe src="http://www.hotwire.com/" width="100%" height="100%">
+		  <p>Your browser does not support iframes.</p>
+		</iframe>
+	  </div>
+	</div>
+</body>
+</html>

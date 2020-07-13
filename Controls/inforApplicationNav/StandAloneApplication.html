@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+		<meta charset="utf-8">
+
+		<title>Infor/Lawson Application</title>
+		<link rel="shortcut icon" type="image/icon" href="css/images/favicon.ico" />
+		<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+		<script src="../Release/jquery-1.11.1.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+		<!---We can use header and footer symatics if we include this...-->
+		<script src="../lib/modernizr.2.5.2.custom.js"></script>
+
+		<script src="../Release/inforControlsCombined.js"></script>
+		<script src="js/inforApplicationNav.js"></script>
+
+		<script>
+			 $(function () {
+				//Globalize.culture("ar-SA");
+				//init the menu and iFrame
+				$("#inforApplicationNav").inforApplicationNav();
+				$('#contentArea').fillToBottom();
+
+				//Simulate opening something...
+				$("#inforApplicationNav").find("a").click(function() {
+					var $this = $(this);
+				   if ($this.parent().find("ul").length > 0)	//has a sub menu ignore
+						return;
+
+				   $("#contentArea").show().contents().find("#pageTitleText").html($this.html());
+				});
+
+			});
+		</script>
+</head>
+<body>
+	<header class="inforTopBanner">
+		<div class="inforTopBannerLeft">
+			<span class="inforLogo">Infor Logo</span>
+			<span class="inforApplicationName">Lawson Budgeting & Planning v10</span>
+		</div>
+		<div class="inforTopBannerRight">
+			<span class="inforBannerText">Josephe Tamayo (14938)</span>
+			<button class="inforIconButton signOut" title="Sign Out" type="button">
+				<span></span>
+			</button>
+		</div>
+	</header>
+	<div id="inforApplicationNav" class="inforApplicationNav">
+		<ul>
+			<li><a href="#">Plan</a>
+				<ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			   </ul>
+			</li>
+			<li><a href="#">Report</a>
+			   <ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			   </ul>
+			</li>
+			<li><a href="#">Approvals (2)</a>
+				<ul>
+				   <li><a href="#">Sub Item 1.1</a></li>
+				   <li><a href="#">Sub Item 1.2</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Distribution</a></li>
+			<li><a href="#">Administration</a></li>
+		</ul>
+	</div>
+	<iframe id="contentArea" name="contentArea"  style="display:none" src="FrameContents.html" scrolling="no" frameborder="0" ></iframe>
+	<!--Optional:-->
+	<footer class="inforBottomFooter">
+		<span class="inforBannerText">Status: 1 Record Updated</span>
+	</footer>
+</body>
+</html>

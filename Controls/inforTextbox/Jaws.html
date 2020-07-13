@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Textbox Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		 $(function($) {
+			$('#i1').inforToolTip();
+		});
+	</script>
+</head>
+
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	  <label for="i1" class="inforLabel">This is a label</label>
+    <input id="i1" type="text" class="inforTextbox" title="Title, not label">
+	</div>
+</body>
+</html>

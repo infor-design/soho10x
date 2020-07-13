@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<title>Data Grid Row Re-Order</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+	<script>
+		var grid = null;
+
+		 $(function () {
+			var gridData = getGridData();
+			var gridColumns = getGridColumns();
+			var gridOptions = getGridOptions(gridColumns, gridData);
+
+			grid = $("#inforDataGrid").inforDataGrid(gridOptions);
+
+			var isSorting = false;
+			var showHide = true;
+		});
+
+		function getGridOptions(gridColumns, gridData) {
+			var options = null;
+			options = {
+				//columns: gridColumns,
+				dataset: gridData,
+				idProperty: 'processId',
+				editable: true,
+				enableRowReordering: true,
+				showFilter: false,
+				showCheckboxes: true,
+				showDrillDown: false,
+				multiSelect: true,
+				autoHeight: true,
+				savePersonalization: false
+			};
+
+			return options;
+		}
+
+		function getGridData() {
+			var data = [];
+				data.push({ sortable: true, processId: 1, processType: "Load Data", processOrder: 1, processMembers: "", processOptions: "C:\\MyLoadFile.csv, Ignore load errors", processIgnoreError: "N" });
+				data.push({ sortable: true, processId: 2, processType: "Prepare Eliminations", processOrder: 2, processMembers: "Period Year=[January 2010],\n[September 2011];Currency=[USD];Unit=[Total Company];Version=[Actual],[Ownership];RateSet=[Actual Rate];Product=[No Product];Sales Channel=[No Sales Channel];", processOptions: "*UnitHierarchy=[Total Company];*ApprovalOption=1;*MeteringInterval=2;Journal=[Sales/COS=0;];*TranslationOption=1", processIgnoreError: "N" });
+				data.push({ sortable: true, processId: 3, processType: "Consolidation", processOrder: 3, processMembers: "Period Year=[September 2011],[September 2011];Schedule=[Consolidation];Currency=[Local],[USD];Unit=[US];Version=[Actual],[Ownership];RateSet=[Actual Rate];Product=[No Product];Sales Channel=[No Sales Channel];", processOptions: "*YTD=[1]; *SkipAllocationFormula=1;*ProcessUnsubmittedStatements=0;*AggregateMissingData=0;*ReadSubmittedConsNodes=0;*ReadConsMemberP0=1;*DoLocalAuto=1;*ConsolidationPassesNeeded=1;*meteringinterval=60;*UnitHierarchy=[Total Company];*Report_FocusRange_Warnings=1", processIgnoreError: "N" });
+				data.push({ sortable: true, processId: 4, processType: "Consolidation", processOrder: 4, processMembers: "Period Year=[Total Year 2011],[Total Year 2011];Schedule=[Consolidation];Currency=[USD];Unit=[Total Company];Version=[Actual],[Ownership];RateSet=[Actual Rate];Product=[No Product];Sales Channel=[No Sales Channel];", processOptions: "*YTD=[1]; *SkipAllocationFormula=1;*ProcessUnsubmittedStatements=0;*AggregateMissingData=0;*ReadSubmittedConsNodes=0;*ReadConsMemberP0=1;*DoLocalAuto=1;*ConsolidationPassesNeeded=1;*meteringinterval=60;*UnitHierarchy=[Total Company];*Report_FocusRange_Warnings=1", processIgnoreError: "Y" });
+				data.push({ sortable: true, processId: 5, processType: "Window Executable", processOrder: 5, processMembers: "", processOptions: "", processIgnoreError: "Y" });
+			return data;
+		}
+
+		function getGridColumns() {
+			var columns = [],
+				isSortable = function(a ,b ,c ,d ,e ,f, gridObj) {
+					return gridObj.getSortColumns().length > 0;
+				}
+
+			columns.push({ sortable: false, width: 20, editability: isSortable, id: "#", name: "", behavior: "selectAndMove", selectable: false, resizable: false, formatter: RowSortFormatter });
+			columns.push({ sortable: true, width: 300, id: "processId", name: "PId", field: "processId", formatter: UneditableColumnFormatter });
+			columns.push({ sortable: true, width: 300, id: "processType", name: "Process Type", field: "processType", sortable: true, formatter: TextCellFormatter, editor: SelectCellEditor, options: ["Consolidation", "Copy Financial", "Erase Financial", "Erase Ownership", "Prepare Eliminations", "Load Data", "Window Executable"] });
+			columns.push({ sortable: true, width: 300, id: "processMembers", name: "Process Members", field: "processMembers", formatter: TextCellFormatter, editor: TextCellEditor });
+			columns.push({ sortable: true, width: 300, id: "processOptions", name: "Process Options", field: "processOptions", formatter: UneditableColumnFormatter });
+			columns.push({ sortable: true, width: 300, id: "processIgnoreError", name: "Ignore Errors", cssClass: "alignCenter", field: "processIgnoreError", formatter: TextCellFormatter, editor: SelectCellEditor, options: ["Y", "N"] });
+
+			return columns;
+		}
+
+		function addRow() {
+			grid.addRow({ processId: grid.getData().getMaxId() + 1, processType: "Consolidation", processMembers: "", processOptions: "", processIgnoreError: "N" })
+		}
+
+		function deleteSelectedRows() {
+			grid.removeSelectedRows();
+		}
+
+		function showRows() {
+			var data = grid.getData().getItems();
+			for (var i=0 ; i < data.length; i++) {
+				console.log(data[i].processId);
+			}
+		}
+	</script>
+</head>
+
+<body class="inforApplicationPadding">
+	<div class="inforModuleHeader">
+		<div class="inforModuleHeaderLeft">
+			<span class="inforPageTitleText" id="_batchProcessTitle">Batch Report</span>
+		</div>
+		<div class="inforModuleHeaderRight">
+
+		</div>
+	</div>
+	<!-- Toolbar buttons -->
+	<div class="inforToolbar">
+		<button id="refreshButton"  class="inforIconButton book" onclick="showRows()"><span></span></button>
+		<span class="inforToolbarSpacer"></span>
+		<button class="inforIconButton new" onclick="addRow()"><span></span></button>
+		<button class="inforIconButton delete" onclick="deleteSelectedRows()"><span></span></button>
+	</div>
+
+	<div id="inforDataGrid"></div>
+
+</body>
+</html>

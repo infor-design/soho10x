@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<head>
+
+	<title>Infor DataGrid : Nested Headers</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+	<script src="js/sampleData.js"></script>
+
+</head>
+<body>
+
+	<div style="padding:10px;">
+		<div id="inforDataGrid1" class='inforDataGrid' style="height:200px;"></div>
+	</div>
+	<p><p>
+	<div style="padding:10px;">
+		<div id="inforDataGrid2" class='inforDataGrid' style="height:200px;"></div>
+	</div>
+	<div style="padding:10px;">
+		<div id="inforDataGrid3" class='inforDataGrid' style="height:200px;"></div>
+	</div>
+
+	<script>
+		var columns1 =
+		[
+			{name: "Name",           id: "name",        field: "lastName", hidden: true},
+			{name: "Status",         id: "status",      field: "status"},
+			{name: "Anniversary",    id: "anniversary", field: "anniversary"},
+			{name: "Rating",         id: "rating",      field: "rating"},
+			{name: "Score",          id: "score",       field: "score"},
+			{name: "Pay Rate",       id: "payRate",     field: "payRate"},
+
+			{
+				name: "New Merit Pool", id: "nmp", children:
+				[
+					{id: "budgeted",       name: "Budgeted",       field: "budgeted"},
+					{id: "budgetedHourly", name: "BudgetedHourly", field: "budgetedHourly"},
+					{id: "reccomended",    name: "Reccomended",    field: "reccomended"},
+				]
+			},
+
+			{id: "percent", name: "percent", field: "percent"}
+	  ];
+
+		var columns2 =
+		[
+			{name: "Name2",           id: "name2",        field: "lastName"},
+			{name: "Status2",         id: "status2",      field: "status"},
+			{name: "Anniversary2",    id: "anniversary2", field: "anniversary"},
+			{name: "Rating2",         id: "rating2",      field: "rating"},
+			{name: "Score2",          id: "score2",       field: "score"},
+			{name: "Pay Rate2",       id: "payRate2",     field: "payRate"},
+
+			{
+				name: "New Merit Pool", id: "nmp", children:
+				[
+					{id: "budgeted2",       name: "Budgeted2",       field: "budgeted"},
+					{id: "budgetedHourly2", name: "BudgetedHourly2", field: "budgetedHourly"},
+					{id: "reccomended2",    name: "Reccomended2",    field: "reccomended"},
+				]
+			},
+
+			{id: "percent2", name: "percent2", field: "percent"}
+	  ];
+
+		var options1 =
+		{
+			enableCellNavigation: true,
+			enableColumnReorder: false,
+			columns: columns1,
+			dataset: [], //getPeopleData(),
+			idProperty: "id",
+			showFilter: false,
+			savePersonalization: false,
+			forceFitColumns: true,
+			showFooter: true
+		};
+
+		var options2 =
+		{
+			enableCellNavigation: true,
+			enableColumnReorder: false,
+			columns: columns2,
+			dataset: getPeopleData(),
+			idProperty: "id",
+			showFilter: false,
+			savePersonalization: false,
+			forceFitColumns: true,
+			showFooter: true
+		};
+		var dataGrid1 = $("#inforDataGrid1").inforDataGrid(options1);
+		var dataGrid2 = $("#inforDataGrid2").inforDataGrid(options2);
+		
+		dataGrid1.hideColumn("name");
+		//self.dataGrid1.hideColumn("budgeted");
+
+	</script>
+
+</body>
+</html>

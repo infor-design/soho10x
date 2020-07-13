@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Form Pattern</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+
+	<style>
+
+		.inforLargeSettingsButton {
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA/UlEQVR42rWUuw2EMAyGUzEBHXQom2SA7JDmpCtvA26JLEBFBqDlxqFHh4QE50hGsiKHh8JF+pvY/pw4joU4WI/ny4BWlBapCyAdAbZXAjNQA6pBOe5J0EyAE6hCWwGyIOdjOaAjgSOoBy1kb9OCti/ZazigZYLP6s0ByyDrWY1biThoHwkaUJztE4NVTM08RBEfxYB9jKQg7dsBXzDMrpjEivGbsb2M2KnNsNNiseuvfwEaPO6ccOUJy6apo0x4lOrOtuljsByb9Gpj+89QcsA64etZDtgEWY+GA72Ni40vh0OiJL9nChpYkhLVeJDsypxsCbC7Y2JrAjRH/j8qXBwQj2B0PwAAAABJRU5ErkJggg==");
+			height: 20px;
+			width: 20px;
+			border: none;
+			background-color: transparent;
+			margin-right: 35px;
+			float: right;
+			margin-top: 5px;
+		}
+
+		.inforLargeSettingsButton:hover, .inforLargeSettingsButton.active {
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABXUlEQVR42qXUW0rDQBQG4IhYEUEEgwhWEGNEdBtZQPeQndRHRRERIyIiEhSTBeQ1LifvIdNOO8d/4FSHzoTeAt/LufxhQhLPm3Fd5iIGYj1v1esiEwUQy+ZePP8WHUihDz7XQpBATEDAvUNIINe7VuDZ1yAHYjWUoIzahOJeY9RSK/D0c5AALenKCjxJB11ogBZUg+98jscfwxLIoWKu3o8z7Oh9GIACMlQQGTMR18wZvRP+BR2+yR5kIICmRNM31jXHnIQCYu/gVVKLqu0V0722PW//RVKL1kDda9vz9p5HMRQggaZYR9Y1x5yADP4/zd2nUQgKyFBBZMxEXDNn9E7gPMrO47gEcqiYq1c6w7Yfxj7UQAtqoGsFbt2rPtCSEitw806lQKyBEpRRm1Dcq41abgVu3KoO5JBAl2sBCCAmIeSeD31I9e7c/8n1G8qAWLHyH3vtmnpALJ41/wsZ1YPmRQpgZQAAAABJRU5ErkJggg==");
+		}
+
+		.inforSettingsPane {
+			height: 40px;
+			width: 100%;
+			background-color: #e6e6e6;
+			position: relative;
+			top: 40px;
+
+			transition: height 1s;
+			-moz-transition: height 1s; /* Firefox 4 */
+			-webkit-transition: height 1s; /* Safari and Chrome */
+			-o-transition: height 1s; /* Opera */
+
+			box-shadow: inset 0 0 4px rgba(0,0,0,.45);
+			display:none;
+		}
+
+		.inforSettingsPane.animated {
+			height: 200px;
+		}
+
+		.inforSettingsText {
+			color: #777777;
+			font-family: Helvatica,Arial;
+			font-size: 24px;
+			margin-left: 40px;
+			position: relative;
+			top: 35px;
+		}
+
+		.inforSettingsNotch{
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAARCAYAAAAlpHdJAAABU0lEQVR42r2Uz4qDMBDGfZG13V22j13wVFr0okUQK1qwBbUeSm3VQ1Zdra8xmwnVg/R/TQPDx0xgfl9CMoLw5BqPx0NJkmyqA+GdazKZDFVVzXRdB1Sav8fAbDb7NAwjX6/X4Ps+oNI8m06nA+5g0zRzhO73e0jTlCnmtP5L9we8wF8UUARBAEmSQJZlUBQF0ziOAetcDCB4sVi04DzPoSxLOB6PTDHHeu8GTuC/Lriu6zYuGBBfBX/fAnMxcAKX94C7BjpvQHwU/PMo+IoBQr+hyB18zcDNG1AUZWRZVrXZbJ4GXzJAD0RkWT5vYD6fjxzHqcIwbMFVVT0FPvcI8UC2bRNN0z5a6HK5hNVqxabUdrtlU6sPcNcA9sX+nueB67qAXCGKIjgcDmyTEMKmVl/gJrAf9sX+eAvI2+12IKAr3MBoplaf4CaaadiwkCvwAN0b/0VrTgIFQ3csAAAAAElFTkSuQmCC");
+			background-position: left center;
+			display: inline-block;
+			float: right;
+			height: 17px;
+			position: absolute;
+			right: 30px;
+			top: -12px;
+			width: 31px;
+		}
+
+		.inforSettingsClose{
+			background-color: transparent;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAAZklEQVR42mNggILIyEhBIOZmwAFAciA16IJ+QPwLiF8DsS4WTbpQOZAaP2SJx0D8H4pRNCNpgsk/ZsAj+RoqhlUcl3OQFeHXhEczYU1ImiOwaIwgpIl0G8nyI9mhSkk8kpdyyEmrAEbkvk8xez/oAAAAAElFTkSuQmCC");
+			border: medium none;
+			clear: both;
+			float: right;
+			height: 14px;
+			position: relative;
+			right: 39px;
+			top: 9px;
+			width: 14px;
+		}
+		.inforSettingsClose:hover {
+			background-image: url("data:image/png;base64,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");
+		}
+	</style>
+
+	<script>
+		function toggleSettingsPane() {
+			var pane = $(".inforSettingsPane"),
+				button = $(this).addClass("active");
+
+			if (pane.is(":visible")){
+				pane.hide("slide",{direction: 'up'}, 100);
+			} else {
+				pane.show("slide",{direction: 'up'}, 100);
+			}
+
+			pane.toggleClass("animated");
+			button.toggleClass("active");
+		}
+
+		$(function () {
+			$("#settings, #closeButton").click(function() {
+				toggleSettingsPane();
+			});
+		});
+	</script>
+</head>
+<body style="margin:0;padding:0">
+	<div class="inforModuleHeaderRight">
+		<button class="inforLargeSettingsButton" id="settings"></button>
+	</div>
+
+	<!--<div class="inforSettingsPane">
+		<div class="inforSettingsNotch"></div>
+		<div class="inforSettingsPaneBody">
+			<span class="inforSettingsText">Settings</span>
+		</div>
+	</div>-->
+
+	<div class="inforSettingsPane">
+		<div class="inforSettingsNotch"></div>
+		<button type="button" class="inforSettingsClose" id="closeButton" title="Close"></button>
+		<span class="inforSettingsText">Settings</span>
+	</div>
+</body>
+</html>
+

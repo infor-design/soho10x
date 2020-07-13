@@ -1,0 +1,12 @@
+- Same comments as accordian
+- Use aria-expanded 
+- Make sure the field set doesnt have the same name as the field? 
+- Make sure you use fieldset markup when needed (heading vs legend) - heading default
+	- if both use aria-described by
+- aria-hidden is redundent
+
+Notes:
+http://filamentgroup.com/lab/expand_and_collapse_content_accessibly_with_progressive_enhancement_jquery/
+
+Recommendation
+-Use field set if you have more than one field with the same name on the field to group

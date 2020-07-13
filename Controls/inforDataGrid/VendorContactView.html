@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Vendor Contact View</title>
+ <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <!--Load a Flat file with JSON data-->
+  <script src="js/sampleData.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+    <script type="text/javascript">
+    var grid;
+    var columns = [];
+    //columns.push({ id: "id_0_addr_type_descp", name:"Contact Type", field: "addr_type_descp", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_1_contact_name", name:"Contact Name", field: "contact_name", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_2_contact_title", name: "Contact Title", field: "contact_title", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_3_electronic_mail_identifier", name:"Email Address", field: "electronic_mail_identifier", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_4_phone_intl_code", name:"Phone Intl", field: "phone_intl_code", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_5_phone_country_code", name:"Phone Country", field: "phone_country_code", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_6_phone_area_city_code", name:"Phone Area", field: "phone_area_city_code", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_7_phone_nbr", name:"Phone Local", field: "phone_nbr", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_8_phone_extension_nbr", name:"Phone Ext", field: "phone_extension_nbr", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_9_fax_intl_code", name:"Fax Intl", field: "fax_intl_code", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_10_fax_country_code", name:"Fax Country", field: "fax_country_code", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_11_fax_area_city_code", name:"Fax Area", field: "fax_area_city_code", width: 101, formatter: TextCellFormatter });
+    //columns.push({ id: "id_12_fax_nbr", name: "Fax Local", field: "fax_nbr", width: 101, formatter: TextCellFormatter });
+
+    columns.push({ id: "addr_type_descp", name: "Contact Type", field: "addr_type_descp", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "contact_name", name: "Contact Name", field: "contact_name", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "contact_title", name: "Contact Title", field: "contact_title", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "electronic_mail_identifier", name: "Email Address", field: "electronic_mail_identifier", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "phone_intl_code", name: "Phone Intl", field: "phone_intl_code", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "phone_country_code", name: "Phone Country", field: "phone_country_code", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "phone_area_city_code", name: "Phone Area", field: "phone_area_city_code", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "phone_nbr", name: "Phone Local", field: "phone_nbr", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "phone_extension_nbr", name: "Phone Ext", field: "phone_extension_nbr", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "fax_intl_code", name: "Fax Intl", field: "fax_intl_code", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "fax_country_code", name: "Fax Country", field: "fax_country_code", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "fax_area_city_code", name: "Fax Area", field: "fax_area_city_code", width: 101, formatter: TextCellFormatter });
+    columns.push({ id: "fax_nbr", name: "Fax Local", field: "fax_nbr", width: 101, formatter: TextCellFormatter });
+
+    var pagingInfo = eval({
+        data: [
+        {key:'key0',vendor_id:'0000000001',vendor_loc_code:'001',addr_type:'O',addr_type_descp:'Order-From',contact_name:'fùsdmsqdµmùl ',contact_title:'ùmlùsdlqùml ',phone_intl_code:' ',phone_country_code:' ',phone_area_city_code:'sdùµl',phone_nbr:'µùmµùml ',phone_extension_nbr:' ',fax_intl_code:' ',fax_country_code:' ',fax_area_city_code:'µùmdl',fax_nbr:'54faùlm ',electronic_mail_identifier:'µqsùmlqsµdùqsl',chgstamp:0},
+        {key:'key1',vendor_id:'0000000001',vendor_loc_code:'001',addr_type:'T',addr_type_descp:'Return-To',contact_name:'Return ',contact_title:'Return ',phone_intl_code:' ',phone_country_code:' ',phone_area_city_code:' ',phone_nbr:'1002000 ',phone_extension_nbr:'30000',fax_intl_code:' ',fax_country_code:' ',fax_area_city_code:' ',fax_nbr:'4005000 ',electronic_mail_identifier:'smdlskd',chgstamp:0},
+        {key:'key2',vendor_id:'0000000001',vendor_loc_code:'001',addr_type:'T',addr_type_descp:'Return-To',contact_name:'Return To Name ',contact_title:'Return To Title ',phone_intl_code:'000 ',phone_country_code:'001 ',phone_area_city_code:' ',phone_nbr:'0010002 ',phone_extension_nbr:'00003',fax_intl_code:' ',fax_country_code:' ',fax_area_city_code:' ',fax_nbr:'0040005 ',electronic_mail_identifier:'email@returnto.com',chgstamp:1}
+        ]
+    });
+
+    $(document).ready(function () {
+        is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
+        if (!is_explorer)
+            is_explorer = navigator.userAgent.indexOf('Trident/7.') > -1;
+        var oLanguageCultureID = "en-US";
+        Globalize.culture(oLanguageCultureID);
+        //
+        var options = {
+            columns: columns,
+            idProperty: 'key',
+            editable: true,
+            dataset: pagingInfo.data,
+            showFilter: false,
+            multiSelect: false,
+            showCheckboxes:false, /* Defect 476644 (6) - wdena - No longer display the select checkbox (Jay & Carolyn)*/
+            showDrillDown: false,
+            showFooter: false,
+            forceFitColumns: true,
+            savePersonalization: false,
+            filterMenuOptions: [],
+            exportFileName: "VendorContact",
+            gridMenuOptions: [{ label: Globalize.localize("ColumnPersonalization"), href: "#cp", cssClass: "columns" },
+            { label: Globalize.localize("ResetToDefault"), href: "#re" },
+            { label: Globalize.localize("ExportToExcel"), href: "#ex", cssClass: "separator export"}]
+        };
+        grid = $("#inforDataGrid").inforDataGrid(options);
+        //grid.onClick.subscribe(function (e) {
+        //    var cell = grid.getCellFromEvent(e);
+        //    document.getElementById("HiddenRowNbr").value = grid.getCellFromEvent(e).row;
+        //    var selectedrow = grid.getCellFromEvent(e).row;
+        //    var addr_type = grid.getData(e).getItem(cell.row).addr_type;
+        //    var contact_name = grid.getData(e).getItem(cell.row).contact_name;
+        //    displayContactInfo(addr_type, contact_name);
+        //});
+        //grid.onSelectedRowsChanged.subscribe(function (e, args) {
+        //    var rows = grid.getSelectedRows();
+        //    if (rows.length == 0)
+        //        $("#toolbarDelete").disable();
+        //    else
+        //    {
+        //        if (activitySecurityLevel == 4)
+        //            $("#toolbarDelete").enable();
+        //    }
+        //});
+
+        //
+        parent.skipHasAnythingChangedContact = 'N';
+        parent.closeLoadingIndicator();
+
+    });
+</script>
+    </head>
+<body>
+    <div>
+        <div id="inforDataGrid" style="margin-top: 5px">
+        </div>
+    </div>
+</body>
+</html>

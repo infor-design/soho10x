@@ -1,0 +1,207 @@
+/* Infor Column Layouts
+*********************************/
+
+/* 2 Column */
+/* 3 Column */
+/* Single Column */
+/* Vertical Column */
+/* RTL */
+/* Field Set */
+
+.column1, .column2, .column3, .column4, .column5 {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: top;
+  margin-left: 2%;
+  margin-right: -.25em;
+  /* Clearfix */
+  overflow: hidden;
+  *overflow: visible;
+}
+
+.inforColumnSpan {
+  width: 97%;
+}
+
+/*Inline Fields */
+.inforInlineLayout .inforLabel, .inforInlineLayout .label, .inforInlineLayout .inforDataLabel {
+  float: none;
+  width: auto;
+}
+
+.inforInlineLayout:first-child {
+    margin-top: 10px;
+}
+
+.inforInlineLayout {
+    clear: both;
+}
+
+.inforInlineLayout .inforTextbox, .inforInlineLayout .inforTriggerField input {
+  margin-bottom: 4px;
+}
+
+.inforInlineLayout .inforTextbox, .inforInlineLayout .inforTriggerField {
+  margin-right: 4px;
+}
+
+.inforInlineLayout > * {
+    float: left !important;
+    min-width: 0 !important;
+    width: auto;
+}
+
+/*Single Column */
+.inforSingleColumnLayout, .infor2ColumnLayout, .infor3ColumnLayout {
+  clear: both;
+  margin: 20px;
+}
+
+.inforSingleColumnLayout .inforTextbox, .inforSingleColumnLayout .inforTriggerField input {
+  width: 195px;
+}
+
+html[dir="rtl"] .inforSingleColumnLayout .inforTextbox, html[dir="rtl"] .inforSingleColumnLayout .inforTriggerField, html[dir="rtl"] .inforSingleColumnLayout .dropdown {
+  float: right;
+}
+
+.inforSingleColumnLayout .dropdown {
+  width: 173px;
+}
+
+.inforSingleColumnLayout div.multiselect  {
+  width: 195px;
+}
+
+.inforSingleColumnLayout .inforTextbox, .inforSingleColumnLayout .inforTriggerField, .inforSingleColumnLayout .dropdown, .inforSingleColumnLayout .multiselect {
+  float: left;
+  margin-bottom: 4px;
+}
+
+.inforSingleColumnLayout .inforTopLabel + .inforTextbox, .inforSingleColumnLayout .inforTopLabel + .inforTriggerField, .inforSingleColumnLayout .inforTopLabel + .dropdown, .inforSingleColumnLayout .inforTopLabel + .multiselect {
+  float: none;
+}
+
+.inforSingleColumnLayout .inforFormButton {
+  margin-bottom: 0;
+}
+
+.inforSingleColumnLayout input + .inforFormButton {
+  position: relative;
+  left: 4px;
+  top: -4px;
+}
+
+.inforSingleColumnLayout .inforFormButton
+.inforSingleColumnLayout .label, .inforSingleColumnLayout .inforLabel {
+  float: left;
+}
+
+.inforSingleColumnLayout br {
+  clear: both;
+}
+
+.inforSingleColumnLayout .inforTextArea  {
+  width: 196px;
+}
+
+.inforSingleColumnLayout .inforTriggerField input, .infor2ColumnLayout .inforTriggerField input , .infor3ColumnLayout .inforTriggerField input {
+  width: 192px;
+}
+
+.inforSingleColumnLayout .inforCheckboxLabel {
+  margin-left: -7px;
+  position: relative;
+}
+
+/* 2 column Layout */
+.infor2ColumnLayout {
+  max-width: 960px;
+  margin: 20px auto;
+}
+
+.infor2ColumnLayout .column1, .infor2ColumnLayout .column2 { width: 47%; }
+
+.infor2ColumnLayout .inforTextbox, .infor2ColumnLayout .inforTriggerField input, .infor2ColumnLayout .inforFormButton {
+  margin-bottom: 4px;
+}
+
+.infor2ColumnLayout .inforTextArea, .infor3ColumnLayout .inforTextArea {
+  height: 98px;
+  width: 195px;
+  margin-bottom: 3px;
+}
+
+/* 3 column Layout */
+.infor3ColumnLayout .inforTextbox, .infor3ColumnLayout .inforTriggerField input, .infor3ColumnLayout .inforFormButton {
+  margin-bottom: 4px;
+}
+
+.infor3ColumnLayout .column1, .infor3ColumnLayout .column2, .infor3ColumnLayout .column3 { width: 30.36%; }
+
+/*Side Bar Right Layout*/
+.infor2ColumnSidebarLayout {
+  display: table;
+   height: 100%;
+}
+
+.infor2ColumnSidebarLayout .infor2ColumnLayout {
+    background-color: rgba(0, 0, 0, 0);
+    margin-right: -220px;
+    max-width: none;
+    width: 100% !important;
+  display: table-cell;
+}
+
+.inforSidebarRight {
+  background-color: #F1F1F1;
+  height: 100%;
+  width: 220px;
+  display: table-cell;
+  min-width: 225px;
+}
+
+.infor2ColumnLayout .inforCheckboxLabel {
+  margin-left: -2px;
+  display: inline-block;
+}
+
+.inforVerticalColumnLayout {
+  display: inline-block;
+  margin: 20px;
+  vertical-align: top;
+}
+
+.inforSingleColumnLayout input:last-child {
+  margin-bottom: 15px;
+}
+
+
+/* Media Queries */
+@media screen and (max-width: 650px) {
+  .infor2ColumnLayout, .infor3ColumnLayout {
+    margin-left: 0;
+    max-width: none;
+  }
+
+  .infor2ColumnLayout .column1, .infor2ColumnLayout .column2, .infor3ColumnLayout .column1, .infor3ColumnLayout .column2, .infor3ColumnLayout .column3, .inforInlineLayout {
+    margin: 0 10px;
+    width: 97%;
+    display: block;
+  }
+
+  .infor2ColumnLayout .inforLabel, .infor2ColumnLayout .label, .infor2ColumnLayout .label, .infor3ColumnLayout  .inforLabel, .inforInlineLayout .inforLabel, .inforSingleColumnLayout .inforLabel, .inforSingleColumnLayout .label {
+     text-align: left;
+     width: 100% !important;
+  }
+
+  .infor2ColumnLayout span.inforLabel.noColon, .infor2ColumnLayout span.label.noColon, .infor2ColumnLayout span.label.noColon, .infor3ColumnLayout  span.inforLabel.noColon {
+    display: none;
+  }
+
+  .inforInlineLayout input {
+     display: block;
+  }
+
+}

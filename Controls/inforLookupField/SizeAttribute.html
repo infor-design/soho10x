@@ -1,0 +1,70 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+	<title>Infor Lookup Field</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+	<script src="js/inforLookupField.js"></script>
+
+	<script>
+		 $(function () {
+
+			//set columns
+			var columns = [];
+			columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true});
+			columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true });
+			columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank"});
+			columns.push({ id: "country", name: "Country", field: "country", width: 70});
+			columns.push({ id: "territory", name: "Territory", field: "territory", width: 70});
+
+			//get the data in JSON format - see datagrid example for more examples.
+			var data = getSampleData([]);
+
+			var options = {
+				dataset: data,
+				columns: columns,
+				idProperty: 'officeId',
+				editable: false,
+				showDrillDown: false,
+				showFilter: false,
+				showCheckboxes: false,
+				showStatusIndicators: false,
+				multiSelect: false,
+				savePersonalization: false
+			};
+
+		   //if you want a custom lookup docan still do this...: $("#inforLookupField1").inforTriggerField({click:function(event){.....
+		   //pass in the grid options and field to return into the lookup.
+		   $("#lookupField1").inforLookupField({
+				gridOptions: options,
+				returnField: "city",
+				height: 200,
+				width: 400,
+				editable: false
+			});
+			
+			$("#lookupField2").inforLookupField({
+				editable: true
+			});
+		   
+		  });
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Lookup Field</label>
+			<input class="inforLookupField" type="text" id="lookupField1"><br>
+			<label class="inforLabel">Size of 2</label>
+			<input class="inforLookupField" type="text" size="4" maxlength="4" value="1234" id="lookupField2"><br>
+		</div>
+	</div>
+</body>
+</html>

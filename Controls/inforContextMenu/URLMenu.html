@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset="utf-8">
+
+    <title>Infor Context Menu - Basic</title>
+    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+
+    <link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
+
+    <script>
+      $().ready( function() {
+        $('#iconMenu').popupmenu({
+          menu: 'iconMenuOptions',
+          invokeMethod: 'click',
+          positionBelowElement: true
+        }).on('selected', function(e, el) {
+          alert('Do Action: '+el.attr('href'));
+        });
+      });
+    </script>
+</head>
+
+<body class="inforApplicationPadding">
+  <button id="iconMenu" class="inforFormButton">Show Menu</button>
+  <ul id="iconMenuOptions" class="inforContextMenu">
+    <li><a href="#opt1">Option One</a></li>
+    <li><a href="http://www.google.com">Google</a></li>
+    <li><a href="http://www.google.com" target="_blank">Google in a new tab</a></li>
+  </ul>
+</body>
+</html>

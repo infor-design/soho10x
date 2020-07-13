@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor ToolTip - Basic Examples</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTooltip.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTooltip.js"></script>
+
+	<script>
+		  $(function () {
+			//Globalize.culture("ar-SA");
+
+			//show a single validation message tooltip
+			$('#textBox1').validationMessage('show', 'Longer error message here.' , true);
+			$('#textBox2').validationMessage('show', 'This field is required.' , true);
+			$('#textBox3').validationMessage('show', 'I open on Top.' , true);
+
+			//add normal tooltips to all elements with a title on them - All this does is translate strings we use the browser tooltips.
+			$('[title]').not('.inforErrorIcon').inforToolTip();
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout">
+		<label class="inforLabel" for="textBox1" style="width:100px">Longer Error Message</label>
+		<input type="text" id="textBox1" class="inforTextbox "/><br>
+		<label class="inforLabel" for="textBox2" style="width:100px">Normal Error</label>
+		<input type="text" id="textBox2" class="inforTextbox "/><br>
+		<br>
+		<button type="button" class="inforFormButton" title="Sample Button 1" onclick="console.log('clicked')">Sample Button 1</button>
+		<button type="button" class="inforFormButton" title="Sample Button 2" disabled>Disable Button (No Tips)</button>
+		<br>
+		<button type="button" class="inforIconButton save" style="left:-10px;top: 10px;position: relative;" title="I hug the left side" onclick="console.log('clicked')"></button>
+		<button type="button" class="inforIconButton save" style="float:right;right:10px;top: 10px;position: relative;" title="I hug the left side" onclick="console.log('clicked')"></button>
+
+		<button type="button" class="inforFormButton" title="Sample Button 2"  style="position:fixed;bottom:20px;left:10px">On the Bottom</button>
+		<label class="inforLabel" for="textBox3" style="position:fixed;bottom:20px;left:70px">Normal Error</label>
+		<input type="text" id="textBox3" class="inforTextbox " style="position:fixed;bottom:17px;left:215px"/><br>
+
+	</div>
+</body>
+</html>

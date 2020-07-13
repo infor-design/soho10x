@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor ListBox Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforListBox.js"></script>
+
+	<script>
+		 $(function () {
+			$(".inforListBox").inforListBox({showCheckboxes: false}).change(function() {
+				console.log($("select").find(":selected"));
+			});
+
+			$("button").on("click", function() {
+				$("#listbox1").find("option").remove();
+				$("#listbox1").inforListBox("refresh");
+			});
+
+			$('#listbox1').inforListBox('value', 'option1');
+		});
+	</script>
+</head>
+
+<body style="margin:10px">
+	<select multiple="multiple" class="inforListBox" id="listbox1" >
+		<option value="option1" >Option One</option>
+		<option value="option2" >Option Two</option>
+	</select>
+	<button>Clear</button>
+</body>
+</html>

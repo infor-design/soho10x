@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor DataGrid - Basic </title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+  <!--Load a Flat file with JSON data-->
+  <script src="js/sampleData.js"></script>
+
+  <script>
+  $(function () {
+      var options = {
+        columns: [],
+        dataset: [],
+        idProperty: 'RowIndex',
+        editable: true,
+        showCheckboxes: true,
+        showDrillDown: false,
+        rowHeight: 26,
+        autoHeight: true,
+        frozenColumn: -1,
+        enableColumnReorder: true,
+        forceFitColumns: false,
+        pagingMode: PagingModes.None,
+        showFooter: false,
+        autoCellEditCommit: false,
+        multiColumnSort: false,
+        showExport: false
+      }
+    $('#inforDataGrid').inforDataGrid(options);
+  });
+
+  </script>
+
+</head>
+<body>
+  <div class="inforToolbar">
+    <button type="button" class="inforIconButton new" title="New"><span>New</span></button>
+    <button type="button" class="inforIconButton save" title="save" onclick='console.log(data[0].isLeedCertified, data[0].city)'><span>Save</span></button>
+  </div>
+  <div id="inforDataGrid">
+  </div>
+</body>
+</html>

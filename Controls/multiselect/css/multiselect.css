@@ -1,0 +1,137 @@
+/* Multi Select Control
+----------------------------------*/
+.multiselect {
+  background-color: #fff;
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  color: #1a1a1a;
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 1em;
+  min-height: 18px;
+  outline: medium none;
+  overflow: hidden;
+  padding: 0px 4px;
+  text-align: left;
+  width: 195px;
+}
+.multiselect.is-focused {
+  background-color: #ddf1fe;
+  border: 1px solid #13a3f7;
+}
+#multiselect-list {
+  max-height: 300px;
+  overflow: auto;
+}
+
+select.multiselect {
+  display: none;
+}
+
+.multiselect input[type="text"] {
+  background-color: transparent;
+  border: medium none;
+  box-shadow: none;
+  display: inline;
+  height: 18px;
+  margin: 0 1px;
+  max-width: inherit;
+  min-width: 55px;
+  outline: medium none;
+  padding: 0 3px;
+  vertical-align: top;
+  width: 3rem;
+}
+
+.multiselect > .icon {
+  background-color: transparent;
+  border: medium none;
+  cursor: pointer;
+  float: right;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  left: 4px;
+  position: relative;
+  vertical-align: top;
+  width: 20px;
+}
+
+.multiselect > .icon i {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAQAAADB7vUKAAAAGklEQVQY02NgGCQg8j8qJKCEgCkELGIYlAAA7Ioa4cFU1v4AAAAASUVORK5CYII=") no-repeat scroll right center transparent;
+  display: block;
+  height: 20px;
+  left: 1px;
+  margin: 0;
+  opacity: 0.6;
+  position: relative;
+  top: -1px;
+  width: 18px;
+}
+
+.multiselect > .icon:hover {
+  background-color: #d8d8d8;
+  border-left: medium none;
+  box-shadow: 0 1px #a2a2a2;
+}
+
+.multiselect > .icon:hover i {
+  opacity: 1;
+}
+
+.multiselect .tag {
+  -moz-user-select: none;
+  background-color: #ebebeb;
+  border: 1px solid #b3b3b3;
+  border-radius: 2px;
+  color: #1a1a1a;
+  cursor: default;
+  display: inline-block;
+  font-size: 11px;
+  height: auto;
+  line-height: 11px;
+  margin: 2px 4px -1px 0;
+  overflow: hidden;
+  padding: 1px 18px 0 1px;
+  position: relative;
+  transition: all 0.15s linear 0s;
+  text-overflow: ellipsis;
+  max-width: 157px;
+}
+
+.multiselect .tag > span {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHAQMAAAD+nMWQAAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAAAAAApWe5zwAAAAJ0Uk5TpgCOztZXAAAAFUlEQVQI12OoYdjFcI3hHRDvYqgBACM4BQfoqSOLAAAAAElFTkSuQmCC") no-repeat scroll right center transparent;
+  bottom: 0;
+  color: #fff;
+  cursor: pointer;
+  margin-left: -10px;
+  opacity: 0.6;
+  padding: 0;
+  position: absolute;
+  right: 5px;
+  top: -1px;
+  width: 25px;
+  z-index: 2;
+}
+
+.multiselect .tag > span:hover {
+  opacity: 1;
+}
+
+.multiselect.disabled {
+  background-color: #e5e5e5;
+  border: 1px solid #e5e5e5;
+  color: #cccccc;
+}
+.multiselect.disabled .icon {
+    display: none;
+}
+.multiselect.disabled .tag {
+  background-color: #f1f1f1;
+  box-shadow: none;
+  color: #666;
+  cursor: default;
+  padding: 10px;
+}
+.multiselect.disabled .tag > span {
+  cursor: default;
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <title>Infor Menu Button : Open a Simple Popup Underneath (Needs Cleanup)</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <style>
+    #selectFromExisting {
+      background-color: white;
+      height: 129px;
+      opacity: 0;
+      padding: 3px;
+      width: 199px;
+      z-index: 999;
+      overflow: hidden;
+    }
+
+    #batchName {
+      width: 150px;
+      height: 240px;
+    }
+
+    #batchNameLabel {
+       padding-bottom: 3px;
+    }
+  </style>
+
+  <script>
+     $(function () {
+      $('#batchName').inforListBox();
+
+      //init a menu button with no options and define a custom click
+      $('#editButton').click(function(){
+        //on click we add our dialog to the page (or this could already be in the page)
+        var elem = $('#selectFromExisting');
+        elem.css('display','');
+
+        //wrap the div
+        if (!elem.parent().hasClass('inforLookupGridBoxShadow')) {
+          elem.wrap('<div class="inforLookupGridBoxShadow" ></div');  //add the box shadow.
+        }
+
+        //set the height
+        elem.parent().height(elem.height()+10).width(elem.width()+10);
+
+        //position under the field - needs to be visible to work...
+        var isRTL = elem.css('direction') === 'rtl';
+        elem.parent().position( {
+          my: (isRTL ? 'right top' : 'left top'),
+          at: (isRTL ? 'right bottom' : 'left bottom'),
+          of: $('#editButton')
+        });
+
+        //show it
+        elem.css('opacity','1');
+        elem.parent().animate({opacity: 1}, 500);
+
+        //add modal overlay which also handles the click out.
+        $('<div></div>').addClass('inforLookupOverlay')
+          .appendTo(document.body)
+          .css({
+            width: $(window).width(),
+            height: $(window).height()
+          }).click(function() { //if you add buttons and dont need click out remove this and close in the buttons
+            //remove popup element and animate.
+            elem.parent().animate({opacity: 0}, 500);
+            $('.inforLookupOverlay').remove();
+          });
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="inforToolbar" >
+    <button type="button" class="inforMenuButton default" id="editButton">Edit</button>
+  </div>
+
+  <div id="selectFromExisting">
+    <label class="inforTopLabel" id="batchNameLabel"  for="batchName">Select From Existing</label><br/>
+    <select multiple="multiple" class="inforListBox" id="batchName" >
+      <option value="1" >ABC Manufacturing</option>
+      <option value="2" selected="selected">Acme Industrial</option>
+      <option value="3">Allied Suppliers</option>
+      <option value="4">Basic Brands</option>
+      <option value="5" selected="selected">Blue Sky Distribution</option>
+      <option value="6" selected="selected">Consolidated Consortiums</option>
+      <option value="7"  disabled="disabled">Easter Widgets</option>
+      <option value="8">Ecac Manufacturing</option>
+      <option value="9">Generic Suppliers</option>
+      <option value="10">Normal Brands</option>
+      <option value="11">Intolink Industrial</option>
+      <option value="12">Morose Power</option>
+    </select>
+  </div>
+</body>
+</html>

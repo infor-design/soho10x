@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Xtreme Support</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$("body").inforForm();
+
+			 var popupContents = $("<p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>");
+
+		   $(".recentIncidents a").inforPopover({content: popupContents, trigger: "hover", placement: "right", title: 'Popover Left <span class="alignRight">10/20/2013</span>'});
+		});
+	</script>
+
+	<style>
+		.sidebar {
+			width: 218px;
+			position: relative;
+      left: calc(100% - 218px);
+      background-color: #f2f2f2;
+      height: 100%;
+      padding: 20px 0;
+		}
+
+    .isa {
+      width: 178px;
+      padding: 0 20px 20px 20px;
+    }
+
+    .isa .inforFormButton {
+      width: 100%;
+    }
+
+    .inforx-add, .inforum-add {
+      background-color: #8f8f8f;
+      height: 115px;
+      padding: 20px;
+    }
+
+    .inforx-add h3, .inforum-add h3 {
+      color: white;
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+
+    .inforx-add button, .inforum-add button {
+      background-color: white !important;
+      border: none;
+      border-radius: 3px;
+      color: #cf0429;
+      font-weight: bold;
+      cursor: pointer;
+     height: 29px;
+    }
+
+    .inforx-add button span, .inforum-add button span {
+      font-size: 1.5em;
+      position: relative;
+      top: 1px;
+    }
+
+    .inforx-add button {
+      color: #595959;
+       margin: 6px 0;
+    }
+
+    .inforx-add p, .inforum-add p {
+      color: #FFFFFF;
+      font-size: 1.2em;
+      font-weight: lighter;
+      line-height: 15px;
+    }
+
+    .inforum-add {
+      background-color: #cf0429;
+      height: 115px;
+    }
+
+    .inforum-logo {
+       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJMAAAAXCAYAAAAPxH3bAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxRkY1RDdGM0JEOUMxMUUzOUZGQUI3RDE2MEQwQkYyQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxRkY1RDdGNEJEOUMxMUUzOUZGQUI3RDE2MEQwQkYyQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjFGRjVEN0YxQkQ5QzExRTM5RkZBQjdEMTYwRDBCRjJDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjFGRjVEN0YyQkQ5QzExRTM5RkZBQjdEMTYwRDBCRjJDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+lKe21gAABw5JREFUeNrsWgls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");
+        background-repeat: no-repeat;
+        height: 23px;
+        color: transparent;
+    }
+	</style>
+</head>
+<body>
+		<div class="sidebar">
+      <div class="isa">
+        <a class="inforHyperlink heading">Infor Support Assistant (ISA)</a>
+        <p>A caption will be displayed for the user to click through and learn more</p>
+        <button type="button" class="inforFormButton default">Opt-In Now</button>
+      </div>
+
+      <div class="inforx-add">
+        <h3>The Infor UpgradeX Program</h3>
+        <p>Simple, cost-effective, fast.</p>
+        <button type="button">Learn More <span>›</span></button>
+      </div>
+
+      <div class="inforum-add">
+        <div class="inforum-logo">The Infor UpgradeX Program</div>
+        <p>Sept 15-18, 2014<br>New Orleans, LA
+        </p>
+        <button type="button">Learn More <span>›</span></button>
+      </div>
+
+    </div>
+</body>
+</html>
+

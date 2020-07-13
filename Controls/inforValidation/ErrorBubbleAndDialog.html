@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Scrollable with Validation</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforValidation.js"></script>
+	<script src="../inforTooltip/js/inforTooltip.js"></script>
+
+
+	<script>
+		function generateFormWithLotsOfInputBoxes () {
+			var html = '<form id="templateForm"><label style="margin: 7px;"><em>If a value is entered, it must be ABC</em></label><br/>';
+			for (var I = 0; I < 20; I++) {
+				var num = I + 1;
+				html = html + '<label style="margin: 7px;">Field Number ' + num + '</label><input class="inforTextbox" data-validation="validChars" style="margin: 7px;"/><br/>';
+			}
+			html = html + '</form>';
+			return html;
+		}
+
+		//Construct the dialog
+		$(function () {
+			//Globalize.culture("ar-SA");
+			//Setup form button styling for the sample buttons
+
+
+			//Display a generic dialog -
+			$("#generalDialogButton").click(function () {
+
+				//First add the html to the page..
+				$("body").append('<div id="newCatalogDialog" style="display:none"><ul class="inforTabset" style="width: 500px; height 240px;"><li><a id="ancInfoTab1" href="#conInfoTab1"></a></li></ul><div style="height: 200px;"><div id="conInfoTab1" class="ui-tabs-panel" style="overflow:auto; ">' + generateFormWithLotsOfInputBoxes() + '</div></div></div>');
+
+				//Invoke the dialog on it
+				var dialog = $('#newCatalogDialog').inforMessageDialog({
+					title: "Validation on Item in Scrollable Area",
+					dialogType: "General",
+					width: 640,
+					height: 360,
+					modal: true,
+					close: function(event, ui) {
+						$('#newCatalogDialog').remove();
+					}
+				});
+
+				//Setup the form Validation
+				var templateForm = $("#templateForm");
+				templateForm.setupValidation(function (valid) {
+					if (valid) {
+						console.log("save the data");
+						//Save the data....
+						$("#newCatalogDialog").inforDialog("close");
+						//Note: $('#templateForm').trigger('submit');	Will infinitely loop
+					}
+				});
+
+			});
+
+		//Define validation
+			$.Validation.addRule("validChars", {
+				check: function (value) {
+					if (value) {
+						valTr = $.trim(value);
+
+						if (valTr == '') {
+							return true;
+						}
+						if (valTr != "ABC") {
+							return false;
+						}
+						return true;
+					}
+					return true;
+				},
+				msg: "The field contains invalid characters."
+			});
+
+		});
+
+
+	</script>
+</head>
+<body style="height:900px;overflow:auto">
+	<button id="generalDialogButton" style="position:relative;left:45%;top:50%" class="inforFormButton">Show</button>
+</body>
+</html>

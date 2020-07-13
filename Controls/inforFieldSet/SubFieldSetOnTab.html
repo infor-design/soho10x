@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+		<meta charset="utf-8">
+
+		<title>Infor Tab Set : Basic Features </title>
+		<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+		<link href="css/inforFieldSet.css" rel="stylesheet">
+		<script src="../Release/jquery-1.11.1.min.js"> </script>
+		<script src="../Release/jquery-ui-1.10.4.custom.min.js"> </script>
+		<script src="../Release/inforControlsCombined.js"> </script>
+
+		<script>
+			$(function($) {
+				//Globalize.culture("ar-SA");
+				$('#inforTabContainer').inforTabset();
+				$('.inforFieldSet').inforFieldSet();
+			});
+		</script>
+	</head>
+	<body>
+		<div id="inforTabContainer">
+			<ul class="inforTabset">
+				<li><a href="#tab1">2 Column Layout</a></li>
+				<li><a href="#tab2">3 Column Layout</a></li>
+			</ul>
+
+			<div id="tab1" >
+				<div class="inforFieldSet2ColumnLayout">
+					<fieldset class="inforFieldSet inforSubHeading">
+						<legend>
+							<span class="inforFieldSetLabel inforSubHeadingLabel">Field Left</span>
+						</legend>
+
+						<div class="content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+						</div>
+					</fieldset>
+
+					<fieldset class="inforFieldSet inforSubHeading">
+						<legend>
+							<span class="inforFieldSetLabel inforSubHeadingLabel">Field Right</span>
+						</legend>
+
+						<div class="content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div id="tab2">
+				<div class="inforFieldSet3ColumnLayout">
+					<fieldset class="inforFieldSet">
+						<span class="inforFieldSetLabel inforSubHeadingLabel">Field Left</span>
+						<div class="content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+						</div>
+					</fieldset>
+
+					<fieldset class="inforFieldSet">
+						<span class="inforFieldSetLabel inforSubHeadingLabel ">Field Set Center</span>
+						<div class="content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+						</div>
+					</fieldset>
+
+					<fieldset class="inforFieldSet">
+						<span class="inforFieldSetLabel inforSubHeadingLabel ">Field Set Right</span>
+						<div class="content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

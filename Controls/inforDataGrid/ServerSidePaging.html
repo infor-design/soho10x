@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid : Server Side Paging with Pager Button </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="js/inforDataGrid.js"></script>
+
+</head>
+
+<body class="inforHidden">
+	<div>
+		<div class="inforToolbar">
+			<button class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1, city: 'New City', phone: '000-000-0000' })"><span></span></button>
+			<button class="inforIconButton delete" title="Click to remove selected rows" onclick="grid.removeSelectedRows()"><span></span></button>
+			<span class="inforToolbarSpacer"></span>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		//Globalize.culture("zh-CN");
+
+		//Define Your Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "city", name: "City", field: "city", width: 125, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", name: "State", field: "state",  formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"], filterType: SelectFilter});
+		columns.push({ id: "numberEmployees", name: "No. Employees", field: "numberEmployees", width: 50, headerCssClass : "alignRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", name: "Leed Cerification", field: "isLeedCertified", width: 90, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, editor: DateCellEditor, formatter: DateCellFormatter, filterType: DateFilter });
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		 /* This Sample uses a JSONP - WCF Data Service: http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc */
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: [],
+			pagingMode: PagingModes.PagerServerSide,
+			showFilter: true,
+			showDrillDown: false,
+			forceFitColumns: true,
+			editable: false,
+			showCheckboxes: false,
+			multiSelect: false,
+			pageSize: 25,
+			showFooter: true
+		}
+		
+		var grid = $("#inforDataGrid").inforDataGrid(options);
+		var dataView = grid.getData();
+
+		//Save the core string for the wcf data aservice
+		var baseqry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?";
+
+		//simple function to get a page.
+		function getPage(args) {
+		  var newQry = baseqry + "&$inlinecount=allpages&$top="+args.pageSize+"&$skip="+(args.pageNum*args.pageSize);
+		   //TODO: Add caching Example.
+		   
+		   //add sort condition
+		   if (args.sortColumns) {
+				newQry += "&$orderby="+(args.sortColumns[0].columnId ? args.sortColumns[0].columnId : "city")+(args.sortColumns[0].sortAsc ? " asc" : " desc");
+		   }
+		   
+		   $.getJSON(newQry,
+				 function (jsonResult) {
+					var newData = jsonResult.d.results;
+					grid.mergeData(newData, args.pageNum, parseInt(jsonResult.d.__count));
+		   });
+		}
+
+		//Subscribe to page requests - make an ajax call and get the page.
+		dataView.onPageRequested.subscribe(function (e, args) {
+			getPage(args);
+			for (filter in args.filters) {
+				console.log(args.filters[filter]);
+			}
+		});
+
+		//get first page - pages are zero indexed but show as +1 on screen
+		var savedSettings = grid.getGridPersonalizationInfo();
+		getPage({pageNum: 0, pageSize: (savedSettings.pageSize ? savedSettings.pageSize : options.pageSize), sortAsc: true, sortColumnId: "city" });
+		grid.setSortColumn("city", false);	//set sort indicator to match
+		grid.restorePersonalization({ filterInResults: false, columnInfo: [] }); 
+		
+		$('body').removeClass('inforHidden');
+	</script>
+</body>
+</html>

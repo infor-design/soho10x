@@ -1,0 +1,23 @@
+-Fails Contrast Test (azure on white)
+-Keyboard to open (SHIFT - F10)?
+-On Click needs focus first
+-Use access keys
+-Make the button it acts on use http://www.w3.org/TR/wai-aria/states_and_properties#aria-haspopup
+-Make the menu have role menu (see doc from thomas)
+-use user training to find text and tree that you can right click on
+
+-shift F-10 opened browser window (right click) (see notes how to open)
+-esc to close or cancel.
+-tab into and click opens in the wrong position
+-should go to first item on the context menu
+-has context menu???
+
+Keys
+-shift f-10
+-esc to close
+-arrows up and down
+http://www.w3.org/WAI/GL/wiki/Using_ARIA_menus
+
+Takeaways
+-KEYS SHOULD GO IN THE STYLE GUIDE
+

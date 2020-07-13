@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Text Button</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+	 $(function () {
+		//Globalize.culture("ar-SA");
+
+		//Show an Alert on click
+		$("#disabledButton").on('click',function(){
+			alert('Button was Clicked');
+		});
+
+		//add a button which toggles disabled state of the last button
+		$("#firstButton").toggle(function(){
+			$("#disabledButton").removeAttr("disabled","disabled");	//.enable();
+		}, function(){
+			$("#disabledButton").attr("disabled","disabled");	//disable();
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="inforToolbar">
+		<button type="button" class="" title="Toggle Disabled"id="firstButton">Normal Button</button>
+		<button type="button" class="" disabled title="A Button Tooltip" id="disabledButton"  id="thirdButton">Disabled Button</button>
+	</div>
+
+</body>
+</html>

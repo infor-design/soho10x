@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DropDownList : List of Ops</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script>
+		$().ready( function() {
+				$("#opsButton").inforContextMenu({
+					menu: 'operationsMenu',
+					invokeMethod: 'click'
+				},
+				function(action, el, pos, item) {
+					//toggle the button icon..
+					el.removeClass();
+					el.addClass('inforFilterButton '+action);
+					//set the tooltip
+					el.attr("title",item.html());
+					$('#gridFilterMenuOptions').remove();
+				});
+		});
+	</script>
+</head>
+<body style="margin:20px" style="background: none repeat scroll 0 0 #F1F1F1;">
+	<button class="inforFilterButton contains"  id="opsButton" type="button" title="Contains"><span></span></button>
+
+	<ul id="operationsMenu" class="inforContextMenu">
+		<li><span class="icon greaterThan"></span><a href="#greaterThan">Greater Than</a></li>
+		<li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">Greater Than or Equals</a></li>
+		<li><span class="icon lessThan"></span><a href="#lessThan">Less Than</a></li>
+		<li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">Less Than or Equals</a></li>
+		<li><span class="icon equals"></span><a href="#equals">Equals</a></li>
+		<li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">Does Not Equal</a></li>
+		<li class="separator"></li>
+		<li><span class="icon contains"></span><a href="#contains">Contains</a></li>
+		<li><span class="icon doesNotContain"></span><a href="#doesNotContain">Does Not Contain</a></li>
+		<li class="separator"></li>
+		<li><span class="icon isEmpty"></span><a href="#isEmpty">Is Empty</a></li>
+		<li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">Is Not Empty</a></li>
+		<li class="separator"></li>
+		<li><span class="icon startsWith"></span><a href="#startsWith">Starts With</a></li>
+		<li><span class="icon doesNotStartWith"></span><a href="#doesNotStartWith">Does Not Start With</a></li>
+		<li><span class="icon endsWith"></span><a href="#endsWith">Ends With</a></li>
+		<li><span class="icon doesNotEndWith"></span><a href="#doesNotEndWith">Does Not End With</a></li>
+		<li class="separator"></li>
+		<li><span class="icon eitherSelectedorNotSelected"></span><a href="#eitherSelectedorNotSelected">Either Selected or Not Selected</a></li>
+		<li><span class="icon checked"></span><a href="#selected">Selected</a></li>
+		<li><span class="icon notChecked"></span><a href="#notSelected">Not Selected</a></li>
+		<li class="separator"></li>
+		<li><span class="icon between"></span><a href="#between">Between</a></li>
+		<li><span class="icon today"></span><a href="#today">Today</a></li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	<script src="../inforLookupField/js/inforLookupField.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <span class="inforToolbar">
+			<button type="button" class="inforIconButton submit" title="Serialize" onclick='console.log(data[0])'></button>
+		</span>
+		<div id="inforDataGrid" ></div>
+	</div>
+	<script>
+		var grid;
+		//Define Columns for the Grid.
+		var columns = [];
+
+		//define options for the lookup cell
+		var lookupColumns = [];
+		lookupColumns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
+		lookupColumns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true });
+		lookupColumns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank"});
+
+		var lookupData = getSampleData([]);
+
+		var lookupOptions = {
+			dataset: lookupData,
+			columns: lookupColumns,
+			idProperty: 'officeId',
+			editable: false,
+			showDrillDown: false,
+			showFilter: false,
+			showStatusIndicators: false,
+			multiSelect: true,
+      showFooter: true
+		};
+
+		var lookupFilter = function (request, response, isFormatter, dataContext) {
+      var result = [];
+			result[0]= {officeId: 6, city: "test 1"};
+			result[1]= {officeId: 7, city: "test 2"};
+			result[2]= {officeId: 8, city: "test 3"};
+			result[3]= {officeId: 9, city: "test 4"};
+			result[4]= {officeId: 11, city: "test 5"};
+			result[5]= {officeId: 14, city: "test 6"};
+
+			return response(result);
+		}
+
+		//Define Columns for the Grid.
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter:UneditableColumnFormatter});
+		columns.push({ id: "city", name: "Storing and Showing Unique Field", field: "cityCode", width: 125, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: {gridOptions: lookupOptions, returnField: "officeId", height: 200, width: 400, editable: true, typeAheadSearch: false}, filterType: TextFilter });
+		columns.push({ id: "cityCode", name: "Storing Code Showing Name", field: "cityCode", width: 125, formatter: LookupCellFormatter, editor: LookupCellEditor, editorOptions: {gridOptions: lookupOptions, returnField: "city", height: 200, width: 400, editable: false, typeAheadSearch: false}, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "cityCode", name: "Storing Code Showing Name - Source Function", field: "cityCode", width: 125, formatter: LookupCellFormatter, editor: LookupCellEditor, editorOptions: {source: lookupFilter, gridOptions: lookupOptions, returnField: "city", height: 200, width: 400, editable: false, typeAheadSearch: false}, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		data = getSampleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: true
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+    grid.validateAll();
+
+	</script>
+</body>
+</html>

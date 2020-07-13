@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog Box</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/modal.js"></script>
+	<script src="js/message.js"></script>
+	<link href="css/modal.css" rel="stylesheet">
+	<link href="css/message.css" rel="stylesheet">
+
+	<script>
+		$(function () {
+			$('body').message({
+				title: 'Connectivity',
+				shortMessage: 'test',
+				detailedMessage: "Not all formulas were compiled.  Refer to the following errorsCode building failed. Correct the errors:<br />Compiling InforClient_Billing.Account.dll<br /><br />Error in Formula: 'Sync_error_resolved_HPS-64450'<br />Product Family: 'Billing' Event Name: 'BeforeAdd'<br />Line 10: could not find library 'C:\Development\Trunk\Hansen8\InetPub\WWWRoot\NextGen\bin\Hansen.Core.DataManagement.dll'<br />For Statment: ''<br /><br />Error in Formula: 'Sync_error_resolved_HPS-64450'<br />Product Family: 'Billing' Event Name: 'BeforeAdd'<br />Line 10: compiler initialization failed unexpectedly: The filename, directory name, or volume label syntax is incorrect. <br />For Statment: ''<br /><br />Code building failed. Correct the errors:<br />Compiling InforClient_Billing.CollectionsMilestone.dll<br /><br />Error found in Product Family: 'Billing'<br />Error found in Formula: 'ColFormRes'<br />could not find library 'C:\Development\Trunk\Hansen8\InetPub\WWWRoot\NextGen\bin\Hansen.Core.DataManagement.dll'<br />For Statment: ''<br /><br />Error found in Product Family: 'Billing'<br />Error found in Formula: 'ColFormRes'<br />compiler initialization failed unexpectedly: The filename, directory name, or volume label syntax is incorrect. <br />For Statment: ''<br /><br />Code building failed. Correct the errors:<br />Compiling InforClient_Billing.DelinquencyMilestone.dll<br /><br />Error found in Product Family: 'Billing'<br />Error found in Formula: 'FormRes'<br />could not find library 'C:\Development\Trunk\Hansen8\InetPub\WWWRoot\NextGen\bin\Hansen.Core.DataManagement.dll'<br />For Statment: ''<br /><br />Error found in Product Family: 'Billing'<br />Error found in Formula: 'FormRes'<br />compiler initialization failed unexpectedly: The filename, directory name, or volume label syntax is incorrect. <br />For Statment: ''<br /><br />Code building failed. Correct the errors:<br />Compiling InforClient_Billing.DelinquencyScheme.dll<br /><br />Error found in Product Family: 'Billing'<br />Error found in Formula: 'Repeat1'<br />could not find library 'C:\Development\Trunk\Hansen8\InetPub\WWWRoot\NextGen\bin\Hansen.Core.DataManagement.dll'<br />For Statment: ''<br /><br />Error found in Product Family: 'Billing'<br />Error found in Formula: 'Repeat1'<br />compiler initialization failed unexpectedly: The filename, directory name, or volume label syntax is incorrect. <br />For Statment: ''<br /><br />Code building failed. Correct the errors:<br />Compiling InforClient_Core.BatchProcessing.Task.dll<br /><br />Error found in Product Family: 'Core.BatchProcessing'<br />Error found in Formula: 'Wait5Mins'<br />could not find library 'C:\Development\Trunk\Hansen8\InetPub\WWWRoot\NextGen\bin\Hansen.Core.DataManagement.dll'<br />For Statment: ''<br /><br />Error found in Product Family: 'Core.BatchProcessing'<br />Error found in Formula: 'Wait5Mins'<br />compiler initialization failed unexpectedly: The filename, directory name, or volume label syntax is incorrect. <br />For Statment: ''<br /><br /><br><p>Code building failed. Correct the errors:<br>Compiling InforClient_Core.BatchProcessing.Task.dll<br><br>Error found in Product Family: 'Core.BatchProcessing'<br>Error found in Formula: 'Wait5Mins'<br>could not find library 'C:\Development\Trunk\Hansen8\InetPub\WWWRoot\NextGen\bin\Hansen.Core.DataManagement.dll'<br>For Statment: ''<br><br>Error found in Product Family: 'Core.BatchProcessing'<br>Error found in Formula: 'Wait5Mins'<br>compiler initialization failed unexpectedly: The filename, directory name, or volume label syntax is incorrect. <br>For Statment: ''<br><br>",
+				dialogType: 'Information'
+			});
+		});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

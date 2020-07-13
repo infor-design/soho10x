@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog Box - Height</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<style>
+    #hotkeysListDiv {
+      height: 100px;
+      overflow: auto;
+    }
+    fieldset.inforFieldSet {
+        margin: 1em 0;
+    }
+		td {
+			padding: 1em;
+			font-size: 1.5em;
+		}
+  </style>
+
+	<script>
+		$(function () {
+
+			//Display a generic dialog -
+			$('#generalDialogButton').click(function () {
+
+			    $('<div></div>').html('<div id="hotkeysListDiv"><fieldset class="inforFieldSet"><legend><span class="inforFieldSetLabel open">Lawson</span></legend><button role="button" class="inforExpandButton open" title="Expand/Collapse" aria-disabled="false"></button><div class="content" aria-hidden="false"><table class="fieldSetTable"><tbody><tr><td>Perform Submit Action</td><td>F12</td></tr><tr><td>Perform Close/Cancel Action</td><td>Esc</td></tr><tr><td>Perform Refresh Action</td><td>Ctrl+Shift+F5</td></tr><tr><td>Perform Delete Action</td><td>Ctrl+Shift+D</td></tr><tr><td>Perform Next Action</td><td>Ctrl+Shift+N</td></tr><tr><td>Perform Previous Action</td><td>Ctrl+Shift+P</td></tr><tr><td>Perform Page Up Action</td><td>PageUp</td></tr><tr><td>Perform Page Down Action</td><td>PageDn</td></tr><tr><td>Tab Page Up</td><td>Ctrl+PageUp</td></tr><tr><td>Tab Page Down</td><td>Ctrl+PageDn</td></tr><tr><td>Position in First Field</td><td>Ctrl+Alt+F</td></tr><tr><td>Display Field Help</td><td>Ctrl+Shift+H</td></tr><tr><td>Display Form Help</td><td>Shift+F1</td></tr><tr><td>Display Hotkeys Help</td><td>Alt+K</td></tr><tr><td>Position in Search Box</td><td>Shift+F8</td></tr><tr><td>Position in Toolbar</td><td>Shift+F9</td></tr><tr><td>Open New Window</td><td>Ctrl+N</td></tr><tr><td>Display Home Page</td><td>Ctrl+Home</td></tr><tr><td>Show Context Menu</td><td>Shift+F10</td></tr><tr><td>Toggle status bar</td><td>Ctrl+Shift+S</td></tr></tbody></table></div></fieldset></div>').message({
+							title: "HOTKEYS_HELP",
+							dialogType: "General",
+							modal: false,
+							buttons: [{
+								text: "Print"
+							}, {
+								text: "Close",
+								click: function () {
+									$(this).inforDialog('close');
+								},
+								isDefault: true
+							}],
+							close: function () {
+								$(this).remove();
+							}
+						});
+			});
+
+		});
+	</script>
+</head>
+<body>
+	<button id="generalDialogButton" style="margin:2em;" class="inforFormButton">Show</button>
+</body>
+</html>

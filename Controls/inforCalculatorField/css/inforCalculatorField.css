@@ -1,0 +1,143 @@
+/* Infor Calculator Field
+----------------------------------*/
+.inforCalculatorButton
+{
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQMAAABsu86kAAAABlBMVEUAAACws7UU2v2nAAAAAXRSTlMAQObYZgAAABlJREFUeNpjqD/A8P8Bw4EEEAIyrmKQ9QcAO8gRuQPYGTsAAAAASUVORK5CYII=");
+	background-position: 4px 3px;
+}
+
+.inforCalculatorButton:hover, .inforCalculatorButton:focus {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQMAAABsu86kAAAABlBMVEUAAAATo/cd9CxzAAAAAXRSTlMAQObYZgAAABlJREFUeNpjqD/A8P8Bw4EEEAIyrmKQ9QcAO8gRuQPYGTsAAAAASUVORK5CYII=");
+}
+
+#inforCalculatorPopup {
+	width: 232px;
+	overflow:hidden;
+	background-color: white;
+	padding: 20px;
+	border: 1px solid #B3B3B3;
+	border-radius: 3px;
+}
+
+.inforCalculatorTable {
+	line-height: 12px;
+	margin-left: 2px;
+	padding-top: 10px;
+}
+
+.inforCalculatorTableHeader {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAAyCAYAAAD1JPH3AAABOElEQVR42u3dPU7DMBiAYSdKq6YbvR9nYGPjAGwcgI1T5QAdCVPUqukP/iKSgZEJV88jWUo8Wq8+OVOqruveTqfT0/V6TVVVpbquE5Qiur3dblO36/X6tcpBf+bNXX5Jq9VqijoW/HcRcqxxHFMeyhF13+T93Xa7TZvNRtAUG/TxeIy1i6CnmNu2TU3TuHJQ3JUjug0R9fQUkzk25wkNJU3pueEwjeP5Y1DMlOZ3u0vQUHrYS9BwLwSNoEHQIGgQNIIGQYOgQdAgaAQNggZBg6BB0AgaBA2CBkGDoBE0CBoEDYIGQSNoEDQIGgQNgkbQIGgQNAgaBI2gQdAgaPhb0P3lcnESFO2n4T6C/hiGIZ3P5+U3s1CKaDbajYaz9/jX9/PhcKj2+/1jfn5wRBToKwZzXi+OgrvyDWwKX9naNBriAAAAAElFTkSuQmCC");
+	height: 50px;
+	width: 181px;
+	margin-left: 6px;
+}
+
+.inforCalculatorTableFooter {
+	border-top: 1px solid #EBECEC;
+	line-height: 35px;
+	margin-top: 4px;
+	padding-top: 5px;
+	text-align: center;
+}
+
+.inforCalculatorTableFooter .inforFormButton{
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+
+.inforTextbox.inforCalculatorInput {
+	font-size: 1.5em;
+	height: 16px;
+	left: 0;
+	opacity: 1;
+	position: relative;
+	text-align: right;
+	top: 4px;
+	width: 94%;
+	filter:alpha(opacity=100);
+}
+
+.inforCalculatorExpression {
+	background: none repeat scroll 0 0 transparent;
+	border: medium none;
+	display: block;
+	font-size: 1em;
+	left: 0;
+	padding-bottom: 0;
+	position: relative;
+	text-align: right;
+	top: 1px;
+	width: 98%;
+	color: #FF6400;
+}
+
+.inforCalculatorTable .inforFormButton  {
+	height: 25px;
+	width: 25px;
+}
+
+.inforCalculatorTable .inforTextButton, .inforCalculatorTable .inforFormButton  {
+	background: none repeat scroll 0 0 white;
+	border: 1px solid #E6E6E6;
+	border-radius: 3px 3px 3px 3px;
+	color: #666666;
+	font-size: 1.5em;
+	height: 25px;
+	margin-bottom: 4px;
+	margin-left: 1px;
+	padding-bottom: 0;
+	text-align: center;
+	width: 30px;
+}
+
+.inforCalculatorTable .inforTextButton:hover {
+	background-color: transparent !important;
+	border: 1px solid #13A3F7;
+}
+
+.inforCalculatorTable .inforTextButton:active {
+	background-color: #13A3F7 !important;
+	color: white !important;
+}
+
+.inforCalculatorTable .inforTextButton:focus {
+	border: 1px solid #13A3F7;
+}
+
+.inforCalculatorTable .inforTextButton.colored{
+	background: #e6e6e6;
+}
+
+.inforCalculatorTable .inforTextButton.padded{
+		padding-bottom: 2px;
+}
+
+.inforTextButton.inforEqualsButton {
+	height: 55px;
+	margin-top: 1px;
+	width: 31px;
+}
+
+.inforTextButton.backButton {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAPAQMAAABQjDRqAAAABlBMVEUAAACAgICSabkkAAAAAXRSTlMAQObYZgAAADhJREFUeNpjYPz//z8DAzOQbGBgB5P8YFL+/24gaf9fEEjW/28Gkv//H4ezIeIQNfxIeiHmgM0EAOHoMq0pY2ZZAAAAAElFTkSuQmCC");
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-top: 3px;
+	width: 70px !important;
+}
+
+.inforTextbox.inforHiddenInput {
+	display: inline;
+	float: left;
+	left: -1000px;
+	position: absolute;
+	top: 41px;
+	opacity: 0;
+	filter:alpha(opacity=0);
+}
+
+html[dir="rtl"] .inforTextbox.inforHiddenInput {
+	 left: 0;
+	 right: -1000px;
+}

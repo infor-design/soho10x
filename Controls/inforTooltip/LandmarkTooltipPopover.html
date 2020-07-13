@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Lmrk Tooltip Popover</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+<!--
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.11.1.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+
+
+-->
+
+<style>
+html,body {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.inforTopBannerLeft .inforTopBannerLeftInner {
+    padding-left:25px;
+}
+.inforTopBannerLeft .inforTopBannerLeftInner li + li {
+    width:90%;
+}
+.inforTopBannerInner,
+.inforTopBannerLeftInner li,
+.landmarkBannerInner,
+.landmarkBannerInner li {
+    padding:0;
+    list-style:none;
+    display:inline-block;
+    position:relative;
+}
+.inforTopBannerRight .landmarkBannerInner {
+    margin-right:25px;
+    margin-top:14px;
+}
+.inforTopBannerRight .landmarkBannerInner .badge {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	z-index: 1;
+}
+.landmarkBannerInner .badge{
+	position: absolute;
+	bottom: 14px;
+	left: 20px;
+	z-index: 1;
+}
+.landmarkBannerInner .inforBannerText {
+	line-height:inherit;
+	display:inline-block;
+	padding:0;
+	margin:0;
+	height: 24px;
+	vertical-align: top;
+	float: left;
+	line-height: 26px;
+	max-width: 470px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.landmarkBannerInner .inforIconButton.signOut {
+    top:0;
+    left:0;
+    position:relative;
+}
+.menuView .landmarkBanner .inforMenu {
+    right:0 !important;
+    left: initial !important;
+}
+/* Notification badges
+----------------------------------------------------------------------------------------------------------------------- */
+.notificationPane {
+	width: 370px;
+	height: 410px;
+	overflow:auto;
+}
+</style>
+
+<script>
+$(function ()
+{
+	var popoverContent       = $("<div id='notificationPopover'></div>").addClass("notificationPane");
+	var viewAllNotifications = "View All Notifications";
+	var unreadNotifications  = "Unread Notifications";
+	var title                = unreadNotifications +
+							   "<span class='alignRight'><button type='button' id='viewAllNotifications' class='inforTextButton'>" +
+							   viewAllNotifications +
+							   "</button></span>";
+
+	$(".inforIconButton.download").popover(
+	{
+		content   : popoverContent,
+		trigger   : "click",
+		placement : "bottom",
+		title     : title,
+		width     : "500",
+		draggable : false
+	});
+
+	var hoverContent = $("<div id=\"imagePopover\"><div><a class=\"inforHyperlink\" href=\"javascript:void(0)\">Browse</a></div><div><a class=\"inforHyperlink\" href=\"javascript:void(0)\">Clear</a></div></div>");
+	$(".inforTextButton.hovercontent").popover(
+	{
+		content   : hoverContent,
+		trigger   : "hover",
+		placement : "bottom",
+    isPopover: true,
+    width     : "500",
+		draggable : false
+	});
+
+	$('.inforBannerText').text("Jason Ayers (emp123)").attr("title", "Jason Ayers (emp123)");
+	$('.inforBannerText').inforToolTip();
+
+	$("body").inforForm();
+});
+
+
+</script>
+</head>
+<body>
+	<div class="inforTopBannerRight">
+		<ul class="landmarkBannerInner" aria-role="menu">
+			<li>
+				<button class="inforTextButton hovercontent" title="" type="button" aria-label="hover popover">
+					hover popover
+				</button>
+			</li>
+			<li>
+				<button class="inforIconButton download" title="" type="button" aria-label="Notifications">
+					<span></span>
+				</button>
+				<span class="badge deepTurqouise">27</span>
+			</li>
+			<li>
+				<span class="inforBannerText"></span>
+			</li>
+			<li>
+				<button class="inforIconButton signOut" title="" type="button" aria-label="Sign out and other tasks menu">
+					<span></span>
+				</button>
+			</li>
+		</ul>
+	</div>
+
+</body>
+</html>

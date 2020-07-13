@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Drop Down List - Add Items</title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+  $(function () {
+
+    //Init Drop inforDropDownList
+    var dropdown1 = $('#dropdown1').inforDropDownList();
+
+    $('#btn1').click(function(){
+      var options = dropdown1[0].options;
+
+      options[0] = new Option('abc','0');
+      options[1] = new Option('abcd','1');
+
+      dropdown1.append('<option value="2">yyy</option>');
+      dropdown1.trigger('updated');
+    });
+  });
+
+  </script>
+
+</head>
+
+<body>
+<label for="dropdown1">Items</label>
+<select class="inforDropDownList" id="dropdown1" ></select>
+<button id="btn1" >Click me</button>
+</body>
+</html>

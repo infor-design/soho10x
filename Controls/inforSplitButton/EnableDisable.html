@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Split Button - Test Enabling and Disabling</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+
+			$("#button1").inforSplitButton({menuId: 'menu1'});
+
+			//Testing the enable/disable functions
+			$("#button2").click(function(){
+				$("#button1").enable();
+			});
+
+			$("#button3").click(function(){
+				$("#button1").disable();
+			});
+
+		});
+
+	</script>
+</head>
+<body>
+	<div class="inforToolbar" >
+		<button type="button" class="inforSplitButton" id="button1">Normal</button>
+		<button type="button" class="inforTextButton" id="button2">Enable</button>
+		<button type="button" class="inforTextButton" id="button3">Disable</button>
+	</div>
+
+	<ul id="menu1" class="inforContextMenu">
+		<li class="option1"><a href="#s">Selected</a></li>
+		<li class="option2"><a href="#a">All</a></li>
+		<li class="option3"><a href="#o">Other...</a></li>
+	</ul>
+
+</body>
+</html>

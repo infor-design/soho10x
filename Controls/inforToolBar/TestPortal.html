@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>infor Toolbar - Simulation for Workspace</title>
+
+
+<script language="javascript">
+
+var portalUrl;
+var portalContainer;
+
+function onLoad()
+{
+	if (!portalUrl)
+	{
+		portalContainer = document.getElementById("portalFrame");
+		portalUrl = path="../inforForm/index.html";
+		portalContainer.src = portalUrl;
+	}
+}
+
+function navigate(elem, token)
+{
+	if (token == "home")
+	{
+		portalContainer.contentWindow.goHome();
+		return;
+	}
+
+	eval(portalContainer.contentWindow.doFind(token));
+}
+
+function search(elem)
+{
+	var token = document.getElementById("search").value;
+	navigate(elem, token);
+}
+
+function searchKeyDown(evt)
+{
+	var evt = portalContainer.contentWindow.getEventObject(evt)
+	if (!evt) return;
+
+	var elem = portalContainer.contentWindow.getEventElement(evt);
+	if (elem == null) return;
+
+	if (!evt.altKey && !evt.ctrlKey && !evt.shiftKey && evt.keyCode == 13)
+		search(elem);
+}
+</script>
+
+</head>
+
+<body onload="onLoad()" class="inforApplicationPadding">
+	<div id="top" style="background-image: url('images.example/top_banner.png');position:absolute;top:0px;left:0px;height:57px;width:1361px;">&nbsp;</div>
+	<div id="right" style="background-image: url('images.example/left_webparts.png');position:absolute;top:57px;left:1030px;width:331px;height:575px;">&nbsp;</div>
+	<div id="bottom" style="position:absolute;top:606px;left:0px;width:1248px;height:5px;">&nbsp;</div>
+	<iframe id="portalFrame" src="" frameborder="no" style="position:absolute;top:58px;height:576px;width:1034px;margin:0px;"></iframe>
+</body>
+</html>

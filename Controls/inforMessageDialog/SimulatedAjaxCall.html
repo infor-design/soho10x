@@ -1,0 +1,142 @@
+  <!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Infor Message Dialog Box</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforMessageDialog.js"></script>
+  <link href="css/inforMessageDialog.css" rel="stylesheet">
+
+  <script>
+      $(function () {
+      function Dialog(control) {
+        var self = this;
+        self.control = control;
+        self.modalControl = null;
+        self.type = "General";
+        self.shortMessage = "";
+        self.detailedMessage = "";
+        self.autoFocus = false;
+        self.buttons = [{
+          text: "OK",
+          click: self.close,
+          isDefault: true
+        }];
+        self.setShortMessage = function(message) {
+          self.shortMessage = message;
+        };
+        self.setDetailedMessage = function(message) {
+          self.detailedMessage = message;
+        };
+        self.setButtons = function(buttons) {
+          self.buttons = buttons;
+        };
+        self.setTitle = function(title) {
+          self.title = title;
+        };
+        self.setTitleKey = function(key) {
+          self.setTitle(i18n.getString(key));
+        };
+        self.setType = function(type) {
+          self.type = type;
+        };
+        self.setSize = function(width, height) {
+          self.width = width;
+          self.height = height;
+        };
+        self.setInnerPadding = function(innerPadding) {
+          self.innerPadding = innerPadding;
+        };
+        self.setAutoFocus = function(autoFocus) {
+          self.autoFocus = autoFocus;
+        };
+        self.show = function () {
+          var defaults = {
+            title: self.title,
+            dialogType: self.type,
+            width: self.width,
+            height: self.height,
+            buttons: self.buttons,
+            shortMessage: self.shortMessage,
+            detailedMessage: self.detailedMessage,
+            autoFocus: self.autoFocus
+          };
+          self.control.message(defaults);
+          self.modalControl = self.control.closest('.modal');
+        };
+        self.close = function() {
+          self.modalControl.modal('close');
+        };
+        self.setWidth = function(width) {
+          self.width = width;
+        };
+        self.setHeight = function(height) {
+          self.height = height;
+        };
+        self.find = function(selector) {
+          return self.control.find(selector);
+        };
+      return self;
+      }
+
+      //Display a generic dialog -
+      $('#generalDialogButton').click(function () {
+
+        $.ajax({
+        url: "http://www.randomtext.me/api/lorem/p-5/2",
+        dataType: "json",
+        timeout: 5000,
+        success: function (data) {
+            var self = this;
+              // Set of buttons.
+            self.buttons = [{ text: "TEST", click: function() {
+              var testDialog = new Dialog($("#TestConfigurationDialog"));
+              testDialog.setTitle("Test");
+              testDialog.setButtons([{text: "Cancel", click: function () { testDialog.close(); }}]);
+              testDialog.show();
+            }, isDefault: true},
+            { text: "Cancel", click: function() { $(this).inforDialog("close"); }}];
+
+            $('#emailConfigurationDialog').html('<form action="/ReportManager/" id="emailConfigurationForm" method="post">    <div class="inforSingleColumnLayout autoLabelWidth">         <label class="inforLabel" for="Server">Server</label>         <input class="inforTextbox required" id="Server" name="Server" type="text" value="localhost" />         <br/>         <label class="inforLabel" for="Port">Port</label>         <input class="inforTextbox required" id="Port" name="Port" type="text" value="25" />         <br/>         <label class="inforLabel" for="Sender">Sender</label>         <input class="inforTextbox required" id="Sender" name="Sender" type="text" value="srs@infor.com" />         <br/>         <label class="inforLabel noColon inforLabel"> </label>         <input class="inforCheckbox" data-val="true" data-val-required="The Enable SSL field is required." id="EnableSsl" name="EnableSsl" type="checkbox" value="true" /><input name="EnableSsl" type="hidden" value="false" />         <label class="inforCheckboxLabel" for="EnableSsl">Enable SSL</label>         <br/>     </div>     <div id = "TestConfigurationDialog" class="inforSingleColumnLayout autoLabelWidth" style="display: none">         <label class="inforLabel" for="Reciever">To</label>         <input class="inforTextbox required" id="Reciever" name="Reciever" type="text" value="" />         <br />     </div>      </form>');
+
+            $("#emailConfigurationForm").inforForm();
+
+
+            var dialog = new Dialog($("#emailConfigurationDialog"));
+            dialog.setTitle("Email");
+            dialog.setWidth(360);
+            dialog.setButtons(self.buttons);
+            dialog.setAutoFocus(false);
+            dialog.show();
+
+            $("#emailConfigurationForm").inforForm();
+          }
+        });
+      });
+
+
+    });
+  </script>
+</head>
+<body>
+    <div id="mainContentArea">
+     <p>This is a sample shows implementing the various types of pop-up message and dialogs available.</p>
+      <table style="font-size:1.2em">
+        <tr>
+          <td>Email</td>
+          <td><button id="generalDialogButton" class="inforFormButton">Show</button></td>
+        </tr>
+      </table>
+    </div>
+
+
+   <div id="emailConfigurationDialog" style="display: none"></div>
+    <div id = "TestConfigurationResultDialog" style="display: none"></div>
+
+</body>
+</html>

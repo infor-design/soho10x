@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor Module Header Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<link href="css/inforModuleHeader.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.min.js"></script>
+
+	<script>
+		function menuCallback() {
+			//do something on the options
+		}
+
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$(".inforModuleContentArea").inforScrollableArea();
+
+			$("#settingsButton, #menuButton").inforToolTip().inforContextMenu({
+				menu: 'settingsMenuOptions',
+				invokeMethod: 'click',
+				positionBelowElement: true,
+				offsetLeft: -35,
+				offsetTop: 2,
+			},menuCallback);
+			
+			$("#closeButton").inforToolTip();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	  <div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+			 <div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Sales Orders</span>
+					<span class="inforModuleRecordIdText">SL0090562</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button type="button" class="inforModuleDropDownButton" id = "menuButton"  title="Menu"><i>Drop Down</i></button>
+					<button type="button" class="inforModuleSettingsButton" id = "settingsButton"  title="Settings"><i>Settings</i>i></button>
+					<button type="button" title="Close current activty" class="inforModuleCloseButton" id = "closeButton"  title="Close"><i>Close</i></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+				<!-- Your Module Stuff will Go Here - Color is only presented to show padding. -->
+				<div class="inforToolbar" >
+					<button type="button" class="inforTextButton">New</button>
+					<button type="button" class="inforTextButton">Edit</button>
+
+					<span class="inforToolbarSpacer"></span>
+					<button type="button" class="inforTextButton">Delete</button>
+				</div>
+
+		 </div>
+	 </div>
+
+	 <ul id="settingsMenuOptions" class="inforContextMenu">
+		<li><a href="#id1">Option 1</a></li>
+		<li><a href="#id2">Option 2</a></li>
+		<li><a href="#id3">Option 3</a></li>
+	</ul>
+</body>
+</html>
+

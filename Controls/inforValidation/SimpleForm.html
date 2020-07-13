@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Validate Plugin: Form Validation</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/validation.js"></script>
+
+  <script>
+     $(function () {
+      //Globalize.culture('ar-SA');
+
+      //Initialize all form controls
+      $('body').inforForm();
+      $('.inforLookupField').inforLookupField();
+
+      //setup validation
+      var demoForm = $('#formExample').validate().on('validated', function(e, isValid) {
+        if (!isValid) {
+          console.log('Form cannot be submitted');
+        } else {
+          console.log('Form can be submitted');
+          demoForm.submit();
+        }
+      });
+
+      $('#submitButton').on('click', function () {
+        demoForm.trigger('submit');
+      });
+
+      $('#discardButton').on('click', function () {
+        resetForm();
+      });
+
+      //set localized message for existing message
+      //$.fn.validation.rules['required'].message = 'This is required';
+
+      //example of adding a custom rule to the validation
+      $.fn.validation.rules['xhr-test'] = {
+        check: function (value, onComplete) {
+          var result;
+          //do some sort of back end request...
+          $.ajax({
+            url: 'http://www.randomtext.me/api/lorem/p-5/2',
+            dataType: 'json',
+            timeout: 5000,
+            success: function () {
+               result = (value === '' ? false : true);
+               onComplete(result);
+             },
+            error: function () {
+              result = false;
+              console.log('error');
+              onComplete(result);
+            },
+            async: true
+          });
+        },
+        message: 'Vendor does not exist',
+        async: true
+      };
+     });
+
+    function resetForm() {
+      //reload your data here and reset the form validation
+      setTimeout(function () {
+        $('#formExample').resetForm();
+      }, 50);
+    }
+  </script>
+</head>
+<body class="inforHidden inforApplicationPadding">
+
+  <form id="formExample">
+    <div class="inforModuleContainer">
+     <div class="inforModuleHeader">
+        <div class="inforModuleHeaderLeft">
+          <span class="inforPageTitleText">Order Line Item</span>
+          <span class="inforModuleRecordIdText">12000001</span>
+        </div>
+        <div class="inforModuleHeaderRight">
+          <button class="inforModuleSettingsButton" type="button"></button>
+          <button class="inforModuleCloseButton"  type="button"></button>
+        </div>
+     </div>
+     <div class="inforModuleContentArea">
+      <div class="inforToolbar">
+        <button class="inforIconButton save" id="submitButton" type="button" title="Saves the current Order line Item"></button>
+        <button class="inforIconButton discard" id="discardButton" type="button" title="Undo your pending changes"></button>
+      </div>
+      <div class="infor2ColumnLayout autoLabelWidth">
+        <div class="column1">
+           <label class="inforLabel" for="textBox1">Order Id</label>
+           <input type="text" id="textBox1" class="inforTextbox required" data-validate="required"/><br>
+        </div>
+      </div>
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+/* Infor Form Progress Indicator
+----------------------------------*/
+.inforFormStatusBar {
+	width: 100%;
+	height: 19px;
+	border-radius: 1px;
+	background-color: #b3b3b3;
+	display: inline-block;
+	margin: 10px;
+}
+
+.inforFormStatusBar .bar {
+	background-color: #13A3F7;
+    color: #FFFFFF;
+    display: inline-block;
+    height: 19px;
+    transition: width 0.5s ease-in-out 0s;
+    width: 50%;
+}
+
+.inforFormStatusBar .label {
+	color: #FFFFFF;
+    display: inline;
+    font-size: 1.1em;
+    line-height: 20px;
+    position: absolute;
+    text-align: right;
+    text-indent: 5px;
+}
+
+/* Error and Color States */
+
+.inforFormStatusBar.alert .bar  {
+	background-color: #ffaa00;
+}
+
+.inforFormStatusBar .icon {
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    left: 100%;
+    margin-left: -17px;
+    position: relative;
+    top: -3px;
+    width: 14px;
+    z-index: 12;
+}
+
+.inforFormStatusBar .icon.alert  {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAi0lEQVR42mNgwAL+///v8h8BXBmIAUCFTEB8DknjeZAYMRpj/mOCGEKaOID4AVSxDRT/h4px4NNYDLMCSQwGinFpEgTit3g0vgOpwaaxG9lTWDSCQA+6Jnkg/o6mCOQ/azQxkBp5ZI2L/hMPFsE0GQDxXywKkEMVGYDUGoA07sRhMjanwsAuhv9kAgDeoag/5wZVbgAAAABJRU5ErkJggg==");
+}
+
+.inforFormStatusBar.error .bar  {
+	background-color: #ff574d;
+}
+
+.inforFormStatusBar .icon.error  {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAg0lEQVR42pWSQQ7AEBRE/0oP4Sh1JXpMC4vqWXTRrvSTiYjQ6iRvM4w/AREUYxSMYSwTgIUnqBYbktnjWGlN1ie3mxWo5ZklBXR7XDW5lSb0nA3YZN4/Alc3gP5rxw/dSi/Klcxggur4JgUWXNlXpSNf6+TD+fJwzdfYGMecwMErX+MBiqzcoZ0dMqIAAAAASUVORK5CYII=");
+}
+
+.inforFormStatusBar.complete .bar  {
+	background-color: #2db329;
+}
+
+.inforFormStatusBar .icon.complete  {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAYAAACALL/6AAAAhklEQVR42mNgIAL8//+/E4iLGIhUXP8fAv4BcRYhxcX/UcEMmIQ2EJujKc6BmgoDC4CYESShAsTPgPgDEBtBFSehKV4JxMwwk/YjSbwC4log/oMktgmI2ZCtlgPih/+xg50oipE0gZz1BE3xASDmwhcimlAngcBxIOYlJsz1gHg3EPPjUgMAyTLmCtd+C98AAAAASUVORK5CYII=");
+}

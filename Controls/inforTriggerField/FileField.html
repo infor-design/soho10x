@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+  <title>Infor Trigger Field - Drop Down List</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+     $(function () {
+
+      $('.inforFileField').inforFileField();
+      $('#trigger4').addError({message:'This field has an Error.'});
+      $('body').inforForm();
+
+  		$('form').eq(0).setupValidation();
+
+  		$.Validation.addRule('validateFileSize', {
+  			message: 'Cannot select an empty file',	// helps stop duplicate messages
+  			check: function(value, element) {
+          var $element = $(element);
+          var elem = $element[0];
+
+          $element.removeError();
+          if (value && elem.files && elem.files[0] && elem.files[0].size <= 0) {
+            return false;
+          }
+
+          return true;
+  			}
+  		});
+
+    });
+  </script>
+</head>
+<body>
+<form>
+  <div class="inforSingleColumnLayout autoLabelWidth">
+    <label class="inforLabel" for="trigger1">File Field</label>
+    <input class="inforFileField" type="file" title="" id="trigger1" value="Central Files" data-validate="validateFileSize"><br>
+    <label class="inforLabel" for="trigger2">File Field Readonly</label>
+    <input class="inforFileField" type="file" readonly value="Some Value" id="trigger2"><br>
+    <label class="inforLabel" for="trigger3">File Field Disabled</label>
+    <input class="inforFileField" type="file" disabled value="Some Value" id="trigger3"><br>
+    <label class="inforLabel" for="trigger4">File Field Error</label>
+    <input class="inforFileField" type="file"  value="Some Value" id="trigger4"><br>
+  </div>
+</form>
+</body>
+</html>

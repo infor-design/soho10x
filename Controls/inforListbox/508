@@ -1,0 +1,10 @@
+-cannot tab into it (fixed?)
+-aria label? clicking the label didn't focus.
+-add aria-selected to selected items? (is selected color correct?)
+-check keys with the documents
+	- down and up arrow should navigate not select (not an issue)
+	- space to select
+	- how to unselect
+	
+Recommendation
+-change page (list box should not be used for single select)

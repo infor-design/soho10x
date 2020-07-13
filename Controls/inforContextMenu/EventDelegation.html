@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<title>Infor Context Menu - Using Delegates</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		$(function () {
+			var NameText = {
+				NameTextMouseClick: function (e) {
+
+					if (e.which === 1) {
+						return;
+					}
+					function deleteRelation() {
+						alert('delete');
+					}
+
+					function edit() {
+						///<summary>Handler for edit menu pick.</summary>
+						alert('edit');
+					}
+
+					function copy() {
+						///<summary>Handler for copy menu pick.</summary>
+					   alert('copy');
+					}
+
+					// invoke the context menu control the clicked item
+					$(this).inforContextMenu({
+						menu: 'iconMenuOptions',
+						invokeMethod: 'immediate'
+					}, function (action, el, pos) {
+						  alert('Do ' + action);
+					});
+					// #endRegion
+
+					return false; //prevents text selection in case of double click
+				}
+
+
+			};
+
+			(function () {
+
+				var appendUs = [];
+
+				function d(number) {
+
+					var el = $('<div>', { text: 'Number: ' + number }).addClass('a');
+					el[0].Id = Math.random();
+					return el; //.bind('click', NameText.NameTextMouseClick);
+				}
+
+				for (var i = 0; i < 1000; i += 1) {
+
+					var thisItem;
+
+					thisItem = d(i);
+					//o.append(thisItem);
+					appendUs.push(thisItem[0]);
+
+				}
+				$('.stuff').append(appendUs);
+				$('.stuff').on('mouseup', 'div.a', NameText.NameTextMouseClick);
+        $('.stuff').on('contextmenu', 'div.a', function (e) {
+          e.preventDefault();
+          return false;
+        });
+
+			} ());
+		});
+	</script>
+</head>
+<body>
+<div class="stuff">
+
+</div>
+
+		<ul id="iconMenuOptions" class="inforContextMenu">
+			<li class="silverTheme"><a href="#Copy" id="copyItem">Copy</a></li>
+			<li class="silverTheme"><a href="#Edit" id="editItem">Edit</a></li>
+			<li class="silverTheme"><a href="#Delete" id="deleteItem">Delete</a></li>
+			<li class="silverTheme"><a href="#Node" id="nodeItem">Add Node</a></li>
+			<li class="silverTheme"><a href="#Page" id="pageItem">Add Page</a></li>
+		</ul>
+</body>
+</html>

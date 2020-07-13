@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Dropdown - With Percentage Width </title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      $('select').dropdown();
+      $('label').remove();  //remove added labels for this demo but this is bad.
+    });
+  </script>
+
+  <style>
+   .c2 .dropdown {margin: 2px; width: 50%;}
+   .c1 .dropdown {margin: 2px; width: 98.5%; padding: 0 0 0 4px;}
+  </style>
+
+</head>
+<body>
+  <fieldset class="inforFieldSet">
+    <span class="inforFieldSetLabel">Select 100% width Test</span>
+    <div class="content c1">
+    <select id="0">
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+    </select>
+    <br />
+    <select id="1">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <br />
+    <select id="2">
+      <option value="q">q</option>
+      <option value="a">a</option>
+      <option value="z">z</option>
+      <option value="w">w</option>
+    </select>
+    </div>
+  </fieldset>
+  <fieldset class="inforFieldSet">
+    <span class="inforFieldSetLabel">Select 50% width Test</span>
+    <div class="content c2">
+    <select id="3">
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+    </select>
+    <br />
+    <select id="4">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <br />
+    <select id="5">
+      <option value="q">q</option>
+      <option value="a">a</option>
+      <option value="z">z</option>
+      <option value="w">w</option>
+    </select>
+    </div>
+  </fieldset>
+  </body>
+</html>

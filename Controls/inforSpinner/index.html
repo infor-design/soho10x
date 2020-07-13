@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Spinner (Numeric up down)</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="js/inforSpinner.js"></script>
+	<script src="../inforFieldStates/js/inforFieldStates.js"></script>
+
+	<script>
+		 $(function () {
+		   $("body").inforForm();
+		});
+
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel" for="spinner1">Spinner</label>
+			<input class="inforSpinner" type="number" min="5" max="10" step="1" value="5" id="spinner1" name="spinner1"><br>
+			<label class="inforLabel" for="spinner1">Spinner</label>
+			<input class="inforSpinner" type="text"><br>
+			<label class="inforLabel" for="spinner2">Spinner Readonly</label>
+			<input class="inforSpinner" type="number" readonly value="5" id="spinner2" name="spinner2"><br>
+			<label class="inforLabel" for="time1">Time Field</label>
+			<input class="inforTimeField" type="text" id="time1" value="08:30 AM"><br>
+		</div>
+	</div>
+</body>
+</html>

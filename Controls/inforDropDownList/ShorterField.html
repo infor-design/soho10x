@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="utf-8">
+
+  <title>Dropdown : Short Field</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script src="js/inforDropDownList.js"></script>
+
+  <script>
+     $(function () {
+      $('#dd1').inforDropDownList().change(function() {
+        console.log($(this).val());
+      });
+
+      $('#dd1').inforDropDownList('setCode', 'X', true);
+    });
+  </script>
+</head>
+<body>
+  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+    <label for="dd1" class="label">Test</label>
+    <!-- In This example the width can be set inline to effect the drop down -->
+    <SELECT style="WIDTH: 11px;" id="dd1" class="inforDropDownList">
+      <OPTION value="X" tran="X" disp="(X)Select">X - (X)Select</OPTION>
+      <OPTION value="A" tran="A" disp="Add">A - Add</OPTION>
+      <OPTION value="C" tran="C" disp="Change">C - Change</OPTION>
+      <OPTION value="D" tran="D" disp="Delete">D - Delete</OPTION>
+      <OPTION value="1" tran="1">1 - Lines to Insert2</OPTION>
+      <OPTION value="2" tran="2">2 - Lines to Insert1</OPTION>
+      <OPTION value="3" tran="3">3 - Lines to Insert3</OPTION>
+      <OPTION value="4" tran="4">4 - Lines to Insert4</OPTION>
+      <OPTION value="5" tran="5">5 - Lines to Insert5</OPTION>
+      <OPTION value="6" tran="6">6 - Lines to Insert6</OPTION>
+      <OPTION value="7" tran="7">7 - Lines to Insert7</OPTION>
+      <OPTION value="8" tran="8">8 - Lines to Insert8</OPTION>
+      <OPTION value="9" tran="9">9 - Lines to Insert9</OPTION>
+    </SELECT>
+  </div>
+</body>
+</html>

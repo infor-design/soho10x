@@ -1,0 +1,852 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdditionalHelp" xml:space="preserve">
+    <value>Дополнительная справка</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="AddNewTab" xml:space="preserve">
+    <value>Добавить новую вкладку</value>
+    <comment>Add New Button on Tab Control Tooltip</comment>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>Оповещения</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>Применить фильтр</value>
+    <comment>Button Tooltip  in DataGrid Control</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Утвердить</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>Вложения</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>Обычное</value>
+    <comment>Switch to a Basic View</comment>
+  </data>
+  <data name="Between" xml:space="preserve">
+    <value>Между</value>
+    <comment>Menu Filter Option </comment>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>Книга</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отменить</value>
+    <comment>Button Text on Dialog</comment>
+  </data>
+  <data name="Checked" xml:space="preserve">
+    <value>Отмечено</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Очистить фильтр</value>
+    <comment>Button Tooltip  in DataGrid Control</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Закрыть</value>
+    <comment>Close Button Tooltip on Form.</comment>
+  </data>
+  <data name="CloseCancelChanges" xml:space="preserve">
+    <value>Закрыть и отменить изменения</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CloseSaveChanges" xml:space="preserve">
+    <value>Закрыть и сохранить изменения</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CloseTab" xml:space="preserve">
+    <value>Закрыть вкладку</value>
+    <comment>Close Button Tooltip on Tab</comment>
+  </data>
+  <data name="ColumnPersonalization" xml:space="preserve">
+    <value>Персонализация столбца</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Комментарии</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Подтверждение</value>
+    <comment>Text on Confirmation Dialog</comment>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Содержит</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="CreateTab" xml:space="preserve">
+    <value>Создать новую вкладку</value>
+    <comment>Create Button Tooltip on Tab</comment>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Вырезать</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DiscardUndo" xml:space="preserve">
+    <value>Отменить/удалить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DisplayDropDownList" xml:space="preserve">
+    <value>Отобразить раскрывающийся список</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Displaying" xml:space="preserve">
+    <value>Отображение: </value>
+    <comment>Grid Footer info - showing number of rows</comment>
+  </data>
+  <data name="DocWord" xml:space="preserve">
+    <value>Документ</value>
+    <comment>Icon Button Tooltip </comment>
+  </data>
+  <data name="DoesNotContain" xml:space="preserve">
+    <value>Не содержит</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotEndWith" xml:space="preserve">
+    <value>Не заканчивается на</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotEqual" xml:space="preserve">
+    <value>Не равняется</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotStartWith" xml:space="preserve">
+    <value>Не начинается с</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Загрузить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>Дублировать</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Изменить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EitherSelectedorNotSelected" xml:space="preserve">
+    <value>Выбрано или не выбрано</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Электронная почта</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>Заканчивается на</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EqualsStr" xml:space="preserve">
+    <value>Равняется</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ExpandCollapse" xml:space="preserve">
+    <value>Развернуть/свернуть</value>
+    <comment>Expand Button Tooltip</comment>
+  </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>Сбой экспорта</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Экспорт в Excel</value>
+    <comment>DataGrid Button Function Tooltip</comment>
+  </data>
+  <data name="FileInUse" xml:space="preserve">
+    <value>Указанный файл используется</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="FileInUseDetail" xml:space="preserve">
+    <value>Закройте файл в приложении, где он используется или укажите другое имя файла.</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Фильтр</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="FilterMenu" xml:space="preserve">
+    <value>Меню фильтра</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="FilterOptions" xml:space="preserve">
+    <value>Параметры фильтра</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="FilterWithinResults" xml:space="preserve">
+    <value>Фильтровать результаты</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>Перв.</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="FirstView" xml:space="preserve">
+    <value>Первое представление</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Папка</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Забыли пароль?</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Вперед</value>
+    <comment>Arrow button tooltip</comment>
+  </data>
+  <data name="GetMoreRows" xml:space="preserve">
+    <value>Больше строк</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>Больше чем</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>Больше чем или равняется</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="GridSettings" xml:space="preserve">
+    <value>Настройки сетки</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="GroupSelection" xml:space="preserve">
+    <value>Выбор группы</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Справка</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="HideColumn" xml:space="preserve">
+    <value>Скрыть столбец</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="IsEmpty" xml:space="preserve">
+    <value>Пусто</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="IsNotEmpty" xml:space="preserve">
+    <value>Не пусто</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Последн.</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LastView" xml:space="preserve">
+    <value>Последнее представление</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LaunchActivate" xml:space="preserve">
+    <value>Запустить/активировать</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>Меньше чем</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>Меньше чем или равняется</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Ссылки</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ListTabs" xml:space="preserve">
+    <value>Список всех вкладок</value>
+    <comment>Tabs Control Button Tooltip</comment>
+  </data>
+  <data name="LoadingItem" xml:space="preserve">
+    <value>Загрузка элемента </value>
+    <comment>Progress Dialog Text - Make sure there is a space at the end.</comment>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Обслуживание</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Меню</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Создать</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Далее</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NextView" xml:space="preserve">
+    <value>Следующее представление</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="NotChecked" xml:space="preserve">
+    <value>Не отмечено</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Примечания</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NotSelected" xml:space="preserve">
+    <value>Не выбрано</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value> из </value>
+    <comment>Grid Footer Text</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OК</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Открыть</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Вставить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Подождите</value>
+    <comment>Progress Dialog Text</comment>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Назад</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PreviousView" xml:space="preserve">
+    <value>Предыдущее представление</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Печать</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>Запросы</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Вернуть</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Отклонить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Запомнить меня на этом компьютере</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Отчеты</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Сбросить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Пересмотр</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RunFilter" xml:space="preserve">
+    <value>Запустить фильтр</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RunJob" xml:space="preserve">
+    <value>Запустить задание</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SaveBeforeClosing" xml:space="preserve">
+    <value>Сохранить перед закрытием</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SavedFilters" xml:space="preserve">
+    <value>Сохраненные фильтры</value>
+    <comment>Grid Filter Menu Option</comment>
+  </data>
+  <data name="SaveSubmit" xml:space="preserve">
+    <value>Сохранить/отправить</value>
+    <comment>Icon Button Tooltip - Or Either Word.</comment>
+  </data>
+  <data name="ScreenDesign" xml:space="preserve">
+    <value>Дизайн экрана</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SelectContents" xml:space="preserve">
+    <value>Выделить содержимое</value>
+    <comment>Tooltip for Grid Filter to Select Contents of the Row data.</comment>
+  </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>Выбрать дату</value>
+    <comment>Tooltip for Date Picker</comment>
+  </data>
+  <data name="SelectDeselect" xml:space="preserve">
+    <value>Выделить/очистить все</value>
+    <comment>Select all rows/ no rows in the grid</comment>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Выбрано: </value>
+    <comment>Show number of select rows</comment>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Имя сервера</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ShowFilterRow" xml:space="preserve">
+    <value>Показать фильтры строки</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Войти</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="SortAscending" xml:space="preserve">
+    <value>Сортировать по возрастанию</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="SortDescending" xml:space="preserve">
+    <value>Сортировать по убыванию</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="Spreadsheet" xml:space="preserve">
+    <value>Электронная таблица</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>Начинается с</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="StatusIndicator" xml:space="preserve">
+    <value>Индикатор статуса</value>
+    <comment>Status Dialog Text</comment>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Задачи</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Сегодня</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>Перевести</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>Идентификатор пользователя</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Utilities" xml:space="preserve">
+    <value>Служебные программы</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+    <comment>Dialog Button Text</comment>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Страница</value>
+    <comment>Grid Pager Information</comment>
+  </data>
+  <data name="Rows" xml:space="preserve">
+    <value>Строки</value>
+    <comment>Word describing the grid rows.</comment>
+  </data>
+  <data name="ShowingAll" xml:space="preserve">
+    <value>Показано все</value>
+    <comment>Grid Row Status Area.</comment>
+  </data>
+  <data name="SessionNavigation" xml:space="preserve">
+    <value>Навигация по сеансу</value>
+    <comment>Tooltip for a button that opens session navigation</comment>
+  </data>
+  <data name="ListAllMenuItems" xml:space="preserve">
+    <value>Список всех элементов меню</value>
+    <comment>Show all the menu items</comment>
+  </data>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>Записей не найдено</value>
+    <comment>Grid Status Text</comment>
+  </data>
+  <data name="SearchTree" xml:space="preserve">
+    <value>Поиск дерева</value>
+    <comment>InLine Help to Search the Tree</comment>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистить</value>
+    <comment>Clear a TextField from a button</comment>
+  </data>
+  <data name="DrillDown" xml:space="preserve">
+    <value>Детализация</value>
+    <comment>Button that drills to the record.</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Данное поле является обязательным</value>
+    <comment>Required Validation Message</comment>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Доступно:</value>
+    <comment>Text For Dual List</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+    <comment>Add an Item from a Dual List</comment>
+  </data>
+  <data name="MoveDown" xml:space="preserve">
+    <value>Переместить вниз</value>
+    <comment>Move Down a grid row</comment>
+  </data>
+  <data name="MoveUp" xml:space="preserve">
+    <value>Переместить вверх</value>
+    <comment>Move up a grid row</comment>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Удалить</value>
+    <comment>Remove an item from a dual list</comment>
+  </data>
+  <data name="LastYear" xml:space="preserve">
+    <value>В прошлом году</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextMonth" xml:space="preserve">
+    <value>В следующем месяце</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextWeek" xml:space="preserve">
+    <value>На следующей неделе</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextYear" xml:space="preserve">
+    <value>В следующем году</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="OneMonthAgo" xml:space="preserve">
+    <value>Один месяц назад</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="OneWeekAgo" xml:space="preserve">
+    <value>Одну неделю назад</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="SixMonthsAgo" xml:space="preserve">
+    <value>Полгода назад</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Время</value>
+    <comment>Time Selection on a  DatePicker</comment>
+  </data>
+  <data name="CannotBeSelected" xml:space="preserve">
+    <value>Невозможно выбрать эту строку.</value>
+    <comment>Grid Tooltip</comment>
+  </data>
+  <data name="ResetToDefault" xml:space="preserve">
+    <value>Восстановить значения макета по умолчанию</value>
+    <comment>Reset the Grid Layout</comment>
+  </data>
+  <data name="CloseOtherTabs" xml:space="preserve">
+    <value>Закрыть другие вкладки</value>
+    <comment>Tab Control Right Click Menu</comment>
+  </data>
+  <data name="EmailValidation" xml:space="preserve">
+    <value>Введите допустимый адрес электронной почты</value>
+    <comment>Text For Email Field  Validation</comment>
+  </data>
+  <data name="UrlValidation" xml:space="preserve">
+    <value>Введите допустимый URL-адрес</value>
+    <comment>Text For Url Field Validation</comment>
+  </data>
+  <data name="EndofResults" xml:space="preserve">
+    <value>Конец результатов</value>
+    <comment>Toolbar message for paging</comment>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>Дополнительно...</value>
+    <comment>Overflow Text for Tabs and Dialogs</comment>
+  </data>
+  <data name="RecordsPerPage" xml:space="preserve">
+    <value>Число записей на странице</value>
+    <comment>Text for a Grid Page Size Selector</comment>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>Развернуть</value>
+    <comment>Title Bar Icon</comment>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>Свернуть</value>
+    <comment>Title Bar Icon</comment>
+  </data>
+  <data name="CloseAllTabs" xml:space="preserve">
+    <value>Закрыть все вкладки</value>
+    <comment>Tab Control Right Click Menu</comment>
+  </data>
+  <data name="QuickDates" xml:space="preserve">
+    <value>Быстрые даты</value>
+    <comment>Date Functionality</comment>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Готово</value>
+    <comment>Button on the Wizard Pattern</comment>
+  </data>
+  <data name="SetTextColor" xml:space="preserve">
+    <value>Задать цвет текста</value>
+    <comment>Color Picker / Text Editor</comment>
+  </data>
+  <data name="AttachmentRules" xml:space="preserve">
+    <value>Правила для вложений</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="AutoRefresh" xml:space="preserve">
+    <value>Автоматическое обновление</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="BarChart" xml:space="preserve">
+    <value>Линейчатая диаграмма</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CopyMail" xml:space="preserve">
+    <value>Копировать и отправить</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CopyUrl" xml:space="preserve">
+    <value>Копировать URL-адрес</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DistributeHorizontally" xml:space="preserve">
+    <value>Распределить по горизонтали</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>Развернуть все</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Создать</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="GenerateScript" xml:space="preserve">
+    <value>Создать сценарий</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NoAttachments" xml:space="preserve">
+    <value>Нет вложений</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PieChart" xml:space="preserve">
+    <value>Круговая диаграмма</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="QuickAccess" xml:space="preserve">
+    <value>Быстрый доступ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RestoreUser" xml:space="preserve">
+    <value>Восстановить пользователя</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SaveConsolidate" xml:space="preserve">
+    <value>Сохранить с локальной консолидацией</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Screen Design" xml:space="preserve">
+    <value>Дизайн экрана</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Выбрать все</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SpellCheck" xml:space="preserve">
+    <value>Проверка орфографии</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SubmitForApproval" xml:space="preserve">
+    <value>Отправить на утверждение</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Часовой пояс</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Загрузка...</value>
+    <comment>Loading Text</comment>
+  </data>
+  <data name="NewNode" xml:space="preserve">
+    <value>Создать узел</value>
+    <comment>Create a New tree Node</comment>
+  </data>
+  <data name="AboutText" xml:space="preserve">
+    <value>Авторские права © Infor, 2014. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев. www.infor.com.</value>
+    <comment>Text in the Page About Dialog</comment>
+  </data>
+</root>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - No Options</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+</head>
+<body>
+	<div id="inforDataGrid" style="height: 250px">
+	</div>
+	<div id="inforDataGrid2" style="height: 250px">
+	</div>
+	<script>
+		//Store the Grid Obj For Later Api Calls..
+		var grid = null,
+			columns = [],
+			data = getSampleData([]);
+
+		//Define Columns for the Grid.
+		columns.push({ id: 'officeId', focusable: false, name: 'Office Id', field: 'officeId', width: 140, formatter:UneditableColumnFormatter });
+		columns.push({ id: 'city', name: 'City', field: 'city', width: 125, formatter: TextCellFormatter, filterType: TextFilter });
+		columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 160, filterType: TextFilter});
+		columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 200, filterType: TextFilter});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter });
+
+		grid = $('#inforDataGrid').inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: false,
+			savePersonalization: false,
+			showDrillDown: true,
+			showCheckboxes: false,
+			showStatusIndicators: false,
+			showGridSettings: false,
+			forceFitColumn: true,
+			drillDownTooltip: '',
+			fillHeight: false
+		});
+
+		grid2 = $('#inforDataGrid2').inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: false,
+			savePersonalization: false,
+			showDrillDown: true,
+			showCheckboxes: false,
+			showStatusIndicators: false,
+			showGridSettings: false,
+			forceFitColumn: true,
+			drillDownTooltip: '',
+			fillHeight: false
+		});
+	</script>
+</body>
+</html>

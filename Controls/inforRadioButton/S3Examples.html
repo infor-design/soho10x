@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Radio Button - S3 Examples</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforRadioButton.js"></script>
+
+	<script>
+
+		  $(function () {
+				$(".inforRadioButtonSet input").inforRadioButton();
+		  });
+	</script>
+
+  </head>
+  <body>
+	<div>
+		<div class="inforRadioButtonSet" style="position:absolute;top:24px;left:40px;width:90px;">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tbody>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l190" name="_l19" value="1"><label>ONE</label></nobr>
+					</td>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l191" name="_l19" value="2"><label>TWO</label></nobr>
+					</td>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l192" name="_l19" value="3"><label>THREE</label></nobr>
+					</td>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l193" name="_l19" value="4"><label>FOUR</label></nobr>
+					</td>
+				<tr></tr>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l194" name="_l19" value="5"><label>FIVE</label></nobr>
+					</td>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l195" name="_l19" value="6"><label>SIX</label></nobr>
+					</td>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l196" name="_l19" value="7"><label>SEVEN</label></nobr>
+					</td>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l197" name="_l19" value="8"><label>EIGHT</label></nobr>
+					</td>
+				<tr></tr>
+					<td>
+						<nobr><input type="radio" class="inforRadioButton" id="_l198" name="_l19" value="9"><label>NINE</label></nobr>
+					</td>
+				</tbody>
+			</table>
+		</div>
+
+		<div style="position:absolute;top:120px;left:40px;">
+			<button type="button" class="inforFormButton" style="width:80px;"onclick='$(".inforRadioButtonSet").show()'>Show</button>
+		</div>
+		<div style="position:absolute;top:120px;left:130px;">
+			<button type="button" class="inforFormButton" style="width:80px;"onclick='$(".inforRadioButtonSet").hide()'>Hide</button>
+		</div>
+		<div style="position:absolute;top:120px;left:220px;">
+			<button type="button" class="inforFormButton" style="width:80px;"onclick='$(".inforRadioButtonSet input").enable()'>Enable</button>
+		</div>
+		<div style="position:absolute;top:120px;left:310px;">
+			<button type="button" class="inforFormButton" style="width:80px;"onclick='$(".inforRadioButtonSet input").disable()'>Disable</button>
+		</div>
+		<div style="position:absolute;top:120px;left:400px;">
+			<button type="button" class="inforFormButton" style="width:80px;"onclick='alert($(".inforRadioButtonSet").getValue())'>Get Value</button>
+		</div>
+		<div style="position:absolute;top:120px;left:490px;">
+			<button type="button" class="inforFormButton" style="width:80px;"onclick='$(".inforRadioButtonSet").setValue("7")'>Set Value</button>
+		</div>
+	</div>
+  </body>
+</html>

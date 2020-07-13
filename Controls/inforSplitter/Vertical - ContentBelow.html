@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Splitter - 3 Pane Splitter Example (Work in Progress)</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<link href="css/inforSplitter.css" rel="stylesheet" />
+	<script src="js/inforSplitter.js"></script>
+
+	<script>
+		$(function() {
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+			$(".inforSplitter").inforSplitter({savePosition: false});
+		});
+	</script>
+
+	<style>
+		p {
+			text-align: center;
+			font-size: 1.4em;
+		}
+	</style>
+</head>
+<body style="height: 100%">
+
+	<div class="inforScrollableArea">
+		<div class="inforSplitter">
+			<div class="leftPane" style="width:32%; background-color: #ffdc00 ">
+				<p>Pane 1</p>
+			</div>
+			<div class="rightPane" style="width:68%; background-color: #11de00 ">
+				<p>Pane 2</p>
+			</div>
+		</div>
+	</div>
+
+	<div id="filterButtonDiv" style="background-color:rgb(235, 235, 235); filter:alpha(opacity=100); opacity:1; text-align:center">
+		<button type="button" class="inforFormButton" id="ClearFilters">clear</button>
+		<button type="button" class="inforFormButton" id="Save">save</button>
+		<button type="button" class="inforFormButton" id="SaveAs">save as</button>
+	</div>
+
+</body>
+</html>

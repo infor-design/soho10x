@@ -1,0 +1,66 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Messages - Constrained by an IFrame</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="../inforTooltip/js/inforTooltip.js" ></script>
+
+	<script>
+		$(function () {
+			$(".inforLookupField").inforLookupField({
+				gridOptions: {},
+				returnField: "",
+				height: 400,
+				width: 400,
+				editable: true,
+				typeAheadSearch: false,
+				source: function (request, response) {
+					alert('No data');
+					return;
+				}
+			});
+
+			$(".inforDateField").inforDateField({
+				validateInput: false,
+				isRTL: false,
+				dateFormat: "MM/dd/yyyy"
+			});
+
+			var isError = false;
+			$("#continue").click(function(){
+				if (isError) {
+					$("#position").validationMessage("remove");
+				} else {
+					$("#position").validationMessage("show", "Job Code or Position is required.",  true);
+				}
+				isError = !isError;
+			});
+
+			$("#jobReqForm").inforForm();
+	})
+	</script>
+</head>
+<body>
+	<div id="jobReqForm">
+		<div class="autoLabelWidth inforSingleColumnLayout">
+			<label class="inforLabel">Position</label>
+			<!--data-tooltip-maxwidth="100"-->
+			<input class="inforLookupField required" type="text" name="position" id="position"  value="" size="30" maxlength="30" onfocus="this.select()" onkeyup="this.value=''"><br/>
+			<label class="inforLabel">Job</label>
+			<input class="inforLookupField required" type="text" name="job" value="" size="30" maxlength="30" onfocus="this.select()" onkeyup="this.value=''"><br/>
+			<label class="inforLabel">Date Needed</label>
+			<input class="inforDateField required" type="text" name="dateneeded" value="" size="10" maxlength="10" onfocus="this.select()"><br/>
+			<label class="inforLabel">Status</label>
+			<input class="inforLookupField required" type="text" name="status" value="" size="30" maxlength="30" onfocus="this.select()" onkeyup="this.value=''" required="required"><br/>
+			<label class="inforLabel noColon">&nbsp;</label>
+			<button class="inforFormButton" id="continue">Continue</button><br/>
+		</div>
+	</div>
+</body>
+</html>

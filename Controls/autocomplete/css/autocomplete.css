@@ -1,0 +1,17 @@
+/* AutoComplete Control
+----------------------------------*/
+#autocomplete-list {
+  border-radius: 0 0 4px 4px;
+}
+
+.autocomplete.is-open {
+  border-radius: 3px 3px 0 0;
+}
+
+#autocomplete-list i {
+  color: #0896e9;
+  font-family: opensans-semibold,Helvetica,Arial;
+  font-style: normal;
+  letter-spacing: 1px;
+  text-decoration: underline;
+}

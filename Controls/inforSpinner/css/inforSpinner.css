@@ -1,0 +1,73 @@
+﻿/* Infor Spinner (Numeric Up Down)
+----------------------------------*/
+
+.inforTriggerField  .inforSpinner{
+	padding-right: 0;
+	width: 57px !important;
+}
+
+.inforSpinnerButtonUp, .inforSpinnerButtonDown{
+	border-radius: 2px 2px 1px 1px !important;
+    height: 8px !important;
+    left: 8px;
+    margin-left: -8px !important;
+    position: relative;
+    top: 0;
+    width: 16px !important;
+}
+
+.inforSpinnerButtonUp span, .inforSpinnerButtonDown span {
+	display: block !important;
+    height: 3px !important;
+    left: 3px;
+    position: relative;
+    top: 0;
+    width: 6px !important;
+}
+
+.focus .inforSpinnerButtonDown {
+	outline: 3px solid #EAF7FF;
+}
+
+.inforSpinnerButtonUp span {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAGklEQVR42mNgQID/UAwGjEiCyICREYsgGAAAuPcEAOa0074AAAAASUVORK5CYII=");
+}
+
+.inforSpinnerButtonDown {
+	left: 0px !important;
+    top: 9px !important;
+}
+
+.inforSpinnerButtonDown:hover {
+	box-shadow: 0 1px #A2A2A2 inset  !important;
+	border-radius: 1px 1px 2px 2px !important;
+}
+
+.inforSpinnerButtonDown span{
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAGUlEQVR42mNkYGD4z4AFMELp/zjE4ZJwBQCHWwQAwfmGrAAAAABJRU5ErkJggg==");
+}
+
+.inforSpinnerButtonDown.error {
+	background-position: 0 0;
+	border-radius: 0 0 3px 0;
+	border-top: 0 none;
+	height: 10px;
+}
+
+.inforSpinnerButtonUp.error {
+	border-bottom: 0 none;
+	border-radius: 0 3px 0 3px;
+	height: 10px;
+}
+
+/* Right to Left */
+html[dir="rtl"] .inforSpinnerButtonDown {
+	left: 0;
+	right: 0;
+}
+
+html[dir="rtl"] .inforSpinnerButtonUp {
+	left: 0;
+	right: 8px;
+	top: -1px;
+}

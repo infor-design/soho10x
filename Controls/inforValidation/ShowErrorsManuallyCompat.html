@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+  <meta charset="utf-8">
+
+  <title>Infor Validation Plugin: Adding Errors Manually</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+     $(function (){
+      $('body').inforForm();
+    });
+
+    function showErrors() {
+      $('#textBox1').validationMessage('show', 'I have an Error, yes i do.', true);
+    }
+
+    function hideErrors() {
+      $('#textBox1').validationMessage('remove');
+    }
+  </script>
+</head>
+<body class="inforHidden inforApplicationPadding">
+  <div class="inforModuleContainer">
+     <div class="inforModuleHeader">
+        <div class="inforModuleHeaderLeft">
+          <span class="inforPageTitleText">Order Line Item</span>
+          <span class="inforModuleRecordIdText">12000001</span>
+        </div>
+        <div class="inforModuleHeaderRight">
+          <button class="inforModuleSettingsButton"></button>
+          <button class="inforModuleCloseButton"></button>
+        </div>
+     </div>
+     <div class="inforModuleContentArea">
+      <div class="inforToolbar">
+        <button class="inforIconButton save"  onclick="showErrors()"></button>
+        <button class="inforIconButton discard" onclick="hideErrors()"></button>
+      </div>
+
+      <div class="autoLabelWidth inforSingleColumnLayout">
+         <label class="inforLabel" for="textBox1">Order Id</label>
+         <input type="text" id="textBox1" class="inforTextbox required" /><br>
+         <label class="inforLabel" for="textBox2">Vendor Id</label>
+         <input type="text" id="textBox2" class="inforTextbox "/><br>
+         <label class="inforLabel" for="textarea1" >Comments</label>
+         <textarea class="inforTextArea required" id="textarea1"></textarea><br>
+         <span class="inforLabel noColon">&nbsp;</span><input type="checkbox" class="inforCheckbox"  checked="checked" id="checkbox1"/><label class="inforCheckboxLabel" for="checkbox1">Checkbox</label><br>
+         <label class="inforLabel" for="dropDown1">Supplier</label>
+         <select id="dropDown1" class="inforDropDownList required">
+          <option value="a">All</option>
+          <option value="cc">Consolidated Consortiums</option>
+          <option value="mw">Major Widgets Inc</option>
+          <option value="me">Metrolitan Electric</option>
+          <option value="sp">Speed Services Inc</option>
+         </select><br>
+        <label class="inforLabel" id="radioButton1">Drink</label>
+        <input type="radio" id="rumOption" class="inforRadioButton" name="radioGroup1" value="be"/><label>Beer</label>
+        <input type="radio" id="waterOption" class="inforRadioButton" name="radioGroup1" value="wa" /><label>Water</label>
+      </div>
+      <br>
+      <div class="inforTabContainer" id="tabSet1">
+          <ul class="inforTabset">
+          <li><a href="#tab1">Overview</a></li>
+          <li><a href="#tab2">Items</a></li>
+          </ul>
+          <div id="tab1">
+          <p>Morbi consequat iaculis quam. Suspendisse pharetra, turpis molestie varius adipiscing, est ligula eleifend lorem, in iaculis lectus nibh ac nibh. Curabitur semper condimentum neque. Praesent at diam ac diam gravida elementum. Mauris aliquet vehicula elit. Donec aliquet velit. Integer lobortis lacus in augue. Cras dignissim. Pellentesque facilisis ultrices orci. Morbi ligula ipsum, rutrum in, convallis eu, accumsan quis, odio. Quisque lorem sapien, dictum vulputate, rhoncus id, facilisis vel, lacus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec neque magna, elementum id, posuere eget, elementum eu, pede.</p>
+          <p>Donec non turpis. Quisque cursus adipiscing orci. Sed non lectus. Fusce nec turpis. Etiam tincidunt. Nam tempus, nulla vitae pretium elementum, ante massa rhoncus dolor, nec ultrices felis tellus in dolor. Pellentesque ut justo. Sed ligula. Praesent vel lorem eu est convallis sodales. Nam porta iaculis orci.</p>
+          </div>
+          <div id="tab2">
+          <div class="autoLabelWidth inforSingleColumnLayout">
+            <label class="inforLabel" for="itemId">Item Id 1</label>
+            <input type="text" id="itemId1" class="inforTextbox required" /><br>
+            <label class="inforLabel">Lookup Field</label>
+            <input class="inforLookupField" type="text" id="itemId2"><br>
+          </div>
+        </div>
+      </div>
+
+     </div>
+   </div>
+
+</body>
+</html>

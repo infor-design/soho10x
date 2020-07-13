@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Infor Lookup Field</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js" ></script>
+
+  <script>
+     $(function () {
+
+      //set columns
+      var columns = [];
+      columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, filterType: TextFilter});
+      columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true, filterType: TextFilter });
+      columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank", filterType: TextFilter});
+      columns.push({ id: "country", name: "Country", field: "country", width: 70, filterType: TextFilter});
+      columns.push({ id: "territory", name: "Territory", field: "territory", width: 70, filterType: TextFilter});
+
+      //get the data in JSON format - see datagrid example for more examples.
+      var data = [];
+
+      data.push({ officeId:  3, city:  null, cityCode:  "6,4",  phone:  "6538227668", addressLine1:  "", addressLine2:  "78 Rocky Second St.", state:  "New Jersey", country: "Zambia", postalCode: "09514", territory: "ECXL", establishedDate:  null, isLeedCertified: "1", comments: "Et quad estis vobis homo, si nomen transit. \n Sed quad estis vobis homo, si quad ut novum vobis homo, \n si nomen novum vobis regit, \n et nomen transit. Sed quad estis vobis regit, et nomen transit. Tam quo, \n et quis gravis delerium.  Versus esset in dolorum cogn. esset in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et plurissimum ", numberEmployees:   null, airportCode: "PHL", officeType:  null, revenue:  2080 });
+        data.push({ officeId:  4, city:  "       ", cityCode:  "6,7",  phone:  "845-9216316", addressLine1:  "452 East Milton Way", addressLine2:  "452 East Milton Way", state:  "Louisiana", country: "FrenchSouthernTerritories(TAFF)", postalCode: "99077", territory: "T271ZWMT93", isLeedCertified: "YES", comments: "Multum gravum et pladior venit.  Tam quo, et quis gravis et quis gravis et nomen transit. Et quad estis vobis homo, si quad ut novum eggredior.  ", numberEmployees:  20, airportCode: "PHL", officeType:  'Remote', revenue:  562 });
+        data.push({ officeId:  5, city:  "     ", cityCode:  "19,20",  phone:  "8678333362", addressLine1:  "364 East White Hague Boulevard", addressLine2:  "706 Green Old Parkway", state:  "Iowa", country: "Anguilla", postalCode: "29544", territory: "9VY46", establishedDate:  new Date(2012, 9, 14, 21, 47, 46, 707), isLeedCertified: "0", comments: "Tam quo, et nomen transit. Multum gravum et bono quorum glavans e gravis et nomen novum eggredior.  Longam, e gravis delerium.  Versus esset in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et plurissimum Tam quo, et nomen transit. Multum gravum et bono quorum glavans e gravis et nomen novum eggredior.  Longam, e gravis delerium.  Versus esset in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et plurissimum ", numberEmployees:   0, airportCode: "PHL", officeType:  'Remote'  });
+
+      var options = {
+        dataset: data,
+        columns: columns,
+        idProperty: 'officeId',
+        showColumnHeaders: true,
+        showFilter: true,
+        showGridSettings: false,
+        savePersonalization: false,
+        showDrillDown: false,
+        showCheckboxes: false,
+        forceFitColumns: true,
+        showFooter: true,
+        pageSize: 10,
+        pagingMode: PagingModes.PagerClientSide,
+        showPageSizeSelector: true,
+        showStatusIndicators: false,
+        multiSelect: false,
+        editable: false
+      };
+
+       //if you want a custom lookup docan still do this...: $("#inforLookupField1").inforTriggerField({click:function(event){.....
+       //pass in the grid options and field to return into the lookup.
+       $(".inforLookupField").inforLookupField({
+        gridOptions: options,
+        returnField: "city",
+        height: 'auto',
+        width: 400,
+        editable: false
+      }).on("change", function(e,b) {
+      });
+      });
+  </script>
+</head>
+<body>
+  <div class="inforSingleColumnLayout autoLabelWidth">
+    <label class="inforLabel" for="lookupField1">Lookup Field</label>
+    <div id="lookupField1Container" class="inforTriggerField"><input class="inforLookupField inforTextbox" id="lookupField1" type="text"><button tabindex="-1" class="inforTriggerButton inforLookupButton" type="button"><span>Open</span></button></div><br>
+  </div>
+
+</body></html>

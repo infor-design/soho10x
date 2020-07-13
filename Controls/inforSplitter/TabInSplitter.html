@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../inforTabset/js/inforTabset.js"></script>
+
+	<script>
+		$(function($) {
+			$('#someTabContainer').inforTabset();
+			$(".inforHorizontalSplitter").inforSplitter({ splitHorizontal: true });
+		});
+	</script>
+</head>
+<body>
+	<div class="inforModuleContainer">
+		<div class="inforModuleHeader">
+			<div class="inforModuleHeaderLeft">
+				<span class="inforPageTitleText">Some Page</span>
+			</div>
+		</div>
+		<div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button type="button" class="inforTextButton">Some Button</button>
+				<button type="button" class="inforTextButton">Another Button</button>
+			</div>
+			<div class="inforHorizontalSplitter">
+				<div id="topPane" style="overflow:hidden">
+					<div id="someTabContainer">
+						<ul class="inforTabset">
+							<li><a href="#someTab">Some Tab</a></li>
+							<li><a href="#anotherTab">Another Tab</a></li>
+						</ul>
+						<div id="someTab">
+							<label class="inforLabel noColon">Some Controls</label>
+						</div>
+						<div id="anotherTab">
+							<label class="inforLabel noColon">Some Controls</label>
+						</div>
+					</div>
+				</div>
+				<div id="bottomPane" >
+					<div>
+						<label class="inforLabel noColon">Some Grid</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+

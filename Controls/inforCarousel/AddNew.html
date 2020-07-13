@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Carousel - Basic Example</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link rel="stylesheet" href="css/inforCarousel.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforCarousel.js"></script>
+
+	<script>
+		$(function () {
+			//uncomment To Test RTL:
+			//Globalize.culture("ar-SA");
+
+			$(".inforFieldSet").inforFieldSet();
+			$('#carousel1').inforCarousel({scrollBar: true});
+
+			$("#addNew").click(function () {
+				var newItem = $('<li class="inforCarouselItem"></li>');
+				//add the icon element
+				newItem.append('<div class="inforCarouselImage excel"></div>');
+				//add the label text
+				newItem.append($(' <div class="inforCarouselLabel"></div>').html("New Item 1"));
+				//add the tooltip
+				newItem.append('<div class="inforCarouselTooltip">Specs Part 001 <br> Modified by: John Hameson <br> Created on: 04/09/2010 <br>Modified On: 14/02/2012 <br> Version 3.0</div>');
+				//add the buttons
+				newItem.append('<div class="inforCarouselToolbar"><button type="button" class="inforIconButton search" title="Search"></button><button type="button" class="inforIconButton tag" title="Tag"></button><button type="button" class="inforIconButton delete alignRight" title="Delete"></button></div>');
+
+				$("#carousel1").append(newItem).inforCarousel("refresh");
+			});
+		});
+	</script>
+</head>
+<body style="margin-top:20px">
+	<div class="inforToolbar">
+			<button class="inforIconButton new" id="addNew" type="button" title="Add New"></button>
+	</div>
+	<fieldset class="inforFieldSet">
+		<!--Optional collapse button -->
+		<legend class="inforExpandButton open"></legend>
+		<span class="inforFieldSetLabel">Purchase order</span>
+		<div class="content">
+			<ul id="carousel1" class="inforCarousel" >
+			  <li class="inforCarouselItem">
+				   <div class="inforCarouselImage excel"></div>
+				   <div class="inforCarouselLabel">Corp Charts-Jim 1012-V2 Description</div>
+				   <div class="inforCarouselToolbar">
+						<button type="button" class="inforIconButton search" onclick="console.log('Search Clicked')" title="Search"></button>
+						<button type="button" class="inforIconButton tag" onclick="console.log('Tag Clicked')" title="Tag"></button>
+						<button type="button" class="inforIconButton delete alignRight" onclick="console.log('Delete Clicked')" title="Delete"></button>
+				   </div>
+			   </li>
+			   <li class="inforCarouselItem" >
+				   <div class="inforCarouselImage word" ></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Specs Part 001 <br> Modified by: John Hameson <br> Created on: 04/09/2010 <br>Modified On: 14/02/2012 <br> Version 3.0</div>
+				</li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage excel"></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage excel"></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage word"></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage excel"></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage excel"></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage word"></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+			   </li>
+			</ul>
+		</div>
+	</fieldset>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+
+</body>
+</html>

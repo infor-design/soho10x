@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<title>Structured Data Example - Grid Can use dotted notation.</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	
+</head>
+<body>
+	<div id="inforDataGrid">
+	</div>
+	<script>
+		function getPeopleData() //ignore jslint
+		{
+			var data = [];
+			data.push({id:1, employeeId:{value:"1",mutable:false}, lastName:{value:"Asper",mutable:true},  firstName:{value:"David",mutable:true},   title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"Full Time", mutable:true}});
+			data.push({id:2, employeeId:{value:"2",mutable:false}, lastName:{value:"Baxter",mutable:true}, firstName:{value:"Michael",mutable:true}, title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"Full Time", mutable:true}});
+			data.push({id:3, employeeId:{value:"3",mutable:false}, lastName:{value:"Baxter",mutable:true}, firstName:{value:"Steven",mutable:true},  title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"Part Time", mutable:true}});
+			data.push({id:4, employeeId:{value:"4",mutable:false}, lastName:{value:"Baxter",mutable:true}, firstName:{value:"Samual",mutable:true},  title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"Full Time", mutable:true}});
+			data.push({id:5, employeeId:{value:"5",mutable:false}, lastName:{value:"Bronte",mutable:true}, firstName:{value:"Emily",mutable:true},   title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"HOURLY", mutable:true}});
+			return data;
+		}
+			
+		//Store the Grid Obj For Later Api Calls..
+		var grid = null, columns = [], data = getPeopleData([]);
+
+		columns.push({ id: "employeeId",     name: "Employee Id",     field: "employeeId.value"});
+		columns.push({ id: "firstName",      name: "First Name",      field: "firstName.value",      editor:TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "lastName",       name: "Last Name",       field: "lastName.value",       editor:TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "anniversary",    name: "Hire Date",       field: "anniversary.value",    editor:DateCellEditor, DateSourceFormat: "MM/dd/yyyy"});
+		columns.push({ id: "salary",         name: "Salary",          field: "salary.value",         editor:DecimalCellEditor});
+		columns.push({ id: "employmentType", name: "Employment Type", field: "employmentType.value", editor:SelectCellEditor, editorOptions: {editable:false, typeAheadSearch:false}, options: ["Part Time", "Full Time", "Hourly"]});
+
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'id',
+			dataset: data,
+			showFilter: true,
+			savePersonalization: false,
+			showDrillDown: false,
+			showCheckboxes: false,
+			showStatusIndicators: false,
+			showGridSettings: true
+			/*
+			dataItemColumnValueExtractor: function(data, field, gridControl) {
+				if (!field) {
+					return undefined;	
+				}
+				
+				var columnDef = gridControl.getColumns()[gridControl.getColumnIndex(field)];
+
+				if (columnDef.builtin) {
+					return undefined;
+				}
+				
+				if (columnDef.cellTemplate) {
+					return columnDef.cellTemplate;
+				}
+				
+				return data[columnDef.field].value;
+			},
+			// seems like we need a setter so the editor value 
+			// will make it back into our data.
+			dataItemColumnValueSetter: function(data, field, value) {
+				data[field].value = value;
+			}*/
+		});
+	</script>
+</body>
+</html>

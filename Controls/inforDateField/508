@@ -1,0 +1,26 @@
+- use the input masking like the time field
+- need format masking info in the label
+- blind user would like to know the day of the week (add it to a span?)
+- add aria-has-popup
+- contrast issue on disabled days
+- role="list" and role="listitem" (li) for the tree and aria-level
+- be more forgiving in the date format
+
+- funky keyboard behaviour
+	- when keying around then update the date in the field
+
+-quick dates is not keyboard accessible
+	- add a second button or keyboard shortcut
+- go to next year (ctrl+pgup / ctrl+pgdown) (need an override)
+- use new keyboard short cuts
+-magnifyer issues (make calendar come underneath)
+
+Recommendation
+-use like the separate time field and read the alt text
+-constraints should be mentioned in the label (or use aria-described by)
+
+Question?
+-should alt down arrow or enter trigger?
+-invalid date is cleared should this be announced.
+
+	

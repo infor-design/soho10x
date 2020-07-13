@@ -1,0 +1,67 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Search Field - With Auto Complete</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			//Take the input field and add auto complete functionality as well as search field styling.
+			var input = $("#search1").autocomplete({
+				minLength:0,
+				//The source function fires when a auto complete search is requested
+				//In this example i do an ajax call to get the array but you coul djust return an array in the form..
+				//response([{label: 'Value1', value: 'v1', id: 'v1'}, {label: 'Value2', value: 'v2', id: 'v2'}]);
+				source: function (request, response) {
+					$.ajax({
+						url: "http://ws.geonames.org/searchJSON",
+						data: {
+							featureClass: "P",
+							style: "full",
+							maxRows: 25,
+							name_startsWith: request.term
+						},
+						dataType: "jsonp",
+						timeout: 5000,
+						success: function(data) {
+							var result = $.map(data.geonames, function(item) {
+							return {
+								label: item.name + ", " + item.countryName,
+								value: item.name,
+								id: item.geonameId
+							}});
+							response(result);	//return the response array to the callback function
+						}
+					});
+				},
+				select: function (event, ui) {
+					//Value was selected go do something...
+					alert("Do something with "+ui.item.value);
+				}
+			}).inforSearchField({click:function(event){
+				//could also connect the click to the auto complete
+				//input.autocomplete("search", "");
+				alert("Do something with "+ $(event.input).val());
+			},cancel:function(event){
+				//do something on cancel
+				alert('x');
+			}});
+
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" >Search Field</label>
+		<input class="inforSearchField" type="text" id="search1" placeholder="Search" title="Search Items">
+	</div>
+</body>
+</html>

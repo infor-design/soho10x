@@ -1,0 +1,288 @@
+/* Infor Tile Panels
+----------------------------------*/
+.inforTilePanel {
+	background-color: #f2f2f2;
+}
+
+.inforPanelItem {
+  width: 30%;
+  max-width: 45%;
+  min-width: 300px;
+  margin: 10px;
+  float: left;
+  height: 188px;
+  border-radius: 2px;
+  box-shadow: 0 1px #b3b3b3;
+  background-color: #FFFFFF;
+  border: 1px solid  #D9D9D9;
+}
+
+.expanded .inforPanelBody {
+	height: 306px;
+}
+
+.inforPanelItem .inforLabel {
+	text-align: left;
+	margin-bottom: -1px;
+}
+
+.inforPanelItem  .inforAlertIcon {
+	position: relative;
+	left: 4px;
+}
+
+.inforPanelItem .inforDataLabel {
+	font-style: normal;
+	margin-bottom: 1px;
+	margin-left: 0;
+	white-space: pre;
+	width: 1px;
+}
+
+.inforPanelItem:hover {
+  border: 1px solid #13a3f7;
+}
+
+/*Drag and Drop*/
+.inforPanelPlaceholder {
+	background-color: #e5e5e5 !important;
+}
+
+.inforPanelItemDragging {
+	background-color: #f5f5f5;
+	opacity:.9;
+	filter: alpha(opacity = 90);
+	width: 370px;
+	margin: 20px;
+	height: 188px;
+	border: 1px solid #13a3f7;
+}
+
+/*Content*/
+.inforPanelHeader {
+	border-bottom: 1px solid #D9D9D9;
+	padding: 9px 0 4px 10px;
+}
+
+.inforPanelHeaderText{
+	color: #444;
+	font-family: Helvetica,Arial,sans-serif !important;
+	font-size: 1.6em;
+	padding-left: 7px;
+	position: relative;
+	top: -6px;
+}
+
+.inforLabelLarge {
+	color: #666666;
+	font-size: 1.6em;
+	position: relative;
+	text-indent: 13px;
+	top: -3px;
+	display: inline-block;
+}
+
+.inforPanelBody .slick-pane-header {
+	border-bottom: 0 none ;
+}
+
+.inforPanelBody .inforSingleColumnLayout {
+	margin-left: 35px;
+	margin-top: 2px;
+	overflow: hidden;
+}
+
+.slick-cell .inforSingleColumnLayout {
+	line-height: 18px;
+	margin-left: -4px;
+	margin-top: 5px;
+	padding: 0;
+}
+
+.inforPanelBody {
+	border-top: 1px solid white;
+	height: 118px;
+	margin-top: 0;
+	padding: 15px 10px 11px;
+}
+
+.inforPanelBody br {
+	clear:both;
+}
+
+/*Buttons*/
+.inforPanelSettingsButton {
+	float: right;
+	left: -9px;
+	position: relative;
+	top: 4px;
+}
+
+.inforPanelExpand {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAAMUlEQVQoz2NgAIKZM2f+Z8AB4HIgBgxjUwSXQ+YgK8Yqji6ISzNexTgdTlARumJ0cQDlaWRpBfW23wAAAABJRU5ErkJggg==") no-repeat scroll center center #D9D9D9;
+	border: medium none;
+	border-radius: 2px 0 0 0;
+	bottom: 0px;
+	height: 20px;
+	position: absolute;
+	right: 0px;
+	width: 20px;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+}
+
+.inforPanelExpand:hover {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAAMUlEQVQoz2NgAIK0tLT/DDgAXA7EgGFsiuByyBxkxVjF0QVxacarGKfDCSpCV4wuDgA3b07lLNcrJAAAAABJRU5ErkJggg==") no-repeat scroll center center #BFBFBF;
+}
+
+.inforPanelExpand:active {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAAMUlEQVQoz2NgAAJfX9//DDgAXA7EgGFsiuByyBxkxVjF0QVxacarGKfDCSpCV4wuDgAAQ0RZCaRx8AAAAABJRU5ErkJggg==") no-repeat scroll center center #b2b2b2;
+}
+
+.inforPanelExpand.up {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAAOUlEQVR42mNgQAMzZ878D8Lo4ozoipD56enpjBgKsZmCrJgRnyJkxYy4rEMXZ8LlJmQ2AyH3IcsBAHxbIGXB5VcNAAAAAElFTkSuQmCC") no-repeat scroll center center #D9D9D9;
+}
+
+.inforPanelExpand.up:hover {
+	 background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAAOUlEQVR42mNgQANpaWn/QRhdnBFdETJ/1qxZjBgKsZmCrJgRnyJkxYy4rEMXZ8LlJmQ2AyH3IcsBAP+IHpoMZIrNAAAAAElFTkSuQmCC") no-repeat scroll center center #BFBFBF;
+}
+
+.inforPanelExpand.up:active {
+	 background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAAOUlEQVR42mNgQAO+vr7/QRhdnBFdETJ/8+bNjBgKsZmCrJgRnyJkxYy4rEMXZ8LlJmQ2AyH3IcsBAETpHbn4PAemAAAAAElFTkSuQmCC") no-repeat scroll center center #b2b2b2;
+}
+
+.inforPanelExpandBar {
+	background-color: #ebebeb;
+	bottom: 1px;
+	height: 22px;
+	position: absolute;
+	width: 100%;
+	 margin-left: -10px;
+	padding-right: 13px;
+}
+
+/*Themes and Icons*/
+.inforPanelIcon {
+	float: left;
+	height: 17px;
+	padding-left: 1px;
+	width: 14px;
+	position: relative;
+	top: 2px;
+}
+
+.inforPanelBody .inforIcon.ok, .inforPanelBody .inforIcon.error {
+	clear: both;
+	float: left;
+	left: 0px;
+	position: relative;
+	top: 0;
+}
+
+/*Count Down*/
+.inforLabel.inforCountDown  {
+	margin-left: 2px;
+	margin-top: 7px;
+	display:none;
+}
+
+.inforLabel.inforCountDown:after  {
+	content: "";
+}
+
+.inforCountDown  tbody{
+	text-align: center;
+}
+
+.inforCountDown  tr:first-child{
+	font-size: 48px;
+	padding-bottom: 2px;
+}
+
+.inforCountDown .hour,.inforCountDown .min {
+	text-indent: 10px;
+}
+
+.inforCountDown .hour:after, .inforCountDown .min:after  {
+	content: ":";
+}
+
+/*Drag and Drop*/
+.inforPanelDragTarget {
+	border: 1px solid #C1C1C1;
+}
+
+.inforPanelDragTarget:hover{
+	border: 1px solid #80CDFA;
+}
+
+/*Flip Css3 Animation*/
+.inforPanelItem {
+	-webkit-perspective: 1000px;
+	 -moz-perspective: 1000px;
+	  -ms-perspective: 1000px;
+		  perspective: 1000px;
+}
+
+.inforPanelItem  {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out 0.2s;
+	 -moz-transition: -moz-transform 0.3s ease-in-out 0.2s;
+	 -ms-transition: -ms-transform 0.3s ease-in-out 0.2s;
+		  transition: transform 0.3s ease-in-out 0.2s;
+
+  -webkit-transform-style: preserve-3d;
+	 -moz-transform-style: preserve-3d;
+	 -ms-transform-style: preserve-3d;
+		  transform-style: preserve-3d;
+}
+
+.inforPanelItem.flipped {
+  -webkit-transform: rotateY( 180deg );
+	 -moz-transform: rotateY( 180deg );
+	 -ms-transform: rotateY( 180deg );
+		  transform: rotateY( 180deg );
+}
+
+.inforPanelItem div {
+   -webkit-backface-visibility: hidden;
+	 -moz-backface-visibility: hidden;
+	 -ms-backface-visibility: hidden;
+		  backface-visibility: hidden;
+}
+
+.inforPanelItem .inforPanelSettings {
+  display:none;
+  -webkit-transform: rotateY( 180deg );
+	 -moz-transform: rotateY( 180deg );
+	 -ms-transform: rotateY( 180deg );
+		  transform: rotateY( 180deg );
+}
+
+.inforDragProxy .inforCardstackCell {
+	margin: 4px;
+}
+.inforDragProxy .inforCardstackImg {
+	 top: -48px;
+}
+
+.inforPanelItem .inforCardstackCell .inforLabel, .inforPanelItem .inforCardstackCell .inforDataLabel{
+	font-size: 1em;
+	padding-top: 0;
+}
+
+.inforCardstackCell .inforIcon {
+	left: -5px !important;
+	padding-left: 2px;
+	position: relative;
+	top: -2px;
+}
+
+.inforLabel.inforCountDown > table {
+	margin-left: 0px;
+	margin-top: 18px;
+}
+
+.inforPanelBody .slick-viewport {
+	background: none repeat scroll 0 0 transparent;
+}

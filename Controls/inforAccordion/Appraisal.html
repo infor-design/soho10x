@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Accordion Control</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script>
+		$().ready(function () {
+			//Globalize.culture("ar-SA");
+			$(".inforAccordion").inforAccordion({onExpand: function(e, ui) {
+				console.log(e, $(ui).parent());
+			}});
+
+			//Do something when you select a sub menu item
+			$(".inforAccordionSubmenu").click(function (e) {
+				//do something
+			});
+
+			$(".inforSlider").inforSlider({value: 2, min: 0, max:5, step: 1, showSteps: true, stepLabels: ["Very Poor", "Poor", "Adequate", "Good", "Excellent", "Superior"], showValueLabel: false, qualityScales: {lightEmerald: {start:4,end:5}, amber: {start:2,end:3}, ruby: {start:0,end:1}} });
+		});
+	</script>
+	<style>
+		.appraisalPage .inforAccordion {
+			display: inline-block;
+			float: left;
+			width: 18%;
+			 min-width: 220px;
+		}
+		.appraisalPage .inforFieldSet {
+			width: 100%;
+		}
+		.appraisalPage .inforAccordion .inforFieldSet:first-child {
+			border-top:none !important;
+		}
+		.appraisalForm {
+			 border-left: 1px solid #CCCCCC;
+			display: inline-block;
+			float: left;
+			padding: 15px 0 0 40px;
+			width: 64%;
+		}
+		.appraisalForm .inforSlider {
+			margin-left: 25px;
+			width: 94%;
+			margin-bottom: 40px;
+		}
+		.appraisalForm .inforSlider + .inforSubSectionLabel {
+			margin-top: 55px;
+		}
+		.appraisalForm .inforSectionLabel{
+			line-height: 9px;
+			margin-bottom: -2px;
+			margin-top: 10px;
+			padding: 0;
+		}
+		.appraisalPage .inforLabel {
+			float: none;
+			width: auto;
+		}
+		.appraisalPage .inforSubSectionLabel {
+			color: #444;
+			font-size: 1.4em;
+			margin-bottom: -5px;
+		}
+	</style>
+
+</head>
+<body class="appraisalPage">
+	<div class="inforToolbar">
+		<button class="inforIconButton save" type="button"><span></span></button>
+		<button class="inforIconButton print" type="button"><span></span></button>
+	</div>
+
+	<div class="inforAccordion isSequential" role="navigation">	<!--Can have an explicit width or flow to size fx..style="width: 250px;" -->
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon ok" aria-label="ok" title="ok" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Evaluate Criteria</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Position Competency</a>
+				<a class="inforAccordionSubmenu" href="#">Competency Management Skills</a>
+				<a class="inforAccordionSubmenu" href="#">Leadership</a>
+				<a class="inforAccordionSubmenu" href="#">Managing Skills</a>
+			</div>
+		</fieldset>
+
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon pending" aria-label="pending" title="pending" ></div>
+			<legend class="selected">
+				<span class="inforFieldSetLabel">Evaluate Goals</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton open" aria-expanded="true"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu complete" href="#">Option One</a>
+				<a class="inforAccordionSubmenu complete" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu current selected" href="#">Option Three</a>
+			</div>
+		</fieldset>
+
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon incomplete" aria-label="incomplete" title="incomplete" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Third Party</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One is a little <br>longer</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two is also <br>longish</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
+
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon incomplete" aria-label="incomplete" title="incomplete" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Completed Activities</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
+
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon incomplete" aria-label="incomplete" title="incomplete" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Planned Activities</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
+
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon incomplete" aria-label="incomplete" title="incomplete" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Overall Evaluation</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="appraisalForm">
+		<p class="inforSectionLabel">Competency Management Skills</p>
+		<p class="inforSubSectionLabel">Passion and Commitment</p>
+		<p class="inforLabel noColon">1. Lorem ipsum dolor sit amet, consectuetur adipiscing etit, sed do eiusmod tempor incidumnt ut labore</p>
+		<div class="inforSlider" ></div>
+		<p class="inforLabel noColon">2. Lorem ipsum dolor sit amet, consectuetur adipiscing etit, sed do eiusmod tempor incidumnt ut labore</p>
+		<div class="inforSlider" ></div>
+
+		<p class="inforSubSectionLabel">Honesty and Integrity</p>
+		<p class="inforLabel noColon">3. Lorem ipsum dolor sit amet, consectuetur adipiscing etit, sed do eiusmod tempor incidumnt ut labore</p>
+		<div class="inforSlider" ></div>
+		<p class="inforLabel noColon">4. Lorem ipsum dolor sit amet, consectuetur adipiscing etit, sed do eiusmod tempor incidumnt ut labore</p>
+		<div class="inforSlider" ></div>
+		<p class="inforLabel noColon">5. Lorem ipsum dolor sit amet, consectuetur adipiscing etit, sed do eiusmod tempor incidumnt ut labore</p>
+		<div class="inforSlider" ></div>
+		<p class="inforLabel noColon">6. Lorem ipsum dolor sit amet, consectuetur adipiscing etit, sed do eiusmod tempor incidumnt ut labore</p>
+		<div class="inforSlider" ></div>
+	</div>
+</body>
+</html>

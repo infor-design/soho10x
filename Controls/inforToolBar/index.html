@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Text Buttons - For Light Backgrounds</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script>
+		$(function () {
+			$('.inforSplitButton').inforSplitButton({menuId: 'menu1'});
+			$('.inforMenuButton').inforMenuButton({menuId: 'menu1'});
+			$('[title]').inforToolTip();
+			$('body').inforForm();
+		});
+	</script>
+</head>
+<body style="padding: 20px">
+	<div class="inforToolbar" role="toolbar">
+		<button class="inforIconButton cut" title="Sample Tooltip"><span></span></button>
+		<button class="inforIconButton select" title="Sample Tooltip"><span></span></button>
+		<button type="button" class="inforSplitButton duplicate" title="Sample Tooltip"><span></span></button>
+
+		<span class="inforToolbarSpacer"></span>
+		<button type="button" class="inforMenuButton new" title="Sample Tooltip">Test</button>
+		<button class="inforIconButton delete" title="Sample Tooltip"><span></span></button>
+		<button class="inforIconButton edit" disabled title="Sample Tooltip"><span></span></button>
+		<button class="inforIconButton open" title="Sample Tooltip"><span></span></button>
+
+		<span class="inforToolbarSpacer"></span>
+
+		<button type="button" class="inforTextButton" >Text Button</button>
+		<button type="button" class="inforTextButton" disabled>Disabled Button</button>
+    <button type="button" class="inforSplitButton" id="splitButton">Split Button</button>
+		<button type="button" class="inforMenuButton" id="menuButton">Menu Button</button>
+	</div>
+
+	<!--Example Menu for All Menu/Split Buttons-->
+	<ul id="menu1" class="inforContextMenu">
+		<li><a>Option One</a></li>
+		<li><a>Option Two</a></li>
+		<li><a>Option Three</a></li>
+	</ul>
+</body>
+</html>

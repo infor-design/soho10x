@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+	<title>KO Landmark DropDownList2</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../inforShared/js/inforKnockout.js"></script>
+
+	<script>
+		$(function () 
+		{
+			var bindIdGender = "Gender";
+			var bindIdGenderStates = "GenderStates";
+			
+			// create form view model
+			var viewModel = {};
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState(" ", ""));		
+				
+			viewModel[bindIdGender] = ko.observable("");
+			viewModel[bindIdGenderStates] = ko.observableArray(fieldsStateArray);
+
+			// apply bindings
+			try
+			{
+				ko.applyBindings(viewModel);
+			}
+			catch(e)
+			{
+				alert(e.message);
+			}
+					
+			var genderDataValue = "3";
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState("&nbsp;", "0"));		
+			fieldsStateArray.push(new FieldState("1 Withhold", "1"));
+			fieldsStateArray.push(new FieldState("2 Female", "2"));
+			fieldsStateArray.push(new FieldState("3 Male", "3"));
+
+			viewModel[bindIdGenderStates](fieldsStateArray);
+			viewModel[bindIdGender](genderDataValue);
+
+			showData("loadData: loading " + bindIdGender + " with value of [" + genderDataValue + "]");
+
+			$("#clear").click(function()
+			{
+				$("#msg").text("");
+			});
+
+			$("#showData").click(function()
+			{
+				showData("showData");
+			});
+
+			function showData(name)
+			{
+				writeMsg(name + ":\t");
+				writeMsg("viewModel[\"" + bindIdGender + "\"]() = [" + (viewModel[bindIdGender]()) + "];");
+				writeMsg("LRCEmployee_wid130.val() = [" + $("#LRCEmployee_wid130").val() + "];");
+				writeMsg(" ");
+			}
+
+			function writeMsg(message)
+			{
+				var text = $("#msg").text();
+				text += message + "\n";
+				$("#msg").text(text);
+				$("#msg").scrollTop($("#msg")[0].scrollHeight);
+			}
+			
+			// Constructor for a "select bind" object with two properties
+			function FieldState(label, value)
+			{
+				this.label = label;
+				this.value = value;
+			};
+			
+		});
+</script>
+</head>
+<body style="margin:10px">
+	<select class="inforDropDownList landmarkInput inforDirty" id="LRCEmployee_wid130" data-bind="inforDropDownList: {data: GenderStates, value:Gender, optionsText:'label', optionsValue:'value'}" size="1" style="width: 82px;">
+	</select>
+	<br>
+	<br>
+	<button type="button" role="button" aria-disabled="false" class="inforFormButton" id="showData">Show Data</button>
+	<button type="button" role="button" aria-disabled="false" class="inforFormButton" id="clear">Clear</button>
+	<br>
+	<textarea id="msg" style="height:400px;width:1000px;"></textarea>
+</body>
+</html>
+

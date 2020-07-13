@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta charset='utf-8'>
+
+	<title>Infor Message Dialog Box</title>
+	<link href='../Release/inforControlsCombined.css' rel='stylesheet'>
+	<script src='../Release/jquery-1.11.1.min.js'></script>
+	<script src='../Release/jquery-ui-1.10.4.custom.min.js'></script>
+	<script src='../Release/inforControlsCombined.js'></script>
+	<script src='js/message.js'></script>
+  <script src='js/modal.js'></script>
+
+	<script>
+		$(function () {
+
+			//Display a generic dialog -
+			$('button').click(function () {
+				//First add the html to the page..
+				$('body').append('<div id="dialog1" style="display:none"><p>Dialog Stuff that is interesting</p></div>');
+
+				//Invoke the dialog on it
+				$('#dialog1').message({
+					title: 'New Catalog',
+					dialogType: 'General'
+				}).one('beforeOpen', function () {
+          console.log('beforeOpen');
+          //Could return false to not close
+          //return false;
+        }).one('beforeClose', function () {
+          console.log('beforeClose.');
+          //Could return false to not close
+          //return false;
+        }).one('open', function () {
+          console.log('open');
+        }).one('close', function () {
+          console.log('close');
+          $('#dialog1').closest('modal').remove();
+        });
+
+				$('#newCatalogDialog').inforForm();
+
+			});
+		});
+	</script>
+</head>
+<body>
+		<button class='inforFormButton'>Show</button>
+</body>
+</html>

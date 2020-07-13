@@ -1,0 +1,9 @@
+ToDo
+- a href # add this so that (first one doesnt focus)
+- role = "presentation" on line labels (they ar read twice).
+- all must have headers (last column)
+- The title could be a table caption
+- headers are closed
+
+Notes:
+	http://webaim.org/techniques/tables/

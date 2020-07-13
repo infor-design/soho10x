@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Infor Message Dialog Box - Manual</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+
+      $("#generalDialogButton").click(function () {
+        //Invoke the dialog on a bit of Html at anytime
+        $('#newCatalogDialog').message({
+          title: 'New Catalog',
+          dialogType: 'General',
+          width: 440,
+          height: 'auto',
+          modal: true
+        });
+      });
+
+      $('body').inforForm();
+    });
+  </script>
+</head>
+<body>
+
+    <button id="generalDialogButton" class="inforFormButton">Show</button>
+    <div id="newCatalogDialog" style="display:none">
+      <label style="width: 100px;" for="catalogName" class="inforLabel">Name</label>
+      <input type="text" name="catalogName" id="catalogName" class="inforTextbox" style="margin-bottom:4px"/>
+      <br>
+      <label style="width: 100px;" class="inforLabel" for="catalogDescription">Description</label>
+      <textarea class="inforTextArea" id="catalogDescription" style="height: 40px;"></textarea>
+      <br>
+      <select id="country1" class="inforDropDownList" >
+        <option value="8">red</option>
+        <option value="9">orange</option>
+        <option value="10">yellow</option>
+        <option value="11">green</option>
+        <option value="12">blue</option>
+        <option value="13">indigo</option>
+        <option value="14">violet</option>
+        <option value="15">black</option>
+        <option value="16">purple</option>
+        <option value="17">sage</option>
+        <option selected="" value="18">blackcolor</option>
+        <option value="19">black Light</option>
+      </select><br>
+    </div>
+</body>
+</html>

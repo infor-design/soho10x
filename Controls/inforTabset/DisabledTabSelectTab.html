@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Small Number of Tabs</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTabset.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			var tabContainer = $('#inforTabContainer').inforTabset();
+
+			//disable tab 2
+			tabContainer.tabs("option","disabled", [2]);
+			//enable all tabs
+			//tabContainer.tabs("option","disabled", []);
+
+			//Select tab 3
+			tabContainer.tabs("select",1);
+			console.log(tabContainer.tabs('option', 'selected'));
+		});
+	</script>
+</head>
+<body style='inforHidden'>
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1">Overview</a></li>
+		<li><a href="#tab2">Items</a></li>
+		<li><a href="#tab3">Notes</a></li>
+	  </ul>
+	  <div id="tab1">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+	  </div>
+	  <div id="tab2">
+		<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+	  </div>
+	  <div id="tab3">
+			<p>Morbi vitae lorem. Nulla facilisi. Phasellus convallis. Vestibulum faucibus dapibus ipsum. In convallis turpis tincidunt eros. Donec nunc tellus, faucibus ut, rutrum laoreet, porttitor id, mi. Nullam vulputate lacinia dolor. Quisque ullamcorper, nulla iaculis placerat dapibus, justo massa scelerisque nisl, in accumsan lorem turpis vitae leo. Nam in felis sodales ligula eleifend convallis. Suspendisse ornare convallis velit. Duis sit amet dolor quis ipsum tincidunt commodo. In nec est. Cras consectetuer malesuada orci. Nunc pellentesque gravida nulla. Nam lacus tellus, molestie eget, venenatis non, bibendum vitae, tellus. Aenean non sem ac turpis fermentum scelerisque. Aliquam eros nisi, sodales eu, sodales nec, gravida ac, nibh. Curabitur id neque nec massa consectetuer suscipit. Quisque vulputate orci in tortor. Quisque euismod.</p>
+	 </div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+    Reference Infor Jira Tickets:
+    HFC-1676 / HFC-1271
+-->
+<html>
+<head>
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+    <meta charset="utf-8">
+
+    <title>Infor ToolTip - Float Tests</title>
+
+    <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+    <link href="js/tooltip.css" rel="stylesheet" />
+    <style>
+        .spacer {
+            padding: 20px;
+        }
+        .top-container {
+            width: 100%;
+            position: fixed;
+        }
+        .bottom-container {
+            width: 100%;
+            position: fixed;
+            bottom: 20px;
+        }
+    </style>
+    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+    <script src="js/tooltip.js"></script>
+
+    <script>
+          $(document).ready(function () {
+            $('#topleft').inforToolTip({ placement: 'top' });
+            $('#topright').inforToolTip({ placement: 'top' });
+            $('#bottomleft').inforToolTip({ placement: 'bottom' });
+            $('#bottomright').inforToolTip({ placement: 'bottom' });
+          });
+    </script>
+</head>
+<body>
+    <div class="top-container">
+        <div class="spacer">
+            <button id="topleft" name="topleft" type="button" class="inforFormButton"
+                style="float: left;"
+                title="This tooltip is really long, and was originally placed to the top, but should now be on the right.">
+                &reg;
+            </button>
+            <button id="topright" name="topright" type="button" class="inforFormButton"
+                style="float: right;"
+                title="This tooltip is really long, and was originally placed to the top, but should now be on the left.">
+                &reg;
+            </button>
+        </div>
+    </div>
+    <div class="bottom-container">
+        <div class="spacer">
+            <button id="bottomleft" name="bottomleft" type="button" class="inforFormButton"
+                style="float: left;"
+                title="This tooltip is really long, and was originally placed to the bottom, but should now be on the right.">
+                &reg;
+            </button>
+            <button id="bottomright" name="bottomright" type="button" class="inforFormButton"
+                style="float: right;"
+                title="This tooltip is really long, and was originally placed to the bottom, but should now be on the left.">
+                &reg;
+            </button>
+        </div>
+    </div>
+</body>
+</html>

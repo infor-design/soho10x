@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor Textarea Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script>
+		$(function($) {
+		   //Globalize.culture("ar-SA");
+		   $("#toggle").toggle(function () {
+				$("#textarea1").readOnly();
+		   }, function() {
+				$("#textarea1").enable();
+		   });
+
+		   $("#textarea1").trackDirty();
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout">
+		<label class="inforLabel" for="textarea1">Normal</label>
+		<textarea class="inforTextArea" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat. Litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea>
+		<br>
+		<label class="inforLabel" for="textarea2">Readonly</label>
+		<textarea class="inforTextArea" id="textarea2" readonly="readonly">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat. Litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea>
+		<br>
+		<label class="inforLabel" for="textarea3">Disabled</label>
+		<textarea class="inforTextArea" id="textarea3" disabled="disabled">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat. Litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea>
+		<br>
+		<label class="inforLabel" for="textarea4">Row/Cols</label>
+		<textarea class="inforTextArea" id="textarea4" cols="50" rows="1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat. Litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea>
+</div>
+</body>
+</html>

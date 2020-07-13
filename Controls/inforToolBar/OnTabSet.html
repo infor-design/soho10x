@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Toolbar - Toolbar on a Tabset</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			$('#inforTabContainer').inforTabset();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1">Overview</a></li>
+		<li><a href="#tab2">Items</a></li>
+		<li><a href="#tab3">Notes</a></li>
+
+		<li><a href="#tab4">Exceptions</a></li>
+		<li><a href="#tab5">Quisque Dolor Phasellus</a></li>
+	  </ul>
+	  <div id="tab1">
+		<div class="inforToolbar">
+			<button class="inforTextButton">Test Button</button>
+			<div class=alignRight>
+				<button class="inforIconButton help"></BUTTON>
+			</div>
+		</div>
+	  </div>
+	  <div id="tab2">
+		<p>Maecenas id magna non nibh vehicula elementum. Phasellus a purus. Nunc in ipsum. Quisque mollis nisi. Vestibulum fermentum. Donec sed ligula. Morbi cursus magna eu nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sed lectus. Quisque dictum elit a velit. Nulla eleifend. Nunc condimentum nibh sed purus.</p>
+		<p>Nam semper adipiscing enim. Nulla egestas, tellus vitae tempor tempus, mauris tortor tristique dui, sit amet egestas leo mi non quam. Aliquam accumsan quam at nunc. Sed sit amet eros. Nunc orci ante, ultricies id, ultrices ac, dignissim id, mauris. Proin nisi nisl, consectetuer sit amet, blandit eu, commodo nec, sem. Mauris egestas. Proin vulputate fringilla ipsum. Proin faucibus, ante sit amet imperdiet mattis, odio velit feugiat orci, ac vestibulum tellus pede ut urna. Duis auctor mi in est. Morbi rhoncus mi. Sed euismod eros vel lorem. Suspendisse potenti.</p>
+		<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</p>
+	  </div>
+	  <div id="tab3">
+		<p>Maecenas id magna non nibh vehicula elementum. Phasellus a purus. Nunc in ipsum. Quisque mollis nisi. Vestibulum fermentum. Donec sed ligula. Morbi cursus magna eu nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sed lectus. Quisque dictum elit a velit. Nulla eleifend. Nunc condimentum nibh sed purus.</p>
+		<p>Nam semper adipiscing enim. Nulla egestas, tellus vitae tempor tempus, mauris tortor tristique dui, sit amet egestas leo mi non quam. Aliquam accumsan quam at nunc. Sed sit amet eros. Nunc orci ante, ultricies id, ultrices ac, dignissim id, mauris. Proin nisi nisl, consectetuer sit amet, blandit eu, commodo nec, sem. Mauris egestas. Proin vulputate fringilla ipsum. Proin faucibus, ante sit amet imperdiet mattis, odio velit feugiat orci, ac vestibulum tellus pede ut urna. Duis auctor mi in est. Morbi rhoncus mi. Sed euismod eros vel lorem. Suspendisse potenti.</p>
+		<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</p>
+	  </div>
+	  <div id="tab4">
+		<p>Nulla auctor. Praesent nec dolor. Vestibulum non erat. Sed molestie elit a justo. Maecenas nulla ligula, gravida et, gravida id, venenatis luctus, dui. Vivamus congue. Quisque a mauris nec urna euismod adipiscing. Curabitur nec nulla. Etiam blandit. Praesent elementum aliquam dui. Fusce in orci. Pellentesque ac lorem a odio bibendum tincidunt. Etiam fermentum neque ut arcu. </p>
+	  </div>
+	  <div id="tab5">
+		<p>Morbi porttitor porta eros. Fusce tempus. Sed tempor nulla eget metus. Nulla risus nisi, rhoncus in, varius vel, posuere sodales, nisl. Donec urna est, malesuada ac, interdum quis, elementum id, lorem. Nulla vel turpis. Morbi ornare. Integer tincidunt dapibus neque. Vestibulum sem. Nam vitae lectus.</p>
+		<p>Donec venenatis hendrerit nunc. Quisque et mi ut neque faucibus condimentum. Sed dictum molestie dui. Mauris quis mauris id dolor fringilla rhoncus. Morbi lorem enim, sagittis non, ultrices eu, lacinia eu, augue. Aenean id ante. Duis et justo. Proin metus turpis, venenatis sed, aliquet eu, placerat et, lacus. Aenean eu elit porta felis pharetra blandit. Maecenas vitae arcu at est ultricies facilisis. In nec magna. Sed aliquet volutpat lectus. Morbi placerat tellus.</p>
+		<p>Integer fermentum lorem a erat. Suspendisse potenti. Nullam semper. Nam facilisis, purus non gravida aliquet, lectus ligula volutpat nulla, vestibulum ullamcorper nulla purus sed purus. Donec at sapien. Nunc non enim. Vivamus fermentum ultrices purus. Mauris rutrum suscipit leo. Maecenas placerat. Suspendisse nunc.</p>
+		<p>Sed magna turpis, tristique non, porttitor eu, interdum in, nunc. Integer accumsan vehicula nibh. Integer magna purus, rutrum a, suscipit volutpat, bibendum at, elit. Fusce vestibulum, dolor sed tincidunt tincidunt, massa leo vehicula lorem, sed ultrices felis ante vitae orci. Phasellus ultrices sagittis risus. Etiam turpis. Nulla aliquet, sem in feugiat consectetuer, enim pede mattis elit, eu ornare pede augue eu leo. Ut quis sem. Donec risus. Maecenas dignissim neque at massa. Nam viverra velit sed risus. Integer orci. Cum sociis natoque.</p>
+	  </div>
+	</div>
+</body>
+</html>

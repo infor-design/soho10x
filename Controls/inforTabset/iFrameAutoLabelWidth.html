@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Document Detail</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+
+			function sizeIFrames(selector) {
+				selector.each(function() {
+					var $area = $(this);
+					//set the max height of this area to the bottom of the form and track any resize events...
+					handleResize($area);
+					$(window).smartresize(function(){
+						handleResize($area);
+					});
+
+					function handleResize($iFrame) {
+						var maxHeight=$(window).height()-$iFrame.offset().top-8;
+						$iFrame.css({ "margin-left": "-14px", "border": "none" });
+						$iFrame.height(maxHeight);
+						$iFrame.width($(window).width());
+					}
+				});
+			}
+
+			 $(function () {
+				$("body").inforForm(); //initializing the form plugin initializes all controls on this form.
+				$('#inforTabContainer').tabs();
+				sizeIFrames($('iframe'));
+
+				$('#inforTabContainer').tabs({
+					show: function (e, ui, newTab) {
+						sizeIFrames($(ui.panel).find("iframe"));
+					}
+				});
+			});
+	</script>
+</head>
+<body style="opacity: 0">
+	<form id="form1">
+	<div class="inforModuleContentArea">
+		<div id="inforTabContainer" class="inforTabContainer inforScrollableArea">
+			<ul class="inforTabset">
+				<li><a id="TabMainView" href="#DivMainView">xMain View</a></li>
+				<li><a id="TabDocumentDetail" href="#DivDocumentDetail">xDocument Detail</a></li>
+				<li><a id="TabTaxInformation" href="#DivTaxInformation">xTax Information</a></li>
+				<li><a id="TabAccountingDistributions" href="#DivAccountingDistributions">xAccounting
+					Distributions</a></li>
+				<li><a id="TabCurrency" href="#DivCurrency">xCurrency</a></li>
+				<li><a id="TabCustomFields" href="#DivCustomFields">xCustomFields</a></li>
+				<li><a id="TabLineAccountingTax" href="#DivLineAccountingTax">xLine Accounting & Tax</a></li>
+				<li><a id="TabLineDetail" href="#DivLineDetail">xLine Detail</a></li>
+				<li><a id="TabLineCustomFields" href="#DivLineCustomFields">xLine Custom Fields</a></li>
+				<li><a id="TabDocumentAttachments" href="#DivDocumentAttachments">xDocument Attachments</a></li>
+			</ul>
+			<div id="DivMainView">
+			</div>
+			<div id="DivDocumentDetail">
+			</div>
+			<div id="DivTaxInformation">
+			</div>
+			<div id="DivAccountingDistributions">
+			</div>
+			<div id="DivCurrency">
+			</div>
+			<div id="DivCustomFields">
+			</div>
+			<div id="DivLineAccountingTax">
+			</div>
+			<div id="DivLineDetail">
+				<div>
+					jefke</div>
+			</div>
+			<div id="DivLineCustomFields">
+				<iframe name="LineCustomFields" id="LineCustomFields" src="Content.html" ></iframe>
+			</div>
+			<div id="DivDocumentAttachments">
+				<div style="background-color: red">
+					jefke</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Splitter - 3 Pane Splitter Example (Work in Progress)</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<link href="css/inforSplitter.css" rel="stylesheet" />
+	<script src="js/inforSplitter.js"></script>
+
+	<script>
+		$(function() {
+			//Globalize.culture("ar-SA");
+			$(".inforSplitter").inforSplitter({savePosition: false});
+		});
+	</script>
+
+	<style>
+		p {
+			text-align: center;
+			font-size: 1.4em;
+		}
+	</style>
+</head>
+<body>
+<div class="inforSplitter">
+	<div class="leftPane" style="width:32%; background-color: #ffdc00 ">
+		<p>Pane 1</p>
+	</div>
+	<div class="rightPane" style="width:68%">
+		<div class="inforSplitter">
+			<div class="leftPane" style="width:50%; background-color: #3ec7f4  ">
+				<p>Pane 2</p>
+			</div>
+			<div class="rightPane"  style="width:50%; background-color: #2db329">
+				<p>Pane 3</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

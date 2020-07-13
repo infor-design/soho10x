@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Textbox Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../lib/jquery-1.7.2.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		 $(function($) {
+			//Globalize.culture("es-ES");
+			$("body").inforForm();
+		});
+	</script>
+</head>
+
+<body style="margin:10px" class="inforHidden">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	  <label class="inforLabel">Normal Field</label>
+	  <input type="text" class="inforTextbox backgroundColor"  id="field1" /><br>
+
+	  <label class="inforLabel" >Read Only Field with Back Color</label>
+	  <input type="text" id="readonlyField" name="readonlyField" readonly class="inforTextbox backgroundColor" value="Read Only Value"/><br>
+
+	  <label class="inforLabel" >Disabled Field with Back Color</label>
+	  <input type="text" id="disabledField" name="disabledField" disabled class="inforTextbox disabled backgroundColor" value="Disabled Value"/><br>
+
+	  <label class="inforLabel" for="disabledField">Numeric Field with Back Color - Right Aligned</label>
+	  <input type="text" id="disabledField" name="disabledField" readonly class="inforTextbox numericOnly backgroundColor" value="1023"/><br>
+
+	   <label class="inforLabel" for="disabledField">DropDown List</label>
+	   <select class="inforDropDownList backgroundColor" id="dropDown1" readonly>
+			<option value="al" selected="selected">Alabama</option>
+			<option value="az">Arizona</option>
+			<option value="ar">Arkansas</option>
+		</select>
+	</div>
+</body>
+</html>

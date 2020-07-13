@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Infor DateField over Three Fields</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDateField.js"></script>
+
+	<script>
+
+		$(function($) {
+
+			//Three input date field..
+			$("#timePart").inforDateField({showTimeInput: true,
+										   dateFormat: 'HH:mm',
+										   timeFormat: "HH:mm",
+										   altField: "#datePart",
+										   altFormat: "yyyy/MM/dd",
+										   beforeShow: function(input, inst) {
+											  var date = new Date($("#datePart").val()),
+												  timeSplit = $("#timePart").val().split(":");
+
+												  if (date && $("#timePart").val()!="" && timeSplit[0]!="Nan") {
+													 date.setHours(parseInt(timeSplit[0], 10));
+													 date.setMinutes(parseInt(timeSplit[1], 10));
+													 $("#timePart").datepicker("setDate", date);
+												  }
+											}});
+
+			$("#datePart").insertBefore("#timePart");
+			$("body").inforForm();
+		});
+	</script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel">Start Date</label>
+		<input class="inforTextbox" style="width:72px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" value="2013/07/08" id="datePart" type="text" >
+		<input class="inforDateField required" style="width:45px; padding-right: 0;" id="timePart" value="11:19" type="text" ><br>
+	</div>
+</body>
+</html>
+

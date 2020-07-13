@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta charset='utf-8'>
+
+  <title>Infor Dialog Error Handler</title>
+  <link href='../Release/inforControlsCombined.css' rel='stylesheet'>
+  <script src='../Release/jquery-1.11.1.min.js'></script>
+  <script src='../Release/jquery-ui-1.10.4.custom.min.js'></script>
+  <script src='../Release/inforControlsCombined.js'></script>
+
+  <script>
+    $(function () {
+      var msg = '';
+
+      for (var i = 0; i < 200; i++) {
+        msg += 'The stored procedure DBSwact..ssw_sel_favoritesx does not exist.';
+      }
+
+      $('body').inforMessageDialog({
+        title: 'An unexpected problem has occurred.',
+        shortMessage: 'Please contact your system administrator with the following information. ',
+        detailedMessage: msg,
+        dialogType: 'Error',
+        close: function() {
+          $(this).closest('.inforDialog').find('.detailedMessage').show();
+          $('#detailMessage').appendTo('body').hide();
+        },
+        buttons: [ {  text: 'Close',
+                  isDefault: true,
+                  click: function() {
+                    $(this).modal('close');
+                  }}
+              ]
+      });
+
+    });
+  </script>
+</head>
+<body>
+    <div id='detailMessage' style='margin-top:10px;display:none'>
+      <textarea style='width: 480px;height:400px; color: #666666; margin-left: 30px;margin-top: 4px;' class='inforTextArea' readonly>Date and Time:         6/14/2012 9:38:56 AM
+Machine Name:          BEBRDWDENA2
+Process User:          IIS APPPOOL\DefaultAppPool
+Remote User:           WDNYR
+Remote Address:        fe80::cc01:dc77:4346:fc73%12
+Remote Host:           fe80::cc01:dc77:4346:fc73%12
+URL:                   http://bebrdwdena2/WebSiteB/provokeexception/provokeexception.aspx
+
+NET Runtime version:   4.0.30319.239
+Application Domain :   /LM/W3SVC/1/ROOT/WebSiteB-4-129841330946525316Assembly Codebase:     C:/Windows/Microsoft.Net/assembly/GAC_64/System.Data/v4.0_4.0.0.0__b77a5c561934e089/System.Data.dll
+Assembly Full Name:    System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+Assembly Version:      4.0.0.0
+Assembly Build Date:   5/17/2011 11:50:13 AM
+
+Exception Type:        System.InvalidOperationException
+Exception Message:     The stored procedure 'DBSwact..ssw_sel_favoritesx' doesn't exist.
+Exception Source:      System.Data
+Exception Target Site: DeriveParameters
+
+---- Stack Trace ----
+   System.Data.SqlClient.SqlCommand.DeriveParameters()
+     (unknown file): N 2899043
+   System.Data.SqlClient.SqlCommandBuilder.DeriveParameters(command As SqlCommand)
+     (unknown file): N 00241
+   SSW.DataAccess.SQLServer.SqlHelperParameterCache.DiscoverSpParameterSet(connection As IDbConnection, spName As String, includeReturnValueParameter As Boolean)
+     (unknown file): N 00155
+   SSW.DataAccess.SQLServer.SqlHelperParameterCache.GetSpParameterSetInternal(connection As IDbConnection, spName As String, includeReturnValueParameter As Boolean)
+     (unknown file): N 00213
+   SSW.DataAccess.SQLServer.SqlHelperParameterCache.GetSpParameterSet(connectionString As String, spName As String, includeReturnValueParameter As Boolean)
+     (unknown file): N 00123
+   SSW.Portal.BLL.Portal.ProvokeException(userID As String, languageCode As String, serverID As Int32)
+     Portal.cs: line 0822, col 13, IL 0025
+   SSW.PortalMain.Web.provokeexception.btnProvokeException1_Click(sender As Object, e As EventArgs)
+     provokeexception.aspx.cs: line 0024, col 13, IL 0113
+   System.Web.UI.WebControls.Button.RaisePostBackEvent(eventArgument As String)
+     (unknown file): N 00154
+   System.Web.UI.Page.ProcessRequestMain(includeStagesBeforeAsyncPoint As Boolean, includeStagesAfterAsyncPoint As Boolean)
+     (unknown file): N 03707
+
+
+---- ASP.NET Collections ----
+
+Form
+
+  __EVENTVALIDATION             /wEWBALEuPLMCwLq3vTSDgLq3rjBBALq3sycDfGXUrxXRkVvHLu/24AB9YUknQzSLjD6hLAs0+LDbvN9
+  btnProvokeException1          Provoke Exception 1: Missing stored procedure
+
+Cookies
+
+  SSWPortal                     LANGUAGE_CODE=EN&DATE_FORMAT=MDY&NUMERIC_FORMAT=CDF&DBSERVER_ID=1&DEFAULT=NOTSET&USER_ID=WDNYR
+  ASP.NET_SessionId             rvdha4m3dwrtoxoopctjq0jb
+  InforSmartStreamWeb           13406FBA1A839D0AE4B0A81C3D192CD473856E973D6DD0D8B28ACA51874A38E2C6F78B9E37438B1CCDCF6D04759816F9A76F207B1AA5BB8D673EE1DE75B033284B1FE2ACD0BB5705FD5A0C0110B10EDFDFF4F5330F64F8E378C896337AF507C3A3D4DBFAB6DD59DC5D17BCB72442D4505367C5AA3A84D00FB9F4B0EEFD978933DB0422E5E0E33B8896DD6B88DDC01A27
+
+Session
+
+  USER_ID                       WDNYR
+  LANGUAGE_CODE                 EN
+  DATE_FORMAT                   MDY
+  DECIMAL_SEP                   .
+  THOUSANDS_SEP                 ,
+  DBSERVER_ID                   1
+  DEFAULT                       NOTSET
+  INVALID_LOGON_ATTEMPTS        0
+  CONN_AUTH_USER                Data Source='BRUDEVSQL70R';UID='WDNYR';PWD='password';Database='DBSctlg';WorkStation ID='DBSStream';Pooling=false
+  TRACING                       False
+  TRACE_FILE
+  DEPLOYMENT_MODE               Standalone
+  UNIFIED_LOGON                 SSW.Platform.Model.UnifiedLogonUserInfo
+  REDIRECTED_URL                Portal.aspx?EntryPoint=LogonOK
+
+Application
+
+  EN                            Y
+  FR                            Y
+  NL                            Y
+  ES                            Y
+  IT                            Y
+  PT                            Y
+  UDAK                          SSW.LedgerPolicy.Model.UdakInfo
+  fundsInstalled                Y
+  projectsInstalled             Y
+  suppliesInstalled             Y
+  UNIFIED_LOGON                 SSW.Platform.Model.UnifiedLogonServerInfo
+
+ServerVariables
+
+  APPL_MD_PATH                  /LM/W3SVC/1/ROOT/WebSiteB
+  APPL_PHYSICAL_PATH            C:\visual studio 2010 Projects\SSW.Portal\SSW.PortalMain.Web\
+  AUTH_TYPE                     Forms
+  AUTH_USER                     WDNYR
+  LOGON_USER                    WDNYR
+  REMOTE_USER                   WDNYR
+  CONTENT_LENGTH                258
+  CONTENT_TYPE                  application/x-www-form-urlencoded
+  GATEWAY_INTERFACE             CGI/1.1
+  HTTPS                         off
+  INSTANCE_ID                   1
+  INSTANCE_META_PATH            /LM/W3SVC/1
+  LOCAL_ADDR                    fe80::cc01:dc77:4346:fc73%12
+  PATH_INFO                     /WebSiteB/provokeexception/provokeexception.aspx
+  PATH_TRANSLATED               C:\visual studio 2010 Projects\SSW.Portal\SSW.PortalMain.Web\provokeexception\provokeexception.aspx
+  REMOTE_ADDR                   fe80::cc01:dc77:4346:fc73%12
+  REMOTE_HOST                   fe80::cc01:dc77:4346:fc73%12
+  REMOTE_PORT                   49892
+  REQUEST_METHOD                POST
+  SCRIPT_NAME                   /WebSiteB/provokeexception/provokeexception.aspx
+  SERVER_NAME                   bebrdwdena2
+  SERVER_PORT                   80
+  SERVER_PORT_SECURE            0
+  SERVER_PROTOCOL               HTTP/1.1
+  SERVER_SOFTWARE               Microsoft-IIS/7.5
+  URL                           /WebSiteB/provokeexception/provokeexception.aspx
+  HTTP_CACHE_CONTROL            no-cache
+  HTTP_CONNECTION               Keep-Alive
+  HTTP_CONTENT_LENGTH           258
+  HTTP_CONTENT_TYPE             application/x-www-form-urlencoded
+  HTTP_ACCEPT                   application/x-ms-application, image/jpeg, application/xaml+xml, image/gif, image/pjpeg, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*
+  HTTP_ACCEPT_ENCODING          gzip, deflate
+  HTTP_ACCEPT_LANGUAGE          en-US
+  HTTP_COOKIE                   SSWPortal=LANGUAGE_CODE=EN&DATE_FORMAT=MDY&NUMERIC_FORMAT=CDF&DBSERVER_ID=1&DEFAULT=NOTSET&USER_ID=WDNYR; ASP.NET_SessionId=rvdha4m3dwrtoxoopctjq0jb; InforSmartStreamWeb=13406FBA1A839D0AE4B0A81C3D192CD473856E973D6DD0D8B28ACA51874A38E2C6F78B9E37438B1CCDCF6D04759816F9A76F207B1AA5BB8D673EE1DE75B033284B1FE2ACD0BB5705FD5A0C0110B10EDFDFF4F5330F64F8E378C896337AF507C3A3D4DBFAB6DD59DC5D17BCB72442D4505367C5AA3A84D00FB9F4B0EEFD978933DB0422E5E0E33B8896DD6B88DDC01A27
+  HTTP_HOST                     bebrdwdena2
+  HTTP_REFERER                  http://bebrdwdena2/WebSiteB/provokeexception/provokeexception.aspx
+  HTTP_USER_AGENT               Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; InfoPath.3)
+  </textarea>
+    </div>
+</body>
+</html>

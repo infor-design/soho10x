@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Infor Message Dialog - Minimizable</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      $('#commentsButton').click(function () {
+        //Invoke the dialog on it
+        $('#minimizableDialog').message({
+          title: 'New Catalog',
+          dialogType: 'General',
+          minimizable: true,
+          modal: false
+        });
+      });
+    });
+  </script>
+</head>
+<body class="inforApplicationPadding">
+    <p>This is a sample shows a minimizable dialog</p>
+    <button id="commentsButton" class="inforFormButton">Show</button>
+
+    <div id="minimizableDialog" style="display:none;">
+        <label style="width: 100px" class="inforLabel" for="catalogDescription">Catalog Description</label><br>
+        <textarea class="inforTextArea" id="catalogDescription" style="height: 83px;margin-bottom: 15px; padding-bottom: 40px; padding-right: 33px; width: 350px;"></textarea>
+    </div>
+
+</body>
+</html>

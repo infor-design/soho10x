@@ -1,0 +1,605 @@
+/* Infor TabSet
+----------------------------------*/
+.inforTabContainer {
+   height: 100%;
+   overflow: hidden;
+}
+
+.ui-tabs, .inforTabset  {
+   overflow:hidden;
+   margin-top: 2px;
+}
+
+.inforTabset {
+ list-style: none;
+ margin: 0px;
+ padding: 0px;
+ border-bottom: 1px solid #b3b3b3;
+ height: 26px;
+ position:relative;
+ overflow: hidden;
+ width: auto;
+}
+
+.ui-tabs-panel > p {
+	margin: 20px 20px;
+}
+
+/*The Divider Between the Tabs */
+.inforTabset li {
+	color: #444;
+	background-color: #ebebeb;
+	display: inline-block;
+	height: 21px;
+	min-width: 45px;
+	padding-top: 5px;
+	border-radius: 3px 3px 0 0;
+	height: 19px;
+	border: 1px solid transparent;
+}
+
+.inforTabset li:first-child {
+	 margin-left: 0 !important;
+}
+
+/*The Unfocused Tabs*/
+.inforTabset a {
+   float: left;
+   padding:  0px 10px 0px;
+   color: #444;
+   text-decoration: none;
+   white-space: nowrap;
+   margin-top: 1px;
+   cursor: default;
+   font-size: 1.2em;
+   cursor: pointer;
+}
+
+.inforTabset li:hover {
+	cursor: default;
+	background-color: #f2f2f2;
+	-moz-transition-timing-function: ease;
+	-moz-transition-duration: 150ms;
+	-moz-transition-property: background-color;
+	border-radius: 3px 3px 0px 0;
+}
+
+.inforTabset li:hover a{
+	color: #333333;
+}
+
+.inforTabset li.ui-state-focus{
+	border: 1px solid #13A3F7;
+}
+
+.inforModuleTabs li.ui-state-focus{
+	border-bottom: 3px solid #13A3F7 !important;
+}
+
+.inforTabset li.ui-state-disabled.ui-state-focus{
+	border: 1px solid transparent;
+}
+
+.inforTabset li.ui-state-focus a {
+	color: #13A3F7;
+}
+
+.inforModuleHeaderRight:hover {
+	background-color: transparent !important;
+}
+
+.inforTabset a:focus {
+	border-radius: 3px;
+}
+
+/*UnFocus and Selected Tab*/
+.ui-tabs-selected, .ui-tabs-selected:hover  {
+	background-color: #13A3F7 !important;
+	cursor: default;
+}
+
+.ui-tabs-selected a{
+ color: white !important;
+}
+
+/* The Hidden Tabs*/
+.ui-tabs-hide {
+   display: none;
+   background-color: #fff
+}
+
+.ui-state-disabled {
+	opacity: 0.6;
+	filter:alpha(opacity=60);
+	background-color: transparent !important;
+}
+
+.ui-state-disabled a{
+	color: #444 !important;
+}
+
+/* The Tab Panel Area*/
+.ui-tabs-panel {
+   height: 100%;
+   background: #f7f7f7;
+}
+
+.inforModuleTabs .ui-tabs-panel {
+   height: 100%;
+   background: white;
+}
+
+#rightPane .ui-tabs-panel {
+   padding: 10px;
+}
+
+/* Tab Overflow Button */
+.inforTabButton {
+  background-color: #ebebeb;
+  border-left: 2px solid white;
+  border-radius: 3px 0 0;
+  float: right;
+  margin: 0 0 0 -75px;
+  position: relative;
+  right: 0;
+  top: -27px;
+}
+
+.inforTabButton button {
+	vertical-align: middle;
+	margin: 0;
+}
+
+.inforModuleTabs > .inforTabButton {
+	height: 29px;
+    top: -30px;
+}
+
+.inforMoreButton {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAJklEQVR42mOcOXPmfwY8gBFE4FKUnp7OyAjjoCsCSWLoAClCVwgA5NgQYhsZMMMAAAAASUVORK5CYII=") no-repeat scroll 98% 12px transparent;
+	background-position: 89% 11px;
+	background-color: ##EBEBEB;
+	border: medium none;
+	color: #444;
+	height: 26px;
+	border-radius: 3px 3px 0 0;
+	padding: 0px 5px 0;
+	line-height: 27px;
+	cursor: pointer;
+	width: 54px;
+	margin-right: 1px;
+	text-indent: -7px;
+}
+
+.inforMoreButton:hover {
+	background-color: #f2f2f2;
+}
+
+.inforMoreButton:hover a {
+	background-color: #333333;
+}
+
+.inforModuleTabs > .inforTabButton > .inforMoreButton {
+	color: #333333;
+    font-size: 1.6em;
+    height: 29px;
+	text-indent: -11px;
+	margin-right: 1px;
+    width: 51px;
+	border-bottom: 3px solid transparent;
+	background-position: 98% 12px;
+}
+
+.inforModuleTabs > .inforTabButton > .inforMoreButton:hover {
+  border-bottom: 3px solid #444 !important;
+}
+
+.inforModuleTabs > .inforTabButton > .inforMoreButton:hover a{
+    color: #333333;
+}
+
+/* Tab Close Button */
+.inforTabCloseButton {
+	visibility: hidden;
+	opacity: 0;
+	float: right;
+	height: 11px;
+	left: -1px;
+	margin-top: 6px;
+	padding-left: 6px;
+	width: 10px;
+	border: none;
+	background-color: transparent;
+}
+
+.inforNormalTabs > li.ui-state-active > .inforTabCloseButton {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAN0lEQVQY02P4//8/AzGYgRyF6kDsgMR3gIphKARJNEAl1aFsB1xWwxQ0IJtGtkKirSbaM9QJRwAqODK4Un8IXAAAAABJRU5ErkJggg==")  no-repeat scroll 0 2px transparent;
+}
+
+.inforNormalTabs > li.ui-state-active > .inforTabCloseButton:hover {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAZklEQVQY02P4//8/AxAzAnEMEK8G4mdQvBoqBpJjgClq+I8bgOQYGaC6/u94/Pd/58XfcFkQGyQGBTEMUCvAEsKLv4MlQRjERtK4mgHqnv8wU0EKYBqQwDOSFBJtNdGeITp4iApwANLMY5zrqGg4AAAAAElFTkSuQmCC")  no-repeat scroll 0 2px transparent;
+	 box-shadow: none;
+    height: 20px;
+}
+
+.inforNormalTabs > li.ui-state-active > .inforTabCloseButton span {
+    background: none;
+}
+
+.inforNormalTabs > li.ui-state-active > .inforTabCloseButton:active {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAZklEQVQY02P4//8/AxAzAnEMEK8G4mdQvBoqBpJjgClq+I8bgOQYGaC6/u94/Pd/58XfcFkQGyQGBTEMUCvAEsKLv4MlQRjERtK4mgHqnv8wU0EKYBqQwDOSFBJtNdGeITp4iApwANLMY5zrqGg4AAAAAElFTkSuQmCC")  no-repeat scroll 0 2px transparent;
+}
+
+.ui-state-hover .inforTabCloseButton{
+	opacity: 1;
+	visibility: visible;
+	transition: visibility 0s, opacity 1s linear;
+	-moz-transition: visibility 0s, opacity 1s linear;
+}
+
+.ui-tabs-selected .inforTabCloseButton{
+	opacity: 1;
+	visibility: visible;
+}
+
+.inforAddTabButton{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA/0lEQVR42r2U4QqCMBDHfRgfQwgEX1HoMSL6Wiu/qn0KKp8hWn5T0rV/bHKI02mjPxzMu9vPnd7O8/6lzXYXSVtLS6W9pQm1hi+aA/KlMQUYM+T4U7BA2gMb9uworre7eHIu2rYVENbwIaagyA3GTvaFpVkumqYRJiGGHAL1h4BMw/rSZfZFoKwPC3WZQyczAZFLyg8pMIYT32dIJiCEPSoeU2AB56ssZwOxR8ULCqzg1OVatEz3AuxRzxUFcjjrunYGvLgu2flPcds2tLGz/GwNRO5gY5OrxxdcPW4cEnQ4HNipGw5aejggRu7xymZ8JRZtk0yOr5EBKxYP2F/1AYOcqGFSHymuAAAAAElFTkSuQmCC") no-repeat scroll 0 0 transparent;
+	border-width: 0;
+	height: 20px;
+	position: relative;
+	top: -16px;
+	width: 20px;
+	cursor: pointer;
+}
+
+.inforAddTabButton:hover, .inforAddTabButton:active {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABDUlEQVR42r2UOwrCQBCGPUyOERACuYtg6Qkk2Ih1QDBY6A0MIlaBtLZWqYKPTkgVSGJY95ddGUPeLv4wsJnHxw6ZncHgXxqNJya3JbcTtyc3Js7wmV1AGjdPAOoMOVoTTOf2QMHUmjN3f2RheGF5njMIZ/gQE1Dk6nU3e8NWzoalacaqhBhyCFQrA3oSVpRssygC9YowQ7ZZdrMqIHJJ+wYF2nDu3ENpi1VACDUiblNgAOf1du8MRI2IBxSYwJll2RegySDUiO+EAiM44zhWBjyrbln5T1E7NnSwnfW2NRC5pYNNnl7U4+lFlUuCLgdrtvgsBym5HBAj73jYZn35LcbGb1xfNQuW9V6wv+oFPX8mOvlR4z0AAAAASUVORK5CYII=");
+}
+
+.inforModuleContentArea > .inforTabContainer
+{
+	margin-top: 0px;
+}
+
+.inforHiddenTab {
+	display: none !important;
+}
+
+html[dir="rtl"] .inforTabset li {
+	float: right;
+}
+
+html[dir="rtl"] .inforTabButton {
+	float:left;
+}
+
+html[dir="rtl"] .ui-tabs-paging-next {
+   float: left !important;
+}
+
+html[dir="rtl"] .ui-tabs-paging-prev {
+   float: right !important;
+}
+
+html[dir="rtl"] .inforModuleTabs .inforModuleHeaderRight {
+	padding: 14px 1px;
+}
+
+/*Session aka Module Tabs*/
+ul.inforModuleTabs {
+	height: 33px;
+}
+
+.inforModuleTabs > li a {
+	font-size: 1.6em;
+	font-family:  Helvetica, Arial, sans-serif;
+	color: #444 !important;
+	padding: 5px 8px 0 10px;
+}
+
+.inforModuleTabs > li a:active {
+	background-color: transparent;
+}
+
+.inforModuleTabs > li.ui-tabs-selected a {
+	font-size: 1.6em;
+	padding-top: 5px;
+}
+
+.inforModuleTabs > li > a:focus {
+	height: 33px;
+	margin-top: 0;
+	padding-top: 6px;
+}
+
+.inforModuleTabs > .ui-tabs-selected a {
+	color: #13a3f7 !important;
+}
+
+.inforModuleTabs > .ui-tabs-selected a:focus {
+	height: 100%;
+	margin: 0;
+	padding-top: 6px;
+}
+
+.inforModuleTabs > .inforTabset li:hover, .inforModuleTabs > .inforTabset li.ui-state-focus {
+	background-color: transparent !important;
+	border-bottom: 3px solid #444;
+}
+
+.inforModuleTabs > .inforTabset li:hover a, .inforModuleTabs > .inforTabset li.ui-state-focus a {
+	color: #444 !important;
+}
+
+.inforModuleTabs > .ui-tabs-selected, .inforModuleTabs > .ui-tabs-selected:hover  {
+	background-color: transparent !important;
+	border-bottom: 3px solid #13a3f7 !important;
+	border-radius: 3px 3px 0 0;
+}
+
+.inforModuleTabs > .inforTabset li.ui-tabs-selected:hover a, .inforModuleTabs > .inforTabset li.ui-tabs-selected.ui-state-focus a {
+	color: #13A3F7 !important;
+}
+
+.inforModuleTabs > ul > li {
+	border-bottom: 3px solid transparent;
+  background-color: transparent;
+	height: 30px;
+	padding: 0;
+	margin-left: 11px;
+}
+
+.inforTabCloseButton {
+	height: 11px;
+	padding-left: 0;
+	width: 11px;
+	position: relative;
+	left: -6px;
+	margin-left: -1px;
+	margin-right: -4px;
+	top: -7px;
+	cursor: pointer;
+}
+
+.inforTabCloseButton span {
+	display: block;
+    height: 9px;
+    width: 6px;
+	opacity: .40;
+	filter: alpha(opacity=40);
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGAQAAAADIt9LlAAAAAnRSTlMAAQGU/a4AAAARSURBVGjeYzBgMGA4A4RAGgAOHAJZRACDbAAAAABJRU5ErkJggg==")   no-repeat scroll 0 2px transparent;
+}
+
+.inforModuleTabs .inforTabCloseButton{
+	left: -2px;
+	margin-left: -3px;
+	margin-right: -4px;
+	top: -1px;
+}
+
+.inforModuleTabs .inforModuleDropDownButton {
+	position: relative;
+	left: 2px;
+	padding: 0;
+	margin: 0;
+}
+
+.inforTabCloseButton:hover {
+	background-color: #e0e0e0;
+	box-shadow: 0 1px #a2a2a2;
+}
+
+.inforTabCloseButton:hover span {
+	opacity: .65;
+	filter: alpha(opacity=65);
+}
+
+.inforTabCloseButton:active {
+	background-color: #e0e0e0;
+	box-shadow: 0 1px #a2a2a2;
+}
+
+.inforTabCloseButton:active span {
+	opacity: .80;
+	filter: alpha(opacity=80);
+}
+
+.inforModuleTabs .inforTabHeaderEditor {
+	display: inline;
+	left: 5px;
+	top: 5px;
+	margin-left: -2px;
+}
+
+/*vertical Tabs*/
+.inforVerticalTabs {
+	width: 100%;
+	display: inline-block;
+}
+
+.inforVerticalTabs > .ui-tabs-panel {
+  border: 1px solid #cccccc;
+  background-color: white;
+  border-radius: 0px 3px 3px 3px;
+  margin: 10px 3px;
+  z-index: 1;
+  left: -1px;
+  padding: 0 20px;
+  width: auto;
+  position: relative;
+}
+
+.inforVerticalTabs > ul > .ui-tabs-selected  {
+	background-color: white  !important;
+	border-right: 1px solid white;
+	position: relative;
+	z-index: 2;
+}
+
+.inforVerticalTabs > ul > .ui-tabs-selected > a  {
+	color: #13A3F7  !important;
+	border-left: 3px solid #13A3F7;
+	text-indent: 17px;
+}
+
+.inforVerticalTabs > ul {
+	display: inline-block;
+	list-style: none outside none;
+	width: auto;
+	z-index: 2;
+	float: left;
+	padding-left: 0;
+}
+
+.inforVerticalTabs > ul > li {
+	background-color: #E6E6E6;
+	border-bottom: 1px solid #CCCCCC;
+	border-radius: 0 0 0 0;
+	border-right: 1px solid #CCCCCC;
+	height: 30px;
+}
+
+.inforVerticalTabs > ul > li {
+	 border-top: 1px solid #CCCCCC;
+}
+
+.inforVerticalTabs > ul > li:hover {
+	background-color: #E1E1E3;
+}
+
+.inforVerticalTabs > ul > li:hover > a {
+	border-left: 3px solid #686B73;
+	text-indent: 17px;
+}
+
+.inforVerticalTabs > ul > .ui-tabs-selected:hover > a {
+	border-left: 3px solid #13A3F7;
+	text-indent: 17px;
+}
+
+.inforVerticalTabs > ul > li a {
+	color: #444;
+	float: left;
+	font-size: 1.3em;
+	line-height: 28px;
+	margin: 1px -2px 1px 0;
+	text-decoration: none;
+	text-indent: 17px;
+	border-left: 3px solid transparent;
+}
+
+.inforVerticalTabs  h2 {
+	border-bottom: 1px solid #CCCCCC;
+	color: #13A3F7;
+	font-size: 2em;
+	font-weight: normal;
+	margin-bottom: 15px;
+	margin-top: 18px;
+	padding-bottom: 9px;
+}
+
+/*Nested Tab Styling*/
+
+.inforTabset.inforNormalTabs.level2 > .ui-tabs-selected {
+	background-color: #686B73 !important;
+}
+
+.inforTabset.inforNormalTabs.level3 > .ui-tabs-selected {
+	background-color: white !important;
+	border-top: 3px solid #13A3F7;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #b3b3b3;
+	border-bottom: none;
+}
+
+.inforTabset.inforNormalTabs.level3 li {
+	 height: 19px;
+}
+
+.inforTabset.inforNormalTabs.level3 li.ui-state-active {
+	 height: 20px;
+}
+
+.inforTabset.inforNormalTabs.level3 > .ui-tabs-selected > a{
+	color: #333333 !important;
+}
+
+.inforTabset.level3{
+	overflow: visible !important;
+}
+
+.inforTabset.level3 li:first-child{
+	margin-left: 4px !important;
+}
+
+.inforTabCloseButton .inforBusyIndicator{
+	display: inline-block;
+	height: 16px;
+	left: -1px;
+	position: relative;
+	top: 3px;
+	width: 16px;
+}
+
+.inforTabset li:hover .inforDragHandle{
+	visibility: visible;
+}
+
+.inforTabset li.ui-state-active .inforDragHandle {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAPCAYAAAAs9AWDAAAAGklEQVR42mNgwAIYQcR/IIALAAED0WCEaAcAokcUBumqKYgAAAAASUVORK5CYII=");
+}
+
+.inforModuleTabs li.ui-state-active .inforDragHandle {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAPCAYAAAAs9AWDAAAAGUlEQVQoU2PACYQXf/8Pw1AhUsBw187AAACTvSgVj6lbUwAAAABJRU5ErkJggg==");
+}
+
+.inforModuleTabs .inforDragHandle {
+	background-position: -1px 8px;
+	height: 24px !important;
+}
+
+.inforTabset .inforDragHandle {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAPCAYAAAAs9AWDAAAAHklEQVR42mNgwAIYQcTmzZv/wwR8fX0ZGYgGI0Q7AGzXFAYcKpT1AAAAAElFTkSuQmCC");
+	background-repeat: no-repeat;
+	cursor: move;
+	display: inline-block;
+	float: left;
+	height: 15px;
+	left: 3px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 5px;
+	visibility: hidden;
+}
+
+.inforDragHandle + a {
+	padding-left: 5px;
+}
+
+
+.inforDragPlaceholder{
+	background-color:#e5e5e5;
+	height: 26px;
+	min-width: 50px;
+}
+
+
+.inforTabset li.downArrow {
+	opacity: 1;
+	filter:alpha(opacity=100);
+	padding-right: 11px;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAJElEQVQYV2PYvHnzf0KYAQSwScAwWAEMEFQAAwQVwACmAgYGANtfTVkXrUkfAAAAAElFTkSuQmCC") no-repeat scroll 94% center transparent !important;
+}
+
+.inforTabset li.downArrow.ui-tabs-selected {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAJElEQVQYV2MQXvz9PyHMAALYJGAYrAAGCCqAAYIKYABTAQMDALfEQs2pG1ekAAAAAElFTkSuQmCC") no-repeat scroll 94% 15px transparent !important;
+}
+
+.ui-state-disabled > a {
+    cursor: default;
+}
+
+.inforTabset .badge {
+    margin-left: 8px;
+}

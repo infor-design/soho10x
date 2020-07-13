@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Infor Message Dialog Box</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	<script src="../inforMessageDialog/js/inforMessageDialog.js"></script>
+
+	<script>
+		//Handle the dialog
+		function openDialog() {
+
+			var grid = null;
+			var grid_data = [];
+			var grid_columns = [];
+			var grid_newRowKey = 'ROWORDER';
+			var grid_gridDataKey = 'ROWORDER';
+
+			var grid_newRowTemplate = { ROWORDER: -1, ROWID: '', FIRSTNAME: '', LASTNAME: '', AGE: '', HEIGHT: '', STARTDATE: '', STATE: '', NOTES: '' };
+			grid_data.push({ ROWORDER: '1', ROWID: '1', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '2', ROWID: '2', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '3', ROWID: '3', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '4', ROWID: '4', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '5', ROWID: '5', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '6', ROWID: '6', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '7', ROWID: '7', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '8', ROWID: '8', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '9', ROWID: '9', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '10', ROWID: '10', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			grid_data.push({ ROWORDER: '11', ROWID: '11', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+
+			grid_columns.push({ id: 'ROWORDER', name: 'Order', field: 'ROWORDER', maxWidth: 20, width: 100, formatter: TextCellFormatter, filterType: IntegerFilter });
+			grid_columns.push({ id: 'LASTNAME', name: 'Last Name', field: 'LASTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+			grid_columns.push({ id: 'FIRSTNAME', name: 'First Name', field: 'FIRSTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: DateFilter });
+
+			var options = {
+				columns: grid_columns,
+				dataset: grid_data,
+				idProperty: 'ROWORDER',
+				editable: true,
+				showCheckboxes: true,
+				showDrillDown: false,
+				showStatusIndicators: true,
+				showGridSettings: true,
+				showFilter: true,
+				enableCellNavigation: true,
+				fillHeight: false
+			};
+
+			grid = $('#grid1').inforDataGrid(options);
+
+			var dialog = $('#dialog');
+
+			dialog.message({
+				title: 'Grid on a Dialog',
+				dialogType: 'General',
+				innerPadding: false,
+				width:650,
+				autoFocus: false,
+				buttons: [{
+					text: Globalize.localize('Ok'),
+					click: function () {
+						$(this).modal('close');
+					},
+					isDefault: true
+				}]
+			});
+
+			dialog.on('close', function() {
+				alert('close on dialog called');
+        console.log(this)
+			});
+
+			//Focus first editable cell
+			grid.focus(0);
+		}
+
+		$(function () {
+			$('.inforFormButton').click(function () {
+				openDialog();
+			});
+		});
+	</script>
+</head>
+<body>
+	<button class="inforFormButton">Open Dialog</button>
+	<div id="dialog" style="display:none" class="dialogFillContents">
+		<div class="inforToolbar">
+			<button id="editPathVariableButton" class="edit inforIconButton" type="button" title="Edit Variable ..." disabled="disabled"></button>
+		</div>
+		<div id="grid1" style="height:274px"></div>
+		<div id="deleteConfirmationDialog" style="display:none"></div>
+	</div>
+</body>
+</html>

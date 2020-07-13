@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Message Dialog Box</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/message.js"></script>
+  <link href="css/modal.css" rel="stylesheet">
+  <link href="css/message.css" rel="stylesheet">
+
+  <script>
+    $(function () {
+      $('body').inforForm();
+
+      $('#modal-1').modal().on('close', function () {
+        console.log('This Dialog Closed');
+      });
+
+      $('#modal-1  .inforCloseButton').on('click', function () {
+        alert();
+      });
+    });
+  </script>
+</head>
+<body style="height: 10000px;overflow:scroll">
+<div style="height: 250px;"></div>
+  <!--<div class="modal" id="modal-1">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title" tabindex="0">Page Settings</h1>
+      </div>
+
+      <div class="modal-body">-->
+
+        <div class="autoLabelWidth inforSingleColumnLayout">
+            <label class="inforLabel" for="navTitle">Navigation Title</label>
+            <select id="navTitle" class="dropdown" name="navTitle">
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+              <option>Option 4</option>
+            </select>
+            <br>
+            <label class="inforLabel" for="url">URL</label>
+            <input class="inforDateField" id="url" name="url" type="text">
+            <br>
+            <label class="inforLabel" for="pageTitle">Page Title</label>
+            <input class="inforTextbox"  id="pageTitle" name="pageTitle" type="text">
+            <br>
+            <label class="inforLabel" for="pageDesc">Page Description</label>
+            <input class="inforTextbox"  id="pageDesc" name="pageDesc" type="text">
+        </div>
+
+        <div class="modal-buttonset">
+          <button class="inforFormButton default btn-close" type="button">Close</button>
+        <!--</div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" style="position: absolute; top: 100px" class="inforFormButton" data-modal="modal-1">Show</button>
+-->
+
+</body>
+</html>

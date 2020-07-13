@@ -1,0 +1,54 @@
+
+	<div>
+		<div id='inforGridControl'></div>
+	</div>
+
+	<script>
+		var language = "en";
+		var inforGridControl;
+
+		(function($)
+		{
+			var pageNum = 0;
+
+			createGridControl = function()
+			{
+				var columns = [];
+				columns.push({id:"numberEmployees",name:"Employees",field:"numberEmployees",sortable:false,selectable:true,formatter:IntegerCellFormatter,filterType:IntegerFilter,width:200,cssClass:"",headerCssClass:""});
+				columns.push({id:"airportCode",name:"Airport Code",field:"airportCode",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+				columns.push({id:"officeType",name:"Office Type",field:"officeType",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+
+				var pages = [];
+				pages.push({"Active":true,"numberEmployees":"20","airportCode":"MSY","officeType":"Headquarters","_rowIndex":1,"_op_Description_spc_translation_cp_":"Daughter1"});
+				pages.push({"Active":true,"numberEmployees":"36","airportCode":"CYS","officeType":"Satellite","_rowIndex":2,"_op_Description_spc_translation_cp_":"Daughter2"});
+				pages.push({"Active":true,"numberEmployees":"41","airportCode":"LAS","officeType":"Remote","_rowIndex":3,"_op_Description_spc_translation_cp_":"Daughter3"});
+				pages.push({"Active":true,"numberEmployees":"57","airportCode":"BIL","officeType":"Remote","_rowIndex":4,"_op_Description_spc_translation_cp_":"Daughter4"});
+
+				var options =
+				{
+					columns: columns,
+					idProperty: '_rowIndex',
+					dataset: pages,
+ 					editable: false,
+					multiSelect: false,
+					showCheckboxes: false,
+					showGridSettings: false,
+					savePersonalization: false,
+					forceFitColumns: true,
+					showFooter: true
+				};
+
+				inforGridControl = $('#inforGridControl').inforDataGrid(options);
+			};
+		})(jQuery);
+
+
+		$(document).ready(function()
+		{
+			Globalize.culture("en-US");
+			createGridControl();
+			$("body").inforForm();
+		});
+	</script>
+
+

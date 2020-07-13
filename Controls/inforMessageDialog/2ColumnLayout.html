@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog with 2 Column Layout</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/message.js"></script>
+	<script src="js/modal.js"></script>
+
+	<script>
+		$(function () {
+			$('#showButton').click(function () {
+
+				$('#dialogContents').message({
+					title: 'New Job to Schedule',
+					width: 696
+				});
+
+				//$('#dialogContents').inforForm();
+			});
+		});
+	</script>
+
+</head>
+<body class='inforApplicationPadding'>
+	<p>This is a sample shows a dialog with a 2 column layout.</p>
+	<button id="showButton" class="inforFormButton">Show</button>
+
+	<div id="dialogContents" style="display:none">
+		<div class="infor2ColumnLayout autoLabelWidth">
+
+		  <div class="column1">
+				<label for="Name" class="inforLabel">Job Name</label>
+				<input type="text" name="Name" id="Name" class="inforTextbox required" value="FTAL1" >
+				<br>
+				<label for="Description" class="inforLabel">Description</label>
+				<input type="text" value="Account Listing with Analysis" name="Description" id="Description" class="inforTextbox required">
+				<br>
+				<label for="UserName" class="inforLabel">User Name</label>
+				<select name="UserName" id="UserName" class="inforDropDownList">
+					<option value="PK1 Menu User 1" selected="selected">Theo Harper</option>
+				</select>
+				<br>
+				<label for="Date" class="inforLabel">Description</label>
+				<input type="text" value="10/12/2012" name="Description" id="Date" class="inforDateField">
+			</div>
+
+			 <div class="column2">
+				<label for="ReportName" class="inforLabel">Report Name</label>
+				<input type="text" readonly="readonly" class="inforTextbox" value="FTAL1">
+				<br>
+				<label for="ReportType" class="inforLabel">Type</label>
+				<input type="text" value="Report" readonly="readonly" name="ReportType" id="ReportType" class="inforTextbox">
+				<br>
+				<label for="ReportDescription" class="inforLabel">Description</label>
+				<input type="text" value="Account Listing with Analysis" readonly="readonly" name="ReportDescription" id="ReportDescription" class="inforTextbox">
+				<br>
+				<label for="Location" class="inforLabel">Location</label>
+				<input type="text" value="/Example Reports/Standalone" readonly="readonly" name="Location" id="Location" class="inforTextbox">
+				<br>
+				<label for="BusinessUnit" class="inforLabel">Business Unit</label>
+				<input type="text" value="Core" readonly="readonly" name="BusinessUnit" id="BusinessUnit" class="inforTextbox">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

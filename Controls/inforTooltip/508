@@ -1,0 +1,14 @@
+-Should i put aria-described by on the object? The issue is the tooltip is shared.
+-Do i need a keyboard shortcut to show and hide? (there is no keyboard shortcuts)
+-Review Accessible tooltips..
+	http://www.impressivewebs.com/pure-css-tool-tips/
+-aria-describedby or aria-label enough?
+	http://www.oaa-accessibility.org/examplep/tooltip1/
+
+-put aria-describedby on the button
+-keyboard show it (show it)
+	
+-needs to be activated with the tooltip
+
+Questions?
+	- what is the best way to do tooltips?

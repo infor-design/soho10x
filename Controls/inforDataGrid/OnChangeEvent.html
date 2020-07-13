@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+  <script>
+    function getData() {
+      var data = [];
+      data.push({id:'1', 'customMapping':'item1', 'check1': true, 'check2': false});
+      data.push({id:'2', 'customMapping':'item2', 'check1': false, 'check2': true});
+      data.push({id:'3', 'customMapping':'item3', 'check1': false, 'check2': true});
+      return data;
+    }
+  </script>
+
+  <script>
+
+    $(document).ready(function()
+    {
+      //Set the locale
+      //Globalize.culture('ar-SA');
+      var grid, columns, data;
+
+      data = getData();
+
+      columns = [];
+      columns.push({id:'customMapping1',name:'Custom Mapping',field:'customMapping',formatter: SelectCellFormatter , options: [{id:'item1', label:'item1',editable: false, value:'item1'}, {id:'item2', label:'item2',editable: true, value:'item1'},{id:'item3', label:'item3',editable: true, value:'item1'}], editor: TextCellEditor, filterType: SelectFilter});
+      columns.push({id:'customMapping2', name:'Custom Mapping Value',field:'customMapping',formatter:TextCellFormatter});
+      columns.push({id:'check1', name:'Allow',field:'check1',formatter:CheckboxCellFormatter, editor:CheckboxCellEditor});
+      columns.push({id:'check2', name:'Deny',field:'check2',formatter:CheckboxCellFormatter, editor:CheckboxCellEditor});
+
+
+      var options = {
+        dataset: data,
+        idProperty: 'id',
+        columns: columns,
+        editable: true,
+        showFilter: false,
+        forceFitColumns: true
+      };
+
+      grid = $('#inforDataGrid').inforDataGrid(options);
+      grid.onCellChange.subscribe(function (e, args) {
+        if (args.cell === 4 && args.cellValue === true) {
+          data[args.row].check2 = false;
+          grid.updateCell(args.row, 5);
+        }
+        if (args.cell === 5 && args.cellValue === true) {
+          data[args.row].check1 = false;
+          grid.updateCell(args.row, 4);
+        }
+      });
+
+    });
+
+  </script>
+
+</head>
+<body>
+  <div id="inforDataGrid"></div>
+</body>
+</html>

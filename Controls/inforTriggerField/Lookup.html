@@ -1,0 +1,43 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<title>Infor Trigger Fields</title>
+	
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			//initialize each type one at a time.
+			$(".inforLookupField").inforTriggerField({
+				editable: false,
+				click: function(event){
+					console.log('My input field is :'+event.input);
+					event.input.val("test");
+				}
+			});
+			
+			$("#trigger8").validationMessage("show","This field is required.");
+			
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="trigger1">Lookup Field</label>
+		<input class="inforLookupField" type="text" id="trigger1"><br>
+		<label class="inforLabel" for="trigger2">Lookup Field Read-only</label>
+		<input class="inforLookupField" type="text" readonly value="Some Value" id="trigger2"><br>
+		<label class="inforLabel" for="trigger3">Lookup Field Disabled</label>
+		<input class="inforLookupField" type="text" disabled value="Some Value" id="trigger3"><br>
+		<label class="inforLabel" for="trigger4">Lookup Field Error</label>
+		<input class="inforLookupField" type="text" id="trigger4"><br>
+	</div>
+</body>
+</html>

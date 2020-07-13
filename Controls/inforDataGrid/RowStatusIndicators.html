@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - Basic </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+
+	<script>
+	$(function () {
+
+		//Store the Grid Obj For Later Api Calls..
+			columns = [],
+			data = getSampleData([]);
+
+		//Define Columns for the Grid.
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: false, formatter:UneditableColumnFormatter, title: "This is a tooltip", hidden: true });
+		columns.push({ id: "city", maxLength: 10, name: "City", field: "city", width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 70, editor: TextCellEditor, required: true, filterType: TextFilter});
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: UneditableColumnFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
+		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter, contentsFilterValues : ['empty', 'Remote', 'Satellite', 'Headquarters']  });
+		columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 90, cssClass: "alignLeft", headerCssClass: "alignHeaderLeft", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "revenue", name: "Revenue", field: "revenue", required: true, width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter, numberFormat: "n2"});
+		columns.push({ id: "revenue2", name: "Qty", field: "revenue", required: true, width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter, numberFormat: "n2"});
+		columns.push({ id: "revenue3", name: "Qty %", field: "revenue", required: true, width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter, numberFormat: "n2"});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor,  formatter: DateCellFormatter, filterType: DateFilter });
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "territory", required: true, name: "Territory", field: "territory", width: "Territory".textWidth()+8, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: true,
+			showFooter: true,
+			showGridSettings: true,
+			forceFitColumns: false,
+			savePersonalization: false,
+			enableCellRangeSelection: false,
+			showExport: true
+		});
+		
+		grid.setRowStatus(1, "info", "Some Informational Message");
+		grid.setRowStatus(2, "ok", "This row is ok");
+		grid.setRowStatus(3, "alert", "This row has an alert");
+		grid.setRowStatus(4, "error", "This row is in error");
+		grid.setRowStatus(5, "pending", "This row is pending");
+		grid.setRowStatus(6, "incomplete", "This row is incomplete");
+		
+	});
+	</script>
+
+</head>
+<body>
+
+	<div id="inforDataGrid">
+	</div>
+</body>
+</html>

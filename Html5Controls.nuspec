@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>InforHtmlControls</id>
+    <version>3.6.0-alpha</version>
+    <title>Infor Html Controls version next (trunk)</title>
+    <authors>Hook and Loop</authors>
+    <owners>Hook and Loop</owners >
+    <projectUrl>http://soho.infor.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Infor Common Html Controls by Hook and Loop</summary>
+    <description>These 100% royalty free controls use html5, jquery and css3 to target Hook and Loop's soho designs. </description>
+ </metadata>
+  <files>
+    <file src="Controls\Release\inforControlsCombined.css" target="content\Content\inforControlsCombined.css" />
+    <file src="Controls\Release\inforControlsCombined.min.css" target="content\Content\inforControlsCombined.min.css" />
+    <file src="Controls\Release\inforControlsCombined.js" target="content\Scripts\inforControlsCombined.js" />
+    <file src="Controls\Release\inforControlsCombined.min.js" target="content\Scripts\inforControlsCombined.min.js" />
+    <file src="Controls\Release\jquery-1.11.1.min.js" target="content\Scripts\jquery-1.11.1.min.js" />
+	<file src="Controls\Release\jquery-1.11.1.min.map" target="content\Scripts\jquery-1.11.1.min.map" />
+	<file src="Controls\Release\jquery-ui-1.10.4.custom.min.js" target="content\Scripts\jquery-ui-1.10.4.custom.min.js" />
+  </files>
+</package>

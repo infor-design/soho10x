@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforValidation.js"></script>
+	
+	</head>
+	
+	<body>	
+		<br /> <br />
+		<div class="autoLabelWidth">
+			<fieldset id="envFieldSet" class="inforFieldSet">
+				<legend>
+					<span class="inforFieldSetLabel">Environments</span>
+				</legend>
+				<button type="button" class="inforExpandButton open" title="Expand/Collapse"><span></span></button>
+				<div class="content" >
+					<br />
+					<div class="autoLabelWidth inforInlineLayout">
+						<span class="inforLabel">Add environment with suffix </span>
+						<input maxlength="4" type="text" name="environmentSuffix" id="environmentSuffix" class="inforTextbox" style="width: 40px;" />
+						
+						
+						<button type="button" class="inforIconButton new" style="left: -9px; position: relative; top: -2px;" title="Add environment" onclick="validateInput()"><span></span></button>
+					</div>
+				</div>
+			</fieldset>	
+		</div>
+		
+		<script type="text/javascript">
+			function validateInput() {
+				if ($("#environmentSuffix").val() == "") {
+					$("#environmentSuffix").validationMessage("show", "Empty field");
+				}
+			}
+			
+			var initPage = function () {	
+				$("#envFieldSet").inforFieldSet();
+			}
+			
+			initPage();
+		</script>
+	</body>	
+</html>

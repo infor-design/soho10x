@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" >
+<head>
+   <title>Text Area Overflow Workaround &raquo; Unrefined Idea</title>
+
+  <style type="text/css">
+	  textarea {
+		width: 240px;
+		height: 100px;
+		border: 1px solid red;
+	  }
+
+	  @media print {
+		textarea {
+		  display: block;
+		  height: 900px; /** this should now expand the .textarea div to whatever the required height of the TextArea element is */
+		  width: 50%; /** To match the above example */
+		  border: 1px solid orange;
+		}
+	  }
+  </style>
+
+</head>
+<body>
+   <p>Content before textarea.</p>
+   <textarea id="text">Some Example Text</textarea>
+  <p>This content follows the textarea.</p>
+</body>
+</html>

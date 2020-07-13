@@ -1,0 +1,852 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdditionalHelp" xml:space="preserve">
+    <value>附加帮助</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="AddNewTab" xml:space="preserve">
+    <value>新增选项卡</value>
+    <comment>Add New Button on Tab Control Tooltip</comment>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>警报</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>应用筛选器</value>
+    <comment>Button Tooltip  in DataGrid Control</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>批准</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>附件</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>后退</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>基本</value>
+    <comment>Switch to a Basic View</comment>
+  </data>
+  <data name="Between" xml:space="preserve">
+    <value>介于</value>
+    <comment>Menu Filter Option </comment>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>账簿</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+    <comment>Button Text on Dialog</comment>
+  </data>
+  <data name="Checked" xml:space="preserve">
+    <value>已选中</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>清除筛选器</value>
+    <comment>Button Tooltip  in DataGrid Control</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+    <comment>Close Button Tooltip on Form.</comment>
+  </data>
+  <data name="CloseCancelChanges" xml:space="preserve">
+    <value>关闭并取消更改</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CloseSaveChanges" xml:space="preserve">
+    <value>关闭并保存更改</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CloseTab" xml:space="preserve">
+    <value>关闭选项卡</value>
+    <comment>Close Button Tooltip on Tab</comment>
+  </data>
+  <data name="ColumnPersonalization" xml:space="preserve">
+    <value>列个性化设置</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>备注</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>确认</value>
+    <comment>Text on Confirmation Dialog</comment>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>包含</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="CreateTab" xml:space="preserve">
+    <value>创建新选项卡</value>
+    <comment>Create Button Tooltip on Tab</comment>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>剪切</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DiscardUndo" xml:space="preserve">
+    <value>放弃/撤消</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DisplayDropDownList" xml:space="preserve">
+    <value>显示下拉列表</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Displaying" xml:space="preserve">
+    <value>显示内容: </value>
+    <comment>Grid Footer info - showing number of rows</comment>
+  </data>
+  <data name="DocWord" xml:space="preserve">
+    <value>文档</value>
+    <comment>Icon Button Tooltip </comment>
+  </data>
+  <data name="DoesNotContain" xml:space="preserve">
+    <value>不包含</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotEndWith" xml:space="preserve">
+    <value>结束值非</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotEqual" xml:space="preserve">
+    <value>不等于</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotStartWith" xml:space="preserve">
+    <value>起始值非</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>下载</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>复制</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EitherSelectedorNotSelected" xml:space="preserve">
+    <value>选定项或非选定项</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>结束值为</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EqualsStr" xml:space="preserve">
+    <value>等于</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ExpandCollapse" xml:space="preserve">
+    <value>展开/折叠</value>
+    <comment>Expand Button Tooltip</comment>
+  </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>导出失败</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>导出至 Excel</value>
+    <comment>DataGrid Button Function Tooltip</comment>
+  </data>
+  <data name="FileInUse" xml:space="preserve">
+    <value>指定的文件在使用中</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="FileInUseDetail" xml:space="preserve">
+    <value>请在相关的应用程序中关闭此文件，或者指定其他文件名。</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>筛选器</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="FilterMenu" xml:space="preserve">
+    <value>筛选菜单</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="FilterOptions" xml:space="preserve">
+    <value>筛选选项</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="FilterWithinResults" xml:space="preserve">
+    <value>在结果中筛选</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>第一个</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="FirstView" xml:space="preserve">
+    <value>第一个视图</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>文件夹</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>忘记密码?</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>向前</value>
+    <comment>Arrow button tooltip</comment>
+  </data>
+  <data name="GetMoreRows" xml:space="preserve">
+    <value>获取更多行</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>大于</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>大于或等于</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="GridSettings" xml:space="preserve">
+    <value>网格设置</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="GroupSelection" xml:space="preserve">
+    <value>组选择</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>帮助</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="HideColumn" xml:space="preserve">
+    <value>隐藏列</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="IsEmpty" xml:space="preserve">
+    <value>为空</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="IsNotEmpty" xml:space="preserve">
+    <value>非空</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>最后一个</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LastView" xml:space="preserve">
+    <value>最后一个视图</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LaunchActivate" xml:space="preserve">
+    <value>启动/激活</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>小于</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>小于或等于</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>链接</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ListTabs" xml:space="preserve">
+    <value>列出所有选项卡</value>
+    <comment>Tabs Control Button Tooltip</comment>
+  </data>
+  <data name="LoadingItem" xml:space="preserve">
+    <value>正在加载项目 </value>
+    <comment>Progress Dialog Text - Make sure there is a space at the end.</comment>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>维护</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>菜单</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新建</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>下一步</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NextView" xml:space="preserve">
+    <value>下一个视图</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="NotChecked" xml:space="preserve">
+    <value>未选中</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>注释</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NotSelected" xml:space="preserve">
+    <value>未选择</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value> / </value>
+    <comment>Grid Footer Text</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>打开</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>粘贴</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>电话</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>请稍候</value>
+    <comment>Progress Dialog Text</comment>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>上一步</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PreviousView" xml:space="preserve">
+    <value>上一个视图</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>打印</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>查询</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>重做</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>拒绝</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>在本机记录我的登录信息</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>报表</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>复查</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RunFilter" xml:space="preserve">
+    <value>运行筛选器</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RunJob" xml:space="preserve">
+    <value>运行作业</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SaveBeforeClosing" xml:space="preserve">
+    <value>先保存后关闭</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SavedFilters" xml:space="preserve">
+    <value>保存的筛选器</value>
+    <comment>Grid Filter Menu Option</comment>
+  </data>
+  <data name="SaveSubmit" xml:space="preserve">
+    <value>保存/提交</value>
+    <comment>Icon Button Tooltip - Or Either Word.</comment>
+  </data>
+  <data name="ScreenDesign" xml:space="preserve">
+    <value>屏幕设计</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SelectContents" xml:space="preserve">
+    <value>选择内容</value>
+    <comment>Tooltip for Grid Filter to Select Contents of the Row data.</comment>
+  </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>选择日期</value>
+    <comment>Tooltip for Date Picker</comment>
+  </data>
+  <data name="SelectDeselect" xml:space="preserve">
+    <value>全选/撤消全选</value>
+    <comment>Select all rows/ no rows in the grid</comment>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>选定: </value>
+    <comment>Show number of select rows</comment>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>服务器名称</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ShowFilterRow" xml:space="preserve">
+    <value>显示筛选行</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>登录</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="SortAscending" xml:space="preserve">
+    <value>升序排序</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="SortDescending" xml:space="preserve">
+    <value>降序排序</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="Spreadsheet" xml:space="preserve">
+    <value>电子表格</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>起始值为</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="StatusIndicator" xml:space="preserve">
+    <value>状态指示符</value>
+    <comment>Status Dialog Text</comment>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>任务</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今天</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>翻译</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>用户 ID</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Utilities" xml:space="preserve">
+    <value>实用工具</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+    <comment>Dialog Button Text</comment>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>第</value>
+    <comment>Grid Pager Information</comment>
+  </data>
+  <data name="Rows" xml:space="preserve">
+    <value>行</value>
+    <comment>Word describing the grid rows.</comment>
+  </data>
+  <data name="ShowingAll" xml:space="preserve">
+    <value>全部显示</value>
+    <comment>Grid Row Status Area.</comment>
+  </data>
+  <data name="SessionNavigation" xml:space="preserve">
+    <value>会话导航</value>
+    <comment>Tooltip for a button that opens session navigation</comment>
+  </data>
+  <data name="ListAllMenuItems" xml:space="preserve">
+    <value>列出所有菜单项目</value>
+    <comment>Show all the menu items</comment>
+  </data>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>未找到记录</value>
+    <comment>Grid Status Text</comment>
+  </data>
+  <data name="SearchTree" xml:space="preserve">
+    <value>搜索树形结构</value>
+    <comment>InLine Help to Search the Tree</comment>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清除</value>
+    <comment>Clear a TextField from a button</comment>
+  </data>
+  <data name="DrillDown" xml:space="preserve">
+    <value>详查</value>
+    <comment>Button that drills to the record.</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>需要该字段</value>
+    <comment>Required Validation Message</comment>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>可用:</value>
+    <comment>Text For Dual List</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+    <comment>Add an Item from a Dual List</comment>
+  </data>
+  <data name="MoveDown" xml:space="preserve">
+    <value>下移</value>
+    <comment>Move Down a grid row</comment>
+  </data>
+  <data name="MoveUp" xml:space="preserve">
+    <value>上移</value>
+    <comment>Move up a grid row</comment>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>删除</value>
+    <comment>Remove an item from a dual list</comment>
+  </data>
+  <data name="LastYear" xml:space="preserve">
+    <value>去年</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextMonth" xml:space="preserve">
+    <value>下月</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextWeek" xml:space="preserve">
+    <value>下周</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextYear" xml:space="preserve">
+    <value>明年</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="OneMonthAgo" xml:space="preserve">
+    <value>一个月前</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="OneWeekAgo" xml:space="preserve">
+    <value>一周前</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="SixMonthsAgo" xml:space="preserve">
+    <value>半年前</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>时间</value>
+    <comment>Time Selection on a  DatePicker</comment>
+  </data>
+  <data name="CannotBeSelected" xml:space="preserve">
+    <value>不能选择这一行。</value>
+    <comment>Grid Tooltip</comment>
+  </data>
+  <data name="ResetToDefault" xml:space="preserve">
+    <value>重设为默认布局</value>
+    <comment>Reset the Grid Layout</comment>
+  </data>
+  <data name="CloseOtherTabs" xml:space="preserve">
+    <value>关闭其他选项卡</value>
+    <comment>Tab Control Right Click Menu</comment>
+  </data>
+  <data name="EmailValidation" xml:space="preserve">
+    <value>输入有效的电子邮件地址</value>
+    <comment>Text For Email Field  Validation</comment>
+  </data>
+  <data name="UrlValidation" xml:space="preserve">
+    <value>输入有效的 URL</value>
+    <comment>Text For Url Field Validation</comment>
+  </data>
+  <data name="EndofResults" xml:space="preserve">
+    <value>结果末尾</value>
+    <comment>Toolbar message for paging</comment>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>更多...</value>
+    <comment>Overflow Text for Tabs and Dialogs</comment>
+  </data>
+  <data name="RecordsPerPage" xml:space="preserve">
+    <value>每页记录数</value>
+    <comment>Text for a Grid Page Size Selector</comment>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>最大化</value>
+    <comment>Title Bar Icon</comment>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>最小化</value>
+    <comment>Title Bar Icon</comment>
+  </data>
+  <data name="CloseAllTabs" xml:space="preserve">
+    <value>关闭所有选项卡</value>
+    <comment>Tab Control Right Click Menu</comment>
+  </data>
+  <data name="QuickDates" xml:space="preserve">
+    <value>快速日期</value>
+    <comment>Date Functionality</comment>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>完成</value>
+    <comment>Button on the Wizard Pattern</comment>
+  </data>
+  <data name="SetTextColor" xml:space="preserve">
+    <value>设置文本颜色</value>
+    <comment>Color Picker / Text Editor</comment>
+  </data>
+  <data name="AttachmentRules" xml:space="preserve">
+    <value>附件规则</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="AutoRefresh" xml:space="preserve">
+    <value>自动刷新</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="BarChart" xml:space="preserve">
+    <value>条形图</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CopyMail" xml:space="preserve">
+    <value>复制并发送邮件</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CopyUrl" xml:space="preserve">
+    <value>复制 URL</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DistributeHorizontally" xml:space="preserve">
+    <value>水平分布</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>全部展开</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>生成</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="GenerateScript" xml:space="preserve">
+    <value>生成脚本</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NoAttachments" xml:space="preserve">
+    <value>无附件</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PieChart" xml:space="preserve">
+    <value>饼形图</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="QuickAccess" xml:space="preserve">
+    <value>快速访问</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RestoreUser" xml:space="preserve">
+    <value>还原用户</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SaveConsolidate" xml:space="preserve">
+    <value>保存时做本地合并</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Screen Design" xml:space="preserve">
+    <value>屏幕设计</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全选</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SpellCheck" xml:space="preserve">
+    <value>拼写检查</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SubmitForApproval" xml:space="preserve">
+    <value>提交以便审批</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>时区</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>正在加载...</value>
+    <comment>Loading Text</comment>
+  </data>
+  <data name="NewNode" xml:space="preserve">
+    <value>新节点</value>
+    <comment>Create a New tree Node</comment>
+  </data>
+  <data name="AboutText" xml:space="preserve">
+    <value>版权所有 © 2014 Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。保留所有权利。在此所列举的其它商标则属于其各自拥有人的财产。</value>
+    <comment>Text in the Page About Dialog</comment>
+  </data>
+</root>

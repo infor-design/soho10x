@@ -1,0 +1,133 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Infor DataGrid : Collapsing Tree</title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+  <script>
+	$(function () {
+		//Globalize.culture("ar-SA");
+
+		var grid,
+		data = [],
+		columns = [
+		  {id: "title", name: "Task", field: "title", width: 220, formatter: TreeRowFormatter,  editor: TextCellEditor, sortable:false},
+		  {id: "duration", name: "Duration", field: "duration", editor: TextCellEditor},
+		  {id: "assignedTo", name: "Assigned To", field: "assignedTo", minWidth: 100, editor: TextCellEditor},
+		  {id: "start", name: "October 2013", field: "start", minWidth: 60, editor: TextCellEditor},
+		  {id: "finish", name: "Finish", field: "finish", minWidth: 60, editor: TextCellEditor},
+		  { id: "isLeedCertified", cssClass : "alignCenter", headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", minWidth: 20, width: 70, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, editability: function(a) {return  a % 2;}}
+		];
+
+		var options = {
+		  editable: true,
+		  showCheckboxes: true,
+		  showDrillDown: false,
+		  columns: columns,
+		  showStatusIndicators: true,
+		  showFooter: true,
+		  savePersonalization: false,
+		  frozenColumn: -1,
+		  showFilter: false,
+		  selectChildren: false,
+		  disableClientFilter: true
+		};
+
+
+	  // prepare random data - key properties are:
+	  var indent = 0;
+	  var parents = [];
+
+	  //  indent - how many levels
+	  //  parent - the parent array element
+	  // collapsed - whether or not to collapse the row
+	  var data = [];
+	  data.push({ id: 0, depth:  0, parent: null,  isParent:  true, children : [1,2], collapsed: true, title:  "Task 1", duration: "1 day", percentComplete: 50, start: "11/12/2013", finish: "11/13/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 1, depth:  1, parent: 0,  isParent:  false, children : null , collapsed: true, title:  "Task 1.1", duration: "2 days", percentComplete: 70, start: "11/15/2013", finish: "11/17/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 2, depth:  1, parent: 0,  isParent:  true, children : [3] , collapsed: true, title:  "Task 1.2", duration: "1.5 days", percentComplete: 60, start: "11/13/2013", finish: "11/15/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 3, depth:  2, parent: 2,  isParent:  false, children : null , collapsed: true, title:  "Task 1.2.1", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 4, depth:  0, parent: null,  isParent:  true, children : [5,6,7]  , collapsed: true, title:  "Task 2", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 5, depth:  1, parent: 4,  isParent:  false, children : null , collapsed: true, title:  "Task 3", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 6, depth:  1, parent: 4,  isParent:  false, children : null  , collapsed: true, title:  "Task 4", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 7, depth:  1, parent: 4,  isParent:  false, children : null  , collapsed: true, title:  "Task 5", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 8, depth:  null, parent: null,  isParent:  false, children : null , collapsed: true, title:  "Task 6", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 9, depth:  null, parent: null,  isParent:  false, children : null , collapsed: true, title:  "Task 7", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 10, depth:  null, parent: null,  isParent:  false, children : null , collapsed: true, title:  "Task 8", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 11, depth:  null, parent: null,  isParent:  false, children : null , collapsed: true, title:  "Task 19", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+	  data.push({ id: 12, depth:  null, parent: null,  isParent:  false, children : null , collapsed: true, title:  "Task 10", duration: "3 days", percentComplete: 80, start: "11/17/2013", finish: "11/20/2013", assignedTo: "Joe Cicero"});
+
+	  // initialize the grid
+	  grid = $("#inforDataGrid").inforDataGrid(options);
+	  grid.updateData(data);
+	  grid.invalidateAllRows();
+	  grid.render();
+
+	  //Listen to the Expand and Collapse events
+	  grid.onRowCollapsed.subscribe(function (e, args) {
+			console.log(e,args);
+	   });
+
+	   grid.onRowExpanded.subscribe(function (e, args) {
+			console.log(e,args);
+	   });
+
+	  //Link Collapse all and Expand All Buttons
+	  $("#expandAll").click(function() {
+		for (var i=0; i<data.length; i++) {
+			data[i]["collapsed"] = false;
+		}
+		grid.updateData(data);
+	  });
+
+	  $("#collapseAll").click(function() {
+		for (var i=0; i<data.length; i++) {
+			data[i]["collapsed"] = true;
+		}
+		grid.updateData(data);
+
+	  });
+
+	   count = 1;
+	   timer = null
+
+	   $("#updateCell").click(function() {
+			var count = 1;
+			if (timer) {
+				clearInterval(timer);
+				timer = null;
+			}
+
+			var timer = setInterval(function(e){
+				var row =  1,
+					data = grid.getDataItem(row);
+
+				//update the data
+				data.duration="Test Update "+count;
+
+				//render.
+				//grid.invalidateRow(1);
+				//grid.render();
+
+				//update cell
+				grid.updateCell(row,2);
+				count++;
+			}, 1000);
+	  });
+})
+</script>
+</head>
+<body>
+	<div>
+		 <div class="inforToolbar">
+			<button class="inforTextButton" id="expandAll">Expand All</button>
+			<button class="inforTextButton" id="collapseAll">Collapse All</button>
+			<button class="inforTextButton" id="updateCell">Update Cell</button>
+	   </div>
+	   <div id="inforDataGrid"></div>
+	</div>
+</body>
+</html>

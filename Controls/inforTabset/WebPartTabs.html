@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Web Part Tabs</title>
+		<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+		<script src="../Release/jquery-1.11.1.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+		<script src="../Release/inforControlsCombined.js"></script>
+
+		<script>
+			$(function($) {
+				$('#inforTabContainer').inforTabset({fillToBottom:false});
+			});
+		</script>
+	</head>
+
+	<body style="position: relative;width: 320px; border: 1px solid #f2f2f2">
+		<div id="inforTabContainer">
+		  <ul class="inforTabset">
+			<li><a href="#tab1">Overview</a></li>
+			<li><a href="#tab2">Items</a></li>
+			<li><a href="#tab3">Notes</a></li>
+		  </ul>
+		  <div id="tab1">
+			<p>Morbi consequat iaculis quam. Suspendisse pharetra, turpis molestie varius adipiscing, est ligula eleifend lorem, in iaculis lectus nibh ac nibh. Curabitur semper condimentum neque. Praesent at diam ac diam gravida elementum. Mauris aliquet vehicula elit. Donec aliquet velit. Integer lobortis lacus in augue. Cras dignissim. Pellentesque facilisis ultrices orci. Morbi ligula ipsum, rutrum in, convallis eu, accumsan quis, odio. Quisque lorem sapien, dictum vulputate, rhoncus id, facilisis vel, lacus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec neque magna, elementum id, posuere eget, elementum eu, pede.</p>
+			<p>Donec non turpis. Quisque cursus adipiscing orci. Sed non lectus. Fusce nec turpis. Etiam tincidunt. Nam tempus, nulla vitae pretium elementum, ante massa rhoncus dolor, nec ultrices felis tellus in dolor. Pellentesque ut justo. Sed ligula. Praesent vel lorem eu est convallis sodales. Nam porta iaculis orci.</p>
+		  </div>
+		  <div id="tab2">
+			<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+			<p>Morbi vitae lorem. Nulla facilisi. Phasellus convallis. Vestibulum faucibus dapibus ipsum. In convallis turpis tincidunt eros. Donec nunc tellus, faucibus ut, rutrum laoreet, porttitor id, mi. Nullam vulputate lacinia dolor. Quisque ullamcorper, nulla iaculis placerat dapibus, justo massa scelerisque nisl, in accumsan lorem turpis vitae leo. Nam in felis sodales ligula eleifend convallis. Suspendisse ornare convallis velit. Duis sit amet dolor quis ipsum tincidunt commodo. In nec est. Cras consectetuer malesuada orci. Nunc pellentesque gravida nulla. Nam lacus tellus, molestie eget, venenatis non, bibendum vitae, tellus. Aenean non sem ac turpis fermentum scelerisque. Aliquam eros nisi, sodales eu, sodales nec, gravida ac, nibh. Curabitur id neque nec massa consectetuer suscipit. Quisque vulputate orci in tortor. Quisque euismod.</p>
+		  </div>
+		  <div id="tab3">
+		  </div>
+	  </div>
+	</body>
+</html>

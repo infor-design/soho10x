@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Dropdown - Labels may have inline styles to carry over</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      $('body').inforForm();
+    });
+  </script>
+
+</head>
+<body>
+  <label class="inforLabel" style="text-align: center; width: 200px; text-decoration:underline" for="example1">Display Code</label>
+  <select class="inforDropDownList" name="example1" id="example1" style="width:10px">
+    <option value="MM">H Hourly</option>
+    <option value="MM">S Salaried</option>
+  </select>
+  <br>
+  <label class="inforLabel" style="text-align: right; width: 100px; text-decoration:underline" for="example2">Display Code 2</label>
+  <select class="inforDropDownList" name="example1" id="example2" style="width:10px">
+    <option value="L">L Large</option>
+    <option value="M">M Medium</option>
+    <option value="S">S Small</option>
+  </select>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Infor/Lawson Application</title>
+    <link rel="shortcut icon" type="image/icon" href="css/images/favicon.ico" />
+    <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+    <script src="../inforDataGrid/js/sampleData.js"></script>
+
+    <script>
+       $(function () {
+        //Set Locale
+        Globalize.culture('en-US');
+
+        //init the menu and a few controls
+        $('#inforApplicationNav').inforApplicationNav();
+        $('#trigger1').inforSearchField();
+
+        var columns = [],
+          data = getCustomers([]);
+
+        //Define Columns for the Grid.
+         columns.push({ id: 'name', name: 'Name', field: 'name', width: 160, filterType: TextFilter, editor: TextCellEditor});
+         columns.push({ id: 'description', name: 'Description', field: 'description', width: 160, filterType: TextFilter, editor: TextCellEditor});
+
+        var gridOpts = {
+          columns: columns,
+          dataset: data,
+          idProperty: 'id',
+          showFilter: false,
+          showCheckboxes: false,
+          multiSelect: true,
+          showFooter: true,
+          autoHeight: true,
+          pagingMode: PagingModes.PagerClientSide,
+          pageSize: 50,
+          savePersonalization: false,
+          enableCellNavigation: false,
+          showPageSizeSelector: true
+        };
+        $('#inforDataGrid').inforDataGrid(gridOpts);
+
+      });
+    </script>
+</head>
+<body>
+  <header class="inforTopBanner">
+    <div class="inforTopBannerLeft">
+      <span class="inforLogo">Infor Logo</span>
+      <span class="inforApplicationName">CloudSuite</span>
+    </div>
+    <div class="inforTopBannerRight">
+      <span class="inforBannerText">Rick Lawson (14938)</span>
+      <button class="inforIconButton signOut" title="Sign Out" type="button">
+        <span></span>
+      </button>
+    </div>
+  </header>
+  <div id="inforApplicationNav" class="inforApplicationNav">
+    <ul>
+      <li><a href="#">Customers</a></li>
+      <li><a href="#">Environments</a></li>
+      <li><a href="#">Instances</a></li>
+      <li><a href="#">Notifications</a></li>
+      <li><a href="#">Jobs</a></li>
+      <li><a href="#">Config</a></li>
+    </ul>
+  </div>
+  <div id="contentArea">
+
+    <div class="inforModuleContainer inforApplicationPadding">
+     <div class="inforModuleHeader">
+        <div class="inforModuleHeaderLeft">
+          <span class="inforPageTitleText" id="pageTitleText">Customers</span>
+          <span class="inforModuleRecordIdText"></span>
+        </div>
+        <div class="inforModuleHeaderRight">
+          <button class="inforModuleSettingsButton"></button>
+          <button class="inforModuleCloseButton" type="button" ><i>Close</i></button>
+        </div>
+     </div>
+     <div class="inforModuleContentArea">
+      <div class="inforToolbar" role="toolbar">
+        <button type="button" class="inforIconButton new"><span>New</span></button>
+        <button type="button" class="inforIconButton delete" ><span>Delete</span></button>
+
+        <span class="inforToolbarSpacer"></span>
+        <button type="button" class="inforIconButton save" ><span>Save</span></button>
+        <button type="button" class="inforIconButton discard" ><span>Discard</span></button>
+        <span class="inforToolbarSpacer"></span>
+        <button type="button" class="inforIconButton settings" ><span>Settings</span></button>
+
+        <div class="alignRight">
+          <label class="inforLabel scr-only" for="trigger1">Search Field</label>
+          <input class="inforSearchField" id="trigger1" type="text" placeholder="Search Items">
+          <button type="button" class="inforIconButton help" ><span>Help</span></button>
+        </div>
+      </div>
+
+      <div id="inforDataGrid">
+      </div>
+      <div style="height: 20px;display: block">
+        &nbsp;
+      </div>
+     </div>
+    </div>
+  </div>
+</body>
+</html>

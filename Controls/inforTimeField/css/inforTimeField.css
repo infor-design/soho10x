@@ -1,0 +1,25 @@
+/* Infor Time Field
+----------------------------------*/
+.timepopup .dropdown  {
+  font-size: 1em;
+  margin-right: 5px;
+  margin-top: -2px;
+  padding-top: 2px;
+  position: relative;
+  top: 2px;
+  width: 18px !important;
+}
+
+.timepopup > span {
+  color: #1a1a1a;
+  font-size: 1.2em;
+  left: 1px;
+  margin-left: -2px;
+  margin-right: 6px;
+  position: relative;
+  top: 1px;
+}
+
+.inforSingleColumnLayout .inforTriggerField input.inforTimeField, .infor2ColumnLayout .inforTriggerField input.inforTimeField, .infor3ColumnLayout .inforTriggerField input.inforTimeField, .inforTimeField {
+  width: 65px !important;
+}

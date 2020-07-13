@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link rel="stylesheet" href="css/inforTabset.css" />
+	<title>Infor Module Level Tabs</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTabset.js"></script>
+
+	<script>
+		 $(function () {
+			$("#inforTabContainer").inforTabset();
+		});
+	</script>
+</head>
+<body>
+	<div id="inforTabContainer">
+		<ul class="inforTabset">
+			<li><a href="ajax/content1.html">Customers</a></li>
+			<li><a href="ajax/content2.html">Purchase Order - PO58</a></li>
+			<li><a href="ajax/content3-slow.php">Leads</a></li>
+			<li><a href="ajax/content4-broken.php">Opportunities</a></li>
+		</ul>
+	</div>
+</body>
+</html>

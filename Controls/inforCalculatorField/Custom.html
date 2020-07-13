@@ -1,0 +1,46 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Calculator Field</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+
+		   //instansiate then -> hide the calender
+		   $("#calcField").inforCalculatorField().closest(".inforTriggerField")
+				.position({				//position it in the same spot as the input field
+					 my: "left",
+					 at:  "left",
+					 of: $("#customField")
+				}).css({"opacity":0 , "z-index":"-1"})	//hide it but for positional reasons use opacity
+				.on("change", function(e){	//attach to the change event to get the changed value
+						$("#customField").val($(this).find("input").val());
+				});
+
+		   //setup the button to trigger the calculator button.
+		   $("#customButton").click(function() {
+				$("#calcField").val($("#customField").val());	//copy the value
+				$("#calcField").closest(".inforTriggerField").find(".inforTriggerButton").trigger("click");  //open the popup
+		   });
+
+		});
+	</script>
+</head>
+<body >
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<input class="inforCalculatorField" type="text" id="calcField"><br>
+			<label class="inforLabel">Custom Calc Field</label>
+			<input class="myCustomField" type="text" id="customField" ><button id="customButton">My Custom button</button>
+		</div>
+	</div>
+</body>
+</html>

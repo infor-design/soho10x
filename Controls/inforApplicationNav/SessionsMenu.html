@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<title>Infor Application Navigation Control - Sessions Drop Down</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforApplicationNav.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+
+			//keep the iframe the same size from the top of the nav to thebottom even when resizing..
+			$('#contentFrame').fillToBottom();
+
+			//Initialize the nav plugin - really in simple cases you just need this line with no options.
+			$("#inforApplicationNav1").inforApplicationNav({
+				showSessionMenu:true,
+				onSessionMenuOpen: function (sessionInfo) {
+					//the current session info. fires before opening
+					return sessionInfo;
+				}
+			});
+
+			//Add some example elements to the session nav - useful to manage this manually.
+			addExampleSessionContent();
+
+			//sample function that takes all the anchors and gets the html and searchs for it.
+			//To simulate updating the center frame somehow and managing session history.
+			$("#inforApplicationNav1").find("a").click(function() {
+				handleMenuItemClick($(this));
+			});
+
+			//Example Implementation of the Session Nav - might later be moved in the control.
+			var historyStack = [];
+			var historyPosition = 0;
+
+			//Move back in the session list
+			function moveBack() {
+				historyPosition--;
+				var item = historyStack[historyPosition];
+				addSessionItem(item.id, item.text , item.action);
+				item.action();
+			}
+
+			//Move forward in the session list
+			function moveForward() {
+				historyPosition++;
+				var item = historyStack[historyPosition];
+				addSessionItem(item.id, item.text , item.action);
+				item.action();
+			}
+
+			//Add an Item to the session menu
+			function addSessionItem(sessionId, sessionText, sessionAction) {
+				//manually manage the history...
+				var sessionInfo = $("#inforApplicationNav1").inforApplicationNav("sessionInfo");
+				//remove and re-add back/forward and seperator first..setup the new and old back items...
+				sessionInfo.splice(0,3);
+				var rest = sessionInfo.slice(0, sessionInfo.length);	//save the rest..
+				sessionInfo.splice(0, sessionInfo.length);
+
+				//add the new one - if its not there...
+				var newId = sessionId,
+					newText = sessionText,
+					newItem = {id: newId, text:newText, action: sessionAction , cssClass: "activeSession", parent: null};
+
+				var found = false;
+				for (var i = 0; i < historyStack.length; i++) {
+					if (historyStack[i].id==newId && historyStack[i].text==newText) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					historyStack.push(newItem);
+					historyPosition=historyStack.length-1;
+				}
+
+				sessionInfo.push({id: "back" , text: Globalize.localize("Back"), action: function() { handleMenuItemClick("back") }, parent: null, cssClass: (historyStack.length>1 &&  historyPosition>0 ? "" : "disabledText")});
+				sessionInfo.push({id: "forward" , text:Globalize.localize("Forward"), action: function() { handleMenuItemClick("forward") }, parent: null, cssClass: (historyStack.length>1  && historyPosition<historyStack.length-1  ? ""  : "disabledText")});
+				sessionInfo.push({id: "navSessionSpacer", action: null, parent: null});
+				sessionInfo.push(newItem);
+
+				//add the previous ones..but limit to last 8..
+				var maxHistory = 8,
+					count = 1;
+
+				if (rest.length>0) {
+					for (var j = 0; j < rest.length; j++) {	//clear active flag
+						if (rest[j].cssClass=="activeSession")
+							rest[j].cssClass="";
+
+						//remove the one we just added to the top if its already there..
+						if (rest[j].id==newId && rest[j].text==newText)
+							continue;
+
+							count++;
+							if (count<=maxHistory)
+								sessionInfo.push(rest[j]);
+					}
+				}
+
+				$("#inforApplicationNav1").inforApplicationNav("sessionInfo",sessionInfo);
+			}
+
+			function handleMenuItemClick($this) {
+				if ($this=="back") {
+					moveBack();
+					return;
+				}
+
+				if ($this=="forward") {
+					moveForward();
+					return;
+				}
+
+				if ($this.parent().find("ul").length>0)	//has a sub menu ignore
+					return;
+
+				//update the header active style..
+				var active = $this.parentsUntil(".inforApplicationNav").filter("li.activeHeader");
+				setTimeout(function() {
+					active.addClass("activeHeader");
+				},200);
+
+				//update the content frame with the contents simulating - opening something...
+				$("#contentFrame").show();
+				$("#contentFrame").contents().find("#pageTitleText").html($this.html());
+				$("#contentFrame").contents().find(".inforModuleContainer").show();
+
+				addSessionItem($this.attr("id"), $this.html(), function() { handleMenuItemClick($this) });
+			}
+
+			//Add some example elements to the session nav - useful to manage this manually.
+			function addExampleSessionContent() {
+				var sessionInfo = [];
+				//should always have back/forward and seperator first..
+				sessionInfo.push({id: "back" , text: Globalize.localize("Back"), parent: null, cssClass: "disabledText"});
+				sessionInfo.push({id: "forward" , text:Globalize.localize("Forward"), parent: null, cssClass: "disabledText"});
+				sessionInfo.push({id: "navSessionSpacer", action: null, parent: null});
+
+				$("#inforApplicationNav1").inforApplicationNav("sessionInfo",sessionInfo);
+			}
+
+		 });
+
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div id="inforApplicationNav1" class="inforApplicationNav">
+		<ul>
+			<li><a href="#">People</a></li>
+			<li><a href="#">Charting</a>
+				<ul>
+					<li><a href="#">Sub Item 1</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Financials</a>
+				<ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+				  <li><a href="#">Sub Item 1.8</a></li>
+				  <li><a href="#">Sub Item 1.9</a></li>
+				  <li><a href="#">Expenses by Cost Center</a></li>
+				  <li><a href="#">Navigation Administration</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Projects</a>
+			  <ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			  </ul>
+			</li>
+			<li><a href="#">Resource Planning</a></li>
+			<li><a href="#">Orders</a>
+				<ul>
+					<li><a href="#">Pricing</a></li>
+					<li><a href="#">Sales</a>
+						<ul>
+							<li><a href="#">Master Data</a></li>
+							<li><a href="#">Margin Control</a></li>
+							<li><a href="#">Quotations</a>
+								<ul>
+									<li><a href="#">Sub Item 3.1.1.1</a></li>
+									<li><a href="#">Sub Item 3.1.1.2</a></li>
+									<li><a href="#">Sub Item 3.1.1.3</a></li>
+									<li><a href="#">Sub Item 3.1.1.4</a></li>
+									<li><a href="#">Sub Item 3.1.1.5</a>
+										<ul>
+											<li><a href="#">Sub Item 4.1.1.1</a></li>
+											<li><a href="#">Sub Item 4.1.1.2</a>
+												<ul>
+													<li><a href="#">Sub Item 5.1.1.2</a></li>
+													<li><a href="#">Sub Item 5.1.1.2</a>
+														<ul>
+															<li><a href="#">Sub Item 6.1.1.1</a></li>
+															<li><a href="#">Sub Item 6.1.1.2</a>
+																<ul>
+																	<li><a href="#">Sub Item 7.1.1.1</a></li>
+																	<li><a href="#">Sub Item 7.1.1.2</a>
+																		<ul>
+																			<li><a href="#">Sub Item 8.1.1.1</a></li>
+																		</ul>
+																	</li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><a href="#">Contracts</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#">Manufacturing</a></li>
+			<li><a href="#">Warehouse</a></li>
+		</ul>
+	</div>
+	<iframe id="contentFrame" frameborder="0" style="display:none;margin:0px 20px 0px 0px;" src="FrameContents.html"></iframe>
+</body>
+</html>

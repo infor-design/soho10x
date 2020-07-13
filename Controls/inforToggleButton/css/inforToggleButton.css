@@ -1,0 +1,210 @@
+/* Infor Toggle Button
+----------------------------------*/
+.inforToggleButton {
+	margin-top: 2px;
+	background-color: transparent;
+	border-radius: 3px;
+	display: inline-block;
+	width: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.inforToolbar > .inforToggleButton:first-child > button:first-child {
+    margin-left: 10px;
+}
+
+.inforTextButton.checked:active {
+    border-top: 1px solid #767676 !important;
+}
+
+.inforToggleButton .inforTextButton {
+	border: 1px solid transparent;
+	border-radius: 0 0 0 0;
+	margin: 0 0 0 -3px;
+	padding: 0 5px;
+	color: #1A1A1A;
+	border-left: 1px solid #b3b3b3;
+	border-bottom: 1px solid #b3b3b3;
+}
+
+.inforToggleButton .inforTextButton:first-child, .inforToggleButton .inforFormButton:first-child {
+	border-radius: 3px 0 0 3px;
+}
+
+.inforToggleButton .inforTextButton:last-child {
+	border-right: 1px solid #b3b3b3;
+}
+
+.inforToggleButton .inforTextButton:last-child, .inforToggleButton .inforFormButton:last-child {
+	border-radius: 0 3px 3px 0;
+}
+
+.inforToolbar .inforIconButton.inforToggleButton {
+	margin-left: 5px  !important;
+	padding: 0 1px;
+	margin-top: 5px !important;
+	width: 25px;
+}
+
+.inforToolbar .inforIconButton.inforToggleButton:focus {
+	border-bottom: 1px solid #13A3F7;
+}
+
+.inforToolbar .inforIconButton.inforToggleButton.checked {
+	border: 1px solid #c7c7c7;
+	background-color: #d7d7d7;
+}
+
+.inforToolbar .inforIconButton.inforToggleButton.checked:focus {
+	border: 1px solid #13A3F7 !important;
+}
+
+.inforToolbar .inforIconButton.inforToggleButton.checked span{
+	opacity: .80;
+	filter: alpha(opacity=80);
+}
+
+.inforToolbar .inforIconButton.inforToggleButton:first-child{
+	margin-left: 10px !important;
+}
+
+.inforToggleButton .inforTextButton:first-child{
+	margin: 0 0 0 0;
+}
+
+.inforToolbar .inforToggleButton .inforTextButton:hover {
+    background-color: #CCCCCC;
+}
+
+.inforToggleButton .inforTextButton:focus, .inforToggleButton .inforFormButton:focus, .inforToggleButton  .inforFormButton.default:focus {
+    box-shadow: 0 1px 0 white, 0 -1px 0 white, 0 2px 0 #13A3F7, 0 -2px 0 #13A3F7;
+}
+
+.inforToggleButton .checked, .inforToggleButton .checked:focus {
+	background-color: #13A3F7;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid #B3B3B3;
+    border-right: none;
+    box-shadow: none;
+    color: #FFFFFF;
+}
+
+.inforToolbar .inforToggleButton .checked, .inforToolbar  .inforToggleButton .checked:focus {
+	background-color: #BEBEBE;
+    border-left: 1px solid #A1A1A1;
+    border-right: 1px solid #A1A1A1;
+    border-top: 1px solid #767676;
+    border-bottom: 1px solid transparent;
+    color: #1A1A1A;
+}
+
+
+/* Form Button Styles */
+.inforToggleButton .inforFormButton {
+	border: medium none;
+    border-radius: 0 0 0 0;
+    margin: 0 -2px;
+	border-left: 1px solid #B3B3B3;
+}
+
+/* Up/Down Arrows for Card Stack / Sort */
+.arrowDown, .arrowUp{
+	background-position: center center;
+	background-repeat: no-repeat;
+	display: block;
+	height: 13px;
+	width: 7px;
+}
+
+.arrowDown {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAOklEQVQI12MIjYy5AMT/seALDEDCAIvEB5A4w////0EKGtAkC0DiYEmoggNQiQMwMWRJBSB+AKJhYgA9aktQ8RMqCAAAAABJRU5ErkJggg==");
+}
+.arrowUp {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAPklEQVQI12P4//8/AwiHRsYoAPEDEA0TY0CSPADE/0E0iiRQoAAqAcMNYEkgwwCIP6BJgrABSPICFgkQvgAAahJLUPs/I+0AAAAASUVORK5CYII=");
+}
+.inforTextButton:active .arrowDown, .checked .arrowDown {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAANklEQVQI12P4////hf/YwQUGIGGAReIDSBwkCcINaJIFIHGYJAgfgEocgIkhSyoA8QMoDRYDAMqwfAuMpwXfAAAAAElFTkSuQmCC");
+}
+.inforTextButton:active .arrowUp, .checked .arrowUp{
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAANUlEQVQI12P4//8/AxQrAPEDKA0WY0CSPPAfAg6gSxb8RwUNMEkDIP7wHxMYgCQv/McOLgAAqmV8C+plitkAAAAASUVORK5CYII=");
+}
+
+/* Up Down Sort with  an icon */
+.inforToggleButton .sortAsc, .inforToggleButton .sortDesc {
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 16px;
+	margin-bottom: -1px;
+	width: 16px;
+}
+
+.inforToggleButton .sortDesc {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtUlEQVR42mNgGHCQmVvikpFdfBeI/4NwZnZJOT71IDWoBuQUp2XmFIUiGfY/M7NCkDQX5BSfAWlMzy6eCTGg2JhoFwAF3oFcgeoC3AZgNRHuhcxCJZJdANIMcgU4ELOKd0MMKFSiWaxhuIBiA9KziiOBsbAMjrOLW8lyQUZGiRjIgLTsEnPyDADanJldnIJLEy4M9UaJLzAGJsSWlHDjsxmrZpjTgbQOMQGIohlrIAJdQkoYAACFa5Ql5MeV3QAAAABJRU5ErkJggg==");
+}
+
+.inforTextButton:active .sortDesc, .checked .sortDesc {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAiElEQVR42mNgGHDw//9/FyC++x8Bygmo/48ukAbEoUiGgYAgqS44A9U4E0obk+KCdyBXoLnAmBQX/EfyghI5LgiFugIEdkNpJVrG2n/qGgDkRwLxMiTcSpYLgOJiUAPMyTWgFYhT8MQUVgBT4AvEE4CYm0B0Y9UMc7oOkWnmP4o3sATiBFLCAACSTRZ797G+NwAAAABJRU5ErkJggg==");
+}
+
+.inforToggleButton .sortAsc {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAu0lEQVR42mNgGHCQnl3UkZFd/B+Oc4rP4FMPUoNVIjOzUAkkmZlTFEqWS0A2p2cXzySoDpsLMrNLyoESdzMzKwRJthnu9NwSF6Jciu4CjEAEuoSmsYYzFsg2ICOjRCcjq3gCMBaWgXB6VokvaQbklDilZZeYww0DGhJbUsJNmguyi1tBGjOzi1NAdEpOiSK6JlwYJDkb5ApkF6AbgMsQWApchuQFMVwGoBsCFwRphrgC7IUqcGACDSI2DAD++5JpbSBVCAAAAABJRU5ErkJggg==");
+}
+
+.inforTextButton:active .sortAsc, .checked .sortAsc {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAjElEQVR42mNgGHDw////jv+o4AwB9f9xSShBDQgl1yVngHgmEer+YxMsB+K7QCxIjs0wp7sQqf4/oUC8S+tY+09dA4B8HSCeAMTLoNiXVAOcgNgcyTCQIdykuqAVqjEFSiuia8IFQJKzQa5Ac4EiNpsxNEMlliF5QQyXAeiGIAuaQ10B0lgFpcWIDQMA+esU0rCTgDIAAAAASUVORK5CYII=");
+}
+
+/*Toggle For Collapse Panels*/
+.inforToggleButton .panelCollapseCenter{
+	width: 22px;
+	height: 22px;
+	margin-left: -3px;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAJklEQVR42mOsrm//z0AJwGcASI6QPBMDhWDUgFEDRg2AAEZKszMAyjYPHTaDeusAAAAASUVORK5CYII=") no-repeat scroll center center transparent;
+}
+
+.inforToggleButton .panelCollapseCenter:hover{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAJklEQVR42mMUXvz9PwMlAJ8BIDlC8kwMFIJRA0YNGDUAAhgpzc4ACu4QJYInbKcAAAAASUVORK5CYII=") no-repeat scroll center center transparent;
+}
+.inforToggleButton .panelCollapseCenter.checked{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAHaTzTgAAAASSURBVHjaY/j/n6GxkVj0/z8Asn8SGTiuphcAAAAASUVORK5CYII=") no-repeat scroll center center transparent;
+}
+
+.inforToggleButton .panelCollapseLeft {
+	width: 22px;
+	height: 22px;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAACVBMVEUAAABoa3N7f4dzc9nSAAAAAXRSTlMAQObYZgAAACpJREFUeNpjWAUEDA0NDEwwghFEsIIIURARCiQa4QSYC5FghSuG6QUZBQBUTxT55QYZlAAAAABJRU5ErkJggg==")  no-repeat scroll center center  transparent;
+}
+.inforToggleButton .panelCollapseLeft:hover{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAATo/cd9CxzAAAAAXRSTlMAQObYZgAAAChJREFUeNpj+P+foYMRjAQZOgwZOgoZOj4ydIIRkAHiGoKlwGr+/wcAkAEQnYO96fAAAAAASUVORK5CYII=")  no-repeat scroll center center  transparent;
+}
+.inforToggleButton .panelCollapseLeft.checked{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAHaTzTgAAAAoSURBVHjaY/j/n6GDEYwEGToMGToKGTo+MnSCEZAB4hqCpcBq/v8HAJABEJ2DvenwAAAAAElFTkSuQmCC")  no-repeat scroll center center  transparent;
+}
+.inforToggleButton .panelCollapseRight {
+	width: 22px;
+	height: 22px;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABnRSTlMAAAAAAABupgeRAAAAOElEQVR42mOorm8nCTGAMF6ArIBiDRnZxSRrwNRDWAOaHqI0IOshVgNcD8000NLTtIw4mqUlkhAAD+iVf3CbWkMAAAAASUVORK5CYII=")  no-repeat scroll center center transparent;
+}
+.inforToggleButton .panelCollapseRight:hover{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAATo/cd9CxzAAAAAXRSTlMAQObYZgAAACZJREFUeNpj+P+foUEQhDoEGXoEGfoEGfqBaCIYgbk9YCmImv//AUT4DWty3BvvAAAAAElFTkSuQmCC")  no-repeat scroll center center  transparent;
+}
+.inforToggleButton .panelCollapseRight.checked{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAHaTzTgAAAAmSURBVHjaY/j/n6FBEIQ6BBl6BBn6BBn6gWgiGIG5PWApiJr//wFE+A1rctwb7wAAAABJRU5ErkJggg==")  no-repeat scroll center center  transparent;
+}
+
+.inforToggleButton .panelCollapseLeft.checked,.inforToggleButton .panelCollapseLeft.checked:focus {
+	background-color: #13A3F7;
+	border: 1px solid #D1D2D5;
+}
+
+.inforToggleButton .panelCollapseRight.checked,.inforToggleButton .panelCollapseRight.checked:focus {
+	background-color: #13A3F7 ;
+	border: 1px solid #D1D2D5;
+}
+
+.inforToggleButton .panelCollapseCenter.checked,.inforToggleButton .panelCollapseCenter.checked:focus {
+	background-color: #13A3F7 ;
+	border: 1px solid #D1D2D5;
+}

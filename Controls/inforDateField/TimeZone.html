@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Datefield Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDateField.js"></script>
+
+	<script>
+		$(function () {
+			$("#dateInput1, #dateInput2").inforDateField({showTimeInput: true,
+											 showTimezone: true,
+											 timezones: [{offset: "-5:00", label: 'NYC (-5:00)'}, {offset: "+0:00", label: 'London (+0:00)'}, {offset: "+7:00", label: 'Hong Kong (+7:00)'}],
+											 dateFormat:  Globalize.culture().calendar.patterns.d + " HH:mm zzz" ,
+											 timeFormat: "HH:mm"})
+										  .change(function (e) {
+											console.log($(this).val());
+										  });
+
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+		<label class="inforLabel">Date Field With Timezone</label>
+		<input class="inforDateField" id="dateInput1" type="text" style="width: 220px" data-utcmillis="" value="3/11/2013 3:07:00 AM -5:00"/><br>
+	</div>
+</body>
+</html>

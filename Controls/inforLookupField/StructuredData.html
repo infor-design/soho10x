@@ -1,0 +1,50 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+	<title>Infor Lookup Field - Open a Grid from a Url</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="../inforDataGrid/js/inforDataGrid.js" ></script>
+	<script src="js/inforLookupField.js" ></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$("#inforDynamicLookupField").inforLookupField(
+			{
+				returnField: "employeeId.value",
+				height: "auto",
+				width: "auto",
+				editable: true,
+				multiSelect: false,
+				beforeSearch: function(ui, options){
+					//pick up form options in before search and change them
+					options.ajaxOptions = {
+						url: "./ExampleLookupGridFrag2.html",
+						type: "POST"};
+
+					return options;
+				},
+				ajaxOptions : {
+					url: "./ExampleLookupGridFrag2.html",
+					type: "POST"}
+			});
+
+			$("body").inforForm();
+		});
+	 </script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Report Path</label>
+			<input class="inforLookupField" type="text" id="inforDynamicLookupField"><br>
+		</div>
+	</div>
+</body>
+</html>

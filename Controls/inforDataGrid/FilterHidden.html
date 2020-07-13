@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - Filter Data But the filter is hidden</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="../inforContextMenu/js/inforContextMenu.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div id="inforDataGrid">
+	</div>
+	<script>
+		var grid = null,
+			columns = [],
+			data = getSampleData([]);
+
+		//Define Columns for the Grid.
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: false, formatter:UneditableColumnFormatter });
+		columns.push({ id: "city", name: "City", field: "city", width: 60, reorderable: false, editor: TextCellEditor, required: true, filterType: TextFilter});
+		columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: false,
+			showDrillDown: true,
+			showFooter: true,
+			savePersonalization: false
+		});
+
+		//Example: Set Initial Filter on city contains "a"
+		var presetFilters  = {};
+		presetFilters["city"] = {value: "ton", operator: "contains", filterType: TextFilter()};
+		grid.applyFilter(presetFilters);
+		//grid.hideColumn("city");
+	</script>
+</body>
+</html>

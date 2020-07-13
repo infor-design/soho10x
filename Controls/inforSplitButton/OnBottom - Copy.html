@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Split Button</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			$("#button1").inforSplitButton({menuId: 'menu1'});
+			$("body").removeClass("inforHidden");
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="inforToolbar" style="position:absolute;bottom:0;width: 100%;">
+		<button type="button" class="inforSplitButton" id="button1">Normal</button>
+	</div>
+
+	<ul id="menu1" class="inforContextMenu">
+		<li class="option1"><a href="#s">Selected</a></li>
+		<li class="option2"><a href="#a">All</a></li>
+		<li class="option3"><a href="#o">Other...</a></li>
+	</ul>
+</body>
+</html>

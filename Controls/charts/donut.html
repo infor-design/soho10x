@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ring/Donut Chart</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="../Release/d3.min.js"></script>
+
+</head>
+<body class="inforApplicationPadding">
+
+  <h1 class="inforSubHeadingLabel">Ring (Donut)</h1>
+  <p>Purpose
+    -  allows comparison of components of more than one data series<br>
+    -  'hole' in the middle can be used to focus the attention to one particular important value<br>
+  </p>
+
+  <div id="pie-donut-example" class="chart-container"></div>
+
+  <script>
+      var donutData = [{
+        data: [{
+            name: 'Component A',
+            value: 7.6
+        }, {
+            name: 'Component B',
+            value: 6.25
+        }, {
+            name: 'Component C',
+            value: 4.35
+        }, {
+            name: 'Component D',
+            value: 5.6
+        }],
+        centerLabel: 'Donut Chart'
+      }];
+
+      $('#pie-donut-example').chart({type: 'donut', dataset: donutData});
+  </script>
+
+
+</body>
+</html>

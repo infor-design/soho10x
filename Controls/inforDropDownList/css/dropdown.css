@@ -1,0 +1,145 @@
+/* Select (DropDown)
+================================================== */
+
+select.dropdown,
+select.inforDropDownList {
+  font-size: 50px;
+}
+
+.dropdown {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAQAAADB7vUKAAAAGklEQVQY02NgGCQg8j8qJKCEgCkELGIYlAAA7Ioa4cFU1v4AAAAASUVORK5CYII=") no-repeat right center transparent;
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 18px;
+  margin-bottom: 4px;
+  padding: 0 25px 0 5px;
+  width: 173px;
+  background-color: white;
+}
+
+.dropdown.is-open {
+  border-radius: 3px 3px 0 0;
+}
+
+.dropdown.backgroundColor[disabled] {
+  background-color: #e5e5e5;
+  border: 1px solid #e5e5e5;
+  background-image: none;
+  cursor: initial;
+  color: #777;
+}
+
+.dropdown.is-readonly[readonly] {
+  background-color: transparent;
+  border: 1px solid transparent;
+  background-image: none;
+  cursor: initial;
+}
+
+.dropdown.is-readonly.backgroundColor {
+  background-color: #e5e5e5 !important;
+  border: 1px solid #e5e5e5 !important;
+  background-image: none !important;
+}
+
+.dropdown[disabled] {
+  background-color: transparent;
+  border: 1px solid transparent;
+  background-image: none;
+  cursor: default;
+}
+
+.dropdown:focus {
+  background-color: #eaf7ff !important;;
+  border: 1px solid #13a3f7;
+}
+
+.dropdown.has-error {
+  border: 1px solid #d5000e;
+}
+
+.dropdown.has-error:focus {
+  background-color: #FDF2F3 !important;
+  border: 1px solid #d5000e !important;
+}
+
+.dropdown-list {
+  background-color: #fff;
+  border: 1px solid #b3b3b3;
+  border-radius: 0 0 3px 3px;
+  color: #1a1a1a;
+  font-size: 1.2em;
+  height: auto;
+  left: 1px;
+  line-height: 28px;
+  list-style: none;
+  max-height: 300px;
+  margin: 0;
+  overflow: auto;
+  padding: 0;
+  position: absolute;
+  text-indent: 6px;
+  top: 1px;
+  transition: height .3s ease 0s;
+  width: auto;
+  z-index: 4001;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+
+.dropdown-list li:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.dropdown-list li.is-selected {
+  background-color: #13a3f7;
+  color: white;
+  font-weight: normal;
+}
+
+.dropdown-list.alignRight li {
+  text-indent: 0px;
+  padding-right: 6px;
+}
+
+.dropdown-icon {
+  background-repeat: no-repeat;
+  background-position: 6px center;
+  padding-left: 22px;
+}
+
+/* Badges In the Drop Down */
+.dropdown-badge:after {
+  background-color: #b3b3b3;
+  border-radius: 2px;
+  color: white;
+  content: attr(data-attr);
+  font-size: 11px;
+  height: 16px;
+  line-height: 16px;
+  margin-top: 6px;
+  position: absolute;
+  right: 22px;
+  text-align: center;
+  text-indent: 0;
+  width: 16px;
+  background-repeat: no-repeat;
+}
+.dropdown-badge.ruby:after {
+  background-color: #d5000e;
+}
+.dropdown-badge.lightAzure:after {
+  background-color: #61c5ff;
+}
+input + .badge {
+  margin-left: -38px;
+  margin-top: 2px;
+  position: absolute;
+}
+
+html[dir="rtl"] .dropdown {
+  background-position: left 4px center;
+  padding: 0 5px 0 25px;
+}

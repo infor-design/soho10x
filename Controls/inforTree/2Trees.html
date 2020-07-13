@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Tree Sample - Using JSON Data</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="js/inforTree.js"></script>
+	<script src="js/sampleData.js"></script>
+	<link href="css/inforTree.css" rel="stylesheet" />
+
+	<script>
+	$(function () {
+		$(".inforSplitter").inforSplitter();
+
+		//Initialize the Tree control
+		$("#inforTree1").inforTree({"json_data" : getSampleJson()});
+
+		$("#inforTree2").inforTree({"json_data" : getSampleJson() ,
+									"plugins": ["search", "themes", "json_data", "ui"]});
+	});
+	</script>
+</head>
+<body>
+	<div class="inforSplitter">
+		<div id="leftPane" style="width:50%">
+			<div id="inforTree1" class="inforTree"></div>
+		</div>
+		<div id="rightPane" style="width:50%">
+			<div id="inforTree2" class="inforTree"></div>
+		</div>
+	</div>
+</body>
+</html>

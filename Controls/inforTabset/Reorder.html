@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Basic Features </title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			var tabs = $('#inforTabContainer').inforTabset({draggable:true, closable: true});
+
+			//take tab two and move it to tab one
+			$(".runJob").click(function() {
+				var lis = tabs.find("ul>li")
+				lis.last().before(lis.eq(0));
+			});
+
+			//add  a new tab
+			$(".new").click(function() {
+				tabs.inforTabset("add","tabX", "New Tab", true, function(e,ui){
+					console.log(e,ui,'addCallback');
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="inforToolbar" >
+		<button class="inforIconButton runJob" title="" type="button"></button>
+		<button class="inforIconButton new" title="" type="button"></button>
+	</div>
+	<div id="inforTabContainer" style="margin:10px">
+		<ul class="inforTabset">
+			<li><a href="#tab1">Overview</a></li>
+			<li><a href="#tab2">Items</a></li>
+			<li><a href="#tab3">Notes</a></li>
+	  </ul>
+
+	  <div id="tab1">
+		<p>Tab 1</p>
+	 </div>
+	  <div id="tab2">
+		<p>Tab 2</p>
+	  </div>
+	  <div id="tab3">
+		<p>Tab 3</p>
+	  </div>
+	</div>
+
+	</body>
+</html>

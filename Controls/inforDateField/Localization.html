@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Infor Datefield Localization Example</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function($) {
+    $('.inforDropDownList').inforDropDownList();
+
+    $('.inforDateField').inforDateField();
+    /*set up as the default value as french when the page is loaded*/
+    Globalize.culture('en-GB');
+    Globalize.culture('en-GB').calendars.standard.firstDay = 0;
+
+    $('#locale').change(function () {
+      Globalize.culture($(this).val());
+      $('#dateField1').val('');
+    });
+    });
+  </script>
+</head>
+<body>
+  <div class="inforModuleContainer">
+     <div class="inforModuleHeader">
+     </div>
+     <div class="inforModuleContentArea">
+      <div class="inforToolbar">
+      </div>
+
+      <div class="autoLabelWidth inforSingleColumnLayout">
+        <label class="inforLabel">Date Field</label>
+        <input class="inforDateField" id="dateField1" type="text"  /><br>
+        <label class="inforLabel">Language</label>
+        <select id="locale" class="inforDropDownList">
+          <option value="en-US" >English (US)</option>
+          <option value="en-GB" >English (UK)</option>
+          <option value="ar-SA">Arabic (Saudi Arabia) (&#8235;(&#1604;&#1593;&#1585;&#1576;&#1610;</option>
+          <option value="fr-FR" selected="selected">French (Fran&ccedil;ais)</option>
+          <option value="zh-CN">Chinese Simplified (&#31616;&#20307;&#20013;&#25991;)</option>
+          <option value="de-DE">German (Deutsch)</option>
+          <option value="ja-JP">Japanese (&#26085;&#26412;&#35486;)</option>
+          <option value="it-IT">Italian (Italiano)</option>
+          <option value="nl-NL">Dutch (Nederlands)</option>
+          <option value="es-ES">Spanish (Espa&ntilde;ol)</option>
+          <option value="pt-BR">Portuguese/Brazilian (Portugu&ecirc;s)</option>
+        </select><br>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Search Field - Simple</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			$(".inforEmailField").inforTriggerField();
+			$("#trigger4").validationMessage("show", "This field has an Error.");
+			
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="trigger1">Email Field</label>
+		<input class="inforEmailField" type="email" id="trigger1"><br>
+		<label class="inforLabel" for="trigger2">Email Field Readonly</label>
+		<input class="inforEmailField" type="email" readonly value="Some Value" id="trigger2"><br>
+		<label class="inforLabel" for="trigger3">Email Field Disabled</label>
+		<input class="inforEmailField" type="email" disabled value="Some Value" id="trigger3"><br>
+		<label class="inforLabel" for="trigger4">Email Field Error</label>
+		<input class="inforEmailField" type="email" id="trigger4"><br>
+	</div>
+</body>
+</html>

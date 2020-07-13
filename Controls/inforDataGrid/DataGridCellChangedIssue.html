@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+		
+	<title>Infor DataGrid - Basic </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	
+	
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+	
+	<script>
+	$(function () {	
+	
+		//Store the Grid Obj For Later Api Calls..
+		var columns = [],
+			data = getSampleData([]);	
+			
+		//Define Columns for the Grid.
+		columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false, width: "auto"}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
+		
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: false,
+			showDrillDown: true,
+			showFooter: true,
+			showGridSettings: true,
+			forceFitColumns: false,
+			savePersonalization: false,
+			enableCellRangeSelection: false,
+			showExport: true
+		});
+		
+		grid.onCellChange.subscribe(function (e, args) {
+        	console.log(args);
+			alert("Prompt user if they sure they want to make change");
+		});
+	});
+	</script>
+	
+</head>
+<body>
+	<div class="inforToolbar">
+		<button type="button" class="inforIconButton save" title="save" onclick='alert("Record Saved")'></button>
+	</div>
+	<div id="inforDataGrid">	
+	</div>
+</body>
+</html>

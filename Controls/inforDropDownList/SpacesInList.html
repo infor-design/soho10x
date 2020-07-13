@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Dropdown - Supports Spaces</title>
+  <link type="text/css" href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <link type="text/css" href="css/inforDropDownList.css" rel="stylesheet" />
+
+  <script  src="../lib/jquery-1.11.1.min.js"></script>
+  <script  src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script  src="../Release/inforControlsCombined.js"></script>
+
+  <script  src="js/inforDropDownList.js"></script>
+
+  <script>
+
+    $(function () {
+      $('#dd1').inforDropDownList();
+      $('#dd1').setValue('');
+      $('#dd1').inforDropDownList('setCode', '1');
+    });
+  </script>
+</head>
+<body>
+  <div class="infor2ColumnLayout">
+    <div class="column1">
+       <label class="label" for="dd1">Ship To</label>
+       <select class="dropdown" id="dd1" >
+        <option  value="2">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;2 - Selected</option>
+        <option selected value="1">&#160;&#160;&#160;&#160;1 - Selected</option>
+        <option></option>
+      </select><br>
+    </div>
+  </div>
+
+</body>
+</html>

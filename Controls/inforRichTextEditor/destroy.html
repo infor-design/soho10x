@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Infor Rich Text Editor</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js" ></script>
+
+  <link rel="stylesheet" href="css/inforRichTextEditor.css" />
+  <script src="js/inforRichTextEditor.js"></script>
+
+  <script>
+    $(function () {
+      //Globalize.culture("es-ES");
+      $('#richTextEditor').inforRichTextEditor().on('change', function(e, source) {
+        console.log(e, source);
+      });
+
+      setTimeout(function () {
+        $('#richTextEditor').inforRichTextEditor('destroy');
+        alert();
+      }, 2000);
+
+    });
+  </script>
+</head>
+<body class="inforApplicationPadding">
+  <p>Comments</p>
+  <div id="richTextEditor" class="inforRichTextEditor" >
+    Lorem Ipsum<br>
+  </div>
+</body>
+</html>

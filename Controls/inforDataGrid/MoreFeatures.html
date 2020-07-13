@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+		   <button type="button" id="newButton"  class="inforIconButton new" title="Click to add a new row" onclick="focusCell()"></button>
+		   <button type="button" id="submitButton" class="inforIconButton save" disabled="disabled" title="Click to Save Modified Rows" ></button>
+		   <span class="inforToolbarSpacer"></span>
+		   <button type="button" id="deleteButton"  class="inforIconButton delete" disabled="disabled" title="Click to remove selected rows" onclick="deleteRows()"></button>
+		   <span class="inforToolbarSpacer"></span>
+		   <button type="button" id="refreshButton"  class="inforIconButton refresh" title="Click to reload the data" onclick="updateFirstRow()"></button>
+			 <span class="inforToolbarSpacer"></span>
+		   <button type="button" id="runJobButton"  class="inforIconButton runJob" title="Click to get Dirty Rows" onclick="console.log(grid.getDirtyRows())"></button>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+	<script>
+		//Set the locale to get the grid translated.
+		Globalize.culture("fr-FR");
+		// Globalize.culture("zh-CN");
+		Globalize.culture().calendar["/"]="/";	//no matter what the local does use this seperator.
+		Globalize.culture().numberFormat[","]=",";
+    Globalize.culture().numberFormat["."]=".";
+
+		//Store the Grid Obj For Later Api Calls..
+		var grid;
+
+		function focusCell() {
+			//grid.setActiveCell(2,3,true);
+			//grid.updateColumnHeader("phone", "Test 123", "Test 123");
+			grid.setSelectedRows([]);
+		}
+		//Example: Reload rows - linked to the refresh button
+		function refreshData()
+		{
+			//grid.getEditorLock().commitCurrentEdit();
+			grid.clearFilter();
+			var data = getSampleData([]);
+			grid.updateData(data);
+		}
+
+		function updateFirstRow() {
+			var row1 = grid.getData().getItems()[1];
+			row1.city ='Test update';
+			grid.updateRow(1);
+
+			//var presetFilters  = {};
+			//presetFilters["city"] = {value: "virgin", operator: "contains", filterType: TextFilter()};
+			//grid.applyFilter(presetFilters);
+		}
+
+		//Example: Deleting rows - linked to the delete button
+		function deleteRows()
+		{
+			var selectedRows = grid.getSelectedRows();
+			for (var i in selectedRows) {
+				var rowData = grid.getDataItem(i);
+				console.log("Delete Row : " + rowData);
+			}
+			grid.removeSelectedRows()
+		}
+
+		//See: RequiredFieldValidator for a cell validator function example
+
+		//Example: of a editability function to mange cell editability.
+		function testEditability(row, cell, value, columnDef, dataContext) {
+		   return dataContext.city =="Spokane";
+		}
+
+		//Define Columns for the Grid.
+		var columns = [];
+
+		//define options for the lookup cell
+		var lookupColumns = [];
+		lookupColumns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
+		lookupColumns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true });
+		lookupColumns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank"});
+		lookupColumns.push({ id: "country", name: "Country", field: "country", width: 70, formatter: TextCellFormatter});
+		lookupColumns.push({ id: "territory", name: "Territory", field: "territory", width: 70, formatter: TextCellFormatter});
+
+		var lookupData = getSampleData([]);
+
+		var options = {
+			dataset: lookupData,
+			columns: lookupColumns,
+			idProperty: 'officeId',
+			editable: false,
+			showDrillDown: false,
+			showFilter: false,
+			showCheckboxes: false,
+			showStatusIndicators: false,
+			multiSelect: false
+		};
+
+		//Define Columns for the Grid.
+		columns.push({id: "drilldown", name: "Test",  headerCssClass: "alignHeaderCenter", cssClass: "non-data-cell alignCenter", builtin: true, selectable: false, reorderable:false, sortable:false, resizable: false, width: 100, formatter: DrillDownCellFormatter });
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter:UneditableColumnFormatter, hidden: true });
+		columns.push({ id: "city", editability : testEditability,  maxLength: 10, cssClass: "uppercase", filterExcludeList: ".equals,.doesNotEqual", name: "City", field: "city", width: 125, sortable: true, editability: testEditability, formatter: TextCellFormatter, editor: TextCellEditor, editorOptions: {gridOptions: options, returnField: "city", height: 400, width: 400, editable: false, typeAheadSearch: false }, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, reorderable: false, editor: TextCellEditor, required: true, filterType: TextFilter});
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: UneditableColumnFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", required: true, name: "State", field: "state", editability: testEditability, formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:true}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
+		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter, contentsFilterValues : ['Remote', 'Satellite', 'Headquarters' , 'Test']  });
+		columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "revenue", name: "Revenue", field: "revenue", width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", editability: testEditability, headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter:CheckboxCellFormatter, editability: testEditability , editor:CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor , editability: testEditability, formatter: DateCellFormatter, filterType: DateFilter,  DateShowFormat:Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.T,  editorOptions: {showTimeInput: true,  showQuickDates: true, dateFormat: Globalize.culture().calendar.patterns.d + " HH:mm", timeFormat: "HH:mm"} });
+		//Note: Use fx...  DateShowFormat: Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.T for date and time in current locale
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		//Shows Setting the Column to the Text Width
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: "Territory".textWidth()+8, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSampleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: false,
+			showFooter: true,
+			showGridSettings: true,
+			drilldown: function(currentRow) {
+				alert('Drill Down on '+currentRow.officeId)
+			},
+			drillDownTooltip : "Display Details About this Office",
+			forceFitColumns: false,
+			savePersonalization: false,
+			enableCellRangeSelection: false,
+			showExport: true,
+			frozenColumn: 3,
+			showGridSettings: false
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+
+		//Example: Enable and Disable the Form Save and delete Buttons.
+		grid.onCellChange.subscribe(function (e, args) {
+			alert('change');
+		});
+
+    grid.trigger(grid.onCellChange, {
+                row: 1,
+                cell: 1,
+                item: {},
+                cellValue : 'new',
+                previousCellValue: 'old'
+              });
+
+
+		grid.onSelectedRowsChanged.subscribe(function (e, args) {
+			var rows = grid.getSelectedRows();
+			if (rows.length==0)
+				$("#deleteButton").disable();
+			else
+				$("#deleteButton").enable();
+		});
+
+		/* Example: Set the initial sort column - not shown at the moment since it would override the column personalization
+			grid.setSortColumn("city", true);
+		*/
+		grid.getColumns()[grid.getColumnIndex("drilldown")].editability =  function(a) {
+											return false;
+										}
+
+		/* Example: Set Initial Filter on city contains "a"*/
+			var presetFilters  = {};
+			presetFilters["city"] = {value: "each", operator: "contains", filterType: TextFilter()};
+
+			//presetFilters ["officeType"] = {value: [{ id : "Remote", isChecked :false},  { id : "Satellite", isChecked :true},  { id:"Headquarters", isChecked:true}],
+			//				operator: "contains",
+			//				filterType: ColumnContentsFilter()};
+
+			//presetFilters["establishedDate"] = {value: "03/07/1964" , operator: "equals", filterType: DateFilter()};
+
+			//Call the grid api to set the filter
+			//grid.applyFilter(presetFilters);
+
+		//Show the first row on submit.
+		$("#submitButton").click(function() {
+			console.log(data[1]);
+		});
+
+		//set the filters to startsWith
+		/*
+		$("#inforDataGrid").find(".inforFilterButton").each(function() {
+			var btn =$(this);
+			if (btn.data("filterType")=="TextFilter")
+				btn.attr("class","").attr("class","inforFilterButton startsWith");
+		});
+
+
+		grid.onSelectedRowsChanged.subscribe(function(e,args) {
+			console.log(e,args);
+		});
+
+		grid.onBeforeEditCell.subscribe(function(e,args) {
+			if (args.column.id=="city") {
+				var returnVal = true;
+
+				//open a dialog and ask a question...
+				$('body').inforMessageDialog({
+						title: "Clear Line or Whatever",
+						shortMessage: "Are you sure?",
+						detailedMessage: "The data will be permanently removed and is not recoverable.",
+						dialogType: "Confirmation",
+						showTitleClose: false,
+						buttons: [  {	text: Globalize.localize("Yes"),
+										click: function() {
+											alert('Clear The Rows');
+											$(this).inforDialog("close");
+										},
+										isDefault: true
+									},{
+										text: Globalize.localize("No"),
+										click: function() {
+											$(this).inforDialog("close");
+											returnVal = false;
+										}
+									}]
+						});
+
+				return returnVal;
+			}
+		});*/
+
+		$("body").inforForm();
+
+	</script>
+</body>
+</html>

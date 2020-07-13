@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid - Panel Formatter (Inline Form)</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+			<button type="button" id="submitButton" onclick="save()" class="inforIconButton save" title="Click to Save Modified Rows" ></button>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		var grid;
+
+		//Create a Function that returns html for the detail template
+		function createDetailTemplate(row, cell, value, columnDef, dataContext, gridObj) {
+			var panelhtml = "";
+			panelhtml += "<div>";
+			panelhtml += "<div id='inforDataGrid" + row + "' style='height:155px;top: 8px;margin-left: 20px;left:35px;'>";
+			panelhtml += "</div>";
+			panelhtml += "</div>";
+			return panelhtml;
+		}
+
+		//Function that initializes anything in code on the detail template. This happens post render.
+		function renderDetailTemplate(cellNode, row, dataContext, colDef) {
+			if (!dataContext.rowHeight) {
+				return;
+			}
+			
+			$(cellNode).find(".inforLoadingIndicator").remove();
+			//Define Columns for the Grid.
+			var columns2 = [];
+			columns2.push({ id: "line", name: "Col1", field: "line", width: 30, formatter:UneditableColumnFormatter, filterType: TextFilter });
+			columns2.push({ id: "item", name: "Col2", field: "item", width: 125, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+			columns2.push({ id: "description", name: "Col3", field: "description", width:125, editor: TextCellEditor, required: true, filterType: TextFilter });
+			columns2.push({ id: "qty", name: "Col 4", field: "qty", width: 40, formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+			columns2.push({ id: "price", name: "Price", field: "price", width: 40, formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+			columns2.push({ id: "summary", name: "Summary", field: "summary", width: 290, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+			var options2 = {
+						columns: columns2,
+						idProperty:'id',
+						dataset: data,
+						showFilter: false,
+						showDrillDown: false,
+						showFooter: false,
+						showGridSettings: true,
+						showStatusIndicators: false,
+						savePersonalization: true,
+						editable: false,
+					};
+			//$("#inforDataGrid" + row).inforDataGrid(options2);
+			
+			//Fade In
+			$(cellNode).find(".inforDetailTemplate").css('opacity', 1).parent().css('opacity', 1);
+		}
+
+		//Define Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "edit", name: "hey", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "tree-expand inforIconButton closed", 
+						buttonClick: function (row, gridObj) { 
+							if (row.rowHeight == 0) {
+								row.rowHeight = 200;
+								this.buttonCssClass = "tree-expand inforIconButton open";
+							} else {
+								row.rowHeight = 0;
+								this.buttonCssClass = "tree-expand inforIconButton closed";
+							}
+						}, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
+		columns.push({ id: "line", name: "Line", field: "line", width: 30, formatter:UneditableColumnFormatter, filterType: TextFilter });
+		columns.push({ id: "item", name: "Item", field: "item", width: 125, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "description", name: "Description", field: "description", width:125, editor: TextCellEditor, required: true, filterType: TextFilter });
+		columns.push({ id: "qty", name: "Ordered Qty", field: "qty", width: 40, formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+		columns.push({ id: "price", name: "Price", field: "price", width: 40, formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+		columns.push({ id: "summary", name: "Summary", field: "summary", width: 290, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "panel", sortable: false, name: "Panel Area", field: "", cssClass: "detailTemplate", formatter: DetailTemplateFormatter, editable: true, detailTemplate: createDetailTemplate, asyncPostRender: renderDetailTemplate });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSimpleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'id',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: false,
+			showFooter: true,
+			showGridSettings: true,
+			savePersonalization: true,
+			editable: false,
+			enableAsyncPostRender: true,
+			variableRowHeight: true,
+			variableRowHeightColumn: "rowHeight"
+		};
+
+		grid = $("#inforDataGrid").inforDataGrid(options);
+	</script>
+</body>
+</html>

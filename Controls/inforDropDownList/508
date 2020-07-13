@@ -1,0 +1,49 @@
+Baseline Tests:
+	http://view.jqueryui.com/master/demos/selectmenu/default.html
+	http://www.w3schools.com/tags/tag_select.asp
+	http://www.oaa-accessibility.org/examplep/combobox1/
+
+	
+Todo:
+- Grid
+- Fix Lookup
+- Doesnt work as display: table-cell
+
+
+Breaking Changes:
+- No Auto Complete - http://www.w3.org/TR/wai-aria/states_and_properties#aria-autocomplete
+
+ 
+Copy:
+
+	Dropdown menus are great for reducing clutter, simplifying page content, and providing a consistent navigation structure that (if done well) 
+	makes it easy to find content from anywhere on the site. Unfortunately, very few of the dynamic menus in use today are fully accessible:
+	
+	- Most dynamic menus depend on users being able to use a mouse. Mousers hover over menu items, which makes dropdown menus appear. If non-mousers tab to those same top-level menu items, they typically can't make the dropdown menus appear.
+	- Most dynamic menus depend on users being able to see. Dropdown menus are typically hidden with display:none in CSS, and revealed by changing that to display:block using JavaScript (triggered, as noted above, by a hover event). 
+	  If screen reader users can somehow trigger the change from hidden to visible, that change is not likely to be communicated to them, so even if the dropdown menu is visible it isn't necessarily accessible.
+	
+The following keyboard shortcuts are implemented 
+
+    Tab: Into Field
+    Up and Down Arrow: Move between selections 
+	Enter: Select an Item
+	Keys: Move to an item
+	
+ARIA Roles and Properties
+    http://www.w3.org/WAI/GL/wiki/Using_ARIA_menus
+	
+    activedescendant
+    role="combobox"
+	aria-labelledby
+	role="option"
+	role="menu"
+		
+VPAT Notes:
+
+- X in drop down has keyboard equivalent of using backspace key
+
+Questions:
+- aria-haspopup is needed?
+- Should i support VO + Space to open and select?
+	 

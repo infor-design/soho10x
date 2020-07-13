@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html >
+
+	<head><title>
+		HCM Contacts
+	</title>
+
+   <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+
+	<script type='text/javascript'>
+		$(document).ready(function()
+		{
+			$("#ManufacturerSelfServiceMenuBar").inforApplicationNav();
+
+			var ctl04_TestGrid1 = null;
+			var ctl04_TestGrid1_data = [];
+			var ctl04_TestGrid1_columns = [];
+			var ctl04_TestGrid1_newRowKey = 'ROWORDER';
+			var ctl04_TestGrid1_gridDataKey = 'ROWORDER';
+			var ctl04_TestGrid1_newRowTemplate = { ROWORDER: -1, ROWID: '', FIRSTNAME: '', LASTNAME: '', AGE: '', HEIGHT: '', STARTDATE: '', STATE: '', NOTES: '' };
+
+			ctl04_TestGrid1_data.push({ ROWORDER: '1', ROWID: '1', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '2', ROWID: '2', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '3', ROWID: '3', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '4', ROWID: '4', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '5', ROWID: '5', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '6', ROWID: '6', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '7', ROWID: '7', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '8', ROWID: '8', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '9', ROWID: '9', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '10', ROWID: '10', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '11', ROWID: '11', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '12', ROWID: '12', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '13', ROWID: '13', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '14', ROWID: '14', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '15', ROWID: '15', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '16', ROWID: '16', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '17', ROWID: '17', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '18', ROWID: '18', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '19', ROWID: '19', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '20', ROWID: '20', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '21', ROWID: '21', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '22', ROWID: '22', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '23', ROWID: '23', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '24', ROWID: '24', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '25', ROWID: '25', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '26', ROWID: '26', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '27', ROWID: '27', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '28', ROWID: '28', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '29', ROWID: '29', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+			ctl04_TestGrid1_data.push({ ROWORDER: '30', ROWID: '30', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+
+			ctl04_TestGrid1_columns.push({ id: 'ROWORDER', name: 'Order', field: 'ROWORDER', maxWidth: 20, width: 100, formatter: TextCellFormatter, filterType: IntegerFilter });
+			ctl04_TestGrid1_columns.push({ id: 'LASTNAME', name: 'Last Name', field: 'LASTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+			ctl04_TestGrid1_columns.push({ id: 'FIRSTNAME', name: 'First Name', field: 'FIRSTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+			ctl04_TestGrid1_columns.push({ id: 'STARTDATE', name: 'Start Date', field: 'STARTDATE', width: 100, formatter: DateCellFormatter, editor: DateCellEditor, DateSourceFormat: 'MM/dd/yyyy hh:mm:ss tt', DateShowFormat: 'MM/dd/yyyy', filterType: DateFilter });
+			ctl04_TestGrid1_columns.push({ id: 'AGE', name: 'Age', field: 'AGE', width: 50, formatter: TextCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+			ctl04_TestGrid1_columns.push({ id: 'HEIGHT', name: 'Height', field: 'HEIGHT', width: 50, formatter: TextCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+			ctl04_TestGrid1_columns.push({ id: 'STATE', name: 'State', field: 'STATE', width: 50, formatter: TextCellFormatter, editor: SelectCellEditor, filterType: TextFilter, options: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'] });
+			ctl04_TestGrid1_columns.push({ id: 'NOTES', name: 'Notes', field: 'NOTES', width: 500, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+			ctl04_TestGrid1_columns.push({ sortable: false, id: '#', name: '', width: 40, behavior: 'selectAndMove', selectable: false, resizable: false, cssClass: 'cell-reorder dnd' });
+
+			var options =
+			{
+				columns: ctl04_TestGrid1_columns,
+				dataset: ctl04_TestGrid1_data,
+				idProperty: 'ROWORDER',
+				editable: true,
+				showCheckboxes: true,
+				showDrillDown: false,
+				drillDown: function (currentRow) { },
+				showStatusIndicators: true,
+				showGridSettings: true,
+				showFilter: false,
+				forceFitColumns: true,
+				multiSelect: true,
+				savePersonalization: false,
+				showHeaderContextMenu: true,
+				showSavedFilters: false,
+				showFilterWithinResults: true,
+				enableRowReordering: true,
+				enableCellNavigation: true,
+				showFooter: true,
+				autoHeight: true,
+				pageSize: 10,
+				pagingMode: 'PagingModes.PagerClientSide',
+				frozenColumn: -1
+			}
+			ctl04_TestGrid1 = $('#ctl04_TestGrid1').inforDataGrid(options);
+
+			var options =
+			{
+				columns: ctl04_TestGrid1_columns,
+				dataset: ctl04_TestGrid1_data,
+				idProperty: 'ROWORDER',
+				editable: true,
+				showCheckboxes: true,
+				showDrillDown: false,
+				drillDown: function (currentRow) { },
+				showStatusIndicators: true,
+				showGridSettings: true,
+				showFilter: false,
+				forceFitColumns: true,
+				multiSelect: true,
+				showHeaderContextMenu: true,
+				showSavedFilters: false,
+				showFilterWithinResults: true,
+				enableRowReordering: true,
+				enableCellNavigation: true,
+				showFooter: true,
+				autoHeight: true,
+				savePersonalization: false,
+				pageSize: 10,
+				pagingMode: 'PagingModes.PagerClientSide',
+				frozenColumn: -1
+			}
+			ctl04_TestGrid2 = $('#ctl04_TestGrid2').inforDataGrid(options);
+			$("body").inforForm();
+		});
+	</script>
+
+</head>
+
+
+<body class="inforHidden">
+	<div id="ManufacturerSelfServiceMenuBar" class="inforApplicationNav">
+		<ul menu-title="Manufacturer Self Service">
+			<li type="menu">
+				<a href="javascript:void(0);">Manufacturers</a>
+				<ul id="055ae0d7-3645-493d-b1fe-321a230ab33b" menu-title="Manufacturer Menu">
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Manufacturer?list=AllManufacturers">Manufacturer</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Manufacturer?list=AllManufacturersCasual">Casual Manufacturer</a></li>
+					<li type="form"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/form/Manufacturer?form=Manufacturer">Create Manufacturer</a></li>
+					<li type="class-action"><a href="#">Create Manufacturer From Action</a></li>
+				</ul>
+			</li>
+			<li type="menu">
+				<a href="javascript:void(0);">Product List</a>
+				<ul id="c1f0f807-a6db-4ab3-93d5-d98dfdce77ef" menu-title="Product Menu">
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Product?list=AllProducts">Products</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Product?list=AllProductsRelevanceSearch">Products With Relevance Search</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Product?list=ProductCharts">Product Charts</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Product?list=ProductAvailabilityList">Product Availability</a></li>
+					<li type="task-action"><a href="#">Make All Products Available</a></li>
+					<li type="task-action"><a href="#">Make All Product Unavailable</a></li>
+					<li type="class-action"><a href="#">Create New Product Parameter Form</a></li>
+				</ul>
+			</li>
+			<li type="menu">
+				<a href="javascript:void(0);">Employees</a>
+				<ul id="54362103-e75f-4775-83e9-e93a7dc2c7be" menu-title="Employee Menu">
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Employee?list=EmployeeList">Employee List</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Employee?list=EmployeeCardList">Employee Card List</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Employee?list=EmployeeTreeList">Employee Tree List</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Employee?list=EmployeeOrgChart">Organization Chart</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/IndicatorOfPerformance?list=IndicatorsOfPerformance">Indicator Of Performance</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/IndicatorOfPotential?list=IndicatorsOfPotential">Indicator Of Potential</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/SuccessionMatrixElement?list=SuccessionMatrixList">Succession Matrix Element</a></li>
+					<li type="menu">
+						<a href="javascript:void(0);">Addition Menu Options</a>
+						<ul id="3aaebe48-c9fb-42e0-9243-98aea20f031f" menu-title="Secondary Menu">
+							<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Employee?list=EmployeeTreeList">S Employee Tree List</a></li>
+							<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/Employee?list=EmployeeOrgChart">S Organization Chart</a></li>
+							<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/IndicatorOfPerformance?list=IndicatorsOfPerformance">S Indicator Of Performance</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li type="menu">
+				<a href="javascript:void(0);">Setup</a>
+				<ul id="029ceea1-c325-45a4-9093-ddba00c54aa1" menu-title="My Staff">
+					<li type="page"><a href="#">Admin Console</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/BackOrderCode?list=BackOrderCodeList">Back Order Codes</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/CommodityCode?list=CommodityCode">Commodity Codes</a></li>
+					<li type="list"><a href="lr87417f.infor.com:8080/lmtest/xmlhttp/lwc/app/ManufacturerMaintenance/list/Manufacturer/list/PriceClass?list=PriceClassList">Price Class</a></li>
+				</ul>
+			</li>
+			<li type="url"><a href="#">About</a></li>
+		</ul>
+	</div>
+
+	<div class="inforScrollableArea" style="margin-right:-1px;">
+		<div  class="inforApplicationPadding">
+
+			<p class="inforLandmarkDataLabel">Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu
+			</p>
+
+			<div id="moduleHeader" class="inforModuleContainer">
+				<div class="inforModuleHeader">
+					<div class="inforModuleHeaderLeft">
+						<span id="ManufacturerLocationListFormTitle" class="inforPageTitleText" title="">Dependents</span>
+						<span class="inforModuleRecordIdText"></span>
+					</div>
+				</div>
+			</div>
+			<div style="DISPLAY: block; VISIBILITY: visible;" id="ManufacturerLocationListToolBar" class="inforToolbar">
+				<button id="ManufacturerLocationList_ActionsMenuButton" class="inforMenuButton">Actions</button>
+				<button id="ManufacturerLocationList_OptionsMenuButton" class="inforMenuButton">Options</button>
+				<button id="ManufacturerLocationList_RelatedMenuButton" class="inforMenuButton">Related</button>
+				<span class=inforToolbarSpacer></span>
+				<button id="ManufacturerLocationList_CreateButton" class="inforIconButton new" title="Create"><span></span></button>
+				<button id="ManufacturerLocationList_UpdateButton" class="inforIconButton edit" title="Open"><span></span></button>
+				<button id="ManufacturerLocationList_DeleteButton" class="inforIconButton delete" title="Delete"><span></span></button>
+				<span class="inforToolbarSpacer"></span>
+				<button id=ManufacturerLocationList_RefreshMenuItem class="inforIconButton refresh" title="Refresh"><span></span></button>
+				<div class="alignRight">
+					<button id="ManufacturerLocationList_HelpButton" class="inforIconButton additionalHelp" title="Help"><span></span></button>
+				</div>
+				<ul id="ManufacturerLocationList_ActionsMenu" class="inforContextMenu"></ul>
+				<ul id="ManufacturerLocationList_CreateMenu" class="inforContextMenu"></ul>
+				<ul id="ManufacturerLocationList_RelatedMenu" class="inforContextMenu"></ul>
+				<ul id="ManufacturerLocationList_OptionsMenu" class="inforContextMenu">
+				<li><a id="null">Refresh</a></li>
+				</ul>
+			</div>
+			<div id="ctl04_TestGrid1"></div>
+			<div style="height:45px;"></div>
+			<div id="moduleHeader" class="inforModuleContainer">
+				<div class="inforModuleHeader">
+					<div class="inforModuleHeaderLeft">
+						<span id="ManufacturerLocationListFormTitle" class="inforPageTitleText" title="">Emergency Contact Info</span>
+						<span class="inforModuleRecordIdText"></span>
+					</div>
+				</div>
+			</div>
+			<div style="DISPLAY: block; VISIBILITY: visible;" id="ManufacturerLocationListToolBar" class="inforToolbar">
+				<button id="ManufacturerLocationList_ActionsMenuButton" class="inforMenuButton">Actions</button>
+				<button id="ManufacturerLocationList_OptionsMenuButton" class="inforMenuButton">Options</button>
+				<button id="ManufacturerLocationList_RelatedMenuButton" class="inforMenuButton">Related</button>
+				<span class=inforToolbarSpacer></span>
+				<button id="ManufacturerLocationList_CreateButton" class="inforIconButton new" title="Create"><span></span></button>
+				<button id="ManufacturerLocationList_UpdateButton" class="inforIconButton edit" title="Open"><span></span></button>
+				<button id="ManufacturerLocationList_DeleteButton" class="inforIconButton delete" title="Delete"><span></span></button>
+				<span class="inforToolbarSpacer"></span>
+				<button id=ManufacturerLocationList_RefreshMenuItem class="inforIconButton refresh" title="Refresh"><span></span></button>
+				<div class="alignRight">
+					<button id="ManufacturerLocationList_HelpButton" class="inforIconButton additionalHelp" title="Help"><span></span></button>
+				</div>
+				<ul id="ManufacturerLocationList_ActionsMenu" class="inforContextMenu"></ul>
+				<ul id="ManufacturerLocationList_CreateMenu" class="inforContextMenu"></ul>
+				<ul id="ManufacturerLocationList_RelatedMenu" class="inforContextMenu"></ul>
+				<ul id="ManufacturerLocationList_OptionsMenu" class="inforContextMenu">
+				<li><a id="null">Refresh</a></li>
+				</ul>
+			</div>
+			<div id="ctl04_TestGrid2"></div>
+
+		</div>
+	</div>
+</body>
+</html>

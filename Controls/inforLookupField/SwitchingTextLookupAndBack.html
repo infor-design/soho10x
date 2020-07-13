@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+
+ 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="js/inforLookupField.js" ></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").inforForm();
+        });
+
+        function switchToInforLookupField() {
+            $('#txtLdrKey1').addClass('inforLookupField').inforTriggerField({ click: function () { return UdakBrowse(1); } });
+        }
+        function switchToInforTextbox() {
+            restoreInforTextBox($("#txtLdrKey1"));
+        }
+        function restoreInforTextBox(objTxtField) {
+            var div = $(objTxtField).parents('.inforTriggerField');
+            if (div.length == 0) return
+            var input = $(objTxtField).detach();
+            if ($(input).hasClass('inforLookupField')) {
+                input.removeData('initialized').removeClass('inforLookupField');
+            }
+            div.replaceWith(input);
+        }
+
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <fieldset class="inforFieldSet" id="FSAcctgDistnTypes">
+            <legend>
+                <label id="lblAcctgDistnTypes" class="inforFieldSetLabel" >Distribution Type</label></legend>
+            <button type="button" role="button" class="inforExpandButton open"></button>
+            <div class="infor3ColumnLayout autoLabelWidth">
+                <div class="container">
+                    <div class="column1">
+                        <label id="lblLdrKey1" class="inforLabel" >xDivision:</label>
+                        <input type="text" ID="txtLdrKey1" class="inforTextbox" />
+                        <br />
+                    </div>
+                    <div class="column2">
+                        <br />
+                    </div>
+                    <div class="column3">
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <br />
+    <input type="button" id="Btn4" value="switchToInforLookupField" onclick="switchToInforLookupField();" style="display: block" />
+    <input type="button" id="Btn5" value="switchToInforTextbox" onclick="switchToInforTextbox();" style="display: block" />
+    </form>
+</body>
+</html>

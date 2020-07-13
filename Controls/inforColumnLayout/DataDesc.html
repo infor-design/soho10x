@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <title>2 Column Layout Sample</title>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $().ready(function () {
+      $('body').inforForm();  //the inforForm plugin initializes all controls on this form.
+    });
+  </script>
+</head>
+<body>
+
+  <label class="inforLabel">Start Time</label>
+  <input class="inforTimeField" type="text" id="OnceFrequency_Start" name="OnceFrequency.Start" />
+  <label  class="inforDataLabel noColon" id="OnceFrequency_TimezoneOffset" style="float:none;margin-left:0;">Test</label>
+  <br/>
+
+</body>
+</html>

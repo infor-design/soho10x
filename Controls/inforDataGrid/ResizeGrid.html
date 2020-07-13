@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - Set Grid Height to Fixed Value</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+		   <button type="button" id="resize"  class="inforIconButton refresh" title="Click to Resize" onclick="setSize(300)"></button>
+		</div>
+		<div id="inforDataGrid" ></div>
+	</div>
+	<script>
+
+		//Store the Grid Obj For Later Api Calls..
+		var grid;
+
+		//Example: Resize grid to a fixed value. Note that fillHeight: false should be in the grid options.
+		function setSize(height)
+		{
+			var gridDiv = $("#inforDataGrid").height(height);
+			gridDiv.data("gridInstance").resizeCanvas();
+		}
+
+		//Define Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter:UneditableColumnFormatter, hidden: true });
+		columns.push({ id: "city",   maxLength: 10, cssClass: "uppercase", filterExcludeList: ".equals,.doesNotEqual", name: "City", field: "city", width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, editorOptions: {gridOptions: options, returnField: "city", height: 400, width: 400, editable: false, typeAheadSearch: false }, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, reorderable: false, editor: TextCellEditor, required: true, filterType: TextFilter});
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: UneditableColumnFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSampleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			fillHeight: false,
+			showFooter: true
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+
+		setSize(200);
+	</script>
+</body>
+</html>

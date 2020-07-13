@@ -1,0 +1,60 @@
+/* Infor Lookup Field
+----------------------------------*/
+.inforLookupGrid {
+	z-index: 10000;
+}
+
+.inforLookupGridBoxShadow {
+	border: 1px solid #13A3F7;
+	z-index: 2015;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,.15);
+	padding-bottom: 3px;
+}
+
+.inforLookupGridBoxShadow .inforGridFooter{
+	border-bottom: 1px solid #13A3F7;
+	margin-bottom: -4px;
+}
+
+.inforTriggerField.focus {
+	border-color: #13A3F7;
+}
+
+.inforLookupOverlay {
+	background-color: white;
+	opacity: 0.2;
+	filter: alpha(opacity = 20);
+	position: absolute;
+	top: 0;
+	z-index: 2012;	/* Make Sure that its higher than the dialog overlay (this can handle 12 levels of dialogs*/
+}
+
+.inforLookupHeader .inforCloseButton{
+	float: right;
+	left: 3px;
+	position: relative;
+	top: 7px;
+	cursor: pointer;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAxElEQVQoz5WSMQrDIBSGtUOOkKt0yWWkRyjN1KlzLxAiSCDnEjqmBAoOLZgY8155FluTQIcPo36/Po2sqiqGeO85kAMFIMZxPDjnChrjwQtyBuyB4wo4l70DtPKWHIc4oy03ZaXUg75zRjUn0jAMJbZ1XVsoZQI8uhgQQaJBlE9a6yv0HckTOeITQDkQ9Scp5SvaWXyVFIdQbtv21nXdxVpbklMkhw6BpmnuC2fLF68VyngaY86/19r3/e7/H7f2NIjkaczUBr8aTeZRlwAAAABJRU5ErkJggg==")  no-repeat scroll 0 0 transparent;
+}
+
+.inforLookupHeader .inforCloseButton:hover, .inforLookupHeader .inforCloseButton:focus, .inforLookupHeader .inforCloseButton:active {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAvElEQVQoz52SPQ6DMAxGM2TvYTgZY45CFGVBypI1PUZR1aF3YESqFFXKT21kV7SkDB2eAPM+YoeIWqsgJNABCgg553MpRVFNssfyCeiByw96cgR/+UjehqSgJQ/lcRyfdN8J6nknwQwTXo0xWWtdh2Go6GIgsETFVZ7n+Q5iwRoGyAnvAL5g+BlFa23arBw+WtqGUPbeP5ZluaWUJnLUbmgOOOdiY7auua3YRozx+r2tUJN//bjm0SB2R+MFsp3sprJz3w8AAAAASUVORK5CYII=")  no-repeat scroll 0 0 transparent;
+}
+
+.inforLookupHeader {
+	background: none repeat scroll 0 0 #D9D9D9;
+	height: 26px;
+}
+
+.inforLookupGridBoxShadow .slick-header {
+	border-radius: 0;
+}
+
+.inforTriggerField.alignRight.has-error input, .inforTextbox.alignRight.has-error {
+  padding-right: 20px;
+  width: 179px;
+}
+
+

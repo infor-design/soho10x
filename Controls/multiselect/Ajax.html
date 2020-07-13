@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Multi Select</title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/multiselect.js"></script>
+
+  <script>
+    $(function () {
+
+      $('#states-multi').multiselect({source: function (term, response) {
+        //make an ajax call
+        $.getJSON('http://www.randomtext.me/api/lorem/p-5/2', function(data) {
+          var items = data.text_out.split('</p>'),
+            resp = [];
+
+          $.each(items, function(key, value) {
+            resp.push({id: key.toString(), value: key.toString(), label: value.replace('<p>','')});
+          });
+
+          resp.push({id: 'long', value: 'long', label: 'Structure the data with val, label syntax is done on the server'});
+
+          //Structure the data with val, label syntax is done on the server
+          response(resp);
+        });
+      }}).on('change', function () {
+        console.log('Changed to :' + $(this).val());
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <div class="inforSingleColumnLayout autoLabelWidth">
+    <label for="states-multi" class="label">Multiple States</label>
+    <select multiple id="states-multi" name="states" class="multiselect">
+    </select>
+  </div>
+</body>
+</html>

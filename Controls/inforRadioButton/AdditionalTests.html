@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+	<title>Infor Radio Button : Main Sample </title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforRadioButton.js"></script>
+
+	<script>
+		 $(function () {
+			//All that is needed for this control
+			$("#boozeOptions input").inforRadioButton();
+			$("body").inforForm();
+		});
+
+		function toggleEnabled(value) 
+		{
+			var radios = $("#boozeOptions");
+			var checkbox = $("#setmutable");
+			
+			switch (value)
+			{
+				case "enable":
+					radios.enable();
+					checkbox.enable();
+					break;
+					
+				case "disable":
+					radios.disable();
+					checkbox.disable();
+					break;
+					
+				case "readonly":
+					radios.readOnly();
+					checkbox.readOnly();
+					break;
+					
+				case "show":
+					$("#boozeOptions").show();
+					checkbox.show();
+					break;
+					
+				case "hide":
+					$("#boozeOptions").hide();
+					checkbox.hide();
+					break;
+			}
+		}
+	</script>
+</head>
+<body style="margin:10px">
+	<div class="inforSingleColumnLayout">
+	<div class="inforRadioButtonSet" id="boozeOptions">
+		<label class="inforTopLabel">I like to Drink</label><br>
+		<input type="radio" id="rumOption"   class="inforRadioButton" name="radioGroup1" value="whiskey"/><label>Irish Whiskey</label><br>
+		<input type="radio" id="waterOption" class="inforRadioButton" name="radioGroup1" value="water"/><label>Water</label><br>
+		<input type="radio" id="beerOption"  class="inforRadioButton" name="radioGroup1" value="beer"  /><label>Beer</label><br>
+		<input type="radio" id="wineOption"  checked class="inforRadioButton" name="radioGroup1" value="wine"/><label>Wine</label><br>
+	</div>
+	<input type="checkbox" class="inforCheckbox" id="setmutable" checked /><label for="setmutable" class="inforCheckboxLabel">Set Mutable</label><br>
+	<br>
+	<!--Just For Demonstration purpose not part of the control.-->
+	<button class="inforFormButton" onclick="toggleEnabled('enable')">Enable</button>
+	<button class="inforFormButton" onclick="toggleEnabled('disable')">Disable</button>
+	<button class="inforFormButton" onclick="toggleEnabled('readonly')">Readonly</button>
+	<button class="inforFormButton" onclick="toggleEnabled('show')">Show</button>
+	<button class="inforFormButton" onclick="toggleEnabled('hide')">Hide</button>
+</body>

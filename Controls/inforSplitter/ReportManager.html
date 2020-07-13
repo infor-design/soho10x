@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Splitter - Testing example (Sun Systems)</title>
+
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<link href="css/inforSplitter.css" rel="stylesheet" />
+	<script src="js/inforSplitter.js"></script>
+
+</head>
+
+<body>
+	  <div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Common > My Reports - Reports</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+
+					<button class="inforModuleDropDownButton"></button>
+					<button class="inforModuleSettingsButton" disabled="disabled" ></button>
+					<button class="inforModuleCloseButton"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+
+		<div class="inforToolbar"><button class="default inforTextButton" id="reportsButton" title="Report library">Reports</button><button class="inforTextButton" id="schedulesButton" title="Report schedules">Schedules</button><span class="inforToolbarSpacer"></span><button class="delete inforIconButton" id="deleteReportButton" title="Delete Report(s)."></button><button class="translate inforIconButton" id="moveReportButton" title="Move Report(s)."></button><button class="duplicate inforIconButton" id="copyReportButton" title="Copy Report(s)."></button><button class="links inforIconButton" id="linkReportButton" title="Link Report."></button><button class="tasks inforIconButton" id="addReportToScheduleButton" title="Add Report to schedule."></button><button class="reports inforIconButton" id="runReportButton" title="Run Selected Report(s)"></button><span class="inforToolbarSpacer"></span><button class="book inforIconButton" id="renameItemButton" title="Rename item."></button><button class="new inforIconButton" id="newFolderButton" title="New Folder."></button><span class="inforToolbarSpacer"></span>    <button id="moreActionsMenuButton" class="inforMenuButton default" >Actions</button>
+			<input class="inforCheckbox" type="checkbox" id="includeFolders" /> <label for="includeFolders" class="inforCheckboxLabel">Folders</label>
+			<input class="inforCheckbox" type="checkbox" id="includeSnapshots" /><label for="includeSnapshots" class="inforCheckboxLabel">Snapshots</label>
+			<input class="inforCheckbox" type="checkbox" id="includeLinkedReports" /><label for="includeLinkedReports" class="inforCheckboxLabel">Linked</label>
+			<input class="inforCheckbox" type="checkbox" id="includeAuxillaryFiles" /><label for="includeAuxillaryFiles" class="inforCheckboxLabel">Auxillary</label>
+			<span class="inforToolbarSpacer"></span>
+			<button id="viewMenuButton" class="inforMenuButton" >View</button>
+		</div>
+
+	<div class="inforSplitter">
+		<div id="leftPane" style="width:40%">
+			<div id="folderTree" >
+			</div>
+		</div>
+		<div id="rightPane" style="width:60%">
+			<div class="inforModuleContainer">
+				<div class="inforModuleHeader">
+					<div class="inforModuleHeaderLeft">
+						<span id="breadcrumb" class="inforPageTitleText"></span>
+						<span class="inforModuleRecordIdText"></span>
+					</div>
+					<div class="inforModuleHeaderRight">
+						<button class="inforModuleDropDownButton"></button>
+					</div>
+			 </div>
+			 <div class="inforModuleContentArea" style="padding-top: 0px">
+				 <div id="inforDataGrid"></div>
+			 </div>
+			 </div>
+		</div>
+		</div>
+	</div>
+</div>
+
+	 <script  src="../inforDataGrid/js/sampleData.js"></script>
+
+	<script >
+		//Globalize.culture("ar-SA");
+		$(".inforCheckbox").inforCheckbox();
+		$(".inforMenuButton").inforMenuButton();
+		$(".inforSplitter").inforSplitter();
+
+		var columns = [];
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
+		columns.push({ id: "city", name: "City", field: "city", width: 125, selectable: true, editor: SelectCellEditor, options: ["Dublin", "London", "Paris", "Philadelphia", "Rome"] });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: UneditableColumnFormatter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: UneditableColumnFormatter });
+		columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.city%", linkTarget: "_blank", sortable: true });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 60, editor: DateCellEditor, formatter: DateCellFormatter, DateSourceFormat: "mm/dd/yy" ,DateShowFormat: "mm-dd-yy" });
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, editor: TextCellEditor});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor });
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: 60, formatter: TextCellFormatter, editor: TextCellEditor });
+
+		var data = [];
+		data = getSampleData(data);
+		/* This Sample uses a flat JS Sample Data file. */
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: false,
+			forceFitColumns : true,
+			drilldown: function(currentRow) {
+				alert('Drill Down on '+currentRow.officeId)
+			}
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+	</script>
+</body>
+</html>

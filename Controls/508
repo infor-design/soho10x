@@ -1,0 +1,31 @@
+-Use of placeholder is not good enough
+-Labels for each field (because users click them)
+-Avoid redundant verbiage
+	-avoid word label
+-Hot key for popup with title info
+-Make sure no two labels have the same text.
+-make a place for page instructions (an i or question mark)
+	- by of field or by page
+
+http://simplefocus.com/flowtype/
+
+Recommendation
+	- click on the labels to focus the field tip
+	- dyslexic fonts.com - ability to set font /fontsize (and colors)
+	- provide contrast settings
+	- readability plugin chrome
+	- avoid keyboard traps
+	- make sure labels are associated
+	- make sure that it works at 200%  with screen magnifier (use title attribute for zoom users?) 
+	- Dont use links as labels
+	- labels need to include data format
+	- avoid reading : or > or < (implementation)
+	- Abbreviations like W.O. can use on screen text.
+	
+Questions:
+1) http://stackoverflow.com/questions/20504511/aria-live-regions-and-role-alert-not-working-on-mac?noredirect=1#comment30711955_20504511
+
+VPAT Information:
+- Role="alert" only works with IE9 and Jaws 12
+
+	

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <title>Infor Menu Button</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      //Globalize.culture('ar-SA');
+      $('#button1').on('click', function(e) {
+        var $button = $(e.currentTarget);
+        //make an ajax call...
+
+        var qry  = 'http://www.randomtext.me/api/lorem/p-5/2';
+
+        $.getJSON(qry,
+           function (jsonResult) {
+            //clear the last ones.
+            var temp = $(jsonResult.text_out),
+              menu = $('#menu1');
+
+            menu.empty();
+
+            temp.each(function () {
+              var li = $('<li></li>');
+
+              $('<a></a>').appendTo(li).attr('href', '#').text($(this).text()).click(function (e) {
+                console.log($(e.currentTarget).text());
+              });
+              menu.append(li);
+            });
+
+            //show the menu...
+            $button.popupmenu({
+                menu: 'menu1',
+                trigger: 'immediate'
+            });
+        });
+      });
+
+      $('#button2').popupmenu({menuId: 'menu2',callback: function(action) {
+          console.log('Action: ' + action);
+      }});
+    });
+  </script>
+</head>
+<body>
+  <div class="inforToolbar" >
+    <button type="button" class="inforMenuButton" id="button1">Dynamic Menu</button>
+    <button type="button" class="inforMenuButton" id="button2">Normal Menu</button>
+  </div>
+
+  <!--The Menu That Gets Filled with Results..-->
+  <ul id="menu1" class="popupmenu">
+  </ul>
+
+  <ul id="menu2" class="popupmenu">
+    <li class="checked"><a>Option 1</a></li>
+    <li class="notChecked"><a>Option 2</a></li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Datefield Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforDateField.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDateField.js"></script>
+
+	<script>
+		$(function () {
+      Globalize.culture("ar-SA");
+      $("#dateInput1").inforDateField({constrainInput: true, validateInput: false, maxDate: -1});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+		  <label class="inforLabel" for="dateInput1">Date Field</label>
+		  <input class="inforDateField" id="dateInput1" type="text">
+		  <br>
+		  <label class="inforLabel" for="dateInput2">Read Only</label>
+		  <input class="inforDateField" id="dateInput2" type="text" value="10/12/2011" readonly>
+		  <br>
+		  <label class="inforLabel" for="dateInput3">Disabled</label>
+		  <input class="inforDateField" id="dateInput3" type="text" value="10/12/2011" disabled>
+	</div>
+</body>
+</html>

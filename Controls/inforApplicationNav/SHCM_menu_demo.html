@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<!--
+   ***************************************************************
+   *                                                             *
+   *                          NOTICE                             *
+   *                                                             *
+   *   THIS SOFTWARE IS THE PROPERTY OF AND CONTAINS             *
+   *   CONFIDENTIAL INFORMATION OF INFINIUM SOFTWARE, INC.       *
+   *   AND/or ITS AFFILIATES AND SHALL NOT                       *
+   *   BE DISCLOSED WITHOUT PRIOR WRITTEN PERMISSION.            *
+   *   LICENSED CUSTOMERS MAY COPY AND ADAPT                     *
+   *   THIS SOFTWARE FOR THEIR OWN USE IN ACCORDANCE WITH        *
+   *   THE TERMS OF THEIR SOFTWARE LICENSE AGREEMENT.            *
+   *   ALL OTHER RIGHTS RESERVED.                                *
+   *                                                             *
+   *   (c) COPYRIGHT 2012. INFINIUM SOFTWARE, INC. AND/OR ITS    *
+   *   AFFILIATES.                                               *
+   *                                                             *
+   *                                                             *
+   ***************************************************************
+
+-->
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<title>Infor Application Navigation Control - SHCM</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforApplicationNav.js"></script>
+
+	<script>
+	   $(function () {
+			$("#inforApplicationNav1").inforApplicationNav();
+		});
+	</script>
+
+</head>
+<body>
+<div id="inforApplicationNav1" class="inforApplicationNav">
+	<ul>
+		<li><a href='#' title='Click to display your Manager menu options.'>Manager</a>
+			<ul>
+				<li><a href="/SHCM/ahmss/ManagerDocumentTracking.jsp" target="mainarea" title="Click to display transaction workflow history.">Document Tracking</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerEmployeeChangeSelect.jsp" target="mainarea" title="Click to change employee personnel data.">Employee Changes</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ManagerEmployeeCompensation" target="mainarea" title="Click to access the employee compensation.">Employee Compensation</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ManagerEmployeeContacts" target="mainarea" title="Click to view contacts for employees.">Employee Contacts</a></li>
+				<li><a href="/SHCM/EmployeeChangeHistoryServlet" target="mainarea" title="Click to view employee changes history.">Employee History</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerInquirySelect.jsp" target="mainarea" title="Click to access employee information.">Employee Information</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerViewPTOSelect.jsp" target="mainarea" title="Click to access employee time off information.">Employee Time Off</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerSelectEmployee.jsp" target="mainarea" title="Click to access employee training information.">Employee Training</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerEmployeePositionSelectEmployee.jsp" target="mainarea" title="Click to access employee multiple positions.">Multiple Positions</a></li>
+				<li><a href="/SHCM/ahmss/ManagerNewHire.jsp" target="mainarea" title="Click to create a new employee transaction.">New Employee</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerPerformanceReviewList.jsp" target="mainarea" title="Click to access the performance review schedule.">Performance Reviews</a></li>
+				<li><a href="/SHCM/PositionRequisition" target="mainarea" title="Click to request new or existing positions.">Position Requisitions</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerRehireEmployeeSelect.jsp" target="mainarea" title="Click to access former employees for rehire.">Rehire Employee</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSalaryPlanning.jsp" target="mainarea" title="Click to access salary planning.">Salary Planning</a></li>
+				<li><a href="/SHCM/ahmss/ManagerSelectEmployeeListDepth.jsp?gotoPage=/ahmss/ManagerTimeSheetSelect.jsp" target="mainarea" title="Click to access employee time sheets.">Time Sheet Tracking</a></li>
+			</ul>
+		</li>
+		<li><a href='#' title='Click to display your Personal menu options.'>Personal</a>
+			<ul>
+				<li><a href="/SHCM/ahess/EmployeeCalendar.jsp" target="mainarea" title="Click to view your calendar reflecting time off.">Annual Calendar</a></li>
+				<li><a href="/SHCM/ahess/PTOCalendarDriver.jsp" target="mainarea" title="Click to view your calendar reflecting time off.">Monthly Calendar</a></li>
+				<li><a href="/SHCM/ahess/ChangeBasicData.jsp" target="mainarea" title="Click to change your current address information.">Address</a></li>
+				<li><a href="/SHCM/ahess/DisplayEmergencyContacts.jsp" target="mainarea" title="Click to review or update your emergency contacts.">Contacts</a></li>
+				<li><a href="/SHCM/ahess/ViewEduInfo.jsp" target="mainarea" title="Click to view your current education information.">Education</a></li>
+				<li><a href="/SHCM/ahess/ViewLicensingInfo.jsp" target="mainarea" title="Click to view your current licenses.">Licenses</a></li>
+				<li><a href="/SHCM/ahess/ChangePersonalInfo.jsp" target="mainarea" title="Click to view your personal information.">Personal Information</a></li>
+				<li><a href="/SHCM/ahess/ViewPropertyInfo.jsp" target="mainarea" title="Click to view your company property information.">Property</a></li>
+				<li><a href="/SHCM/ahess/ChangePassword.jsp" target="mainarea" title="Click to define sign-on preferences.">Sign-on Preferences</a></li>
+				<li><a href="/SHCM/ahess/PaidTimeOff.jsp" target="mainarea" title="Click to review or request time off.">Time Off Request</a></li>
+				<li><a href="/SHCM/ahess/ViewAutoInfo.jsp" target="mainarea" title="Click to view your current vehicle information.">Vehicles</a></li>
+			</ul>
+		</li>
+		<li><a href='#' title='Click to display your Payroll menu options.'>Payroll</a>
+			<ul>
+				<li><a href="/SHCM/ahess/DirectDepositInquiry.jsp" target="mainarea" title="Click to view your direct deposit disbursements.">View Direct Deposits</a></li>
+				<li><a href="/SHCM/ahess/DirDepositEnroll.jsp" target="mainarea" title="Click to request a change to your disbursements.">Direct Deposits</a></li>
+				<li><a href="/SHCM/ahess/TimeSheetEmpSelectDate.jsp" target="mainarea" title="Click to access your time sheet forms.">My Time Sheets</a></li>
+				<li><a href="/SHCM/ahess/ViewCheckMain.jsp" target="mainarea" title="Click to display your year-to-date pay history.">Pay History</a></li>
+				<li><a href="/SHCM/ahess/ViewTaxInfo2.jsp" target="mainarea" title="Click to view your payroll information.">Payroll Information (CAN)</a></li>
+				<li><a href="/SHCM/ahess/ViewAnnualPay.jsp" target="mainarea" title="Click to view pay history for a previous year.">Prior Year Pay</a></li>
+				<li><a href="/SHCM/T4Information" target="mainarea" title="Click to view your T4 information.">T4 Information</a></li>
+				<li><a href="/SHCM/ahess/TimeKeeperEmployeeSelect.jsp" target="mainarea" title="Click to access your timekeeper time sheets.">Timekeeper Entry</a></li>
+				<li><a href="/SHCM/ahess/W2Select.jsp" target="mainarea" title="Click to view your tax information.">W-2 Information</a></li>
+				<li><a href="/SHCM/ahess/W4Form.pdf" target="mainarea" title="Click to view the current W-4 form/instructions.">W-4 Form</a></li>
+				<li><a href="/SHCM/ahess/ViewW4Data.jsp" target="mainarea" title="Click to view your current tax information.">View Tax Information</a></li>
+				<li><a href="/SHCM/ahess/UpdateW4Data.jsp" target="mainarea" title="Click to update your tax information.">Tax Information</a></li>
+			</ul>
+		</li>
+		<li><a href='#' title='Click to display your Benefits menu options.'>Benefits</a>
+			<ul>
+				<li><a href="/SHCM/ahess/BenefitEnrollment.jsp" target="mainarea" title="Click to update benefits for a lifestyle change.">Benefit Changes</a></li>
+				<li><a href="/SHCM/ahess/MyBenefits.jsp" target="mainarea" title="Click to display your current benefits.">My Benefits</a></li>
+				<li><a href="/SHCM/WebReport?reportName=benefitStatement.rptdesign&display=HTML&roll=E" target="mainarea" title="Click to access the employee compensation.">My Benefit Statement</a></li>
+				<li><a href="/SHCM/ahess/DisplayDependents.jsp?dpType=2" target="mainarea" title="Click to review or change beneficiary information.">My Beneficiaries</a></li>
+				<li><a href="/SHCM/ahess/DisplayDependents.jsp?dpType=1" target="mainarea" title="Click to review or change dependent information.">My Dependents</a></li>
+				<li><a href="/SHCM/ahess/FlexBenConfirmation.jsp" target="mainarea" title="Click to view your flexible benefits elections.">Flex Confirmation</a></li>
+			</ul>
+		</li>
+		<li><a href='#' title='Click to display your Training menu options.'>Training</a>
+			<ul>
+				<li><a href="/SHCM/ahess/TrainingCourseCatalogFilter.jsp" target="mainarea" title="Click to access the course catalog.">Course Catalog</a></li>
+				<li><a href="/SHCM/ahess/TrainingSummary.jsp" target="mainarea" title="Click to access your training information.">My Training</a></li>
+			</ul>
+		</li>
+				<li><a href='#' title='Click to access your Self-Service messages.'>In Box</a>
+			<ul>
+				<li><a href="/SHCM/ahess/AlternateApproverList.jsp" target="mainarea" title="Click to create or edit alternate approvers.">Alternate Approvers</a></li>
+				<li><a href="/SHCM/MassApprovalServlet?action=d" target="mainarea" title="Click to view documents awaiting your approval.">For My Approval</a></li>
+				<li><a href="/SHCM/ahess/Messaging.jsp" target="mainarea" title="Click to display your Self-Service message in-box.">My Messages</a></li>
+				<li><a href="/SHCM/ahess/MyRequests.jsp" target="mainarea" title="Click to display your Self-Service requests.">My Requests</a></li>
+			</ul>
+		</li>
+		<li><a href='#' title='Click to display sources for more information.'>Company</a>
+			<ul>
+				<li><a href="/SHCM/ahess/docs/annualleavepolicy.htm" target="mainarea" title="">Annual Leave</a></li>
+				<li><a href="/SHCM/ahess/docs/exitinterviewpolicy.htm" target="mainarea" title="">Exit Interview</a></li>
+				<li><a href="/SHCM/ahess/docs/recruitment.htm" target="mainarea" title="">Recruitment</a></li>
+			</ul>
+		</li>
+		<li><a href='#' title='Click to display contacts for more information.'>Contact</a>
+			<ul>
+				<li><a href="http://www.infor.com" target="_blank" title="Click to go to the Infor web site.">Infor Global</a></li>
+			</ul>
+		</li>
+		<li><a href="http://www.infor.com" target="_blank" onclick='alert("you clicked Help")' title="Click to open Online Help.">Help</a>
+		</li>
+		<li><a href="http://www.infor.com" target="mainarea" title="Click to sign off from this session.">Sign-off</a>
+		</li>
+	</ul>
+</div>
+<iframe src="http://www.google.com" id='mainarea' name='mainarea' frameborder='0' scrolling='auto' ></iframe>
+</body>
+</html>

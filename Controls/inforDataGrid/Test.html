@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Form Pattern</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+		        //style infor commonUI components
+        //setup splitter
+        //$(".inforHorizontalSplitter").inforSplitter({ closeableto: 10, splitHorizontal: true, savePosition: true, initialSplitPerc: .38, restoreSplitPerc: .38 });
+
+        //style infor commonUI compo
+		$("body").inforForm();
+        $("#policyTabContainer").inforTabset();
+        $(".inforFieldSet").inforFieldSet();
+        $(".inforSpinner").inforSpinner();
+        $('.inforDropDownList').inforDropDownList();
+        $("#IfsHttpPortNumberTextBox").numericOnly(false);
+
+        $("#AuthenticationSettingsFieldSet .autoLabelWidth").find(".inforLabel").autoWidth();
+        $("#SystemUserFieldSet .autoLabelWidth").find(".inforLabel").autoWidth();
+        $("#UserRightsFieldSet .autoLabelWidth").find(".inforLabel").autoWidth();
+        $("#ExpirationFieldSet .autoLabelWidth").find(".inforLabel").autoWidth();
+        $("#passwordTab .autoLabelWidth").find(".inforLabel").autoWidth();
+		});
+	</script>
+
+</head>
+<body>
+        <form id="mainForm" action="/SecurityConsole/Home/SubmitAction" method="post" enctype="multipart/form-data">
+            <header id="securityConsoleAppTitle" class="inforTopBanner">
+                <div class="inforTopBannerLeft">
+                    <a href="http://www.infor.com" target="_blank_" class="inforLogo">infor.com</a>
+                    <span class="inforApplicationName">Infor SunSystems</span>
+                </div>
+                <div id="inforTopBanner" class="inforTopBannerRight">
+                    <span class="inforBannerText">System Administrator</span>
+                    <button id="inforSignOutButton" type="button" class="inforIconButton signOut" title="Log Out">
+                        <span></span>
+                    </button>
+                </div>
+            </header>
+            <div id="securityConsoleAppNav" runat="server" class="inforApplicationNav">
+                <ul>
+                    <li><a href="#" onclick=" SecurityConsoleApplication.openPage('UserManagement'); ">User Management</a></li>
+                    <li><a href="#" onclick=" SecurityConsoleApplication.openPage('GroupManagement'); ">Group Management</a></li>
+                    <li><a href="#" onclick=" SecurityConsoleApplication.openPage('SecurityPolicy'); ">Settings Management</a></li>
+                    <li><a href="#" onclick=" SecurityConsoleApplication.openPage('UserActivity'); ">User Activity</a></li>
+                    <li><a href="#" onclick=" SecurityConsoleApplication.openPage('Audit'); ">Audit</a></li>
+                </ul>
+            </div>
+            <div class="inforModuleContainer inforApplicationPadding" style="padding-top: 0 !important">
+                <div class="inforModuleHeader" id="moduleHeader">
+                    <div class="inforModuleHeaderLeft">
+                        <span class="inforPageTitleText">
+                            &nbsp;SunSystems &gt; Security Console &gt; Settings Management &gt; Security Policy
+                        </span>
+                    </div>
+                    <div class="inforModuleHeaderRight">
+                        <button id="CloseSessionButton" type="button" title="Close session" class="inforModuleCloseButton" onclick=" SecurityConsoleApplication.closeApplication();return false; ">
+                        </button>
+                    </div>
+                </div>
+                <div id="settingsPagesTabContainer" style="height: 22px; display: none">
+                    <ul class="inforTabset">
+                        <li id="SecurityPolicyTabHeading"><a id="SecurityPolicyTabLink" onclick=" SecurityConsoleApplication.openPage('SecurityPolicy'); "
+                                                             href="#securityPolicyTab">Security Policy</a></li>
+                        <li id="FunctionExtensionManagementTabHeading"><a id="FunctionExtensionManagementTabLink"
+                                                                          onclick=" SecurityConsoleApplication.openPage('FunctionExtensionManagement'); "
+                                                                          href="#functionExtensionManagementTab">Function Extensions</a></li>
+                        <li id="DataAccessGroupTabHeading"><a id="DataAccessGroupTabLink" onclick=" SecurityConsoleApplication.openPage('DataAccessGroup'); "
+                                                              href="#DataAccessGroupTab">Data Access Groups</a></li>
+                        <li id="ConnectivityTabHeading"><a id="ConnectivityTabLink" onclick=" SecurityConsoleApplication.openPage('Connectivity'); "
+                                                           href="#connectivityTab">Connectivity</a></li>
+                        <li id="UserCreationTabHeading"><a id="UserCreationTabLink" onclick=" SecurityConsoleApplication.openPage('UserCreationSettings'); "
+                                                           href="#userCreationTab">User Creation Settings</a></li>
+                        <li id="SecurityServiceTabHeading"><a id="SecurityServiceTabLink" onclick=" SecurityConsoleApplication.openPage('SecurityService'); "
+                                                              href="#securityServiceTab">Security Service</a></li>
+                    </ul>
+                    <div id="securityPolicyTab">
+                    </div>
+                    <div id="functionExtensionManagementTab">
+                    </div>
+                    <div id="DataAccessGroupTab">
+                    </div>
+                    <div id="connectivityTab">
+                    </div>
+                    <div id="userCreationTab">
+                    </div>
+                    <div id="securityServiceTab">
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="homeControllerPath" value="/SecurityConsole/Home/Close"/>
+            <input type="hidden" id="helpPath" value="/SecurityConsole/Help/"/>
+            <input type="hidden" id="helpTopicId" value="SecurityConsole_SecurityPolicy"/>
+            <input type="hidden" id="pulsePath"  value="/SecurityConsole/Home/Pulse" />
+            <input type="hidden" id="logoutPath"  value="/SecurityConsole/Security/LogOff" />
+            <input type="hidden" id="loginPath"  value="/SecurityConsole/" />
+            <input type="hidden" id="shortDatePattern" value="dd/MM/yyyy" />
+            <input type="hidden" name="redirectPage" id="redirectPage" value="" />
+            <input type="hidden" name="embeddedViewId" id="embeddedViewId" value="" />
+            <input type="hidden" id="browser" value="firefox" />
+            <input type="hidden" id="currentSettingsPage" value="" />
+            <input type="hidden" id="passwordEntry" value="Password Entry" />
+            <input type="hidden" id="preferedLanguage" value="en-GB"/>
+            <input type="hidden" id="isRtl" value="False"/>
+            <input type="hidden" id="isHijri" value="False"/>
+            <input type="hidden" id="isArabic" value="False"/>
+            <input type="hidden" id="securityConsoleTitle" value="Security Console"/>
+            <input type="hidden" id="openPageShortMsg" value="Page Currently In Edit Mode"/>
+            <input type="hidden" id="cancel" value="Cancel Changes"/>
+            <input type="hidden" id="cancelWarning" value="All changes since the last save will be lost. Are you sure you wish to continue?"/>
+            <input type="hidden" id="changeRecord" value="Change Record"/>
+            <input type="hidden" id="beingEditedWarning" value="Changes will be lost. Click OK to continue."/>
+            <input type="hidden" id="errorOccurred" value="Sorry, an error occurred while processing your request"/>
+            <input type="hidden" id="directAccess" value="true"/>
+            <input type="hidden" id="currentPageName" value="Security Settings"/>
+            <input type="hidden" id="startApplication" value="true"/>
+            <input type="hidden" id="applicationId" value="SunSystems.SecurityConsole"/>
+            <input type="hidden" id="logoutShortMsg" value="Logout Warning"/>
+            <input id="releaseVersion" type="hidden" value="6.3.0.0"/>
+        </form>
+		
+        <div class="inforApplicationPadding" style="padding-top: 0 !important">
+            <div>
+                
+
+
+
+<div class="inforToolbar"><button class="inforIconButton refresh" disabled="disabled" id="refreshButton" title="Refresh" type="button"></button><span class="inforToolbarSpacer"></span><button class="inforIconButton edit" disabled="disabled" id="editButton" title="Edit Security Policy" type="button"></button><button class="inforIconButton save" disabled="disabled" id="saveButton" title="Save Security Policy" type="button"></button><button class="inforIconButton closeCancelChanges" disabled="disabled" id="cancelButton" title="Cancel Changes" type="button"></button>    <div class="alignRight">
+        <button class="inforIconButton help" id="SecurityPolicyHelpButton" title="Help" type="button"></button>
+    </div>
+</div>
+
+<div class="content" id="policyTabContainer"><ul class="inforTabset"><li><a href="#generalTab">General</a></li><li><a href="#passwordPolicyTab">Password Policy</a></li></ul>
+<div id="generalTab">
+<fieldset class="inforFieldSet" id="AuthenticationSettingsFieldSet"><legend><span class="inforFieldSetLabel">Authentication Settings</span></legend><button class="inforExpandButton open" role="button" type="button"></button><div class="content" style="height: 100%;"><div class="inforFieldSet2ColumnLayout">            <!--AuthenticationMethods -->
+<fieldset class="inforFieldSet inforSubHeading"><legend><span class="inforFieldSetLabel inforSubHeadingLabel">Authentication Methods</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel noColon" for="EnableStandardAuthenticationCheckbox" style="height: 1px"></label><input class="inforCheckbox" id="EnableStandardAuthenticationCheckbox" type="checkbox"></input><label class="inforCheckboxLabel" for="EnableStandardAuthenticationCheckbox">Enable Standard Authentication</label><br></span><span><label class="inforLabel noColon" for="EnableSingleSignOnCheckbox" style="height: 1px"></label><input class="inforCheckbox" id="EnableSingleSignOnCheckbox" type="checkbox"></input><label class="inforCheckboxLabel" for="EnableSingleSignOnCheckbox">Enable Single Sign-on</label><br></span><label class="inforLabel">Force password change</label><button class="inforFormButton disabled" id="ForceChangePasswordButton" title="Apply" type="button">Apply</button></div></div></fieldset>            <!-- IfsSettings -->
+<fieldset class="inforFieldSet inforSubHeading"><legend><span class="inforFieldSetLabel inforSubHeadingLabel">IFS Settings</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel noColon" for="EnableIfsSingleSignOnCheckbox" style="height: 1px"></label><input class="inforCheckbox" id="EnableIfsSingleSignOnCheckbox" type="checkbox"></input><label class="inforCheckboxLabel" for="EnableIfsSingleSignOnCheckbox">Use an IFS Server</label><br></span><span><label class="inforLabel" for="IfsServerNameTextBox">IFS server name</label><input class="inforTextbox" id="IfsServerNameTextBox" readonly="readonly" style="width: 160px" title="IFS server name"></input><br></span><span><label class="inforLabel" for="IfsHttpPortNumberTextBox">Http port number</label><input class="inforTextbox" id="IfsHttpPortNumberTextBox" maxlength="4" readonly="readonly" style="width: 160px" title="Http port number"></input><br></span><label class="inforLabel noColon" style="height: 1px"></label><button class="inforFormButton disabled" id="ClearConfigurationButton" title="Clear configuration" type="button">Clear configuration</button></div></div></fieldset></div><div class="inforFieldSet2ColumnLayout">            <!--AutoEnrolment -->
+<fieldset class="inforFieldSet inforSubHeading"><legend><span class="inforFieldSetLabel inforSubHeadingLabel">Automatic Enrolment</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel noColon" for="EnableAutomaticEnrolmentCheckbox" style="height: 1px"></label><input class="inforCheckbox" id="EnableAutomaticEnrolmentCheckbox" type="checkbox"></input><label class="inforCheckboxLabel" for="EnableAutomaticEnrolmentCheckbox">Enable automatic enrolment</label><br></span></div></div></fieldset>            <!--LDAP configuration-->
+<fieldset class="inforFieldSet inforSubHeading"><legend><span class="inforFieldSetLabel inforSubHeadingLabel">Directory Service Configuration</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel noColon" for="EnableDirectoryServiceAuthenticationCheckbox" style="height: 1px"></label><input class="inforCheckbox" id="EnableDirectoryServiceAuthenticationCheckbox" type="checkbox"></input><label class="inforCheckboxLabel" for="EnableDirectoryServiceAuthenticationCheckbox">Enable Directory Service Authentication</label><br></span><span><label class="inforLabel" for="LdapServerTextBox">LDAP Server</label><input class="inforTextbox" id="LdapServerTextBox" readonly="readonly" style="width: 160px" title="LDAP Server"></input><br></span></div></div></fieldset></div></div></fieldset>    
+<fieldset class="inforFieldSet" id="SystemUserFieldSet"><legend><span class="inforFieldSetLabel">System User Settings</span></legend><button class="inforExpandButton open" role="button" type="button"></button><div class="content" style="height: 100%;"><div class="inforFieldSet2ColumnLayout">            <!--AuthenticationMethods -->
+<fieldset class="inforFieldSet inforSubHeading"><legend><span class="inforFieldSetLabel inforSubHeadingLabel">Workflow Approval</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel noColon" for="UseSurrogateWhereInvalidPersonIdCheckBox" style="height: 1px"></label><input class="inforCheckbox" id="UseSurrogateWhereInvalidPersonIdCheckBox" type="checkbox"></input><label class="inforCheckboxLabel" for="UseSurrogateWhereInvalidPersonIdCheckBox">Use surrogate for invalid approval user</label><br></span><span><label class="inforLabel" for="SurrogateApprovalUserDropDown">Surrogate Approval User</label><select class="inforDropDownList backgroundColor" id="SurrogateApprovalUserDropDown" readonly="readonly" style="width: 150px" title="Surrogate Approval User"></select><br></span></div></div></fieldset>            <!--IntegrationUser -->
+<fieldset class="inforFieldSet inforSubHeading"><legend><span class="inforFieldSetLabel inforSubHeadingLabel">Integration User</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel" for="NominatedIntegrationUserDropDown">Nominated integration user</label><select class="inforDropDownList backgroundColor" id="NominatedIntegrationUserDropDown" readonly="readonly" style="width: 150px" title="Nominated integration user"></select><br></span></div></div></fieldset></div></div></fieldset>     
+<div class="inforFieldSet2ColumnLayout"><fieldset class="inforFieldSet" id="UserRightsFieldSet"><legend><span class="inforFieldSetLabel">User Rights</span></legend><button class="inforExpandButton open" role="button" type="button"></button><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="position: relative; left: 135px;right: 143px; padding-top: 0px;"><span><label class="inforLabel noColon" for="EnableAllowUpdatePropertiesCheckBox" style="height: 1px"></label><input class="inforCheckbox" id="EnableAllowUpdatePropertiesCheckBox" type="checkbox"></input><label class="inforCheckboxLabel" for="EnableAllowUpdatePropertiesCheckBox">Allow users to update their properties</label><br></span></div></div></fieldset><fieldset class="inforFieldSet" id="ExpirationFieldSet"><legend><span class="inforFieldSetLabel">Expiration</span></legend><button class="inforExpandButton open" role="button" type="button"></button><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="position: relative; left: 77px;right: 85px; padding-top: 0px;"><span><label class="inforLabel noColon" for="LockOutNotLoggedOnUsersCheckBox" style="height: 1px"></label><input class="inforCheckbox" id="LockOutNotLoggedOnUsersCheckBox" type="checkbox"></input><label class="inforCheckboxLabel" for="LockOutNotLoggedOnUsersCheckBox">Lock out users which have not logged on for</label><br></span><span><label class="inforLabel" for="ExpirationPeriodSpinner">Day(s)</label><input class="inforSpinner backgroundColor" id="ExpirationPeriodSpinner" max="999" min="1" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span></div></div></fieldset></div></div>
+<div id="passwordPolicyTab">
+<fieldset class="inforFieldSet" id="PasswordPolicyFieldSet"><legend><span class="inforFieldSetLabel">Password Policy</span></legend><div class="content" style="height: 100%;"><div class="inforSingleColumnLayout autoLabelWidth" style="padding-top: 0px;"><span><label class="inforLabel" for="MaxPasswordAgeSpinner">Max password age (days)</label><input class="inforSpinner backgroundColor" id="MaxPasswordAgeSpinner" max="999" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel" for="MinPasswordAgeSpinner">Min password age (days)</label><input class="inforSpinner backgroundColor" id="MinPasswordAgeSpinner" max="999" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel" for="EnforcePasswordHistorySpinner">Enforce password history</label><input class="inforSpinner backgroundColor" id="EnforcePasswordHistorySpinner" max="24" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel" for="DenyAccessAfterNumberOfUnsuccesfulLogonAttemptsSpinner">Deny access after number of login failed</label><input class="inforSpinner backgroundColor" id="DenyAccessAfterNumberOfUnsuccesfulLogonAttemptsSpinner" max="24" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel" for="LockUserAfterFailedLoginSpinner">Lock user after failed login</label><input class="inforSpinner backgroundColor" id="LockUserAfterFailedLoginSpinner" max="99" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel" for="MinPasswordLengthSpinner">Min password length</label><input class="inforSpinner backgroundColor" id="MinPasswordLengthSpinner" max="14" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel" for="MaxRepeatedPasswordCharsSpinner">Number of consecutive numerical characters</label><input class="inforSpinner backgroundColor" id="MaxRepeatedPasswordCharsSpinner" max="14" min="0" readonly="readonly" step="1" style="width:50px" type="number"></input><br></span><span><label class="inforLabel noColon" for="PasswordMustNotMatchUsernameCheckBox" style="height: 1px"></label><input class="inforCheckbox" id="PasswordMustNotMatchUsernameCheckBox" type="checkbox"></input><label class="inforCheckboxLabel" for="PasswordMustNotMatchUsernameCheckBox">Password must not match username</label><br></span><span><label class="inforLabel noColon" for="PasswordMustMatchComplexityRequirementsCheckBox" style="height: 1px"></label><input class="inforCheckbox" id="PasswordMustMatchComplexityRequirementsCheckBox" type="checkbox"></input><label class="inforCheckboxLabel" for="PasswordMustMatchComplexityRequirementsCheckBox">Password must match complexity requirements</label><br></span><label class="inforLabel noColon" style="height: 1px"></label>            <table style="margin: 0; padding: 0; position: relative; top: -4px; left: -3px; right: -3px">
+                <tr>
+                    <td style="vertical-align: central"  height="20px">
+                        <span><input class="inforCheckbox" id="NoExactWordMatchFromDictionaryCheckBox" type="checkbox"></input><label class="inforCheckboxLabel" for="NoExactWordMatchFromDictionaryCheckBox">No exact word match from the dictionary</label><br></span>
+                    </td>
+                    <td style="horiz-align: left">
+                        <button class="inforFormButton" id="PasswordDictionaryButton" type="button">Dictionary</button>
+                    </td>
+                </tr>
+            </table>
+</div></div></fieldset>
+    
+<div id="PasswordDictionaryDialog" style="display: none">
+    <table style="width: 100%; height: 100%">
+        <tr>
+            <td style="vertical-align: top; width: 200px">
+                <input class="inforTextbox" id="RestrictionWordTextBox"></input>
+            </td>
+            <td style="vertical-align: top">
+                <button class="inforFormButton" id="AddRestrictionWordButton" style="position:relative;top:-2px" type="button">Add</button>
+            </td>
+        </tr>
+                
+        <tr style="height: 5px">
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr style="height: 100%">
+            <td style="vertical-align: top; width: 200px">
+                <div id="RestrictionWordDictionaryGrid" style="width: 203px; height: 260px"></div>
+            </td>
+            <td style="vertical-align: top">
+                <button class="inforFormButton" id="RemoveRestrictionWordButton" style="position:relative;top:-2px" type="button">Remove</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</div></div>
+
+
+<input type="hidden" id="controllerPath" value="/SecurityConsole/SecurityPolicy/"/>
+<input type="hidden" id="userCreationPath" value="/SecurityConsole/UserCreationSettings?editMode=True"/>
+<input type="hidden" id="securityPolicyTitle" value="Security Policy" />
+<input type="hidden" id="noAuthenticationMethodEnabledDetailedMsg" value="If no authentication methods are enabled, users will not be able to login." />
+<input type="hidden" id="noAuthenticationMethodEnabledWarning" value="Are you sure that you want to disable user authentication?" />
+<input type="hidden" id="couldNotGetSecurityPolicy" value="Could not get security policy"/>
+<input type="hidden" id="couldNotSaveSecurityPolicy" value="Could not save security policy"/>
+<input type="hidden" id="couldNotGetDropDownsData" value="Could not get dropdown data."/>
+<input type="hidden" id="couldNotForceChangePassword" value="Could not force change password."/>
+<input type="hidden" id="couldNotClearIFSConfiguration" value="Could not clear IFS configuration."/>
+<input type="hidden" id="noSurrogateUser" value="Please select a workflow surrogate approval user to continue."/>
+    
+<input type="hidden" id="forceChangePasswordSuccess" value="Password reset successful. All users will need to change their passwords at next login."/>
+<input type="hidden" id="forceChangePasswordNextLoginWarning" value="Are you sure that you want all users to change their password the next time they login?"/>
+<input type="hidden" id="forceChangePasswordNextLoginDetailedMessage" value="This can be reset at user level in User Management."/>
+<input type="hidden" id="clearIFSConfigurationWarning" value="You have chosen to remove the IFS server configuration details. Click OK to continue."/>
+<input type="hidden" id="ifsConfigurationCleared" value="IFS Configuration Cleared."/>
+    
+<input type="hidden" id="securityPolicySaved" value="Security policy saved"/>
+<input type="hidden" id="passwordDictionaryTitle" value="Password Dictionary"/>
+<input type="hidden" id="word" value="Word"/>
+            </div>
+        </div>
+    </body>
+</html>
+

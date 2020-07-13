@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bar</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="../Release/d3.min.js"></script>
+
+</head>
+<body class="inforApplicationPadding">
+
+  <h1 class="inforSubHeadingLabel">Line</h1>
+  <p>If you have more than 3 series to
+demonstrate over many periods</p>
+
+  <div style="height: 360px;width: 520px;" >
+    <div class="chart-container" id="line-example"></div>
+  </div>
+
+  <script>
+    var dataset = [{
+      data: [{
+          name: 'JAN',
+          value: 12
+      }, {
+          name: 'FEB',
+          value: 11
+      }, {
+          name: 'MAR',
+          value: 14
+      }, {
+          name: 'APR',
+          value: 10
+      }, {
+          name: 'MAY',
+          value: 14
+      }, {
+          name: 'JUN',
+          value: 8
+      }],
+      name: 'Component A'
+    }, {
+      data: [{
+          name: 'JAN',
+          value: 22
+      }, {
+          name: 'FEB',
+          value: 21
+      }, {
+          name: 'MAR',
+          value: 24
+      }, {
+          name: 'APR',
+          value: 20
+      }, {
+          name: 'MAY',
+          value: 24
+      }, {
+          name: 'JUN',
+          value: 28
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+          name: 'JAN',
+          value: 32
+      }, {
+          name: 'FEB',
+          value: 31
+      }, {
+          name: 'MAR',
+          value: 34
+      }, {
+          name: 'APR',
+          value: 30
+      }, {
+          name: 'MAY',
+          value: 34
+      }, {
+          name: 'JUN',
+          value: 38
+      }],
+      name: 'Component C'
+    }];
+
+  $('#line-example').chart({type: 'line', dataset: dataset});
+  //, hideDots: true
+  </script>
+
+</body>
+</html>

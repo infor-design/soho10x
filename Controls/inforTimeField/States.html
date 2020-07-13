@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Time Field</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTimeField.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTimeField.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("zh-TW");
+			//Initialize the time field
+			$(".inforTimeField").inforTimeField({timeFormat: "h:mm tt", interval: 30, range: [0, 24]});	//Examples for time format:  hh:mm tt (us date)  HH:mm (24 hour euro dates)
+			
+			//	$(".inforTimeField").inforTimeField({timeFormat: Globalize.culture().calendar.patterns.t, interval: 1, range: [0, 24]});	//Examples for time format:  hh:mm tt (us date)  HH:mm (24 hour euro dates)
+
+			//set up buttons to togger the states for testing
+			$("#toggleEnable").click(function(){
+				$("#time1").disable();
+			});
+
+			//Format label auto width
+			$("body").inforForm();
+
+			//Show an error.
+			$("#time4").validationMessage("show", "This field is required." , false);
+
+			$("#time1").change(function () {
+				console.log("onChange");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="time1">Time Field</label>
+		<input class="inforTimeField" type="text" id="time1" value="08:30 AM"><br>
+
+		<label class="inforLabel" for="time2">Time Field - Readonly</label>
+		<input class="inforTimeField" type="text" id="time2" readonly value="08:30 AM"><br>
+
+		<label class="inforLabel" for="time3">Time Field - Disabled</label>
+		<input class="inforTimeField" type="text" id="time3" disabled value="09:30 PM"><br>
+
+		<label class="inforLabel" for="time4">Time Field - Error</label>
+		<input class="inforTimeField" type="text" id="time4"><br>
+
+		<button id="toggleEnable" class="inforFormButton">Disable</button>
+
+	</div>
+</body>
+</html>

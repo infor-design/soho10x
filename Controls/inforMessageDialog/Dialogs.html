@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Infor Message Dialog Box</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../lib/jquery-1.11.1.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/modal.js"></script>
+  <link href="css/inforMessageDialog.css" rel="stylesheet">
+
+  <script>
+      $(function () {
+
+      //Globalize.culture("ar-SA");
+
+      //Display a generic dialog -
+      $('#generalDialogButton').click(function () {
+        //First add the html to the page..
+          $('body').append('<div id="newCatalogDialog" style="display:none"><label for="country1" class="inforLabel" style="width: 100px;" >Country</label><select id="country1" autofocus data-placeholder="Select..." class="inforDropDownList" ><option selected  value="United States">United States</option><option value="United Kingdom">United Kingdom</option><option value="Afghanistan">Afghanistan</option><option value="Aland Islands">Aland Islands and a Cool Place</option><option value="Albania">Albania</option></select><br><label style="width: 100px;" for="catalogName" class="inforLabel">Name</label><input type="text" name="catalogName" id="catalogName" class="inforTextbox" style="width: 226px;margin-bottom:4px"/><br><label style="width: 100px;" class="inforLabel" for="catalogDescription">Description</label><textarea class="inforTextArea" id="catalogDescription" style="height: 40px;width: 214px;"></textarea></div>');
+
+        //Invoke the dialog on it
+        $('#newCatalogDialog').message({
+          title: 'New Catalog',
+          dialogType: 'General',
+          buttons: [{
+            id: 'okButton',
+            text: Globalize.localize('Ok'),
+            click: function() {
+              $('#okButton').addClass('active');
+               $(this).modal('close');
+              },
+              isDefault: true
+            },{
+            text: Globalize.localize('Cancel'),
+            click: function() {
+              $(this).modal('close');
+            }
+          }]
+        }).off('close').on('close', function () {
+          console.log('close event')
+        });
+
+      });
+
+    });
+  </script>
+</head>
+<body>
+    <button id="generalDialogButton" class="inforFormButton">Show</button>
+</body>
+</html>

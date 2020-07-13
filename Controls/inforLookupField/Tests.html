@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+	<title>Infor Lookup Field</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="../inforTriggerField/js/inforTriggerField.js" ></script>
+
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+
+			//set columns
+			var columns = [];
+			columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true});
+			columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true });
+			columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank"});
+			columns.push({ id: "country", name: "Country", field: "country", width: 70});
+			columns.push({ id: "territory", name: "Territory", field: "territory", width: 70});
+
+			//get the data in JSON format - see datagrid example for more examples.
+			var data = getSampleData([]);
+
+			var options = {
+				dataset: data,
+				columns: columns,
+				idProperty: 'officeId',
+				editable: false,
+				showDrillDown: false,
+				showFilter: false,
+				showCheckboxes: false,
+				showStatusIndicators: false,
+				multiSelect: false
+			};
+
+		   //an editable field.
+		   $("#lookupField2").inforLookupField({
+				gridOptions: options,
+				returnField: "city",
+				height: 400,
+				width: 400,
+				editable: true
+			});
+
+		   ///remote data access - getting data on the fly with a JSON request
+		   var cache = {};	//implement a redumentary caching of requests for performance
+
+		   //set up grid columns
+		   var columns2 = [];
+			columns2.push({ id: "name", name: "City", field: "name", width: 110});
+			columns2.push({ id: "countryName", name: "Country", field: "countryName", width: 70, formatter: TextCellFormatter});
+			columns2.push({ id: "population", name: "Population", field: "population", width: 70, formatter: TextCellFormatter });
+			columns2.push({ id: "adminName1", name: "District", field: "adminName1", width: 70, formatter: TextCellFormatter});
+
+
+		   var options2 = {
+				dataset: [],//initialize the data as empty to start we will fetch on request.
+				columns: columns2,
+				idProperty: 'geonameId',
+				editable: false,
+				showDrillDown: false,
+				showFilter: false,
+				showCheckboxes: false,
+				showStatusIndicators: false,
+				multiSelect: false
+			};
+
+		   //initialize the control options - the source function is called when an ajax call is needed.
+			$("#inforLookupFieldRemote").inforLookupField({
+				gridOptions: options2, 	//set the grid options (columns and settings). dataset will be empty.
+				returnField: "name",
+				height: 400,
+				width: 400,
+				editable: true,
+			});
+
+		   //remove class which hides the page for smoother loading and size fields...Not necessary specifically for this control.
+		   $("body").inforForm();
+
+		   $("#lookupField2").inforLookupField("setCode", 2);
+
+       $("#lookupField2").disable();
+       $('#toggleReadonly').on('click', function () {
+          $("#lookupField2").enable();
+       });
+
+		  })
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Lookup Field Editable</label>
+			<input class="inforLookupField" type="text" id="lookupField2" ><br>
+			<label class="inforLabel">Input</label>
+			<input class="inforTextbox" type="text" id="field2" style="text-align:right"><br>
+		</div>
+	</div>
+	<button class="inforFormButton" id="toggleReadonly">Disable/Enable</button>
+
+</body>
+</html>

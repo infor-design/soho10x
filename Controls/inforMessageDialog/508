@@ -1,0 +1,50 @@
+Copy:
+	- no nested dialogs
+	- Keep fox in the dialog (no tabbing out)
+	- Start and End Dialog Text (not a requirement)
+		"Start of Dialog Content"
+		"End of Dialog Content"
+	- Manage focus
+	- Focus back on old element
+	- look into ARIA-LOG
+	- ON THE SLIDE IN PANEL how would i mve fields
+	
+ToDo:
+	- Make the close button enabled
+	- Close on Escape
+	- use sections and h1 tags
+	- hide the background content with aria-hidden (important)
+	- tabbing should not leave the dialog 
+	- text login start / log-in end - use a div so it line breaks
+	- off screen text (use this that we set)
+	- set the focus to the title (tabindex = -1) make it an h1 element (role="heading" aria-level="1")
+		- js focus initially.
+	- Alert 
+		- Use Error: Before the error text
+		- Use unobtrusive announcement role = "alert"
+	- Focus back on the triggering element
+		- if it is on a menu that triggered the dialog go back to the button
+
+Guidelines:
+	- Site: http://whatsock.com/tsg/
+	- unobtrusive announcement (off screen)
+		- aria- polite
+		- https://developer.mozilla.org/en-US/docs/Accessibility/ARIA/ARIA_Live_Regions
+		- can be used by status or update message (don't over use)
+		- make sure you remove it after 1-1.5 seconds
+	-Offscreen Text is
+	
+	.offscreenText {
+		position: absolute;
+		clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 0;
+		border: 0;
+		height: 1px;
+		width: 1px;
+		overflow: hidden;
+		z-index: -1000;
+	}
+
+		
+	

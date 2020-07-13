@@ -1,0 +1,202 @@
+/* Infor Module Container
+----------------------------------*/
+.inforApplicationPadding {
+  margin-top: 10px;
+  padding: 0px 20px 0px 20px;
+  width: 100%;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
+/* Fixed these here: http://jsfiddle.net/X9Ezn/ */
+
+.inforModuleContentArea {
+	background: white;
+}
+
+.inforModuleHeader {
+	border-bottom: 1px solid #B3B3B3;
+	height: 25px;
+	margin-top: 0px;
+	padding-bottom: 2px;
+	display: inline-block;
+	width: 100%;
+	margin-bottom: -3px;
+}
+
+/* The Left Aligned Items */
+.inforModuleHeaderLeft {
+	float: left;
+	padding: 0px 0px 0px 0px;
+	height: 25px;
+	text-align: left;
+	margin-left: -2px;
+}
+
+/* The Right Aligned Items */
+.inforModuleHeaderRight {
+	float: right;
+	height: 25px;
+	margin: 11px 0 0;
+	padding: 0;
+	text-align: center;
+}
+
+.inforModuleHeaderRight > * {
+	float: left;
+	margin-left: -1px;
+	margin-top: -6px;
+	padding: 0 !important;
+}
+
+html[dir="rtl"]  .inforModuleHeaderRight > * {
+	float: right;
+}
+
+/* The Main Page Text  */
+.inforPageTitleText {
+	font-size: 1.6em;
+	color: #13a3f7;
+	margin-left: 0px;
+	margin-right: 0px;
+	line-height: 27px;
+	font-family:  Helvetica, Arial, sans-serif !important;
+}
+
+/* The text Showing the Current Record Id */
+.inforModuleRecordIdText {
+	font-size: 1.4em;
+	color: #444;
+	margin-left: 4px;
+	line-height: 27px;
+}
+
+.inforModuleHeaderRight > span {
+	font-size: 1.2em;
+}
+
+/* Icon Buttons on the Module header */
+.inforModuleDropDownButton, .inforCloseButton, .inforModuleCloseButton,  .inforModuleSettingsButton, .inforPanelSettingsButton, .inforMinimizeButton, .inforMaximizeButton {
+	border: 1px solid transparent;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	cursor: pointer;
+	background-color: transparent;
+	color: transparent;
+	padding: 0;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.inforModuleDropDownButton i, .inforCloseButton i, .inforModuleCloseButton i,  .inforModuleSettingsButton i, .inforPanelSettingsButton i, .inforMinimizeButton i, .inforMaximizeButton i {
+	display: block;
+	text-indent: -9999px;
+    position: relative;
+	border: 1px solid transparent;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.inforModuleDropDownButton i:after, .inforCloseButton i:after, .inforModuleCloseButton i:after,  .inforModuleSettingsButton i:after, .inforPanelSettingsButton i:after, .inforMinimizeButton i:after, .inforMaximizeButton i:after {
+    height: 12px;
+    margin: -5.5px 0 0 -7px;
+    width: 14px;
+    content: "";
+    display: block;
+    left: 50%;
+    opacity: .65;
+    filter: alpha(opacity=65);
+    position: absolute;
+    top: 50%;
+}
+
+.inforModuleDropDownButton i:after, .inforCloseButton i:after, .inforModuleCloseButton i:after {
+	 margin: -6.5px 0 0 -7px !important;
+}
+
+.inforModuleSettingsButton i:after, .inforPanelSettingsButton i:after {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAlklEQVR42mNgwA7uAfF1BjxADoh7gFgRiEOA+D8Ug9gqQDwViBWQNUxAUoQLdyFrAJn8j4AGFBuCkCSOA7EhFB9HEg8DYkaQ4mtoJpkhGWSEJvcQJHgXjwZjNLkr2Jx0FqrJFIhPIokHogcrPk//gwYvHHQSUPwfGhdwIAvEE4FYCYj90SIOJNcBdQVOcBmI78OCERkAAMaxS+AyhbjTAAAAAElFTkSuQmCC") no-repeat scroll center center transparent;
+}
+
+.inforCloseButton i:after, .inforModuleCloseButton i:after {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAmSURBVGjeY/j/geH+BoZ+AYZjBgwPChg+fAAhIAPIBQoCpf5/AAArYhCHJltC9gAAAABJRU5ErkJggg==") no-repeat scroll center center transparent;
+}
+
+.inforModuleDropDownButton i:after {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAJ0lEQVR42mNgGPqAEYn9nxi1jGiC/wkZzIhF8j8eV+AE/4lw4pAFAI+eBQJknrCtAAAAAElFTkSuQmCC") no-repeat scroll center center transparent;
+}
+
+.inforMinimizeButton i:after {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAACCAIAAADjHarAAAAADElEQVR42mNgoBYAAABKAAFH8OkVAAAAAElFTkSuQmCC") no-repeat scroll center center transparent;
+}
+
+.inforMaximizeButton i:after {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAALAQAAAABn/oHPAAAAAnRSTlMAAQGU/a4AAAAjSURBVGjeY3jAwnCAgeH/B4YGAwYGAQb7CTA0hYFBhqHBBgCceQhscQsxvQAAAABJRU5ErkJggg==") no-repeat scroll center center transparent;
+}
+
+.inforModuleDropDownButton:hover, .inforCloseButton:hover, .inforModuleCloseButton:hover, .inforModuleSettingsButton:hover, .inforPanelSettingsButton:hover, .inforMaximizeButton:hover, .inforMinimizeButton:hover {
+	background-color: #d8d8d8;
+    box-shadow: 0 1px #A2A2A2;
+}
+
+.inforModuleDropDownButton:hover i:after , .inforCloseButton:hover i:after , .inforModuleCloseButton:hover i:after , .inforModuleSettingsButton:hover i:after , .inforPanelSettingsButton:hover i:after , .inforMaximizeButton:hover i:after , .inforMinimizeButton:hover i:after {
+  opacity: 0.80;
+  filter: alpha(opacity=80);
+}
+
+.inforModuleDropDownButton:active, .inforCloseButton:active , .inforModuleCloseButton:active, .inforModuleSettingsButton:active, .inforPanelSettingsButton:active, .inforMinimizeButton:active, .inforMaximizeButton:active {
+  background-color: #BEBEBE;
+  box-shadow: 0 1px #767676 inset;
+}
+
+.inforModuleDropDownButton:active i, .inforCloseButton:active i, .inforModuleCloseButton:active i, .inforModuleSettingsButton:active i, .inforPanelSettingsButton:active i, .inforMinimizeButton:active i, .inforMaximizeButton:active  i{
+  opacity: 0.90;
+  filter: alpha(opacity=90);
+}
+
+.inforModuleSettingsButton[disabled], .inforPanelSettingsButton[disabled], .inforCloseButton[disabled], .inforModuleCloseButton[disabled], .inforModuleDropDownButton[disabled], .inforMinimizeButton[disabled], .inforMaximizeButton[disabled] {
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+	cursor: default;
+	background-color: transparent;
+}
+
+.inforDialog .inforMaximizeButton {
+	display: inline-block;
+	float: right;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	top: -35px;
+	padding: 0 10px;
+}
+
+.inforDialog .inforMinimizeButton {
+	display: inline-block;
+	float: right;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	top: -35px;
+	padding: 0 10px;
+}
+
+.inforCloseButton:focus, .inforModuleCloseButton:focus, .inforMinimizeButton:focus, .inforMaximizeButton:focus, .inforModuleSettingsButton:focus, .inforModuleDropDownButton:focus {
+    border: 1px solid #13a3f7;
+    border-radius: 3px;
+    outline: none;
+}
+
+html[dir="rtl"] .inforModuleHeaderLeft {
+	float: right;
+	padding: 0 10px 0 0;
+}
+
+html[dir="rtl"] .inforModuleHeaderRight {
+	float: left;
+	padding: 0 0 0 8px
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta charset="utf-8">
+
+  <title>Infor DropDownList With Badges</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      //Use Normal Init for drop downs.
+      $('#badgesDropDown').dropdown().on('change', function () {
+        var badge = $(this).next().next().next(),
+          selected = $(this.selectedOptions);
+
+        badge.text(selected.attr('data-attr')).attr('class', 'badge '+selected.attr('class').replace('dropdown-badge', ''));
+      });
+
+      //Label width ect...
+      $('body').inforForm();
+    });
+  </script>
+
+</head>
+<body>
+  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+     <label class="label" for="badgesDropDown">Document Type</label>
+     <select style="width:200px" class="dropdown" id="badgesDropDown">
+        <option value="calendar" selected="selected" data-attr="1" class="dropdown-badge">Customer</option>
+        <option value="shopping_cart" class="dropdown-badge ruby" data-attr="3">Warehouse </option>
+        <option value="games" class="dropdown-badge lightAzure" data-attr="0">Customer Pricing</option>
+    </select>
+    <span class="badge">1</span>
+  </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor ListBox Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforListBox.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforListBox.js"></script>
+
+	<script>
+		 $(function () {
+			Globalize.culture("ar-SA");
+			$(".inforListBox").inforListBox({showCheckboxes:true});
+		});
+	</script>
+</head>
+
+<body style="margin:10px">
+		<label class="inforLabel" for="listbox1">Suppliers</label>
+		<select multiple="multiple" size="5" class="inforListBox" id="listbox1" style="height:139px;width:185px">
+			<option value="1" >ABC Manufacturing</option>
+			<option value="2" selected="selected">Acme Industrial</option>
+			<option value="3">Allied Suppliers</option>
+			<option value="4">Basic Brands</option>
+			<option value="5" selected="selected">Blue Sky Distribution</option>
+			<option value="6" selected="selected">Consolidated Consortiums</option>
+			<option value="7"  disabled="disabled">Easter Widgets</option>
+			<option value="8">Ecac Manufacturing</option>
+			<option value="9">Generic Suppliers</option>
+			<option value="10">Normal Brands</option>
+			<option value="11">Intolink Industrial</option>
+			<option value="12">Morose Power</option>
+		</select>
+</body>
+</html>

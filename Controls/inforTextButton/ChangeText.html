@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Text Button</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTextButton.css" rel="stylesheet" />
+
+	<script src="../lib/jquery-1.7.1.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			$("#secondButton").click('click', function () {
+				$('#firstButton, #formButton, #disabledButton').text('New Text');
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforToolbar">
+		<button type="button" class="inforTextButton" id="secondButton">Click to Rename Text</button>
+		<button type="button" class="inforTextButton default" id="firstButton">Original</button>
+		<button type="button" class="inforTextButton" id="disabledButton" disabled>Original</button>
+
+	</div>
+	<button type="button" class="inforFormButton" id="formButton">Original</button>
+</body>
+</html>

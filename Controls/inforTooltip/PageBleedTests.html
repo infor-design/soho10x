@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+    Reference Infor Jira Tickets:
+    HFC-1676 / HFC-1271
+-->
+<html>
+<head>
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+    <meta charset="utf-8">
+
+    <title>Infor ToolTip - Basic Examples</title>
+
+    <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+    <link href="js/tooltip.css" rel="stylesheet" />
+    <style>
+        .move {
+            position: absolute;
+        }
+    </style>
+    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+    <script src="js/tooltip.js"></script>
+
+    <script>
+          $(document).ready(function () {
+            $('#top').inforToolTip({ placement: 'top' });
+            $('#bottom').inforToolTip({ placement: 'bottom' });
+            $('#left').inforToolTip({ placement: 'left' });
+            $('#right').inforToolTip({ placement: 'right' });
+          });
+    </script>
+</head>
+<body>
+    <div class="inforSingleColumnLayout">
+        <button id="top" name="top" type="button" class="inforFormButton move"
+            style="top: 0; left: 50%;"
+            title="This tooltip was originally set to show on top, but should now show beneath.">
+            Show Tooltip On Top
+        </button>
+        <button id="bottom" name="bottom" type="button" class="inforFormButton move"
+            style="top: 90%; left: 50%;"
+            title="This tooltip was originally set to show at the bottom, but should now be placed above.">Show Tooltip On Bottom
+        </button>
+        <button id="left" name="left" type="button" class="inforFormButton move"
+            style="top: 50%; right: 60%;"
+            title="This tooltip was originally set to show on the left, but should now be placed at the right.">
+            Show Tooltip On Left
+        </button>
+        <button id="right" name="right" type="button" class="inforFormButton move"
+            style="top: 50%; left: 60%;"
+            title="This tooltip was originally set to show on the right, but should now be placed at the left.">
+            Show Tooltip On Right
+        </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+
+  <title>Infor Tree with Context Menu</title>
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="js/sampleData.js"></script>
+  <script src="js/inforTree.js"></script>
+
+  <script>
+    $(function () {
+      $('#tree1').inforTree({
+        'ui': {
+          'select_limit': 1,
+          'initially_select': ['1']
+        },
+        'json_data': getSampleJson(),
+        'plugins': ['themes', 'json_data', 'ui', 'crrm', 'contextmenu']
+      });
+    });
+  </script>
+</head>
+<body style="margin:10px">
+  <div class="inforScrollableArea">
+     <div class="inforModuleHeader">
+        <div class="inforModuleHeaderLeft">
+          <span class="inforPageTitleText">Infor Tree With ContextMenu</span>
+        </div>
+        <div class="inforModuleHeaderRight">
+          <button class="inforModuleSettingsButton"></button>
+          <button class="inforModuleCloseButton"></button>
+        </div>
+     </div>
+    <div id="tree1"></div>
+  </div>
+</body>

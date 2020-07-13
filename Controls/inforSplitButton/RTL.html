@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Split Button</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			Globalize.culture("ar-SA");
+			
+			$(".inforSplitButton").inforSplitButton({menuId: 'menu1', click: function(e) {
+															alert('click event');
+												    }});
+			$("body").removeClass("inforHidden");
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="inforToolbar">
+		<button type="button" class="inforSplitButton" title="Normal Button" id="button1">Normal</button>
+		<button type="button" class="inforSplitButton disabled" id="button2" disabled>Disabled</button>
+		<button type="button" class="inforSplitButton attachments" id="attachments"></button>
+		<button type="button" class="inforSplitButton delete" title="Delete" id="delete"></button>
+		<button type="button" class="inforSplitButton duplicate" title="Duplicate" id="duplicate"></button>
+		<button type="button" class="inforSplitButton discard"></button>
+		<button type="button" class="inforSplitButton help"></button>
+		<button type="button" class="inforSplitButton links"></button>
+		<button type="button" class="inforSplitButton new"></button>
+		<button type="button" class="inforSplitButton notes" ></button>
+		<button type="button" class="inforSplitButton print"></button>
+		<button type="button" class="inforSplitButton refresh"></button>
+		<button type="button" class="inforSplitButton submit"></button>
+		<button type="button" class="inforSplitButton attachments disabled"></button>
+		<button type="button" class="inforSplitButton delete disabled"></button>
+		<button type="button" class="inforSplitButton duplicate disabled" ></button>
+		<button type="button" class="inforSplitButton discard disabled"></button>
+		<button type="button" class="inforSplitButton help disabled"></button>
+		<button type="button" class="inforSplitButton links disabled"></button>
+		<button type="button" class="inforSplitButton new disabled"></button>
+		<button type="button" class="inforSplitButton notes disabled" ></button>
+		<button type="button" class="inforSplitButton print disabled"></button>
+		<button type="button" class="inforSplitButton refresh disabled"></button>
+		<button type="button" class="inforSplitButton submit disabled"></button>
+	</div>
+
+	<ul id="menu1" class="inforContextMenu">
+		<li><a onClick="myFunction(1)">Selection One</a></li>
+		<li><a onClick="myFunction(2)">Selection Two</a></li>
+		<li><a onClick="myFunction(3)">Selection Three</a></li>
+	</ul>
+</body>
+</html>

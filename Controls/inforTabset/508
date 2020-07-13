@@ -1,0 +1,37 @@
+- use ul and li tags
+- close button is a span tag
+	- fact that it only appears on hover.
+- shift f10 context menu?
+	-aria has context menu or popup.
+	-or have an invisible actions button.
+-arrow keys tabs are wrong? the enter to activate
+	
+-pulls in content in the dom or not
+	-aria-busy?? Q.
+	
+-aria selected on active tab and another one for the non selected tab
+-vertical tab (support both left and right or down arrow)
+-module tabs could be headings (h2?)
+
+Related Tags
+-aria-level and aria-posinset
+
+
+Whether it does it or not at the moment. I think it should work as follows:
+
+http://access.aol.com/dhtml-style-guide-working-group/#tabpanel
+http://whatsock.com/tsg/Coding%20Arena/ARIA%20and%20Non-ARIA%20Tabs/ARIA%20Tabs%20%28Internal%20Content%29/demo.htm
+
+Also: Sortable tabs functionality is not accessible and should be disabled.
+
+This could be as simple as revamping the keyboard functionality. But I might want to reboot the entire implementation since it comes from jQuery Ui which is not very accessible.
+ 
+ 
+ accessibleculture.org/research-files/aria-tabs/version2a.php
+ http://accessibleculture.org/research-files/aria-tabs/version3a.php
+ 
+
+VPAT 
+- On Mac you need to enable Full Keyboard access
+http://developer.yahoo.com/blogs/ydn/enabling-full-keyboard-access-mac-090053716.html
+ 

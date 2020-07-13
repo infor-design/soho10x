@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Fieldset - Basic Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforFieldset.css" rel="stylesheet" >
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="js/inforFieldset.js"></script>
+
+	<script>
+		$(function () {
+			$("#extraTests").inforFieldSet({
+				initialState: 'open',
+				animate: false,
+				onExpand: function(e) {console.log(e)},
+				onCollapse: function(e) {console.log(e)}
+			});
+
+			$(".inforFieldSet").inforFieldSet();
+		});
+	</script>
+</head>
+<body class="inforScrollableArea" style="overflow:scroll">
+	<!--example shows an initially closed field set -->
+	<fieldset class="inforFieldSet">
+		<legend>
+			<span class="inforFieldSetLabel">The Label</span>
+		</legend>
+		<button type="button" role="button" class="inforExpandButton closed"></button>
+		<div class="content" style="display:none">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+		</div>
+	</fieldset>
+
+	<!--example with no expand button-->
+	<fieldset class="inforFieldSet" >
+		<legend><span class="inforFieldSetLabel">The Label</span></legend>
+		<div class="content">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+		</div>
+	</fieldset>
+
+	<!--example shows an initially open the field set -->
+	<fieldset class="inforFieldSet" id="fs3" style="display:none">
+		<legend><span class="inforFieldSetLabel">The Label</span></legend>
+		<button type="button" role="button" class="inforExpandButton open"></button>
+		<div class="content">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+		</div>
+	</fieldset>
+
+	<!--example shows how to split two field sets 50/50 with a div aligner.-->
+	<div class="inforFieldSet2ColumnLayout">
+		<fieldset class="inforFieldSet" >
+			<legend><span class="inforFieldSetLabel">Field Left</span></legend>
+			<button type="button" role="button" class="inforExpandButton open"></button>
+			<div class="content">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+			</div>
+		</fieldset>
+
+		<fieldset class="inforFieldSet">
+			<legend><span class="inforFieldSetLabel">Field Set Right</span></legend>
+			<button type="button" role="button" class="inforExpandButton open"></button>
+			<div class="content">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+			</div>
+		</fieldset>
+	</div>
+
+	<!--example shows a fixed width field set-->
+	<fieldset class="inforFieldSet"  id="extraTests" style="clear:both; width: 646px">
+		<legend><span class="inforFieldSetLabel">Field Set Test Prefs</span></legend>
+		<button type="button" role="button" class="inforExpandButton closed"></button>
+		<div class="content">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+		</div>
+	</fieldset>
+</body>
+</html>

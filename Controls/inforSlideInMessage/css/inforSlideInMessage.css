@@ -1,0 +1,89 @@
+﻿/* Infor Slide In Message
+----------------------------------*/
+.inforSlideInMessage {
+	cursor: default;
+	z-index: 9998;
+	background-color: white;
+	/*fix it to the top*/
+	position:fixed;
+	top:0;
+	margin-left: 3%;
+	margin-right: 3%;
+	width: 94%;
+	border-radius: 0 0 5px 5px;
+	border-bottom: 1px solid #B3B3B3;
+	border-left: 1px solid #B3B3B3;
+	border-right: 1px solid #B3B3B3;
+	box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+
+.inforSlideInMessage.alert {
+	border-bottom: 1px solid #ffaa00;
+	border-left: 1px solid #ffaa00;
+	border-right: 1px solid #ffaa00;
+}
+
+.inforSlideInMessage.info {
+	border-bottom: 1px solid #13a3f7;
+	border-left: 1px solid #13a3f7;
+	border-right: 1px solid #13a3f7;
+}
+
+/*Content area*/
+.inforSlideInMessage .content {
+	color: #666666;
+	font-size: 1.2em;
+	line-height: 25px;
+	margin: 10px 10px 10px 0;
+	padding-top: 10px;
+}
+
+.inforSlideInMessage .header {
+	color: #666666;
+	font-size: 1.5em;
+}
+
+.inforSlideInMessage .popupMiddleCenter {
+	background-color: #FFFFFF;
+	border-radius: 0 0 5px 5px;
+	margin-top: -9px;
+}
+
+.inforSlideInMessage .inforIcon{
+	float: left;
+	height: 26px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-top: -1px;
+	overflow: hidden;
+	width: 26px;
+}
+
+.inforSlideInMessage .messageField {
+	display: table;
+}
+
+.inforSlideInMessage .messageField.indent {
+   padding-left:36px;
+   padding-top: 10px;
+}
+
+.inforSlideInMessage .inforCloseButton {
+	float: right;
+	left: 0;
+	position: relative;
+	top: -3px;
+}
+
+.inforSlideInMessage .inforCloseButton i {
+	margin: -4.5px 0 0 -1px !important;
+}
+
+html[dir="rtl"] .inforSlideInMessage .inforIcon {
+	float: right;
+}
+
+html[dir="rtl"] .inforSlideInMessage .inforCloseButton {
+	float: left;
+	left: 15px;
+}

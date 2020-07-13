@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Absolute Positioning </title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<link href="css/inforTabset.css" rel="stylesheet">
+	<script src="../lib/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTabset.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			//$('#inforTabContainer').inforTabset({fillToBottom:false});
+			
+			$('div[tp="tabregion"]').inforTabset({fillToBottom: false, animate: false});				
+
+			$("#textBox1").validationMessage("show", "The printer '\\ukfawfps1\F2-Print5-Err' is defined but not accessible to reporting.",  false);
+
+			/*Use the tabsselect if you wish to check before activating another tab..Return false to not show the new tab
+			$('#inforTabContainer').inforTabset().bind('tabsselect', function(event, ui) {
+					// Objects available in the function context:
+					ui.tab     // anchor element of the selected (clicked) tab
+					ui.panel   // element, that contains the selected/clicked tab contents
+					ui.index   // zero-based index of the selected (clicked) tab
+
+				//return false;
+			});*/
+			$("body").removeClass("inforHidden");
+		});
+	</script>
+</head>
+<body class="inforHidden">
+<div id="mainDiv" class="mainStyle" style="overflow:auto;display:block;top:0px;width:100%;height:100%;">
+<span class="inforLabel noColon" id="label25" style="top:24px;left:65px;width:104px;position:absolute;min-width:104px;text-align:right;">Company</span>
+<span class="inforLabel noColon" id="label34" style="top:48px;left:52px;width:117px;position:absolute;min-width:117px;text-align:right;">Employee</span>
+<span class="inforLabel noColon" id="label360" style="top:48px;left:780px;width:130px;position:absolute;min-width:130px;text-align:right;">Effective</span>
+<input type="text" class="inforLookupField" id="_f263" name="form" tp="text" hdet="1" par="" det="" maxlength="4" edit="numeric" hsel="1" style="text-align:right;top:24px;left:182px;position:absolute;width:38px;">
+<span class="inforDataLabel outputFontStyle outputFieldColor" id="_f264" name="form" style="position: absolute;overflow: hidden;left:338px;height: 20px;width:390px;top:24px;margin-left:0px;margin-right: 0px;margin-bottom: 4px;text-align:left;" title=""></span>
+<input type="text" class="inforLookupField" id="_f265" maxlength="9" edit="numeric" style="text-align:right;top:48px;left:182px;position:absolute;width:103px;">
+<input type="text" class="inforDateField" id="_f267" sz="6" maxlength="10" style="font-size: 8pt;top:48px;left:923px;position:absolute;width:64px;">
+
+<div style="position:absolute;top:72px;height:366px;width:800px;left:13px;">
+<div id="TR0" curtab="TF0-0" tp="tabregion">
+<ul class="inforTabset">
+<li id="TF0-0" name="TR0"><a href="#TF0-0PANE" id="TF0-0BTN">Main</a></li>
+<li id="TF0-1" name="TR0"><a href="#TF0-1PANE" id="TF0-1BTN">Assignment</a></li>
+<li id="TF0-2" name="TR0"><a href="#TF0-2PANE" id="TF0-2BTN">Pay</a></li>
+<li id="TF0-3" name="TR0"><a href="#TF0-3PANE" id="TF0-3BTN">Work</a></li>
+<li id="TF0-4" name="TR0"><a href="#TF0-4PANE" id="TF0-4BTN">Personal</a></li>
+<li id="TF0-5" name="TR0"><a href="#TF0-5PANE" id="TF0-5BTN">Address</a></li>
+<li id="TF0-6" name="TR0"><a href="#TF0-6PANE" id="TF0-6BTN">Work Elig</a></li>
+<li id="TF0-7" name="TR0"><a href="#TF0-7PANE" id="TF0-7BTN">User Flds</a></li>
+<li id="TF0-8" name="TR0"><a href="#TF0-8PANE" id="TF0-8BTN">Tax</a></li>
+<li id="TF0-9" name="TR0"><a href="#TF0-9PANE" id="TF0-9BTN">Pay Edits</a></li>
+<li id="TF0-10" name="TR0"><a href="#TF0-10PANE" id="TF0-10BTN">Year End</a></li>
+<li id="TF0-11" name="TR0"><a href="#TF0-11PANE" id="TF0-11BTN">Ben Dates</a></li>
+<li id="TF0-12" name="TR0"><a href="#TF0-12PANE" id="TF0-12BTN">Ben Flags</a></li>
+<li id="TF0-13" name="TR0"><a href="#TF0-13PANE" id="TF0-13BTN">Plan Test</a></li>
+<li id="TF0-14" name="TR0"><a href="#TF0-14PANE" id="TF0-14BTN">Spouse Emp</a></li>
+</ul>
+
+<div id="TF0-0PANE" fld="_f268" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label05" style="top:2px;left:65px;width:130px;position:absolute;min-width:130px;text-align:right;">Last Name</span>
+	<input type="text" class="inforTextbox" id="_f269" name="TF0-0" sz="4" maxlength="30" style="top:2px;left:208px;position:absolute;width:300px;">
+</div>
+<div id="TF0-1PANE" fld="_f294" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label011" style="top:2px;left:143px;width:182px;position:absolute;min-width:182px;text-align:right;">Process Level</span>
+	<input type="text" class="inforLookupField" id="_f295" name="TF0-1" maxlength="5" style="text-transform:uppercase;top:2px;left:338px;position:absolute;width:51px;">
+</div>
+<div id="TF0-2PANE" fld="_f321" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label012" style="top:2px;left:156px;width:169px;position:absolute;min-width:169px;text-align:right;">Salary Class</span>
+	<input type="text" class="inforTextbox" id="_f326" name="TF0-2" maxlength="14" style="top:2px;left:338px;position:absolute;width:172px;">
+</div>
+<div id="TF0-3PANE" fld="_f374" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label019" style="top:2px;left:130px;width:143px;position:absolute;min-width:143px;">Telephone</span>
+	<input type="text" class="inforTextbox" id="_f383" name="TF0-3" maxlength="30" style="top:2px;left:338px;position:absolute;width:224px;">
+</div>
+<div id="TF0-4PANE" fld="_f268" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label05" style="top:2px;left:65px;width:130px;position:absolute;min-width:130px;text-align:right;">Last Name</span>
+	<input type="text" class="inforTextbox" id="_f269" name="TF0-4" sz="4" maxlength="30" style="top:2px;left:208px;position:absolute;width:300px;">
+</div>
+<div id="TF0-5PANE" fld="_f294" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label011" style="top:2px;left:143px;width:182px;position:absolute;min-width:182px;text-align:right;">Process Level</span>
+	<input type="text" class="inforLookupField" id="_f295" name="TF0-5" maxlength="5" style="text-transform:uppercase;top:2px;left:338px;position:absolute;width:51px;">
+</div>
+<div id="TF0-6PANE" fld="_f374" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label019" style="top:2px;left:130px;width:143px;position:absolute;min-width:143px;">Telephone</span>
+	<input type="text" class="inforTextbox" id="_f383" name="TF0-6" maxlength="30" style="top:2px;left:338px;position:absolute;width:224px;">
+</div>
+<div id="TF0-7PANE" fld="_f268" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label05" style="top:2px;left:65px;width:130px;position:absolute;min-width:130px;text-align:right;">Last Name</span>
+	<input type="text" class="inforTextbox" id="_f269" name="TF0-7" sz="4" maxlength="30" style="top:2px;left:208px;position:absolute;width:300px;">
+</div>
+<div id="TF0-8PANE" fld="_f294" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label011" style="top:2px;left:143px;width:195px;position:absolute;min-width:195px;text-align:right;">BSI Group</span>
+	<input type="text" class="inforLookupField" id="_f579" name="TF0-8" maxlength="11" style="text-transform:uppercase;top:2px;left:351px;position:absolute;width:133px;">
+	<div style="position:absolute;top:24px;height:366px;width:800px;left:4px;">
+	<div id="TR2" typ="" name="TF0-8" curtab="TF2-0" tp="tabregion">
+	<ul class="inforTabset">
+	<li id="TF2-0" name="TR2"><a isTabLabel="1" href="#TF2-0PANE" id="TF2-0BTN">United States</a></li>
+	<li id="TF2-1" name="TR2"><a isTabLabel="1" href="#TF2-1PANE" id="TF2-1BTN">United States Local Taxes</a></li>
+	<li id="TF2-2" name="TR2"><a isTabLabel="1" href="#TF2-2PANE" id="TF2-2BTN">Canada</a></li>
+	</ul>
+	<div id="TF2-0PANE" fld="_f580" name="TR2" isSubPane="1" hasdtl="" hastab="" style="position:absolute;width:100%;height:100%;">
+		<span class="inforLabel noColon" id="label16" style="top:24px;left:78px;width:247px;position:absolute;min-width:247px;text-align:right;">Workers Comp State</span>
+		<input type="text" class="inforTextbox" id="_f581" name="TF2-0" maxlength="2" style="text-transform:uppercase;top:24px;left:338px;position:absolute;width:23px;">
+	</div>
+	<div id="TF2-1PANE" fld="_f599" name="TR2" isSubPane="1" hasdtl="" hastab="" style="position:absolute;width:100%;height:100%;">
+		<span class="inforLabel noColon" id="label113" style="top:24px;left:169px;width:182px;position:absolute;min-width:182px;text-align:right;">Resident City</span>
+		<input type="text" class="inforTextbox" id="_f600" name="TF2-1" maxlength="10" style="text-transform:uppercase;top:24px;left:364px;position:absolute;width:116px;">
+	</div>
+	<div id="TF2-2PANE" fld="_f606" name="TR2" isSubPane="1" hasdtl="" hastab="" style="position:absolute;width:100%;height:100%;">
+		<span class="inforLabel noColon" id="label124" style="top:24px;left:312px;width:169px;position:absolute;min-width:169px;text-align:right;">Tax Province</span>
+		<input type="text" class="inforLookupField" id="_f607" name="TF2-2" maxlength="2" style="text-transform:uppercase;top:24px;left:494px;position:absolute;width:23px;">
+	</div>
+	</div>
+	</div>
+</div>
+<div id="TF0-9PANE" fld="_f321" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label012" style="top:2px;left:156px;width:169px;position:absolute;min-width:169px;text-align:right;">Salary Class</span>
+	<input type="text" class="inforTextbox" id="_f326" name="TF0-9" maxlength="14" style="top:2px;left:338px;position:absolute;width:172px;">
+</div>
+<div id="TF0-10PANE" fld="_f374" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label019" style="top:2px;left:130px;width:143px;position:absolute;min-width:143px;">Telephone</span>
+	<input type="text" class="inforTextbox" id="_f383" name="TF0-10" maxlength="30" style="top:2px;left:338px;position:absolute;width:224px;">
+</div>
+<div id="TF0-11PANE" fld="_f268" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label05" style="top:2px;left:65px;width:130px;position:absolute;min-width:130px;text-align:right;">Last Name</span>
+	<input type="text" class="inforTextbox" id="_f269" name="TF0-11" sz="4" maxlength="30" style="top:2px;left:208px;position:absolute;width:300px;">
+</div>
+<div id="TF0-12PANE" fld="_f294" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label011" style="top:2px;left:143px;width:182px;position:absolute;min-width:182px;text-align:right;">Process Level</span>
+	<input type="text" class="inforLookupField" id="_f295" name="TF0-12" maxlength="5" style="text-transform:uppercase;top:2px;left:338px;position:absolute;width:51px;">
+</div>
+<div id="TF0-13PANE" fld="_f321" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label012" style="top:2px;left:156px;width:169px;position:absolute;min-width:169px;text-align:right;">Salary Class</span>
+	<input type="text" class="inforTextbox" id="_f326" name="TF0-13" maxlength="14" style="top:2px;left:338px;position:absolute;width:172px;">
+</div>
+<div id="TF0-14PANE" fld="_f374" name="TR0" style="position:absolute;height:100%;width:100%;">
+	<span class="inforLabel noColon" id="label019" style="top:2px;left:130px;width:143px;position:absolute;min-width:143px;">Telephone</span>
+	<input type="text" class="inforTextbox" id="_f383" name="TF0-14" maxlength="30" style="top:2px;left:338px;position:absolute;width:224px;">
+</div>
+</div>
+</div>
+</body>
+</html>

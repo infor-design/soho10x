@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdditionalHelp" xml:space="preserve">
+    <value>अतिरिक्त सहायता</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="AddNewTab" xml:space="preserve">
+    <value>नया टैब जोड़ें</value>
+    <comment>Add New Button on Tab Control Tooltip</comment>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>अलर्ट</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>फ़िल्टर लागू करें</value>
+    <comment>Button Tooltip  in DataGrid Control</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>अनुमोदित करें</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>अनुलग्नक</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>पीछे</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Basic" xml:space="preserve">
+    <value>मूलभूत</value>
+    <comment>Switch to a Basic View</comment>
+  </data>
+  <data name="Between" xml:space="preserve">
+    <value>के बीच</value>
+    <comment>Menu Filter Option </comment>
+  </data>
+  <data name="Book" xml:space="preserve">
+    <value>बुक</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>रद्द करें</value>
+    <comment>Button Text on Dialog</comment>
+  </data>
+  <data name="Checked" xml:space="preserve">
+    <value>जाँचा हुआ</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>फ़िल्टर क्लियर करें</value>
+    <comment>Button Tooltip  in DataGrid Control</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>बंद करें</value>
+    <comment>Close Button Tooltip on Form.</comment>
+  </data>
+  <data name="CloseCancelChanges" xml:space="preserve">
+    <value>बंद करें और परिवर्तन रद्द करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CloseSaveChanges" xml:space="preserve">
+    <value>बंद करें और परिवर्तन सेव करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CloseTab" xml:space="preserve">
+    <value>टैब बंद करें</value>
+    <comment>Close Button Tooltip on Tab</comment>
+  </data>
+  <data name="ColumnPersonalization" xml:space="preserve">
+    <value>स्तंभ वैयक्तिकरण</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>टिप्पणियाँ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>पुष्टिकरण</value>
+    <comment>Text on Confirmation Dialog</comment>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>शामिल</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="CreateTab" xml:space="preserve">
+    <value>नया टैब बनाएँ</value>
+    <comment>Create Button Tooltip on Tab</comment>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>काटें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>हटाएँ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DiscardUndo" xml:space="preserve">
+    <value>छोड़ें/पूर्ववत् करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DisplayDropDownList" xml:space="preserve">
+    <value>ड्रॉपडाउन सूची प्रदर्शित करें</value>
+    <comment>Button Tooltip</comment>
+  </data>
+  <data name="Displaying" xml:space="preserve">
+    <value>प्रदर्शित: </value>
+    <comment>Grid Footer info - showing number of rows</comment>
+  </data>
+  <data name="DocWord" xml:space="preserve">
+    <value>दस्तावेज़</value>
+    <comment>Icon Button Tooltip </comment>
+  </data>
+  <data name="DoesNotContain" xml:space="preserve">
+    <value>शामिल नहीं है</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotEndWith" xml:space="preserve">
+    <value>के साथ अंत नहीं होता है</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotEqual" xml:space="preserve">
+    <value>के बराबर नहीं है</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="DoesNotStartWith" xml:space="preserve">
+    <value>के साथ प्रारंभ नहीं होता है</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>डाउनलोड</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>प्रतिलिपि करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>संपादित करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EitherSelectedorNotSelected" xml:space="preserve">
+    <value>चयनित किया गया या चयनित नहीं किया गया</value>
+    <comment>Menu Filter Option</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ई-मेल</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>के साथ अंत होता है</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="EqualsStr" xml:space="preserve">
+    <value>के बराबर है</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ExpandCollapse" xml:space="preserve">
+    <value>विस्तृत करें/संक्षिप्त करें</value>
+    <comment>Expand Button Tooltip</comment>
+  </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>निर्यात विफल</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Excel में निर्यात करें</value>
+    <comment>DataGrid Button Function Tooltip</comment>
+  </data>
+  <data name="FileInUse" xml:space="preserve">
+    <value>निर्दिष्ट फ़ाइल उपयोग में है</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="FileInUseDetail" xml:space="preserve">
+    <value>अनुप्रयोग में यह फ़ाइल जहाँ उपयोग में है, वहाँ उसे बंद करें या एक अलग फ़ाइल नाम निर्दिष्ट करें|</value>
+    <comment>Error Message</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>फ़िल्टर करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="FilterMenu" xml:space="preserve">
+    <value>फ़िल्टर सूची</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="FilterOptions" xml:space="preserve">
+    <value>फ़िल्टर विकल्प</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="FilterWithinResults" xml:space="preserve">
+    <value>परिणामों के दायरे में फ़िल्टर करें</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>प्रथम</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="FirstView" xml:space="preserve">
+    <value>प्रथम दृश्य</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>फ़ोल्डर</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>पासवर्ड भूल गए?</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>आगे</value>
+    <comment>Arrow button tooltip</comment>
+  </data>
+  <data name="GetMoreRows" xml:space="preserve">
+    <value>अधिक पंक्तियाँ प्राप्त करें</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>से अधिक</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="GreaterThanOrEquals" xml:space="preserve">
+    <value>से अधिक या बराबर</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="GridSettings" xml:space="preserve">
+    <value>ग्रिड सेटिंग्स</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="GroupSelection" xml:space="preserve">
+    <value>समूह चयन</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>सहायता</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="HideColumn" xml:space="preserve">
+    <value>स्तंभ छिपायें</value>
+    <comment>DataGrid Button Tooltip</comment>
+  </data>
+  <data name="IsEmpty" xml:space="preserve">
+    <value>खाली है</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="IsNotEmpty" xml:space="preserve">
+    <value>खाली नहीं है</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>अंतिम</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LastView" xml:space="preserve">
+    <value>अंतिम दृश्य</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LaunchActivate" xml:space="preserve">
+    <value>लॉन्च/सक्रिय करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>से कम</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="LessThanOrEquals" xml:space="preserve">
+    <value>से कम या बराबर</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>लिंक्स</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ListTabs" xml:space="preserve">
+    <value>सभी टैब्स को सूचीबद्ध करे</value>
+    <comment>Tabs Control Button Tooltip</comment>
+  </data>
+  <data name="LoadingItem" xml:space="preserve">
+    <value>वस्तु लोड हो रही है... </value>
+    <comment>Progress Dialog Text - Make sure there is a space at the end.</comment>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>रखरखाव</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>मेनू</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>नया</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>अगला</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NextView" xml:space="preserve">
+    <value>अगला दृश्य</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>नहीं</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="NotChecked" xml:space="preserve">
+    <value>नहीं जाँचा गया</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>नोट्स</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NotSelected" xml:space="preserve">
+    <value>चयनित नहीं किया गया</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value> का </value>
+    <comment>Grid Footer Text</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>ठीक</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>खोलें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>पासवर्ड</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>चिपकाएँ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>फ़ोन</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>कृपया प्रतीक्षा करें</value>
+    <comment>Progress Dialog Text</comment>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>पिछला</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PreviousView" xml:space="preserve">
+    <value>पिछला दृश्य</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>मुद्रित करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>क्वेरीज़</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>पुन: करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>रिफ़्रेश करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>अस्वीकृत करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>इस कंप्यूटर पर मुझे याद रखें</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>रिपोर्ट्स</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>रीसेट करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>समीक्षा</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RunFilter" xml:space="preserve">
+    <value>फ़िल्टर चलाएँ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RunJob" xml:space="preserve">
+    <value>कार्य चलाएँ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>सेव</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SaveBeforeClosing" xml:space="preserve">
+    <value>समापन से पहले सेव करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SavedFilters" xml:space="preserve">
+    <value>सेव किए गए फ़िल्टर्स</value>
+    <comment>Grid Filter Menu Option</comment>
+  </data>
+  <data name="SaveSubmit" xml:space="preserve">
+    <value>सेव/जमा करें</value>
+    <comment>Icon Button Tooltip - Or Either Word.</comment>
+  </data>
+  <data name="ScreenDesign" xml:space="preserve">
+    <value>स्क्रीन डिजाइन</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>खोजें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SelectContents" xml:space="preserve">
+    <value>सामग्री चयन करें</value>
+    <comment>Tooltip for Grid Filter to Select Contents of the Row data.</comment>
+  </data>
+  <data name="SelectDate" xml:space="preserve">
+    <value>दिनांक चयन करें</value>
+    <comment>Tooltip for Date Picker</comment>
+  </data>
+  <data name="SelectDeselect" xml:space="preserve">
+    <value>समस्त चयनित / अचयनित करें</value>
+    <comment>Select all rows/ no rows in the grid</comment>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>चयनित: </value>
+    <comment>Show number of select rows</comment>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>सर्वर नाम</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>सेटिंग्स</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ShowFilterRow" xml:space="preserve">
+    <value>फ़िल्टर पंक्ति दिखाएँ</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>साइन इन करें</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="SortAscending" xml:space="preserve">
+    <value>आरोही क्रम में सॉर्ट करें</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="SortDescending" xml:space="preserve">
+    <value>अवरोही क्रम में सॉर्ट करें</value>
+    <comment>Grid Menu Option</comment>
+  </data>
+  <data name="Spreadsheet" xml:space="preserve">
+    <value>स्प्रेडशीट</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>के साथ प्रारंभ होता हैं</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="StatusIndicator" xml:space="preserve">
+    <value>स्थिति संकेतक</value>
+    <comment>Status Dialog Text</comment>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>कार्य</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>आज</value>
+    <comment>Grid Data Filtering Option</comment>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>अनुवाद करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>उपयोगकर्ता आईडी</value>
+    <comment>Login Dialog Text</comment>
+  </data>
+  <data name="Utilities" xml:space="preserve">
+    <value>उपयोगिताएँ</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>हाँ</value>
+    <comment>Dialog Button Text</comment>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>पृष्ठ</value>
+    <comment>Grid Pager Information</comment>
+  </data>
+  <data name="Rows" xml:space="preserve">
+    <value>पंक्तियाँ</value>
+    <comment>Word describing the grid rows.</comment>
+  </data>
+  <data name="ShowingAll" xml:space="preserve">
+    <value>सभी दिखा रहा है</value>
+    <comment>Grid Row Status Area.</comment>
+  </data>
+  <data name="SessionNavigation" xml:space="preserve">
+    <value>सत्र नेविगेशन</value>
+    <comment>Tooltip for a button that opens session navigation</comment>
+  </data>
+  <data name="ListAllMenuItems" xml:space="preserve">
+    <value>सभी मेनू आइटम को सूचीबद्ध करे</value>
+    <comment>Show all the menu items</comment>
+  </data>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>कोई रेकॉर्ड्स नहीं मिले</value>
+    <comment>Grid Status Text</comment>
+  </data>
+  <data name="SearchTree" xml:space="preserve">
+    <value>खोज ट्री</value>
+    <comment>InLine Help to Search the Tree</comment>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>क्लियर करें</value>
+    <comment>Clear a TextField from a button</comment>
+  </data>
+  <data name="DrillDown" xml:space="preserve">
+    <value>ड्रिल डाउन</value>
+    <comment>Button that drills to the record.</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>यह फ़ील्ड आवश्यक हैं</value>
+    <comment>Required Validation Message</comment>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>उपलब्ध:</value>
+    <comment>Text For Dual List</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>जोड़ें</value>
+    <comment>Add an Item from a Dual List</comment>
+  </data>
+  <data name="MoveDown" xml:space="preserve">
+    <value>नीचे ले जाएँ</value>
+    <comment>Move Down a grid row</comment>
+  </data>
+  <data name="MoveUp" xml:space="preserve">
+    <value>ऊपर ले जाएँ</value>
+    <comment>Move up a grid row</comment>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>हटाएँ</value>
+    <comment>Remove an item from a dual list</comment>
+  </data>
+  <data name="LastYear" xml:space="preserve">
+    <value>अंतिम वर्ष</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextMonth" xml:space="preserve">
+    <value>अगला महीना</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextWeek" xml:space="preserve">
+    <value>अगला सप्ताह</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="NextYear" xml:space="preserve">
+    <value>अगला वर्ष</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="OneMonthAgo" xml:space="preserve">
+    <value>एक महीना पहले</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="OneWeekAgo" xml:space="preserve">
+    <value>एक सप्ताह पहले</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="SixMonthsAgo" xml:space="preserve">
+    <value>छह महीने पहले</value>
+    <comment>Quick Date Selection in the DatePicker</comment>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>समय</value>
+    <comment>Time Selection on a  DatePicker</comment>
+  </data>
+  <data name="CannotBeSelected" xml:space="preserve">
+    <value>इस पंक्ति का चयन नहीं किया जा सकता|</value>
+    <comment>Grid Tooltip</comment>
+  </data>
+  <data name="ResetToDefault" xml:space="preserve">
+    <value>डिफ़ॉल्ट लेआउट को रीसेट करें</value>
+    <comment>Reset the Grid Layout</comment>
+  </data>
+  <data name="CloseOtherTabs" xml:space="preserve">
+    <value>अन्य टैब बंद करें</value>
+    <comment>Tab Control Right Click Menu</comment>
+  </data>
+  <data name="EmailValidation" xml:space="preserve">
+    <value>एक मान्य ईमेल पता दर्ज करें</value>
+    <comment>Text For Email Field  Validation</comment>
+  </data>
+  <data name="UrlValidation" xml:space="preserve">
+    <value>एक मान्य URL दर्ज करें</value>
+    <comment>Text For Url Field Validation</comment>
+  </data>
+  <data name="EndofResults" xml:space="preserve">
+    <value>परिणाम का अंत</value>
+    <comment>Toolbar message for paging</comment>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>अधिक...</value>
+    <comment>Overflow Text for Tabs and Dialogs</comment>
+  </data>
+  <data name="RecordsPerPage" xml:space="preserve">
+    <value>रिकॉर्ड प्रति पृष्ठ</value>
+    <comment>Text for a Grid Page Size Selector</comment>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>बड़ा करें</value>
+    <comment>Title Bar Icon</comment>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>छोटा करें</value>
+    <comment>Title Bar Icon</comment>
+  </data>
+  <data name="CloseAllTabs" xml:space="preserve">
+    <value>सभी टैब बंद करें</value>
+    <comment>Tab Control Right Click Menu</comment>
+  </data>
+  <data name="QuickDates" xml:space="preserve">
+    <value>त्वरित दिनांक</value>
+    <comment>Date Functionality</comment>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>समाप्त करें</value>
+    <comment>Button on the Wizard Pattern</comment>
+  </data>
+  <data name="SetTextColor" xml:space="preserve">
+    <value>टेक्स्ट रंग सेट करें</value>
+    <comment>Color Picker / Text Editor</comment>
+  </data>
+  <data name="AttachmentRules" xml:space="preserve">
+    <value>अनुलग्नक नियम</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="AutoRefresh" xml:space="preserve">
+    <value>स्वतः रिफ़्रेश</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="BarChart" xml:space="preserve">
+    <value>बार चार्ट</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CopyMail" xml:space="preserve">
+    <value>प्रतिलिपि बनाएँ और मेल करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="CopyUrl" xml:space="preserve">
+    <value>URL कॉपी करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="DistributeHorizontally" xml:space="preserve">
+    <value>क्षैतिज रूप से वितरित करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>सभी विस्तृत करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>उत्पन्न करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="GenerateScript" xml:space="preserve">
+    <value>स्क्रिप्ट उत्पन्न करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="NoAttachments" xml:space="preserve">
+    <value>कोई अनुलग्नक नहीं</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="PieChart" xml:space="preserve">
+    <value>पाई चार्ट</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="QuickAccess" xml:space="preserve">
+    <value>त्वरित पहुँच</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="RestoreUser" xml:space="preserve">
+    <value>उपयोगकर्ता पुनर्स्थापित करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SaveConsolidate" xml:space="preserve">
+    <value>स्थानीय एकत्रीकरण के साथ सेव करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Screen Design" xml:space="preserve">
+    <value>स्क्रीनडिजाइन</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>सभी चयन करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SpellCheck" xml:space="preserve">
+    <value>वर्तनी परीक्षण</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="SubmitForApproval" xml:space="preserve">
+    <value>अनुमोदन के लिए जमा करें</value>
+    <comment>Icon Button Tooltip</comment>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>समयक्षेत्र</value>
+    <comment>Dialog Text</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>लोड हो रहा है...</value>
+    <comment>Loading Text</comment>
+  </data>
+  <data name="NewNode" xml:space="preserve">
+    <value>नया नोड</value>
+    <comment>Create a New tree Node</comment>
+  </data>
+  <data name="RememberSettings" xml:space="preserve">
+    <value>इन सेटिंग्स को याद रखें</value>
+    <comment>Sign in Page Help</comment>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>कंपनी</value>
+    <comment>Which company do we want to login to? AKA Tenant</comment>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>वातावरण</value>
+    <comment>Which Environment do we want to login to? Fx Test/Prod</comment>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>ख़ाता नहीं है?</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>पासवर्ड रीसेट करें</value>
+    <comment>Change Password Text</comment>
+  </data>
+  <data name="SignUpNow" xml:space="preserve">
+    <value>अभी साइन अप करें</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="SelectMonthYear" xml:space="preserve">
+    <value>महीना और वर्ष चयन करें</value>
+    <comment>Date Picker Text</comment>
+  </data>
+</root>

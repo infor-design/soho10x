@@ -1,0 +1,64 @@
+/* Infor Breadcrumb
+----------------------------------*/
+.inforBreadcrumb {
+	line-height: 27px;
+}
+
+.inforBreadcrumb a {
+	color: #666666;
+	display: inline-block;
+	font-size: 1.4em;
+	margin-left: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-decoration: none;
+
+	-webkit-transition: width .4s ease-in-out;
+	-moz-transition: width .4s ease-in-out;
+	transition: width .4s ease-in-out;
+}
+
+.inforBreadcrumb .inforPageTitleText:hover, .inforBreadcrumb .inforPageTitleText:focus {
+	cursor: pointer;
+	color: #FF6400;
+	text-decoration: underline;
+}
+
+.inforBreadcrumb .inforPageTitleText, .inforBreadcrumb a {
+	color: #13A3F7;
+	font-size: 1.6em;
+}
+
+.inforBreadcrumb a:last-child {
+  color: #444;
+}
+
+.inforBreadcrumb a:hover, .inforBreadcrumb a:focus {
+	color: #FF6400;
+	text-decoration: underline;
+	width: auto;
+}
+
+.inforBreadcrumb a:before {
+	content: "/";
+	margin-left: 0;
+	margin-right: 7px;
+	left: -1px;
+	position: relative;
+	color: #444;
+}
+
+.inforBreadcrumb a:first-child {
+	margin-left: 10px;
+}
+
+.inforBreadcrumb a:first-child:before {
+	content: '';
+	margin-right: auto;
+}
+
+html[dir="rtl"]  .inforBreadcrumb a:before {
+	margin-left: 7px;
+    margin-right: 0;
+}

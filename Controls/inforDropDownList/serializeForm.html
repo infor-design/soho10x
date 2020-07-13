@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Checkbox Examples</title>
+	<link rel="stylesheet" href="css/inforCheckbox.css" />
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			//Example showing disabling of the buttons
+			$("#runBtn").click(function(){
+				var formData = $("#archiveConfigurationForm").serialize();
+				console.log(formData);
+
+				formData = {};
+				$("#archiveConfigurationForm").serializeArray().map(function (x) { formData[x.name] = x.value; });
+
+				console.log(formData);
+			});
+			
+		});
+	</script>
+
+
+</head>
+<body style="margin:10px">
+
+<div id="archiveConfigurationDialog">
+	<form action="/ReportManager/" id="archiveConfigurationForm" method="post">      
+	  <div class="inforSingleColumnLayout autoLabelWidth">
+            <label class="inforLabel" for="Server">IDM Server</label>
+            <input class="inforTextbox required" id="Server" name="Server" type="text" value="ukfadtharper01" />
+            <br />
+
+            <label class="inforLabel" for="Port">Port</label>
+            <input class="inforTextbox required" id="Port" name="Port" type="text" value="21000" />
+            <br />
+
+            <label class="inforLabel noColon inforLabel"> </label>
+            <span>
+                <input checked="checked" class="inforCheckbox" data-val="true" data-val-required="The SSL field is required." id="EnableSsl" name="EnableSsl" type="checkbox" value="true" /><input name="EnableSsl" type="hidden" value="false" />
+                <label class="inforCheckboxLabel" for="EnableSsl">SSL</label>
+            </span>
+            <br/>
+
+            <label class="inforLabel" for="AuthenticationMode">Authentication Mode</label>
+            <select class="inforDropDownList" data-val="true" data-val-required="The Authentication Mode field is required." id="AuthenticationMode" name="AuthenticationMode"><option selected="selected" value="Basic">Basic</option>
+				<option value="Ntlm">Ntlm</option>
+				<option value="Certificate">Certificate</option>
+			</select>
+            <br/>
+
+            <label class="inforLabel" for="UserName">User</label>
+            <input class="inforTextbox required" id="UserName" name="UserName" type="text" value="svc-ifinbuild" />
+            <br />
+
+            <label class="inforLabel" for="CertificatePath">Certificate Path</label>
+            <input class="inforTextbox" id="CertificatePath" name="CertificatePath" type="text" value="" />
+            <br />
+
+            <label class="inforLabel" for="Password">Password</label>
+            <input class="inforTextbox" id="Password" name="Password" type="password" />
+            <br/>
+
+			<button type="button" id="runBtn" class="inforFormButton">Submit</button>
+        </div>
+</form>
+</div>
+</body>
+</head>

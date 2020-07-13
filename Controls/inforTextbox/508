@@ -1,0 +1,15 @@
+ToDo:
+
+- aria-invalid for errors
+- move required field before label
+- dirty append text to the label element... (hidden span)
+- need slide in error dialog http://jira.infor.com/browse/HFC-344
+
+- Aria Live region (for toast messages)
+- Add (invisible?) text Error: on the actual error.
+
+- tabindex on a div - aria-described - points to the error.
+- unobtrusive announcement? (live region?)
+- slide in error message
+- use the word error in front of the error
+

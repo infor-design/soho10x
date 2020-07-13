@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Icon Buttons - Right to Left</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforIconButton.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$().ready(function ()  {
+			Globalize.culture("ar-SA");			//Only arrow type buttons will be flipped.
+
+			//Setup the textbutton to toggle Disabling the other Button
+			$(".inforTextButton").click(function(){
+				$(".inforIconButton").each(function(){
+					var $button = $(this);
+					if ($button.is(':disabled'))
+						$button.enable();
+					else
+						$button.disable();
+				});
+			});
+
+			$("body").inforForm();	//add infor tooltip. Also this will translate the title strings in this page to the current locale.
+		});
+	</script>
+
+</head>
+
+<body>
+	<div>
+		<button type="button" role="button" class="inforIconButton additionalHelp" title="AdditionalHelp" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton alerts" title="Alerts" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton approve" title="Approve" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton attachments" title="Attachments" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton attachmentRules" title="Attachment Rules" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton noAttachments" title="No Attachments" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton book" title="Book" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton calculate" title="Calculate" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton chartBar" title="Bar Chart" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton chartPie" title="Pie Chart" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton closeCancelChanges" title="CloseCancelChanges" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton closeSaveChanges" title="CloseSaveChanges" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton collapseAll" title="Collapse All" ></button>
+		<button type="button" role="button" class="inforIconButton copy" title="Copy" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton copyUrl" title="Copy Url" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton copyMail" title="Copy and Mail " aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton cut" title="Cut" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton deactivate" title="Deactivate" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton delete" title="Delete" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton disable" title="Disable" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton discard" title="DiscardUndo" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton display" title="Display" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton distributeHorizontally" title="Distribute Horizontally" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton doc" title="DocWord" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton download" title="Download" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton duplicate" title="Duplicate" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton edit" title="Edit" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton email" title="Email" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton enable" title="Enable" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton exit" title="Exit" ></button>
+		<button type="button" role="button" class="inforIconButton expand" title="Expand" ></button>
+		<button type="button" role="button" class="inforIconButton expandAll" title="Expand All" ></button>
+		<button type="button" role="button" class="inforIconButton export" title="Export" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton exportExcel" title="ExportToExcel" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton favorites" title="Favorites" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton filter" title="Filter" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton noFilter" title="Filter" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton first" title="First" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton firstView" title="FirstView" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton folder" title="Folder" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton generate" title="Wizard/Generate" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton generateScript" title="Download/Generate Script" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton getMoreRows" title="GetMoreRows" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton groupSelection" title="GroupSelection" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton help" title="Help" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton history" title="History" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton home" title="Home" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton import" title="Import" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton information" title="Information/About" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton last" title="Last" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton lastView" title="LastView" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton launch" title="LaunchActivate" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton links" title="Links" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton maintenance" title="Maintenance" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton move" title="Move" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton new" title="New" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton next" title="Next" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton nextView" title="NextView" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton notes" title="Notes" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton open" title="Open" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton paste" title="Paste" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton phone" title="Phone" ></button>
+		<button type="button" role="button" class="inforIconButton post" title="Post" ></button>
+		<button type="button" role="button" class="inforIconButton previous" title="Previous" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton previousView" title="PreviousView" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton print" title="Print" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton queries" title="Queries" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton quickAccess" title="Quick Access" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton redo" title="Redo" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton refresh" title="Refresh" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton reject" title="Reject" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton rename" title="Rename" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton reports" title="Reports" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton restoreUser" title="Restore User" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton review" title="Review" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton runJob" title="Run Job" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton saveBeforeClosing" title="SaveBeforeClosing" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton save" title="Save/Submit" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton screenDesign" title="Screen Design" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton search" title="Search" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton select" title="Select" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton selectAll" title="Select All" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton settings" title="Settings" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton spellCheck" title="Spell Check" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton spreadsheet" title="Spreadsheet" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton tasks" title="Tasks" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton text" title="Text" ></button>
+		<button type="button" role="button" class="inforIconButton translate" title="Translate" aria-disabled="false"></button>
+		<button type="button" role="button" class="inforIconButton utilities" title="Utilities" aria-disabled="false"></button>
+	   </div>
+	<br>
+	<div>
+		<button type="button" role="button" class="inforIconButton additionalHelp" title="AdditionalHelp" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton alerts" title="Alerts" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton approve" title="Approve" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton attachments" title="Attachment" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton attachmentRules" title="Attachment Rules" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton noAttachments" title="No Attachments" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton book" title="Book" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton calculate" title="Calculate" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton chartBar" title="Bar Chart" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton chartPie" title="Pie Chart" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton closeCancelChanges" title="CloseCancelChanges" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton closeSaveChanges" title="CloseSaveChanges" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton collapseAll" title="Collapse All" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton copy" title="Copy" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton copyUrl" title="Copy Url" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton copyMail" title="Copy and Mail" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton cut" title="Cut" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton deactivate" title="Deactivate" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton delete" title="Delete" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton disable" title="Disable" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton discard" title="DiscardUndo" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton display" title="Display" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton distributeHorizontally" title="Distribute Horizontally" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton doc" title="Doc/Word" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton download" title="Download" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton duplicate" title="Duplicate " disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton email" title="Email" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton enable" title="Enable" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton edit" title="Edit " disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton exit" title="Exit" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton expand" title="Expand" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton expandAll" title="Expand All" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton export" title="Export" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton exportExcel" title="ExportToExcel" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton favorites" title="Favorites" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton filter" title="Filter" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton noFilter" title="No Filter" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton first" title="First" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton firstView" title="FirstView" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton folder" title="Folder" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton generate" title="Wizard/Generate" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton generateScript" title="Download/Generate Script" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton getMoreRows" title="GetMoreRows" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton groupSelection" title="GroupSelection" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton help" title="Help" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton history" title="History" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton home" title="Home" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton import" title="Import" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton information" title="Information/About" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton last" title="Last" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton lastView" title="LastView" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton launch" title="LaunchActivate" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton links" title="Links" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton maintenance" title="Maintenance" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton move" title="Move" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton new" title="New" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton next" title="Next" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton nextView" title="NextView" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton notes" title="Notes" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton open" title="Open" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton paste" title="Paste" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton phone" title="Phone" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton post" title="Post" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton previous" title="Previous" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton previousView" title="PreviousView" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton print" title="Print" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton queries" title="Queries" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton quickAccess" title="Quick Access" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton redo" title="Redo" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton refresh" title="Refresh" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton reject" title="ReJect" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton rename" title="Rename" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton reports" title="Reports" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton restoreUser" title="Restore User" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton review" title="Review" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton runJob" title="RunJob" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton saveBeforeClosing" title="SaveBeforeClosing" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton save" title="SaveSubmit" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton screenDesign" title="ScreenDesign" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton search" title="Search" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton select" title="Select" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton selectAll" title="Select All" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton settings" title="Settings" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton spellCheck" title="spellCheck" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton spreadsheet" title="Spreadsheet" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton tasks" title="Tasks" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton text" title="Text" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton translate" title="Translate" disabled aria-disabled="true"></button>
+		<button type="button" role="button" class="inforIconButton utilities" title="Utilities" disabled aria-disabled="true"></button>
+	</div>
+	<br>
+	<button type="button" role="button" class="inforTextButton" aria-disabled="false">Toggle Enabled</button>
+</body>
+</html>

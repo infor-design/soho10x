@@ -1,0 +1,102 @@
+/* Infor Radio Button
+----------------------------------*/
+.inforRadioButton {
+	opacity : 0;
+	filter: alpha(opacity=0);
+	outline: none;
+	height: 16px;
+	clear:both;
+	cursor: pointer;
+}
+
+.inforRadioButtonLabel {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAw0lEQVR42tWTQQ7CIBBFewjtxfRENekdOErZdm+0noGw1epCCZT+IZB0AULSJsZJ3qZDH8zAVNVfBGNsB1owgLfnAhrKlUoO4A5sggetKZFM9EPXdVZKabXWDiGE++ZlU1KGxN7vZvu+t6mg3OJkdUzUhJPkgnMeZG1MRM10JeSCSvaiISaim3H9yAWt8aLPKpFSKoieW5V2TTabGrm22fUm1596kMYY15PiB7mQHcH4ZUTGrCQytDegwAucwal4aH8eM6UOKl22rNfwAAAAAElFTkSuQmCC");
+	background-position: left center;
+	background-repeat: no-repeat;
+	color: #444;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.2em;
+	line-height: 18px;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding: 0 3px;
+	transition: background-image 0.25s linear 0s;
+}
+
+.inforRadioButtonLabel.checked{
+	background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA9UlEQVR42tWTTQrCMBCFvYM/F9Ab6VY9hCtd+QNexJW3UBRECkXrJXSnbcEareO8GEqxiQYVxIEPykz6MvOS5HJ/EfnRscAMGY+JFCumj5qtSJXZM2TggDU2Ilf8UJ8IWuxiii4kmW1jmVNiV6MYF4pqN2otBZkCtVRnJZ0Q5qfG5C5yionajqDKOKIyg2/kEM1pIjbUCcFMOQKi44iMPz33LGsYWeU8nRBORvqBQCePQsjJbnmNyp0+EgpEIhS8NVo3O9raaDaMTJtdfsPs0leO33Qh0UXIE81tL2RKrMb4T56I/1JE82g3jGBCxmUG1o/253EDeRn6hiSU8QgAAAAASUVORK5CYII=");
+}
+
+.inforRadioButtonLabel.hover{
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA5UlEQVR42tWTQQ6CMBBFOYRyMT0RJtyBHdeALSGBjVE8A+lW0YU2wDi/KQlpWm3ExPiTl5CZ9jMzbYPgL5QkyYqJmYa5aw5MhJyvyYY5M+TggjU+JiM2ZFlGQgjq+17Rtq2KabPRacaJtf4bFUVBLiE3qyy0GUVTJdAwDFSWJaVpqsA3YlCe55NZbDPCMFULEDaa86nrWuXQso41NiOcjJoHhCpMI8QgrNGxxyIjKeUUu37UWlVVZmtH57AxyKXDDr9y/K4LiSowE+8LOTPbMt2LJ9K9NbE82hMjmRuzZ3bej/bnegKjEgjijznpVQAAAABJRU5ErkJggg==");
+}
+
+.inforRadioButtonLabel.disabled .labelText:hover {
+	cursor: default;
+}
+
+.inforRadioButtonLabel.disabled, .inforRadioButtonLabel.checked.disabled  {
+	opacity: .6;
+  filter: alpha(opacity=60);
+	cursor: default;
+}
+
+.inforRadioButtonLabel.disabled input{
+	cursor: default;
+}
+
+.inforRadioButtonLabel.focus {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB00lEQVR42p2UTS8DYRDH6zMgIW7e4uWAhLMEqRMH4kji5MaNz0DSs9SlDXUo/QR0i1S77VG8JjhKe6QqdlfXmt/maVNNVzHJP3kyz8x/Z/7zzPp8dax5731CEBTcC0yFe+Wb9DUyCeoTnLTtv5/1Hhprc3Fz5PjJbgWc8cndKTHEepGMCwo9B8ZGOp3ujEQigXA4fB0KhQwg50vxbXJHDLHk1KvkeTBmLEej0UVJfBE4HigQQyw5lcrk0CTQ+Yoi+SRB0zQnn887pVLJRS6Xc32K7JNYVZkOB0RT0vdJKpXq4msE6rrueBl35cqSyWQ3uXBAtCMirtJ/uRLMtm1HyB3RxgVnfFgikXDJ0JFcOCB6mI+bw4jJJS1gJAaDwW/IZrPuHS0TyzDIhQMik/Gq6bh6YFRRS4QPI0a15+bCAVEhcPnR8Rciy7LKRMVqorvZI3P0N61lMpna1q4WNHNIOB4h2h2IGStlsRHyL2KTCwdE0zLCOKP85/g14fA3fJBUgSYeD3K98iDrrMiSBL7+sCKvNSvS/5ulvZFES/Am5wvxbf24tDXLq9M3L5aJnOftlu3bj/aZI3MMn9JE9/yNVJGhmZ9nz1gFlqAouFU+f0WTKvsClcoQuuCdoRQAAAAASUVORK5CYII=");
+}
+
+.inforRadioButtonLabel.checked.focus {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB5UlEQVR42p1Uz0sCURC2vyGjokOQFv2CCuocVNipDkVHjU7dkiiKOtWxwHPUMQv6Yf+AKSoFmwhBWBlYx6Bupcbue7a+5lt3ZdFVq4EPZufNfM588542m4U1+uUxwj4hTWA60nps3FbPKKmbEGk5lmNd54p3JsSGLl/VJgA+YnQWRQ5yq5GMEjKdZ8r6apx3tJ/IvuYj+YFiCkB+kmI7OEMOclFj1clHX0BZ6L9Q3Ha//Enfwgp0lkEOclFT6oycBoKEX0EC+QUUuKNcSO+qUL6Fhqs3VYvphAXk6p1J4ADRBM0dWb7hDnuxXbES56Ka4czozCtxJ2rBAaIDEnEJ8yPBEy2SMFWIjQQXzlNFOAjwEYPNx4pk0BG14ADR82yIDUJMHGIE2GaCV+izfZvXzjAyvrEM1IIDRAzr1bej6QFDJ+VEiGndUo4eM2oZiDK+ZL7tL0RZLgydcmaip+kgG/7NaFuVo93PhdkA+S8gOuwNKIuG2BDSLLajjtioBQeIJmmFIazyn+sP07er7oVEFzma6Nr6Qq6VLqTFE/HQr2VrPJFs2RPp+c2jfaQYp+Iv8u8otlvz0ZY9Xglz48ZiIzSSfS+Vb50KshHEdE2kqn8jJjJo5sK1x1rRESFHSOkxV0kTk/0AE0j8ybGLthUAAAAASUVORK5CYII=");
+}
+
+.inforRadioButtonSet .inforTopLabel {
+	width:auto;
+	font-size: 1.2em;
+	line-height: 20px;
+}
+
+.inforRadioButtonSet {
+	margin-bottom: 4px;
+}
+
+.inforRadioButtonSet > br {
+	display: block;
+	margin-top: -3px;
+}
+
+.inforRadioButtonLabel .labelText {
+  left: -4px;
+  position: relative;
+  top: -1px;
+}
+
+html[dir="rtl"] .inforRadioButtonSet .inforTopLabel {
+	padding: 0 0 4px 8px;
+	text-align: left;
+}
+
+html[dir="rtl"] .inforRadioButtonSet .inforRadioButtonLabel{
+	background-position: right center;
+	margin-left: 0;
+	margin-right: 3px;
+	padding-left: 0;
+}
+
+html[dir="rtl"] .inforTopLabel:after {
+	content: "";
+}
+
+html[dir="rtl"] .inforTopLabel:before {
+	content: ":";
+}
+
+html[dir="rtl"] .inforRadioButtonLabel .labelText {
+	display: inline-block;
+	right: 0;
+	width: auto;
+}

@@ -1,2 +1,5 @@
-# soho10x
-The older version of the components (3.x)
+# Infor Soho 10x Components
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+This library was formerly hosted at http://usmawsubv.infor.com/svn/html5controls/trunk and is added in case needed in the future. Do not use the library anymore for any projects. Instead see https://github.com/infor-design/enterprise for the latest version.

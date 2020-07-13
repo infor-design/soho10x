@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Textbox Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		 $(function($) {
+			$('body').inforForm();
+			
+			//set up validation on the form using the field metadata
+			$("form").setupValidation();
+			
+			//Example of a Forgiving Input Validator
+			$.Validation.addRule("forgiving-currency", {
+				check: function (value, field) {
+					var format;
+					field.formatNumber();
+					return true;
+				}
+			}, false);
+			
+		});
+	</script>
+</head>
+
+<body>
+	<form class="inforSingleColumnLayout autoLabelWidth">
+	  <label class="inforLabel" for="phoneNumber">Currency</label>
+	  <input type="text" class="inforTextbox" id="phoneNumber" name="phoneNumber" data-number-format="c2" data-validation-events="blur" data-validation="forgiving-currency"><br>
+	  <label class="inforLabel" for="address">Address</label>
+	  <input type="text" class="inforTextbox" name="address" id="address">
+	</form>
+</body>
+</html>

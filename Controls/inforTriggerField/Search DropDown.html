@@ -1,0 +1,49 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Search Field - With Drop Down</title>
+
+	<link href="http://hookandlooplabs.com/controls/Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="http://hookandlooplabs.com/controls/Release/jquery-1.11.1.min.js"></script>
+	<script src="http://hookandlooplabs.com/controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="http://hookandlooplabs.com/controls/Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			$("body").inforForm();
+		});
+	</script>
+	<style>
+		#searchDrop1 + div {
+			position: relative;
+			top: 2px;
+			left: -2px;
+		}
+		#searchDrop1 + div + .inforFormButton {
+			position: relative;
+			top: 1px;
+			left: -2px;
+		}
+	</style>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	
+		<div class="inforSearchDropContinerContainer">
+			<label class="inforScreenReaderText" for="search1">Search Field</label>
+			<label class="inforScreenReaderText" for="searchDrop1">Search Field</label>
+			<input class="inforTextbox" type="text" title="Search Items" id="search1">
+			<select class="inforDropDownList" id="searchDrop1" style="width:80px;top: 2px;position:relative">
+				<option>Category 1</option>
+				<option>Category 2</option>
+				<option>Category 2</option>
+			</select>
+			<button class="inforFormButton default">Default</button>
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Transfer Desk</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			$('body').inforForm();
+			$('.inforToggleButton').inforToggleButton();
+		});
+	 </script>
+
+</head>
+<body>
+	  <div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Data Access Manager</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleCloseButton"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button title="Refresh history" class="inforIconButton refresh"></button>
+				<span class="inforToolbarSpacer"></span>
+				<div class="inforToggleButton">
+					<button type="button" id="option1" onclick="console.log('You selected option 1')">Option 1</button>
+					<button type="button" id="option2" onclick="console.log('You selected option 2')">Option 2</button>
+					<button type="button" id="option3" onclick="console.log('You selected option 3')">Option 3</button>
+					<button type="button" id="option4" onclick="console.log('You selected option 4')">Option 4</button>
+					<button type="button" id="option5" onclick="console.log('You selected option 5')">Option 5</button>
+				</div>
+				<div class="alignRight"><button onclick="transferDeskControls.openHelp();" class="inforIconButton help" title="Help"></button></div>
+			</div>
+		 </div>
+	 </div>
+
+	 <ul id="menu1" class="inforContextMenu">
+		<li class="option1"><a href="#s">Selected</a></li>
+		<li class="option2"><a href="#a">All</a></li>
+		<li class="option3"><a href="#o">Other...</a></li>
+	</ul>
+</body>
+</html>

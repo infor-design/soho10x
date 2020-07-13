@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - No Options</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+</head>
+<body>
+	<div id="inforDataGrid">
+	</div>
+	<script>
+		//Store the Grid Obj For Later Api Calls..
+		var grid = null,
+			columns = []
+			data = [];
+        
+        var formatLine = function(item, column) {
+        	if (!item) {
+	        	return "n3";	//for the filter row return the higest decimals...
+        	}
+			return "n"+item.nbr_of_dec;
+        };
+        
+        data.push({ id: 1, jrnl_line: 1, jrnl_amount: 1000.9900, jrnl_curr: 'USD', jrnl_amount_frmt: 'n2', nbr_of_dec: 2 });
+        data.push({ id: 2, jrnl_line: 2, jrnl_amount: 1000.6600, jrnl_curr: 'GBP', jrnl_amount_frmt: 'n2', nbr_of_dec: 2 });
+        data.push({ id: 3, jrnl_line: 3, jrnl_amount: 1000.0000, jrnl_curr: 'ISK', jrnl_amount_frmt: 'n0', nbr_of_dec:0 });
+        data.push({ id: 4, jrnl_line: 4, jrnl_amount: 1000.4550, jrnl_curr: 'JOD', jrnl_amount_frmt: 'n3', nbr_of_dec: 3 });
+
+		//Define Columns for the Grid.
+		columns.push({ id: "id", focusable: false, name: "Office Id", field: "officeId", width: 140, formatter:UneditableColumnFormatter });
+		columns.push({ id: "jrnl_line", name: "Line No", field: "jrnl_line", width: 125, formatter: TextCellFormatter, filterType: TextFilter });
+		columns.push({ id: "jrnl_amount", name: "Amount", field: "jrnl_amount",numberFormat: formatLine, formatter: DecimalCellFormatter, editor: DecimalCellEditor, width: 160, filterType: TextFilter});
+		columns.push({ id: "jrnl_curr", name: "Currency", field: "jrnl_curr", width: 200, filterType: TextFilter});
+		columns.push({ id: "jrnl_amount_frmt", name: "Num Format", field: "jrnl_amount_frmt", width: 200, filterType: TextFilter});
+		columns.push({ id: "nbr_of_dec", name: "No Decimals", field: "nbr_of_dec", width: 200, filterType: TextFilter});
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'id',
+			dataset: data,
+			showFilter: false,
+			savePersonalization: false,
+			showDrillDown: true,
+			showCheckboxes: false,
+			showStatusIndicators: false,
+			showGridSettings: false,
+			forceFitColumn: true,
+			drillDownTooltip: ""
+		});
+	</script>
+</body>
+</html>

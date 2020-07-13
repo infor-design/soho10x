@@ -1,0 +1,122 @@
+/* Infor ListBox
+----------------------------------*/
+.inforListBox {
+	width: 185px;
+	height: 141px;
+	outline: none;
+	border: 1px solid #b3b3b3;
+	background: #ffffff;
+	display: inline-block;
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-bottom: 4px;
+	font-size: 1.2em;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.inforListBox.has-error {
+	border: 1px solid #d5000e !important;
+}
+
+.inforListBox:focus, .inforListBox.focus {
+	border: 1px solid #13A3F7;
+}
+
+.inforListBox.has-error:focus {
+  background-color: #fdf2f3 !important;
+}
+
+.inforListBoxOption:first-child {
+	padding-top: 5px;
+}
+
+.inforListBoxOption:last-child {
+	padding-bottom: 5px;
+}
+
+/* Options */
+.inforListBoxOption, .inforListBoxOption LI, .inforListBoxOption LI A {
+  color: #1a1a1a;
+  display: block;
+  cursor: default;
+  padding: 0;
+  margin: 0;
+  padding: 0px;
+}
+
+.inforListBox[disabled] a, .inforListBox.disabled a {
+  color: #999999;
+}
+
+.inforListBox[disabled] label, .inforListBox.disabled label {
+  cursor: default;
+}
+
+.inforListBox[disabled] LI:hover {
+    background-color: transparent;
+}
+
+.inforListBoxOption LI A {
+  line-height: 24px;
+  height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-indent: 10px;
+}
+
+.inforListBoxOption LI:hover {
+	background-color: #F2F2F2;
+}
+
+.inforListBoxOption LI.inforListBoxDisabled A {
+	color: #777;
+	background-color: transparent;
+}
+
+.inforListBoxOption LI.isSelected A {
+	background-color: #DEF1FF;
+	margin-right: -4px;
+}
+
+.inforListBoxOption .inforListBoxOptGroup {
+	color: #1A1A1A;
+	font-size: 1.15em;
+	line-height: 19px;
+	margin-left: 4px;
+	padding-bottom: 2px;
+	padding-top: 3px;
+	white-space: nowrap;
+}
+
+.inforListBoxOption .inforCheckbox  span{
+	left: -1px;
+	position: relative;
+	top: -2px;
+}
+
+.inforListBoxOption .inforCheckboxContainer:hover {
+	background-color: transparent !important;
+	border-color: none;
+	border-width: 0;
+	margin-bottom:0;
+	margin-left: 0;
+	margin-top: 0;
+}
+
+.inforListBoxOption .inforCheckboxContainer{
+	margin-right: 3px;
+	position: relative;
+	top: 1px;
+}
+
+html[dir="rtl"]  .inforListBoxOption .inforCheckboxContainer {
+	margin-right: -3px;
+}
+
+html[dir="rtl"] .inforListBoxOption .inforCheckbox {
+	margin-left: 4px;
+}
+
+html[dir="rtl"] .inforListBoxOption LI.isSelected A {
+	margin-right: 0px;
+}

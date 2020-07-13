@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Xtreme Support</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			//Tab Like Navigation Menu
+			$("#tabContainer").inforTabset({fillToBottom: false}).tabs({select: function(e, ui) {
+				if ($(ui.tab).attr("href")) {
+					var url = $(ui.tab).data("href.tabs");
+					
+					if (url) {
+						location.href = href;
+						return false;
+					}
+					return true;
+				}
+			}});
+			
+			$("body").inforForm();
+			
+			 var popupContents = $("<p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>");
+				
+		   $(".recentIncidents a").inforPopover({content: popupContents, trigger: "hover", placement: "right", title: 'Popover Left <span class="alignRight">10/20/2013</span>'});
+		});
+		
+		function goToPage() {
+			//Some criteria and checking in here?
+			location.href = "http://www.inforxtreme.com";
+		}
+	</script>
+	
+	<style>
+		
+		.recentIncidents {
+			width: 40%;
+			font-size: 1.1em;
+		}
+		.incident {
+			margin-top: 25px
+		}
+	</style>
+</head>
+<body>
+	<div class="inforTopBanner">
+		<div class="inforTopBannerLeft">
+			<a href="http://www.infor.com" target="_blank_" class="inforLogo">infor.com</a>
+			<span class="inforApplicationName">Xtreme Support</span>
+		</div>
+		<div class="inforTopBannerRight">
+			<span class="inforBannerText">Henrik Carlsson</span>
+			<button class="inforIconButton signOut" title="Sign Out" type="button">
+				<span></span>
+			</button>
+		</div>
+	</div>
+	
+	<div id="inforApplicationNav" class="inforApplicationNav">
+		<ul>
+			<li><a href="#">Favorites</a></li>
+			<li><a href="#">Environment</a></li>
+			<li><a href="#">Support Assistant</a>
+				<ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			   </ul>
+			</li>
+			<li><a href="#">Product Downloads</a></li>
+			<li><a href="#">Community</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Notifications <span class="inforBadge ruby">11</span></a></li>
+		</ul>
+	</div>
+
+	<div class="inforApplicationPadding">
+		<div id="tabContainer" class="inforModuleTabs inforTabContainer" style="height: 40px;">
+			<ul class="inforTabset">
+				<li><a href="ajax/content1.html" >Home</a></li>
+				<li>
+					<a href="#">Search</a>
+					<ul id="menu1" class="inforContextMenu">
+						<li><a href="ajax/content4.html">KnowledgeBase Search</a></li>
+						<li><a onclick="goToPage()">Incident Search</a></li>
+						<li><a href="ajax/content6.html">Product Component Search</a></li>
+					</ul>
+				</li>
+				<li><a onclick="goToPage()">Incidents</a></li>
+				<li><a href="ajax/content8.html">Analytics</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="inforApplicationPadding">
+		<h1 class="inforSectionLabel">Incidents</h1>
+		<div class="recentIncidents first">
+			<div class="inforToolbar">
+				<button type="button" class="inforTextButton">Add New Incident</button>
+			</div>
+			<div class="incident first">
+				<a class="inforHyperlink heading">Incident 8521183: Syteline</a>
+				<p>Problem with interface technologies & saving a new incident</p>
+			</div>
+			<div class="incident">
+				<a class="inforHyperlink heading">Incident 3139223: EAM</a>
+				<p>Problem with interface architecture and the ability to transform a saved incident into a completed incident and archiving my incidents</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

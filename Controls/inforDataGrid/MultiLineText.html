@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid Sample</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+			<button type="button" id="submitButton" onclick="save()" class="inforIconButton save" title="Click to Save Modified Rows" ></button>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		//Set the locale to get the grid translated.
+		//Globalize.culture("nl-NL");
+		function save() {	//serialize and save rows
+			console.log(data[0].comments);
+		}
+
+		var grid;
+
+		//Define Columns for the Grid.
+		var columns = [];
+
+		columns.push({ id: "line", name: "Line", field: "line", width: 30, formatter:UneditableColumnFormatter, filterType: TextFilter });
+		columns.push({ id: "item", name: "Item", field: "item", width: 125, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "description", name: "Description", field: "description", width:125, editor: TextCellEditor, required: true, filterType: TextFilter });
+		columns.push({ id: "qty", name: "Ordered Qty", field: "qty", width: 40, formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+		columns.push({ id: "price", name: "Price", field: "price", width: 40, formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+		columns.push({ id: "summary", name: "Summary", field: "summary",  width: 100, cssClass: "autoHeight", formatter: MultiLineTextCellFormatter, editor: MultiLineTextCellEditor, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSimpleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'id',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: false,
+			showFooter: true,
+			showGridSettings: true,
+			savePersonalization: true,
+			editable: true,
+			variableRowHeight: true,
+			variableRowHeightColumn: "summary"
+		};
+
+		grid = $("#inforDataGrid").inforDataGrid(options);
+
+	</script>
+</body>
+</html>

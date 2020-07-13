@@ -1,0 +1,14 @@
+ToDo:
+
+- aria-has-popup
+    aria-controls
+    aria-haspopup
+
+- start and end of text. (invisible spans on top bottom)
+- focus needs to be on
+- Too big? Button states
+- Remove buttons that don't have keyboards
+- aria describe by (this is a calculator field)  (label + calculator)
+- jump back mode to go through the dirty fields.
+
+Questions:

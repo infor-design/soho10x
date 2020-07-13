@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog with 2 Column Layout</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/message.js"></script>
+	<script src="../inforWizard/js/inforWizard.js"></script>
+
+	<script>
+	$(function () {
+		function Dialog(control) {
+    var self = this;
+    self.control = control;
+    self.modalControl = null;
+    self.type = "General";
+    self.shortMessage = "";
+    self.detailedMessage = "";
+    self.autoFocus = false;
+    self.buttons = [{
+        text: "OK",
+        click: self.close,
+        isDefault: true
+    }];
+    self.setShortMessage = function(message) {
+        self.shortMessage = message;
+    };
+    self.setDetailedMessage = function(message) {
+        self.detailedMessage = message;
+    };
+    self.setButtons = function(buttons) {
+        self.buttons = buttons;
+    };
+    self.setTitle = function(title) {
+        self.title = title;
+    };
+    self.setTitleKey = function(key) {
+        self.setTitle(i18n.getString(key));
+    };
+    self.setType = function(type) {
+        self.type = type;
+    };
+    self.setSize = function(width, height) {
+        self.width = width;
+        self.height = height;
+    };
+    self.setInnerPadding = function(innerPadding) {
+        self.innerPadding = innerPadding;
+    };
+    self.setAutoFocus = function(autoFocus) {
+        self.autoFocus = autoFocus;
+    };
+    self.show = function () {
+        var defaults = {
+            title: self.title,
+            dialogType: self.type,
+            width: self.width,
+            height: self.height,
+            buttons: self.buttons,
+            shortMessage: self.shortMessage,
+            detailedMessage: self.detailedMessage,
+            autoFocus: self.autoFocus
+        };
+
+        self.control.message(defaults);
+        self.modalControl = self.control.closest('.modal');
+    };
+
+    self.close = function() {
+        self.modalControl.modal('close');
+    };
+
+    self.setWidth = function(width) {
+        self.width = width;
+    };
+
+    self.setHeight = function(height) {
+        self.height = height;
+    };
+
+    self.find = function(selector) {
+        return self.control.find(selector);
+    };
+
+    return {
+        setHeight: self.setHeight,
+        setWidth: self.setWidth,
+        setTitle: self.setTitle,
+        setType: self.setType,
+        setSize: self.setSize,
+        setButtons: self.setButtons,
+        setShortMessage: self.setShortMessage,
+        setDetailedMessage: self.setDetailedMessage,
+        setInnerPadding: self.setInnerPadding,
+        show: self.show,
+        close: self.close,
+        setTitleKey: self.setTitleKey,
+        find: self.find,
+        setAutoFocus: self.setAutoFocus
+    };
+}
+
+	function BaseControl(control) {
+		var self = this;
+		self.control = control;
+		self.hide = function () {
+			self.control.css("display", "none");
+		};
+		self.show = function () {
+			self.control.css("display", "");
+		};
+		self.extend = function (child) {
+			return $.extend({ show: self.show, hide: self.hide }, child);
+		};
+		self.css = function(element, name) {
+			self.control.css(element, name);
+		};
+		return self;
+	}
+
+	function Button(control, action) {
+		var self = this;
+		self.base = new BaseControl(control);
+		self.control = control;
+		self.action = action;
+		self.onClick = function () {
+			self.action.execute();
+		};
+		self.onStateChange = function (e, enabled) {
+			self.enable(enabled);
+		};
+		if (self.action && self.action.subscribe) {
+			self.action.subscribe(self.onStateChange);
+			self.control.click(self.onClick);
+		}
+		self.enable = function (enabled) {
+			if (enabled) {
+				self.control.removeClass("disabled");
+			} else {
+				self.control.addClass("disabled");
+			}
+			if (enabled) {
+				self.control.removeAttr("disabled");
+			} else {
+				self.control.attr("disabled", "disabled") ;
+			}
+		};
+		if (self.action && self.action.isEnabled) {
+			self.enable(self.action.isEnabled());
+		}
+		if (self.action && self.action.isAllowed) {
+			if (!self.action.isAllowed()) {
+				self.hide();
+			}
+		}
+		return self.base.extend({ hide: self.hide, enable: self.enable });
+	}
+
+		$("#showButton").click(function() {
+
+        self.removeFile = new Button($("#removeFile"), null);
+        self.removeFile.onClick = function () {  };
+        self.removeFile.enable(false);
+
+        //self.uploadGrid = new ItemUploadGrid($("#itemUploadGrid"));
+        //self.uploadGrid.init(self.removeFile);
+        //self.confirmGrid = new ItemUploadConfirmGrid($("#itemUploadConfirmGrid"));
+        //self.confirmGrid.init();
+		columns = [],
+		data = [];
+		columns.push({ id: 'officeId', name: 'Office Id', field: 'officeId', width: 40, sortable: false, formatter:UneditableColumnFormatter, title: 'This is a tooltip', hidden: true });
+		columns.push({ id: 'city', maxLength: 10, name: 'City', toolTip: 'This is a test', field: 'city', width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 10, editor: TextCellEditor, required: true, filterType: TextFilter});
+		columns.push({ id: 'addressLine1', name: 'Address 1', field: 'addressLine1', width: 140, formatter: UneditableColumnFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		grid = $('#itemUploadGrid').inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset:data,
+			showFilter: true,
+			showDrillDown: true,
+			showFooter: true
+		});
+
+        self.dialog = new Dialog($("#uploadDialog"));
+        self.dialog.setTitle("Upload Reports");
+        self.dialog.setType("General");
+        self.dialog.setSize("750", "480"); // Can't set "auto" for height as the dialog has changing content.
+        self.dialog.setButtons({});
+
+        self.dialog.show();
+
+        $("#uploadBackupRule :radio").change(function() {});
+        $("#uploadValidationRule :radio").change(function() {});
+
+        //$("#selectFilesForm").ajaxForm({
+        //    iframe: true,
+        //    dataType: "json",
+        //    success: function() {},
+        //    error: function() {}
+        //});
+
+        // Initialise the form (after it is show to ensure all the sizes are available
+        $("#uploadReportDialog").inforForm();
+
+        $("#displayTargetFolder").inforTriggerField({ click: function() {} });
+        $("#displayBackupFolder").inforTriggerField({ click: function() {} });
+        $("#fileupload").inforFileField();
+
+
+		self.currentPage = 0;
+
+		// Initialise the form (after it is show to ensure all the sizes are available
+        $("#form").inforForm();
+
+		var wiz = $('#uploadWizard').inforWizard({
+            sequential: true,
+            showTitleBar: false,
+            onFinish: function () {
+                //??
+            },
+			onShowPage: function () {
+                setTimeout(function() {
+                    self.dialog.find('.autoLabelWidth').find('.inforLabel').autoWidth();
+                },100);
+            },
+            buttons: [{text: "Help",
+			click: function () {}
+            }, {text: "Cancel",
+                click: function () {
+                    confirmRunDialog.close();
+				}
+            }, {
+                text: "Finish",
+                click: function () {}
+            }, {
+                text: "Next",
+                click: function () {
+					var wiz = $(this);
+                    wiz.inforWizard("showPage", ++self.currentPage);
+					},
+                isDefault: true,
+                isNext: true
+            }, {
+                text: "Previous",
+                click: function () {
+                    var wiz = $(this);
+                    wiz.inforWizard("showPage", --self.currentPage);
+                },
+                isPrevious: true
+            }]
+        });
+
+	});
+
+	});
+	</script>
+</head>
+<body>
+	<div id="mainContentArea">
+		<table>
+			<tr>
+				<td style="font-size:1.2em">2 column layout Dialog Example</td>
+				<td><button id="showButton" class="inforFormButton">Show</button></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="uploadDialog" style="display:none">
+
+<ul id="uploadWizard" class="inforWizard" data-title="**Item Upload**"
+    style="width:700px; height:400px">
+
+    <li class="inforWizardPage" data-title="Select Files">
+        <div id="fileSelection" class="typeSelection">
+<label class="information">
+    Select individual files or a zip file containing previously exported reports.
+</label>
+
+<form action="/ReportManager/ItemUpload/AddItems" enctype="multipart/form-data" id="selectFilesForm" method="post">    <div class=" autoLabelWidth inforSingleColumnLayout">
+
+        <label class="inforLabel">File</label>
+        <input type="file" name="file" class="inforFileField" id="fileupload" style="width: 300px" onchange=" $('#ajaxUploadButton').click(); " />
+        <input id="ajaxUploadButton" type="submit" value="Submit" style="display: none" />
+        <br/>
+        <div class="alignRight">
+            <button title="Remove" class="inforFormButton" id="removeFile" type="button">
+                Remove
+            </button>
+        </div>
+    </div>
+</form><div id="itemUploadGrid" style="height: 280px"></div>
+</div>
+    </li>
+
+<form action="/ReportManager/ItemUpload/ItemUpload" method="post">        <li class="inforWizardPage" data-title="Select Target Folder">
+            <div id="targetFolderSelection" class="typeSelection">
+<label class="information">
+    Select a target folder into which files will be imported
+</label>
+
+<div class="inforSingleColumnLayout autoLabelWidth">
+
+    <input type="hidden" id="realTargetFolder"/>
+    <label class="inforLabel" for="TargetFolder">Target Folder</label>
+    <input class="inforFileField" type="text" name="TargetFolder" id="displayTargetFolder"/>
+    <br/>
+    <br/>
+
+    <input checked="checked" class="inforCheckbox" data-val="true" data-val-required="The Use Folder Names field is required." id="useFolder" name="UseFolderName" type="checkbox" value="true" /><input name="UseFolderName" type="hidden" value="false" />
+    <label class="inforCheckboxLabel" for="UseFolderName">Use Folder Names</label>
+    <br/>
+    <br/>
+
+    <input checked="checked" class="inforCheckbox" data-val="true" data-val-required="The Apply Folder Permissions field is required." id="useACL" name="UseACL" type="checkbox" value="true" /><input name="UseACL" type="hidden" value="false" />
+    <label class="inforCheckboxLabel" for="UseACL">Apply Folder Permissions</label>
+    <br/>
+    <br/>
+</div></div>
+        </li>
+        <li class="inforWizardPage" data-title="Backup Rule">
+            <div id="backupRuleSetting" class="typeSelection">
+<label class="information">
+    Select the rule to use when replacing files with a newer version
+</label>
+
+<div class="inforSingleColumnLayout autoLabelWidth">
+    <div class="inforRadioButtonSet" id="uploadBackupRule">
+        <input type="radio" id="promptToOverwrite" class="inforRadioButton" name="uploadBackupRule" checked="checked" value="1"/>
+        <label class="inforRadioButtonLabel" for="promptToOverwrite">
+            Always prompt when files are being overwritten
+        </label>
+        <br/>
+        <input type="radio" id="silentToOverwrite" class="inforRadioButton" name = "uploadBackupRule" value="2"/>
+        <label class="inforRadioButtonLabel" for="silentToOverwrite">
+            Do not prompt but always move files to the safe backup folder
+        </label>
+        <br/>
+    </div>
+
+    <input type="hidden" id="realBackupFolder" />
+    <label class="inforLabel" for="BackupFolder">Backup Folder</label>
+    <input class="inforFileField" type="text" name="BackupFolder" id="displayBackupFolder" value="/Central Files" />
+    <br />
+    <br />
+
+</div>
+
+</div>
+        </li>
+        <li class="inforWizardPage" data-title="Validation Rules">
+            <div id="validationRuleSetting" class="typeSelection">
+<label class="information">
+    Select the validation level to use when importing report definitions
+</label>
+
+<div class="inforSingleColumnLayout autoLabelWidth">
+    <div class="inforRadioButtonSet" id="uploadValidationRule">
+        <input type="radio" id="noValidation" class="inforRadioButton" name = "uploadValidationRule" value="1"/>
+        <label class="inforRadioButtonLabel" for="noValidation">
+            Import reports without validation
+        </label>
+        <br/>
+
+        <input type="radio" id="markInvalid" class="inforRadioButton" name = "uploadValidationRule" value="2"/>
+        <label class="inforRadioButtonLabel" for="markInvalid">
+            Validate report definitions and mark invalid definitions
+        </label>
+        <br/>
+
+        <input type="radio" id="rejectInvalid" class="inforRadioButton" name = "uploadValidationRule" checked="checked" value="3"/>
+        <label class="inforRadioButtonLabel" for="rejectInvalid">
+            Validate report definitions and reject invalid reports
+        </label>
+        <br/>
+    </div>
+</div></div>
+        </li>
+        <li class="inforWizardPage" data-title="Confirmation">
+            <div id="confirmationSetting" class="typeSelection">
+<div class="inforSingleColumnLayout autoLabelWidth">
+
+    <label class="inforLabel" for="TargetFolder">Target Folder</label>
+    <input class="inforTextbox" id="ConfirmationTargetFolder" name="TargetFolder" readonly="" type="text" value="" />
+    <br/>
+    <br />
+
+    <label class="inforLabel" for="UseFolderName">Use Folder Names</label>
+    <input class="inforTextbox" id="ConfirmationUseFolderName" name="UseFolderName" readonly="" type="text" value="" />
+    <br />
+
+    <label class="inforLabel" for="UseACL">Apply Folder Permissions</label>
+    <input class="inforTextbox" id="ConfirmationUseACL" name="UseACL" readonly="" type="text" value="" />
+    <br />
+
+    <label class="inforLabel" for="IsBackup">Backup Rule</label>
+    <input class="inforTextbox" data-val="true" data-val-required="The Backup Rule field is required." id="ConfirmationIsBackup" name="IsBackup" readonly="" type="text" value="" />
+    <br />
+
+    <label class="inforLabel" for="BackupFolder">Backup Folder</label>
+    <input class="inforTextbox" id="ConfirmationBackupFolder" name="BackupFolder" readonly="" type="text" value="" />
+    <br />
+
+    <label class="inforLabel" for="ValidationRule">Validation Rules</label>
+    <input class="inforTextbox" data-val="true" data-val-number="The field Validation Rules must be a number." data-val-required="The Validation Rules field is required." id="ConfirmationValidationRule" name="ValidationRule" readonly="" type="text" value="" />
+    <br />
+
+    <div id="itemUploadConfirmGrid" style="height: 230px"></div>
+</div>
+
+</div>
+        </li>
+</form></ul>
+	</div>
+
+</body>
+</html>

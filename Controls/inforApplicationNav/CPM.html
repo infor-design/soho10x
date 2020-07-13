@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Infor Application Navigation</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforApplicationNav.js"></script>
+	<script>
+		 $().ready(function ()
+		 {
+			$("#inforApplicationNav1").inforApplicationNav();
+
+			$("a").click(function() {
+				console.log('You clicked ',$(this).text());
+			});
+
+		 });
+	</script>
+</head>
+<body style="margin:0;padding:0">
+	<div id="inforApplicationNav1" class="inforApplicationNav">
+		<ul>
+			<li><a href="#">Administration</a>
+				<ul>
+					<li><a href="#">Admin Page</a></li>
+				</ul>
+			</li>
+			<li><a href="#">CPM</a>
+				<ul>
+					<li><a href="#">Expenses By Cost Center</a></li>
+					<li><a href="#">Second Level</a>
+						<ul>
+							<li><a href="#">Admin Page</a></li>
+							<li><a href="#">Margin Control</a></li>
+							<li><a href="#">SMore Expenses</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</html>

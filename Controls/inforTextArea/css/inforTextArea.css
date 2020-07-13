@@ -1,0 +1,53 @@
+/* Infor Text Area
+----------------------------------*/
+.inforTextArea:focus, .inforTextArea[readonly]:focus {
+  outline: none;
+  border: 1px solid #13A3F7;
+  background-color: #EAF7FF;
+}
+
+.inforTextArea {
+  border: 1px solid #b3b3b3;
+  margin-bottom: 4px;
+  padding: 0px 4px 4px;
+  line-height: 17px;
+  resize: none;
+  width: 195px;
+  height: 100px;
+  border-radius: 3px;
+  color: #1a1a1a;
+  overflow:auto;
+  background-color: white;
+}
+
+.inforTextArea[readonly] {
+  border: 1px solid transparent;
+}
+
+.inforTextArea[disabled], .inforTextArea[disabled]:focus {
+   border: 1px solid transparent;
+   cursor: default;
+}
+
+.inforTextArea.backgroundColor[readonly],.inforTextArea.backgroundColor[disabled] {
+   background-color: #e5e5e5;
+}
+
+.inforTextArea[disabled] {
+  opacity: .5;
+  filter:alpha(opacity=50);
+}
+
+.inforTextArea.has-error {
+   border: 1px solid #d5000e !important;
+}
+
+.inforTextArea.has-error:focus {
+   background-color: #fdf2f3 !important;
+}
+
+.inforTextArea[rows], .inforTextArea[cols] {
+  width: auto;
+  height: auto;
+}
+

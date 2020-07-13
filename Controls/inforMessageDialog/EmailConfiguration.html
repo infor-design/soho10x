@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog with 2 Column Layout</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/message.js"></script>
+	<script src="js/modal.js"></script>
+
+	<script>
+	$(function () {
+	function Dialog(control) {
+    var self = this;
+    self.control = control;
+    self.type = "General";
+    self.shortMessage = "";
+    self.detailedMessage = "";
+    self.autoFocus = false;
+    self.buttons = [{
+        text: "OK",
+        click: function() {
+            self.control.modal('close');
+        },
+        isDefault: true
+    }];
+    self.show = function () {
+        var defaults = {
+            title: self.title,
+            dialogType: self.type,
+            width: self.width,
+            height: self.height,
+            buttons: self.buttons,
+            shortMessage: self.shortMessage,
+            detailedMessage: self.detailedMessage,
+            autoFocus: self.autoFocus
+        };
+
+        self.control.message(defaults);
+    };
+    self.close = function() {
+        self.control.modal('close');
+    };
+    
+
+    return self;
+	};
+	
+	var confirmRunDialog = new Dialog($("#emailConfigurationDialog"));
+    confirmRunDialog.shortMessage = 'Here is my short message';
+    confirmRunDialog.detailedMessage = 'Where is my short message';
+    var buttons = [{
+            text: 'OK',
+            click: function() {
+                $(this).inforDialog("close");
+            },
+            isDefault: true
+        }];
+        confirmRunDialog.buttons = buttons;
+        confirmRunDialog.title = 'Title';
+        confirmRunDialog.type = "Confirmation";
+        confirmRunDialog.show();
+		});
+	</script>
+</head>
+<body>
+	<div id="mainContentArea">
+	 <p>This is a sample shows a dialog with a 2 column layout.</p>
+		<table>
+			<tr>
+				<td style="font-size:1.2em">2 column layout Dialog Example</td>
+				<td><button id="showButton" class="inforFormButton">Show</button></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="emailConfigurationDialog" class="">  
+		
+	</div>
+		
+</body>
+</html>

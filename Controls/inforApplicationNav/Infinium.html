@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta content='IE=8' http-equiv='X-UA-Compatible'>
+	<title>App Nav JS Error Example</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforApplicationNav.css" rel="stylesheet" />
+	<script src="js/inforApplicationNav.js"></script>
+
+	<script>
+		$(function () {
+			//$(".inforDropDownList").inforDropDownList();
+			$(".inforApplicationNav").inforApplicationNav();
+		});
+	</script>
+</head>
+<body>
+	<div id="inforApplicationNav1" class="inforApplicationNav">
+		<ul>
+		<li>
+		  <a href="#">System Commands</a>
+		  <ul>
+			<li>
+			  <a href="#">Messages</a>
+			</li>
+			<li>
+			  <a href="#">Spool Files</a>
+			</li>
+			<li>
+			  <a href="#">Jobs</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">AM Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="AM" infversion="0" infplatform="infinium">
+			  <a  href="#">Infinium Application Manager 3.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="AM" infversion="1" infplatform="infinium">
+			  <a href="#">am test version</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">AR Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="AR" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium AR 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="AR" infversion="5" infplatform="infinium">
+			  <a href="#">AR QA for Analytics v005</a>
+			</li>
+		  </ul>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="CA" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Cross Applications 12.2</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="CB" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Cash Book 14.0</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="CM" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Currency Management</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="FA" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Fixed Assets 14.0</a>
+		</li>
+		<li>
+		  <a href="#">GL Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="GL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium General Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="GL" infversion="5" infplatform="infinium">
+			  <a href="#">GL QA for Analytics v005</a>
+			</li>
+		  </ul>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="GT" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Global Taxation 14.0</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="IC" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Inventory Control 12.3</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="IR" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Income Reporting 14.0</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="JP" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Journal Processor 12.3</a>
+		</li>
+		<li>
+		  <a href="#">MD Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="MD" infversion="0" infplatform="infinium">
+			  <a href="#">MyDay</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="MD" infversion="1" infplatform="infinium">
+			  <a href="#">MyDay Development</a>
+			</li>
+		  </ul>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="PA" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Project Accounting 14.0</a>
+		</li>
+		<li>
+		  <a href="#">PE Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PE" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium HR/400 Release 11.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PE" infversion="1" infplatform="infinium">
+			  <a href="#">Infinium HR/400 Release 11.0</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PL Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PM Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PN Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PO Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PP Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PQ Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PR Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PS Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PT Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PU Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PV Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PW Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li>
+		  <a href="#">PX Authorized Systems</a>
+		  <ul>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="0" infplatform="infinium">
+			  <a href="#">Infinium Payables Ledger 14.0</a>
+			</li>
+			<li onclick="javascript:loadAppMenui10w(this)" infsystem="PL" infversion="5" infplatform="infinium">
+			  <a href="#">PL QA For Analytics</a>
+			</li>
+		  </ul>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="PM" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium Purchase Mgmt. 12.3</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="PY" infversion="0" infplatform="infinium">
+		  <a href="#">Infinium PY/400 Release 11.0</a>
+		</li>
+		<li onclick="javascript:loadAppMenui10w(this)" infsystem="SS" infversion="0" infplatform="infinium">
+		  <a href="#">HCM Self Service Release 11.3</a>
+		</li>
+
+		</ul><br style="CLEAR: left">
+	</div>
+</body>
+</html>
+

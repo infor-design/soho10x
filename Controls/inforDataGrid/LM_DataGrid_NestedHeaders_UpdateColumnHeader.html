@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>LM DataGrid Nested Headers Update Column Header</title>
+<!-- jira:    -->
+	
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	<script src="js/sampleData.js"></script>
+
+<!-- 
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.10.2.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+	<script src="../Controls/inforDataGrid/js/sampleData.js"></script>
+
+-->
+
+</head>
+<body>
+	<p>
+	<div>
+		<button type="button" class="inforFormButton" id="firstButton">Update Name Header</button>
+		<button type="button" class="inforFormButton" id="secondButton">Update Budgeted Nested Header</button>
+		<button type="button" class="inforFormButton" id="thirdButton">Update New Merit Pool Parent Header</button>
+	</div>
+	<p>
+
+	<div id="inforDataGrid1" class='inforDataGrid'></div>
+	<script>
+	  var grid;
+	  var columns = [
+		 {name: "Name", id: "name", field: "lastName"},
+		 {name: "Status", id: "status", field: "status"},
+		 {name: "Anniversary", id: "anniversary", field: "anniversary"},
+		 {name: "Rating", id: "rating", field: "rating"},
+		 {name: "Score", id: "score", field: "score"},
+		 {name: "Pay Rate", id: "payRate", field: "payRate"},
+		{
+		  name: "New Merit Pool",
+		  id: "nmp",
+		  children: [
+			{id: "budgeted", name: "Budgeted", field: "budgeted"},
+			{id: "budgetedHourly", name: "BudgetedHourly", field: "budgetedHourly"},
+			{id: "reccomended", name: "Reccomended", field: "reccomended"},
+		  ]
+		},
+		{id: "percent", name: "percent", field: "percent"}
+	  ];
+
+	 var options = {
+		enableCellNavigation: true,
+		enableColumnReorder: false,
+		forceFitColumns: true,
+		columns: columns,
+		dataset: getPeopleData(),
+		idProperty: "id",
+		showFilter: false,
+		savePersonalization: false
+	 };
+
+	 self.dataGrid = $("#inforDataGrid1").inforDataGrid(options);
+
+	 $("#firstButton").click(function(){self.dataGrid.updateColumnHeader("name", "Name (Updated)");});
+	 $("#secondButton").click(function(){self.dataGrid.updateColumnHeader("budgeted", "Budgeted (Updated)");});
+	 $("#thirdButton").click(function(){
+		self.dataGrid.updateColumnHeader("nmp", "New Merit Pool (Updated)");
+	 });
+	</script>
+
+</body>
+</html>

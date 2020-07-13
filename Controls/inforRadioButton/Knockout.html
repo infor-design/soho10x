@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Using KnockOut with Radios</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.debug.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	
+	<script src="../inforShared/js/inforKnockout.js"></script>
+
+	<script>
+		$(function () {
+			var viewModel = {
+				selectedOption: ko.observable("o4"),
+				isVisible: ko.observable(true),
+				isEnabled: ko.observable(true),
+				isReadOnly: ko.observable(false)
+			};
+
+			ko.applyBindings(viewModel);
+
+			//show the value...
+			$("#showValue").click(function(){
+				console.log(ko.toJSON(viewModel), $('input:radio[name=radioGroup1]:checked').prop('checked'), $('input:radio[name=radioGroup1]:checked').val());
+			});
+
+			//change the value in the viewModel
+			$("#changeValue").click(function(){
+				viewModel.selectedOption("o1");
+			});
+		});
+	</script>
+</head>
+<body >
+	<div class="inforRadioButtonSet" data-bind="inforRadioButton: {value: selectedOption}" id="options" role="radiogroup" aria-labelledby="groupLabel">
+		<span class="inforTopLabel" role="presentation" id="groupLabel">Select Option</span><br role="presentation">
+		<input type="radio" id="option1" class="inforRadioButton" name="radioGroup1" value="o1" role="radio"/><label role="presentation" for="option1">Option One</label><br role="presentation">
+		<input type="radio" id="option2" disabled checked class="inforRadioButton" name="radioGroup1" value="o2" role="radio"/><label role="presentation" for="option1">Option Two</label><br role="presentation">
+		<input type="radio" id="option3" class="inforRadioButton" name="radioGroup1" value="o3"  role="radio"/><label role="presentation" for="option1">Option Three</label><br role="presentation">
+		<input type="radio" id="option4" class="inforRadioButton" name="radioGroup1" value="o4" role="radio"/><label role="presentation" for="option1">Option Four</label><br role="presentation">
+	</div>
+	
+	<br>
+	
+	<button type="button" class="inforFormButton" id="showValue">Show Value</button>
+	<button type="button" class="inforFormButton" id="changeValue">Change Value</button>
+</body>
+</html>
+

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Textbox Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		 $(function($) {
+			$('body').inforForm();
+			$("#lookupField1").inforLookupField();
+		});
+	</script>
+</head>
+
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="lookupField1">Lookup Field</label>
+		<input class="inforLookupField" type="text" id="lookupField1" style="width: 85px" value="BM12345"><span class="inforDescriptiveText">Buick Motors</span><br>
+	</div>
+</body>
+</html>

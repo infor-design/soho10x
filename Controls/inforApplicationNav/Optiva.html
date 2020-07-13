@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head id="Head1">
+	<title>Infor PLM Process</title>
+		<link rel="shortcut icon" type="image/icon" href="/FsOptivaWeb/images/favicon.ico" />
+		<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+		<script src="../Release/jquery-1.11.1.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+		<script src="../Release/inforControlsCombined.js"></script>
+
+		<script src="js/inforApplicationNav.js"></script>
+		<script>
+			function closeNavMenu() {
+				$(".inforApplicationNav").inforApplicationNav('close');
+			}
+
+			$(document).ready(function() {
+				$(".inforApplicationNav").inforApplicationNav();
+
+				$(".inforSearchField").inforSearchField({click:function(event){
+											console.log('search was clicked');
+										},cancel:function(event){
+											console.log('cancel search results');
+										}});
+			});
+		</script>
+		<style>
+		#findTextContainer {
+			position: relative;
+			top: 10px;
+			left: 45px;
+		}
+		</style>
+</head>
+<body >
+	<div class="inforTopBanner">
+		<div class="inforTopBannerLeft inforLogo">
+			<span class="inforApplicationName">Infor PLM Process</span>
+		</div>
+		<div class="inforTopBannerRight">
+			<span class="inforBannerText">Josephe Tamayo (14938)</span>
+			<button class="inforSignOutButton" title="Sign Out"></button>
+		</div>
+	</div>
+	<div id="inforApplicationNav1" class="inforApplicationNav">
+		<ul>
+			<li><a href="/FsOptivaWeb/Core/" target="_parent">Home</a></li>
+			<li><a href="#">New</a>
+				<ul>
+							<li><a href="javascript:displayObjectPage('ITEM', '', '', 1)">Item</a></li>
+
+							<li><a href="javascript:displayObjectPage('FORMULA', '', '', 1)">Formula</a></li>
+
+							<li><a href="javascript:displayObjectPage('SPECIFICATION', '', '', 1)">Specification</a></li>
+
+							<li><a href="javascript:displayObjectPage('PROJECT', '', '', 1)">Project</a></li>
+
+							<li><a href="javascript:displayObjectPage('LABEL', '', '', 1)">Ingredient Statement</a></li>
+
+							<li><a href="javascript:displayObjectPage('COMPANY', '', '', 1)">Company</a></li>
+
+							<li><a href="javascript:displayObjectPage('COMPANY', '', 'CUSTOMER', 1)">Customer</a></li>
+
+							<li><a href="javascript:displayObjectPage('COMPANY', '', 'VENDOR', 1)">Vendor</a></li>
+
+							<li><a href="javascript:displayObjectPage('SAMPLE', '', '', 1)">Sample</a></li>
+
+							<li><a href="javascript:displayObjectPage('TESTORDER', '', '', 1)">Test Order</a></li>
+
+							<li><a href="javascript:displayObjectPage('USER', '', '', 1)">User</a></li>
+
+							<li><a href="javascript:displayObjectPage('QUICKSEARCH', '', '', 1)">Search</a></li>
+
+							<li><a href="javascript:displayObjectPage('GLOBALCALC', '', '', 1)">Global Calc</a></li>
+
+
+				</ul>
+			</li>
+			<li><a href="#">Open</a>
+				<ul>
+
+
+							<li><a href="javascript:openLookupWin('ITEM', '', null,'')">Item</a></li>
+
+							<li><a href="javascript:openLookupWin('FORMULA', '', null,'')">Formula</a></li>
+
+							<li><a href="javascript:openLookupWin('SPECIFICATION', '', null,'')">Specification</a></li>
+
+							<li><a href="javascript:openLookupWin('PROJECT', '', null,'')">Project</a></li>
+
+							<li><a href="javascript:openLookupWin('LABEL', '', null,'')">Ingredient Statement</a></li>
+
+							<li><a href="javascript:openLookupWin('COMPANY', '', null,'')">Company</a></li>
+
+							<li><a href="javascript:openLookupWin('COMPANY', '', null,'CUSTOMER')">Customer</a></li>
+
+							<li><a href="javascript:openLookupWin('COMPANY', '', null,'VENDOR')">Vendor</a></li>
+
+							<li><a href="javascript:openLookupWin('SAMPLE', '', null,'')">Sample</a></li>
+
+							<li><a href="javascript:openLookupWin('TESTORDER', '', null,'')">Test Order</a></li>
+
+							<li><a href="javascript:openLookupWin('USER', '', null,'')">User</a></li>
+
+							<li><a href="javascript:openLookupWin('QUICKSEARCH', '', null,'')">Search</a></li>
+
+							<li><a href="javascript:openLookupWin('GLOBALCALC', '', null,'')">Global Calc</a></li>
+
+
+				</ul>
+			</li>
+			<li><a href="#">Tools</a>
+				<ul>
+
+
+							<li><a href="/FsOptivaWeb/Core/FsFrmChangeRole.aspx" target="body" >Change Role</a></li>
+
+							<li><a href="" target="">Compare</a></li>
+
+							<li><a href="" target="">Guideline Check</a></li>
+
+							<li><a href="" target="">Ingredient Where Used</a></li>
+
+							<li><a href="BottomFrameSet.aspx?page=FsPackaging_ConfigTree.aspx" target="lower">Configure Templates</a></li>
+
+
+				</ul>
+			</li>
+			<li><a href="#">Searches</a>
+				<ul><li><a>New...</a></li>
+				<li><a>Open...</a></li>
+				<li><a>.Cheese</a></li>
+				</ul>
+			</li>
+			<li><a href="#">View</a>
+				<ul>
+					<li><a href="javascript:toggleSideBarMenu(true);" title="Toggle sidebar">Sidebar</a></li>
+					<li><a href="javascript:openSessionInfo();" title="View Session Information">Session Information</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Some More</a></li>
+			<li><a href="#">Another Thing</a></li>
+			<li><a href="#">Yet Another thing</a></li>
+			<li><a href="#">Some More</a></li>
+			<li><a href='/FsOptivaWeb/doc/docs/OptivaWeb.pdf' target='_blank' title='Help' onclick="allMenusOff()">Help</a><span class="menuItemDivider">&nbsp;</span></li>
+		</ul>
+	</div>
+	<iframe id="PortalMain" name="PortalMain"  scrolling="no" frameborder="0" src="iFrame.html"></iframe>
+</body>
+</html>

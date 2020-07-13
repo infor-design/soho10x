@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor DropDown List - Basic Functionality</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+     $('.inforLookupField').inforLookupField({
+        height: 200,
+        width: 400,
+        editable: false
+      });
+
+      $('.inforDropDownList').dropdown();
+      $('#gender').required();
+
+	  $('body').inforForm();
+    });
+
+    function showErrors() {
+      $('.inforDropDownList').removeError().addError({message: 'I have an Error.', showTooltip: true});
+    }
+
+    function hideErrors() {
+      $('inforDropDownList').removeError();
+    }
+  </script>
+
+</head>
+<body class="inforApplicationPadding">
+  <div class="inforModuleContainer">
+     <div class="inforModuleHeader">
+        <div class="inforModuleHeaderLeft">
+          <span class="inforPageTitleText">Order Line Item</span>
+          <span class="inforModuleRecordIdText">12000001</span>
+        </div>
+        <div class="inforModuleHeaderRight">
+          <button class="inforModuleSettingsButton"></button>
+          <button class="inforModuleCloseButton"></button>
+        </div>
+     </div>
+     <div class="inforModuleContentArea">
+      <div class="inforToolbar">
+        <button class="inforIconButton save"  onclick="showErrors()"></button>
+        <button class="inforIconButton discard" onclick="hideErrors()"></button>
+      </div>
+
+      <div class="autoLabelWidth inforSingleColumnLayout">
+		  <label class="inforLabel" for="name">Name</label><input id="name" class="inforTextbox" type="text"><br/>
+		  <label class="inforLabel" for="physician">Primary Care Physician</label><input id="physician" class="inforLookupField" type="text"><br/>
+		  <label class="inforLabel" for="gender">Gender</label>
+			  <select id="gender" class="inforDropDownList">
+				<option value="M">Male</option>
+				<option value="F">Female</option>
+			  </select><br/>
+		  <label class="inforLabel" for="student">Student</label>
+			  <select id="student" class="inforDropDownList">
+				<option value="N">No</option>
+				<option value="Y">Yes</option>
+			  </select><br/>
+	  </div>
+    </div>
+  </div>
+</body>
+</html>

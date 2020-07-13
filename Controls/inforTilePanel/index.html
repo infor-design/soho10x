@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor Tile Panels</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<link rel="stylesheet" href="css/inforTilePanel.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js" ></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js" ></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script src="../lib/jquery.masonry.min.js"></script>
+	<script src="js/inforTilePanel.js"></script>
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$('body').inforForm();	//init any controls used in the panels.
+			var tiles = $('#inforTilePanel').inforTilePanel(); //init the panels
+
+			//For example Purposes Setup a panel with the cardstack control.
+			createCardStack(tiles);
+		});
+
+		function getSampleCampaigns() {
+			var data = [];
+			data.push({id: 1, title: "Apple Computer", company: "Apple Computer", country: "US", category: "TV", posted: "1984", img: "../inforImages/greencheck_21x21.png" });
+			data.push({id: 2, title: "Fast Talker", company: "Federal Express", country: "US", category: "TV", posted: "1982 " , img: "../inforImages/greencheck_21x21.png" });
+			data.push({id: 3, title: "We try harder", company: "Avis", country: "US", category: "TV", posted: "1963 " , img: "../inforImages/rednotification_21x21.png" });
+			data.push({id: 4, title: "Does she ... or doesn't she?", company: "Clairol", country: "US", category: "TV", posted: "1957 " , img: "../inforImages/greencheck_21x21.png" });
+			data.push({id: 5, title: "Tastes great, less filling", company: "Miller Lite's", country: "US", category: "LPN", posted: "1974" , img: "../inforImages/greencheck_21x21.png" });
+			data.push({id: 7, title: "Absolut Bottle", company: "Absolut Vodka's", country: "SV", category: "Print", posted: "1982" , img: "../inforImages/rednotification_21x21.png" });
+			data.push({id: 8, title: "A diamond is forever", company: "DeBeers", country: "WV", category: "Print", posted: "1948" , img: "../inforImages/rednotification_21x21.png" });
+			data.push({id: 9, title: "You Deserve a Break Today", company: "McDonald's", country: "US", category: "Print", posted: "1971 " , img: "../inforImages/rednotification_21x21.png" });
+			data.push({id: 10, title: "Just Do It", company: "Nike", country: "US", category: "TV", posted: "1988 ", img: "../inforImages/rednotification_21x21.png" });
+			data.push({id: 11, title: "Marlboro Man", company: "Marlboro", country: "TV", category: "Print", posted: "1955" , img: "../inforImages/greencheck_21x21.png" });
+			data.push({id: 12, title: "The pause that refreshes", company: "Coca-Cola", country: "US", category: "Poster", posted: "06/09/2012" , img: "../inforImages/greencheck_21x21.png" });
+			data.push({id: 13, title: "Think Small", company: "Volkswagen", country: "MA", category: "Poster", posted: "1959 " , img: "../inforImages/greencheck_21x21.png" });
+			return data;
+		}
+
+		function createCardStack(tiles) {
+			//get some made up json data
+			var data = getSampleCampaigns();
+
+			//Create Columns including a template for the header values
+			var columns = [
+				{id: "contact-card", name: "", width: 50, field: "title", formatter: CellTemplateFormatter, cellTemplate: "campaign_template"}
+			];
+
+			//init non default grid options
+			var options = {
+				rowHeight: 80,
+				dataset: data,
+				idProperty: "id",
+				columns: columns,
+				editable: false,
+				enableCellNavigation: false,
+				enableColumnReorder: false,
+				showFilter: false,
+				showGridSettings: false,
+				showDrillDown: false,
+				showCheckboxes: false,
+				showFooter: false,
+				forceFitColumns: true,
+				showStatusIndicators:false,
+				savePersonalization:false,
+				showHeaderContextMenu:false,
+				showColumnHeaders: false,
+				enableCellRangeSelection: false
+			  };
+
+			 var gridDiv = $("#campaignProperties").find(".inforCardStack"),
+				 gridObj = gridDiv.inforDataGrid(options);
+
+			tiles.inforTilePanel("setupDragDrop", gridDiv , $("#campaignProperties"));
+		  }
+
+	</script>
+</head>
+<body class="inforHidden" style="background-color: #f2f2f2">
+	<div id="inforTilePanel">
+		<div class="inforPanelItem" id="campaignProperties">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon campaign"></div>
+					<span class="inforPanelHeaderText">Campaign List</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+			  </div>
+			  <div class="inforPanelBody">
+				  <script type="text/html" id="campaign_template">
+				   <div class="inforCardstackCell" style="padding: 6px 0;margin-left: -6px;">
+					  <div class="inforAlertIcon ok" aria-label="Ok" title="Ok"></div>
+					  <span class="inforCardstackHeading"><%=title%></span>
+					  <div class="autoLabelWidth inforSingleColumnLayout">
+						<label class="inforLabel">Company</label>
+						<label class="inforDataLabel"><%=company%></label><br/>
+						<label class="inforLabel">Category</label>
+						<label class="inforDataLabel"><%=category%></label><br/>
+					  </div>
+				   </div>
+				  </script>
+				  <div class="inforCardStack" style="height:80px"></div>
+				  <button type="button" class="inforPanelExpand"></button>
+			 </div>
+			  <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			  </div>
+		  </div>
+		  <div class="inforPanelItem" id="communications">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon communication"></div>
+					<span class="inforPanelHeaderText">Communications</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+			  </div>
+			  <div class="inforPanelBody">
+				<div class="inforAlertIcon ok" aria-label="Ok" title="Ok"></div>
+				<div class="inforLabelLarge">10% Email</div>
+				 <div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">ID</label><label class="inforDataLabel">14776</label><br/>
+					  <label class="inforLabel">Code</label><label class="inforDataLabel">HolDisc</label><br/>
+					  <label class="inforLabel">Launch Date</label><label class="inforDataLabel alert">10/15/2012</label><br/>
+				  </div>
+				  <button type="button" class="inforPanelExpand"></button>
+				</div>
+			 <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			 </div>
+		  </div>
+		  <div class="inforPanelItem" id="segments">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon book"></div>
+					<span class="inforPanelHeaderText">Segments</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+			  </div>
+			  <div class="inforPanelBody">
+				<div class="inforAlertIcon ok" aria-label="Ok" title="Ok"></div>
+				<div class="inforLabelLarge">Individual Segment Name</div>
+				 <div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">Value 1</label><label class="inforDataLabel">Value</label><br/>
+					  <label class="inforLabel">Trigger</label><label class="inforDataLabel positive">Positive Results</label><br/>
+					  <label class="inforLabel">Full Description</label><label class="inforDataLabel">Description of Segment</label><br/>
+					  <label class="inforLabel">Number</label><label class="inforDataLabel">20,0000</label><br/>
+				  </div>
+				<button type="button" class="inforPanelExpand"></button>
+			  </div>
+			  <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			 </div>
+		  </div>
+		  <div class="inforPanelItem" id="outputFiles">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon outputFiles"></div>
+					<span class="inforPanelHeaderText">Output Files</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+			  </div>
+			  <div class="inforPanelBody">
+				<div class="inforAlertIcon ok" aria-label="Ok" title="Ok"></div>
+				<div class="inforLabelLarge">Export1234.xls</div>
+				<div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">Information</label><label class="inforDataLabel">Information</label><br/>
+					  <label class="inforLabel">Trigger</label><label class="inforDataLabel positive">Positive Result</label><br/>
+					  <label class="inforLabel">Full Description</label><label class="inforDataLabel">Output file description</label><br/>
+					  <label class="inforLabel">File Size</label><label class="inforDataLabel">200KB</label><br/>
+				 </div>
+
+			</div>
+			   <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			 </div>
+		  </div>
+		  <div class="inforPanelItem" id="rulesAndExclusions">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon check"></div>
+					<span class="inforPanelHeaderText">Rules and Exclusions</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+			  </div>
+			  <div class="inforPanelBody">
+				<div class="inforAlertIcon error" aria-label="Error" title="Error"></div>
+				<div class="inforLabelLarge">Rule Name</div>
+				 <div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">Information</label><label class="inforDataLabel">Information</label><br/>
+					  <label class="inforLabel">Trigger</label><label class="inforDataLabel negative">Negative Result</label><br/>
+					  <label class="inforLabel">Full Description</label><label class="inforDataLabel">Rule Description</label><br/>
+					  <label class="inforLabel">Number</label><label class="inforDataLabel">200</label><br/>
+				 </div>
+
+			  </div>
+			  <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			  </div>
+		  </div>
+		  <div class="inforPanelItem" id="campaignStatus">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon time"></div>
+					<span class="inforPanelHeaderText">Campaign Status</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+			  </div>
+			  <div class="inforPanelBody">
+				<div class="inforAlertIcon error" aria-label="Error" title="Error"></div>
+				<div class="inforLabelLarge">Status Title</div>
+				 <div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">Information</label><label class="inforDataLabel">Information</label><br/>
+					  <label class="inforLabel">Trigger</label><label class="inforDataLabel positive">Positive Result</label><br/>
+					  <label class="inforLabel">Full Description</label><label class="inforDataLabel">Description of Status</label><br/>
+					  <label class="inforLabel">Number</label><label class="inforDataLabel">20,000</label><br/>
+				 </div>
+			 </div>
+			  <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			  </div>
+		  </div>
+		  <div class="inforPanelItem" id="scheduleCampaign">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon calendar"></div>
+					<span class="inforPanelHeaderText">Schedule Campaign</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+			  </div>
+			  <div class="inforPanelBody">
+				<div class="inforAlertIcon error" aria-label="Error" title="Error"></div>
+				<div class="inforLabelLarge">Schedule Title</div>
+				 <div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">Information</label><label class="inforDataLabel">Information</label><br/>
+					  <label class="inforLabel">Trigger</label><label class="inforDataLabel negative">Negative Result</label><br/>
+					  <label class="inforLabel">Full Description</label><label class="inforDataLabel">Description of Schedule</label><br/>
+					  <label class="inforLabel">Number</label><label class="inforDataLabel">20,000</label><br/>
+				  </div>
+				<button type="button" class="inforPanelExpand"></button>
+			 </div>
+			 <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			  </div>
+		  </div>
+		  <div class="inforPanelItem" id="nextLaunch">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon countdown"></div>
+					<span class="inforPanelHeaderText">Countdown</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+
+			  </div>
+			  <div class="inforPanelBody">
+				 <div class="autoLabelWidth inforSingleColumnLayout" >
+					  <div class="inforLabelLarge" >Next Execution Launching In...</div>
+					  <label class="inforLabel inforCountDown">July 10, 2013 14:30:00</label>
+				 </div>
+			 </div>
+			 <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			  </div>
+		  </div>
+		  <div class="inforPanelItem" id="lorem">
+			  <div class="inforPanelHeader">
+				   <div class="inforIcon outputFiles"></div>
+					<span class="inforPanelHeaderText">Lorem Ipsum</span>
+					<button type="button" class="inforPanelSettingsButton"><i></i></button>
+			 </div>
+			  <div class="inforPanelBody">
+				 <div class="inforLabelLarge">Lorem Ipsum</div>
+				 <div class="autoLabelWidth inforSingleColumnLayout">
+					  <label class="inforLabel">Sit amet</label><label class="inforDataLabel">14776</label><br/>
+					  <label class="inforLabel">Consectetur</label><label class="inforDataLabel negative">Duis Aute Irure</label><br/>
+					  <label class="inforLabel">Adipisicing</label><label class="inforDataLabel">Expecteur</label><br/>
+					  <label class="inforLabel">Elit Set</label><label class="inforDataLabel">Occaecat</label><br/>
+				 </div>
+			 </div>
+			  <div class="inforPanelSettings">
+				<button type="button" class="inforPanelSettingsButton"><i></i></button>
+				<div class="inforLabelLarge">Settings Go Here.</div>
+			  </div>
+		  </div>
+	</div>
+</body>
+</html>

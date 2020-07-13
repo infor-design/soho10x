@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <link href="css/inforColumnLayout.css" rel="stylesheet" />
+
+  <title>2 Column Layout Sample</title>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDropDownList/js/inforDropDownList.js"></script>
+
+  <script>
+    $().ready(function () {
+      $('body').inforForm();
+      $('.inforLookupField').inforLookupField();
+    });
+  </script>
+</head>
+<body class="inforHidden">
+  <div class="infor2ColumnLayout autoLabelWidth">
+    <div class="column1">
+      <label class="inforLabel" for="dropdown1">DropDown List</label>
+      <select class="inforDropDownList required" id="dropdown1">
+        <option value="a">All</option>
+        <option value="cc">Consolidated Consortiums</option>
+        <option value="mw">Major Widgets Inc</option>
+        <option value="me">Metrolitan Electric</option>
+        <option value="sp">Speed Services Inc</option>
+      </select><br>
+      <label class="inforLabel" for="orderNumber">Order Number</label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
+      <label class="inforLabel" for="soldTo">Sold To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+      <label class="inforLabel" for="location">Billing Location Details</label> <input type="text" id="location" class="inforTextbox"/><br>
+      <label class="inforLabel" for="textarea1">Comments</label>
+      <textarea class="inforTextArea required" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+      <span class="inforLabel noColon">&nbsp;</span><input type="checkbox" class="inforCheckbox "  checked="checked" id="test"/><label class="inforCheckboxLabel" for="test">Internal</label><br>
+      <span class="inforLabel noColon">&nbsp;</span><button type="button" class="inforFormButton" >Example button</button>
+    </div>
+    <div class="column2">
+      <label class="inforLabel" for="invoiceNumber">Invoice Number</label><input type="text" id="invoiceNumber" class="inforTextbox "/><br>
+      <label class="inforLabel" for="billTo">Bill To</label><input type="text" id="billTo" class="inforTextbox"/><br>
+      <label class="inforLabel" for="billLocation">Location</label> <input type="text" id="billLocation" class="inforTextbox"/><br>
+      <label class="inforLabel" for="supplier">Supplier</label>
+      <select class="inforDropDownList required" id="supplier">
+        <option value="a">All</option>
+        <option value="cc">Consolidated Consortiums</option>
+        <option value="mw">Major Widgets Inc</option>
+        <option value="me">Metrolitan Electric</option>
+        <option value="sp">Speed Services Inc</option>
+      </select><br>
+      <span class="inforLabel noColon">&nbsp;</span><input type="checkbox" class="inforCheckbox required" checked="checked" id="checkbox1"/><label class="inforCheckboxLabel" for="checkbox1">Checkbox</label><br>
+      <label class="inforLabel" for="comments2">Comments</label>
+      <textarea class="inforTextArea required" id="comments2">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+      <div class="inforRadioButtonSet">
+        <span class="inforLabel">Deployment Mode</span>
+        <input type="radio" id="rbBoth" class="inforRadioButton" name="mode"
+          value="0" /><label>Opotion One</label>
+        <input type="radio" id="rbWorkSpace"  class="inforRadioButton" name="mode"
+          value="1" /><label>Option Two</label>
+        <input type="radio" id="rbStandalone" class="inforRadioButton" name="mode"
+          value="2" /><label>Option Three</label>
+      </div>
+  </div>
+
+</body>

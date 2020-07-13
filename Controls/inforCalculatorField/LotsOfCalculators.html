@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://soho.infor.com/controls/inforCalculatorField/index.html -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Calculator Field - Default Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+
+			//show error on the field.
+			$("#inforCalculatorField1").validationMessage("show", "Enter a Valid Number.");
+		});
+	</script>
+</head>
+<body class="" style="border: none; padding: 0px;" onload="window.resizeTo(625,625)">
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel" style="width: 145px;">Calculator Field</label>
+			<div class="inforTriggerField"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567"><button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button></div><br>
+			<label class="inforLabel" style="width: 145px;">Calculator Field Readonly</label>
+			<div class="inforTriggerField readonly"><input class="inforCalculatorField inforTextbox" type="text" readonly=""><button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button></div><br>
+			<label class="inforLabel" style="width: 145px;">Calculator Field Disabled</label>
+			<div class="inforTriggerField disabled"><input class="inforCalculatorField inforTextbox" type="text" disabled=""><button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button></div><br>
+			<label class="inforLabel" style="width: 145px;">Calculator Field Error</label>
+			<div class="inforTriggerField has-error" id="inforCalculatorField1Container"><input class="inforCalculatorField inforTextbox" type="text" id="inforCalculatorField1" aria-haspopup="true" aria-expanded="false" aria-owns="inforCalculatorPopup"><button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button></div><i class="icon-error">&nbsp;</i><br>
+
+
+			<div class="inforTriggerField" style="position:absolute;top:500px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:550px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:600px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:650px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:700px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:750px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:800px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:850px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			<div class="inforTriggerField" style="position:absolute;top:900px"><input class="inforCalculatorField alignRight inforTextbox" type="text" value="10.123567">
+			<button class="inforTriggerButton inforCalculatorButton" type="button" tabindex="-1"><span>Open</span></button>
+			</div>
+
+			</div>
+	</div>
+</div>
+</body></html>

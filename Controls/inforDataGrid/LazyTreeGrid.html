@@ -1,0 +1,120 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta charset="utf-8">
+
+<title>Infor DataGrid : Collapsing Tree</title>
+<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+<script src="../Release/jquery-1.11.1.min.js"></script>
+<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="../Release/inforControlsCombined.js"></script>
+<script src="js/inforDataGrid.js"></script>
+
+</head>
+<body>
+	<div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		var grid, columns = [];
+
+		columns.push({id : "title", name : "Task", field : "title", width : 220, showBullet : false, formatter : TreeRowFormatter, sortable : false});
+		columns.push({id : "duration", name : "Duration", field : "duration", editor : TextCellEditor, sortable : false});
+		columns.push({id : "assignedTo", name : "Assigned To", field : "assignedTo", minWidth : 100, editor : TextCellEditor, sortable : false});
+		columns.push({id : "start", name : "October 2013", field : "start", minWidth : 60, editor : TextCellEditor, sortable : false});
+		columns.push({id : "finish", name : "Finish", field : "finish", minWidth : 60, editor : TextCellEditor, sortable : false});
+
+		var options =
+		{
+			editable : true,
+			showCheckboxes : true,
+			showDrillDown : false,
+			columns : columns,
+			showStatusIndicators : false,
+			showFooter : true,
+			savePersonalization : false,
+			frozenColumn : -1,
+			showFilterRow : false,
+			selectChildren : false
+		};
+
+		var getData = function(level, parentId)
+		{
+			var depth = 0, data = [];
+			for (var i = 0; i < 5; i++) {
+				var d = (data[i] = {});
+
+				if (parentId !== undefined)
+				{
+					d.parent = parentId;
+					d.id = parentId + "." + (i + 1);
+				}
+				else
+				{
+					d.id = (i + 1).toString();
+				}
+
+				d.depth = level;
+				d.isParent = true;
+				d.collapsed = true;
+
+				d.title = "Task " + d.id;
+				d.duration = i / 2 + " days";
+				d.assignedTo = "Joe Cicero";
+				d.start = "01/01/2012";
+				d.finish = "01/05/2012";
+
+				d.percentComplete = Math.round(Math.random() * 100);
+			}
+
+			return data;
+		}
+
+		$(function()
+		{
+			// prepare random data - key properties are:
+			// depth - how many levels
+			// parent - the parent array id property value.
+			// collapsed - whether or not to collapse the row
+
+			var data = getData(0);
+
+			// initialize the grid
+			grid = $("#inforDataGrid").inforDataGrid(options);
+			grid.updateData(data);
+			grid.invalidateAllRows();
+			grid.render();
+
+			grid.onRowExpanded.subscribe(function(e, args)
+			{
+				//Simulate loading rows in. I.E. Lazy loading.
+				var parentId = args.item["id"];
+				var parentDepth = args.item["depth"];
+				var currentRows = args.grid.getData().getItems();
+				var childrenLoaded = args.item["childrenLoaded"];
+
+				if (childrenLoaded === undefined
+				||  childrenLoaded === false)
+				{
+					var data = getData(parentDepth + 1, parentId),
+						newData = args.grid.getData().getItems();
+
+					for (var i = 0; i < data.length; i++)
+					{
+						newData.splice(args.row + 1 + i, 0, data[i]);
+					}
+
+					args.item["childrenLoaded"] = true;
+				}
+				if (newData) {
+					grid.updateData(newData);
+				}
+			});
+
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor Toggle Button</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+	   $(function () {
+		//Globalize.culture("ar-SA");
+		$(".inforToggleButton").inforToggleButton();
+
+		//set first option stylistically..
+		$("#option1_1").trigger("click");
+		$("#option1_2").trigger("click");
+
+		
+		$("body").removeClass("inforHidden");	//prevent fouc
+	  });
+   </script>
+</head>
+<body class="inforHidden">
+	<div class="inforToolbar">
+		<div class="inforToggleButton">
+			<button type="button" id="option1_1">Option 1</button>
+			<button type="button" id="option2_1">Option 2</button>
+			<button type="button" id="option3_1">Option 3</button>
+			<button type="button" id="option4_1">Option 4</button>
+			<button type="button" id="option5_1">Option 5</button>
+		</div>
+	</div>
+
+	<br>
+	<div class="inforToggleButton">
+		<button type="button" id="option1_2">Option 1</button>
+		<button type="button" id="option2_2">Option 2</button>
+		<button type="button" id="option3_2">Option 3</button>
+		<button type="button" id="option4_2">Option 4</button>
+		<button type="button" id="option5_2">Option 5</button>
+	</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+	<title>Infor Lookup Field</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script src="../inforDataGrid/js/inforDataGrid.js" ></script>
+	<script src="../inforDataGrid/js/sampleData.js" ></script>
+	<script src="js/inforLookupField.js" ></script>
+
+	<script>
+		 $(function () {
+			//set columns
+			var columns = [];
+			columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
+			columns.push({ id: "city", name: "City", field: "city", width: 110, filterType: TextFilter });
+			columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank"});
+			columns.push({ id: "country", name: "Country", field: "country", width: 70, formatter: TextCellFormatter});
+			columns.push({ id: "territory", name: "Territory", field: "territory", width: 70, formatter: TextCellFormatter});
+
+			//get the data in JSON format - see datagrid example for more examples.
+			var data = getSampleData([]);
+
+			var options = {
+				dataset: data,
+				columns: columns,
+				idProperty: 'officeId',
+				editable: false,
+				showDrillDown: false,
+				showFilter: false,
+				showCheckboxes: true,
+				showStatusIndicators: false,
+				savePersonalization: false,
+				multiSelect: true,
+				persistSelections: true,
+				showFooter: true,
+				pageSize: 10,
+                pagingMode: PagingModes.PagerClientSide
+			};
+
+			//an editable field.
+		   $("#lookupField1").inforLookupField({
+				gridOptions: options,
+				returnField: "city",
+				width: 400,
+				height: 300,
+				editable: false
+			}).inforLookupField("setCode",[6, 7]);
+		   $("#lookupField1").change(function (e, args) {
+				console.log(arguments);
+			});
+
+			//Example 2 with a filter
+
+			var data = [];
+			data.push({ officeId:3, city: "Greensboro", phone: "6538227668", addressLine1: "", addressLine2: "78 Rocky Second St.", state: "New Jersey",country:"Zambia", postalCode:"09514", territory:"ECXL", establishedDate: null, isLeedCertified:"1", comments:"Et quad estis vobis homo, si nomen transit. \n Sed quad estis vobis homo, si quad ut novum vobis homo, \n si nomen novum vobis regit, \n et nomen transit. Sed quad estis vobis regit, et nomen transit. Tam quo, \n et quis gravis delerium.  Versus esset in dolorum cogn. esset in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et plurissimum ", numberEmployees: null, airportCode:"PHL", officeType: 'Remote' , revenue: 0 });
+			data.push({ officeId:5, city: "Memphis", phone: "8678333362", addressLine1: "364 East White Hague Boulevard", addressLine2: "706 Green Old Parkway", state: "Iowa",country:"Anguilla", postalCode:"29544", territory:"9VY46", establishedDate: new Date("03/07/1964"), isLeedCertified:"0", comments:"Tam quo, et nomen transit. Multum gravum et bono quorum glavans e gravis et nomen novum eggredior.  Longam, e gravis delerium.  Versus esset in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et plurissimum ", numberEmployees: 0, airportCode:"PHL" , officeType: 'Remote'  });
+			data.push({ officeId:6, city: "Meamphis", phone: "8678333362", addressLine1: "364 East White Hague Boulevard", addressLine2: "706 Green Old Parkway", state: "Iowa",country:"Anguilla", postalCode:"29544", territory:"9VY46", establishedDate: new Date("03/07/1964"), isLeedCertified:"0", comments:"Tam quo, et nomen transit. Multum gravum et bono quorum glavans e gravis et nomen novum eggredior.  Longam, e gravis delerium.  Versus esset in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et plurissimum ", numberEmployees: 0, airportCode:"PHL" , officeType: 'Remote'  });
+			data.push({ officeId:13, city: "Louisville", phone: "7497246106", addressLine1: "47 Old Blvd.", addressLine2: "637 White Cowley St.", state: "South Carolina",country:"VietNam", postalCode:"69571", territory:"BDH6KRILZG", establishedDate: new Date("03/06/1970"), isLeedCertified:"1", comments:"Versus esset in volcans essit.  Pro linguens non quo plorum in volcans essit.  Pro linguens non trepicandor si nomen transit. Sed quad estis vobis homo, si quad fecit, non quo linguens non apparens vantis. Sed quad ut novum eggredior.  Longam, e gravis et", numberEmployees:68, airportCode:"PHL" , officeType: 'Remote' , revenue: 10000.12 });
+			data.push({ officeId:14, city: "Arlington", phone: "177-341-3392", addressLine1: "786 White Cowley St.", addressLine2: "35 Rocky First Way", state: "Wyoming",country:"Luxembourg", postalCode:"12829", territory:"E", establishedDate: new Date("01/04/1965"), isLeedCertified:"0", comments:"Multum gravum et plurissimum parte brevens, non quo plorum in dolorum cognitio, travissimantor quantare sed quartu manifestum egreddior estum.  Multum gravum et pladior venit.  Tam quo, et quis gravis delerium.  Versus esset in dolorum cognitio, travissim", numberEmployees:73, airportCode:"PHL" , officeType: 'Remote' , revenue: 10000.12 });
+			options.dataset = data;
+			options.showFilter = true;
+
+			$("#lookupField2").inforLookupField({
+				gridOptions: options,
+				returnField: "city",
+				width: 400,
+				height: 300,
+				savePersonalization: false
+			});
+			$("#lookupField2").change(function (e, args) {
+				console.log(arguments);
+			});
+
+		   //remove class which hides the page for smoother loading and size fields...Not necessary specifically for this control.
+		   $("body").inforForm();
+		  })
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Lookup Field</label>
+			<input class="inforLookupField" type="text" id="lookupField1"><br>
+			<label class="inforLabel">Lookup Field with Filter</label>
+			<input class="inforLookupField" type="text" id="lookupField2"><br>
+		</div>
+	</div>
+
+</body>
+</html>

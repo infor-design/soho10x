@@ -1,0 +1,15 @@
+- add aria-disabled
+- contrast issues on blue and orange
+
+http://webaim.org/techniques/hypertext/link_text
+
+Guidelines
+	- Question: Always have an underline so that it also communicates its a link
+	- Title is not read by AT.
+		- so if title is not clear use off screen text
+	- Links need to make sense in context and no duplicate links and the link text makes sense
+		Example: Instead of Click her to reset password (underline on click here) 
+			Do: reset password (underline this)
+	- Make sure two links with same name go to same place.
+	- Course details example (use off-screen text slide in accessibility basics.)
+	

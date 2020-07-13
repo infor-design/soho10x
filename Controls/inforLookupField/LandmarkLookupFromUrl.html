@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>Landmark Lookup from URL </title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js" ></script>
+
+  <script src="../inforDataGrid/js/sampleData.js"></script>
+  <script src="js/inforLookupField.js"></script>
+
+
+
+	<script>
+		$(function ()
+		{
+			$("#Currency").inforLookupField(
+			{
+				returnField: "employeeId.value",
+				height: "auto",
+				width: "450px", //"auto",
+				editable: true,
+				ajaxOptions:
+				{
+					url              : "./ExampleLookupGridFrag2.html",
+					cache            : false,
+					contentType      : "application/json; charset=utf-8",
+					success          : function(data, textStatus, jqXHR)
+					{
+
+					},
+					error : function(failure)
+					{
+
+					}
+				}
+			});
+
+			$("body").inforForm();
+		});
+	 </script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Test Lookup</label>
+			<input class="inforLookupField" type="text" id="Currency" maxlength="5" size="5"><br>
+		</div>
+	</div>
+
+</head>
+</html>

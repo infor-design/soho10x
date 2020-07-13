@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link rel="stylesheet" href="css/inforTabset.css" />
+	<title>Infor Module Level Tabs - Add new button</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+	<script src="js/inforTabset.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("fr-FR");
+
+			//Application Nav
+			$("#inforTabContainer").inforTabset({
+					closable: true,
+					sortable: true,
+					addButton: true,
+					editable: true
+			});
+
+
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div id="inforTabContainer" class="inforModuleTabs">
+		<ul class="inforTabset">
+			<li><a href="#tab1">Sales Orders</a></li>
+			<li><a href="#tab2">Purchase Orders</a></li>
+			<li><a href="#tab3">Leads</a></li>
+			<li><a href="#tab4">Opportunities</a></li>
+			<li><a href="#tab5">Activities</a></li>
+			<li class="inforModuleHeaderRight">
+				<button type="button" class="inforModuleDropDownButton" id="menuButton" title="Menu"></button>
+				<button type="button" class="inforModuleSettingsButton" id="settingsButton" title="Settings"></button>
+			</li>
+		</ul>
+		<div id="tab1">
+			<div class="inforToolbar" >
+				<button type="button" class="inforIconButton edit" title="Edit"></button>
+				<button type="button" class="inforIconButton email" title="Email"></button>
+			</div>
+		</div>
+		<div id="tab2">
+			<div class="inforToolbar" >
+				<button type="button" class="inforIconButton edit" title="Edit"></button>
+				<button type="button" class="inforIconButton email" title="Email"></button>
+			</div>
+		</div>
+		<div id="tab3">
+			<div class="inforToolbar" >
+				<button type="button" class="inforIconButton edit" title="Edit"></button>
+				<button type="button" class="inforIconButton email" title="Email"></button>
+			</div>
+		</div>
+		<div id="tab4">
+			<div class="inforToolbar" >
+				<button type="button" class="inforIconButton edit" title="Edit"></button>
+				<button type="button" class="inforIconButton email" title="Email"></button>
+			</div>
+		</div>
+		<div id="tab5">
+			<div class="inforToolbar" >
+				<button type="button" class="inforIconButton edit" title="Edit"></button>
+				<button type="button" class="inforIconButton email" title="Email"></button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

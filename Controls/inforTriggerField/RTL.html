@@ -1,0 +1,170 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Trigger Fields</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+		   Globalize.culture("ar-SA");
+
+		   //initialize each type one at a time.
+		   $(".inforLookupField").inforTriggerField({
+				editable:false,
+				click:function(event){
+					console.log('My input field is :'+event.input);
+					event.input.val("test");
+				}});
+
+		   $(".inforDropDownList").inforDropDownList().setValue("");
+		   $(".inforDateField").inforDateField();
+
+		   $(".inforUrlField").inforTriggerField({click:function(event){
+				console.log('The id of my input field is :'+event.inputId);
+		   }});
+
+		   $(".inforSearchField").inforSearchField({click:function(event){
+											console.log('search was clicked');
+										},cancel:function(event){
+											console.log('cancel search results');
+										}});
+
+		   $(".inforEmailField").inforTriggerField();
+		   $(".inforFileField").inforFileField();
+
+		   //show error en each of the types..
+		   $("#inforDropDownList1").validationMessage("show", "This field is required.");
+		   $("#inforLookupField1").validationMessage("show","This field is required.");
+		   $("#inforDateField1").validationMessage("show","This field is required.");
+		   $("#inforUrlField1").validationMessage("show","This field is required.");
+		   $("#inforEmailField1").validationMessage("show","This field is required.");
+		   $("#inforSearchField1").validationMessage("show", "This field is required.");
+		   $("#inforFileField1").validationMessage("show", "This field is required.");
+
+		   $("body").inforForm();
+
+		   //Example Buttons to toggle readonly/enabled
+			var allFields =$("#inforDropDownList1, #inforLookupField1, #inforDateField1, #inforUrlField1, #inforEmailField1, #inforSearchField1,#inforFileField1")
+
+			$("#toggleEnable").click(function(){
+				allFields.disable().validationMessage("remove");
+				//allFields.enable().validationMessage("remove");
+			});
+
+		   $("#remove").click(function() {
+			   $(".column1").remove();
+		   });
+
+		   $("#toggleReadonly").click(function(){
+				allFields.readOnly().validationMessage("remove");
+				//allFields.enable().validationMessage("remove");
+			});
+
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">DropDownList List</label>
+			<select class="inforDropDownList">
+				<option value="a">A</option>
+				<option value="b" selected="selected">B</option>
+				<option value="c">C</option>
+				<option value="d">D</option>
+				<option value=""></option>
+			</select><br>
+			<label class="inforLabel">DropDownList Readonly</label>
+			<select class="inforDropDownList" readonly >
+				<option value="a">A</option>
+				<option value="b" selected="selected">B</option>
+				<option value="c">C</option>
+				<option value="d">D</option>
+				<option value=""></option>
+			</select><br>
+			<label class="inforLabel">DropDownList Disabled</label>
+			<select class="inforDropDownList" disabled >
+				<option value="a">A</option>
+				<option value="b" selected="selected">B</option>
+				<option value="c">C</option>
+				<option value="d">D</option>
+				<option value=""></option>
+			</select><br>
+			<label class="inforLabel">DropDownList Error</label>
+			<select class="inforDropDownList" id="inforDropDownList1">
+				<option value="a">A</option>
+				<option value="b" selected="selected">B</option>
+				<option value="c">C</option>
+				<option value="d">D</option>
+				<option value=""></option>
+			</select><br>
+			<br>
+			<label class="inforLabel">Lookup Field</label>
+			<input class="inforLookupField" type="text"><br>
+			<label class="inforLabel">Lookup Field Readonly</label>
+			<input class="inforLookupField" type="text" readonly value="Some Value" ><br>
+			<label class="inforLabel">Lookup Field Disabled</label>
+			<input class="inforLookupField" type="text"disabled value="Some Value" ><br>
+			<label class="inforLabel">Lookup Field Error</label>
+			<input class="inforLookupField" type="text" id="inforLookupField1"><br>
+			<br>
+			<label class="inforLabel">Date Field</label>
+			<input class="inforDateField" type="text"><br>
+			<label class="inforLabel">Date Field Readonly</label>
+			<input class="inforDateField" type="text" readonly value="Some Value" ><br>
+			<label class="inforLabel">Date Field Disabled</label>
+			<input class="inforDateField" type="text" disabled value="Some Value" ><br>
+			<label class="inforLabel">Date Field Error</label>
+			<input class="inforDateField" type="text" id="inforDateField1"><br>
+			<br>
+			<label class="inforLabel">File Field</label>
+			<input class="inforFileField" type="file" id="fileId"><br>
+			<label class="inforLabel">File Field Readonly</label>
+			<input class="inforFileField" type="file" readonly value="Some Value" ><br>
+			<label class="inforLabel">File Field Disabled</label>
+			<input class="inforFileField" type="file" disabled value="Some Value" ><br>
+			<label class="inforLabel">File Field Error</label>
+			<input class="inforFileField" type="file" id="inforFileField1"><br>
+		</div>
+		<div class="column2">
+			<label class="inforLabel">Url Field</label>
+			<input class="inforUrlField" type="text" id="inforUrlField2"><br>
+			<label class="inforLabel">Url Field Readonly</label>
+			<input class="inforUrlField" type="text" readonly value="Some Value" ><br>
+			<label class="inforLabel">Url Field Disabled</label>
+			<input class="inforUrlField" type="text" disabled value="Some Value" ><br>
+			<label class="inforLabel">Url Field Error</label>
+			<input class="inforUrlField" type="text" id="inforUrlField1"><br>
+			<br>
+			<label class="inforLabel">Email Field</label>
+			<input class="inforEmailField" type="email"><br>
+			<label class="inforLabel">Email Field Readonly</label>
+			<input class="inforEmailField" type="email" readonly value="Some Value" ><br>
+			<label class="inforLabel">Email Field Disabled</label>
+			<input class="inforEmailField" type="email" disabled value="Some Value" ><br>
+			<label class="inforLabel">Email Field Error</label>
+			<input class="inforEmailField" type="email" id="inforEmailField1"><br>
+			<br>
+			<label class="inforLabel" >Search Field</label>
+			<input class="inforSearchField" type="text" title="Search Items"><br>
+			<label class="inforLabel">Search Field Readonly</label>
+			<input class="inforSearchField" type="text" readonly value="Some Value"><br>
+			<label class="inforLabel">Search Field Disabled</label>
+			<input class="inforSearchField" type="text" disabled value="Some Value"  value="Some Value"><br>
+			<label class="inforLabel">Search Field Error</label>
+			<input class="inforSearchField" type="text" id="inforSearchField1"><br>
+		</div>
+	</div>
+
+	<button class="inforFormButton" id="toggleEnable">Enable/Disable</button>
+	<button class="inforFormButton" id="remove">Remove</button>
+	<button class="inforFormButton" id="toggleReadonly">Enable/Readonly</button>
+</body>
+</html>

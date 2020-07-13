@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Checkbox Examples</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$('#checkbox1 + label').attr('title', 'I am ').inforToolTip({content: function() {
+				return 'I am ' + ($(this).prev().prop('checked') ? 'checked' : 'unchecked');
+			}});
+		});
+	</script>
+</head>
+<body style="margin:30px">
+	<input type="checkbox" class="inforCheckbox" id="checkbox1" readonly checked/><label for="checkbox1" class="inforCheckboxLabel">Unchecked</label><br>
+ </body>
+</html>

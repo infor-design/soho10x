@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Small Number of Tabs</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			$('#inforTabContainer').inforTabset();
+
+			//Function to Rename a tab - Just set the html on the a element
+			$("#testRename").click(function() {
+				$('a[href="#tab1"]').html("New Label");
+			});
+
+			$("body").removeClass("inforHidden");
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1">Overview</a></li>
+		<li><a href="#tab2">Items</a></li>
+		<li><a href="#tab3">Notes</a></li>
+	  </ul>
+	  <div id="tab1">
+		<button id="testRename" class="inforFormButton">
+			Click Me to Rename First Tab
+		</button>
+	 </div>
+	  <div id="tab2">
+		<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+	  </div>
+	  <div id="tab3">
+		<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+	  </div>
+	</div>
+</body>
+</html>

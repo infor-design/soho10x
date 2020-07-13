@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - Default Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	 <script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div id="inforDataGrid">
+	</div>
+	<script>
+
+		//Store the Grid Obj For Later Api Calls..
+		var grid = null,
+			columns = [],
+			data = getTaskData([]);	// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+
+		GanttCellFormatter = function(row, cell, value, columnDef, dataContext)
+		{
+			var color = "lightAzure",
+			progressPercentage = parseInt(dataContext.duration) / 31 * 100,
+			displayValue = value,
+			tooltip = dataContext.duration + " Starting " +dataContext.start,
+			indent = (((new Date(dataContext.start).getDate())) -1) * 17;
+
+			//indent 15px per day but that is based on the text.
+			return "<div class='inforProgressBar' style='background-color: transparent; box-shadow: none; width:100%;margin-left:"+indent+"px' title='" + tooltip + "'><span class='bar inforColor "+ color +"' style='width:" + progressPercentage + "%'></span></div>";
+		}
+
+		columns = [
+		  {id: "title", name: "Task", field: "title", width: 220, showBullet: false, formatter: TreeRowFormatter,  editor: TextCellEditor, sortable:false},
+		  {id: "duration", name: "Duration", field: "duration", editor: TextCellEditor, sortable:false},
+		  {id: "assignedTo", name: "Assigned To", field: "assignedTo", minWidth: 100, editor: TextCellEditor, sortable:false},
+		  {id: "start", name: "Start", field: "start", minWidth: 60, editor: TextCellEditor, sortable:false},
+		  {id: "finish", name: "Finish", field: "finish", minWidth: 60, editor: TextCellEditor, sortable:false},
+		  {id: "gantt", selectable: false, cssClass: "non-data-cell", name: "01  02  03  04  05  06  07  08  09  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31", field: "title", width: 533, formatter:GanttCellFormatter}
+		 ];
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty: 'id',
+			dataset: data,
+			showFilter: false,
+			showDrillDown: false,
+			showFooter: false,
+			showGridSettings: false,
+			enableCellRangeSelection: false,
+			frozenColumn: 3,
+			savePersonalization: false
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <title>2 Column Layout Sample</title>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $().ready(function () {
+      $('body').inforForm();  //the inforForm plugin initializes all controls on this form.
+    });
+  </script>
+  <style>
+    #scheduleDetailForm .inforRadioButtonLabel, #scheduleDetailForm .inforDataLabel {
+      float: left;
+    }
+    #scheduleDetailForm .inforDataLabel {
+      left: 5px;
+      margin-right: 6px;
+    }
+    #MonthlyFrequency_DayOfWeek-shdo{
+      margin-left: 6px;
+    }
+    #MonthlyFrequency_WeekOfMonth-shdo {
+      margin-left: 19px;
+    }
+    #scheduleDetailForm .inforTriggerField .inforSpinner {
+      width: 63px !important;
+    }
+  </style>
+</head>
+<body>
+
+
+
+<form action="/ReportManager/" id="scheduleDetailForm" method="post"><input id="Id" name="Id" type="hidden" value="a2f19a3f-bb67-485a-9fb5-f369236aea45" /><input data-val="true" data-val-number="The field UpdateCount must be a number." data-val-required="The UpdateCount field is required." id="UpdateCount" name="UpdateCount" type="hidden" value="0" />    <div class="inforSingleColumnLayout autoLabelWidth">
+
+
+
+
+
+        <div id="frequencyDetailsContentPanel"  style="height: 120px">
+
+
+            <div id="MonthlyScheduleDetail" class="typeSelection">
+
+
+<label class="inforLabel">Day</label>
+
+<div class="inforRadioButtonSet" id="monthlyType">
+    <input checked="checked" class="inforRadioButton" data-val="true" data-val-required="The MonthlyFrequencyType field is required." id="monthlyType_calendar" name="MonthlyFrequency.MonthlyFrequencyType" type="radio" value="Calendar" />
+    <label class="inforRadioButtonLabel" for="monthlyType_calendar" style="width:150px">Calendar</label>
+    <input class="inforSpinner" type="number" max="31" min="1" step="1" value="1" id="MonthlyFrequency_DayOfMonth" name="MonthlyFrequency.DayOfMonth"/>
+    <label class="inforDataLabel noColon">of the month</label>
+    <br/>
+
+    <label class="inforLabel noColon inforLabel"> </label>
+    <input class="inforRadioButton" id="monthlyType_week" name="MonthlyFrequency.MonthlyFrequencyType" type="radio" value="Week" />
+    <label class="inforRadioButtonLabel" for="monthlyType_week" style="width:150px">Week</label>
+    <select class="inforDropDownList" data-val="true" data-val-required="The Week field is required." id="MonthlyFrequency_WeekOfMonth" name="MonthlyFrequency.WeekOfMonth" style="width:60px"><option value="First">First</option>
+<option value="Second">Second</option>
+<option value="Third">Third</option>
+<option value="Fourth">Fourth</option>
+<option value="Last">Fifth</option>
+</select>
+    <select class="inforDropDownList" data-val="true" data-val-required="The DayOfWeek field is required." id="MonthlyFrequency_DayOfWeek" name="MonthlyFrequency.DayOfWeek" style="width:60px"><option value="Day">Day</option>
+<option value="Monday">Monday</option>
+<option value="Tuesday">Tuesday</option>
+<option value="Wednesday">Wednesday</option>
+<option value="Thursday">Thursday</option>
+<option value="Friday">Friday</option>
+<option value="Saturday">Saturday</option>
+<option value="Sunday">Sunday</option>
+<option value="Weekday">Weekday</option>
+<option value="Weekend">Weekend</option>
+</select>
+</div>
+
+</div>
+<br />
+
+<div id="HourlyScheduleDetail" class="typeSelection">
+<label class="inforLabel">Interval</label>
+<input class="inforSpinner" type="number" max="23" min="0" step="1" value="1" id="HourlyFrequency_RepeatHours" name="HourlyFrequency.RepeatHours"/>
+<label class="inforDataLabel noColon">hours</label>
+<input class="inforSpinner" type="number" max="59" min="0" step="1" value="0" id="HourlyFrequency_RepeatMinutes" name="HourlyFrequency.RepeatMinutes"/>
+<label class="inforDataLabel noColon" style="">minutes</label>
+<br/>
+</div>
+        </div>
+        <br/>
+
+    </div>
+</form>
+
+
+</body>
+</html>

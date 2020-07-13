@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>3 Column Layout Sample</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$().ready(function () {
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body>
+	<div class="infor3ColumnLayout autoLabelWidth">
+		<div class="column1">
+				<label class="inforLabel" for="orderNumber">Order Number </label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
+				<label class="inforLabel" for="soldTo">Sold To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+				<label class="inforLabel" for="location">Location</label> <input type="text" id="location" class="inforTextbox"/><br>
+				<label class="inforLabel" for="dateField">Date Field</label>
+				<input class="inforDateField" id="dateField" type="text"><br>
+				<label class="inforLabel" for="textarea1" >TextArea</label>
+				<textarea class="inforTextArea required" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+				<span class="inforLabel noColon"></span><input type="checkbox" class="inforCheckbox required"  checked="checked" id="ordered"/><label class="inforCheckboxLabel" for="ordered">Checkbox</label><br>
+				<label class="inforLabel" for="shipDate">Ship Date</label>
+				<input class="inforDateField" id="shipDate" type="text" />
+				<br>
+				<label class="inforLabel" for="supplier">Supplier</label>
+				<select class="inforDropDownList required" id="supplier">
+					<option value="a">All</option>
+					<option value="cc">Consolidated Consortiums</option>
+					<option value="mw">Major Widgets Inc</option>
+					<option value="me">Metrolitan Electric</option>
+					<option value="sp">Speed Services Inc</option>
+				</select><br>
+		</div>
+		<div class="column2">
+				<label class="inforLabel" for="invoiceNumber">Invoice Number</label><input type="text" id="invoiceNumber" class="inforTextbox required"/><br>
+				<label class="inforLabel" for="invoiceTo">Invoice To</label><input type="text" id="invoiceTo" class="inforTextbox"/><br>
+				<label class="inforLabel" for="invoiceLoc">Location</label> <input type="text" id="invoiceLoc" class="inforTextbox"/><br>
+				<label class="inforLabel" for="comments" >Comments</label>
+				<textarea class="inforTextArea required" id="comments">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+				<label class="inforLabel" for="search">Search Field</label>
+				<input class="inforSearchField" type="text" id="search"><br>
+				<label class="inforLabel" for="invoiceDate">Invoice Date</label>
+				<input class="inforDateField" id="invoiceDate" type="text" value="10/12/2010"  readonly/>
+				<br>
+				<span class="inforLabel noColon"></span><input type="checkbox" class="inforCheckbox required"  checked="checked" id="test"/><label class="inforCheckboxLabel" for="test">Checkbox</label><br>
+				<label class="inforLabel" for="invoiceSup" >Supplier</label>
+				<select class="inforDropDownList required" id="invoiceSup">
+					<option value="a">All</option>
+					<option value="cc">Consolidated Consortiums</option>
+					<option value="mw">Major Widgets Inc</option>
+					<option value="me">Metrolitan Electric</option>
+					<option value="sp">Speed Services Inc</option>
+				</select><br>
+		</div>
+		<div class="column3">
+				<label class="inforLabel" for="shipNumber">Shipping Number</label><input type="text" id="shipNumber" class="inforTextbox required"/><br>
+				<label class="inforLabel" for="shipTo">Ship To</label><input type="text" id="shipTo" class="inforTextbox"/><br>
+				<label class="inforLabel" for="shipLoc">Location</label> <input type="text" id="shipLoc" class="inforTextbox"/><br>
+				<label class="inforLabel" for="shipComments" >Shjp Comments</label>
+				<textarea class="inforTextArea required" id="shipComments">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+				<span class="inforLabel noColon"></span><input type="checkbox" class="inforCheckbox required"  checked="checked" id="isShipped"/><label class="inforCheckboxLabel" for="isShipped">Shipped</label><br>
+				<label class="inforLabel" for="shipper">Shipper</label>
+				<select class="inforDropDownList required" id="shipper">
+					<option value="a">All</option>
+					<option value="cc">Consolidated Consortiums</option>
+					<option value="mw">Major Widgets Inc</option>
+					<option value="me">Metrolitan Electric</option>
+					<option value="sp">Speed Services Inc</option>
+				</select><br>
+		   </div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DropDownList : Alternate Style</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$(".inforDropDownList").inforDropDownList();
+
+			$(".inforDateField").inforDateField();
+
+			$(".inforLookupField").inforLookupField({
+				 editable: false,
+				 typeAheadSearch: false,
+				 click: function() {}
+			});
+
+			$("#toggleReadonly").toggle(function () {
+				$("#textbox, #date, #dropDown, #lookup").enable();
+			}, function () {
+				$("#textbox, #date, #dropDown, #lookup").readOnly();
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout">
+		<input id="textbox" type="text" class="inforTextbox backgroundColor" value="InforTextbox" readonly /><br/>
+		<input id="date" type="text" class="inforDateField backgroundColor" value="10/12/2011" readonly /><br/>
+
+		<select id="dropDown" class="inforDropDownList backgroundColor" readonly>
+			<option value="a">A</option>
+			<option value="b" >B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+			<option value="e" selected="selected">InforDropDownList</option>
+		</select><br/>
+
+		<input id="lookup" type="text" class="inforLookupField backgroundColor" readonly/><br/>
+
+	</div>
+</body>
+</html>

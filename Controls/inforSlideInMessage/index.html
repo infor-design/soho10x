@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Page Level Messages - Default Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$('button').on('click', function () {
+				//This line is all you need to open the message dialog
+				$('body').inforSlideInMessage({
+					messageType: 'Alert',
+					messageTitle: 'Alert Title ',
+					message: 'This is a sample info message. Take note and dont be overly alarmed.'
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<button class="inforFormButton">Show</button>
+	<!--Required for Screen Reader Support-->
+	<div id="scr-errors" role="alert" class="inforScreenReaderText"><span id="message"></span></div>
+</body>
+</html>

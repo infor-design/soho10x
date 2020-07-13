@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Toggle Button</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$(".inforToggleButton").inforToggleButton();
+		});
+   </script>
+</head>
+<body>
+	<div class="inforToolbar">
+		<button class="inforIconButton bold inforToggleButton" type="button" title=""><span></span></button>
+		<button class="inforIconButton italic inforToggleButton" type="button" title=""><span></span></button>
+		<button class="inforIconButton underline inforToggleButton" type="button" title=""><span></span></button>
+		<button class="inforIconButton strikeThrough inforToggleButton" type="button" title=""><span></span></button>
+	</div>
+</body>
+</html>

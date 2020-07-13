@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Infor Rich Text Editor</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<link rel="stylesheet" href="css/inforRichTextEditor.css" />
+	<script src="js/inforRichTextEditor.js"></script>
+
+	<script>
+		$(function () {
+			$('#richTextEditor').inforRichTextEditor();
+
+			$("#disable").click(function () {
+				$('#richTextEditor').disable();
+			});
+			
+			$("#readonly").click(function () {
+				$('#richTextEditor').readOnly();
+			});
+
+			$("#enable").click(function () {
+				$('#richTextEditor').enable();
+			});
+
+		});
+	</script>
+</head>
+<body style="overflow:hidden; margin: 20px;">
+	<div class="inforToolbar" >
+		<button class="inforTextButton" id="disable">disable</button>
+		<button class="inforTextButton" id="readonly">readonly</button>
+		<button class="inforTextButton" id="enable">enable</button>
+	</div>
+
+	<div id="richTextEditor" class="inforRichTextEditor">
+		Lorem Ipsum
+	</div>
+</body>
+</html>

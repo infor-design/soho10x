@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html >
+
+	<head id="Head1"><title>
+		Infor Controls Grid Test
+	</title>
+
+   <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+	<style>
+		.slick-viewport {
+			overflow-y: hidden !important;
+		}
+	</style>
+
+	</head>
+	<body style="overflow:auto;">
+
+	<div class="inforToolbar">
+		<button type="button" class="inforIconButton new" title="New" onclick='ctl04_TestGrid1.addRow({ROWORDER: "99999", FIRSTNAME:"New"});'></button>
+	</div>
+	<div id="ctl04_TestGrid1"></div>
+
+	<script type='text/javascript'>
+		var ctl04_TestGrid1 = null;
+		var ctl04_TestGrid1_data = [];
+		var ctl04_TestGrid1_columns = [];
+		var ctl04_TestGrid1_newRowKey = 'ROWORDER';
+		var ctl04_TestGrid1_gridDataKey = 'ROWORDER';
+		var ctl04_TestGrid1_newRowTemplate = { ROWORDER: -1, ROWID: '', FIRSTNAME: '', LASTNAME: '', AGE: '', HEIGHT: '', STARTDATE: '', STATE: '', NOTES: '' };
+		ctl04_TestGrid1_data.push({ ROWORDER: '1', ROWID: '1', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '2', ROWID: '2', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '3', ROWID: '3', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '4', ROWID: '4', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '5', ROWID: '5', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '6', ROWID: '6', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '7', ROWID: '7', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '8', ROWID: '8', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '9', ROWID: '9', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '10', ROWID: '10', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '11', ROWID: '11', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+
+		ctl04_TestGrid1_columns.push({ id: 'ROWORDER', name: 'Order', field: 'ROWORDER', maxWidth: 20, width: 100, formatter: TextCellFormatter, filterType: IntegerFilter });
+		ctl04_TestGrid1_columns.push({ id: 'LASTNAME', name: 'Last Name', field: 'LASTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		ctl04_TestGrid1_columns.push({ id: 'FIRSTNAME', name: 'First Name', field: 'FIRSTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		ctl04_TestGrid1_columns.push({ id: 'STARTDATE', name: 'Start Date', field: 'STARTDATE', width: 100, formatter: DateCellFormatter, editor: DateCellEditor, DateSourceFormat: 'MM/dd/yyyy hh:mm:ss tt', DateShowFormat: 'MM/dd/yyyy', filterType: DateFilter });
+		ctl04_TestGrid1_columns.push({ id: 'AGE', name: 'Age', field: 'AGE', width: 50, formatter: TextCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+		ctl04_TestGrid1_columns.push({ id: 'HEIGHT', name: 'Height', field: 'HEIGHT', width: 50, formatter: TextCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+		ctl04_TestGrid1_columns.push({ id: 'STATE', name: 'State', field: 'STATE', width: 50, formatter: TextCellFormatter, editor: SelectCellEditor, filterType: TextFilter, options: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'] });
+		ctl04_TestGrid1_columns.push({ id: 'NOTES', name: 'Notes', field: 'NOTES', width: 500, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+
+		$(function ($) {
+			var options = {
+				columns: ctl04_TestGrid1_columns,
+				dataset: ctl04_TestGrid1_data,
+				idProperty: 'ROWORDER',
+				showFooter: true,
+				pagingMode: PagingModes.PagerClientSide,
+				autoHeightToPageSize: true,
+				pageSize: 25,
+				frozenColumn: 2
+			}
+			ctl04_TestGrid1 = $('#ctl04_TestGrid1').inforDataGrid(options);
+		});
+	</script>
+
+</body>
+</html>

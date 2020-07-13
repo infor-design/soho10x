@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Splitter - Test Tabset doesnt Disappears when resizing browser window</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforFieldset.css" rel="stylesheet">
+	<script  src="../Release/jquery-1.11.1.min.js"></script>
+	<script  src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script  src="../Release/inforControlsCombined.js"></script>
+	<script  src="../inforDataGrid/js/inforDataGrid.js"></script>
+	<script  src="../inforDataGrid/js/sampleData.js"></script>
+	<script  src="js/inforSplitter.js"></script>
+
+	<script >
+		var editable = false;
+		var businessUnitGrid;
+		var functionPermissionGrid;
+
+		var functionPermissions = [];
+		functionPermissions.push({ Enabled: true, FunctionCode: 'ADD', FunctionName: 'Addresses', MenuItemType: 'Maintenance', DefaultCategory: 'Addresses', ApplicationType: 'Common' });
+		functionPermissions.push({ Enabled: true, FunctionCode: 'ADD1', FunctionName: 'Addresses', MenuItemType: 'Maintenance', DefaultCategory: 'Addresses', ApplicationType: 'Common' });
+
+		 $(function () {
+			$('.inforFieldSet').inforFieldSet();
+			$('.inforSplitter').inforSplitter();
+
+			var businessUnitColumns = [];
+			businessUnitColumns.push({ id: 'BusinessUnitCode', name: 'BusinessUnit Code', field: 'BusinessUnitCode', sortable: true, filterType: TextFilter, minWidth: 20 });
+			businessUnitColumns.push({ id: 'BusinessUnitDescription', name: 'BusinessUnit Description', field: 'BusinessUnitDescription', sortable: true, filterType: TextFilter, minWidth: 20 });
+
+			var businessUnits = [];
+			businessUnits.push({ BusinessUnitCode: '   ', BusinessDescription: 'Default Business Unit' });
+			businessUnits.push({ BusinessUnitCode: 'PK1', BusinessDescription: 'PK1' });
+
+
+			var businessUnitGridOptions = {
+				columns: businessUnitColumns,
+				idProperty: 'BusinessUnitCode',
+				dataset: businessUnits,
+				showFilter: true,
+				showDrillDown: false,
+				forceFitColumns: true,
+				multiSelect: false,
+				editable: false,
+				showCheckboxes: false,
+				savePersonalization: false,
+				filterMenuOptions: [
+					{ label: Globalize.localize("RunFilter"), href: "#rf" },
+					{ label: Globalize.localize("ClearFilter"), href: "#cf"}],
+				gridMenuOptions: [
+					{ label: Globalize.localize("ShowFilterRow"), href: "#sfr", cssClass: "selected", id: "showFilter" },
+					{ label: Globalize.localize("ColumnPersonalization"), href: "#cp", cssClass: "columns"}]
+			};
+
+			$('#businessUnitFieldSet').show();
+			businessUnitGrid = $('#businessUnitGrid').inforDataGrid(businessUnitGridOptions);
+
+			$('#functionPermissionFiledSet').show();
+			var functionPermissionColumns = [];
+			functionPermissionColumns.push({ id: 'Enabled', name: 'Enabled', field: 'Enabled', cssClass: 'alignCenter', formatter: CheckboxCellFormatter, editor: CheckboxCellEditor, filterType: CheckboxFilter, width: 65, minWidth: 20, resizable: false });
+			functionPermissionColumns.push({ id: 'FunctionCode', name: 'Function Code', field: 'FunctionCode',  formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, minWidth: 20 });
+			functionPermissionColumns.push({ id: 'FunctionName', name: 'Function Name', field: 'FunctionName',  formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, minWidth: 20 });
+			functionPermissionColumns.push({ id: 'MenuItemType', name: 'Menu Item Type', field: 'MenuItemType',  formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, minWidth: 20 });
+			functionPermissionColumns.push({ id: 'DefaultCategory', name: 'Default Category', field: 'DefaultCategory',  formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, minWidth: 20 });
+			functionPermissionColumns.push({ id: 'ApplicationType', name: 'Application Type', field: 'ApplicationType',  formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, minWidth: 20 });
+
+			var functionPermissionGridOptions = {
+				columns: functionPermissionColumns,
+				idProperty: 'FunctionCode',
+				dataset: functionPermissions,
+				editable: editable,
+				fillHeight: false,
+				forceFitColumns: true,
+				multiSelect: true,
+				savePersonalization: false,
+				showFilter: true,
+				showCheckboxes: false,
+				showDrillDown: false,
+				showStatusIndicators: false,
+				filterMenuOptions: [
+					{ label: Globalize.localize("RunFilter"), href: "#rf" },
+					{ label: Globalize.localize("ClearFilter"), href: "#cf"}],
+				gridMenuOptions: [
+					{ label: Globalize.localize("ShowFilterRow"), href: "#sfr", cssClass: "selected", id: "showFilter" },
+					{ label: Globalize.localize("ColumnPersonalization"), href: "#cp", cssClass: "columns"}]
+			};
+
+
+			functionPermissionGrid = $('#functionPermissionGrid').inforDataGrid(functionPermissionGridOptions);
+
+		});
+	</script>
+</head>
+<body class="inforScrollableArea">
+	<div class="inforSplitter">
+		<div id="leftPane" style="width: 28%">
+			<div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Left Pane Header</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+				</div>
+			</div>
+			<div class="inforModuleContentArea" style="height: 600px">
+			</div>
+		</div>
+		<div id="rightPane" style="width: 72%">
+			<div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Rigth Pane Header</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+				</div>
+			</div>
+			<div id="RightPaneContent" style="height: 600px" class="inforModuleContentArea">
+				<fieldset id="businessUnitFieldSet" class="inforFieldSet" style="display: none">
+					<legend class="inforExpandButton open"></legend><span class="inforFieldSetLabel ">Business
+						Units</span>
+					<div class="content">
+						<div id="businessUnitGrid" style="height: 150px">
+						</div>
+					</div>
+				</fieldset>
+				<fieldset id="functionPermissionFiledSet" style="display: none" class="inforFieldSet">
+					<legend class="inforExpandButton open"></legend><span class="inforFieldSetLabel ">Function
+						Permissions</span>
+					<div class="content">
+						<div id="functionPermissionGrid" style="height: 300px">
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

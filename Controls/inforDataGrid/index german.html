@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid - Basic </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+
+	<script>
+	$(function () {
+			Globalize.culture("de-DE");
+		//Store the Grid Obj For Later Api Calls..
+			columns = [],
+			data = getSampleData([]);
+
+		//Define Columns for the Grid.
+		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: false, formatter:UneditableColumnFormatter, title: "This is a tooltip", hidden: true });
+		columns.push({ id: "city", maxLength: 10, name: "City", toolTip: "This is a test", field: "city", width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "revenue", name: "Revenue", field: "revenue", required: true, width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter, numberFormat: "t9"});
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset:data,
+			showFilter: true,
+			showDrillDown: true,
+			showFooter: true
+		});
+
+		$("body").inforForm();
+	});
+
+	</script>
+
+</head>
+<body>
+	<div id="inforDataGrid">
+	</div>
+</body>
+</html>

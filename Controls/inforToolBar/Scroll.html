@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Text Buttons - For Light Backgrounds</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div class="inforToolbar" >
+		<button class="inforIconButton settings" disabled title="Click to Show Filter Row" ></button>
+		<button class="inforIconButton delete" id = "delete" title="Click to remove selected rows" ></button>
+		<button class="inforIconButton new" title="Click to add a new row" ></button>
+
+		<span class="inforToolbarSpacer"></span>
+
+
+		<button type="button" class="inforTextButton ">New</button>
+		<button type="button" class="inforTextButton">Edit</button>
+
+		<button type="button" class="inforTextButton">Delete</button>
+
+		<button type="button" class="inforTextButton disabled" >Sales</button>
+
+
+	</div>
+	<div class="inforScrollableArea">
+		<div style="height: 20000px">
+		</div>
+	</div>
+</body>
+</html>

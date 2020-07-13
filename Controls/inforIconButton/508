@@ -1,0 +1,11 @@
+- background images go away in high contrast mode (windows)
+- button title attribute works 
+
+TODO:
+	* Need Textual equivalent (place this in the button)
+	* Issue with title attribute
+	* issue with Tooltip
+	* Need high contrast sprite mode.
+	
+Document:
+	- Explain that you need to set either title or text in the button

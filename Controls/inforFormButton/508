@@ -1,0 +1,17 @@
+- Contrast 
+	- what about adding : text-shadow: 0 0 1px rgba(34, 34, 34, 0.3);
+	- only works in ie10 so make this in the conformance claim. (add to wiki)
+	- Title on a label?
+
+Todo:
+	- don't need aria-disabled if its is disabled
+	- don't need disabled="false" just disabled
+	- Adjust color for disabled form button
+
+Recommendation
+	- Using the hand is good.
+	- make another color version?
+	
+Question
+	- is the text shadow cool?
+	

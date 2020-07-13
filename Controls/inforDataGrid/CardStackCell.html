@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid - No Options</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+</head>
+<body>
+	<div id="inforDataGrid">
+	</div>
+	<script>
+		//Store the Grid Obj For Later Api Calls..
+		var grid = null,
+			columns = [],
+			data = getSampleData([]);
+
+    function ProductInfoFormatter(row, cell, value, columnDef, dataContext) {
+      var html = '',
+        css = 'style="float:none;width: auto; font-size: 12px;" ';
+
+      html += '<label '+css+' class="inforLabel">Product</label>' + value + '<br>';
+      html += '<label '+css+' class="inforLabel">Customer</label>' + dataContext.city + '<br>';
+      html += '<label '+css+' class="inforLabel">Description</label>' + dataContext.officeId + '<br>';
+      html += '<label '+css+' class="inforLabel">Unit</label>' + value;
+
+      return html;
+    }
+
+		//Define Columns for the Grid.
+		columns.push({ id: "officeId", focusable: false, name: "Office Id", field: "officeId", width: 140, formatter:UneditableColumnFormatter });
+		columns.push({ id: "city", name: "City", field: "city", width: 125, formatter: TextCellFormatter, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 160, filterType: TextFilter, editor: TextCellEditor});
+		columns.push({ id: 'state', required: true, name: 'Customer Product', field: 'state', formatter: ProductInfoFormatter, filterType: TextFilter});
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+      rowHeight: 65
+		});
+	</script>
+</body>
+</html>

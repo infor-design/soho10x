@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Textbox Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		 $(function($) {
+			$('body').inforForm();
+		});
+	</script>
+</head>
+
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	  <label class="inforLabel" for="ssn">Social Security Number</label>
+	  <span class="inforScreenReaderText">Format 999-99-9999</span>
+	  <input type="text" class="inforTextbox"  id="ssn" value="" placeholder="999-99-9999" data-mask="999-99-9999" style="width:82px"/>
+	  <br>
+	  <label class="inforLabel" for="phone">Phone Number</label>
+	  <span class="inforScreenReaderText">Format (999) 999-9999</span>
+	  <input type="text" class="inforTextbox"  id="phone" value="" placeholder="(999) 999-9999" data-mask="(999) 999-9999" />
+	</div>
+</body>
+</html>

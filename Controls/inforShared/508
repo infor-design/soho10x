@@ -1,0 +1,12 @@
+-All icons and colors need a text alternative
+-Color cannot be used as a text alternative
+-make color contrast version for projectors
+	-try the media query
+	-color themes
+-for alert icons the title will not be announced since div's dont read titles (needs alt text)
+
+Recommendation
+-Make sure to add lang="ar-SA" (which is added by Globalize.culture("ar-SA"); So call this first in your page
+
+ToDo
+-Make sure english is marked

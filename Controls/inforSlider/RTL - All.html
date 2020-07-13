@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+    <meta charset="utf-8" />
+
+    <title>Infor Slider Control - Default functionality</title>
+    <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+    <link href="css/inforSlider.css" rel="stylesheet" />
+
+	<style>
+		html[dir="rtl"] .inforSectionLabel{
+			float: none;
+		}
+	</style>
+	
+    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+
+    <script src="js/inforSlider.js"></script>
+    <script>
+        $().ready(function () {
+
+            Globalize.culture("ar-SA");
+            //Unrestricted Slider by Percent
+            $("#slider1").inforSlider({ value: 2, min: 0, max: 5, step: 1, showSteps: true, showValueLabel: false });
+            $("#sliderQuality").inforSlider({ value: 2, min: 0, max: 5, step: 1, showSteps: true, stepLabels: ["Very Poor", "Poor", "Adequate", "Good", "Excellent", "Superior"], showValueLabel: false, qualityScales: { lightEmerald: { start: 4, end: 5 }, amber: { start: 2, end: 3 }, ruby: { start: 0, end: 1 } } });
+            $("#sliderUnrestricted1").inforSlider({ value: 67, showSteps: false });
+
+            //Update an associated input field
+            var slider = $("#sliderUnrestricted2").inforSlider({
+                value: 53, showSteps: false,
+                slide: function (event, ui) {
+                    $("#currentValue").val(ui.value + "%");
+                }
+            });
+
+            $("#currentValue").change(function () {
+                slider.slider("value", parseInt($(this).value(), 10));
+            });
+        });
+    </script>
+</head>
+<body style="margin: 10px">
+    <h2 class="inforSectionLabel">Value Slider</h2>
+    <div style="width: 420px">
+        <div id="slider1" class="inforSlider"></div>
+    </div>
+    <br /><br />
+    <h2 class="inforSectionLabel" style="margin-bottom: 10px">Value Slider: Restricted Values in Range</h2>
+    <div id="sliderQuality" class="inforSlider" style="width: 96%"></div>
+    <br /><br /><br /><br />
+    <h2 class="inforSectionLabel">Value Slider: Unrestricted Values in Range</h2>
+	<div style="width: 420px">
+		<div id="sliderUnrestricted1" class="inforSlider" ></div>
+	</div>
+	<div style="width: 420px;margin-top:50px">
+		<div id="sliderUnrestricted2" class="inforSlider" >
+		</div>
+		<div style="float:right;top: -15px;position: relative;left: 148px;">
+			<label class="inforLabel" style="width: auto" for="currentValue">Current Value</label><input id="currentValue" value="53%" style="width: 40px" class="inforTextbox"/>
+		</div>
+	</div>
+</body>
+</html>

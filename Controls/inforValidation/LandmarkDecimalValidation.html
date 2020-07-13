@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Landmark Decimal Validation</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	
+<!-- 
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.11.1.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+
+	
+-->
+
+<style>
+.landmarkScrollingContentArea 
+{
+	overflow-y: auto !important;
+}
+</style>
+
+
+	<script>
+$(function ()
+{
+	var fieldSpec = 
+	{
+		size: 4,
+		decSize: 2,
+		type: "BCD"
+	}
+
+	$("#tabs").inforTabset({verticalTabs: true});
+	
+	$(".decimalfield")
+		.attr("data-validate", "validateDecimal")
+		.attr("data-validation-events", "change blur")
+		.attr("maxlength", "6")
+		.attr("size", "8")
+		.attr("data-number-format", "n2")
+		.attr("data-number-source-format", Globalize.cultureSelector)
+		.numericOnly(true, false)
+		.data("fieldSpec", fieldSpec);
+	
+	$("body").inforForm();
+
+	$("#LandmarkForm").setupValidation();
+});
+
+$.Validation.addRule("validateDate",
+{
+	check: function(value, element)
+	{
+		element.removeError();
+		
+		if (value)
+		{
+			var dt = landmark.format.parseDate({value:value, format:Globalize.culture().calendar.patterns.d});
+
+			if (landmark.format.isDate({date:dt}))
+			{
+				element.val(Globalize.format(dt, Globalize.culture().calendar.patterns.d));
+				return true;
+			}
+		}
+
+		this.message = "Invalid Date";		// Globalize.localize("InvalidDate");
+		return false;
+	}
+});
+
+$.Validation.addRule("validateDecimal",
+{
+	check: function(value, element)
+	{
+		var $element = $(element);
+		var fieldSpec = $element.data("fieldSpec") || null;
+		var percentDiff = 0;
+
+		if (!fieldSpec)
+		{
+			// unable to perform validation
+			return true;
+		}
+
+		var decSize = fieldSpec.decSize || 0;
+
+		if (decSize == 0)
+		{
+			// unable to perform validation
+			return true;
+		}
+
+		var valueStr = value.toString();
+
+		// remove percent sign
+		if (fieldSpec.type == "PERCENT")
+		{
+			var re = new RegExp("\\" + Globalize.culture().numberFormat.percent["symbol"], "g");
+			valueStr = valueStr.replace(re, "");
+			percentDiff = 2;
+		}
+
+		if ($.trim(valueStr).length == 0)
+		{
+			// unable to perform validation
+			return true;
+		}
+
+		// parse with current culture; value comes from element,
+		// so probably already formatted in current culture
+		var valueInt = Globalize.parseInt(valueStr);
+
+		if (isNaN(valueInt))
+		{
+			this.message = "Value is not a number";
+			$element.validationMessage("show", this.message, true);
+			return false;
+		}
+
+		// sign, thousands separator, or decimal separator are not counted for length
+		var re = new RegExp("\\" + Globalize.cultures["default"].numberFormat[","]
+			+ "|\\" + Globalize.cultures["default"].numberFormat["-"], "g");
+
+		valueStr = valueInt.toString();
+		valueStr = valueStr.replace(re, "");
+
+		var maxLeft = (fieldSpec.size - decSize) + percentDiff;
+
+		if (valueStr.length > maxLeft)
+		{
+			this.message = "Size of whole number exceeds allowable value";
+			$element.validationMessage("show", this.message, true);
+			return false;
+		}
+
+		return true;
+	}
+});
+
+		
+	</script>
+</head>
+<body>
+
+	<div class="landmarkScrollingContentArea" style="border: none; height: auto; width: 1200px;">
+		<div class="inforApplicationPadding" style="height:auto;">
+			<div id="LandmarkForm" >
+				<form id="LandmarkForm_FormElement">
+					<div id="tabs" >
+						<ul>
+							<li><a href="#tabs-1">Employment</a></li>
+							<li><a href="#tabs-2">Education</a></li>
+							<li><a href="#tabs-3">Skills</a></li>
+							<li><a href="#tabs-4">Credentials</a></li>
+							<li><a href="#tabs-5">Achievments</a></li>
+							<li><a href="#tabs-6">References</a></li>
+							<li><a href="#tabs-7">Identification Number</a></li>
+							<li><a href="#tabs-8">Attachments</a></li>
+							<li><a href="#tabs-8">Attachments</a></li>
+							<li><a href="#tabs-8">Attachments</a></li>
+							<li><a href="#tabs-8">Attachments</a></li>
+							<li><a href="#tabs-8">Attachments</a></li>
+							<li><a href="#tabs-8">Attachments</a></li>
+							<li><a href="#tabs-8">AttachmentsX</a></li>
+						</ul>
+						<div id="tabs-1" class="inforNonScrollingTabPanel" style="height: auto; overflow: auto;">
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+							<label style="width: 100px;" class="inforLabel">Decimal Field</label>
+							<input class="inforTextbox decimalfield" type="text" /><br>
+						</div>
+						<div id="tabs-2">
+							<h2>Content heading 2</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+						<div id="tabs-3">
+							<h2>Content heading 3</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+						<div id="tabs-4">
+							<h2>Content heading 4</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+						<div id="tabs-5">
+							<h2>Content heading 5</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+						<div id="tabs-6">
+							<h2>Content heading 6</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+						<div id="tabs-7">
+							<h2>Content heading 7</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+						<div id="tabs-8">
+							<h2>Content heading 8</h2>
+							<p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+							<p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+						</div>
+					</div>
+				</form/>
+			</div>
+		</div>
+</body>
+</html>

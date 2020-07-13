@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid : Continous Scrolling</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+</head>
+
+<body class="inforHidden">
+	<div>
+		<div class="inforToolbar">
+			<button class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1, city: 'New City', phone: '000-000-0000' })"><span></span></button>
+			<button class="inforIconButton delete" title="Click to remove selected rows" onclick="grid.removeSelectedRows()"><span></span></button>
+			<span class="inforToolbarSpacer"></span>
+			<button class="inforIconButton refresh" title="Reset Scrolling" onclick="reset()"></button>
+
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		//Globalize.culture("ar-SA");
+		function reset() {
+			grid.getData().currentPage = 0;
+			grid.updateData([]);
+			var args = {pageNum: 0, pageSize: options.pageSize, sortColumns: [{columnId: "city", sortAsc: false}]};
+			getPage(args);
+		}
+
+		//Define Your Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "city", name: "City", field: "city", width: 125, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", name: "State", field: "state",  formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"]});
+		columns.push({ id: "numberEmployees", name: "No. Employees", field: "numberEmployees", width: 50, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", name: "Leed Cerification", field: "isLeedCertified", width: 90, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, editor: DateCellEditor, formatter: DateCellFormatter, filterType: DateFilter });
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		var baseqry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?";
+
+		var options = {
+			columns: columns,
+			idProperty: 'officeId',
+			editable: false,
+			showFilter: false,	//does not work with Continou Scrolling yet
+			showCheckboxes: true,
+			multiSelect: true,
+			showFilter: true,
+			showFooter: true,
+			savePersonalization: false,
+			pagingMode: PagingModes.ContinuousScrolling,
+			pageSize: 50	//set a good initial page size that will fill the browser page page + 40% more as a general rule. 50 is often good.
+		};
+
+		var grid = $("#inforDataGrid").inforDataGrid(options),
+			dataView = grid.getData(),
+			hasAllPages = false;
+
+		function getPage(args) {
+		  if (hasAllPages)
+				return;
+
+		   //notice i do not need to include a count...
+		   var newQry = baseqry + "&$top="+args.pageSize+"&$skip="+(args.pageNum*args.pageSize);
+
+		   //add filter expression. For simplicity only the city field is shown.
+		   if (args.filters)
+			   newQry += "&$filter=substringof('"+args.filters["city"].value+"',city) eq true";	//"+args.sortColumnId+(args.sortAsc ? " asc" : " desc");
+
+		   //substringof('Alfreds', CompanyName) eq true
+		   //add the sort expression.
+		   if (args.sortColumns && args.sortColumns.length > 0) {
+				var conds = "";
+				newQry += "&$orderby=";
+				for (var i = 0; i < args.sortColumns.length; i++) {
+					conds += args.sortColumns[0].columnId + (args.sortColumns[0].sortAsc ? " asc" : " desc") + (conds === "" ? "" :",");
+				}
+				newQry += conds;
+			}
+
+		   $.getJSON(newQry,
+				 function (jsonResult) {
+					var newData = jsonResult.d;
+					hasAllPages = (jsonResult.d.length <  args.pageSize);
+
+					setTimeout(function() {
+						grid.mergeData(newData, args.pageNum);
+					}, 1);
+			});
+		}
+
+		//Subscribe to page requests - make an ajax call and get the next page. in this case this will fire when we scroll to the bottom of the grid.
+		dataView.onPageRequested.subscribe(function (e, args) {
+			getPage(args);
+		});
+
+		//get initial page
+		var args = {pageNum: 0, pageSize: options.pageSize, sortCols : [{sortAsc : true, columnId: "city"}]}
+		getPage(args);
+
+		//show the page.
+		$('body').removeClass('inforHidden');
+	</script>
+</body>
+</html>

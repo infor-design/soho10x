@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid : Taller Header with Wrapped Headers </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="../inforDataGrid/css/inforDataGrid.css" />
+
+</head>
+<body>
+	<div>
+		<div class="inforToolbar">
+			<button id="submitButton" class="inforIconButton save" ></button>
+			<button id="deleteButton" class="inforIconButton delete"  ></button>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		grid = null;
+		columns = [];
+
+		columns.push({ id: "cust1", headerCssClass: 'alignHeaderCenter', name: "Net Sales <br> renenue", field: "cust1", width: 80, editor: TextCellEditor, filterType: TextFilter, required: true});
+		columns.push({ id: "cust2", headerCssClass: 'alignHeaderCenter', name: "Cost of <br> good sold", field: "cust2", width: 80, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "cust3", headerCssClass: 'alignHeaderCenter', name: "Gross profit", field: "cust3", width: 80, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "percAllocation", headerCssClass: 'alignHeaderCenter', name: "Gross Margin", field: "percAllocation", width: 80, headerCssClass: "alignHeaderRight" , formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "jan", headerCssClass: 'alignHeaderCenter', name: "SG&A Costs", field: "jan", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter,  editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "feb", headerCssClass: 'alignHeaderCenter', name: "Operating Profit", field: "feb", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter,  editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "mar", headerCssClass: 'alignHeaderCenter', name: "Inventory", field: "mar", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter,  editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "apr", headerCssClass: 'alignHeaderCenter', name: "Accounts <br> receivable", field: "apr", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter,  editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "may", headerCssClass: 'alignHeaderCenter', name: "Accounts <br> payable", field: "may", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter,  editor: IntegerCellEditor, filterType: IntegerFilter});
+
+
+		data = [];
+		data.push({ rowid : '0', cust1: 'ABC', cust2: '123', cust3: 'A1', percAllocation:  null, jan: 10, feb: null, mar: 10, apr: 5, may: 30});
+		data.push({ rowid : '1', cust1: 'ABC', cust2: '456', cust3: 'A1', percAllocation: null, jan: 10, feb: 20, mar: null, apr: 5, may: 30});
+		data.push({ rowid : '3', cust1: 'ABC', cust2: '789', cust3: 'A2', percAllocation: 40, jan: 10, feb: null, mar: 10, apr: 5, may: 30});
+		data.push({ rowid : '4', cust1: 'DEF', cust2: '123', cust3: 'A2', percAllocation: null, jan: 10, feb: 20, mar: 10, apr: null, may: 30});
+		data.push({ rowid : '5', cust1: 'DEF', cust2: '789', cust3: 'A2', percAllocation: null, jan: 10, feb: 20, mar: 10, apr: null, may: 30});
+		data.push({ rowid : '6', cust1: 'GHI', cust2: '123', cust3: 'A3', percAllocation: 30, jan: 10, feb: 20, mar: null, apr: 5});
+		data.push({ rowid : '7', cust1: 'GHI', cust2: '456', cust3: 'A4', percAllocation: null, jan: 10, feb: null, mar: 10, apr: 5, may: null});
+		data.push({ rowid : '8', cust1: 'GHI', cust2: '789', cust3: 'A5', percAllocation: 30, jan: 10, feb: 20, mar: 0, apr: 0, may: null});
+
+		var options = {
+			columns: columns,
+			idProperty:'rowid',
+			dataset: data,
+			showFilter: true,
+      headerHeight: 50,
+			showSummaryRow: true
+		};
+
+		grid = $("#inforDataGrid").inforDataGrid(options);
+	</script>
+</body>
+</html>

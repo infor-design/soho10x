@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>ToolTip - Basic Examples</title>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <link href="css/tooltip.css" rel="stylesheet" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/tooltip.js"></script>
+
+  <script>
+      $(function () {
+      //add normal tooltips to all elements with a title on them - All this does is translate strings we use the browser tooltips.
+      $('[title]').not('.inforErrorIcon').tooltip();
+
+      //Show immediately
+      $('[title]').not('.inforErrorIcon').tooltip('open');
+    });
+	$(function () {
+
+      //Easiest based on popmenu being the next item and/or data-toggle
+      $('#iconMenuButton').popupmenu()
+        .on('close', function (e) {
+           console.log('Has Closed', e);
+        }).on('selected', function (e, anchor) {
+           console.log('Has Selected', e, anchor);
+        });
+
+      //Another way be a linked menu by ID (old school)
+      $('#checkboxMenuButton').popupmenu({
+        menu: 'checkboxMenu'
+      });
+
+      //Right Click Menu by ID, with old school call back. New Events are better.
+      $('#rightClickMenuButton').inforContextMenu({
+        menu: 'rightClickMenu',
+        trigger: 'rightClick'
+      },
+      function(action, el, pos) {
+        console.log('Action: ' + action + '\n\n' +
+        'Element ID: ' + $(el).attr('id') + '\n\n' +
+        'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
+        'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+        );
+      });
+
+    });
+  </script>
+</head>
+<body style="margin: 30px;">
+  <div class="inforToolbar">
+    <button type="button" class="inforIconButton edit" title="Tooltip 1">
+      <span>Label 1</span>
+    </button>
+    <button type="button" class="inforIconButton new" title="Tooltip 2">
+      <span>Label 2</span>
+    </button>
+  </div>
+  <div class='inforApplicationPadding'>
+
+    <button id="iconMenuButton" data-toggle="popupmenu" class="inforFormButton" title="Tooltip 1">Click Me - Context Menu with Icons</button>
+    <ul class="popupmenu divider">
+      <li><span class="icon sortAsc"></span><a href="#sortAsc">Sort Ascending</a></li>
+      <li><span class="icon sortDesc"></span><a href="#sortDesc">Sort Descending</a></li>
+      <li class="popupmenu-seperator"></li>
+      <li><span class="icon locked"></span><a href="#locked">Lock Column</a></li>
+      <li class="is-disabled"><span class="icon unlocked"></span><a href="#unlocked">Unlock Column</a></li>
+      <li class="popupmenu-seperator"></li>
+      <li><span class="icon columns"></span><a href="#columns">Columns</a></li>
+    </ul>
+
+    <button id="checkboxMenuButton" class="inforFormButton" title="Tooltip 1">CheckBoxes</button>
+    <ul id="checkboxMenu" class="popupmenu">
+      <li class="checkbox"><a href="#"><input type="checkbox" id="check1" class="inforCheckbox"/><label for="check1" class="inforCheckboxLabel">Option One</label></a></li>
+      <li class="checkbox"><a href="#"><input type="checkbox" id="check2" class="inforCheckbox"/><label for="check2" class="inforCheckboxLabel">Option Two</label></a></li>
+      <li class="checkbox"><a href="#"><input type="checkbox" id="check3" class="inforCheckbox"/><label for="check3" class="inforCheckboxLabel">Option Three</label></a></li>
+    </ul>
+
+    <button id="rightClickMenuButton" class="inforFormButton" title="Tooltip 1">
+      Right Click Me - Context Menu With no Icons
+    </button>
+    <ul id="rightClickMenu" class="popupmenu">
+      <li class="popupmenu-group ">Open Tabs</li>
+      <li><a href="#tab1">Tab 1 - Available</a></li>
+      <li><a href="#tab2">Tab 2 - Available</a></li>
+      <li class="popupmenu-seperator"></li>
+      <li class="popupmenu-group ">Closed Tabs</li>
+      <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+    </ul>
+  </div>
+</body>
+</html>

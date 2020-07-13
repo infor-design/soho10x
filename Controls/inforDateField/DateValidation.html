@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+
+		$(function()
+		{
+			//Make the click open the dialog
+			$(".inforFormButton").click(function ()
+			{
+				$().showResponseRequiredDialog(function(result)
+				{
+					if (result.status == 'OK')
+						alert("Date Picked: " + result.effectiveDate);
+				});
+
+				$("body").inforForm();
+			});
+		});
+
+		(function($)
+		{
+			$.fn.showResponseRequiredDialog = function(callback)
+			{
+				var html = "";
+				html += '<div id="ResponseRequiredDailog" style="display:none;">';
+				html += '<form id="ResponseRequiredDailogForm">'
+				html += '<label style="width: 100px;" for="effectiveDate" class="inforLabel">Effective Date</label>';
+				html += '<input class="inforDateField" id="EffectiveDateField" type="text"   data-validation="required validDate"/>';
+				html += '</form/></div>';
+
+				//First add the html to the page..
+				$("body").append(html);
+
+				$("#EffectiveDateField").inforDateField({validateInput:false});
+				//$("#ResponseRequiredDailog").inforForm();
+
+				$.Validation.addRule("validDate",
+				{
+					check: function (value)
+					{
+						if (value)
+						{
+							var parsedDate = Globalize.parseDate($("#EffectiveDateField").val());
+							return (parsedDate != null);
+						}
+						return true;
+					},
+					msg: "Invalid Date"
+				});
+
+				//Setup the form Validation
+				var dialogForm = $("#ResponseRequiredDailogForm");
+				dialogForm.setupValidation(function (valid)
+				{
+					if (valid)
+					{
+						var parsedDate = Globalize.parseDate($("#EffectiveDateField").val());
+						var dateString = Globalize.format(parsedDate,'yyyyMMdd');
+						var result =
+						{
+							status: 'OK',
+							effectiveDate: dateString
+						};
+
+						callback(result);
+						$('#ResponseRequiredDailog').inforDialog("close");
+
+						//Note: $('#templateForm').trigger('submit');	Will infinitely loop
+					}
+				});
+
+				//Invoke the dialog on it
+				$('#ResponseRequiredDailog').inforMessageDialog(
+				{
+					title: "Response Required",
+					dialogType: "General",
+					width: 500,
+					height: 294,
+					modal: true,
+					close: function(event, ui)
+					{
+						$('#ResponseRequiredDailog').remove();
+					},
+					buttons:
+					[{
+						text: Globalize.localize("Ok"),
+						click: function()
+						{
+							$('#ResponseRequiredDailogForm').trigger('submit');  // <-- that will end up on line #VALID
+						},
+						isDefault: true
+					},
+					{
+						text: Globalize.localize("Cancel"),
+						click: function()
+						{
+							callback({status: 'CANCEL'});
+							$(this).inforDialog("close");
+						}
+					}]
+				});
+			};
+		})(jQuery);
+
+	</script>
+</head>
+<body>
+	  <button style="margin:20px" id="generalDialogButton" class="inforFormButton">Show Dialog With Date Field</button>
+</body>
+</html>

@@ -1,0 +1,11 @@
+-aria-invalid use this role
+-put the text "error" in front of all errors.
+-should stay invalid when you tab into it
+-error should show when you blur (if there is one)
+-use the error list is ideal
+	- make this a heading so it jumps down to it.
+-dont only use color
+
+-aria role = alert
+-use aria-polite
+	http://whatsock.com/tsg/Coding%20Arena/Inline%20Form%20Field%20Validation%20and%20Dynamic%20Help%20Tooltips/Inline%20Form%20Field%20Validation%20%28Complex%29/demo.htm

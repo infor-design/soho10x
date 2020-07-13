@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html >
+
+  <title>Infor Data Grid - Auto height</title>
+
+    <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+  </head>
+  <body style="overflow:auto;">
+
+  <div id="grid" style="height: 40%"></div>
+
+  <script>
+
+    var grid = null;
+    var data = [];
+    var columns = [];
+
+    data.push({ ROWORDER: '1', ROWID: '1', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+    data.push({ ROWORDER: '2', ROWID: '2', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+    data.push({ ROWORDER: '3', ROWID: '3', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+
+    columns.push({ id: 'ROWORDER', filterType: TextFilter, name: 'Order', field: 'ROWORDER', maxWidth: 20, width: 100, formatter: TextCellFormatter, filterType: IntegerFilter });
+    columns.push({ id: 'LASTNAME', filterType: TextFilter, name: 'Last Name', field: 'LASTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+    $(function ($) {
+      var options = {
+        columns: columns,
+        dataset: data,
+        idProperty: 'ROWORDER',
+        editable: false,
+        fillHeight: false,
+        showCheckboxes: false,
+        enableCellNavigation: false,
+        selectOnRowChange: true,
+        showFooter: true
+      };
+
+      grid = $('#grid').inforDataGrid(options);
+      grid.setSelectedRows([1]);
+      grid.setActiveCell(1,3);
+    });
+  </script>
+
+</body>
+</html>

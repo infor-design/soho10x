@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid - Panel Formatter (Inline Form)</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+			<button type="button" id="submitButton" onclick="save()" class="inforIconButton save" title="Click to Save Modified Rows" ></button>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		var grid;
+
+		//Create a Function that returns html for the detail template
+		function createDetailTemplate(row, cell, value, columnDef, dataContext, gridObj) {
+			var panelhtml = "";
+			panelhtml += "<div class='inforTabContainer' style='top: 25px'>";
+			panelhtml += "	<ul class='inforTabset'>";
+			panelhtml += "		<li><a href='tab1'>Overview</a></li>";
+			panelhtml += "		<li><a href='tab2'>Items</a></li>";
+			panelhtml += "  </ul>";
+			panelhtml += "  <div id='tab1'>";
+			panelhtml += "	<p> aliquam libero.</p>";
+			panelhtml += "  </div>";
+			panelhtml += "  <div id='tab2'>";
+			panelhtml += "	<p>Vestibulum pharetra aliquam libero.</p>";
+			panelhtml += "  </div>";
+			panelhtml += " </div>";
+			console.log('x');
+			return panelhtml;
+		}
+
+		//Function that initializes anything in code on the detail template. This happens post render.
+		function renderDetailTemplate(cellNode, row, dataContext, colDef) {
+			//remove loading indicator
+			$(cellNode).find(".inforLoadingIndicator").remove();
+
+			//Initialize any controls here
+			$(cellNode).find(".inforTabContainer").inforTabset();
+			//Fade In
+			$(cellNode).find(".inforDetailTemplate").fadeTo('slow', 1);
+		}
+
+		//Define Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "line", name: "Line", field: "line", width: 30, formatter:UneditableColumnFormatter, filterType: TextFilter });
+		columns.push({ id: "item", name: "Item", field: "item", width: 125, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "description", name: "Description", field: "description", width:125, editor: TextCellEditor, required: true, filterType: TextFilter });
+		columns.push({ id: "qty", name: "Ordered Qty", field: "qty", width: 40, formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+		columns.push({ id: "price", name: "Price", field: "price", width: 40, formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+		columns.push({ id: "summary", name: "Summary", field: "summary", width: 290, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "panel", sortable: false, name: "Panel Area", field: "", cssClass: "detailTemplate", formatter: DetailTemplateFormatter, editable: true, detailTemplate: createDetailTemplate, asyncPostRender: renderDetailTemplate });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSimpleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'id',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: false,
+			showFooter: true,
+			showGridSettings: true,
+			savePersonalization: true,
+			editable: true,
+			enableAsyncPostRender: true,
+			variableRowHeight: true,
+			variableRowHeightColumn: "rowHeight"
+		};
+
+		grid = $("#inforDataGrid").inforDataGrid(options);
+	</script>
+</body>
+</html>

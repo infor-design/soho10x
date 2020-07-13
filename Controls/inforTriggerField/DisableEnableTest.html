@@ -1,0 +1,48 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>Infor Trigger Fields</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+		   //Globalize.culture("ar-SA");
+
+		   //see also trigger field example for a grid popup trigger field.
+		   $("#lookup1").inforTriggerField({
+				editable:false,
+				click:function(event){
+					console.log('The id of my input field is :'+event.inputId);
+					event.input.val("test");
+				}});
+
+
+		   $("#enable").click(function() {
+			   $("#lookup1").enable();
+		   });
+
+		   $("#disabled").click(function() {
+				$("#lookup1").disable();
+		   });
+		});
+	</script>
+</head>
+<body>
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Lookup Field</label>
+			<input class="inforLookupField" type="text" id="lookup1"><br>
+		</div>
+	</div>
+
+	<button class="inforFormButton" id="enable">Enable</button>
+	<button class="inforFormButton" id="disabled">Disabled</button>
+</body>
+</html>

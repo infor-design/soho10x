@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link rel="stylesheet" href="css/inforTabset.css" />
+	<title>Infor Module Level Tabs</title>
+	
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+    
+	<script type="text/html" id="card_template">
+	  <div class="inforCardstackCell">
+		  <img class="inforCardstackImg" src="<%=img%>"/>
+		  <label style="width:100px" class="inforCardstackHeading"><%=title%></label><br/>
+		  <label class="inforCardstackLabel">Location</label>
+		  <label class="inforCardstackValue"><%=location%></label>
+		  <label class="inforCardstackLabel">Category</label>
+		  <label class="inforCardstackValue"><%=category%></label>
+		  <div class="floatRight">
+			<label class="inforCardstackLabel">Posted</label>
+			<label class="inforCardstackValue"><%=posted%></label>
+		  </div>
+	   </div>
+	</script>
+
+	<script>
+		 $(function () {	
+			
+			Globalize.culture("fr-FR");
+			
+			//Application Nav
+			$("#inforApplicationNav").inforApplicationNav();
+			$("#inforTabContainer").inforTabset({ 
+					closable: false,
+					draggable: false,
+					addButton: false,
+					editable: false
+			});
+			
+			$("#inforTabContainer2").inforTabset({chevron:false});
+			
+			//attach an event to each nav menu item and simulate opening a new session with an iframe on it
+			$("#inforApplicationNav").find("a").click(function() {
+				var $this = $(this),
+					label = $this.html();
+					
+			    if ($this.parent().find("ul").length > 0)	//has a sub menu ignore these
+					return;
+				
+				//add a tab - we could load a url directly here for the tab...See ModuleAjax.html
+				//tabset.inforTabset("add", "ajax/content1.html" , label, false);
+				
+				//Or add an id and label and 
+				var tabId = "#"+label.replace(/ /g,"_").replace(/\./g,' ');
+				tabset.inforTabset("add", tabId , label, false, function( event, ui ) {
+					//Callback when tab is added. Add the tab content as needed using jquery 
+					$(ui.panel).append("<p>Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>");
+				});
+			});
+		
+			//Card Stack
+				var data = getCardStackData();
+	  
+			  //Create Columns including a template for the header values
+			  var columns = [
+				{id: "contact-card", name: "", field: "title", formatter: CellTemplateFormatter, cellTemplate: "card_template"}
+			  ];
+			  
+			  var options = {
+				rowHeight: 75,
+				dataset: data,
+				idProperty: "id",
+				columns: columns,
+				editable: false,
+				enableCellNavigation: false,
+				enableColumnReorder: false,
+				showFilter: false,
+				showGridSettings: false,
+				showDrillDown: false,
+				showCheckboxes: false,
+				showFooter: true,
+				forceFitColumns: true,
+				showStatusIndicators:false,
+				pagingMode: PagingModes.PagerClientSide,
+				pageSize: 10,
+				savePersonalization:false,
+				showHeaderContextMenu:false,
+				showColumnHeaders: false
+			  };
+	  
+				$("#inforCardStack").inforDataGrid(options);
+				$("#inforCardStack2").inforDataGrid(options);
+			
+			 
+			//Card Stack
+			$("body").inforForm();
+			$(".inforSplitter").inforSplitter();
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div id="inforTabContainer" class="inforModuleTabs">
+		<ul class="inforTabset">
+			<li><a href="#tab1">Card Stack In Splitter</a></li>
+			<li><a href="#tab2">Card Stack No Splitter</a></li>
+		</ul>
+		<div id="tab1" style="overflow:hidden;">
+			<div class="inforSplitter">	
+				<div id="leftPane" style="width:25%;overflow:hidden;"> 
+					<div id="inforCardStack"></div>
+				</div>
+				<div id="rightPane"  style="width:75%">
+				</div>
+			</div>
+		</div>
+ 		<div id="tab2" style="overflow:hidden;padding-top:0px">
+			<div id="inforCardStack2" style="overflow:hidden;"></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Slider Control - Default functionality</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforSlider.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script src="js/inforSlider.js" ></script>
+
+	<script>
+		$().ready(function () {
+			//Unrestricted Slider by Percent
+			$("#slider1").inforSlider({value: 2, min: 0, max:5, step: 1, showSteps: true, showValueLabel: false});
+		});
+	</script>
+</head>
+<body style="margin: 10px">
+	<h2 class="inforSectionLabel">Value Slider</h2>
+	<div style="width: 420px">
+		<div id="slider1" class="inforSlider" ></div>
+	</div>
+</body>
+</html>

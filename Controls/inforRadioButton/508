@@ -1,0 +1,40 @@
+Copy:
+- enforce Use a label on radio buttons
+- i think we need to just say you need the label
+- my markup my be a little off (need to use a field set) 
+
+Avoid:
+Radio buttons are not supported consistently by all versions of browsers, screen readers, and combinations. 
+A correctly labeled and tagged set of radio buttons is a very difficult control for users of screen-reading technology. 
+If a "choose only one" situation is called for, a select menu is preferable.
+
+If you must use radio buttons, remember to label them with the "Label for" tag. When radio buttons are used, each radio button in the group has the shared name, 
+but a unique ID. Each radio button in the group has a unique label, as well. 
+
+Questions:
+
+For top level label what do i do? Span ok?
+If its just a simple radio button does it help to have aria?
+Error: Only elements with role=radio or role=presentation are allowed as children of an element with role=radiogroup. (on the labels)
+
+Keyboard Shortcuts
+
+The following keyboard shortcuts are implemented for this example (based on recommended shortcuts specified by the DHTML Style Guide Working Group.):
+
+    Tab: Move between radio button groups.
+    Up/Left and Down/Right Arrow: Move selection between radio items in a group
+    Ctrl + Arrow: Move between radio items in a group without changing checked state
+    Space Bar: Check the radio button that currently has focus 
+	
+ARIA Roles and Properties
+
+    Roles:
+        role="radiogroup"
+        role="radio"
+    States and properties:
+        aria-checked
+        aria-describedby
+        aria-labelledby
+
+		
+	

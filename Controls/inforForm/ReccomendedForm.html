@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Example Form Template</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js" ></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js" ></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script>
+	 $(function () {
+		//Set to the current locale of the application
+		Globalize.culture("en-UK");
+		$("body").inforForm();
+	});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div class="inforModuleHeader">
+		 <div class="inforModuleHeaderLeft">
+				<span class="inforPageTitleText">Sales Orders</span>
+				<span class="inforModuleRecordIdText">SL0090562</span>
+			</div>
+			<div class="inforModuleHeaderRight">
+				<button type="button" class="inforModuleDropDownButton" id = "menuButton"  title="Menu"></button>
+				<button type="button" class="inforModuleSettingsButton" id = "settingsButton"  title="Settings"></button>
+				<button type="button" title="Close current activty" class="inforModuleCloseButton" id = "closeButton"  title="Close"></button>
+			</div>
+	 </div>
+	 <div class="inforModuleContentArea">
+	 </div>
+</body>
+</html>

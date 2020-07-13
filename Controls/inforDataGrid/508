@@ -1,0 +1,56 @@
+Before:
+	41K CSS
+	340K JS
+
+Base Line:
+http://webaim.org/articles/voiceover/tables
+
+Breaking Changes:
+* filterType option is now a string. Fx.. filterType: "Text"
+* Formatter option drops word Column...
+
+508 Comments:
+
+See: This link for some ideas..
+http://demos.kendoui.com/web/grid/virtualization-remote-data.html
+-Disabled Text in Grid Contrast
+	- Could be #888888
+	
+-Use Data table Markup (table navigation).
+-Cell uneditable needs aria-disabled / aria-readonly
+-Remove all redundent tool tips
+-Key board into grid not working
+-Keyboard filter row needs work
+-Tooltip does not show on column contents
+-Use alt-down (see keyboard shortcuts)
+-drill down is missing a focus state
+-sort arrow needs a text equivalent
+-make sure loading 10 more cards shows alternate text
+-sortable column headers needs to be tabbable
+	
+-keyboard short cuts for resize columns and sorting?
+-Progress indicator (needs text equivalent)
+-Frozen columns should be row headers
+-Make the button text visible (and should have has popup)
+-consider aria-busy for continuous
+-in drop downs make it not move down
+
+-arrow keys should work 
+-space to enter edit mode.
+-the arrow and and arrow down does not work on the read-only columns
+-add screen reader text (summary but its deprecated)
+
+Questions
+	-Ellpsified content
+		- remove redundant
+		- link to expose
+	-Make field wide enough to see the text.
+	-Big issue is that space should open the editor.
+	
+Most Important
+	- tabbing around
+	- can you use the keyboard
+	- paging needs keyboard (home / end)
+	- how to show the attributes
+	- make sure page up and page down
+

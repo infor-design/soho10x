@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog Box</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/modal.js"></script>
+	<script src="js/message.js"></script>
+	<link href="css/modal.css" rel="stylesheet">
+
+	<script>
+		$(function () {
+			$('body').message({
+				title: 'Connectivity',
+				shortMessage: 'Test Connection Succeeded.',
+				detailedMessage: '',
+				dialogType: 'Information'
+			});
+		}).on('beforeOpen', function () {
+          console.log('About to open.');
+          //Could return false to not close
+          //return false;
+        }).on('open', function () {
+          console.log('Open.');
+          //Could return false to not close
+          //return false;
+        });
+	</script>
+</head>
+<body>
+
+</body>
+</html>

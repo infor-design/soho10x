@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<title>Infor Trigger Field - Drop Down List</title>
+	
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			$(".inforDropDownList").inforDropDownList();	
+			$("#trigger4").validationMessage("show", "This field has an Error.");
+			
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="trigger1">DropDownList List</label>
+		<select class="inforDropDownList" id="trigger1">
+			<option value="a">A</option>
+			<option value="b" selected="selected">B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+		</select><br>
+		<label class="inforLabel" for="trigger2">DropDownList Read-only</label>
+		<select class="inforDropDownList" readonly id="trigger2">
+			<option value="a">A</option>
+			<option value="b" selected="selected">B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+		</select><br>
+		<label class="inforLabel" for="trigger3">DropDownList Disabled</label>
+		<select class="inforDropDownList" disabled id="trigger3">
+			<option value="a">A</option>
+			<option value="b" selected="selected">B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+		</select><br>
+		<label class="inforLabel" for="trigger4">DropDownList Error</label>
+		<select class="inforDropDownList" id="trigger4">
+			<option value="a">A</option>
+			<option value="b" selected="selected">B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+		</select><br>
+	</div>
+</body>
+</html>

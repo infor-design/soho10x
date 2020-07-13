@@ -1,0 +1,6 @@
+- text dirty appended near the field
+- same for required
+- but the required indicator at start so you can see it first. (or use a hidden span)
+- aria-required / aria-invalid
+- text * = required should be on the top of form.
+- instead of background image of the star need text there.

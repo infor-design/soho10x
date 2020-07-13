@@ -1,0 +1,30 @@
+
+-What is exceptable text to use.
+-Test Tool identified color contrast issue.
+
+- Don't need description on the icon if it is the same as the text.
+- Should arrow keys work on the items?
+- Selected State needs to text 
+	- equivalted use aria-selected
+	- Horse hidden <span>select</span> which moves to after the anchor tag
+- Role = Button is redundant
+- use aria heading and aria-level
+- Aria-disabled - is redundant with disabled
+- Use aria-expanded 
+- Review Code Sample from SSB
+- Contrast Colors
+	- 18pt (normal) is large
+	- 14 px (bold) is large
+	- Under small
+- toggle button uses
+	- aria-expanded="true"
+-use role=nav????
+
+Question
+- Is it ok to use a field set? (TEST THIS) 
+- Test Text Shadow on the Blue....(TEST THIS)
+
+Guidelines
+http://whatsock.com/tsg/
+
+

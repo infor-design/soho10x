@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Message Dialog Box</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforValidation.js"></script>
+
+	<script>
+		//Handle the dialog
+		function openDialog() {
+			 var templateWizard = $("#testDialog")
+			 templateWizard.inforMessageDialog({
+				title: "Add a Template Wizard",
+				dialogType: "General",
+				width: 400,
+				height: 250,
+				buttons: [{
+					text: Globalize.localize("Ok"),
+					click: function () {
+						$('#templateForm').trigger('submit');  // <-- that will end up on line #VALID
+					},
+					isDefault: true
+				}, {
+					text: Globalize.localize("Cancel"),
+					click: function () {
+						$(this).inforDialog("close");
+					}
+				}]
+			});
+		}
+
+		$(function () {
+
+			$.Validation.addRule("validChars", {
+				check: function (value) {
+					if (value) {
+						var regExp = new RegExp("^[a-zA-Z0-9_ ]*$"); //allow letter, digit, underscore or space character
+						return regExp.test(value);
+					}
+					return true;
+			},
+				msg: "The field contains invalid characters."
+			});
+
+			//Setup the form Validation
+			var templateForm = $("#templateForm");
+			templateForm.setupValidation(function (valid) {
+				if (valid) {
+					console.log("save the data");
+					//Save the data....
+					$("#testDialog").inforDialog("close");
+					//Note: $('#templateForm').trigger('submit');	Will infinitely loop
+				}
+			});
+
+			//Make the click open the dialog
+			$(".inforFormButton").click(function () {
+				openDialog();
+			});
+		});
+
+	</script>
+</head>
+<body>
+	  <div id="testDialog" style="display:none">
+		<form id="templateForm">
+			<input class="inforTextbox" data-validation="required validChars"/>
+			<input class="inforTextbox" data-validation="required validChars"/>
+			<input class="inforTextbox" data-validation="required validChars"/>
+			<input class="inforTextbox" data-validation="required validChars"/>
+		</form>
+	   </div>
+
+	  <button style="margin:20px" id="generalDialogButton" class="inforFormButton">Show Dialog</button>
+</body>
+</html>

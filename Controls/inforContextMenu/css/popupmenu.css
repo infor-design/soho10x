@@ -1,0 +1,211 @@
+/* Menu (Context)
+----------------------------------*/
+.popupmenu {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0, 0.15);
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  color: #4c4c4c;
+  list-style: none;
+  padding: 12px 0;
+  margin: 0;
+  z-index: 5020;
+  display: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.inforContextMenu {
+  display: none;
+}
+
+.popupmenu.is-open {
+  display: block;
+  z-index: 5020;
+}
+
+.submenu .popupmenu.is-open {
+  display: block;
+  visibility: inherit;
+}
+
+.popupmenu li {
+  line-height: 24px;
+  cursor: pointer;
+  position: static;
+}
+
+.popupmenu li:hover {
+  background-color: #f2f2f2;
+}
+
+.popupmenu li:hover > a {
+  color: #1a1a1a;
+}
+
+.popupmenu li:not(.is-disabled):hover .icon {
+  opacity: 0.80;
+  filter: alpha(opacity = 80);
+}
+
+.popupmenu a {
+  border: 1px solid transparent;
+  font-size: 1.2em;
+  padding: 1px 25px 1px 15px;
+  text-decoration: none;
+  color: #444;
+  display: block;
+  white-space: nowrap;
+}
+
+/* Disabled */
+.popupmenu li.is-disabled a, .popupmenu li.disabled a {
+  cursor: default;
+  background-color: transparent;
+  color: #777;
+}
+
+.popupmenu li.is-disabled:hover, .popupmenu li.disabled:hover {
+  background-color: transparent;
+}
+
+/* Header Groups */
+.popupmenu .group {
+  font-size: 1.2em;
+  padding: 0 10px;
+  cursor: default;
+}
+
+.popupmenu .group:hover {
+  background-color: transparent !important;
+}
+
+.popupmenu .group:hover a {
+  color: #4c4c4c !important;
+}
+
+.popupmenu .separator {
+  border-bottom: 1px solid #F2F2F2;
+  margin: 5px 10px;
+}
+
+.divider .separator {
+  margin-left: 42px;
+}
+
+/*Special Checkbox Handling */
+.popupmenu .inforCheckboxLabel {
+  font-size: 12px;
+}
+
+/*Selected */
+.popupmenu li a:focus {
+  border: 1px solid #13a3f7;
+}
+
+.background-iframe {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  background-color: red;
+}
+
+/* Bugs */
+.inforVerticalTabs .inforMenuButton:before {
+  margin-left: -10px !important;
+  margin-top: -8px !important;
+}
+
+
+/* Icons */
+.popupmenu .icon {
+  background-repeat: no-repeat;
+  display: block;
+  height: 12px;
+  margin-left: 13px;
+  margin-top: 8px;
+  opacity: 0.4;
+  pointer-events: none;
+  position: absolute;
+  width: 12px;
+}
+
+.divider.popupmenu a {
+  text-indent: 35px;
+}
+
+.popupmenu.divider {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP49OkTAAWwAtcirt1dAAAAAElFTkSuQmCC");
+  background-position: 36px center;
+  background-repeat: repeat-y;
+}
+
+.popupmenu .icon.sortAsc { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAARElEQVR42mNgYGD4j4bRAS5xFAV4ASsBWzDE/pNqw38C7sXqB2RBgjYQ4wIUQ5ZhwQQ1YGMTjAdcJmMNcly24FRMtB8AKt4ylwbP1kYAAAAASUVORK5CYII=");}
+.popupmenu .icon.sortDesc { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAARUlEQVR42mNgYGBYhgUjg/9QDAfLcLAJAlyKMWwg2RaS/UAy+I+GGUi14T8hDawEbMEQ+4/Dhv84MIqG/zj4WG35T4wfALpzMpeC7lCaAAAAAElFTkSuQmCC"); }
+.popupmenu .icon.locked{ background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAZElEQVR42mNgwAQ+QHwJiH8C8WUg9mfAA4yA+A9U8WEg/gHE/4DYHJeGPCD+D8QOUL4dlF+MS0MFVAEjlM8M5VcQ0oAMQPx6bIrbgPg2VAE6vg/EPQxYTCKEh52G0wQUXwEpAgDxY07HZpy5BgAAAABJRU5ErkJggg==");}
+.popupmenu .icon.unlocked { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAXklEQVR42mNggIA5QPwJiJ8DcQUQMzLgAYuA+D8QXwLiB1B2Mj4NIJN3QU3lBuL7QLwdnwaQiXVI/KVAfJWQhgok/jQgfkhVDcjgLtQAbPgCLtvw4aGg4TYexddBCgCIgUL4fByXWgAAAABJRU5ErkJggg=="); }
+.popupmenu .icon.current { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAABobHR9g7LZAAAAAXRSTlMAQObYZgAAADNJREFUaN5jYGBkYGBmYGBnYOBnYJBnYLBn4KhjkPnDYP+Dwf4Dg/wDBv4DDOwNICVgAACLwAbVeXVnTQAAAABJRU5ErkJggg==");}
+.popupmenu .icon.columns { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAZSURBVGjeY/j/gaFBgAEC8hMYMhPQyQYBAKGDCKfMfysuAAAAAElFTkSuQmCC");}
+.popupmenu .icon.export { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAPUlEQVR42mNggAB2IP7PgAD/sWAUgFMCmxwh03DKYTOdLA2kqsGu4T8JGGco/SclpAh6miINRDmJWI8zAAAcnk65pG3QRgAAAABJRU5ErkJggg==");}
+.popupmenu .icon.selected { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY2gQYGAwYGAoYBD4wGD5gMH+AIN8AwM/AwMbAxQ0CAAAdqIFjaOithMAAAAASUVORK5CYII=");}
+.popupmenu .icon.notSelected { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAVSURBVGjeY2gQYAAC+wPYERA0CAAAokAJGWgL+UAAAAAASUVORK5CYII=");}
+
+/*Grid Filter Menu Icons*/
+.popupmenu .icon.greaterThan { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAkSURBVGjeY/j/geHwB4aHHxg+fGD4UcDwxwBEfgCLAMX/gxAAbzkUkmXZOJIAAAAASUVORK5CYII=");}
+.popupmenu .icon.greaterThanOrEquals  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAlSURBVGjeYzj8geHhB4YPHxh+FDD8MQCRH8AiQPH/HxgOGAARAGHXEpRCGgXJAAAAAElFTkSuQmCC");}
+.popupmenu .icon.lessThan { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAMUlEQVR42mNgIBEw4pH7j00tIymKcWn4j88VjKQoRhf4T4z/KLKBLD+QFUok+Yn6AABhcAkKlnipJQAAAABJRU5ErkJggg=="); }
+.popupmenu .icon.lessThanOrEquals { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAlSURBVGjeY/hjwPCjgOHDB4aHHxgOg0kgGygCFP//geGAARABAFZ2Eg3Yixx4AAAAAElFTkSuQmCC");}
+.popupmenu .icon.equals { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAHElEQVR42mNgoDVgBOL/pGhgItUGJoZBB0akpwHiogIJHgY8NwAAAABJRU5ErkJggg==");}
+.popupmenu .icon.doesNotEqual { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAaElEQVR42mNgwA3MgPg/FLMwEAGmQRXnokv8x4KRxfnR+FgVh6LxfxPSAGPbAjE7FnkUYIkkyUyMZ2GKKwgpAGEOJLYwjkBBcZsTlD0R6pyPhDTA2HoEghwMzPGFBDbQB8SfgLgAnyIAmipDkJMBg6cAAAAASUVORK5CYII=");}
+.popupmenu .icon.contains { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAWElEQVR42mNggIAGKMYFUOQbSNDQgMv0m0D8AJct6BoCgPg/FEcSo+E/Giao4SUS+wMhDd5YbAjHpwGmqACKkZ2FVcMXIM5FcgaI/Y2QHwhGHskRR1LSAAD1VTB0nrHHcAAAAABJRU5ErkJggg==");}
+.popupmenu .icon.doesNotContain {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAhElEQVR42mNggIAGKEYGJkD8H4pPI0s04NAwH0nDBiS1WBWLAPE3qOLXQMyJrA6bhhIk07vRnY2ugQmI70AV/wViZUIavJBM34rFrxgatiBp8CakQQnqDJDiu1Dn4dXQhWR6KVpAYGjghAbhf2iQiuDTAALrkUxfgEMxSvCfRNJghst0ANiQOn3YNmSMAAAAAElFTkSuQmCC");}
+.popupmenu .icon.isEmpty {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAu0lEQVR42m2STQ6CMBBGa9jhIZRLkegBFG8iyk4Tw3E0+BNFQlhp5CoGp+ZVa+0kb/PN688UlPpWKEyEu9DBjayvnBoIV6SDkMGO7CxERtarGxpj9V8lvYpbqIQg9shz4SkUOFMdtsLFI2+QFkIg7HHfYerIOfnaypZkn11MrchyZ5PMLGh5mYCTOq7jG/5hD10wYOqRY5yZedaKoHTEnjCi19gfcCicaGwZUN/5SFbj/FTIO7u/RmLv/AIL8j/vTf2pyAAAAABJRU5ErkJggg==");}
+.popupmenu .icon.isNotEmpty { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAApUlEQVR42o2SzQnCQBSEPzy6RWgNOcVCIiQFmFhKjG2ph0SQnJSkl/Uyq491RQeGhZlheX/wxhLYAQ/Ai3dpjggr4KrQGTiKF2k3YB3CDhhlVHyikjeqChoJhQnlYkChTA0wA70xO9NDZ/ReWTzQSsxMODCTdwD8gt/wel/ZGRj+KGkAJtv01pgbMW56H4+1TJRUmrG61OJOKuXr4uxp1InTaOzPTyQIPAGzqlMJAAAAAElFTkSuQmCC");}
+.popupmenu .icon.startsWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAANElEQVR42mNgGPSgAY3PBMT/kTBWDcia/qOx/yMrQsfoConSgOwUrM7CZTpeDegAXdNgAwAabh3uQJENIwAAAABJRU5ErkJggg==");}
+.popupmenu .icon.doesNotStartWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAdElEQVR42mNgIB7kAvENEtQz7AHiTmIVCwLxLyC2RJf4j8ZnBOIGIF4LxJ+BmAmbBmRNDVB6FRCfhfH/48Aw0AzEP4F4KTEaGqAKP0M1NhDjpLNQJzXg0oAMmKCmr0XzE05gAQ1OAWLDvwMaYUSD69AkAQcAHQUo9qfs/1QAAAAASUVORK5CYII=");}
+.popupmenu .icon.endsWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAANUlEQVR42mNgGJSACYj/I2F00IAu8B+N/R9NcQM2W/5jsaUBB0ZRRJEGopzEgMXjDQyDGwAAoGkd7jfBcIAAAAAASUVORK5CYII=");}
+.popupmenu .icon.doesNotEndWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAdElEQVR42mNgQAW5QHyDgQSwB4g7iVUsCMS/gNiSkEJGIG4A4rVA/BmImdDk/6NraIDSq4D4LBIfpvg/NluagfgnEC9F0vAfBwYrWAp1TjOxGs5CndRAjJOYoKavRfMTTk9bQINTgNjw74BGGNHgOjRJEAUAG2Ao9r2ZoXoAAAAASUVORK5CYII=");  }
+.popupmenu .icon.checked  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY2gQYGAwYGAoYBD4wGD5gMH+AIN8AwM/AwMbAxQ0CAAAdqIFjaOithMAAAAASUVORK5CYII=");}
+.popupmenu .icon.notChecked { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAVSURBVGjeY2gQYAAC+wPYERA0CAAAokAJGWgL+UAAAAAASUVORK5CYII=");}
+.popupmenu .icon.eitherSelectedorNotSelected { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAoSURBVHjaY2gQYAAC+wMM9g0M9gwMdgwMNgwMFgwMBgwMCiAZhgYBAFh6BCDrtR+xAAAAAElFTkSuQmCC");}
+.popupmenu .icon.between { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAdSURBVGjeY/j5gQEZHTBgeFDA8AHMjl8AQv8/AAB08BOEXUnF3wAAAABJRU5ErkJggg==");}
+.popupmenu .icon.today { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAVUlEQVR42mNgwA72QzFOgK6AEB8usB+PYShyLGiC8lCMrIEFl/Oygfg/FGcRcr80kmIYlkRXh6xBihgN6CADSXEmLneje1oGiGXxeZrkYCU54ohOGgAl0y9dzqOs0wAAAABJRU5ErkJggg==");}
+
+.popupmenu .submenu > a {
+  background-repeat: no-repeat;
+  background-position: 94% center;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAOElEQVQYV2Po6en5DwQM6JghLS3tPwhv2rQJRQFcAiRZUFAAl0SRgOnevHnzf8I6QKqQHcCAy1UAAX9vzbZ/ha0AAAAASUVORK5CYII=");
+  padding: 1px 25px 1px 15px;
+}
+
+.popupmenu-wrapper {
+  display: inline-block;
+  position: absolute;
+  z-index: 5020;
+}
+
+.submenu > .wrapper {
+  display: block;
+  position: absolute;
+}
+
+/*RTL*/
+html[dir="rtl"] .popupmenu .inforCheckboxLabel {
+  padding: 0 0 0 12px;
+  margin-right: -12px;
+}
+
+html[dir="rtl"] .popupmenu .icon {
+  margin-right: 13px;
+}
+
+html[dir="rtl"] .popupmenu.divider {
+  background-image: none;
+}
+
+html[dir="rtl"] .divider .separator {
+  margin-right: 12px;
+  margin-left: 0;
+}

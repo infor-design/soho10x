@@ -1,0 +1,78 @@
+/* Infor Form Button
+----------------------------------*/
+.inforFormButton {
+	background-color: #999999;
+	box-shadow: 0 -1px #737373 inset;
+	border-radius: 2px;
+	color: white;
+	padding: 4px 8px 4px 8px;
+	margin: 2px 0 0;
+	cursor: default;
+	outline: none;
+	height: 22px;
+	overflow: hidden;
+	font-family: Helvetica, Arial, sans-serif;
+	white-space: nowrap;
+	line-height: 14px;
+	min-width: 50px;
+	cursor: pointer;
+	border: none;
+	width: auto;
+	text-shadow: 0 0 1px rgba(34, 34, 34, 0.3);	/*#188188*/
+}
+
+.inforFormButton[disabled], .inforFormButton.disabled, .inforFormButton[disabled]:hover , .inforFormButton.disabled:hover, .inforFormButton[disabled]:active , .inforFormButton.disabled:active{
+	background: none repeat scroll 0 0 #e0e0e0 !important;
+	color: #808080;
+	box-shadow: 0 -1px #E0E0E0 inset;
+	cursor: default;
+	text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.inforFormButton.default[disabled], .inforFormButton.default.disabled {
+	box-shadow: 0 -1px #e0e0e0 inset !important;
+}
+
+.inforFormButton:hover {
+	background-color: #808080;
+	box-shadow: 0 -1px #595959 inset;
+	transition: all 0.15s linear 0s;
+}
+
+.inforFormButton:focus , .inforFormButton.default:focus  {
+	box-shadow: 0 0 0 1px white, 0 0 0 2px #13A3F7;
+}
+
+/*Ie8 Fallbacks*/
+.ie8 .inforFormButton:focus {
+	outline:1px solid #13A3F7;
+}
+
+.ie8 .inforFormButton.default:focus{
+	outline:1px solid #808080;
+}
+
+.inforFormButton:active, .inforFormButton.active{
+	background-color: #737373;
+	box-shadow: 0 1px 0 0 #595959 inset;
+}
+
+.inforFormButton.default {
+	background-color: #13a3f7;
+	box-shadow: 0 -1px #0f7ab8 inset;
+}
+
+.inforFormButton.default:hover {
+	background-color: #1293de;
+	box-shadow: 0 -1px #0d699e inset;
+}
+
+.inforFormButton.default:active{
+	background-color: #118bd1;
+	box-shadow: 0 1px #0c6091 inset;
+}
+
+/*Reset Firefox*/
+td .inforFormButton {
+    font-size: 1em;
+}

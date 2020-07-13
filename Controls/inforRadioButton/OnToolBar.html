@@ -1,0 +1,33 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Radio Button : On a Toolbar</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+		   //Globalize.culture("ar-SA");
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body>
+	<form id="form1">
+	<div class="inforModuleContentArea">
+		<div class="inforToolbar">
+			<input type="radio" id="rumOption" class="inforRadioButton" name="radioGroup1" value="ru"/><label>Rum</label>
+			<input type="radio" id="waterOption" class="inforRadioButton" name="radioGroup1" value="wa" /><label>Water</label>
+			<span class="inforToolbarSpacer"></span>
+			<button type="submit" class="inforIconButton save" title="Submit" id="SignIn1"></button>
+		</div>
+	</div>
+	</form>
+</body>
+</html>

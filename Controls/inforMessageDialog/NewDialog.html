@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Validate Plugin: Form Validation</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+	  $(function () {
+			function Dialog(control) {
+				var self = this;
+				self.control = control;
+				self.modalControl = null;
+				self.type = "General";
+				self.shortMessage = "";
+				self.detailedMessage = "";
+				self.autoFocus = false;
+				self.buttons = [{
+					text: "OK",
+					click: self.close,
+					isDefault: true
+				}];
+				self.setShortMessage = function(message) {
+					self.shortMessage = message;
+				};
+				self.setDetailedMessage = function(message) {
+					self.detailedMessage = message;
+				};
+				self.setButtons = function(buttons) {
+					self.buttons = buttons;
+				};
+				self.setTitle = function(title) {
+					self.title = title;
+				};
+				self.setTitleKey = function(key) {
+					self.setTitle(i18n.getString(key));
+				};
+				self.setType = function(type) {
+					self.type = type;
+				};
+				self.setSize = function(width, height) {
+					self.width = width;
+					self.height = height;
+				};
+				self.setInnerPadding = function(innerPadding) {
+					self.innerPadding = innerPadding;
+				};
+				self.setAutoFocus = function(autoFocus) {
+					self.autoFocus = autoFocus;
+				};
+				self.show = function () {
+					var defaults = {
+						title: self.title,
+						dialogType: self.type,
+						width: self.width,
+						height: self.height,
+						buttons: self.buttons,
+						shortMessage: self.shortMessage,
+						detailedMessage: self.detailedMessage,
+						autoFocus: self.autoFocus
+					};
+					self.control.message(defaults);
+					self.modalControl = self.control.closest('.modal');
+				};
+				self.close = function() {
+          self.modalControl.find('input').removeError();
+					self.modalControl.modal('close');
+				};
+				self.setWidth = function(width) {
+					self.width = width;
+				};
+				self.setHeight = function(height) {
+					self.height = height;
+				};
+				self.find = function(selector) {
+					return self.control.find(selector);
+				};
+			return self;
+			}
+
+			//Display a generic dialogue -
+			$('#generalDialogButton').click(function () {
+
+				  $.fn.validation.rules['folder-existence'] = {
+					check: function (value, onComplete) {
+					// Only allow a!
+						onComplete(value == 'a' || $.trim(value) == '');
+					},
+					message: "The folder already exists",
+					async: true
+				};
+
+				$("#createFolderInput").attr("data-validate", "required folder-existence");
+
+        $('#addFolderForm').validate().on('validated', function(e, isValid) {
+          if (!isValid) {
+		        console.log("Not Valid");
+          } else {
+						console.log("Valid");
+						$(this).modal("close");
+          }
+        });
+
+				$('addFolderForm').inforForm();
+
+			    // Set of buttons.
+				var buttons = [{ text: "OK", click: function() { $('#addFolderForm').trigger('submit');}, isDefault: true},
+						       { text: "Reset", click: function() { $('#addFolderForm').resetForm();	}},
+							   { text: "Cancel", click: function() { $(this).find('input').removeError(); $(this).inforDialog("close");	}}];
+
+				var dialog = new Dialog($("#createFolderDialog"));
+				dialog.setTitle("Email");
+				dialog.setWidth(360);
+				dialog.setButtons(buttons);
+				dialog.setAutoFocus(false);
+				dialog.show();
+			});
+    });
+  </script>
+</head>
+<body class="inforApplicationPadding">
+
+		<div id="mainContentArea">
+		 <p>This is a sample shows implementing the various types of pop-up message and dialogs available.</p>
+			<table style="font-size:1.2em">
+				<tr>
+					<td>Email</td>
+					<td><button id="generalDialogButton" class="inforFormButton">Show</button></td>
+				</tr>
+			</table>
+		</div>
+
+    <div id="createFolderDialog" style="display: none">
+        <form id="addFolderForm">
+            <div class="inforSingleColumnLayout autoLabelWidth">
+                <label class="inforTopLabel" for="createFolderInput">Enter the folder name</label>
+                <input class="inforTextbox" type="text" id="createFolderInput" size="30" maxlength="40" />
+                <br />
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

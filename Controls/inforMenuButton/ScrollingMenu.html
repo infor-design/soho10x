@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Menu Button - Lots of items</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../lib/jquery-1.7.2.js"></script>
+	<script src="../lib/jquery-ui-1.8.17.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforMenuButton.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+
+			$("#button2").inforMenuButton({menuId: 'menu2',callback: function(action, el, pos) {
+					alert('Action: ' + action);
+			}});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforToolbar" >
+		 <button type="button" class="inforMenuButton" id="button2">Button 2</button>
+	</div>
+
+	<ul id="menu2" class="inforContextMenu">
+		<li class="option1"><a href="#1">Option 1</a></li>
+		<li class="option2"><a href="#2">Option 2</a></li>
+		<li class="option3"><a href="#3">Option 3</a></li>
+		<li class="option3"><a href="#4">Option 4</a></li>
+		<li class="option3"><a href="#5">Option 5</a></li>
+		<li class="option3"><a href="#6">Option 6</a></li>
+		<li class="option3"><a href="#7">Option 7</a></li>
+		<li class="option3"><a href="#8">Option 8</a></li>
+		<li class="option3"><a href="#9">Option 9</a></li>
+		<li class="option3"><a href="#10">Option 10</a></li>
+		<li class="option3"><a href="#11">Option 11</a></li>
+		<li class="option3"><a href="#12">Option 12</a></li>
+		<li class="option3"><a href="#13">Option 13</a></li>
+		<li class="option3"><a href="#14">Option 14</a></li>
+		<li class="option3"><a href="#15">Option 15</a></li>
+		<li class="option3"><a href="#16">Option 16</a></li>
+		<li class="option3"><a href="#17">Option 17</a></li>
+		<li class="option3"><a href="#18">Option 18</a></li>
+		<li class="option3"><a href="#19">Option 19</a></li>
+		<li class="option3"><a href="#20">Option 20</a></li>
+		<li class="option3"><a href="#21">Option 21</a></li>
+		<li class="option3"><a href="#22">Option 22</a></li>
+		<li class="option3"><a href="#23">Option 23</a></li>
+		<li class="option3"><a href="#24">Option 24</a></li>
+		<li class="option3"><a href="#25">Option 25</a></li>
+		<li class="option3"><a href="#26">Option 26</a></li>
+		<li class="option3"><a href="#27">Option 27</a></li>
+		<li class="option3"><a href="#28">Option 28</a></li>
+		<li class="option3"><a href="#29">Option 29</a></li>
+		<li class="option3"><a href="#30">Option 30</a></li>
+		<li class="option3"><a href="#31">Option 31</a></li>
+		<li class="option3"><a href="#32">Option 32</a></li>
+		<li class="option3"><a href="#33">Option 33</a></li>
+		<li class="option3"><a href="#34">Option 34</a></li>
+		<li class="option3"><a href="#35">Option 35</a></li>
+		<li class="option3"><a href="#36">Option 36</a></li>
+		<li class="option3"><a href="#37">Option 37</a></li>
+		<li class="option3"><a href="#38">Option 38</a></li>
+		<li class="option3"><a href="#39">Option 39</a></li>
+		<li class="option3"><a href="#40">Option 40</a></li>
+		<li class="option3"><a href="#41">Option 41</a></li>
+		<li class="option3"><a href="#42">Option 42</a></li>
+		<li class="option3"><a href="#43">Option 43</a></li>
+		<li class="option3"><a href="#44">Option 44</a></li>
+		<li class="option3"><a href="#45">Option 45</a></li>
+		<li class="option3"><a href="#46">Option 46</a></li>
+		<li class="option3"><a href="#47">Option 47</a></li>
+		<li class="option3"><a href="#48">Option 48</a></li>
+		<li class="option3"><a href="#49">Option 49</a></li>
+		<li class="option3"><a href="#50">Option 50</a></li>
+		<li class="option3"><a href="#51">Option 51</a></li>
+		<li class="option3"><a href="#52">Option 52</a></li>
+
+	</ul>
+</body>
+</html>

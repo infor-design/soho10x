@@ -1,0 +1,111 @@
+﻿/* Infor Slider
+----------------------------------*/
+
+.inforSlider { position: relative; cursor: pointer; text-align: left;  background-color: #D9D9D9; border-radius: 10px 10px 10px 10px; }
+.inforSlider .inforSliderHandle { position: absolute; z-index: 2; width: 1.2em; height: 1.2em; cursor: default; }
+.inforSlider .inforSliderRange {
+	position: absolute; z-index: 1; font-size: .7em; display: block; border: 0;
+	background-position: 0 0;
+	background-color: #CCCCCC;
+}
+
+.inforSlider.horizontal {height:  11px; }
+.inforSlider.horizontal .inforSliderHandle {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAATCAYAAACgADyUAAABZ0lEQVR42pWTzWrCUBCFb5+gUGyXhW66KPQR4spQqIRIutddwAaCWwlEcGEkNogPYDZx0YVRo/Q9JOviM6S0FAutt2eklfifDBy4zJxvJrk/jMWi3+9nJpNJAwqh+Z+mUN33/QzbFePx+AGGCOJ79EaeNQjdCFocgP61IO8Sqlar59QtAbSabBjGBet2u/V4IQgCblkW1zRtKVpTLu5xXbfBRqPRNJ5sNptcVdU12bbNN5qHBM7jSZqyCVIu7sF/fjGMTQ2CeWe1Wi1M+6mmaYZMlmUH55N4c8hbKBSemCAI161W6yfpcTiOswBzszzLfD7/PBgMjkLD4ZBLkuSvbg46XOq6/nEMrFQqn/BerV27bDZbbrfbe6FOp8Ph0bcuOTqd5HK5wPO8LajX63FRFF/Is/OFoHCqKMorntcKojVyM9TO2KGA4bZYLEa07aRSqRRRjiUJGO+wWd8krO9ZmgBQhh731X8B/Twftc8F9qoAAAAASUVORK5CYII=");
+    height: 19px;
+    margin-left: -4px;
+    margin-top: -3px;
+    width: 14px;
+	cursor: pointer;
+	z-index: 3;
+}
+
+.inforSlider.horizontal .inforSliderHandle:hover, .inforSlider.horizontal .inforSliderHandle.focus {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAATCAYAAACgADyUAAABXElEQVR42pVTy2rCUBAd6N/U4CuLktCtZNllIYJis7IutHEXQh4GDPkAXbjppj/gP2QRsIv+guDCH6ipCzOdcSHm5ePAwDDnnDs3MzcAZ1gsFk+z2WwTBEHiui5yUH6Yz+dr5qAIRCw9z0PHcQqDOdakTNRlWWbIBmuPpn6/L1/qVNR5MBg8w2QyWWeJKIpwt9thHMfHPHsweTYwnU4P50UWZhGGYcro+34ClmWlitwpC66da0zTRBgOh3cbR6MRQrvdTu69qqqqCUiStLVtOzccHkzZcGRZ3kK9Xn/rdDo3r6Pb7SJ53o+7bDabv/zB10ysEUUxPr0cOuFFUZSrRtaQ9jX17ARBWPV6vVKTpmlYqVR+co+crvtAxJ+u6znTeDxGOnjPmsI/pNFoPBKZGIZxMnHONeJEuIRarfZBK0JeEQeNHrkGt6BarX62Wi3koPwL7gF974riu4z/B8JbAicSitNXAAAAAElFTkSuQmCC");
+}
+
+.inforSlider.range.horizontal .inforSliderHandle {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAPCAYAAAA2yOUNAAAAYElEQVQoU+WSMQrAMAhFvf/NPELAMUvMIl7gl19oSEqg2Tt8RP/TQRUA0lqDmaGUMsScdfri7qi1IiKQmUPMWe+9Q9jxBmaQvnD0DnhEf4FUdYk/hHa6oaONH93u+wsgF0qZ8JMLUzNhAAAAAElFTkSuQmCC");
+	height: 15px;
+	width: 9px;
+	margin-left: -3px;
+}
+.inforSlider.range.horizontal .inforSliderHandle:hover, .inforSlider.range.horizontal .inforSliderHandle.focus {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAPCAIAAAC5qnJaAAAABnRSTlMAAAAAAABupgeRAAAAVElEQVR42mNgYGA4evToggULZsIAkA0UYYBIHDhw4M2bN59gAMgGipw8eZIBqApZAi4NFGcAGvIJGwCKI+R6enrg5FCVw+I/fOGCKzxPnDjBgCceAHo0OxOWlMO8AAAAAElFTkSuQmCC");
+}
+.inforSlider.horizontal .inforSliderRange { top: 0; height: 100%; }
+.inforSlider.horizontal .inforSliderRange.min {
+	left: 0;
+	background-color: #666666;
+	border-radius: 10px 0px 0px 10px;
+	padding-right: 2px;
+}
+
+.inforSlider.focus.horizontal .inforSliderRange.min, .inforSlider.hover .inforSliderRange.min,
+.inforSlider.focus.horizontal .inforSliderRange, .inforSlider.hover .inforSliderRange,
+
+.inforSlider.horizontal .inforSliderRange.max{ right: 0; }
+
+.inforSliderTick {
+	background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px 10px 10px 10px;
+    cursor: pointer;
+    display: block;
+    height: 5px;
+    margin-left: 2px;
+    position: absolute;
+    top: 2px;
+    width: 5px;
+    z-index: 2;
+}
+
+.inforSliderTick.afterHandle {
+	background-color: #999999;
+    border: 1px solid #999999;
+}
+
+.inforSliderLabel, .inforSliderLabelRight {
+	left: 50%;
+	margin-left: 2px;
+	margin-top: 19px;
+	position: absolute;
+	color: #666666;
+	font-size: 1.2em;
+	float: left;
+	width: auto;
+}
+
+.inforSliderTick.last {
+    background-color: #D9D9D9;
+    border: medium none;
+    border-radius: 0 10px 10px 0;
+    height: inherit;
+    margin-left: -4px;
+    top: 0;
+    width: 15px;
+}
+
+.inforSliderTick.last:after {
+    background-color: #999999;
+    border-radius: 15px;
+    content: " ";
+    height: 7px;
+    margin-left: 5px;
+    margin-top: 2px;
+    position: absolute;
+    width: 7px;
+}
+
+html[dir="rtl"] .inforSlider.horizontal {
+    text-align: right;
+}
+
+html[dir="rtl"] .inforSliderRangeLabel {
+    float: left;
+}
+
+html[dir="rtl"] .inforSlider.horizontal .inforSliderRange.min {
+    left: initial;
+    right: 0;
+}

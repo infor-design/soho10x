@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Form Pattern</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			Globalize.culture("no");
+			$('body').inforForm();
+			$('#lookupField1').inforLookupField();
+			$('#inforTabContainer').inforTabset();
+		});
+	</script>
+</head>
+<body class="inforHidden inforApplicationPadding">
+	<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Sales Order </span>
+					<span class="inforModuleRecordIdText">SO126373</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton"></button>
+					<button class="inforModuleCloseButton"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea ">
+			<div class="inforToolbar">
+				<button class="inforIconButton additionalHelp" title="Create New"  tabindex="0" ></button>
+				<button class="inforIconButton duplicate"  title="Copy and Create new" ></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforIconButton discard" onclick="cancel()" title="Discard Changes"></button>
+				<button class="inforIconButton refresh" title="Refresh"></button>
+				<button class="inforIconButton open" title="Open"></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforIconButton first" title="Go to First"></button>
+				<button class="inforIconButton previous" title="Go to Previous"></button>
+				<button class="inforIconButton next" title="Go to Next"></button>
+				<button class="inforIconButton last" title="Go to Last"></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforMenuButton print" title="Print"></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforSplitButton delete" title="Open"></button>
+				<button class="inforSplitButton save" onclick="save()" title="Save Changes" ></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforSplitButton" title="Approve">Approve</button>
+				<button class="inforTextButton" title="References">References</button>
+			</div>
+			<div class="inforScrollableArea">
+				<div class="inforFieldSet2ColumnLayout">
+					<fieldset class="inforFieldSet">
+						<legend>
+							<span class="inforFieldSetLabel">Sold-to BP</span>
+						</legend>
+						<button type="button" role="button" class="inforExpandButton open"></button>
+						<div class="content autoLabelWidth">
+							<div class="inforSingleColumnLayout">
+									<label class="inforLabel" for="bp">Business Partner</label>
+									<input class="inforTextbox" readonly id="bp" value="CUS0000016" style="width:90px"/><span class="inforDataLabel noColon" style="float:none;margin-left:0;">Ford Motor Company But i am long long long</span><br/>
+									<label class="inforLabel" for="address" >Address</label>
+									<input class="inforTextbox" value="Ford HeadQuarters" id="address"/><br/>
+									<label class="inforLabel" for="lookupField1">Zip/Postal Code</label>
+									<input class="inforLookupField" type="text" id="lookupField1" /><span class="inforDataLabel noColon" style="float:none;margin-left:0;">Phoenix</span><br/>
+									<label class="inforLabel" for="contact">Contact</label>
+									<input class="inforTextbox" value="Jim Jones" id="contact"/><br/>
+									<label class="inforLabel" for="phone">Phone</label>
+									<input class="inforTextbox" id="phone" value="678-319-8001"/><br/>
+									<label class="inforLabel" for="co">Customer Order</label>
+									<input class="inforTextbox" id="co" value="Simple Flow"/><br/>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="inforFieldSet">
+						<legend>
+							<span class="inforFieldSetLabel">Control</span>
+						</legend>
+						<button type="button" role="button" class="inforExpandButton open"></button>
+						<div class="content autoLabelWidth">
+							<div class="inforSingleColumnLayout">
+									<label  class="inforLabel" for="ot">Order Type</label>
+									<input class="inforTextbox" readonly value="A01 - Simple Sales Order" id="ot"/><br/>
+									<label class="inforLabel" for="so">Sales Office</label>
+									<input class="inforTextbox" readonly value="100 - Sales Office North America" id="so"/><br/>
+									<label class="inforLabel" for="no">Number</label>
+									<input class="inforTextbox" readonly value="20000000153" id="no"/><br/>
+									<label class="inforLabel" for="pdd">Planned Delivery Date</label>
+									<input class="inforDateField"  type="text" value="2012-10-12" id="pdd"><br>
+									<label class="inforLabel" for="prd">Planned Receipt Date</label>
+									<input class="inforDateField" type="text" value="2012-10-14" id="prd"><br>
+									<label  class="inforLabel" for="status">Status</label>
+									<input class="inforTextbox" readonly value="Modified" id="status"/><br>
+									<label  class="inforLabel" for="install">Installments</label>
+									<select class="inforDropDownList" id="install" >
+											<option value="bl"></option>
+											<option value="no">No</option>
+											<option value="mo">Monthly</option>
+											<option value="qu">Quarterly</option>
+									</select>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="inforFieldSet2ColumnLayout">
+					<fieldset class="inforFieldSet">
+						<legend>
+							<span class="inforFieldSetLabel">Ship-to BP</span>
+						</legend>
+						<button type="button" role="button" class="inforExpandButton open"></button>
+
+						<div class="content autoLabelWidth">
+							<div class="inforSingleColumnLayout">
+									<label  class="inforLabel" for="bp">Business Partner</label>
+									<input class="inforTextbox" readonly id="bp" value="CUS0000016" style="width:90px"/><span class="inforLabel noColon" style="float:none;margin-left:0;">Ford Motor Company</span><br/>
+									<label class="inforLabel" for="addr">Address</label>
+									<input class="inforTextbox" value="Ford HeadQuarters" id="addr"/><br/>
+									<label class="inforLabel" for="zip">Zip/Postal Code</label>
+									<input class="inforTextbox" value="48205" id="zip"/><br/>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="inforFieldSet">
+						<legend>
+							<span class="inforFieldSetLabel">Financial</span>
+						</legend>
+						<button type="button" role="button" class="inforExpandButton open"></button>
+
+						<div class="content autoLabelWidth">
+							<div class="inforSingleColumnLayout">
+									<label  class="inforLabel">Commments</label>
+									<textarea class="inforTextArea" maxlength="10">Lorem Ipsum</textarea><br/>
+									<label class="inforLabel">Order Amount</label>
+									<input class="inforTextbox decimalOnly" data-number-format="c2" readonly value="7616000.00" /><br/>
+									<label class="inforLabel">Available Credit</label>
+									<input class="inforTextbox decimalOnly" data-number-format="c2" readonly value="116000.00"/><br/>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<br style="clear:both"/>
+				<div id="inforTabContainer">
+					<ul class="inforTabset">
+						<li><a href="#tab1">Order Lines</a></li>
+						<li><a href="#tab2">Order Promising</a></li>
+						<li><a href="#tab3">Release to Warehouse</a></li>
+						<li><a href="#tab4">Actual Delivery Lines</a></li>
+						<li><a href="#tab5">Invoice Lines</a></li>
+						<li><a href="#tab5">Back Orders</a></li>
+						<li><a href="#tab5">Monitors</a></li>
+					</ul>
+					<div id="tab1">
+						<div class="inforToolbar" >
+							<button type="button" class="inforIconButton edit" title="Edit"></button>
+							<button type="button" class="inforIconButton email" title="Email"></button>
+						</div>
+					</div>
+					<div id="tab2">
+					</div>
+					<div id="tab3">
+					</div>
+					<div id="tab4">
+					</div>
+					<div id="tab5">
+					</div>
+				</div>
+			</div>
+		 </div>
+	 </div>
+
+</body>
+</html>
+

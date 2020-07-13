@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+
+
+<!-- javascript -->
+<script src="../Release/jquery-1.11.1.min.js"></script>
+<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+
+
+<style>
+html {
+	/*height: 100%;*/
+}
+body {
+	background: #aaa;
+	height: 100%;
+}
+div {
+	height: 100%;
+}
+</style>
+<script>
+jQuery(function ($) {
+
+	$(document).on('dragover', 'body', function(e) { console.log('dropover'); e.preventDefault(); e.stopPropagation(); });
+	$(document).on('dragenter', 'body', function(e) { console.log('dropenter');  e.preventDefault(); e.stopPropagation(); });
+	
+	$(document).on('drop', 'div', function(e){
+		console.log('drop'); 
+		e.preventDefault();
+        e.stopPropagation();
+        alert('drop')
+        if(e.originalEvent.dataTransfer){
+            if(e.originalEvent.dataTransfer.files.length) {
+                e.preventDefault();
+                e.stopPropagation();
+                upload(e.originalEvent.dataTransfer.files);
+            }   
+        }
+    });
+	
+	function upload(files){
+		alert('Upload '+files.length+' File(s).');
+	}
+
+});
+
+</script>
+</head>
+<body>
+<div style="background-color: #f1f1f1;height: 200px; width: 200px">Drop Here</div>
+
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Validation Plugin: Form Validation</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../lib/jquery-1.8.2.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforValidation.js"></script>
+
+	<script>
+		 $(function (){
+			//Globalize.culture("ar-SA");
+
+			//Initialize all objects and setup required and dirty indicators
+			$("body").inforForm();
+
+			//setup validation
+			var demoForm = $("#formExample");
+			demoForm.setupValidation(function(e) {	//set up validation on the form using the field metadata
+			   if (demoForm.isValid()) {
+					console.log("Form can be submitted");
+				} else
+					console.log("Form cannot be submitted");
+			});
+
+			//clear form - removed previous data from a refresh
+			$("#formExample").resetForm();
+
+			//set locaized message
+			//$.Validation.getRule("required").msg="This is required XX";
+
+			//example of adding a custom rule to the validation
+			$.Validation.addRule("xhr-test", {
+				check: function (value, onComplete) {
+					$("body").inforLoadingIndicator({delay:300, modal: true});
+					var result;
+					//do some sort of back end request...
+					$.ajax({
+						url: "http://www.randomtext.me/api/lorem/p-5/2",
+						dataType: "json",
+						timeout: 5000,
+						success: function (data) {
+							result = (value == "1"  || value =="" ? false : true); //normally would check some result on the ajax call.. contrived.
+							onComplete(result);
+							$("body").inforLoadingIndicator("close");
+						},
+						error: function (req, status, error) {
+							result = false;
+							onComplete(result);
+						},
+						async: true
+					});
+
+				},
+				msg: "Async Call Returned Something Wrong."
+			}, true);
+
+			$.Validation.addRule("xhr-test2", {
+				check: function (value, onComplete) {
+					var result;
+					//do some sort of back end request...
+					$.ajax({
+						url: "http://www.randomtext.me/api/lorem/p-5/2",
+						dataType: "json",
+						timeout: 5000,
+						success: function (data) {
+							result = (value == "1"  || value =="" ? false : true); //normally would check some result on the ajax call.. contrived.
+							onComplete(result);
+						},
+						error: function (req, status, error) {
+							result = false;
+							onComplete(result);
+						},
+						async: true
+					});
+				},
+				msg: "Async Call Returned Something Wrong 2."
+			}, true);
+		});
+
+		function resetForm() {
+			//reload your data here and reset the form validation
+			$("#formExample").resetForm();
+		}
+	</script>
+</head>
+<body class="inforHidden">
+	<form id="formExample">
+		<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Order Line Item</span>
+					<span class="inforModuleRecordIdText">12000001</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton"></button>
+					<button class="inforModuleCloseButton"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button class="inforIconButton save" id="submitButton" type="submit" title="Saves the current Order line Item"></button>
+				<button class="inforIconButton discard" type="button" title="Undo your pending changes"  onclick="resetForm()"></button>
+			</div>
+			<div class="infor2ColumnLayout autoLabelWidth">
+
+				<div class="column1">
+					 <label class="inforLabel" for="textBox2">Vendor Id</label>
+					 <input type="text" id="textBox2" class="inforTextbox" data-validation-events="blur" data-validation="required xhr-test"/><br>
+					 <label class="inforLabel" for="textBox2">Vendor Id 2</label>
+					 <input type="text" id="textBox2" class="inforTextbox" data-validation-events="blur" data-validation="required xhr-test2"/><br>
+				</div>
+				<div class="column2">
+				</div>
+			</div>
+	 </div>
+	</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bar</title>
+
+  <link href="../../Release/inforControlsCombined.css" rel="stylesheet">
+  <script src="../../Release/jquery-1.11.1.min.js"></script>
+  <script src="../../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../../Release/inforControlsCombined.js"></script>
+  <script src="../../Release/d3.min.js"></script>
+
+</head>
+<body class="inforApplicationPadding">
+
+  <h1 class="inforSubHeadingLabel">Bar</h1>
+  <p>Display / Compare values of multiple entities at a given point in time.</p>
+
+  <div class="chart-container"></div>
+
+  <script>
+    var dataset = [{
+            data: [{
+                name: 'Phone Call',
+                value: 10
+            }, {
+                name: 'Letter',
+                value: 20
+            }, {
+                name: 'Follow Up',
+                value: 30
+            }, {
+                name: 'Appointment Request',
+                value: 10
+            }]
+          }];
+
+    $('.chart-container').chart({type: 'bar', dataset: dataset});
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid - RTL Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="../inforDataGrid/css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+		   <button id="newButton"  class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1, city: 'New City', establishedDate:''})"><span></span></button>
+		   <button id="submitButton" class="inforIconButton save" disabled="disabled" title="Click to Save Modified Rows" ><span></span></button>
+		   <span class="inforToolbarSpacer"></span>
+		   <button id="deleteButton"  class="inforIconButton delete" disabled="disabled" title="Click to remove selected rows" onclick="deleteRows()"><span></span></button>
+		   <span class="inforToolbarSpacer"></span>
+		   <button id="refreshButton"  class="inforIconButton refresh" title="Click to reload the data" onclick="refreshData()"><span></span></button>
+	   </div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		//Set the locale to get the grid translated.
+		Globalize.culture("ar-SA");
+
+		//Store the Grid Obj For Later use..
+		var grid;
+
+		//Example: Reload rows - linked to the refresh button
+		function refreshData()
+		{
+			//grid.getEditorLock().commitCurrentEdit();
+			grid.clearFilter();
+			var data = getSampleData([]);
+			grid.updateData(data);
+		}
+
+		//Example: Deleting rows - linked to the delete button
+		function deleteRows()
+		{
+			var selectedRows = grid.getSelectedRows();
+			for (var i in selectedRows) {
+				var rowData = grid.getDataItem(i)
+				console.log(rowData["officeId"]);
+			}
+			grid.removeSelectedRows()
+		}
+
+		//See: RequiredFieldValidator for a cell validator function example
+
+		//Example: of a editability function to mange cell editability.
+		function readOnlyWhenSpokane(row, cell, value, columnDef, dataContext) {
+		   return dataContext.city =="Spokane";
+		}
+
+		//Define Columns for the Grid.
+		var columns = [];
+
+		columns.push({ id: "city", name: "City", field: "city", width: 125, formatter:TextCellFormatter, editability: readOnlyWhenSpokane, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, required: true, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", name: "State", field: "state", editability: readOnlyWhenSpokane, formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"]});
+		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter });
+		columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "revenue", name: "Revenue", field: "revenue", width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter:CheckboxCellFormatter, editability: readOnlyWhenSpokane , editor:CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor , editability: readOnlyWhenSpokane, formatter: DateCellFormatter, filterType: DateFilter });
+				//Note: Use fx...  DateShowFormat: Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.T for date and time in current locale
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSampleData([]);
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: true,
+			showFooter: true,
+			showGridSettings: true,
+			showFilter: true,
+			savePersonalization: false
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+
+	</script>
+</body>
+</html>

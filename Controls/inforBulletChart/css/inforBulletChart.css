@@ -1,0 +1,74 @@
+﻿/* Infor Status Indicator Chart
+----------------------------------*/
+.inforBulletChart {
+	margin: 10px;
+	width: 221px
+}
+
+.inforBulletChart .inforProgressIndicatorBar{
+	margin-top: 0;
+	margin-left: 0;
+}
+
+.inforBulletChart  .inforProgressIndicatorBar{
+	background: none repeat scroll 0 0 #B3B3B3;
+	width: inherit;
+	height: 69px;
+	margin-top: 5px;
+}
+
+.inforBulletChart  .inforProgressIndicatorValue{
+	height: inherit;
+	border-right: 1px solid white;
+	vertical-align: middle;
+	width: 0%;
+	background-image: none;
+}
+
+.inforBulletChart .title {
+	font-size: 1.6em;
+}
+
+.inforBulletChart .subTitle {
+	font-size: 1.1em;
+}
+
+.inforBulletChart .valueLabel{
+	color: white;
+	position: relative;
+	top: 12px;
+}
+
+.inforBulletChart .valueLabel .line1{
+	font-size: 2.4em;
+	padding-left: 10px;
+	width: 400px;
+}
+
+.inforBulletChart .valueLabel .line2{
+	font-size: 1.1em;
+	padding-left: 10px;
+	width: 400px;
+}
+
+.inforProgressIndicatorValue.overage {
+	background: none repeat scroll 0 0 #E5E6E5;
+	left: 100%;
+	position: relative;
+	top: -69px;
+	z-index: -1;
+}
+
+.inforBulletChart .targetBar {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAABNCAMAAACVI2Q9AAAASFBMVEUAAACZmZmbm5uenp6goKCioqKkpKSmpqamp6anp6epqamtra2ysrK7u7vBwcHCwsLGxsbU1NTa2tri4uLt7e339/f4+Pj///+yqalUAAAAAXRSTlMAQObYZgAAAK9JREFUaN7tk9sOgyAMhmk5uCIKCur7v+m0GMOS9W7JbuhN6Zfm7yko9Rior9Zxx//EwRsEQONDSwcd83YcW456eOBo55NV22Y73hTXo7EVK7cf9OSWdec73Pf7MZ/6QVfdhUDTUvV1UD7yc3IERG7iIHplMuc6SKUkcJyfjULWIEqXS0Ssggq4Gupy+aKR64KEBRGhZNPgq2lQGEcYXlqVtFjhDNLRxBP339DxL/EbY5IbK0OH0oYAAAAASUVORK5CYII=");
+	height: 77px;
+	left: 89%;
+	position: relative;
+	top: -73px;
+	width: 22px;
+	margin-left: -11px;
+}
+
+.inforProgressIndicatorValue.overage + .targetBar {
+	top: -141px;
+}

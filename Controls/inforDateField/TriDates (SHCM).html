@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Infor DateField over Three Fields</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		function verifyRestrictedDates(date) {
+			var datesToEnable = [
+							  new Date(2012,3,2),
+							  new Date(2012,3,16),
+							  new Date(2012,3,30),
+							  new Date(2012,4,13),
+							  new Date(2012,4,27)
+							  ];
+			for(i = 0; i < datesToEnable.length; i++)
+			{
+			if (datesToEnable[i].getFullYear() == date.getFullYear() &&
+				datesToEnable[i].getMonth()-1 == date.getMonth() &&
+				datesToEnable[i].getDate() == date.getDate()) {
+					return [true, ""];
+				}
+			}
+			return [false, ""];
+		}
+
+		$(function($) {
+
+			//Three input date field..
+			$("#MDY_year").inforDateField({dateFormat: 'yyyy',
+										   altField: "#MDY_day", altFormat: "dd",
+										   altField2: "#MDY_month", altFormat2: "MM",
+										   beforeShow: function(input, inst) {
+											  var date = new Date($("#MDY_year").val(),
+																  $("#MDY_month").val()-1,
+																  $("#MDY_day").val());
+											  if (date && $("#MDY_day").val()!="") {
+												 $("#MDY_year").datepicker( "setDate" , date);
+											  }
+											}});
+			$("#MDY_day").insertBefore("#MDY_year");
+			$("#MDY_month").insertBefore("#MDY_day");
+
+			$("#DMY_year").inforDateField({dateFormat: 'yyyy',
+										   altField: "#DMY_day", altFormat: "dd",
+										   altField2: "#DMY_month", altFormat2: "MM",
+										   minDate: 0,
+										   beforeShow: function(input, inst) {
+											  var date = new Date($("#DMY_year").val(),
+																  $("#DMY_month").val()-1,
+																  $("#DMY_day").val());
+											  if (date && $("#DMY_day").val()!="") {
+												 $("#DMY_year").datepicker( "setDate" , date);
+											  }
+										  }});
+			$("#DMY_month").insertBefore("#DMY_year");
+			$("#DMY_day").insertBefore("#DMY_month");
+
+			$("#YMD_day").inforDateField({dateFormat: 'dd',
+										  altField: "#YMD_month", altFormat: "MM",
+										  altField2: "#YMD_year", altFormat2: "yyyy",
+										  beforeShowDay: verifyRestrictedDates,
+										  beforeShow: function(input, inst) {
+														 var date = new Date($("#YMD_year").val(),
+																			 $("#YMD_month").val()-1,
+																			 $("#YMD_day").val());
+														 if (date && $("#YMD_day").val()!="") {
+															 $("#YMD_day").datepicker( "setDate" , date);
+														 }
+										  }})
+						 .before('');
+			$("#YMD_month").insertBefore("#YMD_day");
+			$("#YMD_year").insertBefore("#YMD_month");
+
+			$("body").inforForm();
+		});
+	</script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<p><b>Start Date</b> is displayed in <b>MDY</b> format with no restriction on dates.</p>
+		<p><b>Effective Date</b> is displayed in <b>DMY</b> format.  Past dates are not permitted.</p>
+		<p><b>Promotion Date</b> is displayed in <b>YMD</b> format.  Dates are restricted to cycle end dates (every other Friday in March and April).</p>
+			<label class="inforLabel">Start Date</label>
+			<input class="inforTextbox" style="width:22px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" id="MDY_month" type="text" >
+			<input class="inforTextbox" style="width:22px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" id="MDY_day" type="text" >
+			<input class="inforDateField required" style="width:45px; padding-right: 0;" id="MDY_year" type="text" ><br>
+
+			<label class="inforLabel">Effective Date</label>
+			<input class="inforTextbox" style="width:22px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" id="DMY_day" type="text" >
+			<input class="inforTextbox" style="width:22px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" id="DMY_month" type="text" >
+			<input class="inforDateField" style="width:45px; padding-right: 0;" id="DMY_year" type="text" ><br>
+
+			<label class="inforLabel">Promotion Date</label>
+			<input class="inforTextbox" style="width:22px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" id="YMD_year" type="text" >
+			<input class="inforTextbox" style="width:22px;border-radius: 0; border-right: 1px solid #b3b3b3 !important;padding-right: 0;" id="YMD_month" type="text" >
+			<input class="inforDateField" style="width:45px; padding-right: 0;" id="YMD_day" type="text" ><br>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,627 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+	<title>Document Detail</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" type="text/css" />
+	<script  src="../Release/jquery-1.11.1.min.js"></script>
+	<script  src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script >
+
+
+		var objJSON2 = {
+			"data": [
+{ //Home
+	"data": {
+		"title": "Home",
+		"icon ": "folder"
+	},
+	"metadata": { id: 2 },
+	"state": "open"
+},
+{ //Requisition
+	"data": {
+		"title": "Requisition",
+		"icon ": "folder"
+	},
+	"metadata": { id: 3 },
+	"state": "open",
+	"children": [{ //Requisition
+		"data": {
+			"title": "Requisition",
+			"icon ": "default"
+		},
+		"metadata": { id: 4 }
+	},
+{ //Tracking
+	"data": "Tracking",
+	"metadata": { id: 5 }
+},
+{ //Requisition Approval
+	"data": {
+		"title": "Requisition Approval"
+	},
+	"metadata": { id: 6 }
+},
+{ //Requisition Approval Status
+	"data": {
+		"title": "Requisition Approval Status",
+		"icon ": "folder"
+	},
+	"metadata": { id: 71 }
+},
+{ //WorkBench
+	"data": {
+		"title": "WorkBench",
+		"icon ": "folder"
+	},
+	"metadata": { id: 72 }
+},
+{ //Web Marketplace Admin
+	"data": {
+		"title": "Web Marketplace Admin",
+		"icon ": "folder"
+	},
+	"metadata": { id: 8 }
+},
+{ //Catalog Admin
+	"data": {
+		"title": "Catalog Admin",
+		"icon ": "folder"
+	},
+	"metadata": { id: 73 }
+},
+{ //Requisition User Admin
+	"data": {
+		"title": "Requisition User Admin",
+		"icon ": "folder"
+	},
+	"metadata": { id: 74 }
+}]
+},
+{ //Payable Invoice
+	"data": {
+		"title": "Payable Invoice",
+		"icon ": "folder"
+	},
+	"metadata": { id: 18 },
+	"state": "open",
+	"children": [{ //Payable Invoice Approval
+		"data": {
+			"title": "Payable Invoice Approval",
+			"icon ": "folder"
+		},
+		"metadata": { id: 13 }
+	},
+{ //Payable Invoice Approval Status
+	"data": {
+		"title": "Payable Invoice Approval Status",
+		"icon ": "folder"
+	},
+	"metadata": { id: 19 }
+},
+{ //Payable Invoice Inquiry
+	"data": {
+		"title": "Payable Invoice Inquiry",
+		"icon ": "folder"
+	},
+	"metadata": { id: 17 }
+}]
+},
+{ //Assets
+	"data": {
+		"title": "Assets",
+		"icon ": "folder"
+	},
+	"metadata": { id: 200 },
+	"state": "open",
+	"children": [{ //Assets
+		"data": {
+			"title": "Assets",
+			"icon ": "folder"
+		},
+		"metadata": { id: 201 }
+	},
+{ //Asset Activity
+	"data": {
+		"title": "Asset Activity",
+		"icon ": "folder"
+	},
+	"metadata": { id: 202 },
+	"state": "open",
+	"children": [{ //Asset Retirement
+		"data": {
+			"title": "Asset Retirement",
+			"icon ": "folder"
+		},
+		"metadata": { id: 203 }
+	},
+{ //Asset Retirement Request
+	"data": {
+		"title": "Asset Retirement Request",
+		"icon ": "folder"
+	},
+	"metadata": { id: 204 }
+},
+{ //Asset Retirement Reversal
+	"data": {
+		"title": "Asset Retirement Reversal",
+		"icon ": "folder"
+	},
+	"metadata": { id: 205 }
+},
+{ //Asset Transfer
+	"data": {
+		"title": "Asset Transfer",
+		"icon ": "folder"
+	},
+	"metadata": { id: 206 }
+},
+{ //Asset Transfer Request
+	"data": {
+		"title": "Asset Transfer Request",
+		"icon ": "folder"
+	},
+	"metadata": { id: 207 }
+},
+{ //Retired Assets Inquiry
+	"data": {
+		"title": "Retired Assets Inquiry",
+		"icon ": "folder"
+	},
+	"metadata": { id: 208 }
+},
+{ //Transferred Assets Inquiry
+	"data": {
+		"title": "Transferred Assets Inquiry",
+		"icon ": "folder"
+	},
+	"metadata": { id: 209 }
+}]
+},
+{ //Property Accounts
+	"data": {
+		"title": "Property Accounts",
+		"icon ": "folder"
+	},
+	"metadata": { id: 210 }
+},
+{ //Property Account Activity
+	"data": {
+		"title": "Property Account Activity",
+		"icon ": "folder"
+	},
+	"metadata": { id: 211 },
+	"state": "open",
+	"children": [{ //Property Account Retirement
+		"data": {
+			"title": "Property Account Retirement",
+			"icon ": "folder"
+		},
+		"metadata": { id: 212 }
+	},
+{ //Property Account Retirement Request
+	"data": {
+		"title": "Property Account Retirement Request",
+		"icon ": "folder"
+	},
+	"metadata": { id: 213 },
+	"state": "open"
+},
+{ //Property Account Retirement Reversal
+	"data": {
+		"title": "Property Account Retirement Reversal",
+		"icon ": "folder"
+	},
+	"metadata": { id: 214 }
+},
+{ //Property Account Transfer
+	"data": {
+		"title": "Property Account Transfer",
+		"icon ": "folder"
+	},
+	"metadata": { id: 215 }
+},
+{ //Property Account Transfer Request
+	"data": {
+		"title": "Property Account Transfer Request",
+		"icon ": "folder"
+	},
+	"metadata": { id: 216 },
+	"state": "open"
+},
+{ //Retired Property Accounts Inquiry
+	"data": {
+		"title": "Retired Property Accounts Inquiry",
+		"icon ": "folder"
+	},
+	"metadata": { id: 217 }
+},
+{ //Transferred Property Accounts Inquiry
+	"data": {
+		"title": "Transferred Property Accounts Inquiry",
+		"icon ": "folder"
+	},
+	"metadata": { id: 218 }
+}]
+},
+{ //Master Data
+	"data": {
+		"title": "Master Data",
+		"icon ": "folder"
+	},
+	"metadata": { id: 219 },
+	"state": "open",
+	"children": [{ //Asset Additional Depreciation Tables
+		"data": {
+			"title": "Asset Additional Depreciation Tables",
+			"icon ": "folder"
+		},
+		"metadata": { id: 220 }
+	},
+{ //Asset Annual Limit Tables
+	"data": {
+		"title": "Asset Annual Limit Tables",
+		"icon ": "folder"
+	},
+	"metadata": { id: 221 }
+},
+{ //Asset Category Tables
+	"data": {
+		"title": "Asset Category Tables"
+	},
+	"metadata": { id: 222 },
+	"state": "open"
+},
+{ //Asset Category Accounting Distribution
+	"data": {
+		"title": "Asset Category Accounting Distribution",
+		"icon ": "folder"
+	},
+	"metadata": { id: 223 }
+},
+{ //Asset Depreciation Percent Tables
+	"data": {
+		"title": "Asset Depreciation Percent Tables",
+		"icon ": "folder"
+	},
+	"metadata": { id: 224 }
+},
+{ //Asset Enterprise Policy
+	"data": {
+		"title": "Asset Enterprise Policy",
+		"icon ": "folder"
+	},
+	"metadata": { id: 225 }
+},
+{ //Asset Entity Accounting Distribution
+	"data": {
+		"title": "Asset Entity Accounting Distribution",
+		"icon ": "folder"
+	},
+	"metadata": { id: 226 }
+},
+{ //Asset Entity Policy
+	"data": {
+		"title": "Asset Entity Policy",
+		"icon ": "folder"
+	},
+	"metadata": { id: 227 }
+},
+{ //Asset Location Tables
+	"data": {
+		"title": "Asset Location Tables",
+		"icon ": "folder"
+	},
+	"metadata": { id: 228 }
+},
+{ //Asset Tax Credit Tables
+	"data": {
+		"title": "Asset Tax Credit Tables",
+		"icon ": "folder"
+	},
+	"metadata": { id: 229 }
+},
+{ //Asset Units of Production Tables
+	"data": {
+		"title": "Asset Units of Production Tables",
+		"icon ": "folder"
+	},
+	"metadata": { id: 230 }
+},
+{ //Asset Report Selection Criteria
+	"data": {
+		"title": "Asset Report Selection Criteria",
+		"icon ": "folder"
+	},
+	"metadata": { id: 236 }
+},
+{ //Asset Report Controller
+	"data": {
+		"title": "Asset Report Controller",
+		"icon ": "folder"
+	},
+	"metadata": { id: 237 }
+}]
+},
+{ //Processing
+	"data": {
+		"title": "Processing",
+		"icon ": "folder"
+	},
+	"metadata": { id: 231 },
+	"state": "open",
+	"children": [{ //Asset Depreciation Projection Controller
+		"data": {
+			"title": "Asset Depreciation Projection Controller",
+			"icon ": "folder"
+		},
+		"metadata": { id: 232 }
+	},
+{ //New Year Processing Controller
+	"data": {
+		"title": "New Year Processing Controller",
+		"icon ": "folder"
+	},
+	"metadata": { id: 233 }
+},
+{ //Asset Online Correction Facility
+	"data": {
+		"title": "Asset Online Correction Facility",
+		"icon ": "folder"
+	},
+	"metadata": { id: 234 }
+},
+{ //Period Depreciation Controller
+	"data": {
+		"title": "Period Depreciation Controller",
+		"icon ": "folder"
+	},
+	"metadata": { id: 235 }
+}]
+}]
+},
+{ //Common
+	"data": {
+		"title": "Common",
+		"icon ": "folder"
+	},
+	"metadata": { id: 250 },
+	"state": "open",
+	"children": [{ //Assets Task List
+		"data": {
+			"title": "Assets Task List",
+			"icon ": "folder"
+		},
+		"metadata": { id: 251 }
+	},
+{ //Job Scheduler
+	"data": {
+		"title": "Job Scheduler",
+		"icon ": "folder"
+	},
+	"metadata": { id: 252 },
+	"state": "open",
+	"children": [{ //Job Scheduler
+		"data": {
+			"title": "Job Scheduler",
+			"icon ": "folder"
+		},
+		"metadata": { id: 253 }
+	},
+{ //Job Scheduler Log
+	"data": {
+		"title": "Job Scheduler Log",
+		"icon ": "folder"
+	},
+	"metadata": { id: 254 }
+},
+{ //MasterList Job Scheduler Log
+	"data": {
+		"title": "MasterList Job Scheduler Log",
+		"icon ": "folder"
+	},
+	"metadata": { id: 267 }
+}]
+},
+{ //Master Data
+	"data": {
+		"title": "Master Data",
+		"icon ": "folder"
+	},
+	"metadata": { id: 255 },
+	"state": "open",
+	"children": [{ //Ledger Policy
+		"data": {
+			"title": "Ledger Policy",
+			"icon ": "folder"
+		},
+		"metadata": { id: 256 }
+	},
+{ //Periodic Calendar Year
+	"data": {
+		"title": "Periodic Calendar Year",
+		"icon ": "folder"
+	},
+	"metadata": { id: 257 }
+},
+{ //Periodic Calendar Period
+	"data": {
+		"title": "Periodic Calendar Period",
+		"icon ": "folder"
+	},
+	"metadata": { id: 258 }
+},
+{ //Currency Rate Entity
+	"data": {
+		"title": "Currency Rate Entity",
+		"icon ": "folder"
+	},
+	"metadata": { id: 259 }
+},
+{ //Currency Rate Type
+	"data": {
+		"title": "Currency Rate Type",
+		"icon ": "folder"
+	},
+	"metadata": { id: 260 }
+},
+{ //Currency to Rate Entity Association
+	"data": {
+		"title": "Currency to Rate Entity Association",
+		"icon ": "folder"
+	},
+	"metadata": { id: 261 }
+},
+{ //Rate Entry By Date
+	"data": {
+		"title": "Rate Entry By Date",
+		"icon ": "folder"
+	},
+	"metadata": { id: 262 }
+}]
+},
+{ //My Settings
+	"data": {
+		"title": "My Settings",
+		"icon ": "folder"
+	},
+	"metadata": { id: 266 }
+}]
+},
+{ //Receipt
+	"data": {
+		"title": "Receipt",
+		"icon ": "folder"
+	},
+	"metadata": { id: 9 },
+	"state": "open",
+	"children": [{ //Receipt
+		"data": {
+			"title": "Receipt",
+			"icon ": "folder"
+		},
+		"metadata": { id: 10 }
+	},
+{ //Receipt Inquiry
+	"data": {
+		"title": "Receipt Inquiry",
+		"icon ": "folder"
+	},
+	"metadata": { id: 11 }
+},
+{ //Receipt Maintenance
+	"data": {
+		"title": "Receipt Maintenance",
+		"icon ": "folder"
+	},
+	"metadata": { id: 12 }
+},
+{ //Receipt Exception
+	"data": {
+		"title": "Receipt Exception",
+		"icon ": "folder"
+	},
+	"metadata": { id: 20 }
+}]
+},
+{ //Purchase Order
+	"data": {
+		"title": "Purchase Order",
+		"icon ": "folder"
+	},
+	"metadata": { id: 60 },
+	"state": "open",
+	"children": [{ //Purchase Order Inquiry
+		"data": {
+			"title": "Purchase Order Inquiry",
+			"icon ": "folder"
+		},
+		"metadata": { id: 61 }
+	},
+{ //Purchase Order Approval
+	"data": {
+		"title": "Purchase Order Approval",
+		"icon ": "folder"
+	},
+	"metadata": { id: 62 }
+},
+{ //Purchase Order Approval Status
+	"data": {
+		"title": "Purchase Order Approval Status",
+		"icon ": "folder"
+	},
+	"metadata": { id: 63 }
+},
+{ //Indirect Purchase Order
+	"data": {
+		"title": "Indirect Purchase Order",
+		"icon ": "folder"
+	},
+	"metadata": { id: 64 }
+}]
+}]
+		}
+
+		 $(function () {
+			$(".inforSplitter").inforSplitter();
+
+			//Initialize the Tree control
+			$("#inforTree1").inforTree({
+				"json_data": objJSON2
+				 , "plugins": ["json_data", "themes", "ui", "dnd"]
+			}).bind("move_node.jstree", function(e, data){
+				var treeInstance = data.inst,
+						node = data.rslt.o,
+						parentNode = treeInstance._get_parent(node);
+
+				console.log(node.data("id"),parentNode.data("id"));
+			});
+
+			$("body").inforForm();
+		});
+
+		function iterateTree() {
+			//all li's are nodes....
+			$("#inforTree1").find("li").each(function (i) {
+				if ($(this).find("ul").length>0)	//This is a parent node.
+					console.log("+   "+$(this).find("li:first").data("id")+$(this).find("li:first").text());
+				else	//This is a child node.
+					console.log("   " + $(this).data("id"), $(this).text())
+			});
+		}
+	</script>
+</head>
+<body>
+
+<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Infor Tree Example</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton" type="button"></button>
+					<button class="inforModuleCloseButton" type="button"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button class="inforIconButton save" type="button" onclick='iterateTree()' ></button>
+			</div>
+			<div class="inforSplitter">
+				<div id="leftPane" style="width:40%">
+					<div id="inforTree1" class="inforTree"></div>
+				</div>
+				<div id="rightPane" style="width:60%; height:">
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+

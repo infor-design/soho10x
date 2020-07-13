@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor DropDown List - Basic Functionality</title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      $('#country, #country1').dropdown();
+    });
+  </script>
+
+</head>
+<body class="inforApplicationPadding">
+
+  <label for="country" class="inforLabel" ><span aria-hidden="true">Country</span><span class="scr-only">(ScreenReader-->Country)</span></label>
+  <select id="country" class="inforDropDownList">
+      <option value="">&nbsp;</option>
+      <option selected="" value="United States">United States</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="United States">United States</option>
+  </select>
+
+</body>
+</html>

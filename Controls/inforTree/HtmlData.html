@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Infor Tree Sample - Using JSON Data</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.min.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="js/inforTree.js"></script>
+	<script src="js/sampleData.js"></script>
+	<link href="css/inforTree.css" rel="stylesheet" />
+
+	<script>
+	$(function () {
+		//For example only all you need is inforTree for standalone scenarios..
+		$(".inforModuleContainer").inforForm();
+		$(".inforSplitter").inforSplitter();
+		$(".inforLookupField").inforLookupField();
+
+		var data = '<Div><li id="1" type="profile"><a href="#">2.5_DC_process</a></li><li id="2"><a href="#">test</a><ul><li id="3" type="profile" parentNode="test"><a href="#"  class="inforHyperlink">2.5_DC_process</a></li></ul></li></Div>';
+
+		//Initialize the Tree control
+		$("#inforTree1").inforTree({"ui": { "select_limit": 1,
+						   "initially_select": ["1"]
+						  },
+					"html_data": { "data": data },
+					"themes": { "theme": "default",
+						"url": $("#controlsPath").val() + "JSTree/themes/default/style.css",
+						"dots": true,
+						"icons": true
+					},
+          "crrm": "input_width_limit": 2
+          },
+						"plugins": ["themes", "html_data", "ui", "crrm"]
+					});
+	});
+	</script>
+</head>
+<body style="opacity:0">
+	<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Infor Tree Example</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton"></button>
+					<button class="inforModuleCloseButton"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button class="inforTextButton" onclick='$("#inforTree1").inforTree("toggle_dots")' >Toggle Dots</button>
+				<button class="inforTextButton" onclick='$("#inforTree1").inforTree("toggle_icons")'>Toggle Icons</button>
+			</div>
+			<div class="inforSplitter">
+				<div id="leftPane" style="width:40%">
+					<div id="inforTree1" class="inforTree"></div>
+				</div>
+				<div id="rightPane" style="width:60%; height:">
+					 <div class="inforSingleColumnLayout">
+						  <label class="inforLabel" for="treeId">Node Id</label>
+						  <input type="text" name="treeId" id="treeId" class="inforTextbox" value=""/><br>
+						  <label class="inforLabel" for="treeText">Node Text</label>
+						  <input type="text" name="treeText" id="treeText" class="inforTextbox" value=""/><br>
+						  <label class="inforLabel">Lookup Field</label>
+						  <input class="inforLookupField" type="text" id="lookupField1"><br>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+﻿/* Infor Switch - On/Off
+   Idea from: http://proto.io/freebies/onoff/
+----------------------------------*/
+
+.inforSwitch {
+	position: relative;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select: none;
+	display: inline-block;
+	padding-left: 3px;
+}
+
+.inforSwitchCheckbox {
+	display: block;
+    opacity: 0;
+    position: absolute;
+	cursor: pointer;
+}
+
+.inforSwitchCheckbox:disabled + .inforSwitchLabelContainer .inforSwitchLabel,
+.inforSwitchCheckbox:disabled + .inforSwitchLabelContainer .inforCheckboxLabel {
+	cursor: default;
+	opacity: .5;
+}
+
+.inforSwitch .inforSwitchLabelContainer {
+	display: inline-block;
+	font-size: inherit;
+}
+
+.inforSwitchLabel {
+	display: inline-block;
+	overflow: hidden;
+	cursor: pointer;
+	border: 2px solid #D9D9D9;
+	border-radius: 15px;
+	background-color: #D9D9D9;
+	height: 15px;
+	position: relative;
+	width: 36px;
+}
+
+.inforSwitchInner {
+	width: 200%; margin-left: -100%;
+	-moz-transition: margin 0.3s ease-in 0s;
+	-webkit-transition: margin 0.3s ease-in 0s;
+	transition: margin 0.3s ease-in 0s;
+}
+
+.inforSwitchCheckbox:focus + .inforSwitchLabelContainer .inforSwitchLabel {
+    box-shadow: 0 0 0 1px #FFFFFF, 0 0 0 2px #13A3F7;
+}
+
+.inforSwitchInner:before, .inforSwitchInner:after {
+	display: inline-block;
+	width: 50%;
+	height: 15px;
+	padding: 0;
+	line-height: 15px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.inforSwitchInner:before {
+	content: "";
+	padding-left: 5px;
+	background-color: #007FEA;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAIAAAAPTiitAAAAb0lEQVQY02NgqH+FC3G2vInd+p+l8TUDfhUQhFMRXAV2RchmAJFo93uQIr72t0AOe/MbOBuOxHveg3RytyFEkdlQMyDGC3a+i9z8D1kOrgHhBiCW6vuApoIXWQVEEZo6oNnovoGzgHL+a/+gmwFGADEVxWzKbL+OAAAAAElFTkSuQmCC");
+	background-position: 3px 2px;
+	background-repeat: no-repeat;
+	border-radius: 10px;
+}
+
+.inforSwitchInner:after {
+	content: "";
+	padding-right: 5px;
+	background-color: #D9D9D9;
+	text-align: right;
+	background-position: 21px 2px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAIAAADtkjPUAAAAk0lEQVQY012POw7EIAwFff+DJIIDUCAkKIhEE6oowG12dq31flwQa+YRY1lrXdd1nucYY72LHgKnFz7bq3LOlqCHhBCw0nvXxL7vpRQ0J71CrMw5a60W8t6rds7BsaK/PY5j+y2IKrHZfwnjoi9PKX1rBkF0O7nvO8ZojvdbD8d+dqFaa1ziNPLchZSOUK2lITj2AfCM9dQQMMqYAAAAAElFTkSuQmCC");
+	background-repeat: no-repeat;
+}
+
+.inforSwitchSwitch {
+	width: 15px;
+	height: 15px;
+	margin: 0;
+	background: #FFFFFF;
+	border: 2px solid #D9D9D9;
+	border-radius: 15px;
+	position: absolute;
+	top: -2px;
+	bottom: 0;
+	right: 18px;
+	-moz-transition: all 0.3s ease-in 0s;
+	-webkit-transition: all 0.3s ease-in 0s;
+	transition: all 0.3s ease-in 0s;
+}
+
+.inforSwitchCheckbox:checked + .inforSwitchLabelContainer .inforSwitchLabel .inforSwitchInner {
+	margin-left: 0;
+}
+
+.inforSwitchCheckbox:checked + .inforSwitchLabelContainer .inforSwitchLabel .inforSwitchSwitch {
+	right: -2px;
+}
+
+.inforCheckboxLabel {
+	cursor: pointer;
+	text-align: left;
+}
+
+.inforSwitch + .inforCheckboxLabel {
+	line-height: 20px;
+	position: relative;
+	top: 0;
+}
+
+.inforSwitchLabelContainer .inforCheckboxLabel {
+    position: relative;
+    top: -5px;
+}

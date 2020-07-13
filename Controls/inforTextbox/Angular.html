@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html ng-app>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Textbox - Angular</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+	<script>
+		$(function($) {
+			//nothing yet...using
+		});
+	</script>
+</head>
+
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="requiredField">Angular Field</label>
+		<input type="text" ng-model="field1" class="inforTextbox required"  id="field1" />
+		<label class="inforDataLabel">{{field1}}</label>
+	</div>
+</body>
+</html>

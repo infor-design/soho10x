@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE8"/>
+	<meta charset="utf-8"/>
+
+	<title>Infor Splitter - Horizontal Splitter on a Tab</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"> </script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"> </script>
+	<script src="../Release/inforControlsCombined.js"> </script>
+	<script src="js/inforSplitter.js"> </script>
+
+	<script>
+		 $(function () {
+			$('#inforTabContainer').inforTabset();
+
+			$(".inforHorizontalSplitter").inforSplitter({
+				splitHorizontal: true
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="inforTabContainer" style="margin: 10px">
+		<ul class="inforTabset">
+			<li><a href="#tab1">Overview</a></li>
+			<li><a href="#tab2">Items</a></li>
+			<li><a href="#tab3">Notes</a></li>
+		</ul>
+
+		<div id="tab1" style="height:100%">
+		  <div class="inforHorizontalSplitter">
+				<div id="topPane" >
+					<div style="margin-top: -10px">
+
+					</div>
+				</div>
+				<div id="bottomPane" >
+					<div style="margin-top: -10px">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tab2">
+		</div>
+		<div id="tab3">
+		</div>
+	</div>
+</body>
+</html>

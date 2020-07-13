@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tree - Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTree.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="js/sampleData.js"></script>
+
+	<script>
+		$(function () {
+			$(".inforScrollableArea").inforScrollableArea();
+			
+			//Initialize the Tree control
+			$("#inforTree1").inforTree({"json_data" : getSampleJson(),
+										"plugins": ["themes","search",  "json_data", "ui", "crrm", "contextmenu", "hotkeys"]});
+			
+			$("#inforTree2").inforTree({"json_data" : getSampleJson(),
+										"plugins": ["themes", "search", "json_data", "ui", "crrm", "contextmenu", "hotkeys"]});
+		});
+	</script>
+</head>
+<body style="margin:10px">
+	<div class="inforScrollableArea" style="overflow:auto;width: 200px;">
+		<div id="inforTree1" class="inforTree"></div>
+	
+		<div id="inforTree2" class="inforTree"></div>
+	</div>
+</body>
+</html>

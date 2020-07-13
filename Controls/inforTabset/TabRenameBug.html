@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Add and Rename tabs</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTabset.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			var tabs = $('#tabSet1').inforTabset({editable:true,
+			closable:true,
+			addButton:false,
+			chevron: false,
+			draggable:true,
+			fillToBottom:true,
+			animate:false,
+								});
+
+			$("#addTabButton").click(function(){
+				tabs.inforTabset("add","tabX", "New Tab", true, function(e,ui){
+					$("#foobar").inforForm();
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforToolbar">
+		<button type="button" class="inforIconButton new" id="addTabButton"></button>
+	</div>
+	<div id="tabSet1">
+	  <ul class="inforTabset">
+	  </ul>
+	</div>
+	<form id="foobar">
+		<label  class="inforLabel">Installments</label>
+		<select class="inforDropDownList" id="dropDown1" >
+				<option value="al"></option>
+				<option value="al">No</option>
+				<option value="al">Monthly</option>
+				<option value="az">Quarterly</option>
+		</select>
+	</form>
+</body>
+</html>

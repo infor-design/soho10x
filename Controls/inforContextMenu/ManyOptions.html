@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Context Menu - Basic Examples</title>
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/popupmenu.js"></script>
+
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
+  <link href="css/popupmenu.css" rel="stylesheet"/>
+
+  <script>
+    $(function () {
+
+      $('#rightClickMenuButton').inforContextMenu({
+        menu: 'rightClickMenu',
+        trigger: 'rightClick'
+      });
+
+    });
+  </script>
+</head>
+<body>
+
+  <div class='inforApplicationPadding'>
+
+   <button id="rightClickMenuButton" class="inforFormButton">
+      Right Click Menu - Has a Lot of Options
+    </button>
+    <ul id="rightClickMenu" class="popupmenu">
+      <li class="popupmenu-group ">Open Tabs</li>
+      <li><a href="#tab1">Tab 1 - Available</a></li>
+      <li><a href="#tab2">Tab 2 - Available</a></li>
+      <li class="popupmenu-seperator"></li>
+      <li class="popupmenu-group ">Closed Tabs</li>
+      <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+	  <li><a href="#tab3">Tab 3 - Available</a></li>
+      <li><a href="#tab4">Tab 4 - Available</a></li>
+    </ul>
+  </div>
+</body>
+</html>

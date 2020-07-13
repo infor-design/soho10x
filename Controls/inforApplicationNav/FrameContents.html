@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Form Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			//this plugin will initialize all plugins on the page with default options but is inefficient
+			$("#module1").inforForm();
+
+			$("#closeButton").click(function() {
+				 parent.window.toggleModule();
+			});
+		});
+	</script>
+</head>
+<body class="" >
+	<div id="module1" class="inforModuleContainer inforApplicationPadding">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span id="pageTitleText" class="inforPageTitleText">Order Line Item</span>
+					<span class="inforModuleRecordIdText">12000001</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton"></button>
+					<button class="inforModuleCloseButton" id="closeButton" ></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button class="inforIconButton save" title="Saves the current Order line Item" ><span></span></button>
+				<button class="inforIconButton discard" title="Undo your pending changes"><span></span></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforIconButton new" title="Add's a new Order Line Item"><span></span></button>
+				<button class="inforIconButton delete" title="Delete this Order Line Item"><span></span></button>
+				<button class="inforIconButton refresh" title="Refresh this Order Line Item"><span></span></button>
+				<span class="inforToolbarSpacer"></span>
+				<button class="inforIconButton print" title="Print this Order Line Item"><span></span></button>
+				<span class="inforToolbarSpacer"></span>
+				<button type="button" class="inforTextButton" disabled>Disabled Button</button>
+				<button type="button" class="inforTextButton">Text Button</button>
+				<button type="button" class="inforSplitButton" id="splitButton">Split Button</button>
+				<button type="button" class="inforMenuButton" id="menuButton">Menu Button</button>
+
+			</div>
+
+			<fieldset class="inforFieldSet">
+				<div class="content">
+					<div class="infor2ColumnLayout autoLabelWidth">
+						<div class="column1">
+							<label class="inforLabel" for="orderNumber">Order Number</label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
+							<label class="inforLabel" for="soldTo">Sold To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+							<label class="inforLabel" for="location">Location</label> <input type="text" id="location" class="inforTextbox"/><br>
+							<label class="inforLabel">Ship To</label>
+							<select class="inforDropDownList" id="dropDown1" >
+								<option value=""></option>
+								<option value="a" selected="selected">All</option>
+								<option value="cc">Consolidated Consortiums</option>
+								<option value="mw">Major Widgets Inc</option>
+								<option value="me">Metrolitan Electric</option>
+								<option value="sp">Speed Services Inc</option>
+							 </select><br>
+						</div>
+						<div class="column2">
+							<label class="inforLabel" for="orderNumber">Order Number</label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
+							<label class="inforLabel" for="soldTo">Sold To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+							<label class="inforLabel" for="location">Location</label> <input type="text" id="location" class="inforTextbox"/><br>
+              <span class="inforLabel noColon">&nbsp;</span>
+              <input id="checkbox1" class="inforCheckbox" type="checkbox">
+              <label class="inforCheckboxLabel" for="checkbox1">Sold</label>
+
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<div class="inforTabContainer">
+			  <ul class="inforTabset">
+				<li><a href="#tab1">Overview</a></li>
+				<li><a href="#tab2">Accounting</a></li>
+				<li><a href="#tab3">Defaults</a></li>
+				<li><a href="#tab4">User Def</a></li>
+				<li><a href="#tab4">Piece Trk</a></li>
+			  </ul>
+			  <div id="tab1">
+				<div class="inforFieldSet2ColumnLayout">
+						<fieldset class="inforFieldSet" >
+							<legend><span class="inforFieldSetLabel">Field Left</span></legend>
+							<div class="content">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+							</div>
+						</fieldset>
+
+						<fieldset class="inforFieldSet">
+							<legend><span class="inforFieldSetLabel">Field Set Right</span></legend>
+							<div class="content">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+							</div>
+						</fieldset>
+					</div>
+
+				  </div>
+				  <div id="tab2">
+					<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+					<fieldset class="inforFieldSet">
+						<legend>
+							<span class="inforFieldSetLabel">The Label</span>
+						</legend>
+						<button type="button" role="button" class="inforExpandButton open"></button>
+						<div class="content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+						</div>
+					</fieldset>
+				</div>
+			  <div id="tab3">
+				<p>Maecenas id magna non nibh vehicula elementum. Phasellus a purus. Nunc in ipsum. Quisque mollis nisi. Vestibulum fermentum. Donec sed ligula. Morbi cursus magna eu nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sed lectus. Quisque dictum elit a velit. Nulla eleifend. Nunc condimentum nibh sed purus.</p>
+				<p>Nam semper adipiscing enim. Nulla egestas, tellus vitae tempor tempus, mauris tortor tristique dui, sit amet egestas leo mi non quam. Aliquam accumsan quam at nunc. Sed sit amet eros. Nunc orci ante, ultricies id, ultrices ac, dignissim id, mauris. Proin nisi nisl, consectetuer sit amet, blandit eu, commodo nec, sem. Mauris egestas. Proin vulputate fringilla ipsum. Proin faucibus, ante sit amet imperdiet mattis, odio velit feugiat orci, ac vestibulum tellus pede ut urna. Duis auctor mi in est. Morbi rhoncus mi. Sed euismod eros vel lorem. Suspendisse potenti.</p>
+				<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</p>
+			  </div>
+			</div>
+		 </div>
+	 </div>
+</body>
+</html>

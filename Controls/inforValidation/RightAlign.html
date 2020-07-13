@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Validate Plugin: Form Validation</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+     $(function () {
+      //Globalize.culture('ar-SA');
+
+      //Initialize all form controls
+      $('body').inforForm();
+      $('.inforLookupField').inforLookupField();
+
+      //setup validation
+      var demoForm = $('#formExample').validate().on('validated', function(e, isValid) {
+        if (!isValid) {
+          console.log('Form cannot be submitted');
+        } else {
+          console.log('Form can be submitted');
+        }
+      });
+
+      $('#submitButton').on('click', function () {
+        demoForm.trigger('submit');
+      });
+
+      $('#discardButton').on('click', function () {
+        resetForm();
+      });
+
+      //set localized message for existing message
+      //$.fn.validation.rules['required'].message = 'This is required';
+
+      //example of adding a custom rule to the validation
+      $.fn.validation.rules['xhr-test'] = {
+        check: function (value, onComplete) {
+          var result;
+          //do some sort of back end request...
+          $.ajax({
+            url: 'http://www.randomtext.me/api/lorem/p-5/2',
+            dataType: 'json',
+            timeout: 5000,
+            success: function () {
+               result = (value === '' ? false : true);
+               onComplete(result);
+             },
+            error: function () {
+              result = false;
+              console.log('error');
+              onComplete(result);
+            },
+            async: true
+          });
+        },
+        message: 'Vendor does not exist',
+        async: true
+      };
+     });
+
+    function resetForm() {
+      //reload your data here and reset the form validation
+      setTimeout(function () {
+        $('#formExample').resetForm();
+      }, 50);
+    }
+  </script>
+</head>
+<body class="inforHidden inforApplicationPadding">
+
+  <form id="formExample">
+    <div class="inforModuleContainer">
+     <div class="inforModuleHeader">
+        <div class="inforModuleHeaderLeft">
+          <span class="inforPageTitleText">Order Line Item</span>
+          <span class="inforModuleRecordIdText">12000001</span>
+        </div>
+        <div class="inforModuleHeaderRight">
+          <button class="inforModuleSettingsButton" type="button"></button>
+          <button class="inforModuleCloseButton"  type="button"></button>
+        </div>
+     </div>
+     <div class="inforModuleContentArea">
+      <div class="inforToolbar">
+        <button class="inforIconButton save" id="submitButton" type="button" title="Saves the current Order line Item"></button>
+        <button class="inforIconButton discard" id="discardButton" type="button" title="Undo your pending changes"></button>
+      </div>
+      <div class="infor2ColumnLayout autoLabelWidth">
+        <div class="column1">
+           <label class="inforLabel" for="textBox1">Order Id</label>
+           <input type="text" id="textBox1" class="inforTextbox required" data-validate="required"/><br>
+           <label class="inforLabel" for="textBox2">Vendor Id</label>
+           <input type="text" id="textBox2" class="inforTextbox" data-validate="xhr-test"/><br>
+           <label class="inforLabel" for="textarea1" >Comments</label>
+           <textarea class="inforTextArea required" data-validate="required" id="textarea1"></textarea><br>
+           <label class="inforLabel noColon">&nbsp;</label>
+           <input type="checkbox" data-validate="required" class="inforCheckbox" id="test"/><label class="inforCheckboxLabel" for="test">Checkbox</label><br>
+           <label for="dropDown1" class="inforLabel">Supplier</label>
+           <select id="dropDown1" data-validate="required" class="dropdown required">
+            <option value="">&nbsp;</option>
+            <option value="a">All</option>
+            <option value="cc">Consolidated Consortiums</option>
+            <option value="mw">Major Widgets Inc</option>
+            <option value="me">Metrolitan Electric</option>
+            <option value="sp">Speed Services Inc</option>
+           </select><br>
+           <label class="inforLabel">Date 1</label>
+           <input class="inforDateField required"  id="dateInput1" type="text" data-validate="required"   />
+           <br>
+           <label class="inforLabel">Lookup Dialog</label>
+           <input class="inforLookupField"  id="lookup1"  data-validate="required" type="text" />
+           <br>
+           <label class="inforLabel">Numeric Lookup Dialog</label>
+           <input class="inforLookupField"  id="lookup2" data-validate="required" type="text" data-number-format="d" data-number-source-format="en-US" size="14" maxlength="13"/>
+           <br>
+           <label class="inforLabel" for="textBox1">Numeric text box</label>
+           <input type="text" id="textBox1" class="inforTextbox required" data-validate="required" data-number-format="d" data-number-source-format="en-US" size="14" maxlength="13"/><br>
+        </div>
+
+        <div class="column2">
+          <label class="inforLabel" for="listbox1">Suppliers</label>
+          <select multiple="multiple" data-validate="required" class="inforListBox" id="listbox1" style="height:170px;width:200px">
+            <option value="1" >ABC Manufacturing</option>
+            <option value="2" >Acme Industrial</option>
+            <option value="3">Allied Suppliers</option>
+            <option value="4">Basic Brands</option>
+            <option value="5">Blue Sky Distribution</option>
+            <option value="6">Consolidated Consortiums</option>
+            <option value="7"  disabled="disabled">Easter Widgets</option>
+            <option value="8">Ecac Manufacturing</option>
+            <option value="9">Generic Suppliers</option>
+            <option value="10">Normal Brands</option>
+            <option value="11">Intolink Industrial</option>
+            <option value="12">Morose Power</option>
+          </select>
+        </div>
+      </div>
+      <br style="clear:both">
+      <div class="inforTabContainer" id="tabSet1">
+        <ul class="inforTabset">
+        <li><a href="#tab1">Overview</a></li>
+        <li><a href="#tab2">Items</a></li>
+        </ul>
+        <div id="tab1">
+          <fieldset class="inforFieldSet">
+            <legend>
+              <span class="inforFieldSetLabel">The Label</span>
+            </legend>
+            <button type="button" role="button" class="inforExpandButton open"></button>
+            <div class="content">
+               <div class="autoLabelWidth inforSingleColumnLayout">
+                  <label class="inforLabel" for="itemId1">Item Id</label>
+                <input type="text" id="itemId1" class="inforTextbox required" data-validate="required" />
+              </div><br>
+            </div>
+          </fieldset>
+        </div>
+        <div id="tab2">
+          <div class="autoLabelWidth inforSingleColumnLayout">
+             <label class="inforLabel" for="itemId">Item Id</label>
+             <input type="text" id="itemId" class="inforTextbox required" data-validate="required" /><br>
+          </div>
+      </div>
+     </div>
+    </div>
+  </div>
+  </form>
+
+  <!--Required for Screen Reader Support: Add it to the page on Mac.
+  <div id="scr-errors" role="alert" class="scr-only"><span id="message"></span></div>
+  -->
+</body>
+</html>

@@ -1,0 +1,54 @@
+
+	<div>
+		<div id='inforGridControl'></div>
+	</div>
+
+	<script>
+		var language = "en";
+		var inforGridControl;
+
+		(function($)
+		{
+			var pageNum = 0;
+
+			createGridControl = function()
+			{
+				var columns = [];
+				columns.push({id:"HROrganization",name:"Path",field:"Path",sortable:false,selectable:true,width:200,cssClass:" non-data-cell alignCenter",headerCssClass:" alignHeaderCenter"});
+				columns.push({id:"Relationship",name:"File Name",field:"FileName",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+				columns.push({id:"Relationship",name:"Description",field:"Description",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+
+				var pages = [];
+				pages.push({"Active":true,"Path":"/usr/bin/","FileName":"Stuff.pdf","Description":"Misc Stuff","RelationshipType":2,"_rowIndex":1,"_op_Description_spc_translation_cp_":"Daughter1"});
+				pages.push({"Active":true,"Path":"/usr/bin/","FileName":"Taxes.pdf","Description":"Taxes 2012","RelationshipType":2,"_rowIndex":2,"_op_Description_spc_translation_cp_":"Daughter2"});
+				pages.push({"Active":true,"Path":"/usr/bin/","FileName":"OrgChart.pdf","Description":"Org Chart 2012","RelationshipType":2,"_rowIndex":3,"_op_Description_spc_translation_cp_":"Daughter3"});
+				pages.push({"Active":true,"Path":"/usr/bin/","FileName":"Design.doc","Description":"App Designs","RelationshipType":2,"_rowIndex":4,"_op_Description_spc_translation_cp_":"Daughter4"});
+
+				var options =
+				{
+					columns: columns,
+					idProperty: '_rowIndex',
+					dataset: pages,
+ 					editable: false,
+					multiSelect: false,
+					showCheckboxes: false,
+					showGridSettings: false,
+					savePersonalization: false,
+					forceFitColumns: true,
+					showFooter: true
+				};
+
+				inforGridControl = $('#inforGridControl').inforDataGrid(options);
+			};
+		})(jQuery);
+
+
+		$(document).ready(function()
+		{
+			Globalize.culture("en-US");
+			createGridControl();
+			$("body").inforForm();
+		});
+	</script>
+
+

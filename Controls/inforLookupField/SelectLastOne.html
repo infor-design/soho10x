@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
+	<meta charset="utf-8">
+	<title>Infor DataGrid Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script  src="../Release/jquery-1.11.1.min.js"></script>
+	<script  src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script  src="../Release/inforControlsCombined.js"></script>
+	<script  src="../inforDataGrid/js/inforDataGrid.js"></script>
+	<script  src="js/inforLookupField.js"></script>
+
+	<script >
+
+		function getSampleData(data)
+		{
+			data.push({ property_id: 1, search_name: "99000-001", search_type: "Basic", search_default: "0" });
+			data.push({ property_id: 2, search_name: "USDVEND", search_type: "Basic", search_default: "0" });
+			data.push({ property_id: 3, search_name: "OFFHCS", search_type: "Advanced", search_default: "1" });
+			data.push({ property_id: 4, search_name: "OFFHC4", search_type: "XXXXX", search_default: "1" });
+			return data;
+		}
+
+		$(function () {
+			//set colSaveSearch
+			var colSaveSearch = [];
+			colSaveSearch.push({ id: "search_name", width: 100, name: "Search Name", field: "search_name" });
+			colSaveSearch.push({ id: "search_type", width: 140, name: "Type", field: "search_type" });
+			colSaveSearch.push({ id: "search_default", width: 50, name: "Default", field: "search_default", cssClass: "alignCenter", formatter: CheckboxCellFormatter, filterType: CheckboxFilter });
+
+
+			//get the data in JSON format - see datagrid example for more examples.
+			var data = getSampleData([]);
+
+			var options = {
+				dataset: data,
+				columns: colSaveSearch,
+				idProperty: 'property_id',
+				editable: false,
+				showDrillDown: false,
+				showFilter: false,
+				showCheckboxes: false,
+				showStatusIndicators: false,
+				multiSelect: false, //in theory true will work but not sure how to close the dialog so if you need this discuss with me.
+				forceFitColumns: false
+			};
+
+			//if you want a custom lookup docan still do this...: $("#inforLookupField1").inforTriggerField({click:function(event){.....
+			//pass in the grid options and field to return into the lookup.
+			$("#txtSearch").inforLookupField({
+				gridOptions: options,
+				returnField: "search_name",
+				height: 200,
+				width: 315,
+				editable: true
+			}).change(function (event) {
+				if (!event.originalEvent)
+					DoSomething();
+			});
+
+			//An api method can be used to set the value based on an id.
+			//Also needed for the drop down to set by code - email Steve Duepner <steve.duepner@softbrands.com> with it when done.
+			//$("#txtSearch").inforLookupField("setCode", 2);
+			$("body").removeClass("inforHidden");
+		});
+	   </script>
+	<script >
+		function DoSomething() {
+			console.log($('#txtSearch').value);
+		}
+	</script>
+</head>
+<body>
+	<form id="frmMasterList">
+		<div>
+				<label class="inforLabel">Lookup Field</label>
+				<input class="inforLookupField" type="text" id="txtSearch"><br>
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid : Tests and Issue Where Page Sized is a Whole Number</title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+  <!--Load a Flat file with JSON data-->
+  <script src="js/sampleData.js"></script>
+
+
+</head>
+
+<body class="inforHidden">
+	<button type="button" class="inforTextButton" title="Refresh"  onclick="Refresh();">Save</button>
+	<div>
+		<div class="inforToolbar">
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		//Globalize.culture("nl-NL");
+
+	//Define Your Columns for the Grid.
+		var columns = [];
+		columns.push({ id: "programName", name: "programName", field: "programName", width: 140, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor });
+		columns.push({ id: "description", name: "description", field: "description", width: 225, sortable: true, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: {gridOptions: options, returnField: "city", height: 400, width: 400, editable: true, typeAheadSearch: false }, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data =[];
+		for (var i = 1; i < 501; i++) {
+			data.push({id:i, description: "desc "+i , programName: "prog"+i });
+		}
+
+		var options = {
+			columns: columns,
+			idProperty:'id',
+			editable: false,
+			dataset: [],
+			showFilter: false,
+			showCheckboxes: false,
+			multiSelect: true,
+			showFilter: true,
+			showFooter: true,
+			pagingMode: PagingModes.PagerClientSide,
+			pageSize: 10,
+			savePersonalization: true,
+			frozenColumn : 2
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+		grid.updateData(data);
+
+		$('body').removeClass('inforHidden');
+
+		function Refresh()
+		{
+			var columns = [];
+		columns.push({ id: "programName", name: "programName", field: "programName", width: 140, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor });
+		columns.push({ id: "description", name: "description", field: "description", width: 225, sortable: true, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: {gridOptions: options, returnField: "city", height: 400, width: 400, editable: true, typeAheadSearch: false }, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data =[];
+		for (var i = 1; i < 501; i++) {
+			data.push({id:i, description: "desc "+i , programName: "prog"+i });
+		}
+
+		var options = {
+			columns: columns,
+			idProperty:'id',
+			editable: false,
+			dataset: [],
+			showFilter: false,
+			showCheckboxes: false,
+			multiSelect: true,
+			showFilter: true,
+			showFooter: true,
+			pagingMode: PagingModes.PagerClientSide,
+			pageSize: 10,
+			savePersonalization: true,
+			frozenColumn : 2
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+		grid.updateData(data);
+		}
+	</script>
+</body>
+</html>

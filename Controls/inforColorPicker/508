@@ -1,0 +1,12 @@
+- text that has a popup
+- end and start on the dialog
+- keyboard on the colors (need state)
+- text equivalent
+- focus should go back to the field
+
+Table
+- role = "presentation" on the layout table
+- only use td for layout tables
+
+Questions:
+	- We need an x button

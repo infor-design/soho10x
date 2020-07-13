@@ -1,0 +1,623 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>
+		FTAL2.srdl - Parameters
+	</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			$(".inforModuleContainer").inforForm();
+
+			$("#switchTab").click(function(){
+				$(".inforTabContainer").tabs("select", 2);
+			});
+
+			$(document).bind('keydown', 'alt+1', frmSwitchTab);
+			$(document).bind('keydown', 'alt+2', frmSwitchTab);
+			$(document).bind('keydown', 'alt+3', frmSwitchTab);
+		});
+
+
+		function frmSwitchTab(e)
+		{
+			var tabindex = e.data.replace("alt+","")-1;
+			$("#tabRegion").attr("curtab", 1);
+			$(".inforTabContainer").tabs("select", tabindex);
+		}
+	</script>
+</head>
+
+<body >
+	<div class="inforModuleContainer">
+		<div class="inforModuleHeader">
+			<div class="inforModuleHeaderLeft">
+				<span class="inforPageTitleText">
+					Common > FTAL2.srdl - Parameters
+				</span>
+			</div>
+			<div class="inforModuleHeaderRight">
+				<button class="inforModuleDropDownButton"></button>
+				<button class="inforModuleSettingsButton" disabled="disabled" onclick="alert('ok')"></button>
+				<button class="inforModuleCloseButton"></button>
+			</div>
+		</div>
+		<div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button type="button" class="inforIconButton save" title="Save/Submit"></button>
+				<button type="button" class="inforIconButton refresh" title="Refresh"></button>
+				<button class="inforTextButton" id="cancelButton" title="Cancels the current report">
+					Cancel Report
+				</button>
+				<button class="inforTextButton" id="validateButton" title="Validate the current parameters.">
+					Validate Parameters
+				</button>
+				<button class="inforTextButton" id="runButton" title="Run report with parameters.">
+					Run Report
+				</button>
+				<div class="alignRight" style="padding-right:0px">
+					<span class="inforToolbarSpacer"></span>
+					<button class="help inforIconButton" title="Help"></button>
+				</div>
+			</div>
+
+			<fieldset class="inforFieldSet fullscreen" id="reportDetails" data-report="/Example Reports/Standalone/FTAL2.srdl" >
+				<legend class="inforExpandButton open"></legend>
+				<span class="inforFieldSetLabel">
+					Report Details
+				</span>
+				<div class="content">
+					<div class="infor2ColumnLayout">
+						<div class="column1">
+							<label class="inforLabel" for="ReportName">Name</label>
+							<input class="inforTextbox" id="ReportName" name="ReportName" readonly="readonly" type="text" value="FTAL2.srdl" />
+							<br />
+							<label class="inforLabel" for="ReportDescription">Description</label>
+							<input class="inforTextbox" id="ReportDescription" name="ReportDescription" readonly="readonly" type="text" value="Account Detail Listing" />
+							<br/>
+						</div>
+						<div class="column2">
+							<label class="inforLabel" for="ReportLastModified">
+								Last Modified
+							</label>
+							<input class="inforTextbox" id="ReportLastModified" name="ReportLastModified" readonly="readonly" type="text" value="15/09/2011 22:36:52" />
+							<br />
+							<label class="inforLabel" for="ReportBusinessUnit">
+								Business Unit
+							</label>
+							<input class="inforTextbox" id="ReportBusinessUnit" name="ReportBusinessUnit" readonly="readonly" type="text" value="Core" />
+							<br />
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<button type="button" class="inforFormButton" id="switchTab">Switch Tab</button>
+			<br><br>
+				<div class="inforTabContainer inforScrollableArea" id="tabRegion" curtab="">
+					<ul class="inforTabset">
+						<li>
+							<a href="#tab0">
+								Data Selection
+							</a>
+						</li>
+						<li>
+							<a href="#tab1">
+								Report Output
+							</a>
+						</li>
+						<li>
+							<a href="#tab2">System</a>
+						</li>
+					</ul>
+					<div id="tab0" >
+						<table>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Business Unit
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="businessUnit" class="inforTextbox" value="PK1" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Budget Ledger Code 22121812981289821921121221
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" id="bl" name="budgetLedgerCode_1" class="inforTextbox" value="A" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Account Code
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">From</label>
+								</td>
+								<td>
+									<input type="text" name="accountCode" class="inforTextbox" value="" />
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">-</label>
+								</td>
+								<td>
+									<input type="text" name="accountCode_last" class="inforTextbox" value="" />
+								</td>
+								<td></td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="accountCode_all" value="true" checked="checked"/>
+									<label for="accountCode_all" class="inforCheckboxLabel" style="width:auto">All</label>
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="Locale" value="fr-FR"/>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Accounting Period
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">From</label>
+								</td>
+								<td>
+									<input type="text" name="Period" class="inforTextbox" value="009/2005" placeholder="Using:"/>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">-</label>
+								</td>
+								<td>
+									<input type="text" name="Period_last" class="inforTextbox" value="009/2005" placeholder="Using:"/>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="Period_blank" value="true" />
+									<label for="Period_blank" class="inforCheckboxLabel" style="width:auto">
+										Include Blanks
+									</label>
+								</td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div id="tab1">
+						<table>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Output Format
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<select class="inforDropDownList" id="outputFormat">
+										<option value="XML file with report data">XML</option>
+										<option value="NullRenderer">NULL</option>
+										<option value="CSV (comma delimited)">CSV</option>
+										<option value="Data Feed">ATOM</option>
+										<option value="PDF">PDF</option>
+										<option value="Remote GDI+ file">RGDI</option>
+										<option value="HTML 4.0" selected="selected">HTML4.0</option>
+										<option value="MHTML (web archive)">MHTML</option>
+										<option value="Excel">EXCEL</option>
+										<option value="RPL Renderer">RPL</option>
+										<option value="TIFF file">IMAGE</option>
+										<option value="Word">WORD</option>
+									</select>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										View Output
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto"></label>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="viewOutput" value="true" checked="checked"/>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Store Output
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto"></label>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="storeOutput" value="true"/>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Output Filename
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="outputFileName" class="inforTextbox" value="FTAL2" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Output Path
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input id="outputPath" type="text" name="outputPath" class="inforTextbox" value="/personalFolder_Theo Harper/__Output__" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Print Output
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto"></label>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="printOutput" value="true"/>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">Printer</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="outputPrinter" class="inforTextbox" value="" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Number of copies
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="printCopies" class="inforTextbox" value="1" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Report Executable
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="reportExecutable" class="inforTextbox" value="FTAL2.srdl" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Report Path
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="reportPath" class="inforTextbox" value="/Example Reports/Standalone/FTAL2.srdl" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+					<div id="tab2">
+						<table>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="ReportExecutionId" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="endUserLocale" value="fr-FR"/>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Business Unit Code
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="SSbusinessUnitCode" class="inforTextbox" value="" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="SSbusinessUnitCode_all" value="true" checked="checked"/>
+									<label for="SSbusinessUnitCode_all" class="inforCheckboxLabel" style="width:auto">All</label>
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SScurrentPeriod" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSCurrentDate" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSLedgerCode" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSOperatorGroup" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSOperatorID" value="BTH"/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSSuppressDAGCheck" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSSunSystemsInstigated" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSDocumentDate" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSDocumentFormatDesc" value=""/>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">Comment</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">=</label>
+								</td>
+								<td>
+									<input type="text" name="SSComment" class="inforTextbox" value="" />
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Print Front Sheet
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto"></label>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="printFrontSheet" value="true" checked="checked"/>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Reprint Indicator
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto"></label>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="Reprint" value="true"/>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<label class="inforLabel noColon" style="width:auto">
+										Print Test Page
+									</label>
+								</td>
+								<td>
+									<label class="inforLabel noColon" style="width:auto"></label>
+								</td>
+								<td>
+									<input type="checkbox" class="inforCheckbox" name="testPrint" value="true"/>
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSSuppOption" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSDocumentType" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSPreprintedOutput" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSReprintOrigSeqNum" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSAllocationMarker" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSAllocationCeiling" value="0"/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSDocumentDetails" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="SSNoPEUI" value=""/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="IncludeArchive" value="False"/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="userName" value="BTH"/>
+
+								</td>
+							</tr>
+							<tr style="display:none">
+								<td>
+									<input type="hidden" name="voucher" value="SUSV:1|U:763ffbf2-b0e7-45b7-8d49-4026d329edcc|K8FsSHCtsV5sHN+7Rgwa0R7O03xt14jRRO6dUhQCDh26kPR+5lfZAQ=="/>
+
+								</td>
+							</tr>
+						</table>
+					</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Infor Checkbox Examples</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			//Example showing disabling of the buttons
+			$("#toggleDisabled").click(function(){
+				var f1 = $("#firstCheckBox");
+
+				if (f1.is(":enabled")) {
+					f1.disable();
+				} else {
+					f1.enable();
+				}
+			});
+
+			$("#dirtyTrackedCheckBox").trackDirty();
+
+			//Example Shows how to test if the checkbox is clicked with the api.
+			$("#showFirstCheckVal").click(function() {
+				alert($('#firstCheckBox').is(":checked"));
+			});
+
+			//Example Shows how to toggle the checkbox is clicked with the api.
+			$("#toggleChecked").click(function() {
+				$('#firstCheckBox').toggleChecked();
+			});
+
+			$("#toggle").click(function() {
+				var check = $("#firstCheckBox");
+				if (check.is(":visible")) {
+					check.hide();
+				} else {
+					check.show();
+				}
+			});
+		});
+	</script>
+</head>
+<body style="margin:10px">
+	<input type="checkbox" class="inforCheckbox" id="firstCheckBox" /><label for="firstCheckBox" class="inforCheckboxLabel">Unchecked</label><br>
+	<input type="checkbox" class="inforCheckbox" checked="checked" id="checkedCheckBox" /><label for="checkedCheckBox" class="inforCheckboxLabel">Checked</label><br>
+	<input type="checkbox" class="inforCheckbox" checked="checked" id="dirtyTrackedCheckBox" /><label for="dirtyTrackedCheckBox" class="inforCheckboxLabel">Dirty Tracking</label><br>
+	<input type="checkbox" class="inforCheckbox" id="disabledUncheckedCheckBox" disabled /><label for="disabledUncheckedCheckBox" class="inforCheckboxLabel">Disabled and Unchecked</label><br>
+	<input type="checkbox" class="inforCheckbox" id="disabledCheckedCheckBox" checked="checked" disabled /><label for="disabledCheckedCheckBox" class="inforCheckboxLabel">Disabled and Checked</label><br>
+		<input type="checkbox" class="inforCheckbox partial" id="partialCheckedCheckBox" /><label for="partialCheckedCheckBox" class="inforCheckboxLabel">Partial</label><br>
+	<input type="checkbox" class="inforCheckbox partial" id="partialDCheckedCheckBox" disabled /><label for="partialDCheckedCheckBox" class="inforCheckboxLabel">Partial Disabled</label><br>
+	<br>
+	<button type="button" id="showFirstCheckVal" class="inforFormButton">Show CheckBox Value</button>
+	<button type="button" id="toggleDisabled" class="inforFormButton">Disable/Enable</button>
+	<button type="button" id="toggleChecked" class="inforFormButton">Toggle Checked</button>
+	<button type="button" id="toggle" class="inforFormButton">Show/Hide</button>
+</body>
+</html>

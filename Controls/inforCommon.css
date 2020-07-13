@@ -1,0 +1,214 @@
+/* Infor Common Css
+----------------------------------*/
+html {
+	height: 100%;
+}
+
+body {
+	margin:0;
+	padding:0;
+	font-family:   Helvetica, Arial, sans-serif;
+	font-size: 62.5%;
+	color: #666666;
+	height: 100%;
+	overflow: hidden;
+	background-color: white;
+}
+
+input, textarea {
+	font-family:   Helvetica, Arial, sans-serif;
+	font-size: 1.2em;
+}
+
+/*remove IE10 inputs*/
+::-ms-clear {
+	display: none;
+}
+
+
+button, label , p, span.inforLabel, span.inforTopLabel, span.inforCheckboxLabel {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1.2em;
+}
+
+p {
+	line-height: 16px;
+	color: #535353;
+}
+
+p > button {
+	font-size: 1em;
+}
+
+/* A Field Label */
+.inforLabel, .label, .inforDataLabel, .inforDescriptiveText {
+	color: #444;
+	display: inline-block;
+	float: left;
+	min-width: 1%;
+	padding: 0px 8px 0 0;
+	text-align: right;
+	white-space: pre;
+	width: 7%;
+	font-size: 1.2em;
+	line-height: 20px;
+}
+
+/* Table Layouts */
+table .label, table .inforLabel {
+  float: right;
+  padding: 0 3px 0 0;
+  vertical-align: middle;
+  width: auto;
+}
+
+table .dropdown, table .inforTriggerField {
+  margin-bottom: 0px;
+}
+
+.inforDataLabel, .inforDescriptiveText {
+	color: #444;
+	width: auto;
+	font-style: italic;
+	float: none;
+	margin-left: 4px;
+	line-height: 10px;
+}
+
+.inforTriggerField + .inforDataLabel, .inforTriggerField + .inforDescriptiveText {
+  left: 7px;
+  position: relative;
+  top: -5px;
+}
+
+.inforSingleColumnLayout .inforDataLabel, .inforSingleColumnLayout .inforDescriptiveText {
+  top: 6px !important;
+}
+
+.inforLabel:after, .inforTopLabel:after, .label:after {
+	content: ":";
+}
+
+html[lang="fr-FR"] .inforLabel:after, html[lang="fr-FR"] .label:after, html[lang="fr-FR"] .inforTopLabel:after {
+  content: " :";
+}
+
+html[lang="fr-CA"] .inforLabel:after, html[lang="fr-CA"] .label:after, html[lang="fr-CA"] .inforTopLabel:after {
+  content: " :";
+}
+
+.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang="fr-FR"] .inforLabel.noColon:after, html[lang="fr-FR"] .inforTopLabel.noColon:after  {
+	content: "";
+}
+
+.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang="fr-CA"] .inforLabel.noColon:after, html[lang="fr-CA"] .inforTopLabel.noColon:after  {
+	content: "";
+}
+
+.label.noColon:after {
+    content: "";
+}
+
+html[dir="rtl"] .inforLabel, html[dir="rtl"] .label {
+	float: right;
+	text-align: left;
+	padding: 0 8px;
+}
+
+.inforTopLabel {
+	color: #444;
+	padding: 4px 8px 0px 0px;
+	text-align: right;
+	min-width: 5%;
+	width: 8%;
+	line-height: 16px;
+	white-space: nowrap;
+}
+
+.inforDataLabel.alert {
+	color: #d5000e;
+}
+
+.inforDataLabel.positive {
+	color: #2db329;
+}
+
+.inforScrollableArea {
+	overflow: auto;
+}
+
+.inforHidden {
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+/* Remove Focus Border. */
+:focus {outline:none;} ::-moz-focus-inner {border:0;}
+
+*:focus {
+	outline: 0;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+  outline: 0;
+}
+
+.inforDivider {
+	border-top: 1px solid #CDCDC5;
+	height: 1px;
+	margin-top: 2px;
+	padding-top: 3px;
+	width: auto;
+}
+
+/* Text Formatting */
+.uppercase {
+	text-transform:uppercase;
+}
+
+.inforSection {
+	width: 320px;
+	height: auto;
+}
+
+.inforSection > h1, .inforSection > h2 {
+	border-bottom: 1px solid #E3E3E3;
+	font-size: 1.6em;
+	line-height: 2px;
+}
+
+.inforSectionLabel {
+	color: #666666;
+    font-size: 2em;
+    font-weight: lighter;
+    line-height: 30px;
+    margin: 0;
+    padding: 15px 0;
+}
+
+small {
+	color: #777;
+	font-size: 1.1em;
+}
+
+/* Accessibility */
+.inforScreenReaderText, .scr-only, .audible, .sr-only  {
+	border: 0 none;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+::selection {
+  background: #005ce6;
+  color: white;
+}
+::-moz-selection {
+  background: #005ce6;
+  color: white;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Fire Focus, Change and Submit Events</title>
+  <link type="text/css" href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+
+  <script  src="../Release/jquery-1.11.1.min.js"></script>
+  <script  src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script  src="../Release/inforControlsCombined.js"></script>
+  <script  src="js/dropdown.js"></script>
+
+  <script >
+     $(function () {
+      $('.dropdown').dropdown();
+
+      //Get the Change Event
+      $('select').change(function() {
+        console.log('change');
+      });
+
+
+      //Focus the Drop Down Manually
+      $('#dd2').trigger('activate');
+
+      //test submit fires on enter
+      $('#form1').on('submit', function () {
+        alert('Form Submitted');
+      });
+    });
+  </script>
+</head>
+<body>
+  <form id="form1">
+    <div>
+      <label class="label" for="dd1">Test Label</label>
+      <select id="dd1"  class="dropdown">
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+        <option>Option 4</option>
+        <option>Option 5</option>
+        <option>Option 6</option>
+      </select>
+      <br />
+
+      <label class="label" for="dd2">Test Label</label>
+      <select ID="dd2" class="dropdown">
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+        <option>Option 4</option>
+        <option>Option 5</option>
+        <option>Option 6</option>
+      </select>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

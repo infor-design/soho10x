@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid Sample : Disable Select on Some Rows</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+	   </div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+
+		//Store the Grid Obj For Later use..
+		var grid;
+
+		//Define Columns for the Grid.
+		var columns = [];
+
+		columns.push({ id: "city", name: "City", field: "city", width: 125, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, required: true, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", name: "State", field: "state", formatter: TextCellFormatter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"]});
+		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter });
+		columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+		columns.push({ id: "revenue", name: "Revenue", field: "revenue", width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter});
+		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor, formatter: DateCellFormatter, filterType: DateFilter });
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data = getSampleData([]);
+
+
+
+		var options = {
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			showFilter: true,
+			showDrillDown: true,
+			showFooter: true,
+			showGridSettings: true,
+			showFilter: true,
+			savePersonalization: false
+		};
+		grid = $("#inforDataGrid").inforDataGrid(options);
+
+		//Attach meta data about the rows and which canbe selected to the dataView
+		grid.getData().getItemMetadata = function(index) {
+			var item = grid.getDataItem(index);
+			//Do a check if the row can be selected
+			isSelectable = (item.city != "Spokane");
+
+			return {
+				//cssClasses: (isSelectable ? "" : "slick-nonselectable-row"),
+				selectable : isSelectable
+			};
+		};
+
+		grid.invalidateAllRows();
+		grid.render();
+
+		grid.onSelectedRowsChanged.subscribe(function (e, args) {
+			console.log(args.active);
+			var rows = grid.getSelectedRows();
+			if (rows.length==0)
+				$("#deleteButton").disable();
+			else
+				$("#deleteButton").enable();
+		});
+	</script>
+</body>
+</html>

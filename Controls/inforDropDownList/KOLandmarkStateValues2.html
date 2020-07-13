@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+	<title>KO Landmark State Values 2</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () 
+		{
+			// initialize debug controls
+			$("#preload").inforForm();
+
+			var bindIdGender = "Gender";
+			var bindIdGenderStates = "GenderStates";
+			var bindIdSpecific = "SMART_specific";
+			
+			// create form view model
+			var viewModel = {};
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState(" ", ""));		
+			
+			viewModel[bindIdGender] = ko.observable("");
+			viewModel[bindIdGenderStates] = ko.observableArray(fieldsStateArray);
+			viewModel[bindIdSpecific] = ko.observable("");
+
+			// apply attributes
+			
+			// initialize controls not initialized by inforForm()
+		
+			// apply bindings
+			try
+			{
+				ko.applyBindings(viewModel);
+			}
+			catch(e)
+			{
+				alert(e.message);
+			}
+					
+			loadData();
+
+
+			$(".changeValue").click(function()
+			{
+				var id = this.id.replace("changeValue", "");
+				if (id == "0")
+				{
+					var genderEmptyValue = $("#genderEmptyValue").getValue();
+					id = genderEmptyValue;
+				}
+				viewModel[bindIdGender](id);
+				showData("changeValue: to [" + id + "]");
+			});
+
+			$("#clear").click(function()
+			{
+				$("#msg").text("");
+			});
+
+			$("#showData").click(function()
+			{
+				showData("showData");
+			});
+
+			function loadData()
+			{
+				var genderDataValue = "3";
+
+				var fieldsStateArray = [];
+				fieldsStateArray.push(new FieldState("1 Withhold", "1"));
+				fieldsStateArray.push(new FieldState("2 Female", "2"));
+				fieldsStateArray.push(new FieldState("3 Male", "3"));
+
+				viewModel[bindIdGenderStates](fieldsStateArray);
+				viewModel[bindIdGender](genderDataValue);
+				viewModel[bindIdSpecific](true);
+
+				showData("loadData: loading " + bindIdGender + " with value of [" + genderDataValue + "]");
+			}
+
+			function showData(name)
+			{
+				writeMsg(name + ":\t");
+//				writeMsg("viewModel = " + ko.toJSON(viewModel));
+				writeMsg("viewModel[\"" + bindIdGender + "\"]() = [" + (viewModel[bindIdGender]()) + "];");
+
+				elem = $("#LRCEmployee_wid130");
+				writeMsg("dropDownList: .val() = [" + elem.val() + "]; .getValue() = [" + elem.getValue() + "];");
+
+				elem = $("#LRCEmployee_wid132");
+				writeMsg("radio button: .val() = [" + $("input:radio[name=LRCEmployee_wid132_Group]:checked").val() + "]; prop('checked') = [" + $("input:radio[name=LRCEmployee_wid132_Group]:checked").prop("checked") + "];");
+				writeMsg("checkbox: .val() = [" + $("#LRCEmployee_wid101").val() + "]; .prop('checked') = [" + $("#LRCEmployee_wid101").prop('checked') + "];");
+
+				writeMsg(" ");
+			}
+
+			function writeMsg(message)
+			{
+				var text = $("#msg").text();
+				text += message + "\n";
+				$("#msg").text(text);
+				$("#msg").scrollTop($("#msg")[0].scrollHeight);
+			}
+			
+			// Constructor for a "select bind" object with two properties
+			function FieldState(label, value)
+			{
+				this.label = label;
+				this.value = value;
+			};
+			
+			
+
+		});
+</script>
+</head>
+<body style="margin:10px">
+	<table cellpadding="2" cellspacing="2" border="0">
+		<tr>
+			<td style="vertical-align:top;">
+				<select class="inforDropDownList landmarkInput isDirty" id="LRCEmployee_wid130" data-bind="inforDropDownList: {data:GenderStates,value:Gender,optionsText:'label',optionsValue:'value'}" sz="1" size="1" style="width: 82px;">
+				</select>
+				<select class="inforDropDownList landmarkInput isDirty" readonly data-bind="inforDropDownList: {data:GenderStates,value:Gender,optionsText:'label',optionsValue:'value'}" sz="1" size="1" style="width: 82px;">
+				</select>
+			</td>
+			<td style="vertical-align:top;">
+				<input data-bind="value:Gender" class="inforTextbox landmarkFormElement landmarkInput" size="15" maxlength="8">
+				<span data-bind="text:Gender"></span>
+			</td>
+			<td style="vertical-align:top;">
+				<span class="inforRadioButtonSet landmarkRadioVertical" data-bind="inforRadioButton: {value:Gender}" id="LRCEmployee_wid132">
+					<input type="radio" name="LRCEmployee_wid132_Group" class="inforRadioButton" id="LRCEmployee_1_Option" value="1" /><label for="LRCEmployee_1_Option">1 Withhold</label><br>
+					<input type="radio" name="LRCEmployee_wid132_Group" class="inforRadioButton" id="LRCEmployee_2_Option" value="2" /><label for="LRCEmployee_2_Option">2 Female</label><br>
+					<input type="radio" name="LRCEmployee_wid132_Group" class="inforRadioButton" id="LRCEmployee_3_Option" value="3" /><label for="LRCEmployee_3_Option">3 Male</label><br>
+				</span>
+			</td>
+			<td style="vertical-align:top;">
+				<input type="checkbox" class="inforCheckbox specific" id="LRCEmployee_wid101" typ="specific" data-bind="inforCheckbox: {value: SMART_specific}" /><label for="LRCEmployee_wid101" class="inforCheckboxLabel">Specific</label><br>
+			</td>
+		</tr>
+	</table>
+
+	<div id="preload">
+		<button type="button" class="inforFormButton" id="showData">Show Data</button>
+		<button type="button" class="inforFormButton" id="clear">Clear</button>
+		<br>
+		<textarea id="msg" style="height:340px;width:1000px;"></textarea>
+	</div>
+</body>
+</html>
+

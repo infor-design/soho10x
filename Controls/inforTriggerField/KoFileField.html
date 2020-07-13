@@ -1,0 +1,66 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Infor File Field With Knockout</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../lib/knockout-2.3.0.debug.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../inforShared/js/inforKnockout.js"></script>
+
+	<script>
+
+		$(function() {
+			// declare view model
+			var viewModel =
+			{
+				file: ko.observable("")
+			};
+
+			// initialize elements on form
+			$("body").inforForm();
+
+			// initialize inforFileFields
+			$(".inforFileField").inforFileField();
+
+			// set binding on embedded input element for trigger3
+			$("#trigger3").parent().find(".fileInputField").attr("data-bind", "value:file");
+
+			// apply bindings to elements
+			ko.applyBindings(viewModel);
+
+			// update model with data
+			try
+			{
+				viewModel["file"]("SomeFile.png");
+			}
+			catch(e)
+			{
+				console.log("error encountered in binding, trying again");
+				viewModel["file"]("SomeFile.png");
+			}
+		});
+	</script>
+</head>
+<body>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div data-bind="text:file" ></div>
+
+		<label class="inforLabel" for="trigger1">File Field</label>
+		<input type="file" title="" class="inforFileField" data-bind="inforFileField: {value:file}" id="trigger1"><br>
+
+
+		<label class="inforLabel" for="trigger2">File Field Readonly</label>
+		<input type="file" class="inforFileField" data-bind="inforFileField: {value:file}" readonly id="trigger2"><br>
+
+		<label class="inforLabel" for="trigger1">File Field</label>
+		<input type="file" class="inforFileField" data-bind="inforFileField: {value:file}" id="trigger3"><br>
+		<!--
+		-->
+	</div>
+</body>
+</html>

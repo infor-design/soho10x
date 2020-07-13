@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html >
+
+	<head id="Head1"><title>
+		Infor Grid - Extra QTP Animation Methods.
+	</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<style>
+			.gridActivateIcon {
+				background-color: transparent;
+				background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVR42mNgGJ4gPas4MiO7+D8+jNcAkIKcnDIpXHIgCwjajk0OZOhIsD0jp6QBHWdml/QSZTtYIRYDRoLtWG0mxna4AQTSPJDejwsDAD5ovyfMcCKdAAAAAElFTkSuQmCC");
+				 background-repeat: no-repeat;
+				border: medium none;
+				height: 16px;
+				left: 4px;
+				position: relative;
+				top: -5px;
+				width: 16px;
+			}
+
+			.gridActivateIcon:hover {
+				background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATUlEQVR42mNgGJ5AZPG3SOHF3//jw3gNACkQWf5VCqcc0AKCtmOVAxo6EmwXWfy9ARP/6CXOdqBCbAaMDNuxaSbCdpgBhNI8kN6PCwMAR+LmdUi+fB0AAAAASUVORK5CYII=");
+			}
+	</style>
+
+</head>
+<body style="overflow:auto;">
+	<div class="inforToolbar">
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.rowCount())">RowCount</button>
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.columnCount())">ColumnCount</button>
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.getCellData(2,4), grid1.getCellData(3,5))">GetCellData</button>
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.getChildItem(3,8))">GetChildItem</button>
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.getChildItem(3,10))">GetChildItem Button</button>
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.getChildItemCount(3,8))">ChildItemCount</button>
+		<button type="button" class="inforTextButton" onclick="console.log(grid1.getRowWithCellText('JOSEPH'))">GetRowWithCellText</button>
+    <button type="button" class="inforTextButton" onclick="console.log(grid1.moveRow(1,0))">Move Rows</button>
+	</div>
+	<div id="grid1"></div>
+</body>
+
+<!--Sample Data and Grid Initialization-->
+<script >
+	var grid1 = null;	//Global...
+	var grid1_data = [];
+	var grid1_columns = [];
+	var grid1_newRowKey = 'ROWORDER';
+	var grid1_gridDataKey = 'ROWORDER';
+	var grid1_newRowTemplate = { ROWORDER: -1, ROWID: '', FIRSTNAME: '', LASTNAME: '', AGE: '', HEIGHT: '', STARTDATE: '', STATE: '', NOTES: '' };
+	grid1_data.push({ ROWORDER: '1', ROWID: '1', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '2', ROWID: '2', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '3', ROWID: '3', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '4', ROWID: '4', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '5', ROWID: '5', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '6', ROWID: '6', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '7', ROWID: '7', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '8', ROWID: '8', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '9', ROWID: '9', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '10', ROWID: '10', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '11', ROWID: '11', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '12', ROWID: '12', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '13', ROWID: '13', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+	grid1_data.push({ ROWORDER: '14', ROWID: '14', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+
+	grid1_columns.push({ id: 'ROWORDER', name: 'Order', field: 'ROWORDER', maxWidth: 20, width: 100, formatter: TextCellFormatter, filterType: IntegerFilter });
+	grid1_columns.push({ id: 'LASTNAME', name: 'Last Name', field: 'LASTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+	grid1_columns.push({ id: 'FIRSTNAME', name: 'First Name', field: 'FIRSTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+	grid1_columns.push({ id: 'STARTDATE', name: 'Start Date', field: 'STARTDATE', width: 100, formatter: DateCellFormatter, editor: DateCellEditor, DateSourceFormat: 'MM/dd/yyyy hh:mm:ss tt', DateShowFormat: 'MM/dd/yyyy', filterType: DateFilter });
+	grid1_columns.push({ id: 'AGE', name: 'Age', field: 'AGE', width: 50, formatter: TextCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+	grid1_columns.push({ id: 'HEIGHT', name: 'Height', field: 'HEIGHT', width: 50, formatter: TextCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+	grid1_columns.push({ id: 'STATE', name: 'State', field: 'STATE', width: 50, formatter: TextCellFormatter, editor: SelectCellEditor, filterType: TextFilter, options: ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'] });
+	grid1_columns.push({ id: 'NOTES', name: 'Notes', field: 'NOTES', width: 500, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+	grid1_columns.push({ id: "BUTTON", name: "Button", sortable: false , width: 20, minWidth:20, maxWidth:20, formatter:ButtonCellFormatter , buttonCssClass : "gridActivateIcon", buttonClick: function (row) { console.log(row) }, cssClass: " non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
+	grid1_columns.push({ sortable: false, id: '#', name: '', width: 40, behavior: 'selectAndMove', selectable: false, resizable: false, cssClass: 'cell-reorder dnd' });
+
+	$(function ($) {
+		var options = {
+			columns: grid1_columns,
+			dataset: grid1_data,
+			idProperty: 'ROWORDER',
+			editable: true,
+			showCheckboxes: true,
+			showDrillDown: false,
+			drillDown: function (currentRow) { },
+			showStatusIndicators: true,
+			showGridSettings: true,
+			showFilter: false,
+			forceFitColumns: true,
+			multiSelect: true,
+			showHeaderContextMenu: true,
+			showSavedFilters: false,
+			showFilterWithinResults: true,
+			enableRowReordering: true,
+			enableCellNavigation: true,
+			showFooter: true,
+			autoHeight: true,
+			frozenColumn: -1
+		}
+		grid1 = $('#grid1').inforDataGrid(options);
+		addAutomationFunctions(grid1);
+	});
+
+
+	<!--Add QTP Automation Methods : Could Seperate Into a Js File-->
+	function addAutomationFunctions(gridObj) {
+		gridObj.rowCount = function () {
+			return this.getDataLength();
+		}
+		gridObj.columnCount = function () {
+			return this.getColumns().length;	//Count includes Checkbox, Indicator and Reorder Column.
+		}
+		gridObj.getCellData = function (row,column) {
+			var dataSet = this.getCellNode(row, column);
+			return $(dataSet).text();
+		}
+		gridObj.getChildItem = function (row,column) {
+			return gridObj.getCellNode(row,column);
+		}
+		gridObj.getChildItemCount = function (row,column) {
+			var dataSet = this.getData().getItems(),
+				columnDef = this.getColumns()[column];
+			return (columnDef.options ? columnDef.options.length : 0);
+		}
+    gridObj.moveRow = function (fromRow, toRow) {
+      var dataSet = this.getData().getItems();
+      dataSet.move(fromRow, toRow);
+      gridObj.updateData(dataSet);
+      return true;
+    }
+    Array.prototype.move = function(from, to) {
+      this.splice(to, 0, this.splice(from, 1)[0]);
+    };
+		gridObj.getRowWithCellText  = function (text, column , startFromRow) {
+			var data = this.getData().getItems(),
+				cols = this.getColumns();
+
+			if (!startFromRow)
+				startFromRow = 0;
+
+			for (var i=startFromRow; i<data.length; i++){
+				if (column) {
+					if (data[i][cols[column].id]==text)
+						return data[i];
+				} else {
+					for (var j=0; j < cols.length; j++){
+						if (data[i][cols[j].id]==text)
+							return data[i];
+					}
+				}
+			}
+
+			return;
+		}
+	}
+</script>
+
+</html>

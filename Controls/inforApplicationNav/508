@@ -1,0 +1,54 @@
+http://www.joedolson.com/accessible-navigation.php
+
+-Developers Must add Skip Links (Document)
+	https://www.ssbbartgroup.com/reference/index.php/Notes_on_skip_link_testing_methodology#ucontent
+	- add a skip link as the first element and jump to content
+		http://paypal.github.io/SkipTo/
+	-jump to H1 in the page
+	
+-What to do with the more item
+-Contrast Score 	http://juicystudio.com/services/luminositycontrastratio.php#specify
+	* white on #666
+		The contrast ratio is: 5.74:1
+			Passed at Level AA for text size
+
+	* #F2F2F2 on #666
+		The contrast ratio is: 5.13:1
+			Passed at Level AA for text size
+	
+	* #13A3F7 on #fff
+		Fail!!!!!!
+	
+TODO:
+	* Address #13A3F7 on #fff 
+	* Keyboard short cuts (up and down arrow)
+	* Discuss focus states
+	* Test with Jaws
+	* aria-menu semantics
+	* aria-expanded place this on the buttons and add <span> expended/collapsed
+	* aria-selected on selected elements
+	* do a skip link
+	* why does it scroll when i use the keyboard?
+	* Show selected on menu selections (blue)
+	* Character jumps to the letter like 
+		http://whatsock.com/tsg/Coding%20Arena/ARIA%20Menus/Horizontal%20%28Internal%20Content%29/demo.htm
+	
+Document:
+	- Uses must add Skip Links
+	- Avoid Large Number of Menu items as it has a negative effect on folks with cognitive issues
+	- Max 3 levels
+	
+Design
+	- Use the Responsive Nav menu version?
+	- Bookmarks/Shortcuts/Most recently used
+	
+Questions:
+	- left versus right in keyboard
+		* Off screen text in the node itself 
+		* span with the word "Expand left" or "Expand right"
+	- use up down nav instead?
+	- bookmarks feature how to be keyboard accessible.
+	
+	
+	
+	

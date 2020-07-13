@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>Rating Control</title>
+
+  <style>
+    .rating {
+      border: none;
+    }
+
+    .rating:not(:checked) > input {
+      position:absolute;
+      top:-9999px;
+      clip:rect(0,0,0,0);
+    }
+
+    .rating:not(:checked) > label {
+      color: #a4a4a4;
+      cursor: pointer;
+      float: left;
+      font-size: 200%;
+      height: 30px;
+      line-height: 29px;
+      overflow: hidden;
+      padding: 0 10px;
+      text-indent: -8px;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    .rating:not(:checked) > label:before {
+      content: '★';
+    }
+
+    .rating > input:checked ~ label {
+      color: #f9c600;
+    }
+
+    .rating > input:focus + label {
+      outline: 1px dashed #a4a4a4;
+    }
+
+    .rating:not(:checked) > label:hover,
+    .rating:not(:checked) > label:hover ~ label {
+        color: #f9c600;
+    }
+
+    .rating > input:checked + label:hover,
+    .rating > input:checked + label:hover ~ label,
+    .rating > input:checked ~ label:hover,
+    .rating > input:checked ~ label:hover ~ label,
+    .rating > label:hover ~ input:checked ~ label {
+      color: #f9c600;
+    }
+
+  </style>
+</head>
+<body>
+
+  <fieldset class="rating">
+      <legend class="rating-text">3 Stars out of 5 <br> Satisfied</legend>
+
+      <input type="radio" id="star5" name="rating" value="5" />
+      <label for="star5" title="Loved it">5 star</label>
+
+      <input type="radio" id="star4" class="half" name="rating" value="4" />
+      <label for="star4" title="Really liked it">4 stars</label>
+
+      <input type="radio" id="star3" name="rating" value="3" />
+      <label for="star3" title="Liked it">3 stars</label>
+
+      <input type="radio" id="star2" name="rating" value="2" />
+      <label for="star2" title="Didn’t like it">2 stars</label>
+
+      <input type="radio" id="star1"  name="rating" value="1" />
+      <label for="star1" checked title="Hated it">1 stars</label>
+  </fieldset>
+
+</body>
+</html>

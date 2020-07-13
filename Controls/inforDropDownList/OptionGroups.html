@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Drop Down List - With Option Groups</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/inforDropDownList.css">
+	
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+
+	<script>
+		$(function () {
+			$("#country1, #country2, #nfl").inforDropDownList();
+		});
+	</script>
+  
+</head>
+<body class="inforApplicationPadding">
+      	  <label for="nfl" class="inforLabel">Option Groups</label>
+          <select id="nfl">
+            <option value=""></option>
+            <optgroup label="NFC EAST">
+              <option>Dallas Cowboys</option>
+              <option>New York Giants</option>
+              <option>Philadelphia Eagles</option>
+              <option>Washington Redskins</option>
+            </optgroup>
+            <optgroup label="NFC NORTH">
+              <option>Chicago Bears</option>
+              <option>Detroit Lions</option>
+              <option>Green Bay Packers</option>
+              <option>Minnesota Vikings</option>
+            </optgroup>
+            <optgroup label="NFC SOUTH">
+              <option>Atlanta Falcons</option>
+              <option>Carolina Panthers</option>
+              <option>New Orleans Saints</option>
+              <option>Tampa Bay Buccaneers</option>
+            </optgroup>
+            <optgroup label="NFC WEST">
+              <option>Arizona Cardinals</option>
+              <option>St. Louis Rams</option>
+              <option>San Francisco 49ers</option>
+              <option>Seattle Seahawks</option>
+            </optgroup>
+            <optgroup label="AFC EAST">
+              <option>Buffalo Bills</option>
+              <option>Miami Dolphins</option>
+              <option>New England Patriots</option>
+              <option>New York Jets</option>
+            </optgroup>
+            <optgroup label="AFC NORTH">
+              <option>Baltimore Ravens</option>
+              <option>Cincinnati Bengals</option>
+              <option>Cleveland Browns</option>
+              <option>Pittsburgh Steelers</option>
+            </optgroup>
+            <optgroup label="AFC SOUTH">
+              <option>Houston Texans</option>
+              <option>Indianapolis Colts</option>
+              <option>Jacksonville Jaguars</option>
+              <option>Tennessee Titans</option>
+            </optgroup>
+            <optgroup label="AFC WEST">
+              <option>Denver Broncos</option>
+              <option>Kansas City Chiefs</option>
+              <option>Oakland Raiders</option>
+              <option>San Diego Chargers</option>
+            </optgroup>
+          </select>
+          
+
+
+</body>
+</html>

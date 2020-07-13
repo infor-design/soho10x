@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- meta -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>Drop Down - Handles Duplicate Values</title>
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+  <script src="js/inforDropDownList.js"></script>
+
+  <script>
+    $(function ($) {
+      $('.inforDropDownList').inforDropDownList({source: function(request,response) {
+        var values = [];
+        values.push({id: '1', value: 'ICP_Lang', label:'File'});
+        values.push({id: '2', value: 'ICP_Lang', label:'MDS'});
+        values.push({id: '3', value: 'Title', label:'Share Point'});
+
+        return response(values);
+      }});
+    });
+  </script>
+</head>
+<body>
+
+  <label class="label" for="id1">Field</label>
+  <select onchange="console.log($(this).getCode())" class="inforDropDownList" id="id1">
+  </select>
+
+</body>
+</html>

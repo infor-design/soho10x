@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+	<title>Infor Lookup Field : Paging </title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="../inforDataGrid/js/inforDataGrid.js" ></script>
+	<script src="js/inforLookupField.js" ></script>
+
+</head>
+<body class="inforHidden">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Remote Data</label>
+			<input class="inforLookupField" type="text" id="inforLookupFieldRemote"><br>
+		</div>
+	</div>
+
+	<script>
+			//Globalize.culture("ar-SA");
+
+			var cache = {},	//implement a redumentary caching of requests for performance
+				options = {
+					editable: false,
+					showDrillDown: false,
+					showFilter: false,
+					showCheckboxes: false,
+					showStatusIndicators: false,
+					multiSelect: false,
+					pagingMode: PagingModes.PagerServerSide,
+					pageSize: 10,
+					showFooter: true,
+					savePersonalization: false,
+					autoHeightToPageSize: true,
+					idProperty: "officeId"
+				};
+
+			//Define a function to do whats needed to get the page. This is called in two places: source (initial Page) and onPageRequested
+			var baseqry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?";
+
+			//initialize the control options - the source function is called when a user requests by typing or clicking the button
+			$("#inforLookupFieldRemote").inforLookupField({
+				gridOptions: options, 	//set the grid options (columns and settings). dataset will be empty.
+				returnField: "city",
+				width: 400,
+				height: "auto",
+				editable: true,
+				typeAheadSearch: true,
+				onPageRequested: function (e, args) {
+					alert();
+          //get a new page:
+					var qry = baseqry + "&$inlinecount=allpages&$top="+args.pageSize+"&$skip="+(args.pageNum*args.pageSize)+"&$select=city,state,numberEmployees,officeId";
+
+					if (args.filters)
+						qry += "&$filter=substringof('"+args.filters["officeId"].value+"',city) eq true";
+
+					//add sort condition
+					qry += "&$orderby="+(args.sortColumnId ? args.sortColumnId : "city")+(args.sortAsc ? " asc" : " desc");
+
+					$.getJSON(qry,
+					 function (jsonResult) {
+						var newData = jsonResult.d.results;
+						e.datagrid.mergeData(newData, args.pageNum, parseInt(jsonResult.d.__count));
+					 });
+				},
+				source: function (request, response) {
+					var self = $(this.element);
+
+					/*check if the request is in the cache to avoid extra requests.*/
+					if ( request.term in cache ) {
+						response( cache[ request.term ].data , cache[ request.term ].columns,  cache[ request.term ].totalCount);
+						return;
+					}
+
+					//Set the idProperty using set options or any other grid property
+
+					//get first page:
+					var qry = baseqry + "&$inlinecount=allpages&$top="+options.pageSize+"&$skip=0&$select=city,state,numberEmployees,officeId";
+					//add initial sort condition
+					qry += "&$orderby=city asc";
+
+					if (request.term)
+						qry += "&$filter=substringof('"+request.term+"', city) eq true";
+
+					$.getJSON(qry,
+					 function (jsonResult) {
+
+					   //Pass in the grid columns We want to see. This could come from the Json Request as well.
+					   var columns = [];
+					   columns.push({ id: "city", name: "City", field: "city", width: 135, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+					   columns.push({ id: "state", name: "State", field: "state",  formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"]});
+					   columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, headerCssClass : "alignRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+
+					   //set various control properties retrieved after the request
+
+					   //set sort indicator on the grid. Future: Pull this out of the cookie
+					   self.inforLookupField("option", "sortColumnId", "city");
+					   self.inforLookupField("option", "sortAsc", true);
+
+					   //cache for later
+					   cache[ request.term ] = {data: jsonResult.d.results, columns : columns, totalCount : jsonResult.d.__count};
+
+					   //pass in total count and options
+					   options.idProperty ='officeId';
+					   response(jsonResult.d.results, columns, jsonResult.d.__count, options);
+					 });
+				}
+			});
+
+		   //remove class which hides the page for smoother loading and size fields...Not necessary specifically for this control.
+		   $("body").inforForm();
+	 </script>
+</body>
+</html>

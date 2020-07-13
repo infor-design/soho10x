@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Tree Sample - Using JSON Data</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTree.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTree.js"></script>
+
+	<script src="js/sampleData.js"></script>
+
+	<script>
+	$(function () {
+		//Globalize.culture("de-DE");
+		$(".inforSplitter").inforSplitter();
+
+		//Initialize the Tree control
+		$("#inforTree1").inforTree({"json_data" : getSampleJson(),
+									"plugins": ["themes", "json_data", "ui", "crrm", "contextmenu", "search"],
+									"search": { show_only_matches: false }})
+				.bind("search.jstree", function (e, data) {
+					data.rslt.nodes.each(function () {
+						$(this).css({"background-color" : "#FFE962", "border-radius" : "4px"});
+					});
+				})
+				.bind("clear_search.jstree", function () {
+					$(this).find('a').each(function () { $(this).css("background", "transparent"); });
+				});
+
+		$("body").inforForm();
+	});
+
+	</script>
+</head>
+<body class="inforHidden" style="margin:10px">
+	<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Infor Tree Example</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton" type="button"></button>
+					<button class="inforModuleCloseButton" type="button"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button id="submitButton" type="button" class="inforIconButton save" onclick="displaySelected()"></button>
+				<button class="inforTextButton" type="button" onclick='$("#inforTree1").inforTree("toggle_dots")' >Toggle Lines</button>
+				<button class="inforTextButton" type="button" onclick='$("#inforTree1").inforTree("toggle_icons")'>Toggle Icons</button>
+				<button class="inforTextButton" type="button" onclick='selectNode()'>Select Node</button>
+			</div>
+			<div class="inforSplitter">
+				<div id="leftPane" style="width:40%">
+					<div id="inforTree1" class="inforTree"></div>
+				</div>
+				<div id="rightPane" style="width:60%; height:">
+					 <div class="inforSingleColumnLayout autoLabelWidth">
+						  <label class="inforLabel" for="treeId">Node Id</label>
+						  <input type="text" name="treeId" id="treeId" class="inforTextbox" value=""/><br>
+						  <label class="inforLabel" for="treeText">Node Text</label>
+						  <input type="text" name="treeText" id="treeText" class="inforTextbox" value=""/><br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

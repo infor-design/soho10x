@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<title>Infor Radio Button : Main Sample </title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		function toggleEnabled() {
+			if ($("#boozeOptions input").attr("disabled"))
+				$("#boozeOptions input").enable();
+			else
+				$("#boozeOptions input").disable();
+		}
+
+		$(function () {
+			//Globalize.culture("ar-SA");
+
+			//All that is needed for this control
+			$("#boozeOptions input").inforRadioButton();
+			$("#boozeOptions2 input").inforRadioButton();
+
+			$(".inforDropDownList").inforDropDownList();
+		});
+	</script>
+</head>
+<body style="margin:10px">
+	<!--Define the style for the radio button using standard input=radio Html-->
+	<div class="inforRadioButtonSet" id="boozeOptions">
+		<label class="inforTopLabel">Drink Order<span class="inforRequiredIndicator"></span></label><br>
+		<input type="radio" id="rumOption" class="inforRadioButton" name="radioGroup1" value="ru"/><label>Irish Whiskey</label><br>
+		<input type="radio" id="waterOption" disabled  class="inforRadioButton" name="radioGroup1" value="wa"/><label>Water</label><br>
+		<input type="radio" id="beerOption" class="inforRadioButton" name="radioGroup1" value="be"  /><label>Beer</label><br>
+		<input type="radio" id="wineOption" checked class="inforRadioButton" name="radioGroup1" value="wi"/><label>Wine</label><br>
+	</div>
+	<br>
+	<!--This example does not have a top label. However, The top label is reccomended.-->
+	<div class="inforRadioButtonSet" id="boozeOptions2">
+		<input type="radio" id="ipaOption" class="inforRadioButton" name="radioGroup2" value="ipa"/><label>IPA</label><br>
+		<input type="radio" id="lagerOption" disabled  class="inforRadioButton" name="radioGroup2" value="la"/><label>Lager</label><br>
+		<input type="radio" id="stoutOption" class="inforRadioButton" name="radioGroup2" value="st"  /><label>Stout</label><br>
+		<input type="radio" id="barleyWineOption" checked class="inforRadioButton" name="radioGroup2" value="bw"/><label>Barley Wine</label><br>
+	</div>
+	<br>
+	<input type="text" class="inforTextbox"  value="ipa"/>
+
+	<!--Just For Demonstration purpose not part of the control.-->
+	<button class="inforFormButton" title="Shows that the value is serialized correctly in the console" onclick='console.log($("input").serialize())'>Check Value</button>
+	<button class="inforFormButton" title="Toggle Enabled/Disabled" onclick='toggleEnabled()'>Toggle Enabled</button>
+</body>

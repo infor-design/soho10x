@@ -1,0 +1,159 @@
+/* Infor ToolBar
+----------------------------------*/
+.inforToolbar {
+	height: 34px;
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	background-color: #ebebeb;
+	box-shadow: 0 1px #d4d4d4;
+	height: auto;
+  min-height: 34px;
+}
+
+.inforToolbar.topLine {
+  box-shadow: 0px 1px #D4D4D4 inset;
+}
+
+.inforDialogContent .inforToolbar {
+	padding-top: 0px;
+}
+
+.inforToolbar > *:first-child {
+	margin-left: 10px !important;
+}
+
+/* So All Children Get Centered assuming they are 20 pixels high */
+.inforToolbar > * {
+	margin-top: 6px !important;
+	display: inline-block;
+  vertical-align: top;
+	margin-bottom: 5px !important;	/* Push anything  below it down out of sight */
+}
+
+.inforToolbar > .inforTextButton  {
+	margin-top: 6px !important;
+}
+
+.inforToolbar > .inforLabel  {
+	margin-top: 8px !important;
+	width: auto;
+}
+
+.inforToolbar > .inforSplitButtonContainer {
+	margin-top: 6px !important;
+	margin-left: 5px;
+}
+
+.inforToolbarSpacer {
+	border-right: 1px solid #B3B3B3;
+    height: 20px;
+    margin-left: 19px;
+    margin-right: 14px;
+    margin-top: 7px !important;
+}
+
+.inforToolbar > .inforCheckboxContainer > .inforCheckboxLabel {
+	color: #686B73 !important;
+	margin-left: -1px;
+	margin-right: 8px;
+}
+
+.inforToolbar > .inforCheckboxContainer > .inforCheckboxLabel:hover {
+	color: #13A3F7 !important;
+}
+
+.inforToolbar > .inforCheckboxContainer{
+	margin-top: 5px !important;
+}
+
+.inforToolbar > .inforTriggerField {
+	margin-top: 8px !important;
+}
+
+.inforToolbar > .inforToggleButton {
+	margin-top: 6px !important;
+}
+
+.inforToolbar > .alignRight {
+	float:right;
+  padding-right: 10px;
+}
+
+.inforToolbar > .alignRight > *{
+	float:left;
+}
+
+.alignRight .inforToolbarSpacer {
+	margin-top: 0 !important;
+}
+
+.inforModuleHeader + .inforToolbar {
+	margin-top: -1px;
+	display: inline-block;
+}
+
+.ui-tabs-panel .inforToolbar > .alignRight {
+	padding-right: 20px;
+}
+
+.inforToolbar .inforLabel {
+	width: auto;
+}
+
+.inforToolbar > .inforRadioButtonLabel {
+	margin-right: 7px;
+	margin-top: 6px !important;
+}
+
+.inforToolbar > .inforRadioButtonLabel .labelText{
+	position: relative;
+	top: -3px;
+}
+
+.inforToolbar + .inforTabContainer, .inforToolbar + .inforTabset {
+	margin-top: 8px;
+}
+
+.inforToolbar > .inforTextbox {
+    position: relative;
+    top: 2px;
+}
+
+/*Adjust the Toolbar a little */
+.inforToolbar .inforSearchFieldContainer {
+  padding-top: 4px;
+}
+
+.inforToolbar .inforSearchField {
+  padding: 1px 5px;
+}
+
+.inforToolbar .inforSearchFieldContainer .inforTriggerButton {
+  margin-top: -2px;
+}
+
+/*RTL*/
+html[dir="rtl"] .inforToolbar > .alignRight {
+	float: left;
+}
+
+html[dir="rtl"] .inforToolbarSpacer {
+	float: right;
+}
+
+html[dir="rtl"] .inforToolbar > * {
+	float: right;
+}
+
+html[dir="rtl"]  .inforToolbar > *:first-child {
+	margin-right: 10px;
+}
+
+html[dir="rtl"] .inforToolbar > .alignRight > * {
+  float: right;
+}
+
+html[dir="rtl"] .inforToolbar .inforSearchFieldContainer{
+  margin-left: 5px;
+}

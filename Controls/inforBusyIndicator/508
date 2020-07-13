@@ -1,0 +1,8 @@
+- have a way to cancel the action
+- aria-busy
+- text alternative
+- use live region alert
+
+- for progress bar use a role
+- Joel version might give a stroke (timing) (not subtle)
+	- dim and more than 3 times per second

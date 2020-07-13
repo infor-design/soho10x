@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<title>Infor Application Navigation</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforApplicationNav.js"></script>
+
+	<script>
+		 $().ready(function ()
+		 {
+			jQuery.support.cors = true;	//allow cross site scripting on IE
+
+			$("#inforApplicationNav1").inforApplicationNav({
+				loadMenu: function(submenu, currentmenu, response){
+					var actionValue = currentmenu.children("a").attr("action");
+					//in this example we are only adding to the action='dynamic'
+					if (actionValue!="dynamic")
+					{
+						response(submenu, currentmenu);
+						return;
+					}
+
+					//Use the dynamic element to make sure that it is not loaded already.
+					if (submenu.find("#placeholder").length==0) {
+						response(submenu, currentmenu);
+						return;
+					}
+
+					//Make an Ajax Call in this sample call uses the randomtext.me API to get 6 UL items of 2 words each of the Lorum Ipsum text
+					$.ajax({
+						url: "http://www.randomtext.me/api/lorem/p-5/2",
+						dataType: "json",
+						timeout: 5000,
+						success: function(data) {
+							//format the result into the correct html in this contrived example
+							var newItems = data.text_out;
+							newItems = newItems.replace(/<p/gi,"<li><a href='#'")
+							newItems = newItems.replace(/p>/gi,"a></li>")
+							//Add these new html elements directly to the submenu and/or current menu li..
+
+							//add some submenus
+
+							/* Correct Format is fx...(For a could of submenu items)
+							  <LI id='liId2'><A id='aId1' href="#">Text 1</A></LI>
+							  <LI id='liId2'><A id='aId1' href="#">Text 2</A></LI>
+
+							  <ul>
+								<li><a href="#">Pricing</a></li>
+								<li><a href="#">Sales</a>
+									<ul>
+										<li><a href="#">Master Data</a></li>
+										<li><a href="#">Margin Control</a></li>
+										<li><a href="#">Quotations</a>
+											<ul>
+												<li><a href="#">Sub Item 3.1.1.1</a></li>
+												<li><a href="#">Sub Item 3.1.1.2</a></li>
+												<li><a href="#">Sub Item 3.1.1.3</a></li>
+												<li><a href="#">Sub Item 3.1.1.4</a></li>
+												<li><a href="#">Sub Item 3.1.1.5</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Contracts</a></li>
+									</ul>
+								</li>
+							</ul>
+
+							*/
+							newItems = '<li><a href="#">Pricing</a></li><li><a href="#">Sales</a><ul><li><a href="#">Master Data</a></li><li><a href="#">Margin Control</a></li><li><a href="#">Quotations</a><ul><li><a href="#">Sub Item 3.1.1.1</a></li><li><a href="#">Sub Item 3.1.1.2</a></li><li><a href="#">Sub Item 3.1.1.3</a></li><li><a href="#">Sub Item 3.1.1.4</a></li><li><a href="#">Sub Item 3.1.1.5</a></li></ul></li><li><a href="#">Contracts</a></li></ul></li>';
+							submenu.append(newItems);
+							//remove the Placeholder in there.
+							submenu.find("#placeholder").remove();
+							response(submenu, currentmenu);
+						},
+						 error: function (req, status, error) {
+							alert(error);	//If there was an error in the call still need to return a response.
+							response(submenu, currentmenu);
+						}
+					});
+					return;
+				}
+			});
+
+
+		 });
+
+		 function closeOpenMenusFromClick(event)
+		 {
+			$("#inforApplicationNav1").inforApplicationNav("close");
+		 }
+
+		 function addMenuItem(newId) {
+			var navMenu = $("#inforApplicationNav1")
+			navMenu.find("ul:first").append("<li id='"+newId+"'><a href='#'>New Menu</a><ul><li><a href='#'>Sub Menu1</a></li><li><a href='#'>Sub Menu1</a></li></ul></li><li class='headerDividerContainer' style='display: block;'><div class='headerDivider'></div></li>");
+			navMenu.inforApplicationNav("decorateMenu",navMenu.find("#"+newId));
+			navMenu.inforApplicationNav("render");
+			idCount++;
+		 }
+
+		 function removeMenuItem(newId) {
+			var navMenu = $("#inforApplicationNav1")
+			 navMenu.find("#"+newId).next(".headerDividerContainer").remove();
+			 navMenu.find("#"+newId).remove();
+			 idCount--;
+			$("#inforApplicationNav1").inforApplicationNav("render");
+		 }
+
+		 var idCount = 0;
+	</script>
+</head>
+<body>
+
+	<div id="inforApplicationNav1" class="inforApplicationNav" >
+		<UL>
+		<LI id=id1><A href="#">Bookmarks</A>
+		<UL id=bookmarksMenuList>
+		<LI id=li_inbasket><A id=an_inbasket action="dynamic" href="#">Inbasket</A>
+		<UL id=ul_inbasket>
+			<li id="placeholder"><a href="#">Placeholder</a></li>
+			<LI id=li_inbasketpfi><A id=an_inbasketpfi href="#">PFI</A>
+		<UL id=ul_inbasketpfi>
+		<LI id=li_inbaskettask0><A id=an_inbaskettask0 href="#" action="doSomething"  onclick="doSomething">Manager</A></LI>
+		<LI id=li_inbaskettask2><A id=an_inbaskettask2 href="#">Michael Fitzgerald</A></LI></UL></LI>
+			<LI id=li_inbasketlpa><A id=an_inbasketlpa href="#">LPA</A>
+		<UL id=ul_inbasketlpa>
+		<LI id=li_lpainbaskettask0><A id=an_lpainbaskettask0 href="#">apps901</A></LI>
+		<LI id=li_lpainbaskettask1><A id=an_lpainbaskettask1 href="#" >gen</A></LI>
+		<LI id=li_lpaadmin><A id=an_lpaadmin href="#">Admin</A>
+		<UL id=ul_lpaadmin>
+		<LI id=li_lpaadmin0><A id=an_lpaadmin0 href="#">apps901</A></LI>
+		<LI id=li_lpaadmin1><A id=an_lpaadmin1 href="#">gen</A></LI></UL></LI>
+		<LI id=li_lpatrack><A id=an_lpatrack href="#">Tracking</A>
+		<UL id=ul_lpatrack>
+		<LI id=li_lpatrack0><A id=an_lpatrack0 href="#" >apps901</A></LI>
+		<LI id=li_lpatrack1><A id=an_lpatrack1 href="#">gen</A></LI></UL></LI></UL></LI></UL></LI>
+		<LI id=li_000000000000002><A id=an_000000000000002 href="#">Portal Administration</A>
+		<UL id=ul_000000000000002>
+		<LI id=li_000000000000013><A id=an_000000000000013 href="#">IOS Cache Refresh</A></LI>
+		<LI id=li_000000000000012><A id=an_000000000000012 href="#" >SSO Configuration</A></LI>
+		<LI id=li_000000000000011><A id=an_000000000000011 href="#" >IOS Configuration</A></LI>
+		<LI id=li_000000000000010><A id=an_000000000000010 href="#" >Portal Configuration</A></LI>
+		<LI id=li_000000000000009><A id=an_000000000000009 href="#">Set Custom Form Data Area</A></LI>
+		<LI id=li_000000000000008><A id=an_000000000000008 href="#">Rebuild Custom Form Index</A></LI>
+		<LI id=li_000000000000007><A id=an_000000000000007 href="#">Delete Custom Form</A></LI>
+		<LI id=li_000000000000006><A id=an_000000000000006 href="#">Lawson Terminal</A></LI>
+		<LI id=li_000000000000005><A id=an_000000000000005 href="#">Bookmark Manager</A></LI>
+		<LI id=li_000000000000004><A id=an_000000000000004 href="#">Role Manager</A></LI>
+		<LI id=li_000000000000003><A id=an_000000000000003 href="#">Adminstration Home Page</A></LI></UL></LI>
+		<LI id=li_000000000000014><A id=an_000000000000014 href="#">Jobs and Reports</A>
+		<UL id=ul_000000000000014>
+		<LI id=li_000000000000018><A id=an_000000000000018 href="#">Multi-Step Job Definition</A></LI>
+		<LI id=li_000000000000017><A id=an_000000000000017 href="#">Job Schedule</A></LI>
+		<LI id=li_000000000000016><A id=an_000000000000016 href="#">Print Manager</A></LI>
+		<LI id=li_000000000000015><A id=an_000000000000015 href="#">Job List</A></LI></UL></LI>
+		<LI id=li_000000000000019><A id=an_000000000000019 href="#">mike</A>
+		<UL id=ul_000000000000019>
+		<LI id=li_000000000000242><A id=an_000000000000242 href="#">child level 1</A></LI></UL></LI>
+		<LI id=li_000000000000146><A id=an_000000000000146 href="#">Human Resources</A>
+		<UL id=ul_000000000000146>
+		<LI id=li_000000000000151><A id=an_000000000000151 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000150><A id=an_000000000000150 href="#">Setup</A></LI>
+		<LI id=li_000000000000149><A id=an_000000000000149 href="#">Processing</A></LI>
+		<LI id=li_000000000000148><A id=an_000000000000148 href="#">Reporting</A></LI>
+		<LI id=li_000000000000147><A id=an_000000000000147 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000157><A id=an_000000000000157 href="#">General Ledger</A>
+		<UL id=ul_000000000000157>
+		<LI id=li_000000000000167><A id=an_000000000000167 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000166><A id=an_000000000000166 href="#">Setup</A></LI>
+		<LI id=li_000000000000165><A id=an_000000000000165 href="#">Processing</A></LI>
+		<LI id=li_000000000000164><A id=an_000000000000164 href="#">Reporting</A></LI>
+		<LI id=li_000000000000163><A id=an_000000000000163 href="#">Utilities</A></LI>
+		<LI id=li_000000000000162><A id=an_000000000000162 href="#">Currency Tables</A></LI>
+		<LI id=li_000000000000161><A id=an_000000000000161 href="#">Budgeting</A></LI>
+		<LI id=li_000000000000160><A id=an_000000000000160 href="#">Attribute Matrix Setup</A></LI>
+		<LI id=li_000000000000159><A id=an_000000000000159 href="#">Allocations</A></LI>
+		<LI id=li_000000000000158><A id=an_000000000000158 href="#">Financial Report Writer</A></LI></UL></LI>
+		<LI id=li_000000000000218><A id=an_000000000000218 href="#">Accounts Payable</A>
+		<UL id=ul_000000000000218>
+		<LI id=li_000000000000223><A id=an_000000000000223 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000222><A id=an_000000000000222 href="#" action="switchContents('LAWFORM|TKN=APMN.1','000000000000222')">Setup</A></LI>
+		<LI id=li_000000000000221><A id=an_000000000000221 href="#" action="switchContents('LAWFORM|TKN=APMN.2','000000000000221')">Processing</A></LI>
+		<LI id=li_000000000000220><A id=an_000000000000220 href="#" action="switchContents('LAWFORM|TKN=APMN.3','000000000000220')">Reporting</A></LI>
+		<LI id=li_000000000000219><A id=an_000000000000219 href="#" action="switchContents('LAWFORM|TKN=APMN.4','000000000000219')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000117><A id=an_000000000000117 href="#">Absence Management</A>
+		<UL id=ul_000000000000117>
+		<LI id=li_000000000000121><A id=an_000000000000121 href="#" action="switchContents('LAWFORM|TKN=LPMN.1','000000000000121')">Setup</A></LI>
+		<LI id=li_000000000000120><A id=an_000000000000120 href="#" action="switchContents('LAWFORM|TKN=LPMN.2','000000000000120')">Processing</A></LI>
+		<LI id=li_000000000000119><A id=an_000000000000119 href="#" action="switchContents('LAWFORM|TKN=LPMN.3','000000000000119')">Reporting</A></LI>
+		<LI id=li_000000000000118><A id=an_000000000000118 href="#" action="switchContents('LAWFORM|TKN=LPMN.4','000000000000118')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000212><A id=an_000000000000212 href="#">Accounts Receivable</A>
+		<UL id=ul_000000000000212>
+		<LI id=li_000000000000217><A id=an_000000000000217 href="#" action="switchContents('LAWFORM|TKN=ARFL.1','000000000000217')">Flowchart</A></LI>
+		<LI id=li_000000000000216><A id=an_000000000000216 href="#" action="switchContents('LAWFORM|TKN=ARMN.1','000000000000216')">Setup</A></LI>
+		<LI id=li_000000000000215><A id=an_000000000000215 href="#" action="switchContents('LAWFORM|TKN=ARMN.2','000000000000215')">Processing</A></LI>
+		<LI id=li_000000000000214><A id=an_000000000000214 href="#" action="switchContents('LAWFORM|TKN=ARMN.3','000000000000214')">Reporting</A></LI>
+		<LI id=li_000000000000213><A id=an_000000000000213 href="#" action="switchContents('LAWFORM|TKN=ARMN.4','000000000000213')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000136><A id=an_000000000000136 href="#">Analytic Architect</A>
+		<UL id=ul_000000000000136>
+		<LI id=li_000000000000139><A id=an_000000000000139 href="#" action="switchContents('LAWFORM|TKN=IAMN.1','000000000000139')">Setup</A></LI>
+		<LI id=li_000000000000138><A id=an_000000000000138 href="#" action="switchContents('LAWFORM|TKN=IAMN.2','000000000000138')">Processing</A></LI>
+		<LI id=li_000000000000137><A id=an_000000000000137 href="#" action="switchContents('LAWFORM|TKN=IAMN.4','000000000000137')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000224><A id=an_000000000000224 href="#">Asset Management</A>
+		<UL id=ul_000000000000224>
+		<LI id=li_000000000000229><A id=an_000000000000229 href="#" action="switchContents('LAWFORM|TKN=AMFL.1','000000000000229')">Flowchart</A></LI>
+		<LI id=li_000000000000228><A id=an_000000000000228 href="#" action="switchContents('LAWFORM|TKN=AMMN.1','000000000000228')">Setup</A></LI>
+		<LI id=li_000000000000227><A id=an_000000000000227 href="#" action="switchContents('LAWFORM|TKN=AMMN.2','000000000000227')">Processing</A></LI>
+		<LI id=li_000000000000226><A id=an_000000000000226 href="#" action="switchContents('LAWFORM|TKN=AMMN.3','000000000000226')">Reporting</A></LI>
+		<LI id=li_000000000000225><A id=an_000000000000225 href="#" action="switchContents('LAWFORM|TKN=AMMN.4','000000000000225')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000051><A id=an_000000000000051 href="#">Attendance Management</A>
+		<UL id=ul_000000000000051>
+		<LI id=li_000000000000055><A id=an_000000000000055 href="#" action="switchContents('LAWFORM|TKN=TMMN.1','000000000000055')">Setup</A></LI>
+		<LI id=li_000000000000054><A id=an_000000000000054 href="#" action="switchContents('LAWFORM|TKN=TMMN.2','000000000000054')">Processing</A></LI>
+		<LI id=li_000000000000053><A id=an_000000000000053 href="#" action="switchContents('LAWFORM|TKN=TMMN.3','000000000000053')">Reporting</A></LI>
+		<LI id=li_000000000000052><A id=an_000000000000052 href="#" action="switchContents('LAWFORM|TKN=TMMN.4','000000000000052')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000230><A id=an_000000000000230 href="#">Average Daily Balance</A>
+		<UL id=ul_000000000000230>
+		<LI id=li_000000000000235><A id=an_000000000000235 href="#" action="switchContents('LAWFORM|TKN=ADFL.1','000000000000235')">Flowchart</A></LI>
+		<LI id=li_000000000000234><A id=an_000000000000234 href="#" action="switchContents('LAWFORM|TKN=ADMN.1','000000000000234')">Setup</A></LI>
+		<LI id=li_000000000000233><A id=an_000000000000233 href="#" action="switchContents('LAWFORM|TKN=ADMN.2','000000000000233')">Processing</A></LI>
+		<LI id=li_000000000000232><A id=an_000000000000232 href="#" action="switchContents('LAWFORM|TKN=ADMN.3','000000000000232')">Reporting</A></LI>
+		<LI id=li_000000000000231><A id=an_000000000000231 href="#" action="switchContents('LAWFORM|TKN=ADMN.4','000000000000231')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000201><A id=an_000000000000201 href="#">Benefits Administration</A>
+		<UL id=ul_000000000000201>
+		<LI id=li_000000000000205><A id=an_000000000000205 href="#" action="switchContents('LAWFORM|TKN=BNMN.1','000000000000205')">Setup</A></LI>
+		<LI id=li_000000000000204><A id=an_000000000000204 href="#" action="switchContents('LAWFORM|TKN=BNMN.2','000000000000204')">Processing</A></LI>
+		<LI id=li_000000000000203><A id=an_000000000000203 href="#" action="switchContents('LAWFORM|TKN=BNMN.3','000000000000203')">Reporting</A></LI>
+		<LI id=li_000000000000202><A id=an_000000000000202 href="#" action="switchContents('LAWFORM|TKN=BNMN.4','000000000000202')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000206><A id=an_000000000000206 href="#">Billing</A>
+		<UL id=ul_000000000000206>
+		<LI id=li_000000000000211><A id=an_000000000000211 href="#" action="switchContents('LAWFORM|TKN=BLFL.1','000000000000211')">Flowchart</A></LI>
+		<LI id=li_000000000000210><A id=an_000000000000210 href="#" action="switchContents('LAWFORM|TKN=BLMN.1','000000000000210')">Setup</A></LI>
+		<LI id=li_000000000000209><A id=an_000000000000209 href="#" action="switchContents('LAWFORM|TKN=BLMN.2','000000000000209')">Processing</A></LI>
+		<LI id=li_000000000000208><A id=an_000000000000208 href="#" action="switchContents('LAWFORM|TKN=BLMN.3','000000000000208')">Reporting</A></LI>
+		<LI id=li_000000000000207><A id=an_000000000000207 href="#" action="switchContents('LAWFORM|TKN=BLMN.4','000000000000207')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000196><A id=an_000000000000196 href="#">Billing and Revenue Mgmt</A>
+		<UL id=ul_000000000000196>
+		<LI id=li_000000000000200><A id=an_000000000000200 href="#" action="switchContents('LAWFORM|TKN=BRFL.1','000000000000200')">Flowchart</A></LI>
+		<LI id=li_000000000000199><A id=an_000000000000199 href="#" action="switchContents('LAWFORM|TKN=BRMN.1','000000000000199')">Setup</A></LI>
+		<LI id=li_000000000000198><A id=an_000000000000198 href="#" action="switchContents('LAWFORM|TKN=BRMN.2','000000000000198')">Processing</A></LI>
+		<LI id=li_000000000000197><A id=an_000000000000197 href="#" action="switchContents('LAWFORM|TKN=BRMN.3','000000000000197')">Reporting</A></LI></UL></LI>
+		<LI id=li_000000000000183><A id=an_000000000000183 href="#">Bills of Exchange</A>
+		<UL id=ul_000000000000183>
+		<LI id=li_000000000000185><A id=an_000000000000185 href="#" action="switchContents('LAWFORM|TKN=DTMN.1','000000000000185')">Setup</A></LI>
+		<LI id=li_000000000000184><A id=an_000000000000184 href="#" action="switchContents('LAWFORM|TKN=DTMN.2','000000000000184')">Processing</A></LI></UL></LI>
+		<LI id=li_000000000000186><A id=an_000000000000186 href="#">Case Carts</A>
+		<UL id=ul_000000000000186>
+		<LI id=li_000000000000189><A id=an_000000000000189 href="#" action="switchContents('LAWFORM|TKN=CXMN.1','000000000000189')">Setup</A></LI>
+		<LI id=li_000000000000188><A id=an_000000000000188 href="#" action="switchContents('LAWFORM|TKN=CXMN.3','000000000000188')">Reporting</A></LI>
+		<LI id=li_000000000000187><A id=an_000000000000187 href="#" action="switchContents('LAWFORM|TKN=CXMN.4','000000000000187')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000190><A id=an_000000000000190 href="#">Cash and Treasury Mgmt</A>
+		<UL id=ul_000000000000190>
+		<LI id=li_000000000000195><A id=an_000000000000195 href="#" action="switchContents('LAWFORM|TKN=CBFL.1','000000000000195')">Flowchart</A></LI>
+		<LI id=li_000000000000194><A id=an_000000000000194 href="#" action="switchContents('LAWFORM|TKN=CBMN.1','000000000000194')">Setup</A></LI>
+		<LI id=li_000000000000193><A id=an_000000000000193 href="#" action="switchContents('LAWFORM|TKN=CBMN.2','000000000000193')">Processing</A></LI>
+		<LI id=li_000000000000192><A id=an_000000000000192 href="#" action="switchContents('LAWFORM|TKN=CBMN.3','000000000000192')">Reporting</A></LI>
+		<LI id=li_000000000000191><A id=an_000000000000191 href="#" action="switchContents('LAWFORM|TKN=CBMN.4','000000000000191')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000174><A id=an_000000000000174 href="#">Employee Expenses</A>
+		<UL id=ul_000000000000174>
+		<LI id=li_000000000000179><A id=an_000000000000179 href="#" action="switchContents('LAWFORM|TKN=EESU.1','000000000000179')">Flowchart</A></LI>
+		<LI id=li_000000000000178><A id=an_000000000000178 href="#" action="switchContents('LAWFORM|TKN=EEMN.1','000000000000178')">Setup</A></LI>
+		<LI id=li_000000000000177><A id=an_000000000000177 href="#" action="switchContents('LAWFORM|TKN=EEMN.2','000000000000177')">Processing</A></LI>
+		<LI id=li_000000000000176><A id=an_000000000000176 href="#" action="switchContents('LAWFORM|TKN=EEMN.3','000000000000176')">Reporting</A></LI>
+		<LI id=li_000000000000175><A id=an_000000000000175 href="#" action="switchContents('LAWFORM|TKN=EEMN.4','000000000000175')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000152><A id=an_000000000000152 href="#">Grant Management</A>
+		<UL id=ul_000000000000152>
+		<LI id=li_000000000000156><A id=an_000000000000156 href="#" action="switchContents('LAWFORM|TKN=GMFL.1','000000000000156')">Flowchart</A></LI>
+		<LI id=li_000000000000155><A id=an_000000000000155 href="#" action="switchContents('LAWFORM|TKN=GMMN.1','000000000000155')">Setup</A></LI>
+		<LI id=li_000000000000154><A id=an_000000000000154 href="#" action="switchContents('LAWFORM|TKN=GMMN.2','000000000000154')">Processing</A></LI>
+		<LI id=li_000000000000153><A id=an_000000000000153 href="#" action="switchContents('LAWFORM|TKN=GMMN.3','000000000000153')">Reporting</A></LI></UL></LI>
+		<LI id=li_000000000000128><A id=an_000000000000128 href="#">General Ledger Subset</A>
+		<UL id=ul_000000000000128>
+		<LI id=li_000000000000135><A id=an_000000000000135 href="#" action="switchContents('LAWFORM|TKN=GLSU.1','000000000000135')">Flowchart</A></LI>
+		<LI id=li_000000000000134><A id=an_000000000000134 href="#" action="switchContents('LAWFORM|TKN=IFMN.1','000000000000134')">Setup</A></LI>
+		<LI id=li_000000000000133><A id=an_000000000000133 href="#" action="switchContents('LAWFORM|TKN=IFMN.2','000000000000133')">Processing</A></LI>
+		<LI id=li_000000000000132><A id=an_000000000000132 href="#" action="switchContents('LAWFORM|TKN=IFMN.3','000000000000132')">Reporting</A></LI>
+		<LI id=li_000000000000131><A id=an_000000000000131 href="#" action="switchContents('LAWFORM|TKN=IFMN.4','000000000000131')">Utilities</A></LI>
+		<LI id=li_000000000000130><A id=an_000000000000130 href="#" action="switchContents('LAWFORM|TKN=CUMN.0','000000000000130')">Currency</A></LI>
+		<LI id=li_000000000000129><A id=an_000000000000129 href="#" action="switchContents('LAWFORM|TKN=MXMN.1','000000000000129')">Attribute Matrix Setup</A></LI></UL></LI>
+		<LI id=li_000000000000180><A id=an_000000000000180 href="#">Enterprise Budgeting</A>
+		<UL id=ul_000000000000180>
+		<LI id=li_000000000000182><A id=an_000000000000182 href="#" action="switchContents('LAWFORM|TKN=EBMN.1','000000000000182')">Setup</A></LI>
+		<LI id=li_000000000000181><A id=an_000000000000181 href="#" action="switchContents('LAWFORM|TKN=EBMN.2','000000000000181')">Processing</A></LI></UL></LI>
+		<LI id=li_000000000000111><A id=an_000000000000111 href="#">Invoice Matching</A>
+		<UL id=ul_000000000000111>
+		<LI id=li_000000000000116><A id=an_000000000000116 href="#" action="switchContents('LAWFORM|TKN=MAFL.1','000000000000116')">Flowchart</A></LI>
+		<LI id=li_000000000000115><A id=an_000000000000115 href="#" action="switchContents('LAWFORM|TKN=MAMN.1','000000000000115')">Setup</A></LI>
+		<LI id=li_000000000000114><A id=an_000000000000114 href="#" action="switchContents('LAWFORM|TKN=MAMN.2','000000000000114')">Processing</A></LI>
+		<LI id=li_000000000000113><A id=an_000000000000113 href="#" action="switchContents('LAWFORM|TKN=MAMN.3','000000000000113')">Reporting</A></LI>
+		<LI id=li_000000000000112><A id=an_000000000000112 href="#" action="switchContents('LAWFORM|TKN=MAMN.4','000000000000112')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000072><A id=an_000000000000072 href="#">Sales Analysis</A>
+		<UL id=ul_000000000000072>
+		<LI id=li_000000000000076><A id=an_000000000000076 href="#" action="switchContents('LAWFORM|TKN=SAMN.1','000000000000076')">Setup</A></LI>
+		<LI id=li_000000000000075><A id=an_000000000000075 href="#" action="switchContents('LAWFORM|TKN=SAMN.2','000000000000075')">Processing</A></LI>
+		<LI id=li_000000000000074><A id=an_000000000000074 href="#" action="switchContents('LAWFORM|TKN=SAMN.3','000000000000074')">Reporting</A></LI>
+		<LI id=li_000000000000073><A id=an_000000000000073 href="#" action="switchContents('LAWFORM|TKN=SAMN.4','000000000000073')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000031><A id=an_000000000000031 href="#">ProcessFlow</A>
+		<UL id=ul_000000000000031>
+		<LI id=li_000000000000032><A id=an_000000000000032 href="#" action="switchContents('LAWFORM|TKN=WFMN.1','000000000000032')">Setup</A></LI></UL></LI>
+		<LI id=li_000000000000122><A id=an_000000000000122 href="#">Lease Management</A>
+		<UL id=ul_000000000000122>
+		<LI id=li_000000000000127><A id=an_000000000000127 href="#" action="switchContents('LAWFORM|TKN=LMFL.1','000000000000127')">Flowchart</A></LI>
+		<LI id=li_000000000000126><A id=an_000000000000126 href="#" action="switchContents('LAWFORM|TKN=LMMN.1','000000000000126')">Setup and Maintenance</A></LI>
+		<LI id=li_000000000000125><A id=an_000000000000125 href="#" action="switchContents('LAWFORM|TKN=LMMN.2','000000000000125')">Processing</A></LI>
+		<LI id=li_000000000000124><A id=an_000000000000124 href="#" action="switchContents('LAWFORM|TKN=LMMN.3','000000000000124')">Reporting</A></LI>
+		<LI id=li_000000000000123><A id=an_000000000000123 href="#" action="switchContents('LAWFORM|TKN=LMMN.4','000000000000123')">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000077><A id=an_000000000000077 href="#">Requisitions</A>
+		<UL id=ul_000000000000077>
+		<LI id=li_000000000000082><A id=an_000000000000082 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000081><A id=an_000000000000081 href="#">Setup</A></LI>
+		<LI id=li_000000000000080><A id=an_000000000000080 href="#">Processing</A></LI>
+		<LI id=li_000000000000079><A id=an_000000000000079 href="#">Reporting</A></LI>
+		<LI id=li_000000000000078><A id=an_000000000000078 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000088><A id=an_000000000000088 href="#">Purchasing</A>
+		<UL id=ul_000000000000088>
+		<LI id=li_000000000000093><A id=an_000000000000093 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000092><A id=an_000000000000092 href="#">Setup</A></LI>
+		<LI id=li_000000000000091><A id=an_000000000000091 href="#">Processing</A></LI>
+		<LI id=li_000000000000090><A id=an_000000000000090 href="#">Reporting</A></LI>
+		<LI id=li_000000000000089><A id=an_000000000000089 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000236><A id=an_000000000000236 href="#">Project &amp; Activity Mgmt</A>
+		<UL id=ul_000000000000236>
+		<LI id=li_000000000000241><A id=an_000000000000241 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000240><A id=an_000000000000240 href="#">Setup</A></LI>
+		<LI id=li_000000000000239><A id=an_000000000000239 href="#">Processing</A></LI>
+		<LI id=li_000000000000238><A id=an_000000000000238 href="#">Reporting</A></LI>
+		<LI id=li_000000000000237><A id=an_000000000000237 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000099><A id=an_000000000000099 href="#">Order Entry</A>
+		<UL id=ul_000000000000099>
+		<LI id=li_000000000000104><A id=an_000000000000104 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000103><A id=an_000000000000103 href="#">Setup</A></LI>
+		<LI id=li_000000000000102><A id=an_000000000000102 href="#">Processing</A></LI>
+		<LI id=li_000000000000101><A id=an_000000000000101 href="#">Reporting</A></LI>
+		<LI id=li_000000000000100><A id=an_000000000000100 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000094><A id=an_000000000000094 href="#">Personnel Administration</A>
+		<UL id=ul_000000000000094>
+		<LI id=li_000000000000098><A id=an_000000000000098 href="#">Setup</A></LI>
+		<LI id=li_000000000000097><A id=an_000000000000097 href="#">Processing</A></LI>
+		<LI id=li_000000000000096><A id=an_000000000000096 href="#">Reporting</A></LI>
+		<LI id=li_000000000000095><A id=an_000000000000095 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000083><A id=an_000000000000083 href="#">Payroll</A>
+		<UL id=ul_000000000000083>
+		<LI id=li_000000000000087><A id=an_000000000000087 href="#">Setup</A></LI>
+		<LI id=li_000000000000086><A id=an_000000000000086 href="#">Processing</A></LI>
+		<LI id=li_000000000000085><A id=an_000000000000085 href="#">Reporting</A></LI>
+		<LI id=li_000000000000084><A id=an_000000000000084 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000140><A id=an_000000000000140 href="#">Inventory Control</A>
+		<UL id=ul_000000000000140>
+		<LI id=li_000000000000145><A id=an_000000000000145 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000144><A id=an_000000000000144 href="#">Setup</A></LI>
+		<LI id=li_000000000000143><A id=an_000000000000143 href="#">Processing</A></LI>
+		<LI id=li_000000000000142><A id=an_000000000000142 href="#">Reporting</A></LI>
+		<LI id=li_000000000000141><A id=an_000000000000141 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000105><A id=an_000000000000105 href="#">Multi-Book Ledger</A>
+		<UL id=ul_000000000000105>
+		<LI id=li_000000000000110><A id=an_000000000000110 href="#">Flowchart</A></LI>
+		<LI id=li_000000000000109><A id=an_000000000000109 href="#">Setup</A></LI>
+		<LI id=li_000000000000108><A id=an_000000000000108 href="#">Processing</A></LI>
+		<LI id=li_000000000000107><A id=an_000000000000107 href="#">Reporting</A></LI>
+		<LI id=li_000000000000106><A id=an_000000000000106 href="#">Utilities</A></LI></UL></LI>
+		<LI id=li_000000000000168><A id=an_000000000000168 href="#">Last Management</A>
+		<UL id=ul_000000000000168>
+		<LI id=li_000000000000173><A id=an_000000000000173 href="#" >Flowchart</A></LI>
+		<LI id=li_000000000000172><A id=an_000000000000172 href="#" >Setup</A></LI>
+		<LI id=li_000000000000171><A id=an_000000000000171 href="#" >Processing</A></LI>
+		<LI id=li_000000000000170><A id=an_000000000000170 href="#" >Reporting</A></LI>
+		<LI id=li_000000000000169><A id=an_000000000000169 href="#" >Utilities</A></LI></UL></LI></UL></LI>
+		<LI id=id2><A href="#">Favorites</A>
+			<UL id=favoritesMenuList>
+					<LI id=li_lawfav0><A id=an_lawfav0 href="#" onclick="alert('ok')">CU01</A></LI>
+					<LI id=li_lawfav1><A id=an_lawfav1 href="#" onclick="closeOpenMenusFromClick(event)">hr11</A></LI>
+					<LI id=li_lawfav2><A id=an_lawfav2 href="#">po20</A></LI>
+			</UL>
+		</LI>
+
+	</UL>
+	</DIV>
+
+	<button onclick="addMenuItem('newItem'+idCount)">Add</button>
+	<button onclick="removeMenuItem('newItem'+idCount)">remove</button>
+
+</body>
+</html>

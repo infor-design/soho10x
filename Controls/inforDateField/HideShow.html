@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Datefield - Example using Hide and show functions.</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$("body").inforForm();
+
+			$("#hide").click(function(){
+			  $("#dateInput1").hide();
+			});
+
+			$("#show").click(function(){
+			  $("#dateInput1").show();
+			});
+
+			$("#enable").click(function(){
+			  $("#dateInput1").enable();
+			});
+
+			$("#disable").click(function(){
+			  $("#dateInput1").disable();
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+		<label class="inforLabel">Date Field</label>
+		<input class="inforDateField" id="dateInput1" type="text"   />
+		<br style="clear: both;">
+
+		<label class="inforLabel">Date Actions</label>
+		<button type="button" class="inforFormButton" id="hide">Hide</button>
+		<button type="button" class="inforFormButton" id="show">Show</button>
+		<button type="button" class="inforFormButton" id="disable">Disable</button>
+		<button type="button" class="inforFormButton" id="enable">Enable</button>
+	</div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+/*
+	Infor Field Set
+*/
+
+.inforFieldSet {
+	width:inherit;
+	margin: 0px;
+	padding: 0px !important;
+	border: none;
+}
+
+/*Open Button States */
+.inforFieldSet legend {
+	float: left;
+	margin: 0px;
+	background: transparent none no-repeat;
+	height: 22px;
+	width: 100%;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0 0 11px;
+}
+
+/*The Label*/
+.inforFieldSetLabel {
+  border-bottom: 1px solid #B3B3B3;
+  color: #444;
+  cursor: default;
+  display: block;
+  font-size: 1.4em;
+  height: 29px;
+  line-height: 32px;
+  margin-bottom: 19px;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-top: 0;
+  text-align: left;
+  text-indent: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: auto;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+
+.hover .inforFieldSetLabel {
+	color: #444;
+}
+
+.inforFieldSetLabel.hover {
+	cursor: pointer;
+	background-color: #f2f2f2;
+	border-radius: 2px;
+	border-bottom: 1px solid #999;
+}
+
+/*Correct Padding if we are on a tab panel.*/
+.ui-tabs-panel .inforFieldSet {
+	margin-top: 15px !important;
+	border-right: 0px solid #b4b4b4 !important;
+}
+
+.inforModuleContentArea > .inforFieldSet {
+	border-right: 0px solid #b4b4b4 !important;
+}
+
+/*The Content Area */
+.inforFieldSet div.content{
+	clear: both;
+	overflow: hidden;
+}
+
+/*The Css3 animations */
+.inforFieldSet div.content.open{
+	display: block;
+}
+
+.inforFieldSet.hover div.content.inforSingleColumnLayout {
+	margin-top: 9px;
+}
+
+/*To split two field sets 50/50*/
+.inforFieldSet2ColumnLayout {
+	width:100%;
+	clear:both;
+	margin-top: 10px;
+}
+
+.ui-tabs-panel .inforFieldSet2ColumnLayout {
+	width:100%;
+}
+
+.ui-tabs-panel .inforFieldSet2ColumnLayout > .inforFieldSet {
+	width: 50%;
+  margin: 20px;
+}
+
+.ui-tabs-panel .inforFieldSet2ColumnLayout > .inforFieldSet:first-child {
+	width: 50%;
+}
+
+
+.inforFieldSet2ColumnLayout > .inforFieldSet {
+	width: 50%;margin: 0 !important; padding: 0 !important;
+}
+
+.inforFieldSet2ColumnLayout > .inforFieldSet:first-child {
+	float:left; width: 50%;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+@media screen and (max-width: 650px) {
+	.inforFieldSet2ColumnLayout > .inforFieldSet, .inforFieldSet3ColumnLayout > .inforFieldSet {
+		float: none !important;
+		width: 100% !important;
+	}
+}
+
+/*To split three field sets 33/33/33*/
+.inforFieldSet3ColumnLayout {
+	width:100%;
+	clear:both;
+}
+
+.inforFieldSet3ColumnLayout > .inforFieldSet {
+	width: 33%;
+	margin: 0 !important;
+	padding: 0 !important;
+	float:left;
+}
+
+.inforFieldSet3ColumnLayout > .inforFieldSet {
+	border-right: none !important;
+}
+
+/* Infor Expand Collapse Buttons
+*****************************/
+.inforExpandButton.open, .inforExpandButton.closed
+{
+	background-color: transparent;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHAQAAAAAZ1+HOAAAAAnRSTlMAAQGU/a4AAAAeSURBVHjaY/h8gOHhAYYDBxgaHBh4GBjkGBj2OwAAWzYGvtWzAjsAAAAASUVORK5CYII=");
+	background-position: center center;
+	background-repeat: no-repeat;
+	border: medium none;
+	cursor: pointer;
+	display: inline-block;
+	float: right;
+	height: 10px;
+	margin-bottom: -10px;
+	padding: 0;
+	position: relative;
+	right: 22px;
+	top: -23px;
+	width: 12px;
+	opacity: .40;
+	filter: alpha(opacity=40);
+}
+
+.inforExpandButton.closed {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHAQAAAAAZ1+HOAAAAAnRSTlMAAQGU/a4AAAAdSURBVHjaY97/kEGOgfnvL+YqBsYDDEyKDExCDABI7AUxjpsRQAAAAABJRU5ErkJggg==");
+}
+
+.inforExpandButton.open:hover, .inforExpandButton.open.hover, .inforExpandButton.open:focus, .inforExpandButton.closed:hover, .inforExpandButton.closed.hover, .inforExpandButton.closed:focus {
+	opacity: .65;
+	filter: alpha(opacity=65);
+}
+
+html[dir="rtl"]  .inforFieldSet2ColumnLayout > .inforFieldSet:first-child {
+	float: right;
+}
+
+html[dir="rtl"]  .inforFieldSet3ColumnLayout > .inforFieldSet {
+	float: right;
+}
+
+html[dir="rtl"]  .inforExpandButton {
+	float: left;
+	right: -22px;
+}
+
+html[dir="rtl"] .inforFieldSetLabel {
+	text-align: right;
+	margin-right: -1px;
+	text-indent: 10px;
+}
+
+html[dir="rtl"] .inforFieldSetLabel {
+	margin-right: 10px;
+}
+
+.content > p {
+    margin: 10px 12px;
+}
+
+html[dir="rtl"] .content > p  {
+  margin: 10px 22px;
+}
+
+/*Sub Heading Styling */
+.ui-tabs-panel .inforSubHeading > .content {
+	padding: 0 !important;
+}
+
+.inforSubHeadingLabel {
+	color: #444;
+	font-size: 1.4em;
+}
+
+.inforFieldSetLabel .inforPageTitleText {
+	font-size: 16px;
+}

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Toggle Button</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script>
+	   $(function () {
+		//Globalize.culture("ar-SA");
+		$(".inforToggleButton").inforToggleButton();
+
+		//set the option which is set currently and trigger the code behind it
+		$("#down, #sortDesc").addClass("checked").trigger("click");	//trigger the first option
+
+		//set the option which is set currently
+
+
+		$("body").removeClass("inforHidden");	//prevent fouc
+	  });
+   </script>
+</head>
+<body class="inforHidden" style="margin:20px">
+	<div class="inforToggleButton">
+		<button type="button" id="down" onclick="console.log('You selected up')"><div class="arrowDown"></div></button>
+		<button type="button" id="up" onclick="console.log('You selected down')"><div class="arrowUp"></div></button>
+	</div>
+	<br>
+	<br>
+	<br>
+	<div class="inforToggleButton" >
+		<button type="button" id="sortDesc" onclick="console.log('You selected Descending')"><div class="sortDesc"></div></button>
+		<button type="button" id="sortAsc" onclick="console.log('You selected Ascending')"><div class="sortAsc"></div></button>
+	</div>
+</body>
+</html>

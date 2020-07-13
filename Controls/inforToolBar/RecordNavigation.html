@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Toolbar - New Navigation Button Placement</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			$('body').inforForm();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div class="inforModuleContainer">
+		<div class="inforModuleHeader">
+			<div class="inforModuleHeaderLeft">
+				<span class="inforPageTitleText">Sales Orders</span>
+				<span class="inforModuleRecordIdText">SL0090562</span>
+			</div>
+			<div class="inforModuleHeaderRight">
+				<button class="inforModuleDropDownButton" id = "menuButton" title="Menu"></button>
+				<button class="inforModuleSettingsButton" id = "settingsButton" title="Settings"></button>
+			</div>
+		</div>
+		<div class="inforToolbar">
+			<button class="inforIconButton save" title="Save" ></button>
+			<button class="inforIconButton discard" title="Discard" ></button>
+			<span class="inforToolbarSpacer"></span>
+			<button class="inforIconButton new" title="New" ></button>
+			<button class="inforIconButton delete" title="Delete" ></button>
+			<button class="inforIconButton refresh" title="Refresh" ></button>
+			<span class="inforToolbarSpacer"></span>
+			<button class="inforIconButton print" title="Print" ></button>
+			<span class="inforToolbarSpacer"></span>
+			<button class="inforIconButton first" title="First" ></button>
+			<button class="inforIconButton previous" title="Previous" ></button>
+			<button class="inforIconButton next" title="Next" ></button>
+			<button class="inforIconButton last" title="Last" ></button>
+			<span class="inforToolbarSpacer"></span>
+		</div>
+	 </div>
+</body>
+</html>

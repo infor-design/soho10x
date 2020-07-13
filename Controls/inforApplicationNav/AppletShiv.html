@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<title>Infor Application Navigation Control</title>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforApplicationNav.js"></script>
+
+	<script>
+		 $(function () {
+			//Initialize the nav plugin - really in simple cases you just need this line with no options.
+			$("#inforApplicationNav1").inforApplicationNav({backgroundIFrame: true});
+		});
+	</script>
+</head>
+<body>
+	<div id="inforApplicationNav1" class="inforApplicationNav">
+		<ul>
+			<li><a href="#">People</a></li>
+			<li id ="dynamic"><a href="#">Dynamic Example</a>
+				<ul>
+					<li id="placeholder"><a href="#">Placeholder</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Financials</a>
+				<ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+				  <li><a href="#">Sub Item 1.8</a></li>
+				  <li><a href="#">Sub Item 1.9</a></li>
+				  <li><a href="#">Expenses by Cost Center</a></li>
+				  <li><a href="#">Navigation Administration</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Projects</a>
+			  <ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			  </ul>
+			</li>
+			<li><a href="#">Resource Planning</a></li>
+			<li><a href="#">Orders</a>
+				<ul>
+					<li><a href="#">Pricing</a></li>
+					<li><a href="#">Sales</a>
+						<ul>
+							<li><a href="#">Master Data</a></li>
+							<li><a href="#">Margin Control</a></li>
+							<li><a href="#">Quotations</a>
+								<ul>
+									<li><a href="#">Sub Item 3.1.1.1</a></li>
+									<li><a href="#">Sub Item 3.1.1.2</a></li>
+									<li><a href="#">Sub Item 3.1.1.3</a></li>
+									<li><a href="#">Sub Item 3.1.1.4</a></li>
+									<li><a href="#">Sub Item 3.1.1.5</a>
+										<ul>
+											<li><a href="#">Sub Item 4.1.1.1</a></li>
+											<li><a href="#">Sub Item 4.1.1.2</a>
+												<ul>
+													<li><a href="#">Sub Item 5.1.1.2</a></li>
+													<li><a href="#">Sub Item 5.1.1.2</a>
+														<ul>
+															<li><a href="#">Sub Item 6.1.1.1</a></li>
+															<li><a href="#">Sub Item 6.1.1.2</a>
+																<ul>
+																	<li><a href="#">Sub Item 7.1.1.1</a></li>
+																	<li><a href="#">Sub Item 7.1.1.2</a>
+																		<ul>
+																			<li><a href="#">Sub Item 8.1.1.1</a></li>
+																		</ul>
+																	</li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><a href="#">Contracts</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#">Manufacturing</a></li>
+			<li><a href="#">Warehouse</a></li>
+		</ul>
+	</div>
+
+	<applet id="box1" width="96%" hspace="22" height="800" code="JavaVersionDisplayApplet.class" alt="Browser has Java disabled">
+		Java applet that draws animated bubbles.
+	</applet>
+	<!--<IFRAME id="inforObjectOverlay" style="display:none; z-index:2; filter: alpha(opacity = 9); LEFT: 0px; POSITION: absolute; TOP: 0px; width: 100%; height: 100% " scrolling="no">
+	</IFRAME>-->
+
+</body>
+</html>

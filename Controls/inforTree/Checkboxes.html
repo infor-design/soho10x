@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Tree Sample - Using JSON Data</title>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.min.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="js/sampleData.js"></script>
+
+	<script>
+	$(function () {
+		//For example only all you need is inforTree for standalone scenarios..
+		$(".inforModuleContainer").inforForm();
+		$(".inforSplitter").inforSplitter();
+		$(".inforLookupField").inforLookupField();
+
+		//setup the search field.
+		$(".inforSearchField").inforTriggerField({click:function(event){
+			//do jsTree search
+		}});
+
+		//Initialize the Tree control
+		$("#inforTree1").inforTree({
+				"plugins": ["themes", "json_data", "ui", "checkbox"],
+				"themes" : {
+					"icons": false
+				},
+				"json_data" : getSampleJson(),
+					"checkbox": {
+						"two_state": false,
+						"override_ui": true
+					}
+		});
+
+		//Make very top most nodes folders.
+		/*
+		$("#inforTree1 > ul").children("li").find("a:first").each(function () {
+			var a = $(this);
+			a.find(".jstree-checkbox").hide();
+			a.find(".folder").css({"display": "inline-block", "margin-right": "3px" });
+		});
+		*/
+	});
+
+	function toggleChecked() {
+		 //Check:
+		 // $.jstree._reference('#inforTree1').check_node('#id-of-node');
+		//Uncheck:
+		//$.jstree._reference('#inforTree1').uncheck_node('#id-of-node');
+		//Toggle check:
+		$.jstree._reference('#inforTree1').change_state("#project");
+	}
+
+	function toggleEnabled() {
+		var $tree = $("#inforTree1");
+		if ($tree.hasClass("disabled"))
+			$tree.enable();
+		else
+			$tree.disable();
+	}
+
+	function displayChecked() {
+		$('.jstree-checked,.jstree-undetermined').each(function(){
+			var $this = $(this),
+				isChecked = $this.is(".jstree-checked");
+
+			console.log("Undeterminate: "+!isChecked + " ", $this.data("id"), $this.children("a").text());
+		});
+	}
+	</script>
+</head>
+<body class="inforHidden" style="margin:10px">
+	<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Infor Tree With Checkboxes</span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton"></button>
+					<button class="inforModuleCloseButton"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			 <div class="inforToolbar">
+			   <button id="newButton"  class="inforIconButton new" onclick="toggleChecked()"></button>
+			   <button id="submitButton" class="inforIconButton save" onclick="displayChecked()"></button>
+			   <span class="inforToolbarSpacer"></span>
+			   <button id="refreshButton"  class="inforIconButton refresh"></button>
+			   <button class="inforTextButton" type="button" onclick='toggleEnabled()' >Disable/Enable</button>
+			</div>
+			<div class="inforSplitter">
+				<div id="leftPane" style="width:40%">
+					<div id="inforTree1" class="inforTree"></div>
+				</div>
+				<div id="rightPane" style="width:60%; height:">
+					<!--RHS Page Contents Go Here -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

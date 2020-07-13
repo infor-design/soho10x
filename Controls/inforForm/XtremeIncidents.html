@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Xtreme Support</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$("body").inforForm();
+			
+			 var popupContents = $("<p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>");
+				
+		   $(".recentIncidents a").inforPopover({content: popupContents, trigger: "hover", placement: "right", title: 'Popover Left <span class="alignRight">10/20/2013</span>'});
+		});
+	</script>
+	
+	<style>
+		.recentIncidents {
+			width: 40%;
+			font-size: 1.1em;
+		}
+		.incident {
+			margin-top: 25px
+		}
+	</style>
+</head>
+<body>
+	<div class="inforApplicationPadding">
+		<h1 class="inforSectionLabel">Incidents</h1>
+		<div class="recentIncidents first">
+			<div class="inforToolbar">
+				<button type="button" class="inforTextButton">Add New Incident</button>
+			</div>
+			<div class="incident first">
+				<a class="inforHyperlink heading">Incident 8521183: Syteline</a>
+				<p>Problem with interface technologies & saving a new incident</p>
+				<small>Posted at 10:30 AM on Wed, Jul 17, 2013</small>
+			</div>
+			<div class="incident">
+				<a class="inforHyperlink heading">Incident 3139223: EAM</a>
+				<p>Problem with interface architecture and the ability to transform a saved incident into a completed incident and archiving my incidents</p>
+				<small>Posted at 10:30 AM on Wed, Jul 17, 2013</small>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

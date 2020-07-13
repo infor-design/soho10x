@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor DataGrid - Basic </title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+  <!--Load a Flat file with JSON data-->
+  <script src="js/sampleData.js"></script>
+
+  <script>
+  $(function () {
+    //Globalize.culture('ja-JP');
+
+    //  Globalize.culture('fr-FR');
+    //Store the Grid Obj For Later Api Calls..
+    var columns = [], grid,
+      data = getSampleData([]);
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'officeId', name: 'Office Id', field: 'officeId', width: 200, sortable: false, formatter:UneditableColumnFormatter, title: 'This is a tooltip' });
+    columns.push({ id: 'city', maxLength: 10, name: 'City', toolTip: 'This is a test', field: 'city', width: 200, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+    columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 200, editor: TextCellEditor, required: true, filterType: TextFilter});
+
+
+    grid = $('#inforDataGrid').inforDataGrid({
+      columns: columns,
+      idProperty:'officeId',
+      dataset: data,
+      showFilter: true,
+      showDrillDown: false,
+      showCheckboxes: false,
+      showStatusIndicators: false,
+      showFooter: true,
+      drillDownTooltip: ''
+    });
+
+    grid.getData().getItemMetadata = function (row) {
+      if (row % 2 === 1) {
+        return {
+          'columns': {
+            'officeId': {
+              'colspan': 2
+            }
+          }
+        };
+      } else {
+        return {
+          'columns': {
+            0: {
+              'colspan': '*'
+            }
+          }
+        };
+      }
+    };
+
+    grid.invalidateAllRows();
+    grid.render();
+
+  });
+  </script>
+
+</head>
+<body>
+  <div class="inforToolbar">
+    <button type="button" class="inforIconButton new" title="New" onclick='test()'><span>New</span></button>
+    <button type="button" class="inforIconButton save" title="save" onclick='console.log(data[0].isLeedCertified, data[0].city)'><span>Save</span></button>
+  </div>
+  <div id="inforDataGrid">
+  </div>
+</body>
+</html>

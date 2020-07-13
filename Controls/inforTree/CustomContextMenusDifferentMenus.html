@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+
+    <title>Infor Tree Sample - Drag Tree to Tree</title>
+    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+    <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+    <script src="js/sampleData.js"></script>
+    <script src="js/inforTree.js"></script>
+
+    <script>
+    $(function () {
+        $("#rightTree").inforTree({ "contextmenu": {items: customContextMenu},
+                                    "json_data" : getSampleJson(),
+                                    "plugins": ["themes", "json_data", "ui", "crrm", "contextmenu", "dnd"]
+                        });
+    });
+
+    function customContextMenu(node) {
+            var items = {
+                createFolder: { // Create a new folder
+                    label: "Create Folder " + node.children('a').attr('id'),
+                    action: function (tree) {
+                        var newNodeData = { "data": { "title": "New Folder", "icon": "folder" }};
+                        tree.create(node, "last", newNodeData);
+                    }
+                },
+                createPage: { // Create a new page
+                    label: "Create Page " + node.children('a').attr('id'),
+                    action: function (tree) {
+                    var newNodeData = { "data": { "title": "New Page", "icon": "page", "attr" : { "id" : "project"} }};
+                        tree.create(node, "last", newNodeData);
+                    }
+                },
+                remove: { // Delete a node
+                    label: "Delete " + node.children('a').attr('id'),
+                    action: function (tree) {
+                        tree.remove(node);
+                    }
+                },
+                // Hide default options
+               rename: false,
+               ccp: false,
+               create: false
+            };
+            // if the selected node is a page, hide options to create nodes
+            if ($(node).children().children().hasClass("page")) {
+                delete items.createFolder;
+                delete items.createPage;
+            }
+            return items;
+        }
+
+
+    function displaySelected() {
+        $('#inforTree1 .jstree-clicked').each(function(){
+            var $this = $(this);
+            console.log($this.parent("a").attr("id"), $this.text());
+        });
+    }
+    </script>
+</head>
+<body>
+     <div class="inforScrollableArea">
+        <div class="inforToolbar">
+            <button id="submitButton" class="inforIconButton save" onclick="displaySelected()"></button>
+            <button id="submitButton" class="inforIconButton search" onclick=""></button>
+        </div>
+
+        <div id="rightTree" class="inforTree"></div>
+    </div>
+</body>
+</html>

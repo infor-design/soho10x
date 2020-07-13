@@ -1,0 +1,20 @@
+-Added Aria Tags and Made it pass Wave
+
+ToDo:
+-Focus the text field first
+-Keyboard issue seems to be closing the dialog
+-Start about dialog -> end about dialog
+-Contain the focus
+-Focus back to the calling button.
+-H elements?
+-Rest of content (display hidden)
+-Focus on the Title (so it reads) then next tab down (Q)
+-Aria-Hidden = true (code sample) (keep the )
+-Change the text area to a p tag.
+
+Questions:
+- When going to text-only version the textareas just says text area? Is this a problem
+	- Test that it reads it on the keyboard
+- Focus on the Title (so it reads) then next tab down (Q)
+- How to handle Invisible fields and buttons (focus field is part of the dialog).
+

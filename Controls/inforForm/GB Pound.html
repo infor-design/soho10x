@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<html lang="en-GB">
+	<meta charset="utf-8">
+
+	<title>Infor Form Pattern</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			Globalize.culture("no");
+			$('body').inforForm();
+			$('#lookupField1').inforLookupField();
+			$('#inforTabContainer').inforTabset();
+		});
+	</script>
+</head>
+<body>
+  <script>
+    var x= Globalize.format(parseFloat("12"),"c2","en-GB");
+                document.write(x);
+                document.write("<br>");
+                document.write("£");
+  </script>
+
+  <br>
+  my currency : £
+
+
+</body>
+</html>
+

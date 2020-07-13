@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <meta charset="utf-8">
+
+  <title>Dropdown List - Form Reset Works</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+
+  <script>
+    $(function () {
+      $('#country').dropdown();
+    });
+  </script>
+
+</head>
+<body style="width: 100%" class="inforApplicationPadding">
+  <form name="myform" >
+    <label for="country1" class="inforLabel" >Country</label>
+    <select id="country1" class="inforDropDownList" style="width: 50%">
+        <option value=""></option>
+        <option selected value="United States">United States</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="Afghanistan">Afghanistan</option>
+        <option value="Aland Islands">Aland Islands</option>
+        <option value="Albania">Albania</option>
+    </select><br>
+
+  <label for="country" class="inforLabel">Country</label>
+    <select id="country" data-placeholder="Select..." class="inforDropDownList"  width="221px">
+        <option value=""></option>
+        <option selected value="United States">United States</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="Afghanistan">Afghanistan</option>
+        <option value="Aland Islands">Aland Islands</option>
+      </select>
+      <br>
+      <label class="inforLabel" for="testBox">Text Box</label>
+      <input type="text" size="25" id="testBox" value="selected">
+
+      <input type="reset" value="Reset!"><br>
+  </form>
+
+</body>
+</html>

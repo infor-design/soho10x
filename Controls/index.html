@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<script type="text/javascript" src="//use.typekit.net/vao8nza.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.js"></script>
+
+	<title>Html Controls Examples</title>
+
+	<style>
+		body {
+			margin-bottom: 80px;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			position: relative;
+			-webkit-box-sizing: border-box;
+			   -moz-box-sizing: border-box;
+					box-sizing: border-box;
+		}
+
+		.container {
+			/* Whatever you want. They’re your oats. */
+			margin-left: 98px;
+		}
+
+		.grid {
+			margin-left: -3%;
+			max-width: 105%;
+		}
+
+		.unit {
+			display: inline-block;
+			*display: inline;
+			*zoom: 1;
+			vertical-align: top;
+			margin-left: 3%;
+			margin-right: -.25em;
+			/* Clearfix */
+			overflow: hidden;
+			*overflow: visible;
+		}
+
+		.span-grid {
+			width: 100%;
+		}
+
+		.one-of-two { width: 47%; }
+
+		.one-of-three { width: 30.36%; }
+		.two-of-three { width: 63.666666666%; }
+
+		.one-of-four {
+			width: 21.05%;
+		}
+		.three-of-four { width: 72%; }
+
+		.one-of-five { width: 17.07%; }
+		.two-of-five { width: 37%; }
+		.three-of-five { width: 57%; }
+		.four-of-five { width: 77%; }
+
+		@media screen and (max-width: 650px) {
+			.grid {
+				margin-left: 0;
+				max-width: none;
+			}
+
+			.unit {
+				width: auto;
+				margin-left: 0;
+				display: block;
+			}
+		}
+
+		p, .p, ul, ol, hr, table, form, pre,
+		h1, .alpha, h2, .beta {
+			margin-bottom: 30px;
+			margin-bottom: 1.5rem;
+		}
+
+		h1 {
+			color: #444;
+			font-size: 42px;
+			font-size: 4.2rem;
+			line-height: 112px;
+			white-space: nowrap;
+			font-weight: 300;
+		}
+
+		h2 {
+			font-size: 2.8rem;
+			font-weight: 300;
+			line-height: 2;
+			margin-bottom: 0;
+			margin-top: 47px;
+		}
+
+		h3 {
+			font-size: 18px;
+			font-size: 1.8rem;
+			color:#333333;
+			border-bottom: 1px solid #bfbfbf;
+			padding: 16px 10px;
+			font-weight: 300;
+		}
+
+		hr {
+			border: none;
+			border-bottom: 1px solid rgba(0,0,0,.1);
+			margin-top: -1px;
+		}
+
+		html {
+			font: 62.5% "proxima-nova",sans-serif;
+			font-weight: 300;
+		}
+
+		@media screen and (max-width: 650px) {
+			h1 {
+				font-size: 3rem;
+				margin-left: 10px;
+			}
+			.container {
+				margin-left: 20px;
+			}
+			span-grid > a {
+				float: none;
+				right: -10px;
+				top: -59px;
+			}
+		}
+
+		header {
+			width: 100%;
+			background-color: #f2f2f2;
+			height: 120px;
+		}
+
+		.span-grid > a {
+			display: inline-block;
+			float: right;
+			font-size: 1.6em;
+			position: relative;
+			right: 23px;
+			top: -88px;
+		}
+
+		a {
+			border: 1px solid rgba(0, 0, 0, 0);
+			color: #13A3F7;
+			cursor: pointer;
+			font-size: 1.4em;
+			line-height: 14px;
+			text-decoration: none;
+			white-space: nowrap;
+			margin: 10px;
+			display: inline-block;
+		}
+
+		a[disabled] {
+			color: #666;
+		}
+
+		a[disabled]:hover {
+			color: #666;
+			cursor: default;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #FF6400;
+			text-decoration: underline;
+		}
+
+		h3 + a {
+			margin-top: 10px;
+		}
+		.doc-icon  {
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAAAAAB+AHN8AAAAMklEQVR4AU3L0Q0AIAgD0Tpz15Cd9dCENkDeB11bHZeHgs9DNV0MtIq95Aon8yFrP8kDr+AVg+JNBIMAAAAASUVORK5CYII=");
+		    background-position: center center;
+		    background-repeat: no-repeat;
+		    border-left: 2px solid #B3B3B3;
+		    cursor: pointer;
+		    display: inline-block;
+		    height: 16px;
+		    margin: -3px 0;
+		    padding: 0 12px;
+		    position: relative;
+		    width: 12px;
+		}
+		.new {
+			border-left: 2px solid #B3B3B3;
+		    border-radius: 0;
+		    color: #2DB329;
+		    font-size: 1.1em;
+		    margin: 0;
+		    padding: 0 10px;
+		    text-decoration: none;
+		}
+		.updated {
+			border-left: 2px solid #B3B3B3;
+		    border-radius: 0;
+		    color: #ff574d;
+			font-size: 1.1em;
+		    margin: 0;
+		    padding: 0 10px;
+		    text-decoration: none;
+		}
+		.new:hover {
+			color: #2DB329;
+		}
+		.updated:hover {
+			color: #ff574d;
+		}
+    .badge {
+      background-color: #b3b3b3;
+      border-radius: 2px;
+      color: white;
+      font-size: 11px;
+      line-height: 10px;
+      margin-left: 15px;
+      padding: 3px 5px 2px;
+  }
+	</style>
+
+</head>
+<body>
+	<header class="span-grid">
+		<h1 class="container">HTML Controls Examples</h1>
+		<a target="_blank" href="http://soho.infor.com">Visit SoHo Experience Site</a><br>
+	</header>
+
+	<div  class="container">
+		<section class="main-topic">
+			<h2>Navigation</h2>
+			<div class="grid p">
+				<div class="unit one-of-four">
+					<h3>Navigating a Application</h3>
+					<a href="inforApplicationNav/index.html">Fly out Nav Menu </a><br>
+					<a href="inforApplicationNav/MegaMenus.html">Mega Menu</a><br>
+					<a href="inforTabset/ModuleTabs.html">Module Tabs</a><br>
+          <a href="inforTabset/Vertical.html">Vertical Tabs</a><br>
+
+				</div>
+				<div class="unit one-of-four">
+					<h3>Navigating a Workflow</h3>
+					<a href="inforHyperlink/index.html">Hyperlinks</a><br>
+					<a href="inforBreadCrumb/index.html">Breadcrumb</a><br>
+				</div>
+			</div>
+	</div>
+
+	<div  class="container">
+		<section class="main-topic">
+			<h2>Organizing Content</h2>
+			<div class="grid p">
+				<div class="unit one-of-four">
+					<h3>Data Sets</h3>
+					<a href="inforDataGrid/index.html">Data Grid</a><br>
+					<a href="inforDataGrid/CardStack.html">Cardstack List</a><br><br>
+					<a href="inforSimpleList/index.html">Simple List</a><br>
+					<a href="inforDataGrid/ReportTable.html">Report Table</a><br>
+					<a href="inforCarousel/index.html">Carousel</a><br>
+				</div>
+				<div class="unit one-of-four">
+					<h3>Form Content</h3>
+					<a href="inforColumnLayout/2ColumnLayout.html">General Form Layout - 2 Column</a><br>
+					<a href="inforModuleHeader/index.html">Module Header</a><br>
+					<a href="inforFieldSet/index.html">Field Set Headers</a><br>
+					<a href="inforTabset/index.html">Tabset</a><br>
+					<a href="inforAccordion/index.html">Accordion</a><br>
+					<a href="inforForm/index.html">Form Field Layout</a><br>
+				</div>
+				<div class="unit one-of-four">
+					<h3>Hierarchical Relationships</h3>
+					<a href="inforTree/index.html">Standard tree</a><br>
+					<a href="inforDataGrid/TreeGrid.html">Tree Grid</a><br>
+					<a href="inforDataGrid/Grouping.html">Grid with Grouped Headers</a><br>
+				</div>
+				<div class="unit one-of-four">
+					<h3>Workflow</h3>
+					<a href="#" disabled>Home Pages</a><br>
+					<a href="#" disabled>Workbenches</a><br>
+				</div>
+			</div>
+		</section>
+
+		<section class="main-topic">
+			<h2>User Input</h2>
+			<div class="grid p">
+				<div class="unit one-of-four">
+					<h3>Entering Text</h3>
+					<a href="inforTextbox/index.html">Text Box</a><br>
+					<a href="inforTextArea/index.html">Scrollable Text Area</a><br>
+					<a href="inforRichTextEditor/index.html">Rich text Editor</a><br>
+
+					<a href="inforTextbox/ForgivingInput.html">Forgiving/Smart Input</a><br>
+					<a href="inforTextbox/StructuredInput.html">Structure Input</a><br>
+					<a href="inforSpinner/index.html">Spinner</a><br>
+					<a href="inforTextbox/States.html">Field States (dirty/required ect)</a><br>
+
+				</div>
+
+				<div class="unit one-of-four">
+					<h3>Selecting Text</h3>
+					<a href="autocomplete/index.html">Auto Complete <span class="badge">New</span></a><br>
+          <a href="inforRadioButton/index.html">Radio Button</a><br>
+					<a href="inforCheckbox/index.html">Checkboxes</a><br>
+					<a href="inforListBox/index.html">List Box</a><br>
+					<a href="inforDropDownList/index.html">DropDown List</a><br>
+					<a href="multiselect/index.html">Multiselect <span class="badge">New</span></a><br>
+
+
+					<a href="inforLookupField/index.html">Lookup</a><br>
+					<a href="inforSwapList/index.html">Swap List</a><br>
+					<a href="inforSwitch/index.html">Switch</a><br>
+					<a href="inforToggleButton/index.html">Toggle</a><br>
+					<a href="inforSlider/index.html">Slider</a><br>
+					<a href="inforTriggerField/Search.html">Search Field</a><br>
+					<a href="inforTriggerField/FileField.html">File File (Deprecated)</a><br>
+
+				</div>
+
+				<div class="unit one-of-four">
+					<h3>Special Data Types</h3>
+					<a href="inforDateField/index.html">Date Picker</a><br>
+					<a href="inforTimeField/index.html">Time Picker</a><br>
+					<a href="inforTriggerField/Search.html">Search Field</a><br>
+					<a href="inforTriggerField/FileField.html">File Picker Field</a><br>
+					<a href="inforColorPicker/index.html">Color Picker</a><br>
+					<a href="inforLookupField/index.html">Lookup Field</a><br>
+					<a href="inforCalculatorField/index.html">Calculator Field  (Deprecated)</a><br>
+				</div>
+
+				<div class="unit one-of-four">
+					<h3>Performing Actions</h3>
+					<a href="inforFormButton/index.html">Form button</a><br>
+					<a href="inforToolbar/index.html">Toolbars</a><br>
+					<a href="inforContextMenu/index.html">Context Menu</a><br>
+					<a href="inforToolbar/index.html">Toolbars</a><br>
+					<a href="inforIconButton/index.html">Toolbar Icon Button</a><br>
+					<a href="inforTextButton/index.html">Toolbar Text Button</a><br>
+					<a href="inforMenuButton/index.html">Toolbar Menu Button</a><br>
+					<a href="inforSplitButton/index.html">Toolbar Split Button</a><br>
+
+				</div>
+			</div>
+		</section>
+
+		<section class="main-topic">
+			<h2>Notification</h2>
+			<div class="grid p">
+				<div class="unit one-of-four">
+					<h3>Waiting Indicators </h3>
+					<a href="inforProgressIndicator/index.html">Progress Indicator</a><br>
+					<a href="inforBusyIndicator/index.html">Busy Indicator</a><br>
+				</div>
+				<div class="unit one-of-four">
+					<h3>User Feedback</h3>
+					<a href="inforMessageDialog/index.html">Message Dialog</a><br>
+					<a href="inforSlideInMessage/index.html">Slide-In Message Dialog</a><br>
+					<a href="inforPopover/index.html">Popover</a><br>
+					<a href="inforAboutDialog/index.html">About Dialog</a><br>
+					<a href="inforToolTip/index.html">Tooltip</a><br>
+					<a href="inforValidation/index.html">Validation Messages</a><br>
+
+				</div>
+			</div>
+		</section>
+
+		<section class="main-topic">
+			<h2>Visual Elements</h2>
+			<div class="grid p">
+				<div class="unit one-of-four">
+					<h3>Visual Elements</h3>
+					<a href="inforShared/Colors.html">Color Pallette</a><br>
+					<a href="inforShared/Tags.html">Tags and Badges</a><br>
+					<a href="inforShared/Alerts.html">Alerts</a><br>
+				</div>
+				<div class="unit one-of-four">
+					<h3>Charting</h3>
+					<a href="inforBulletChart/index.html">Bullet Chart</a><br>
+					<a href="inforFormStatusBar/index.html">Status Chart</a><br>
+
+				</div>
+				<div class="unit one-of-four">
+					<h3>Special Interactions</h3>
+					<a disabled>Draggable List (Deprecated)</a><br>
+					<a href="inforSignInDialog/index.html">Sign In Dialog</a><br>
+					<a href="inforSplitter/index.html">Splitter</a><br>
+					<a href="inforTilePanel/index.html">Tile Panel</a><br>
+					<a href="inforWizard/index.html">Wizard</a><br>
+          <a href="rating/index.html">Rating <span class="badge">New</span></a><br>
+
+				</div>
+			</div>
+
+		</section>
+	</div>
+
+</body>
+</html>

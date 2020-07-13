@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Redundent imports but allows me to change grid code without a recompile-->
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+		   <button type="button" id="newButton"  class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1, city: 'New City', establishedDate:''})"></button>
+		   <button type="button" id="submitButton" class="inforIconButton save" disabled="disabled" title="Click to Save Modified Rows" ></button>
+		   <span class="inforToolbarSpacer"></span>
+		   <button type="button" id="deleteButton"  class="inforIconButton delete" disabled="disabled" title="Click to remove selected rows" onclick="deleteRows()"></button>
+		   <span class="inforToolbarSpacer"></span>
+		   <button type="button" id="refreshButton"  class="inforIconButton refresh" title="Click to reload the data" onclick="refreshData()"></button>
+		</div>
+		<div id="inforDataGrid" ></div>
+	</div>
+
+	<script>
+		function comparer(a, b) {
+			var x = a[sortcol], y = b[sortcol];
+			if (typeof a[sortcol] =="string" && typeof b[sortcol] =="string") {
+				// case insensitive sorting
+				x = a[sortcol].toLowerCase();
+				y = b[sortcol].toLowerCase();
+			} else {
+				x = a[sortcol];
+				y = b[sortcol];
+				if ((x==undefined || x==null))
+					return -1;
+				if ((y==undefined || y==null))
+					return 1;
+			}
+			return (x == y ? 0 : (x > y ? 1 : -1));
+		}
+
+		var DataGrid;
+		var columns = [];
+		columns.push({id:'Col1ID',name:'Customer ID',field:'CMCUSTID',width:'Customer ID'.textWidth()+20,headerCssClass:'alignHeaderLeft',cssClass:'alignLeft'});
+		columns.push({id:'Col2ID',name:'Customer Name',field:'CMCUNAME',width:'Customer Name'.textWidth()+20,headerCssClass:'alignHeaderLeft',cssClass:'alignLeft'});
+		columns.push({id:'Col3ID',name:'Crdt Limit Amt',field:'CMCREDIT',width:'Crdt Limit Amt'.textWidth()+20,headerCssClass:'alignHeaderRight',cssClass:'alignRight'});
+		columns.push({id:'Col4ID',name:'Cust Zip',field:'CMCUZIP',width:'Cust Zip'.textWidth()+20,headerCssClass:'alignHeaderLeft',cssClass:'alignLeft'});
+		columns.push({id:'Col5ID',name:'Customer Contact',field:'CMCONTCT',width:'Customer Contact'.textWidth()+20,headerCssClass:'alignHeaderLeft',cssClass:'alignLeft'});
+		columns.push({id:'Col6ID',name:'Customer Phone',field:'CMPHONE',width:'Customer Phone'.textWidth()+20,headerCssClass:'alignHeaderLeft',cssClass:'alignLeft'});
+		var data = [];
+		data.push({RowID:1, CMCUSTID:'000000', CMCUNAME:'DEFAULT-CUSTOMER', CMCREDIT:'0.00                          ', CMCUZIP:'', CMCONTCT:'', CMPHONE:''});
+		data.push({RowID:2, CMCUSTID:'FORF', CMCUNAME:'FOREIGN CONTROL CUSTOMER', CMCREDIT:'0.00                          ', CMCUZIP:'ZIP........X', CMCONTCT:'B.B. COMMTER', CMPHONE:'0K-000'});
+		data.push({RowID:3, CMCUSTID:'FORL', CMCUNAME:'FOREIGN CUSTOMER-LOCAL CONTROL', CMCREDIT:'0.00                          ', CMCUZIP:'', CMCONTCT:'L.L. MORTON', CMPHONE:'09-0900-00303'});
+		data.push({RowID:4, CMCUSTID:'FORR', CMCUNAME:'FOREIGN CUSTOMER-RATE CONTROL', CMCREDIT:'0.000                         ', CMCUZIP:'', CMCONTCT:'M.M. ORKER', CMPHONE:'01-33-0000303'});
+		data.push({RowID:5, CMCUSTID:'100065', CMCUNAME:'J.T. GRAWLT COLLECTIONS', CMCREDIT:'500.00                        ', CMCUZIP:'82701', CMCONTCT:'J.T. GRAWLT', CMPHONE:'307-322-5288'});
+		data.push({RowID:6, CMCUSTID:'100025', CMCUNAME:'BICYCLE BOB\'S OUTDOOR SPORT', CMCREDIT:'25000.00                      ', CMCUZIP:'55318', CMCONTCT:'BOB TRAKSTER', CMPHONE:'612-443-2810'});
+		data.push({RowID:7, CMCUSTID:'100040', CMCUNAME:'CYCLE TIME SALES AND SERVICE', CMCREDIT:'50000.00                      ', CMCUZIP:'55420', CMCONTCT:'JOSE ROLSTAD', CMPHONE:'612-881-4116'});
+		data.push({RowID:8, CMCUSTID:'100010', CMCUNAME:'COLORADO BIKE AND SKI', CMCREDIT:'75000.00                      ', CMCUZIP:'80223', CMCONTCT:'FRANCISCO CORREIA', CMPHONE:'303-410-7005'});
+		data.push({RowID:9, CMCUSTID:'100030', CMCUNAME:'THE É BIKE CHAIN É', CMCREDIT:'125000.00                     ', CMCUZIP:'50013', CMCONTCT:'ANNA BENNETT', CMPHONE:'515-964-4500'});
+		data.push({RowID:10, CMCUSTID:'100055', CMCUNAME:'SUN CITY CYCLE GOODS', CMCREDIT:'175000.00                     ', CMCUZIP:'33065', CMCONTCT:'ANDREW STRAKER', CMPHONE:'305-753-6043'});
+		data.push({RowID:11, CMCUSTID:'100050', CMCUNAME:'NILSON BROTHERS PRO SHOP', CMCREDIT:'200000.00                     ', CMCUZIP:'22041', CMCONTCT:'PETER NILSON', CMPHONE:'703-931-2733'});
+		data.push({RowID:12, CMCUSTID:'100035', CMCUNAME:'UNIVERSITY BIKE AND SPORT', CMCREDIT:'300000.00                     ', CMCUZIP:'53704', CMCONTCT:'JANE MERCER', CMPHONE:'608-242-6700'});
+		data.push({RowID:13, CMCUSTID:'100045', CMCUNAME:'U.S. CYCLE AND FITNESS, DISTR.', CMCREDIT:'325000.00                     ', CMCUZIP:'07603', CMCONTCT:'LUIGI FERRARI', CMPHONE:'201-836-2769'});
+		data.push({RowID:14, CMCUSTID:'100060', CMCUNAME:'LES BICYCLETTES DE FRANCAIS', CMCREDIT:'500000.00                     ', CMCUZIP:'75020', CMCONTCT:'STEPHANE VOEUX', CMPHONE:'04-9625-42-33'});
+		data.push({RowID:15, CMCUSTID:'100020', CMCUNAME:'INTERNATIONAL SPORTING GOODS', CMCREDIT:'1000000.00                    ', CMCUZIP:'98103', CMCONTCT:'JARI TALONEN', CMPHONE:'206-715-6530'});
+		data.push({RowID:16, CMCUSTID:'100015', CMCUNAME:'BRANDMART, USA', CMCREDIT:'2000000.00                    ', CMCUZIP:'92128', CMCONTCT:'TOM BIANCHI', CMPHONE:'310-571-3245'});
+		data.push({RowID:17, CMCUSTID:'G00005', CMCUNAME:'1-TO-1 CONVERSION TEST-------L', CMCREDIT:'9999999999.00                 ', CMCUZIP:'MT ZIP-----L', CMCONTCT:'CUST CONTACT------L', CMPHONE:'CUST PHONE----L'});
+
+		var options = {columns:columns,
+						idProperty:'RowID',
+						dataset:[],
+						showFilter:false,
+						showDrillDown:true,
+						showFooter:false,
+						savePersonalization:true,
+						multiSelect:false,
+						drillDownTooltip:'Select this row',
+						drilldown:function(CurrentRow){},
+						editable:false
+					};
+
+		objDataGrid = $("#inforDataGrid").inforDataGrid(options);
+		objDataGrid.onSort.unsubscribeAll();
+		objDataGrid.onSort.subscribe(function (e, args) {
+			if (args.sortCol == undefined)
+				return;	//happens when the user hides the sorted column
+
+			sortdir = args.sortAsc ? 1 : -1;
+			sortcol = args.sortCol.field;
+			objDataGrid.getData().sort(comparer, args.sortAsc);
+		});
+
+		objDataGrid.updateData(data);
+		objDataGrid.setSortColumn('Col3ID', false);
+	</script>
+</body>
+</html>

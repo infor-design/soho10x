@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+		<meta charset="utf-8">
+
+		<title>Infor Page Level Messages - Right to left</title>
+
+		<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+		<script src="../Release/jquery-1.11.1.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+		<script src="../Release/inforControlsCombined.js"></script>
+
+		<script>
+			$(function () {
+				 Globalize.culture("ar-SA");
+
+				 //setup some click events for demo purpose..
+				 $("#informationButton").click(function () {
+					//This line is all you need to open the message dialog
+					$('body').inforSlideInMessage({
+						messageType: 'Info',
+						messageTitle: 'Information Title 1',
+						errorMessage: 'This is a sample info message. Take note but dont be alarmed.',
+						showClose: true,
+						autoDismiss: false
+					});
+				});
+
+				$("#alertButton").click(function () {
+				   $('body').inforSlideInMessage({
+						messageType: 'Alert',
+						messageTitle: 'Alert Title',
+						errorMessage: 'This is a sample alert message. Be aware.',
+						showClose: true,
+						autoDismiss: true
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="mainContentArea">
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<button id="informationButton" class="inforFormButton">Show Information Message</button>
+			<button id="alertButton"  class="inforFormButton">Show Alert Message</button>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<p>As you can see the messageblock is visible when scrolling down the page.</p>
+		</div>
+	</body>
+</html>

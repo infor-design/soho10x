@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Draggable Lists</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforDraggableList.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDraggableList.js"></script>
+
+	<script>
+		$(function($) {
+			$(".inforDraggableList").inforDraggableList();
+		});
+	</script>
+	<style>	
+		body {
+			overflow: inherit;
+			margin: 20px;
+		}
+	</style>
+	
+</head>
+<body>
+	<div class="inforDraggableLists">
+		<div class="sources">
+			<div class="inforDraggableList">
+				<h1>Available Sources</h1>
+				<ul class="connected source" id="sourceList">
+					<li><a>Source 4</a></li>
+					<li><a>Source 5</a></li>
+					<li><a>Source 6</a></li>
+					<li><a>Source 7</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="instructions">
+			<p>Drag and drop the sources from the left into the processing queues on the right side</p>
+		</div>
+
+		<div class="targets">
+			<div class="inforDraggableList">
+				<h1>Processing Queue 1</h1>
+				<ul class="connected" id="queue1">
+					<li><a>Source 1</a></li>
+				</ul>
+			</div>
+
+			<div class="inforDraggableList">
+				<h1>Processing Queue 2</h1>
+				<ul class="connected" id="queue2">
+				</ul>
+			</div>
+
+			<div class="inforDraggableList">
+				<h1>Processing Queue 3</h1>
+				<ul class="connected" id="queue3">
+					<li><a class="started">Source 2</a></li>
+					<li><a  class="started">Source 3</a></li>
+				</ul>
+			</div>
+
+			<div class="inforDraggableList">
+				<h1>Processing Queue 4</h1>
+				<ul class="connected" id="queue4">
+					<li><a  class="stopped">Source 4</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

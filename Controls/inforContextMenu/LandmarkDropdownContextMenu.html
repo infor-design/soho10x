@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Lmrk Dropdown Context Menu</title>
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
+
+<script>
+
+$(function () {
+  //Add the container you want to use to the body. it can be empty....
+  var $menu = $('<ul id="landmarkContextMenu" class="inforContextMenu"></ul>').appendTo('body');
+
+  var resource = [];
+  resource.push( $('#label1').data('messageRule', 'Country 1') );
+  resource.push( $('#label2').data('messageRule', 'Country 2') );
+  resource.push( $('#label3').data('messageRule', 'text 3') );
+  resource.push( $('#label4').data('messageRule', 'text 4') );
+
+  // initialize form
+  $('body').inforForm();
+
+  //init the control
+  $('.dropdown, .inforTextbox').popupmenu({trigger: 'rightClick', menu: 'landmarkContextMenu'}).
+    on('beforeOpen', function(aa, bb) {
+      $('#dropdown-list').hide();
+
+      //empty out
+      $menu.empty();
+
+      // add/re-add some items
+      $menu.html('<li><a href="#doOpen">Open</a></li><li><a href="#doClose">Close</a></li>');
+    });
+
+    // set label values; Landmark Production code except for comment
+    for (var index=0, len=resource.length; index < len; index++) {
+      var $element = $(resource[index]);
+      var messageRule = $element.data('messageRule');
+      var value = messageRule;    //maf landmark.format.formatMessageRule(messageRule, dataView);
+
+      // if a label and is required, then replace text node value
+      if ($element.prop('nodeName').toUpperCase() == 'LABEL' &&  $element.find('.inforRequiredIndicator').length > 0) {
+        // find the text node and replace the value; need to preserve current dom structure
+        var textNode = $element.contents().filter(function() {
+          return this.nodeType === 3;
+        });
+
+        textNode.replaceWith(value);
+      } else {
+        $element.html(value);
+      }
+    }
+
+});
+</script>
+</head>
+<body style="margin:10px;" class="inforApplicationPadding">
+
+  <label id="label1" for="country1" class="inforLabel" > </label>
+  <select id="country1" data-placeholder="Select..." class="inforDropDownList" style="width: 210px">
+    <option value="">&nbsp;</option>
+    <option value="United States">United States</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="Afghanistan">Afghanistan</option>
+    <option value="Aland Islands">Aland Islands</option>
+    <option value="Albania">Albania</option>
+  </select>
+  <br>
+  <br>
+
+  <label id="label2" for="country2" class="inforLabel noColon" > </label>
+  <select id="country2" data-placeholder="Select..." class="inforDropDownList required" style="width: 210px">
+    <option value="">&nbsp;</option>
+    <option value="United States">United States</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="Afghanistan">Afghanistan</option>
+    <option value="Aland Islands">Aland Islands</option>
+    <option value="Albania">Albania</option>
+  </select>
+  <br>
+  <br>
+
+  <label id="label3" for="text3" class="inforLabel" > </label>
+  <input id="text3" type="text" class="inforTextbox" value="AWB Test" />
+  <br>
+  <br>
+
+  <label id="label4" for="text4" class="inforLabel noColon" > </label>
+  <input id="text4" type="text" class="inforTextbox required" value="AWB Test" />
+  <br>
+  <br>
+
+</body>
+</html>

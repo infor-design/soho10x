@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor Text Button - Basic</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTextButton.css" rel="stylesheet" />
+	
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+	 $(function () {
+		//Globalize.culture("ar-SA");
+
+		//Unless you add disabled to the disabled button as an attribute you can still click it.
+		//IE adds an embossed style if you do add the attribute so it is your choice.
+		$("#disabledButton").on('click',function(){
+			alert('Button was Clicked');
+		});
+
+		//Setup a test to Click to disabling/enabling the other Button
+		$("#firstButton").click(function(){
+			var db = $("#disabledButton");
+			if (db.prop("disabled")) {
+				db.enable();
+			} else {
+				db.disable();
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="inforToolbar" role="toolbar">
+		<button type="button" role="button" class="inforTextButton" id="firstButton">Normal Button</button>
+		<button type="button" role="button" class="inforTextButton" disabled title="Disabled Button" id="disabledButton" id="thirdButton">Disabled Button</button>
+	</div>
+</body>
+</html>

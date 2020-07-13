@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Scheduler 3</title>
+    <link type="text/css" href="../stylesheet/inforControlsCombined6609.css" rel="stylesheet" />
+    <script type="text/javascript" src="../Javascript/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../Javascript/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="../Javascript/inforControlsCombined6609.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#txtTime1").inforTimeField({ timeFormat: 'HH:mm', interval: 1, range: [0, 24] })
+            $("#txtTime2").inforTimeField({ timeFormat: 'h:mm tt', interval: 1, range: [0, 24] })
+            $("#txtTime3").inforTimeField({ timeFormat: 'HH:mm', interval: 1, range: [0, 24] })
+            $("body").inforForm();
+        });
+    </script>
+</head>
+<body>
+    <div class="inforSingleColumnLayout autoLabelWidth" id="psc0050d_AtIntervals">
+        <input class="inforTimeField" type="text" id="txtTime1" value="08:30" />
+        <br>
+        <input class="inforTimeField" type="text" id="txtTime2" value="08:30 AM" />
+        <br>
+        <input class="inforTimeField" type="text" id="txtTime3" value="08:30" />
+        <br>
+    </div>
+</body>
+</html>

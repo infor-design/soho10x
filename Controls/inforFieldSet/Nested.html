@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Fieldset - Nested</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script>
+		 $(function () {
+			$("body").inforForm();
+		 });
+	</script>
+	</head>
+	<body>
+		<fieldset id="AuditExtractDetailFieldSet" class="inforFieldSet">
+			<legend><span class="inforFieldSetLabel">Parent Field Set </span></legend>
+			<button type="button" role="button" class="inforExpandButton open"></button>
+			<div class="content">
+				<div class="inforFieldSet3ColumnLayout">
+				<fieldset id="AuditExtractDetailFieldSet" class="inforFieldSet">
+					<legend><span class="inforFieldSetLabel">Field Set Left Child</span></legend>
+					<button type="button" role="button" class="inforExpandButton open"></button>
+					<div class="content">
+						<label class="inforLabel" >Contents</label>
+					</div>
+				</fieldset>
+				<fieldset id="EventTypesTreeFieldSet" class="inforFieldSet">
+					<legend><span class="inforFieldSetLabel">Field Set Center Child</span></legend>
+					<button type="button" role="button" class="inforExpandButton open"></button>
+
+					<div class="content">
+						<div class="content">
+							<label class="inforLabel" >Contents</label>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset class="inforFieldSet">
+					<legend><span class="inforFieldSetLabel">Field Set Right Child</span></legend>
+					<button type="button" role="button" class="inforExpandButton open"></button>
+					<div class="content">
+						<label class="inforLabel" >Contents</label>
+					</div>
+				</fieldset>
+			</div>
+			</div>
+		</fieldset>
+	</body>
+</html>

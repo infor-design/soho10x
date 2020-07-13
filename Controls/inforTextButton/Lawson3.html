@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<title>Infor Text Buttons - Example From Lawson 3</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			$('body').inforForm();
+			$('.inforMenuButton').inforMenuButton();
+			$('.inforSplitButton').inforSplitButton();
+		});
+	</script>
+</head>
+<BODY style="MARGIN: 40px;">
+<DIV id=moduleHeader class=inforModuleContainer>
+	<DIV class=inforModuleHeader>
+		<DIV class=inforModuleHeaderLeft><SPAN id=formTitle class=inforPageTitleText title="Employee (APPS901 - HR11.1)">Employee (HR11.1)</SPAN> <SPAN class=inforModuleRecordIdText>&nbsp;</SPAN> </DIV>
+		<div class="inforModuleHeaderRight">
+			<button id="menuButton" class="inforModuleDropDownButton" title="Menu" type="button" ></button>
+			<button id="settingsButton" class="inforModuleSettingsButton" title="Settings" type="button" ></button>
+			<button id="closeButton" class="inforModuleCloseButton" title="Close" type="button"></button>
+		</div>
+	</DIV>
+</DIV>
+
+<div  id=lawtoolbar class=inforToolbar>
+	<BUTTON class=inforMenuButton title="Click to initiate a special action" type=button >Special Actions</BUTTON>
+	<BUTTON class=inforTextButton title=Add type=button >Add</BUTTON>
+	<BUTTON class=inforTextButton title=Change type=button >Change</BUTTON>
+	<BUTTON class=inforTextButton title=Delete type=button >Delete</BUTTON>
+	<BUTTON class=inforTextButton title=Previous type=button >Previous</BUTTON>
+	<BUTTON class=inforTextButton title=Inquire type=button >Inquire</BUTTON>
+	<BUTTON class=inforTextButton title=Next type=button >Next</BUTTON>
+	<SPAN class=inforToolbarSpacer></SPAN>
+	<BUTTON class=inforSplitButton title="Click to initiate form action Inquire" type=button >Inquire</BUTTON>
+	<DIV class=alignRight>
+		<BUTTON class=inforMenuButton title="Click to show related forms" type=button>Related Forms</BUTTON>
+	</DIV>
+</div>
+
+</BODY>
+</html>

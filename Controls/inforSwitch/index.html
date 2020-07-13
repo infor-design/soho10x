@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor On Off Switch</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<link href="css/inforSwitch.css" rel="stylesheet">
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--[if lte IE 8]>
+		<script src="js/inforSwitch.js"></script>
+		<script>
+			 $(function () {
+				//you only need this if you support IE8 otherwise it works with pure css.
+				$(".inforSwitch").inforSwitch();
+			});
+		</script>
+	<![endif]-->
+	<script>
+		 $(function () {
+			$("body").inforForm();
+		 });
+	</script>
+
+</head>
+<body class="inforApplicationPadding">
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<h1 class="inforSectionLabel">Notifications</h1>
+			<br>
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff1" class="inforSwitchCheckbox" id="onOff1" >
+				<label class="inforSwitchLabelContainer" for="onOff1">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Colleague requests sent to me</span>
+				</label>
+			</div>
+			
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff2" class="inforSwitchCheckbox" id="onOff2" checked>
+				<label class="inforSwitchLabelContainer" for="onOff2">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Requests to Join a Group Sent to me</span>
+				</label>
+			</div>
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff3" class="inforSwitchCheckbox" id="onOff3" checked>
+				<label class="inforSwitchLabelContainer" for="onOff3">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Post to group the user belongs to</span>
+				</label>
+			</div>
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff4" class="inforSwitchCheckbox" id="onOff4" disabled>
+				<label class="inforSwitchLabelContainer" for="onOff4">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Comments on my Post (disabled)</span>
+				</label>
+			</div>
+		</div>
+
+		<div class="column2">
+			<h1 class="inforSectionLabel">Prompts</h1>
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff6" class="inforSwitchCheckbox" id="onOff6" checked>
+				<label class="inforSwitchLabelContainer" for="onOff6">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Delete colleague relationship</span>
+				</label>
+			</div>
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff7" class="inforSwitchCheckbox" id="onOff7" checked>
+				<label class="inforSwitchLabelContainer" for="onOff7">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Add colleague from search</span>
+				</label>
+			</div>
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff8" class="inforSwitchCheckbox" id="onOff8" checked>
+				<label class="inforSwitchLabelContainer" for="onOff8">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Remove group from search</span>
+				</label>
+			</div>
+			<br>
+			
+			<div class="inforSwitch">
+				<input type="checkbox" name="onOff9" class="inforSwitchCheckbox" id="onOff9" checked>
+				<label class="inforSwitchLabelContainer" for="onOff9">
+					<div class="inforSwitchLabel">
+						<div class="inforSwitchInner"></div>
+						<div class="inforSwitchSwitch"></div>
+					</div>
+					<span class="inforCheckboxLabel">Add group from search</span>
+				</label>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

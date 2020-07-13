@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Tab Set: Alternate Background</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function($) {
+      $('#inforTabContainer').inforTabset();
+      $('body').inforForm();
+      $('.inforLookupField').inforLookupField().disable();
+    });
+  </script>
+
+</head>
+<body>
+  <div id="inforTabContainer" style="margin:10px">
+    <ul class="inforTabset">
+    <li><a href="#tab1">Overview</a></li>
+    </ul>
+
+    <div id="tab1">
+      <div class="inforSingleColumnLayout autoLabelWidth">
+        <label class="inforLabel" for="readonlyField">Textbox</label>
+        <input type="text" name="readOnlyTextBox" id="readonlyField" name="readonlyField" readonly class="inforTextbox" value="Read Only Value"/>
+        <br>
+
+        <label class="inforLabel" for="textarea1">Text Area</label>
+        <textarea class="inforTextArea" readonly id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat. Litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea>
+            <br>
+
+        <label for="country2">Drop List</label>
+        <select id="country2" class="inforDropDownList" readonly>
+          <option value=""></option>
+          <option selected value="United States">United States</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="Afghanistan">Afghanistan</option>
+          <option value="Aland Islands">Aland Islands</option>
+          <option value="Albania">Albania</option>
+          <option value="Algeria">Algeria</option>
+          <option value="American Samoa">American Samoa</option>
+          <option value="Andorra">Andorra</option>
+          <option value="Angola">Angola</option>
+        </select><br>
+
+        <label for="country3">Drop List 2</label>
+        <select id="country3" class="inforDropDownList" >
+          <option value=""></option>
+          <option selected value="United States">United States</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="Afghanistan">Afghanistan</option>
+          <option value="Aland Islands">Aland Islands</option>
+          <option value="Albania">Albania</option>
+          <option value="Algeria">Algeria</option>
+          <option value="American Samoa">American Samoa</option>
+          <option value="Andorra">Andorra</option>
+          <option value="Angola">Angola</option>
+        </select><br>
+
+        <label class="inforLabel" for="lookupField1">Lookup Field Disabled</label>
+        <input class="inforLookupField" type="text" value="12345" disabled id="lookupField1"><br>
+        <br>
+        <label class="inforLabel" for="text1">Text Field Disabled</label>
+        <input class="inforTextbox" type="text" value="12345" disabled id="text1"><br>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

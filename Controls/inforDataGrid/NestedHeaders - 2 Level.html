@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid : Nested Headers</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+	<script src="js/sampleData.js"></script>
+
+</head>
+<body>
+	<p>
+	<div>
+		<button type="button" class="inforFormButton" id="firstButton">Hide Rating Column</button>
+		<button type="button" class="inforFormButton" id="secondButton">Show Rating Column</button>
+	</div>
+	<p>
+
+	<div id="inforDataGrid1" class='inforDataGrid'></div>
+	<script>
+	  var grid;
+	  var columns = [
+		 {name: "Name", id: "name", field: "lastName"},
+		 {name: "Status", id: "status", field: "status"},
+		 {name: "Anniversary", id: "anniversary", field: "anniversary"},
+		 {name: "Rating", id: "rating", field: "rating"},
+		 {name: "Score", id: "score", field: "score"},
+		 {name: "Pay Rate", id: "payRate", field: "payRate"},
+		{
+		  name: "New Merit Pool",
+		  id: "nmp",
+		  children: [
+			{id: "budgeted", name: "Budgeted", field: "budgeted"},
+			{id: "budgetedHourly", name: "BudgetedHourly", field: "budgetedHourly"},
+			{id: "reccomended", name: "Reccomended", field: "reccomended"},
+		  ]
+		},
+		{id: "percent", name: "percent", field: "percent"}
+	  ];
+
+	 var options = {
+		enableCellNavigation: true,
+		enableColumnReorder: false,
+		forceFitColumns: true,
+		columns: columns,
+		dataset: getPeopleData(),
+		idProperty: "id",
+		showFilter: false,
+		savePersonalization: false
+	 };
+
+	 self.dataGrid = $("#inforDataGrid1").inforDataGrid(options);
+
+	 $("#firstButton").click(function(){
+		self.dataGrid.hideColumn("rating");
+	 })
+
+	 $("#secondButton").click(function(){
+		self.dataGrid.showColumn("rating");
+	 })
+	</script>
+
+</body>
+</html>

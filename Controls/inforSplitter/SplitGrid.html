@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Window Splitter Example</title>
+	<style type="text/css" media="all">
+		.bodyFrame {
+			width:100%;
+			height:100%;
+		}
+		.treeFrame {
+			width:100%;
+			height:100%;
+		}
+	</style>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+
+</head>
+	<body>
+		<div class="inforModuleContentArea">
+		<div class="inforSplitter">
+			<div id="leftPane">
+				<iframe id="ifLeft" src="blue.html" class="treeFrame"></iframe>
+			</div>
+			<div id="rightPane" style="overflow:hidden">
+				<fieldset class="inforFieldSet">
+					<span class="inforFieldSetLabel">The Label</span>
+					<div class="content" style="padding:0;margin:0">
+						 <div id="dataGrid"></div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		</div>
+	</body>
+	<script>
+		 $(function () {
+			$(".inforSplitter").inforSplitter();
+			$(".inforFieldSet").inforFieldSet();
+		});
+
+
+		//Define Columns for the Grid.
+		var columns = [];
+
+		columns.push({ id: "city", name: "City", field: "city", width: 125, selectable: true, formatter: TextCellFormatter,  editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, required: true, filterType: TextFilter });
+		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "state", name: "State", field: "state",  formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"] });
+		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter });
+		columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, required: true, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter });
+		columns.push({ id: "revenue", name: "Revenue", field: "revenue", width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter });
+		columns.push({ id: "isLeedCertified", cssClass: "alignCenter", headerCssClass: "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter: CheckboxCellFormatter, editor: CheckboxCellEditor, filterType: CheckboxFilter });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor, formatter: DateCellFormatter, filterType: DateFilter });
+		//Note: Use fx...  DateShowFormat: Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.T for date and time in current locale
+		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "postalCode", name: "Postal Code", field: "postalCode", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: "territory", name: "Territory", field: "territory", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+		var data = [];
+		data.push({ officeId: 3, city: "Greensboro", phone: "6538227668", addressLine1: "", addressLine2: "78 Rocky Second St.", state: "New Jersey", country: "Zambia", postalCode: "09514", territory: "ECXL", establishedDate: new Date("08/09/1964"), isLeedCertified: "1", comments: "Et quad estis vobis homo, si nomen transit. Sed quad estis vobis homo, si quad ut novum vobis homo, si nomen novum vobis regit, et nomen transit. Sed quad estis vobis regit, et nomen transit. Tam quo, et quis gravis delerium.  Versus esset in dolorum cogn", numberEmployees: null, airportCode: "PHL", officeType: 'Remote', revenue: 10000.12 });
+		data.push({ officeId: 4, city: "Greensboro", phone: "845-9216316", addressLine1: "452 East Milton Way", addressLine2: "452 East Milton Way", state: "Louisiana", country: "FrenchSouthernTerritories(TAFF)", postalCode: "99077", territory: "T271ZWMT93", establishedDate: new Date("12/16/1963"), isLeedCertified: "0", comments: "Multum gravum et pladior venit.  Tam quo, et quis gravis et quis gravis et nomen transit. Et quad estis vobis homo, si quad ut novum eggredior.  Longam, e gravis et pladior venit.  Tam quo, et pladior venit.  Tam quo, et bono quorum glavans e funem.  Quad", numberEmployees: 20, airportCode: "PHL", officeType: 'Remote', revenue: 10000.12 });
+
+		var options = {
+			columns: columns,
+			idProperty: 'officeId',
+			dataset: data,
+			showDrillDown: true,
+			showFooter: true,
+			showGridSettings: true,
+			showFilter: true,
+			drilldown: function (currentRow) {
+				alert('Drill Down on ' + currentRow.officeId);
+			},
+			drillDownTooltip: "Display Details About this Office",
+			forceFitColumns: false,
+			savePersonalization: false
+		};
+		var grid = $("#dataGrid").inforDataGrid(options);
+
+		$("#rightPane").bind('resize', function(evt) {
+			var gridDiv = $("#dataGrid"),
+				pane = $(this);
+
+			gridDiv.height(pane.height()-48);
+			if (grid.getData().getItems().length==0)
+				gridDiv.width(pane.width()-20);
+			else
+				gridDiv.width(pane.width());
+
+			console.log('x');
+			grid.resizeAndRender();
+		});
+	</script>
+</html>

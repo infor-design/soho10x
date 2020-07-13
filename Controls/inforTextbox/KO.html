@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Using KnockOut with Drop Downs.</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../lib/knockout-2.1.0.debug.js"></script>
+
+	<script src="../lib/jquery-1.7.2.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			var viewModel = {
+				textValue: ko.observable("Test"),	//The Selected Value in the Drop Down
+				decimalValue: ko.observable(0.26),
+				types: ko.observableArray([			//The Array to use.
+					{key: 'F', name: 'Formula'},
+					{key: 'D', name: 'Data'},
+					{key: 'T', name: 'Text'}
+				]),
+				isVisible: ko.observable(true),
+				isEnabled: ko.observable(true),
+				isReadOnly: ko.observable(false)
+			};
+
+			ko.applyBindings(viewModel);
+
+			//show the value...
+			$("#showValue").click(function(){
+				console.log(ko.toJSON(viewModel), $("#textBox2").val());
+			});
+
+			//toggleVisibility
+			$("#toggleVisibility").click(function(){
+				viewModel.isVisible(!viewModel.isVisible());
+			});
+
+			$("#toggleReadonly").click(function(){
+				viewModel.isReadOnly(!viewModel.isReadOnly());
+			});
+
+			$("#toggleDisabled").click(function(){
+				viewModel.isEnabled(!viewModel.isEnabled());
+			});
+		});
+	</script>
+</head>
+<body>
+	<label class="inforLabel" for="textBox1">Text Field</label>
+	<input type="text" class="inforTextbox"  id="textBox1" data-bind="value: textValue, visible: isVisible" /><br>
+	<br>
+	<label class="inforLabel" for="textBox2">Numeric Field</label>
+	<input type="text" class="inforTextbox"  id="textBox2" data-bind="value: decimalValue" /><br>
+	<br>
+	<button type="button" class="inforFormButton" id="showValue">Show Value</button>
+	<button type="button" class="inforFormButton" id="changeValue">Change Value</button>
+	<button type="button" class="inforFormButton" id="toggleVisibility">Show/Hide</button>
+	<button type="button" class="inforFormButton" id="toggleReadonly">Readonly/Enable</button>
+	<button type="button" class="inforFormButton" id="toggleDisabled">Disable/Enable</button>
+</body>
+</html>
+

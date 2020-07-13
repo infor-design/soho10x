@@ -1,0 +1,37 @@
+{
+  "name": "inforControls",
+  "version": "3.6.0",
+  "description": "Infor Html Controls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "Infor",
+    "Html5",
+    "Controls"
+  ],
+  "author": "Tim McConechy",
+  "license": "Infor",
+  "readmeFilename": "README.txt",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-cssmin": "~0.6.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-ftp-deploy": "^0.1.8",
+    "grunt-preprocess": "~2.3.0",
+    "grunt-remove-logging": "~0.1.1",
+    "grunt-replace": "~0.4.4",
+    "grunt-trimtrailingspaces": "~0.1.0",
+    "jsonfromresx": "^1.0.1",
+    "string": "~1.4.0"
+  },
+  "dependencies": {
+    "grunt-ftp-deploy": "^0.1.10"
+  }
+}

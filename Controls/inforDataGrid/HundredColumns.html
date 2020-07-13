@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+
+	<title>Infor DataGrid Sample </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../lib/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="js/inforDataGrid.js"></script>
+	<link rel="stylesheet" href="css/inforDataGrid.css" />
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+</head>
+<body>
+
+	<div class="inforToolbar">
+	   <button type="button" id="deleteButton"  class="inforIconButton delete"  title="Click to remove selected rows" onclick="deleteRows()"></button>
+	</div>
+	<div id="inforDataGrid">
+	</div>
+
+	<script>
+		function deleteRows()
+		{
+			var selectedRows = grid.getSelectedRows();
+			for (var i in selectedRows) {
+				var rowData = grid.getDataItem(i);
+				console.log("Delete Row : " + rowData);
+			}
+			grid.removeSelectedRows()
+		}
+
+		//Store the Grid Obj For Later Api Calls..
+		var grid = null,
+			columns = [],
+			data = [],
+			originalData = getSampleData([]);	// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+
+		for (var i = 0; i < 25; i++) {
+			data.push(originalData[i]);
+		}
+
+		for (var i = 0; i < 85; i++) {
+			columns.push({ id: "field"+i, name: i, field: "phone", width: 65, editor: TextCellEditor, filterType: TextFilter});
+		}
+
+		grid = $("#inforDataGrid").inforDataGrid({
+			columns: columns,
+			idProperty:'officeId',
+			dataset: data,
+			frozenColumn: -1,
+			savePersonalization: false,
+			showFilter: true
+		});
+	</script>
+</body>
+</html>

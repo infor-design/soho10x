@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+	<title>Infor Lookup Field - Open a Dialog with Url Content</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+</head>
+<body class="inforHidden">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Relationship To Organization</label>
+			<input class="inforLookupField" type="text" id="Relationship"><br>
+		</div>
+	</div>
+
+	<script>
+			//Globalize.culture("ar-SA");
+
+			var options =
+			{
+				editable: false,
+				showDrillDown: false,
+				showFilter: false,
+				showCheckboxes: false,
+				showStatusIndicators: false,
+				multiSelect: false,
+				pagingMode: PagingModes.PagerServerSide,
+				showFooter: true,
+				savePersonalization: false
+			};
+
+			$("#Relationship").inforTriggerField(
+			{
+				click: function(event)
+				{
+					var $dialog = $("<div id='SelectDialog' style=\"display:none;margin-bottom:10px;\"></div>");
+					$('body').append($dialog);
+
+					$("#SelectDialog").load("./ExampleLookupGrid.html", function(html, status, xhr)
+					{
+						title = $(this).find('title').html();
+
+						$("#SelectDialog").inforMessageDialog(
+						{
+							title : title,
+							dialogType : "General",
+							width : 700,
+							height : "auto",
+							modal : true,
+							icon : "select",
+							close : function(event, ui)
+							{
+								$("#SelectDialog").remove();
+							},
+							buttons:
+							[{
+								text : Globalize.localize("Ok"),
+								click : function()
+								{
+									$(this).inforDialog("close");
+									$("#SelectDialog").parent().remove();
+
+								},
+								isDefault : true
+							},
+							{
+								text : Globalize.localize("Cancel"),
+								click : function()
+								{
+									$(this).inforDialog("close");
+									$("#SelectDialog").parent().remove();
+								}
+							}]
+						});
+					});
+				}
+			});
+
+			$("body").inforForm();
+	 </script>
+</body>
+</html>

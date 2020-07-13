@@ -1,0 +1,1049 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Infor Application Navigation</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforApplicationNav.js"></script>
+	<script>
+		 $().ready(function ()
+		 {
+			$("#inforApplicationNav1").inforApplicationNav();
+
+			$("a").click(function() {
+				console.log('You clicked ',$(this).text());
+			});
+
+		 });
+	</script>
+</head>
+<body style="margin:0;padding:0">
+ <div id="inforApplicationNav1" class="inforApplicationNav">
+	<ul>
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu1" href="#">Demand</a>
+ <!--Menu Level 0 -->
+ <ul id="sub1">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../release/viewFilterRelease" target="main">Schedules</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../po/listPoHeader" target="main">Discrete POs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=BLANKETPOCUST" target="main">Blanket POs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../release/viewProjectedDemandFilter" target="main">Demand Summary</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+<!--End Menu Level 0 Item-->
+ <li>
+ <a href="../release/createUnpublishedSchedule" target="main">Create Staged Schedules</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/create?templatename=UNPUB_SCHEDULES" target="main">Manage Staged Schedules</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=BLANKETPOCUST" target="main">Blanket POs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Proposed POs</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../ppo/createPpo" target="main">Create Proposed POs</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=PPO_MGMT_CUST" target="main">Proposed PO Management</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=PPO_CONS_CUST" target="main">Proposed PO Console</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Kanban</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=KBCONSOLE_BUYER" target="main">Kanban Console</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=KBREPORTS_BUYER" target="main">Parts and Pull Signals</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=KBPARTMAINT" target="main">Define Parts</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Supplier Managed Inventory</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="Filters/Buyer/SMI_CONSOLE_BUYER.html" target="main">SMI Console</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=SMI_HISTORY_BUYER" target="main">SMI History</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=SMI_USAGE_BUYER" target="main">Part Usage</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=SMI_SUMMARY_BUYER" target="main">Part Summary</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=SMI_PARTS_SETUP" target="main">Edit SMI Part</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu2" href="#">Shipments</a>
+ <!--Menu Level 0 -->
+ <ul id="sub2">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../shipper/shipperFilter" target="main">Shipment History Report</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=CUST_ASN_HIST" target="main">View ASNs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../shipper/shipperHistFilter" target="main">Shipper History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../aetc/listAetcRequests" target="main">Reply to AETC Requests</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../barcode/reprintFilterCust" target="main">Reprint/Purge Labels</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=RECEIPTSHIPHIST" target="main">Shipping History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Global Track & Trace</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=GTT_ST_CONSOLE" target="main">Shipment Tracking Console</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=GTT_IP_CONSOLE" target="main">Inventory Projection Console</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=GTT_ST_UPDATE" target="main">Shipment Status Update</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../gtt/stDefineLongDistShipments" target="main">Define Long-Distance Shipments</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../filter/createFilter?templatename=GTT_ST_ROUTE_TMPLS" target="main">Define Route Templates</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../gtt/ipSetupInvProjection" target="main">Set Up Inventory Projection</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../gtt/stSetupShipmentManagers" target="main">Set Up Shipment Managers</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu3" href="#">Outside Processing</a>
+ <!--Menu Level 0 -->
+ <ul id="sub3">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../op/createWorkOrder" target="main">Work Order Creation</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=OP_WO_CONSOLE" target="main">Work Order Maintenance</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=OP_PR_CONSOLE" target="main">Process Console</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../op/createProcess" target="main">Process Creation</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=OP_PR_MGMT" target="main">Process Management</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../op/createOperation" target="main">Operation Creation</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=OP_OP_MGMT" target="main">Operation Management</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=OP_DISCREP" target="main">Discrepancy Reasons</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu4" href="#">Premium Freight</a>
+ <!--Menu Level 0 -->
+ <ul id="sub4">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PFAUTHCREATE" target="main">Create PFA</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PFAUTH" target="main">View PFAs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PFCLOSEAUTH" target="main">Close PFAs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PFVIEWHISTORYHTML&syntaxNm=PF_VIEW_HISTORY" target="main">PFA History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PFVIEWTREND&mode=html" target="main">Trend Analysis</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PFVIEWCOSTANALYSIS" target="main">Cost Analysis</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../premiumFreight/listPFCarriers" target="main">Set Up Freight Carriers</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../premiumFreight/listPFReasons" target="main">Set Up Reason Codes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu5" href="#">Receipts</a>
+ <!--Menu Level 0 -->
+ <ul id="sub5">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../receipt/showCreateReceipt" target="main">Create Receipt</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=RECEIPTHIST" target="main">Receiving History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=RECEIPTMGMT" target="main">Receipt Management</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=RECEIPT_RECONCILE" target="main">Reconcile to ASN</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../rma/showRMASearchList" target="main">View RMAs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu6" href="#">Billing</a>
+ <!--Menu Level 0 -->
+ <ul id="sub6">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=SELFBILLINGCUST" target="main">Self-Billing Invoices</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=REMITADV" target="main">Remittance Advice</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=SUPPREMITSUMM" target="main">Supplier Remittance Summary</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../billing/prodInvoice/viewCustomerInvoiceProfile" target="main">Invoice Profile</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PROD_INV_MNT_CUST" target="main">Invoice Maintenance</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PRODINVHISTCUST" target="main">Part Billing History </a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=SUPBILHIST" target="main">Suppliers Billing History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu7" href="#">Delivery Performance</a>
+ <!--Menu Level 0 -->
+ <ul id="sub7">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=CREATEDPR" target="main">Create DPR</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+  <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=MANAGEDPR" target="main">Manage DPRs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=VIEWDPRSUMM" target="main">View DPR Summary</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=SETUPDPRCODE" target="main">Set Up Reason Codes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=SETUPDPRCLAIMAMOUNTCODE" target="main">Set Up Claim Codes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu8" href="#">Defective Materials</a>
+ <!--Menu Level 0 -->
+ <ul id="sub8">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=CREATEDMN" target="main">Create DMN</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=MANAGEDMN" target="main">Manage DMNs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=VIEWDMNSUMMARY" target="main">View DMN Summary</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=VIEWDMNREASONCODES" target="main">Set Up DMN Codes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=DELETEDMN" target="main">Delete DMNs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu9" href="#">PPAP</a>
+ <!--Menu Level 0 -->
+ <ul id="sub9">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=CREATEPPAP" target="main">Create PPAP</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=MANAGEPPAPS" target="main">Manage PPAPs</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../filter/createFilter?templatename=PPAPREJECTCODES" target="main">Set Up Rejection Codes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu10" href="#">Parts Per Million</a>
+ <!--Menu Level 0 -->
+ <ul id="sub10">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../ppm/ppmFilter?filterType=summary" target="main">PPM Summary</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../ppm/ppmFilter?filterType=defect" target="main">Defect History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../ppm/ppmFilter?filterType=receiving" target="main">Receiving History</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu11" href="#">Supplier Performance</a>
+ <!--Menu Level 0 -->
+ <ul id="sub11">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/viewFilterMetrics" target="main">Generate Metrics</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/viewMetricsCatgList?buttonName=edit" target="main">Edit Weights</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/metricsScoresFilter" target="main">Enter Scores</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/publishMetrics" target="main">Publish Metrics</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/viewSupplyChain" target="main">View Supply Chain</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/viewSupplierFilter" target="main">View Suppliers</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/viewMetricsCatgList?buttonName=setup" target="main">Define Metrics</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../metrics/setupCategoryPrefs" target="main">Define Metrics Components</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu12" href="#">Document Management</a>
+ <!--Menu Level 0 -->
+ <ul id="sub12">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../docManagement/addBuyerDocument" target="main">Add Document</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../docManagement/showBuyerDocFilter" target="main">Maintain Documents</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu13" href="#">Communications</a>
+ <!--Menu Level 0 -->
+ <ul id="sub13">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../communications/listPublishFiles" target="main">Send Now</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../communications/listReceiveFiles" target="main">Receive Now</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../gateway/listGatewayFileStatus" target="main">File Status</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../gateway/listProfile" target="main">Define Hosts</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../gateway/showDocumentProfileList" target="main">Define Documents</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../gateway/showHostProfileFilter" target="main">Define Processes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../gateway/listHostprofile" target="main">Define Transfer Schedule</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../gateway/showGWInstanceList" target="main">Define Gateway Instance</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../edi/listTPRecords" target="main">Trading Partners</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Export Scheduler</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../expSchedule/createExpSched" target="main">Create Export Schedule</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../expSchedule/listExpSched" target="main">List Export Schedule</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu14" href="#">Setup</a>
+ <!--Menu Level 0 -->
+ <ul id="sub14">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../account/listBuyerPrefs" target="main">Customer Profiles</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../buyer/showBuyerSetup" target="main">Edit Address</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../buyer/showFacilityFilter" target="main">Facilities</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../buyer/showShipToFilter" target="main">Ship Tos</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../buyer/showBuyerSupplierFilter" target="main">Suppliers</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../parts/addEditPart" target="main">Part Create</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../parts/partFilter" target="main">Part Maintenance</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../shipper/listScac" target="main">SCAC Maintenance</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../buyercontainer/showAddForm" target="main">Containers</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../package/listPackaging" target="main">Packaging Maintenance</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../barcode/listLabelLayouts" target="main">Bar Code Label Layouts</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../buyer/viewSupplierXref?syntaxNm=SUPPXREF" target="main">Supplier Cross-Reference</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../barcode/showTypeTemplateList" target="main">Label Templates</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../jsp/buyerWizardFrameset.jsp" target="main">Launch Setup Wizard</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../flexfield/showList" target="main">Flex Fields</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Security</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../security/listRestrictionGroups" target="main">Define Restrictions</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../security/listRoles" target="main">Define Roles</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../security/listUsers" target="main">Define Users</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../account/listAllLockedUsers" target="main">Unlock User List</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ <!--Menu Level 0 Item-->
+ <li>
+ <a id="menu1">Preferences</a>
+ <!--Menu Level 1 -->
+ <ul id="sub1">
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../security/showUser?formAction=edit&profile=Y" target="main">Edit User Profile</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../event/listAlertSubscriptions" target="main">Configure Alerts</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../emc/listEmcConfiguration" target="main">Configure EMC</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../productgroup/viewPG" target="main">Define Product Groups</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ <!--Menu Level 1 Item -->
+ <li>
+ <a href="../supplierGroup/showSuppGrpList" target="main">Define Supplier Groups</a>
+ </li>
+ <!--End Menu Level 1 Item -->
+ 
+ </ul>
+ <!--End Menu Level 1 -->
+ </li>
+ <!--End Menu Level 0 Item -->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ <!--Parent Menu-->
+ <li>
+ <!--Parent Menu Title -->
+ <a id="menu15" href="#">Help</a>
+ <!--Menu Level 0 -->
+ <ul id="sub15">
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="javascript:displayHelpMain();" >Launch Help</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="javascript:displayTutorial();" >Launch Tutorial</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="javascript:displayHelpSupplier();" >Launch Supplier Help</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="javascript:displayHelpSupport();" >Contact Support</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../jsp/dataTemplates.jsp" target="main">Data Templates</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="../jsp/release.jsp" target="main">Release Notes</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ <!--End Menu Level 0 Item-->
+ <li>
+ <a href="javascript:displayAbout();" >About Application</a>
+ </li>
+ <!--End Menu Level 0 Item-->
+ 
+ </ul>
+ <!--End Menu Level 0 -->
+ </li>
+ <!--End Parent Menu-->
+ 
+ 
+ </ul>
+ </div>
+ </html>

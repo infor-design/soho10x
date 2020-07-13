@@ -1,0 +1,165 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8" />
+
+	<title>Relationship</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<script>
+		var language = "en";
+		var inforGridControl;
+
+		(function($)
+		{
+			var pageNum = 0;
+
+			createGridControl = function()
+			{
+				var columns = [];
+				columns.push({id:"HROrganization",name:"HR Organization",field:"HROrganization",sortable:false,selectable:true,width:200,cssClass:" non-data-cell alignCenter",headerCssClass:" alignHeaderCenter"});
+				columns.push({id:"Relationship",name:"Relationship",field:"Relationship",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+				columns.push({id:"_op_Description_spc_translation_cp_",name:"Description",field:"_op_Description_spc_translation_cp_",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+				columns.push({id:"RelationshipType",name:"Type",field:"RelationshipType",sortable:false,selectable:true,width:200,cssClass:" non-data-cell alignCenter",headerCssClass:" alignHeaderCenter"});
+				columns.push({id:"RelationshipDisplayIndicator",name:"Employee Selectable",field:"RelationshipDisplayIndicator",sortable:false,selectable:true,formatter:TextCellFormatter,editor:TextCellEditor,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+				columns.push({id:"Active",name:"Active",field:"Active",sortable:false,selectable:true,formatter:TextCellFormatter,editor:TextCellEditor,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+
+				var options =
+				{
+					columns: columns,
+					idProperty: '_rowIndex',
+					dataset: [],
+					editable: false,
+					multiSelect: false,
+					enableCellNavigation: false,
+					showDrillDown: false,
+					showCheckboxes: false,
+					showGridSettings: false,
+					savePersonalization: false,
+					showExport: false,
+					forceFitColumns: true,
+					showFooter: true,
+					pagingMode: PagingModes.PagerServerSide,
+					pageSize: 6,
+					autoHeight: false,
+					fillHeight: false,
+					showCheckboxes: true
+				};
+
+				inforGridControl = $('#inforGridControl').inforDataGrid(options);
+			};
+
+			setupEventHandlers = function()
+			{
+				inforGridControl.onDblClick.subscribe(function(e)
+				{
+					var cell = inforGridControl.getCellFromEvent(e);
+					runSelectAction(cell.row);
+				});
+
+				inforGridControl.getData().onPageRequested.subscribe(function (e, args)
+				{
+					if (args.operation == "first")
+					{
+						loadFirstPage();
+					}
+					else
+					if (args.operation == "last")
+					{
+						loadLastPage();
+					}
+					else
+					if (args.operation == "next")
+					{
+						loadNextPage();
+					}
+					else
+					if (args.operation == "previous")
+					{
+						loadPreviousPage();
+					}
+				});
+
+				inforGridControl.onSelectedRowsChanged.subscribe(function(e, args)
+				{
+					var rows = inforGridControl.getSelectedRows();
+				});
+
+			};
+
+			runSelectAction = function(row)
+			{
+			};
+
+			//----------------------------------------------------------------
+			// Paging Functions
+			//----------------------------------------------------------------
+			loadFirstPage = function()
+			{
+				pageNum = 0;
+				loadGridControl(pageNum);
+			};
+
+			loadLastPage = function()
+			{
+				pageNum = pages.length - 1;
+				loadGridControl(pageNum);
+			}
+
+			loadNextPage = function()
+			{
+				if (pages[pageNum].hasNext)
+				{
+					pageNum++;
+					loadGridControl(pageNum);
+				}
+			};
+
+			loadPreviousPage = function()
+			{
+				if (pages[pageNum].hasPrevious)
+				{
+					--pageNum;
+					loadGridControl(pageNum);
+				}
+			};
+
+			loadGridControl = function(pageNum)
+			{
+				inforGridControl.mergeData(pages[pageNum].data, !pages[pageNum].hasNext ? -1 : pageNum, -1, !pages[pageNum].hasNext, !pages[pageNum].hasPrevious);
+			};
+		})(jQuery);
+
+		var pages =
+		[
+			{"hasPrevious":false,"hasNext":true,"data":[{"Active":true,"HROrganization":"7004","Relationship":"DAUGHTER1","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":0,"_op_Description_spc_translation_cp_":"Daughter1"},{"Active":true,"HROrganization":"7004","Relationship":"GRANDMOTHER1","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":1,"_op_Description_spc_translation_cp_":"Grandmother1"},{"Active":true,"HROrganization":"7004","Relationship":"HUSBAND1","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":2,"_op_Description_spc_translation_cp_":"Husband1"},{"Active":true,"HROrganization":"7004","Relationship":"MOTHER1","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":3,"_op_Description_spc_translation_cp_":"Mother1"},{"Active":true,"HROrganization":"7004","Relationship":"SON1","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":4,"_op_Description_spc_translation_cp_":"Son1"},{"Active":true,"HROrganization":"7004","Relationship":"WIFE1","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":5,"_op_Description_spc_translation_cp_":"Wife1"}]},
+			{"hasPrevious":true,"hasNext":true,"data":[{"Active":true,"HROrganization":"7004","Relationship":"DAUGHTER2","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":0,"_op_Description_spc_translation_cp_":"Daughter2"},{"Active":true,"HROrganization":"7004","Relationship":"GRANDMOTHER2","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":1,"_op_Description_spc_translation_cp_":"Grandmother2"},{"Active":true,"HROrganization":"7004","Relationship":"HUSBAND2","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":2,"_op_Description_spc_translation_cp_":"Husband2"},{"Active":true,"HROrganization":"7004","Relationship":"MOTHER2","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":3,"_op_Description_spc_translation_cp_":"Mother2"},{"Active":true,"HROrganization":"7004","Relationship":"SON2","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":4,"_op_Description_spc_translation_cp_":"Son2"},{"Active":true,"HROrganization":"7004","Relationship":"WIFE2","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":5,"_op_Description_spc_translation_cp_":"Wife2"}]},
+			{"hasPrevious":true,"hasNext":true,"data":[{"Active":true,"HROrganization":"7004","Relationship":"DAUGHTER3","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":0,"_op_Description_spc_translation_cp_":"Daughter3"},{"Active":true,"HROrganization":"7004","Relationship":"GRANDMOTHER3","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":1,"_op_Description_spc_translation_cp_":"Grandmother3"},{"Active":true,"HROrganization":"7004","Relationship":"HUSBAND3","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":2,"_op_Description_spc_translation_cp_":"Husband3"},{"Active":true,"HROrganization":"7004","Relationship":"MOTHER3","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":3,"_op_Description_spc_translation_cp_":"Mother3"},{"Active":true,"HROrganization":"7004","Relationship":"SON3","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":4,"_op_Description_spc_translation_cp_":"Son3"},{"Active":true,"HROrganization":"7004","Relationship":"WIFE3","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":5,"_op_Description_spc_translation_cp_":"Wife3"}]},
+			{"hasPrevious":true,"hasNext":false,"data":[{"Active":true,"HROrganization":"7004","Relationship":"DAUGHTER4","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":0,"_op_Description_spc_translation_cp_":"Daughter4"},{"Active":true,"HROrganization":"7004","Relationship":"GRANDMOTHER4","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":1,"_op_Description_spc_translation_cp_":"Grandmother4"},{"Active":true,"HROrganization":"7004","Relationship":"HUSBAND4","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":2,"_op_Description_spc_translation_cp_":"Husband4"},{"Active":true,"HROrganization":"7004","Relationship":"MOTHER4","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":3,"_op_Description_spc_translation_cp_":"Mother4"},{"Active":true,"HROrganization":"7004","Relationship":"SON4","RelationshipDisplayIndicator":true,"RelationshipType":2,"_rowIndex":4,"_op_Description_spc_translation_cp_":"Son4"},{"Active":true,"HROrganization":"7004","Relationship":"WIFE4","RelationshipDisplayIndicator":true,"RelationshipType":1,"_rowIndex":5,"_op_Description_spc_translation_cp_":"Wife4"}]}
+		];
+
+		$(document).ready(function()
+		{
+			Globalize.culture("en-US");
+			createGridControl();
+			setupEventHandlers();
+			loadFirstPage();
+			$("body").inforForm();
+		});
+	</script>
+	<style>
+	</style>
+</head>
+<body>
+	<div>
+		<div id='inforGridControl' style="height:200px"></div>
+	</div>
+</body>
+</html>
+

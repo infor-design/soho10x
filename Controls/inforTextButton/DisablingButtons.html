@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8" />
+
+	<title>Infor Form Buttons</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		function enableAllButtons() {
+			$("button").enable();
+		}
+
+		function onButtonClicked() {
+			alert("You clicked me...........");
+		}
+   </script>
+
+</head>
+<body>
+	<form id="mainForm">
+		<div>
+			<p>Disabled by attribute</p>
+			<button type="button" class="inforIconButton refresh" id="iconButton" disabled onclick="onButtonClicked()"></button>
+			<button type="button" class="inforFormButton" disabled onclick="onButtonClicked()"></button>
+			<button type="button" class="inforTextButton" disabled onclick="onButtonClicked()"></button>
+			<br>
+
+			<p>Disabled by css class</p>
+			<button type="button" class="inforIconButton refresh disabled" id="iconButton" disabled onclick="onButtonClicked()"></button>
+			<button type="button" class="inforFormButton disabled" id="formButton" onclick="onButtonClicked()">FormButton</button>
+			<button type="button" class="inforTextButton disabled" id="textButton" onclick="onButtonClicked()">TextButton</button>
+			<br>
+			<br>
+			<button type="button" class="inforFormButton" id="enableAll" onclick="enableAllButtons()">Enable All Buttons</button>
+		</div>
+	</form>
+</body>
+</html>

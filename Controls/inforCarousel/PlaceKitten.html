@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Carousel - Basic Example</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link rel="stylesheet" href="css/inforCarousel.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforCarousel.js"></script>
+
+	<script>
+		$(function () {
+			//uncomment To Test RTL:
+			//Globalize.culture("ar-SA");
+
+			$(".inforFieldSet").inforFieldSet();
+			$('#carousel1, #carousel2').inforCarousel();
+
+			$("button.delete").click(function () {
+				alert('delete');
+			});
+		});
+	</script>
+</head>
+<style>
+	body, .inforFieldSet, .inforFieldSet .content {
+		min-width:339px;
+		max-width:339px;
+	}
+</style>
+<body style="max-width:339px;float:right;border:1px dashed #e5e5e5">
+
+	<fieldset class="inforFieldSet" >
+		<span class="inforFieldSetLabel">Place Kitten Service</span>
+		<div class="content" >
+			<ul id="carousel1" class="inforCarousel" >
+			  <li class="inforCarouselItem">
+				   <div class="inforCarouselImage"><image src="http://placekitten.com/g/88/88"></image></div>
+				   <div class="inforCarouselLabel">Corp Charts-Jim 1012-V2 Description</div>
+				   <div class="inforCarouselToolbar">
+						<button type="button" class="inforIconButton search" onclick="console.log('Search Clicked')" title="Search"></button>
+						<button type="button" class="inforIconButton tag" onclick="console.log('Tag Clicked')" title="Tag"></button>
+						<button type="button" class="inforIconButton delete alignRight" onclick="console.log('Delete Clicked')" title="Delete"></button>
+				   </div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+			   <li class="inforCarouselItem" >
+				   <div class="inforCarouselImage" ><image src="http://placekitten.com/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+				</li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage "><image src="http://placekitten.com/g/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage "><image src="http://placekitten.com/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage "><image src="http://placekitten.com/g/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				  <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage "><image src="http://placekitten.com/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage "><image src="http://placekitten.com/g/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+				<li class="inforCarouselItem">
+				   <div class="inforCarouselImage "><image src="http://placekitten.com/88/88"></image></div>
+				   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+				   <div class="inforCarouselTooltip">Cute Kitten</div>
+			   </li>
+			</ul>
+		</div>
+	</fieldset>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!--
+	<ul id="carousel2" class="inforCarousel" >
+	   <li class="inforCarouselItem">
+		   <div class="inforCarouselImage excel"></div>
+		   <div class="inforCarouselLabel">Corp Charts-Jim 1012-V2 Description</div>
+	   </li>
+	   <li class="inforCarouselItem">
+		   <div class="inforCarouselImage word"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+		   <div class="inforCarouselTooltip">Specs Part 001 <br> Modified by: John Hameson <br> Created on: 04/09/2010 <br>Modified On: 14/02/2012 <br> Version 3.0</div>
+		</li>
+		<li class="inforCarouselItem">
+		   <div class="inforCarouselImage excel"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+	   </li>
+		<li class="inforCarouselItem">
+		   <div class="inforCarouselImage excel"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+	   </li>
+		<li class="inforCarouselItem">
+		   <div class="inforCarouselImage word"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+	   </li>
+		<li class="inforCarouselItem">
+		   <div class="inforCarouselImage excel"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+	   </li>
+		<li class="inforCarouselItem">
+		   <div class="inforCarouselImage excel"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+	   </li>
+		<li class="inforCarouselItem">
+		   <div class="inforCarouselImage word"></div>
+		   <div class="inforCarouselLabel">Spec Part 00001 100512</div>
+	   </li>
+	</ul> -->
+
+</body>
+</html>

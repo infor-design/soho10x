@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor ListBox - Example showing tootips</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforListBox.js"></script>
+
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			$(".inforListBox").inforListBox();
+		});
+
+		function addItem() {
+			$("#listbox1").inforListBox("add",{optionValue:17, optionText:"New Thing", optionTitle:"New ToolTip"});
+		}
+	</script>
+</head>
+
+<body>
+	<label class="inforLabel" for="listbox1">Suppliers</label>
+	<select multiple="multiple" class="inforListBox" id="listbox1" style="height:139px;width:185px">
+		<option value="1" title="Manufacturing Supplier">ABC Manufacturing</option>
+		<option value="2" selected="selected" title="Industrial Supplier">Acme Industrial</option>
+		<option value="3" title="Industrial Supplier">Allied Suppliers</option>
+		<option value="4" title="Industrial Supplier">Basic Brands</option>
+		<option value="5" selected="selected" title="Industrial Supplier">Blue Sky Distribution</option>
+		<option value="6" selected="selected" title="Consolidated Supplier">Consolidated Consortiums</option>
+		<option value="7" disabled="disabled" title="Consolidated Supplier">Easter Widgets</option>
+		<option value="8" title="Manufacturing Supplier">Ecac Manufacturing</option>
+		<option value="9" title="Manufacturing Supplier">Generic Suppliers</option>
+		<option value="10" title="Manufacturing Supplier">Normal Brands</option>
+		<option value="11" title="Manufacturing Supplier">Intolink Industrial</option>
+		<option value="12" title="Manufacturing Supplier">Morose Power</option>
+	</select>
+	<br>
+	<div style="margin-left:123px;margin-right:123px" >
+		<button class="inforFormButton" onclick="addItem()">Add item</button>
+	</div>
+	<br>
+</body>
+</html>

@@ -1,0 +1,48 @@
+/* Infor Hyperlink
+----------------------------------*/
+.inforHyperlink {
+	color: #13A3F7;
+	line-height: 20px;
+	white-space: nowrap;
+	text-decoration: none;
+	font-size: 1.2em;
+	cursor: pointer;
+}
+
+.inforHyperlink.heading{
+	font-size: 1.3em;
+	line-height: 14px;
+}
+
+.inforHyperlink:visited {
+	color: #13A3F7;
+}
+
+/* Mouse Over States is Same as the focus */
+.inforHyperlink:hover, .inforHyperlink:focus  {
+	color: #1293DE;
+	text-decoration: underline;
+}
+
+.inforHyperlink:focus  {
+  outline: thin dotted #1293DE;
+  outline-offset: 2px;
+}
+
+.inforHyperlink[disabled]:hover  {
+	color:  #777;
+	cursor: default;
+	text-decoration: none;
+}
+
+.inforHyperlink:active {
+	color: #118BD1;
+}
+
+.inforHyperlink[disabled] {
+  color:  #777;
+}
+
+.inforHyperlink .inforLabel {
+	font-size: 1em;
+}

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<title>Example of initializing locales with the internal translations using data-localizedText</title>
+	<link type="text/css" href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script  src="../Release/jquery-1.11.1.min.js"></script>
+	<script  src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script  src="../Release/inforControlsCombined.js"></script>
+	<script  src="js/inforForm.js"></script>
+
+	<script >
+		$(document).ready(function () {
+			Globalize.culture("fr-FR");
+			$("body").inforForm();
+
+			$("#inforTabContainer").inforTabset();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div class="inforModuleHeader" id="DivTop">
+		<div class="inforModuleHeaderLeft">
+			<span class="inforPageTitleText">Sales Order </span>
+			<span class="inforModuleRecordIdText">SO126373</span>
+		 </div>
+		<div class="inforModuleHeaderRight">
+			<button type="button" class="inforModuleCloseButton" id="btnClose" title="Close">
+			</button>
+		</div>
+	</div>
+	<div class="inforModuleContentArea">
+		<div class="inforToolbar" id="divToolbar">
+			<button type="button" class="inforIconButton save" title="Save" >
+			</button>
+			<button type="button" class="inforIconButton attachments" title="Attachments" >
+			</button>
+			<button type="button" class="inforIconButton review" title="Review" >
+			</button>
+			<span class="inforToolbarSpacer" id="spacerId"></span>
+			<button type="button" class="inforIconButton approve" title="Approve" >
+			</button>
+		</div>
+	</div>
+
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1" data-localizedText="text:Attachments">Tab 1</a></li>
+		<li><a href="#tab2">Tab 2</a></li>
+		<li><a href="#tab3">Tab 3</a></li>
+	  </ul>
+	  <div id="tab1">
+	  <fieldset class="inforFieldSet">
+			<span class="inforFieldSetLabel" data-localizedText="text:Attachments">Document Header</span>
+			<div class="content">
+				<button id="add" class="inforFormButton" title="Attachments" data-localizedText="text:Attachments, tooltip:Close"></button>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit ultrices purus at adipiscing. Nullam facilisis mauris vitae lacus condimentum laoreet. Praesent at justo vitae ligula placerat faucibus non nec libero. Maecenas vestibulum lobortis vulputate. Maecenas scelerisque, ligula vel auctor malesuada, ante odio commodo neque, in molestie purus odio nec enim. Nulla congue suscipit nunc sed vestibulum. Donec sit amet orci sit amet orci congue aliquam. Suspendisse vitae elit eros, cursus dapibus erat. Aliquam egestas vestibulum ante in accumsan. Integer lorem turpis, semper vel fringilla eu, pharetra eget nisl. </p>
+			</div>
+			<label class="inforLabel" data-localizedText="Attachments"></label><input class="inforTextbox"  data-localizedText="placeholder:Attachments"/>
+	  </fieldset>
+	  </div>
+	  <div id="tab2">
+		<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+		<p>Morbi vitae lorem. Nulla facilisi. Phasellus convallis. Vestibulum faucibus dapibus ipsum. In convallis turpis tincidunt eros. Donec nunc tellus, faucibus ut, rutrum laoreet, porttitor id, mi. Nullam vulputate lacinia dolor. Quisque ullamcorper, nulla iaculis placerat dapibus, justo massa scelerisque nisl, in accumsan lorem turpis vitae leo. Nam in felis sodales ligula eleifend convallis. Suspendisse ornare convallis velit. Duis sit amet dolor quis ipsum tincidunt commodo. In nec est. Cras consectetuer malesuada orci. Nunc pellentesque gravida nulla. Nam lacus tellus, molestie eget, venenatis non, bibendum vitae, tellus. Aenean non sem ac turpis fermentum scelerisque. Aliquam eros nisi, sodales eu, sodales nec, gravida ac, nibh. Curabitur id neque nec massa consectetuer suscipit. Quisque vulputate orci in tortor. Quisque euismod.</p>
+	  </div>
+	  <div id="tab3">
+	  </div>
+	</div>
+</body>
+</html>

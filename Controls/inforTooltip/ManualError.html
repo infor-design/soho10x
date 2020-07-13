@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor ToolTip - Basic Examples</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTooltip.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTooltip.js"></script>
+
+	<script>
+		  $(function () {
+			$("#field1").validationMessage("show", "This field has an Error." , true);
+			setTimeout(function () {
+				$("#inforTooltip").position({left: "10px", top: "10px"})
+			},1001);
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	  <label class="inforLabel" for="field1">Label</label>
+	  <input type="text" class="inforTextbox" id="field1" name="field1" style="width: 82px" value="Data"><br>
+
+	  <label class="inforLabel" for="field2">Field in Focus</label>
+	  <input type="text" class="inforTextbox required" id="field2" name="field2" value="Data"><br>
+	</div>
+</body>
+</html>

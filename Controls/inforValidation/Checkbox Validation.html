@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>CheckBox Validation</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../inforValidation/js/inforValidation.js"></script>
+
+	<script>
+		
+		function showErrors() {
+			$("#checkbox1").validationMessage("show", "This is a particularily long validation message that does not make any sense." , false);
+		}
+
+		function hideErrors() {
+			$("#checkbox1").validationMessage("remove");
+		}
+	</script>
+</head>
+<body>
+	<div class="inforToolbar">
+		<button class="inforIconButton save" title="Saves" onclick="showErrors()"><span></span></button>
+		<button class="inforIconButton discard" title="Undo"  onclick="hideErrors()"><span></span></button>
+	</div>
+	<div style="margin: 50px">
+		<input type="checkbox" data-tooltip-maxwidth="200" class="inforCheckbox"  checked="checked" id="checkbox1"/><label class="inforCheckboxLabel" for="checkbox1">Checkbox</label>
+	</div>
+</body>
+</html>

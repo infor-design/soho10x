@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	<title>Landmark Rich Text Editor</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="../lib/knockout-2.3.0.debug.js"></script>
+
+<!--
+
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.11.1.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+-->
+
+	<script>
+
+ko.bindingHandlers.inforRichTextEditor = {
+	init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
+		var opts = ko.utils.unwrapObservable(valueAccessor()),
+			elem = $(element);
+
+		//Setup events
+		ko.utils.registerEventHandler(element, "blur", function() {
+			var value = valueAccessor().value;
+			value($(this).html());
+		});
+
+		//init the control
+		if (!elem.data("uiInforRichTextEditor")) {
+			elem.inforRichTextEditor();
+		}
+
+		//set the value
+		if (opts.value) {
+			elem.html(ko.utils.unwrapObservable(opts.value))
+		}
+	},
+	update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
+		var opts = ko.utils.unwrapObservable(valueAccessor()),
+			elem = $(element);
+
+		elem.html(ko.utils.unwrapObservable(opts.value))
+	}
+};
+
+$(function()
+{
+	// declare view model
+	var viewModel =
+	{
+		PositionDescription: ko.observable("")
+	};
+
+	// initialize elements on form
+	$("body").inforForm();
+
+	// apply bindings to elements
+//	ko.applyBindings(viewModel);
+
+	// update model with data
+	viewModel["PositionDescription"]("<b><font color=\"#2db329\">Lorem Ipsum</font></b>");
+});
+	</script>
+
+<style>
+.landmarkDataList {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	display: block;
+}
+.landmarkDataList li {
+	display: block;
+	clear: both;
+	white-space: nowrap;
+}
+</style>
+</head>
+<body class="">
+
+<div id="GoalEmailTemplateForm" class="landmarkApplicationContentArea landmarkScrollingContentArea" style="border: none; height: 684px; width: 1600px;">
+		<div class="inforApplicationPadding" style="height:auto;">
+			<div id="GoalEmailTemplateForm_LandmarkForm" class="landmarkForm standardForm">
+
+				<div id="GoalEmailTemplateForm_ModuleHeader" class="inforModuleContainer">
+					<div class="inforModuleHeader">
+						<div class="inforModuleHeaderLeft">
+							<span class="inforPageTitleText">Goal Email Template</span>
+						</div>
+					</div>
+				</div>
+
+				<div style="DISPLAY: block; VISIBILITY: visible;" class="inforToolbar" id="GoalEmailTemplateForm_Toolbar">
+					<button type="button" id="GoalEmailTemplateForm__StandardCreate" class="inforIconButton new" aria-describedby="tooltip">
+					</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardCreateMenuButton" class="inforMenuButton new">
+					</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardUpdate" class="inforIconButton open" aria-describedby="tooltip">
+					</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardSave" class="inforIconButton save" aria-describedby="tooltip" disabled="">
+					</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardDelete" class="inforIconButton delete" aria-describedby="tooltip">
+					</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardRefresh" class="inforIconButton refresh" aria-describedby="tooltip">
+					</button>
+					<span class="inforToolbarSpacer">
+					</span>
+					<button type="button" id="GoalEmailTemplateForm__StandardActionsMenuButton" class="inforMenuButton">Actions</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardOptionsMenuButton" class="inforMenuButton">Options</button>
+					<button type="button" id="GoalEmailTemplateForm__StandardDrillAroundMenuButton" class="inforMenuButton">Drill Around®</button>
+				</div>
+
+				<form id="GoalEmailTemplateForm_LandmarkForm_FormElement">
+					<div role="form" class="landmarkFormContainer initialLayoutComplete" id="lm-id-0">
+						<div class="landmarkColumnContainer1 formRow implicit">
+							<div class="column gutter col1" style="">
+								<div class="landmarkFormElementContainer">
+									<div class="landmarkFormElementGroup" id="lm-id-1">
+										<label for="GoalEmailTemplateForm_wid9" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-2" style="width: 155px;">Effective Date</label>
+										<input class="inforDateField landmarkFormElement landmarkInput GoalEmailTemplate_effective_date lmc landmarkDateTime inforTextbox" id="GoalEmailTemplateForm_wid9" type="text" placeholder="Select a Date" data-bind="value:GoalEmailTemplate_effective_date.display,mutable:GoalEmailTemplate_effective_date.mutable,required:GoalEmailTemplate_effective_date.required" size="12" maxlength="10" aria-haspopup="true" >
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="landmarkParagraph formRow">
+							<div class="landmarkFormElementContainer">
+								<div class="landmarkParagraphGroup" id="lm-id-3">
+									<div class="landmarkParagraphElement" id="lm-id-4">
+										<label for="GoalEmailTemplateForm_wid8" class="inforLabel firstParagraphLabel first landmarkLabel" id="lm-id-5" style="width: 155px;">Goal Email Template</label>
+										<input id="GoalEmailTemplateForm_wid8" class="inforTextbox landmarkFormElement landmarkInput GoalEmailTemplate required lmc uppercase readonly backgroundColor" data-bind="value:GoalEmailTemplate.display,mutable:GoalEmailTemplate.mutable,required:GoalEmailTemplate.required" size="20" maxlength="20" readonly="readonly" style="width: 73px;">
+									</div>
+									<div class="landmarkParagraphElement" id="lm-id-6">
+										<label for="GoalEmailTemplateForm_wid4" class="inforLabel landmarkParagraphLabel landmarkLabel" id="lm-id-7">Description</label>
+										<input id="GoalEmailTemplateForm_wid4" class="inforTextbox landmarkFormElement landmarkInput Description lmc" data-bind="value:Description.display,mutable:Description.mutable,required:Description.required" size="30" maxlength="60">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="landmarkColumnContainer1 formRow implicit">
+							<div class="column gutter col1" style="">
+								<div class="landmarkFormElementContainer">
+									<div class="landmarkFormElementGroup disabled" id="lm-id-8">
+										<label class="inforLabel noColon landmarkLabel landmarkFirstLabel" id="lm-id-9" style="width: 155px;"> </label>
+										<input type="checkbox" class="inforCheckbox landmarkFormElement landmarkInput Active lmc" id="GoalEmailTemplateForm_wid2" data-bind="checked:Active.display,mutable:Active.mutable,required:Active.required">
+										<label for="GoalEmailTemplateForm_wid2" class="inforCheckboxLabel" id="lm-id-10">Active</label>
+									</div>
+									<div class="landmarkFormElementGroup" id="lm-id-11" hideclassname="landmarkHidden">
+										<label for="GoalEmailTemplateForm_wid10" class="inforLabel landmarkLabel" id="lm-id-12" style="display: none; width: 0px;">Preferred Email Language</label>
+										<select class="dropdown-list dropdown landmarkInput PreferredEmailLanguage lmc" id="GoalEmailTemplateForm_wid10" data-bind="inforDropDownList:{data:PreferredEmailLanguageStates,value:PreferredEmailLanguage.display,optionsText:'label',optionsValue:'value'},mutable:PreferredEmailLanguage.mutable,required:PreferredEmailLanguage.required" size="8">
+											<option value="0">&nbsp;</option>
+											<option value="1">Resource</option>
+											<option value="2">Manager</option>
+										</select>
+										<label class="label landmarkLabel landmarkFirstLabel" for="GoalEmailTemplateForm_wid10-shdo" style="width: 155px;">Preferred Email Language</label>
+										<input type="text" class="dropdown"style="width: 22px;">
+									</div>
+									<div class="landmarkFormElementGroup blankLine" id="lm-id-13">
+									</div>
+									<div class="landmarkFormElementGroup" id="lm-id-14">
+										<label for="GoalEmailTemplateForm_wid7" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-15" style="width: 155px;">To</label>
+										<input id="GoalEmailTemplateForm_wid7" class="inforTextbox landmarkFormElement landmarkInput To lmc" data-bind="value:To.display,mutable:To.mutable,required:To.required" size="30" maxlength="100" >
+									</div>
+									<div class="landmarkFormElementGroup" id="lm-id-16">
+										<label for="GoalEmailTemplateForm_wid6" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-17" style="width: 155px;">CC</label>
+										<input id="GoalEmailTemplateForm_wid6" class="inforTextbox landmarkFormElement landmarkInput CC lmc" data-bind="value:CC.display,mutable:CC.mutable,required:CC.required" size="30" maxlength="100">
+									</div>
+									<div class="landmarkFormElementGroup" id="lm-id-18">
+										<label for="GoalEmailTemplateForm_wid1" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-19" style="width: 155px;">BCC</label>
+										<input id="GoalEmailTemplateForm_wid1" class="inforTextbox landmarkFormElement landmarkInput BCC lmc" data-bind="value:BCC.display,mutable:BCC.mutable,required:BCC.required" size="30" maxlength="100">
+									</div>
+									<div class="landmarkFormElementGroup" id="lm-id-20">
+										<label for="GoalEmailTemplateForm_wid11" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-21" style="width: 155px;">From</label>
+										<input id="GoalEmailTemplateForm_wid11" class="inforTextbox landmarkFormElement landmarkInput From lmc" data-bind="value:From.display,mutable:From.mutable,required:From.required" size="30" maxlength="100">
+									</div>
+									<div class="landmarkFormElementGroup" id="lm-id-22">
+										<label for="GoalEmailTemplateForm_wid5" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-23" style="width: 155px;">Subject</label>
+										<input id="GoalEmailTemplateForm_wid5" class="inforTextbox landmarkFormElement landmarkInput Subject lmc" data-bind="value:Subject.display,mutable:Subject.mutable,required:Subject.required" size="30" maxlength="100" >
+									</div>
+                  <br>
+                  <label for="GoalEmailTemplateForm_wid3" class="inforLabel landmarkLabel landmarkFirstLabel" id="lm-id-25" style="width: 155px;">Body</label>
+
+									<div class="landmarkFormElementGroup" id="lm-id-24">
+
+										<div class="inforRichTextEditor landmarkFormElement landmarkInput Body lmc" id="GoalEmailTemplateForm_wid3" data-bind="inforRichTextEditor:{value:Body.display},mutable:Body.mutable,required:Body.required">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

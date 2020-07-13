@@ -1,0 +1,459 @@
+/* Infor Date Field - Field styling is in the inforTriggerField
+----------------------------------*/
+.inforDateField {
+   width: 135px;
+}
+
+/*overall size of the date picker calendar*/
+.inforDatePicker
+{
+	width: 10em;
+	display:block;
+	position:absolute;
+	z-index:1;
+}
+
+.inforDatePicker .inforDatePicker-header {
+	position:relative;
+}
+
+/* Title, "June 2012"*/
+.inforDatePicker .inforDatePicker-title  {
+	color: #13A3F7;
+	font-family: Helvetica,Arial,sans-serif !important;
+	font-size: 1.4em;
+	line-height: 22px;
+	padding-bottom: 8px;
+	padding-left: 32px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+.inforDatePicker-month {
+	margin-left: 0px;
+}
+
+.inforDatePicker .inforDatePicker-title select { margin:1px 0; }
+.inforDatePicker select.inforDatePicker-month,
+.inforDatePicker select.inforDatePicker-year
+{
+	width: 49%;
+}
+
+.inforDatePickerDaysOfWeek {
+	font-size: 1.1em;
+	border-top: 1px solid #E6E6E6;
+}
+
+/*calendar wise css in date field*/
+.inforDatePicker table  {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0;
+}
+
+
+/*The Dates in the calendar.*/
+.inforDatePicker th  {
+	color: #666666;
+	font-size: 1em;
+	font-weight: bold;
+	padding-bottom: 7px;
+	padding-top: 15px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+/*Controls the Cell Layout padding in the date grid*/
+.inforDatePicker td {
+	line-height: 25px;
+	min-width: 25px;
+	padding: 0;
+}
+
+#inforTimezoneContainer td {
+	line-height: 15px;
+	padding: 0;
+	min-width: 0;
+}
+
+#inforTimezoneContainer tr {
+	display: inline;
+}
+
+#inforTimezoneContainer {
+	left: -6px;
+	position: relative;
+	top: 5px;
+}
+
+
+.inforDatePicker td span, .inforDatePicker td a {
+	display: block;
+	text-align: center;
+	text-decoration: none;
+}
+
+.inforDatePicker .inforDatePicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+.inforDatePicker .inforDatePicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+.inforDatePicker .inforDatePicker-buttonpane button.inforDatePicker-current
+{
+	float:left;
+}
+
+/* RTL support */
+.inforDatePicker-rtl { direction: rtl; }
+.inforDatePicker-rtl .inforDatePicker-prev { right: 2px; left: auto; }
+.inforDatePicker-rtl .inforDatePicker-next { left: 2px; right: auto; }
+.inforDatePicker-rtl .inforDatePicker-prev:hover { left: auto; }
+.inforDatePicker-rtl .inforDatePicker-next:hover { left: 1px; right: auto; }
+.inforDatePicker-rtl .inforDatePicker-buttonpane { clear:right; }
+.inforDatePicker-rtl .inforDatePicker-buttonpane button { float: left; }
+.inforDatePicker-rtl .inforDatePicker-buttonpane button.inforDatePicker-current { float:right; }
+.inforDatePicker-rtl .inforDatePicker-group { float:right; }
+.inforDatePicker-rtl .inforDatePicker-group-last .inforDatePicker-header { border-right-width:0; border-left-width:1px; }
+.inforDatePicker-rtl .inforDatePicker-group-middle .inforDatePicker-header { border-right-width:0; border-left-width:1px; }
+
+/*Week day block css. To remove the border and change background color*/
+#inforDatePicker-week-day {
+	border : 0;
+	color: #444;
+	font-size: 1.1em;
+}
+
+/*week end block css. To remove the border*/
+#inforDatePicker-week-end {
+	border : 0;
+	color: #444;
+	font-size: 1.1em;
+	text-align: center;
+}
+
+/* The Hover on a Date*/
+#inforDatePicker-week-day:hover, #inforDatePicker-week-end:hover{
+	background-color: #e6e6e6;
+	border-radius: 3px;
+}
+
+/* The Images for the Borders*/
+div.inforDatePickerContainer {
+	float: left;
+	margin-top: 5px;
+}
+
+#inforDatePicker-div
+{
+	display:none;
+	min-width: 185px;
+	width: auto;
+	box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+
+/*high light the current day border and color*/
+.inforDatePicker-current-day > #inforDatePicker-week-day , .inforDatePicker-current-day > #inforDatePicker-week-end
+ {
+   border: none;
+   background-color: #13A3F7;
+   color: white;
+   margin: 0;
+   border-radius: 3px;
+   margin: -1px 0;
+}
+
+
+/*Style Todays Date*/
+.isToday a{
+	border: 2px solid #ffaa00 !important;
+	border-radius: 3px !important;
+	 margin-bottom: -1px;
+	margin-top: -1px;
+}
+
+.inforDatePickerButtonPanel {
+	height: 20px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.inforDatePicker-widget-content {
+	background-color: white;
+	border: 1px solid #cecece;
+	border-radius: 3px 3px 3px 3px;
+	padding: 15px;
+}
+
+.inforDatePicker .inforDatePicker-prev, .inforDatePicker .inforDatePicker-next  {
+	position:absolute;
+	top: 8px;
+	width: 1.8em;
+	height: 1.8em;
+}
+
+.inforDatePicker .inforDatePicker-prev { left: -6px; top: 2px;}
+.inforDatePicker .inforDatePicker-next { left: 12px; top: 2px;}
+
+.inforDatePickerPanelButton {
+	background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: block;
+    float: right;
+    height: 23px !important;
+    left: 3px;
+    position: relative;
+    top: -1px;
+    width: 26px !important;
+}
+
+.inforPrevMonthButton, .inforDatePickerPanelButton {
+	 height: 19px;
+	 width: 19px;
+}
+
+.inforYearButtonRow {
+	height: 50px;
+	border-top: 1px solid #E6E6E6;
+}
+
+.datePickerMonthYearGrid hr {
+	border-color: #E6E6E6;
+	border-image: none;
+	border-right: medium none;
+	border-style: solid none none;
+	border-width: 1px medium medium;
+	margin-top: 11px;
+}
+
+/*Required for the Month/Year Panel*/
+.inforDatePickerPanel {
+	min-width: 175px;
+	width: 175px;
+}
+
+.inforDatePickerPanel  .inforFormButton {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearPanel {
+	width: 100%;
+	margin-top: 15px;
+	border-top: none !important;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid {
+	border-collapse: collapse;
+	width: 100%;
+	font-size: 1.1em;
+	border: none;
+	margin-top: -10px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearGridDivider {
+	border-right: 1px solid #E6E6E6;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth.datePickerMonthYearMonthFirstCol {
+	margin-left: 5px;
+	margin-right: 2px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth.datePickerMonthYearMonthSecondCol {
+	margin-right: 5px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear.datePickerMonthYearYearFirstCol {
+   margin-left: 12px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear.datePickerMonthYearYearSecondCol {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+
+.datePickerMonthYearGrid td {
+	padding: 4px 0;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth, .inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear {
+	line-height: 22px;
+	padding: 0 4px;
+	text-align: center;
+	width: 31px;
+	text-transform: capitalize;
+}
+
+.inforDatePickerPanel .datePickerPreviousYearCell, .inforDatePickerPanel .datePickerNextYearCell {
+	text-align: center;
+}
+
+.inforNextMonthButton, .inforPrevMonthButton, .inforNextYearButton, .inforPrevYearButton  {
+    border: 0;
+    outline: 0;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    border-radius: 2px;
+}
+
+.inforNextMonthButton[disabled] {
+  border: none;
+  background-color: transparent;
+  opacity: .5;
+
+}
+
+.inforNextMonthButton[disabled]:hover {
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.inforNextMonthButton[disabled]:hover i::after {
+  opacity: 0.65;
+}
+
+.inforNextMonthButton:hover, .inforPrevMonthButton:hover, .inforNextYearButton:hover, .inforPrevYearButton:hover {
+  background-color: #D8D8D8;
+  box-shadow: 0 1px #A2A2A2;
+}
+
+.inforNextMonthButton:hover i:after, .inforPrevMonthButton:hover i:after, .inforNextYearButton:hover i:after, .inforPrevYearButton:hover i:after {
+    opacity: 0.80;
+    filter: alpha(opacity=80);
+}
+
+.inforNextMonthButton i:after, .inforPrevMonthButton i:after, .inforNextYearButton i:after, .inforPrevYearButton i:after  {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQAAAAB0KcE7AAAAAnRSTlMAAQGU/a4AAAAZSURBVHjaY6hh/geBDAwMLEwcTAJMCkwOAEwCBQXfBp98AAAAAElFTkSuQmCC");
+    background-repeat: no-repeat;
+    height: 11px;
+    margin: -5.5px 0 0 -3px;
+    width: 14px;
+}
+
+.inforPrevMonthButton i:after, .inforPrevYearButton i:after {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAALAQAAAAB0KcE7AAAAAnRSTlMAAQGU/a4AAAAcSURBVGjeY/jB8IHhAcMBhgYGBiA+AGR/YPgBAFjGCBE/a3YtAAAAAElFTkSuQmCC");
+    background-repeat: no-repeat;
+}
+
+.inforNextMonthButton i:after, .inforPrevMonthButton i:after, .inforNextYearButton i:after, .inforPrevYearButton i:after {
+    content: "";
+    display: block;
+    left: 50%;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    position: absolute;
+    top: 50%;
+}
+
+.inforNextMonthButton i, .inforPrevMonthButton i, .inforNextYearButton i, .inforPrevYearButton i  {
+    display: block;
+    position: relative;
+    text-indent: -9999px;
+}
+
+.inforBeforeYearButtonRow div {
+	margin-bottom: 8px;
+}
+
+.inforYearLastRow {
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.inforYearLastRow div {
+	margin-bottom: 7px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth-current, .inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear-current {
+   background-color: #ff6400;
+   border-radius: 3px;
+   color: white;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth-current, .inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear-current {
+   background-color: #ff6400;
+   border-radius: 3px;
+}
+
+.inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth:hover, .inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear:hover {
+	background-color: #E6E6E6;
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.inforDatePickerPanel .inforDatePickerButtonPanel {
+	height: 29px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.datePickerMonth-selected, .datePickerYear-selected{
+	background-color: #13A3F7 !important;
+	color: #FFFFFF !important;
+	border-radius: 3px;
+}
+
+html[dir="rtl"] .inforDatePicker .inforDatePicker-next {
+	right: 16px;
+	float: right;
+}
+
+html[dir="rtl"] .inforDatePicker .inforDatePicker-prev{
+	float: right;
+	right: 1px;
+}
+
+html[dir="rtl"] .inforDatePicker .inforDatePickerPanelButton {
+	float: left;
+	left: -3px;
+}
+
+html[dir="rtl"] .inforDatePicker .inforDatePicker-title {
+	padding-left: 5px;
+	padding-right: 40px;
+}
+
+html[dir="rtl"] .inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearMonth, html[dir="rtl"] .inforDatePickerPanel .datePickerMonthYearGrid .datePickerMonthYearYear  {
+	width: 53px;
+}
+
+html[dir="rtl"] .inforDatePicker .inforDatePicker-prev span {
+	left: 1px;
+    margin-top: 6px;
+}
+
+
+html[dir="rtl"] .inforDatePicker .inforDatePicker-next span {
+	left: 0px;
+    margin-top: 6px;
+}
+
+html[dir="rtl"] .inforDatePicker-month {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/*Not Selectable Dates*/
+.inforDatePicker-unselectable {
+	color: #b2b2b2 !important;
+}
+
+.inforDatePicker-other-month a{
+	color: #777 !important;
+}
+
+.inforDatePicker .dateTimePanel {
+	border-top: 1px solid #E6E6E6;
+	margin-top: 16px;
+	padding: 15px 0 1px;
+	text-align: center;
+}
+
+.inforDatePickerButtonPanel .inforFormButton {
+	margin-left: 5px;
+	margin-right: 5px;
+}

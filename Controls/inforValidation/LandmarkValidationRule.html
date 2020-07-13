@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Landmark Validation Rule</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+
+<!--
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.11.1.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+
+
+-->
+
+
+<script>
+
+$(function()
+{
+	$("body").inforForm();
+
+	$(".inforFormButton").click(function ()
+	{
+		$().showDialog();
+	});
+});
+
+(function($)
+{
+	$.fn.showDialog = function(callback)
+	{
+		var html = "";
+		html += '<div id="Dialog" style="display:none;">';
+		html += '<form id="DialogForm">'
+
+		html += '<label style="width: 100px;" class="inforLabel" for="CompleteGoalAdmin_wid6">% Complete</label>';
+		html += '<input id="CompleteGoalAdmin_wid6" class="inforTextbox alignRight decimalOnly" data-validate="validateDecimal" data-validation-events="change blur" maxlength="7" size="6" data-number-format="n2" data-number-source-format="en-US" style="width: 210px;margin-bottom:4px"/><br>';
+
+		html += '<label style="width: 100px;" for="effectiveDate" class="inforLabel">Completion Date</label>';
+		html += '<input class="inforDateField" id="EffectiveDateField" type="text" /><br>';
+
+		html += '</form/></div>';
+
+		//First add the html to the page..
+		$("body").append(html);
+
+		$("#Dialog").inforForm();
+
+		var fieldSpec =
+		{
+			decSize: 2,
+			dsplSize: 3,
+			type: "PERCENT",
+			signed: true,
+			size: 3
+		}
+		$("#CompleteGoalAdmin_wid6").data("fieldSpec", fieldSpec);
+
+		//Setup the form Validation
+		$("#DialogForm").setupValidation();
+
+		//Invoke the dialog on it
+		$('#Dialog').inforMessageDialog(
+		{
+			title: "Set Completion",
+			dialogType: "General",
+			width: 500,
+			height: 294,
+			modal: true,
+			close: function(event, ui)
+			{
+				$(this).remove();
+			},
+			buttons:
+			[{
+				text: Globalize.localize("Ok"),
+				click: function()
+				{
+          setTimeout(function () {
+
+            var dialog = $('#Dialog');
+            var errors = $(".has-error", dialog);
+            if (errors.length > 0)
+            {
+              // re-display first error message
+              errors.eq(0).showLmrkValidationMessage();
+              return;
+            }
+
+            $(this).modal("close");
+            $(this).remove();
+
+          }, 100);
+
+
+				},
+				isDefault: true
+			},
+			{
+				text: Globalize.localize("Cancel"),
+				click: function()
+				{
+					$(this).modal("close");
+					$(this).remove();
+				}
+			}]
+		});
+	};
+})(jQuery);
+
+//Landmark client validation rule methods
+$.fn.clearLmrkValidationMessage = function()
+{
+	var $element = $(this);
+
+	$element.removeData("lmrkValidationMessage");
+	$element.removeClass("lmrkValidationRule");
+	$element.removeError();
+	return;
+};
+
+$.fn.setLmrkValidationMessage = function(params)
+{
+	// params = message, show
+	var message = params.message;
+	var show = params.show || true;
+
+	var $element = $(this);
+
+	$element.data("lmrkValidationMessage", message);
+	$element.addClass("lmrkValidationRule");
+
+	if (show)
+	{
+		landmark.format.displayError({element:$element, message:message});
+	}
+
+	return;
+};
+
+$.fn.showLmrkValidationMessage = function()
+{
+	var $element = $(this);
+
+	if ($element.data("lmrkValidationMessage"))
+	{
+		landmark.format.displayError({element:$element, message:$element.data("lmrkValidationMessage")});
+		return true;
+	}
+
+	return false;
+};
+// form validation rule for decimal values
+$.Validation.addRule("validateDecimal",
+{
+	message: "",
+	check: function(value, element)
+	{
+		var $element = $(element);
+		var fieldSpec = $element.data("fieldSpec") || null;
+		var percentDiff = 0;
+
+		// clear the error
+		$element.clearLmrkValidationMessage();
+
+		if (!fieldSpec)
+		{
+			// unable to perform validation
+			return true;
+		}
+
+		var decSize = fieldSpec.decSize || 0;
+
+		if (decSize == 0)
+		{
+			// unable to perform validation
+			return true;
+		}
+
+		var valueStr = value.toString();
+
+		// remove percent sign
+		if (fieldSpec.type == "PERCENT")
+		{
+			var re = new RegExp("\\" + Globalize.culture().numberFormat.percent["symbol"], "g");
+			valueStr = valueStr.replace(re, "");
+			percentDiff = 2;
+		}
+
+		if ($.trim(valueStr).length == 0)
+		{
+			// unable to perform validation
+			return true;
+		}
+
+		// parse with current culture; value comes from element,
+		// so probably already formatted in current culture
+		var valueInt = Globalize.parseInt(valueStr);
+
+		if (isNaN(valueInt))
+		{
+			this.message = "Value is not a number";	//maf Globalize.localize("ValueNotANumber");
+			$element.setLmrkValidationMessage({message: this.message});
+			return false;
+		}
+
+		// sign, thousands separator, or decimal separator are not counted for length
+		var re = new RegExp("\\" + Globalize.cultures["default"].numberFormat[","]
+			+ "|\\" + Globalize.cultures["default"].numberFormat["-"], "g");
+
+		valueStr = valueInt.toString();
+		valueStr = valueStr.replace(re, "");
+
+		var maxLeft = (fieldSpec.size - decSize) + percentDiff;
+
+		if (valueStr.length > maxLeft)
+		{
+			this.message = "Size of whole number exceeds " + maxLeft + " digits";	//maf landmark.format.formatMessage(Globalize.localize("SizeOfWholeNumberExceeds"), maxLeft);
+			$element.setLmrkValidationMessage({message: this.message});
+			return false;
+		}
+
+		return true;
+	}
+});
+
+// used in showDialog for Effective Date
+$.Validation.addRule("validateDate",
+{
+	message: "",
+	check: function(value, element)
+	{
+		var $element = $(element);
+
+		// clear the error
+		$element.clearLmrkValidationMessage();
+
+		if (value)
+		{
+			var dt = landmark.format.parseDate({value:value, format:Globalize.culture().calendar.patterns.d});
+
+			if (landmark.format.isDate({date:dt}))
+			{
+				element.val(Globalize.format(dt, Globalize.culture().calendar.patterns.d));
+				return true;
+			}
+		}
+
+		this.message = "Invalid date"; 	//maf Globalize.localize("InvalidDate");
+		$element.setLmrkValidationMessage({message: this.message});
+		return false;
+	}
+});
+
+(function(landmark, $)
+{
+	"use strict";
+
+	landmark.format = landmark.format || {};
+
+	landmark.format.isDate = function(params)
+	{
+		// params = date
+		var dt = params.date;
+
+		if (!dt || (dt && dt.toString().toLowerCase() === "invalid date"))
+		{
+			return false;
+		}
+
+		return true;
+	};
+	landmark.format.parseDate = function(params)
+	{
+		// params = value, format, longFormat
+		var value = params.value;
+		var format = params.format;
+		var longFormat = params.longFormat || format;
+
+		var dt = Globalize.parseDate(value, format);
+
+		if (!landmark.format.isDate({date:dt}))
+		{
+			// try removing the separators and parse again
+
+			// remove date separators
+			var re = new RegExp("\\" + Globalize.culture().calendar["/"], "g");
+			var format = longFormat.replace(re, "");
+
+			// remove time separator
+			re = new RegExp("\\" + Globalize.culture().calendar[":"], "g");
+			format = format.replace(re, "");
+
+			dt = Globalize.parseDate(value, format);
+
+			if (!landmark.format.isDate({date:dt}))
+			{
+				return null;
+			}
+		}
+
+		return dt;
+	};
+
+	landmark.format.displayError = function(params)
+	{
+		// params = element, message
+		var $fieldElement = params.element;
+		var message = params.message;
+
+		$fieldElement.validationMessage("show", message, true);
+	};
+
+}(window.landmark = window.landmark || {}, jQuery));
+
+
+
+</script>
+</head>
+<body>
+	  <button style="margin:20px" id="generalDialogButton" class="inforFormButton">Show Dialog</button>
+</body>
+</html>

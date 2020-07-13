@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]--><meta charset="utf-8">
+
+	<title>My Staff</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script src="../lib/jquery.json-2.2.js"></script>
+	<script src="../lib/jquery.masonry.min.js"></script>
+
+	<script src="js/sampleData.js"></script>
+
+	</head>
+<body>
+
+	<div id="LRCMyStaffDashboard">
+		<div class="inforApplicationPadding">
+
+			<div id="moduleHeader" class="inforModuleContainer">
+				<div class="inforModuleHeader">
+					<div class="inforModuleHeaderLeft">
+						<span id="LRCMyStaffDashboardFormTitle" class="inforPageTitleText" title="">My Staff</span>
+						<span class="inforModuleRecordIdText"></span>
+					</div>
+				</div>
+			</div>
+
+
+			<!---------------------------------------------------------
+			  List component. Any nested components should have their
+			  div"s in here.
+			----------------------------------------------------------->
+			<div id="LRCMyStaffDashboard_Splitter" class="inforSplitter">
+				<div id="leftPane" style="width: 25%">
+					<div id="LRCMyStaffDashboard_DataGrid"></div>
+				</div>
+
+
+				<div id="rightPane" style="width: 75%">
+					<div id="LRCMyStaffDashboard_tilePanel">
+
+						<!------------------------------------------------------
+						   Profile Tile
+						 ------------------------------------------------------->
+						<div class="inforPanelItem" id="LRCMyStaffDashboard_Profile" style="height:250px;width:400px;">
+
+							<div class="inforPanelHeader">
+								<div class="inforIcon person"></div>
+								<span class="inforPanelHeaderText">Profile</span>
+								<a class="inforHyperlink" id="link2" href="#" style="float:right; left:-9px; position:relative;">View Full Profile</a>
+								<br style="float:clear:both"/>
+							</div>
+							<div class="inforPanelBody" style="height: 175px;">
+								<script type="text/html" id="LRCManagerDashboardSectionCardView">
+									<div class="inforCardstackCell" style="height:100%; overflow-y:auto; overflow-x:hidden;">
+										<img class="inforCardstackImg" style="opacity:0" onload="$(this).animate({opacity:1},1200)" src="<%=ResourcePicture_prd_File%>" height="100" width="100" style="margin-bottom:0px; top:-7px;left:0px;"></img>
+										<div style="float: left; font-size: 1.2em; line-height: 20px; margin-top: -5px;">
+											<span class="inforCardstackHeading" style="left:8px"><%=_op_PresentationNameSnapshot_spc_translation_cp_%></span><br/>
+											<span class="inforCardstackLabel noColon"><%=Employee_op_locale_spc_of_spc_blank_cp__col_Name_prd_PreferredFirstAndLastName%></span><br/>
+											<span class="inforCardstackLabel noColon"><%=Employee%></span><br/>
+											<span class="inforCardstackLabel noColon"><a class="inforHyperlink" id="link2" href="mailto:<%=EmployeeWorkEmailAddress%>"><%=EmployeeWorkEmailAddress%></a></span><br/>
+											<span class="inforCardstackLabel noColon"><%=EmployeeWorkTelephone%></span><br/>
+											<label class="inforCardstackLabel">Primary Position</label> <span class="inforCardstackLabel noColon"><%=_op_ActivePrimaryWorkAssignmentRel_prd_Position_prd_Description_spc_translation_cp_%></span><br/>
+											<span class="inforCardstackLabel noColon"><%=_op_ActivePrimaryWorkAssignmentRel_prd_HROrganizationUnit_prd_Description_spc_translation_cp_%></span><br/>
+											<span class="inforCardstackLabel noColon"><%=_op_ActivePrimaryWorkAssignmentRel_prd_Position_prd_Description_spc_translation_cp_%></span><br/>
+										</div>
+									</div>
+								</script>
+							</div>
+						</div>
+
+
+						<!------------------------------------------------------
+							 Goals Tile
+						 ------------------------------------------------------->
+						<div class="inforPanelItem" id="LRCMyStaffDashboard_Goals" style="height:250px;width:400px;">
+							<div class="inforPanelHeader">
+								<div class="inforIcon goals"></div>
+								<span class="inforPanelHeaderText">Goals</span>
+							</div>
+							<div class="inforPanelBody">
+								<div id="LRCGoalsManagerDash" style="margin-top:-10px; margin-bottom:-5px;">
+									<div id="LRCGoalsManagerDash_DataGrid" style="height:175px;"></div>
+								</div>
+							</div>
+						</div>
+
+
+						<!------------------------------------------------------
+						   Notes Tile
+						 ------------------------------------------------------->
+						<div class="inforPanelItem" id="LRCMyStaffDashboard_Notes" style="height:250px;width:400px;">
+							<div class="inforPanelHeader">
+								<div class="inforIcon notes"></div>
+								<span class="inforPanelHeaderText">Notes</span>
+								<button type="button" class="inforIconButton new" style="float:right; left:-9px; position:relative;"></button>
+							</div>
+							<div class="inforPanelBody">
+								<div id="LRCEmployeeJournalList" style="margin-top:-10px; margin-bottom:-5px;">
+									<div id="LRCEmployeeJournalList_DataGrid" style="height:175px;"></div>
+								</div>
+							</div>
+						</div>
+
+						<!------------------------------------------------------
+						   Fit Analysis Tile
+						 ------------------------------------------------------->
+						<div class="inforPanelItem" id="LRCMyStaffDashboard_FitAnalysis" style="height:250px;width:400px;">
+							<div class="inforPanelHeader">
+								<div class="inforIcon check"></div>
+								<span class="inforPanelHeaderText">Fit Analysis</span>
+							</div>
+							<div class="inforPanelBody">
+								<div id="CompetencyAndSkillMatch" style="margin-top:-10px; margin-bottom:-5px;">
+									<div id="CompetencyAndSkillMatch_DataGrid" style="height:175px;"></div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<!---------------------------------------------------------
+	  card stack template
+
+	<div style="background-color:#f1f1f1;width:47px;height:47px;float:left;position:relative;top:-7px;">
+	<img class="inforCardstackImg landmarkListCardstackImg" width="47" height="47" src="http://lr87417f.infor.com:8080/hcm/lwc/v1/image/Employee(7004,700401).ResourcePicture.File?size=100x100" onload="$(this).animate({opacity:1},300)" style="opacity: 1;">
+	</div>
+
+	----------------------------------------------------------->
+	<script type="text/html" id="EmployeeCardViewBasic">
+		<div class="inforCardstackCell">
+			<div style="background-color:#f1f1f1;width:47px;height:47px;float:left;position:relative;top:-7px;">
+				<img class="inforCardstackImg" style="opacity:0" onload="$(this).animate({opacity:1},1200)" src="<%=ResourcePicture_prd_File%>" height="47" width="47" style="top:-7px;left:0px;"></img>
+			</div>
+		<span class="inforCardstackHeading" style="left:8px"><%=_op_PresentationNameSnapshot_spc_translation_cp_%></span><br/>
+			<label class="inforCardstackLabel noColon"><%=_op_ActivePrimaryWorkAssignmentRel_prd_Position_prd_Description_spc_translation_cp_%></label><br/>
+		</div>
+	</script>
+
+	<script type="text/html" id="JournalEntryCardView">
+		<div class="inforCardstackCell">
+			<span class="inforCardstackHeading" style="left:8px"><%=JournalDate%></span><br/>
+			<label class="inforCardstackLabel noColon"><%=JournalEntry%></label>
+		</div>
+	</script>
+
+	<script>
+		(function($)
+		{
+			$.widget("landmark.LRCMyStaffDashboard",
+			{
+				_lRCMyStaffDashboard_DataGrid: null,
+				_columns: [],
+				_dataViewSet: null,
+
+				_create: function()
+				{
+					var self = this;
+
+					self._columns.push({id:"EmployeeCardViewBasic",name:"",formatter:CellTemplateFormatter,cellTemplate:"EmployeeCardViewBasic",width:300});
+
+					var gridOptions =
+					{
+						rowHeight: 56,
+						showColumnHeaders: false,
+						columns: self._columns,
+						idProperty: "_rowIndex",
+						dataset: [],
+						editable: false,
+						showCheckboxes: false,
+						enableCellNavigation: true,
+						multiSelect: false,
+						showDrillDown: false,
+						showGridSettings: false,
+						savePersonalization: false,
+						showExport: false,
+						forceFitColumns: true,
+						showFooter: true,
+						pagingMode: PagingModes.PagerServerSide,
+						pageSize: 10,
+						autoHeight: false,
+						showFilter: false,
+						showStatusIndicators: false
+					};
+
+					self._lRCMyStaffDashboard_DataGrid = $("#LRCMyStaffDashboard_DataGrid").inforDataGrid(gridOptions);
+
+
+					// update tile data when new card is selected
+					self._lRCMyStaffDashboard_DataGrid.onSelectedRowsChanged.subscribe(function(e, args)
+					{
+						var rows = self._lRCMyStaffDashboard_DataGrid.getSelectedRows();
+						self._updateDashboardPanels(rows[0]);
+					});
+
+					// initialize tile content
+					$("#LRCGoalsManagerDash").LRCGoalsManagerDash();
+					$("#LRCEmployeeJournalList").LRCEmployeeJournalList();
+					$("#CompetencyAndSkillMatch").CompetencyAndSkillMatch();
+
+
+					// load the card stack
+					var dataViewSet = getEmployeeCardViewBasicDataViewSet();
+					self.loadGridControl(dataViewSet);
+
+					self._lRCMyStaffDashboard_DataGrid.setSelectedRows([0]);
+
+				},
+
+				loadGridControl: function(dataViewSet)
+				{
+					var self = this;
+
+					if (dataViewSet === null)
+						return;
+
+					self._lRCMyStaffDashboard_DataGrid.mergeData(dataViewSet.data, 0, -1, true, true);
+					self._dataViewSet = dataViewSet;
+				},
+
+				_updateDashboardPanels: function(row)
+				{
+					var self = this;
+
+					self._updateCardTile(row);
+
+					var data1 = getLRCGoalsManagerDashData(row);
+					$("#LRCGoalsManagerDash").LRCGoalsManagerDash("loadGridControl", data1);
+
+					var data2 = getLRCEmployeeJournalListData(row);
+					$("#LRCEmployeeJournalList").LRCEmployeeJournalList("loadGridControl", data2);
+
+					var data3 = getCompetencyAndSkillMatchData(row);
+					$("#CompetencyAndSkillMatch").CompetencyAndSkillMatch("loadGridControl", data3);
+				},
+
+				_updateCardTile: function(row)
+				{
+					var self = this;
+
+					var compiled_template = tmpl("LRCManagerDashboardSectionCardView");
+					var html = compiled_template(self._dataViewSet.data[row]);
+
+					var $bodyDiv = $("#LRCMyStaffDashboard_Profile").find(".inforPanelBody")
+					var $childDiv = $bodyDiv.children("div")
+
+					if ($childDiv.length)
+					{
+						$childDiv.remove();
+					}
+
+					$bodyDiv.append($(html));
+				}
+			});
+		})(jQuery);
+
+		(function($)
+		{
+			$.widget("landmark.LRCGoalsManagerDash",
+			{
+				lRCGoalsManagerDash_DataGrid: null,
+				columns: [],
+
+				_create: function()
+				{
+					var self = this;
+
+					self.columns.push({id:"Goal",name:"Goal",field:"Goal",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+					self.columns.push({id:"DueDate",name:"Due Date",field:"DueDate",sortable:true,sortset:"EmployeeGoal.ByDueDate",selectable:true,formatter:DateCellFormatter,DateSourceFormat: "yyyyMMdd",filterType:DateFilter,width:200,cssClass:"",headerCssClass:""});
+					self.columns.push({id:"AttainmentPercent",name:"% Complete",field:"AttainmentPercent",sortable:false,selectable:true,formatter:ProgressBarCellFormatter,meterRange:1.0,ranges:{yellow:{start:0.0,end:0.4099000096321106},green:{start:1.0,end:9.989999771118164}},width:200,cssClass:"",headerCssClass:"alignHeaderCenter"});
+
+					var gridOptions =
+					{
+						columns: self.columns,
+						idProperty: "_rowIndex",
+						dataset: [],
+						editable: false,
+						multiSelect: false,
+						showFooter: true,
+						savePersonalization: false,
+						forceFitColumns: true,
+						pagingMode: PagingModes.PagerServerSide,
+						pageSize: 5,
+						autoHeight: false,
+						fillHeight: false,
+						enableCellNavigation: false,
+						showCheckboxes: false,
+						showDrillDown: false,
+						showGridSettings: false,
+						showExport: false,
+						showFilter: false
+					};
+
+					self.lRCGoalsManagerDash_DataGrid = $("#LRCGoalsManagerDash_DataGrid").inforDataGrid(gridOptions);
+				},
+
+				loadGridControl: function(dataViewSet)
+				{
+					var self = this;
+					self.lRCGoalsManagerDash_DataGrid.mergeData(dataViewSet.data, 0, -1, true, true);
+				}
+			});
+		})(jQuery);
+
+		(function($)
+		{
+			$.widget("landmark.LRCEmployeeJournalList",
+			{
+				lRCEmployeeJournalList_DataGrid: null,
+				dataViewSet: null,
+				columns: [],
+
+				_create: function()
+				{
+					var self = this;
+
+					self.columns.push({id:"JournalEntryCardView",name:"",formatter:CellTemplateFormatter,cellTemplate:"JournalEntryCardView",width:300});
+
+					var gridOptions =
+					{
+						rowHeight: 56,
+						columns: self.columns,
+						idProperty: "_rowIndex",
+						dataset: [],
+						editable: false,
+						multiSelect: false,
+						showFooter: true,
+						savePersonalization: false,
+						forceFitColumns: true,
+						pagingMode: PagingModes.PagerServerSide,
+						pageSize: 5,
+						autoHeight: false,
+						fillHeight: false,
+						enableCellNavigation: false,
+						showCheckboxes: false,
+						showDrillDown: false,
+						showGridSettings: false,
+						showExport: false,
+						showFilter: false
+					};
+
+					self.lRCEmployeeJournalList_DataGrid = $("#LRCEmployeeJournalList_DataGrid").inforDataGrid(gridOptions);
+				},
+
+				loadGridControl: function(dataViewSet)
+				{
+					var self = this;
+					self.lRCEmployeeJournalList_DataGrid.mergeData(dataViewSet.data, 0, -1, true, true);
+				}
+			});
+		})(jQuery);
+
+		(function($)
+		{
+			$.widget("landmark.CompetencyAndSkillMatch",
+			{
+				competencyAndSkillMatch_DataGrid: null,
+				dataViewSet: null,
+				columns: [],
+
+				_create: function()
+				{
+					var self = this;
+
+					self.columns.push({id:"_op_CompetencyAndSkill_prd_ShortDescription_spc_translation_cp_",name:"Competency And Skill",field:"_op_CompetencyAndSkill_prd_ShortDescription_spc_translation_cp_",sortable:true,sortset:"EmployeeGapAnalysis.ByQualificationType",selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+					self.columns.push({id:"ResourceLevel",name:"Resource Level",field:"ResourceLevel",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+					self.columns.push({id:"ComparisonLevel",name:"Position Level",field:"ComparisonLevel",sortable:false,selectable:true,formatter:TextCellFormatter,filterType:TextFilter,width:200,cssClass:"",headerCssClass:""});
+
+					var gridOptions =
+					{
+						columns: self.columns,
+						idProperty: "_rowIndex",
+						dataset: [],
+						editable: false,
+						multiSelect: false,
+						showFooter: true,
+						savePersonalization: false,
+						forceFitColumns: true,
+						pagingMode: PagingModes.PagerServerSide,
+						pageSize: 5,
+						autoHeight: false,
+						fillHeight: false,
+						enableCellNavigation: false,
+						showCheckboxes: false,
+						showDrillDown: false,
+						showGridSettings: false,
+						showExport: false,
+						showFilter: false
+					};
+
+					self.competencyAndSkillMatch_DataGrid = $("#CompetencyAndSkillMatch_DataGrid").inforDataGrid(gridOptions);
+				},
+
+				loadGridControl: function(dataViewSet)
+				{
+					var self = this;
+					self.competencyAndSkillMatch_DataGrid.mergeData(dataViewSet.data, 0, -1, true, true);
+				}
+			});
+		})(jQuery);
+
+		$(document).ready(function()
+		{
+			Globalize.culture("en-US");
+			$("#LRCMyStaffDashboard_Splitter").inforSplitter();
+			$("#LRCMyStaffDashboard").LRCMyStaffDashboard();
+			$("#LRCMyStaffDashboard_TilePanel").inforTilePanel(); //init the panels
+			$("body").inforForm();
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="utf-8">
+
+  <title>Infor DataGrid : Server Side Paging without a Total Count</title>
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <!--Load a Flat file with JSON data-->
+  <script src="js/sampleData.js"></script>
+  <script src="js/inforDataGrid.js"></script>
+
+</head>
+
+<body>
+  <div>
+    <div class="inforToolbar">
+      <button class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1}, 0)"><span></span></button>
+      <button class="inforIconButton delete" title="Click to remove selected rows" onclick="grid.removeSelectedRows()"><span></span></button>
+    </div>
+    <div id="inforDataGrid"></div>
+  </div>
+
+  <script>
+    //Globalize.culture('ar-SA');
+
+    //Define Your Columns for the Grid.
+    var columns = [];
+    columns.push({ id: 'city', name: 'City', field: 'city', width: 125, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+    columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 60, editor: TextCellEditor, filterType: TextFilter });
+    columns.push({ id: 'officeId', name: 'officeId 1', field: 'officeId', width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+    columns.push({ id: 'addressLine2', name: 'Address 2', field: 'addressLine2', width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+
+    var options = {
+      columns: columns,
+      idProperty: 'officeId',
+      editable: false,
+      dataset: [],
+      showFilter: false,
+      showCheckboxes: true,
+      multiSelect: true,
+      showFooter: true,
+      savePersonalization: false,
+      pagingMode: PagingModes.PagerServerSide,
+      pageSize: 9
+    };
+
+    var grid = $('#inforDataGrid').inforDataGrid(options);
+    var dataView = grid.getData(), currentPage = 0;
+
+    //Save the core string for the wcf data service
+    var baseqry = 'http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?';
+
+    //simple function to get a page.
+    function getPage(pageNum, args) {
+      var newQry = baseqry + '&$top=' + args.pageSize + '&$skip=' + (pageNum * args.pageSize);
+      //add sort condition
+      newQry += '&$orderby=' + (args.sortColumnId ? args.sortColumnId : 'city')
+          + (args.sortAsc ? ' asc' : ' desc');
+      $.getJSON(newQry, function(jsonResult) {
+        var newData = jsonResult.d;
+        //(pageNum==4 ? -1 : pageNum)
+        if (jsonResult.d.length == 0) {
+          return getLastPage(args);
+        }
+        grid.mergeData(newData, pageNum, -1, jsonResult.d.length < args.pageSize, pageNum == 0);
+        currentPage = pageNum;
+      });
+    }
+
+    //simple function to get the last page - requires count in this example.
+    function getLastPage(args) {
+      var newQry = baseqry + '&$inlinecount=allpages&$top=1&$skip=1';
+      $.getJSON(newQry, function(jsonResult) {
+        currentPage = Math.floor(jsonResult.d.__count / args.pageSize);
+
+        var count = parseInt(jsonResult.d.__count), qry = baseqry + '&$top=' + args.pageSize + '&$skip='
+            + (currentPage * args.pageSize);
+        qry += '&$orderby=' + (args.sortColumnId ? args.sortColumnId : 'city')
+            + (args.sortAsc ? ' asc' : ' desc');
+
+        $.getJSON(qry, function(jsonResult) {
+          var newData = jsonResult.d;
+          grid.mergeData(newData, -1, -1, true, false);
+        });
+      });
+    }
+
+    dataView.onPageRequested.subscribe(function(e, args) {
+
+      //Can check on args.operation to see next,previous,last or first if this is easier in your api.
+      if (args.operation == 'last')
+        getLastPage(args);
+
+      if (args.operation == 'filter' || args.operation == 'clearFilter')
+        getPage(0, args);
+
+      if (args.operation == 'next')
+        getPage(currentPage + 1, args);
+
+      if (args.operation == 'first')
+        getPage(0, args);
+
+      if (args.operation == 'sort')
+        getPage(0, args);
+
+      if (args.operation == 'previous')
+        getPage(currentPage - 1, args);
+    });
+
+    //get first page - pages are zero indexed but show as +1 on screen
+    dataView.onDataLoading.notify();
+    getPage(currentPage, {
+      pageNum: 0,
+      pageSize: options.pageSize,
+      sortAsc: true,
+      sortColumnId: 'city'
+    });
+  </script>
+</body>
+</html>

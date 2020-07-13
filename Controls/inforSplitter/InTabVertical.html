@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Splitter - Vertical splitter in a Tab</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function($) {
+			$(".inforSplitter").inforSplitter();
+			$('#inforTabContainer').inforTabset();
+		});
+	</script>
+</head>
+<body>
+	<div style="height: 10px">
+	</div>
+
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1">Overview</a></li>
+		<li><a href="#tab2">Items</a></li>
+		<li><a href="#tab3">Notes</a></li>
+	  </ul>
+	  <div id="tab1">
+
+	  </div>
+	  <div id="tab2">
+			<div class="inforSplitter">
+			<div id="leftPane" style="width: 50%">
+				<p>Sed ut perspiciatis unde omnis iste natus error </p>
+			</div>
+			<div id="rightPane" style="width: 50%">
+				<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+			</div>
+		</div></div>
+	  <div id="tab3">
+		<button id="iconMenu" class="inforFormButton">
+			Click Me - Context Menu with Icons
+		</button>
+		<ul id="iconMenuOptions" class="inforContextMenu">
+			<li class="sortAsc"><a href="#sortAsc">Sort Ascending</a></li>
+			<li class="sortDesc"><a href="#sortDesc">Sort Descending</a></li>
+			<li class="separator locked"><a href="#locked">Lock Column</a></li>
+			<li class="unlocked disabled"><a href="#unlocked">Unlock Column</a></li>
+			<li class="separator columns"><a href="#columns">Columns</a></li>
+			<li class="columns disabled"><a href="#columns">Columns</a></li>
+			<li class="separator datePicker"><a href="#datePicker">Choose a Date</a></li>
+			<li class="disabled headerText"><a href="#headerText">Choose a Theme</a></li>
+			<li class="current defaultTheme"><a href="#defaultTheme">Default Theme</a></li>
+			<li class="silverTheme"><a href="#silverTheme">Silver Theme</a></li>
+			<li class="blueTheme"><a href="#blueTheme">Blue Theme</a></li>
+		</ul></div>
+	</div>
+</body>
+</html>

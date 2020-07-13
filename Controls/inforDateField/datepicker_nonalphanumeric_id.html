@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor Date Picker - Token issue with backslash for escaped characters</title>
+  <link rel="stylesheet" href="http://usmvvwdev67.infor.com:8000/Html5Controlsv3.4/Release/inforControlsCombined.css"/>
+
+  <script src="http://usmvvwdev67.infor.com:8000/Html5Controlsv3.4/Release/jquery-1.11.1.min.js"></script>
+  <script src="http://usmvvwdev67.infor.com:8000/Html5Controlsv3.4/Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="http://usmvvwdev67.infor.com:8000/Html5Controlsv3.4/Release/inforControlsCombined.js"></script>
+  <script src="http://usmvvwdev67.infor.com:8000/Html5Controlsv3.4/inforDateField/js/inforDateField.js"></script>
+
+  <script>
+    $(function () {
+			$("#sGrid\\!ApplicantCapacityType.EffectiveDate_input").inforDateField();//({mask: "99/99/9999"});
+			$("body").inforForm();
+		});
+
+  </script>
+
+</head>
+<body>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+		  <label class="inforLabel" for="#sGrid_ApplicantCapacityType.EffectiveDate_input">Date Field</label>
+		  <input class="inforDateField" id="#sGrid_ApplicantCapacityType.EffectiveDate_input" type="text">
+		  <br>
+
+
+
+	</div>
+</body>
+
+</html>

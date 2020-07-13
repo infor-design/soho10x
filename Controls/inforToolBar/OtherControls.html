@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Text Buttons - For Light Backgrounds</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		  $(function () {
+			$("#menuButton").inforMenuButton({ menuId: 'menu1',
+				callback: function (action) {
+					alert("Not Implemented: " + action);
+				}
+			});
+
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforHidden" style="padding: 20px">
+	<div class="inforToolbar">
+		<button class="inforIconButton new" title="Click to add a new row" ></button>
+		<button class="inforIconButton delete" id = "delete" title="Click to remove selected rows" ></button>
+		
+		<span class="inforToolbarSpacer"></span>
+		<button type="button" class="inforTextButton disabled" >Sales</button>
+		<button type="button" class="inforTextButton ">Invoices</button>
+
+
+		<button type="button" class="inforTextButton">Invoices</button>
+		<span class="inforToolbarSpacer"></span>
+		<button type="button" class="inforSplitButton" id="splitButton">Label</button>
+		<button type="button" class="inforMenuButton" id="menuButton">Label</button>
+
+		<span class="inforToolbarSpacer"></span>
+		<input class="inforCheckbox" type="checkbox" id="includeFolders" /> <label for="includeFolders" class="inforCheckboxLabel">Folders</label>
+		<span class="inforToolbarSpacer"></span>
+		<label class="inforLabel">Ship To</label>
+		<input class="inforTextbox">
+		<span class="inforToolbarSpacer"></span>
+
+		<div class="inforToggleButton" >
+			<button type="button" id="option1" onclick="console.log('You selected option 1')">Option 1</button>
+			<button type="button" id="option2" onclick="console.log('You selected option 2')">Option 2</button>
+			<button type="button" id="option3" onclick="console.log('You selected option 3')">Option 3</button>
+		</div>
+		<span class="inforToolbarSpacer"></span>
+
+		<div class="alignRight">
+			<button type="button" class="inforTextButton">Right Aligned 1</button>
+			<button type="button" class="inforMenuButton settings" ></button>
+		</div>
+	</div>
+
+	<!--Split button Sample menu-->
+	<ul id="menu1" class="inforContextMenu">
+		<li class="option1"><a href="#Selected">Selected</a></li>
+		<li class="option2"><a href="#All">All</a></li>
+		<li class="option3"><a href="#Other">Other...</a></li>
+	</ul>
+</body>
+</html>

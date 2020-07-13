@@ -1,0 +1,417 @@
+/* Infor Application Navigation
+----------------------------------*/
+.inforApplicationNav {
+	font-size: 1.2em;
+	background: repeat scroll 0 0 #e0e0e0;
+	width: 100%;
+	z-index: 1;
+	min-height: 33px;
+	max-height: 33px;
+	border-bottom: 1px solid #D4D4D4;
+}
+
+.inforApplicationNav > ul > li:first-child {
+    padding-left: 15px;
+}
+
+.inforApplicationNav ul{
+	z-index:100;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+  padding-left: 19px;
+	padding-right: 19px;
+	margin: 0 0 0 -14px;
+}
+
+.inforApplicationNav ul:first-child{
+	padding-left: 6px;
+		padding-right: 20px;
+}
+
+/*Top level list items*/
+.inforApplicationNav ul li{
+	position: relative;
+	display: inline;
+	float: left;
+}
+
+.inforApplicationNav > ul > li {
+	height: 32px;
+	z-index: 4;
+	background-color: #e0e0e0;
+}
+
+.inforApplicationNav ul li.activeHeader{
+	background-color: #f2f2f2;
+}
+
+.inforApplicationNav > ul > li.activeHeader  > a:first-child {
+	color: white !important;
+	background-color: #13A3F7;
+}
+
+.inforApplicationNav li a.hover, .inforApplicationNav li a:hover{
+	background-color: #f2f2f2;
+	cursor: pointer;
+	color: #1A1A1A !important;
+}
+
+/*Top level menu link items style*/
+.inforApplicationNav ul li a{
+	display: block;
+	background: transparent;
+	padding-top: 6px;
+	padding-bottom:3px;
+	color: #444;
+	text-decoration: none;
+	outline:none;
+  overflow: hidden;
+	padding: 5px 15px;
+	height: 21px;
+	line-height: 20px;
+	border: 1px solid transparent;
+}
+
+.inforApplicationNav ul li a:link, .inforApplicationNav ul li a:visited{
+	color: #444;
+}
+
+.inforApplicationNav ul li a:hover:link, .inforApplicationNav ul li a:hover:visited{
+	color: #1a1a1a;
+}
+
+
+.inforApplicationNav ul li a:focus {
+	border: 1px solid #13A3F7;
+}
+
+.inforApplicationNav > ul > li.activeHeader > a:focus {
+	color: white !important;
+	border: 1px solid transparent;
+}
+
+.inforApplicationNav ul li ul{
+	position: absolute;
+	left: 0;
+	display: none;
+	visibility: hidden;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,.15);
+	border: 1px solid #d9d9d9;
+}
+
+.inforApplicationNav .inforMegaMenuColumn {
+	box-shadow: none !important;
+	margin: 0;
+	max-width: 46%  !important;
+}
+
+.inforMegaMenuColumn .inforFormButton {
+		font-size: 1em;
+}
+
+.inforApplicationNav .inforMegaMenuColumn:nth-child(2) {
+	border-left: 1px solid #E6E6E6 !important;
+	padding-left: 35px;
+	height: 100%;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.inforApplicationNav ul li ul li {
+	display: list-item;
+	margin-left: -19px;
+	margin-right: -19px;
+	padding: 0;
+	background-color: white;
+	border: none;
+	float: none !important;	/*Prevents longer text from overflowing in RTL*/
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.inforApplicationNav ul li ul li ul{
+	top: 0;
+}
+
+/* Sub level menu links style */
+.inforApplicationNav ul li ul li a{
+	font-size: 1em;
+	min-width: 90px;
+	padding: 5px 20px;
+	white-space: nowrap;
+	width: auto;
+	line-height: 22px;
+}
+
+.inforApplicationNav .downArrow{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEAQMAAAB4CLc+AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAAAAAApWe5zwAAAAJ0Uk5TAKZJJsvlAAAAEElEQVQI12P4x1DDYMEgAAAKHgHDGrfkbwAAAABJRU5ErkJggg==") no-repeat scroll right center !important;
+	display: inline-block;
+	height: 11px;
+	left: 2px;
+	margin: 0 auto;
+	padding-right: 4px;
+	position: relative;
+	text-align: center;
+	top: 2px;
+	width: 11px;
+}
+
+.inforApplicationNav .activeHeader .downArrow {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEAQMAAAB4CLc+AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA////pdmf3QAAAAF0Uk5TAEDm2GYAAAAQSURBVAjXY/jHUMNgwSAAAAoeAcMat+RvAAAAAElFTkSuQmCC") no-repeat right center !important;
+}
+
+.inforApplicationNav .rightArrow {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAANElEQVR42mNgIBds3rz5Pz55JlI0MJFiAxMpTmIixQ94Ffv6+jISpRhdIU7F2BSSHM4kAQAAUhVXYi2YAwAAAABJRU5ErkJggg==")  no-repeat right center;
+}
+
+.inforApplicationNav .leftArrow {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAOElEQVR42mNgoBbYvHnzf2Q+E7EKcSrGphCrYlwKMRTjU4ih2NfXl5FoxYQ0YPUgIRsYSAkVogAA5IMVVy6V21QAAAAASUVORK5CYII=") no-repeat center left;
+}
+
+.topNavSpacer{
+	width: 12px;
+	height: 52px;
+}
+
+.inforApplicationNav .scrollUp, .inforApplicationNav .scrollDown{
+	height: 24px;
+	width:100%;
+	padding-right: 36px;
+	cursor: pointer;
+}
+
+.inforApplicationNav .scrollUp .scrollArrow{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA4SURBVChTY2AYvGDz5s3/sbmOEV0QWaGvry+KPAoHm4nIGuCKcVkNshmmAawYn0KYM9GdNIAhDgBzjRMdyzmiJQAAAABJRU5ErkJggg==");
+	height: 12px;
+	left: 61%;
+	position: relative;
+	width: 12px;
+	top: 7px;
+	z-index: 4;
+}
+
+.inforApplicationNav .scrollDown .scrollArrow{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAIAAAAmzuBxAAAABnRSTlMAAAAAAABupgeRAAAAG0lEQVR42mNgoBfYjBsQUETAJALWEXATw0AAAOTuNHK5WbLVAAAAAElFTkSuQmCC");
+	height: 12px;
+	left: 61%;
+	position: relative;
+	width: 12px;
+	z-index: 4;
+	top: 5px;
+}
+
+.inforApplicationNav .scrollDown[disabled], .inforApplicationNav .scrollUp[disabled]
+{
+opacity: .5;
+filter:alpha(opacity=50);
+background-color: transparent;
+}
+
+.inforApplicationNav .overFlowButton{
+	border: medium none;
+	border-radius: 0 0 0 0;
+	float: right;
+	font-size: 1em;
+	height: 33px;
+	left: 2px;
+	position: relative;
+	text-indent: 5px;
+	top: -2px;
+	width: 74px;
+	z-index: 4;
+}
+
+.inforApplicationNav .overFlowButton:hover {
+	background-color: #F2F2F2 !important;
+}
+
+/* Right To Left Classes */
+html[dir="rtl"] .inforApplicationNav ul li {
+	float:right;
+}
+
+html[dir="rtl"] .downArrow
+{
+	left: -6px;
+}
+
+html[dir="rtl"] .inforApplicationNav .rightArrow
+{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAOElEQVR42mNgoBbYvHnzf2Q+E7EKcSrGphCrYlwKMRTjU4ih2NfXl5FoxYQ0YPUgIRsYSAkVogAA5IMVVy6V21QAAAAASUVORK5CYII=") no-repeat center left !important;
+}
+
+
+html[dir="rtl"] .inforApplicationNav ul li ul {
+	right: 0;
+	left: auto;
+}
+
+/*Session Nav button and styling*/
+
+#sessionNavMenu .downArrow  {
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcAQAAAABXaJJ+AAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY/j///8BBtKJfwzyQBaDPZBoqAcSB0ASD0HEZ7LMAxEAJj9jpqsVecAAAAAASUVORK5CYII=") no-repeat scroll 0 0 transparent !important;
+		border: medium none;
+		height: 26px;
+		margin-left: 0;
+		margin-top: -6px;
+		width: 25px;
+	opacity: .40;
+	filter: alpha(opacity=40);
+}
+
+#sessionNavMenu.activeHeader  .downArrow  {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcCAYAAAB/E6/TAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAD9JREFUSEvtzTEOACAIBEH+/2ltNjbGGBUSi50SjiMk6VPtEGd36Ngi/oauJWI56JywzkX3wLgGP2qfSFKmiA5lBqdZLF4QjgAAAABJRU5ErkJggg==") no-repeat scroll 0 0 transparent !important;
+}
+
+#sessionNavMenu > a {
+	padding: 5px;
+}
+
+#sessionNavMenu .hover .downArrow  {
+	opacity: .65;
+	filter: alpha(opacity=65);
+}
+
+.sessionIcon
+{
+	display: inline-block;
+	height: 8px;
+	margin-left: -10px;
+	margin-right: 4px;
+	width: 8px;
+}
+
+.unSavedSession
+{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAL0lEQVQY02P4//8/AxzPZLgDxkhi6JL/ofgOqgJUSRRFuCThiohQQNAKohyJx5sAfdetIc53Ud0AAAAASUVORK5CYII=") no-repeat scroll left center transparent;
+}
+
+.activeSession
+{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAf0lEQVQY03WPIQ6EMBBF/524yOgGA7fiBJs17DUQzYq6qlaNqqqrGvoJYAjiJS//jRmYGbz30skdO6ELG0IIsv03cx9nwzIc0LmxIcaYx+94xwtubEgpPeIFG1T19YANpZQ8rdMjcmNDrVW0qM2/+Y50bmzgK6016eSOndCPN3e8Y65J8gu5BAAAAABJRU5ErkJggg==") no-repeat scroll left center transparent;
+}
+
+.disabledSession
+{
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAARUlEQVQY042PQQoAIAgEe6IP96Iv8CdbGwpRUB0GhBlQG4CmqjKIARLOQlcSZgZ3n3DOUBjEKrcoGByyoPsKnivuR77e7MGk0uF0NdKDAAAAAElFTkSuQmCC") no-repeat scroll left center transparent;
+}
+
+.disabledText {
+opacity: .5;
+filter:alpha(opacity=50);
+}
+
+.navSessionSpacer
+{
+	background: #E6E6E6;
+	height: 1px;
+	width: 100%;
+}
+
+.inforApplicationNavRight  > * {
+	float: right;
+	margin-top: 10px;
+}
+
+html[dir="rtl"] .inforApplicationNavRight  > * {
+	float: left;
+}
+
+.inforApplicationNavRight {
+	display: block;
+		margin: 0;
+		position: relative;
+		top: -8px;
+}
+
+.inforApplicationNavRight input {
+	font-size: 0.9em;
+}
+
+/*Mega Menu Styling*/
+.inforMegaMenu {
+	padding: 13px 15px !important
+}
+
+.inforMegaMenuTitle {
+  color: #444;
+  display: block;
+  font-size: 1.4em;
+  line-height: 38px;
+  margin-bottom: 4px;
+  padding-left: 0;
+  font-weight: lighter;
+}
+
+.inforMegaMenuSubTitle {
+	color: #444;
+	font-size: 1.4em;
+	line-height: 40px;
+	padding-left: 18px;
+}
+
+.inforApplicationNav .inforMegaMenuColumn  li:hover {
+	background-color: white !important;
+}
+
+.inforMegaMenuItem {
+		height: 18px !important;
+		padding-top: 7px !important;
+		text-indent: -4px;
+}
+
+.inforApplicationNav .inforMegaMenuColumn  li:hover a{
+	color: #13A3F7;
+	cursor: pointer;
+}
+
+.inforMegaMenuColumn {
+	border: none !important;
+	position: relative !important;
+	float: left !important;
+	text-align: left;
+}
+
+.inforMegaMenuColumn li {
+	margin: 0 !important;
+	height: 32px;
+}
+
+.inforMegaMenuDescription {
+	float: left;
+	line-height: 15px;
+}
+
+.inforMegaMenuSpotlight {
+	background: none repeat scroll 0 0 transparent;
+	border-top: 1px solid #E6E6E6;
+	bottom: 0;
+	height: 54px;
+	margin-left: 5px;
+	position: absolute;
+	width: 93%;
+}
+
+.inforMegaMenuSpotlight:hover {
+	background: #F2F2F2;
+}
+
+.inforMegaMenuSpotlight .inforMegaMenuDescription {
+	color: #FF6400;
+	display: inline-block;
+	float: left;
+	font-size: 1.2em;
+	padding: 10px;
+	position: relative;
+	top: -2px;
+}
+
+.inforMegaMenuSpotlight .inforIcon{
+	float: left;
+}
+
+.inforApplicationNav + .inforApplicationPadding > .inforModuleTabs {
+		margin-top: 13px;
+}

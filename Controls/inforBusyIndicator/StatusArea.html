@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Infor/Lawson Application</title>
+	<link rel="shortcut icon" type="image/icon" href="css/images/favicon.ico" />
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<!---We can use header and footer symatics if we include this...-->
+	<script src="../lib/modernizr.2.5.2.custom.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+			 $(function () {
+				//init the menu and iFrame
+				$("#inforApplicationNav").inforApplicationNav();
+				$('#contentArea').fillToBottom();
+
+				//Simulate opening something...
+				$("#inforApplicationNav").find("a").click(function() {
+					var $this = $(this);
+				   if ($this.parent().find("ul").length > 0)	//has a sub menu ignore
+						return;
+
+				   $("#statusArea").text($this.html());
+				   $("#statusArea").animate({marginLeft:'20px'}).inforBusyIndicator({delay: 0,
+														   modal: false,
+														   size: "small",
+														   position: {	my: "left",
+																		at: "left" }
+														});
+
+					//simulate closing the loading indicator..after a while
+					
+				});
+			});
+		</script>
+</head>
+<body>
+	<header class="inforTopBanner">
+		<div class="inforTopBannerLeft inforLogo">
+		</div>
+		<div class="inforTopBannerRight">
+			<span class="inforBannerText">Josephe Tamayo (14938)</span>
+			<button class="inforSignOutButton" title="Sign Out"></button>
+		</div>
+	</header>
+	<div id="inforApplicationNav" class="inforApplicationNav">
+		<ul>
+			<li><a href="#">Plan</a>
+				<ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			   </ul>
+			</li>
+			<li><a href="#">Report</a>
+			   <ul>
+				  <li><a href="#">Sub Item 1.1</a></li>
+				  <li><a href="#">Sub Item 1.2</a></li>
+				  <li><a href="#">Sub Item 1.3</a></li>
+				  <li><a href="#">Sub Item 1.4</a></li>
+				  <li><a href="#">Sub Item 1.5</a></li>
+				  <li><a href="#">Sub Item 1.6</a></li>
+				  <li><a href="#">Sub Item 1.7</a></li>
+			   </ul>
+			</li>
+			<li><a href="#">Approvals (2)</a>
+				<ul>
+				   <li><a href="#">Sub Item 1.1</a></li>
+				   <li><a href="#">Sub Item 1.2</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Distribution</a></li>
+			<li><a href="#">Administration</a></li>
+		</ul>
+	</div>
+	<footer class="inforBottomFooter inforModuleHeader">
+		<span id="statusArea" class="inforBannerText">Lawson Budgetting & Planning v10</span>
+	</footer>
+</body>
+</html>

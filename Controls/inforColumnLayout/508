@@ -1,0 +1,10 @@
+- what the tab order
+- do not use tabindex or it is hard to maintain
+- put active
+- if you add dynamic elements put them in the right dom spot
+- table layout is ok if you dont need role="presentation" and dont use the
+
+- white space (for zoomed at 200% should be usable).
+
+Guidelines
+-Make sure you can see both label and field at 200% zoom

@@ -1,0 +1,12 @@
+-make everything keyboard accessible
+-need a way to show the tooltip
+-tab to select
+-add an I icon
+-on tab in show tooltip
+-should have left and right arrows (and a pause if automatic)
+
+Questions:
+	- what to do with tooltips and keybard focus?
+	- keyboard shortcut for tooltip?
+
+	

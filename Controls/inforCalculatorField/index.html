@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Calculator Field - Default Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforCalculatorField.js"></script>
+	<link href="css/inforCalculatorField.css" rel="stylesheet" />
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+
+			//show error on the field.
+			$("#inforCalculatorField1").addError({message: 'I have an Error.', showTooltip: true});
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel">Calculator Field</label>
+			<input class="inforCalculatorField alignRight" type="text" value="10.123567"><br>
+			<label class="inforLabel">Calculator Field Readonly</label>
+			<input class="inforCalculatorField" type="text" readonly><br>
+			<label class="inforLabel">Calculator Field Disabled</label>
+			<input class="inforCalculatorField" type="text" disabled><br>
+			<label class="inforLabel">Calculator Field Error</label>
+			<input class="inforCalculatorField" type="text" id="inforCalculatorField1"><br>
+		</div>
+	</div>
+</body>
+</html>

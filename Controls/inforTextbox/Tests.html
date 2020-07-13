@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Textbox Example</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script >
+		 $(function($) {
+			Globalize.culture("fr-FR");
+
+			//Setup required field..
+			$(".required").required();	//is also done in $("body").inforForm();
+
+			//Focus a field.
+			$("#focusField").focus();
+
+			//Show an Error on the field Manually
+			$("#errorField").validationMessage("show", "This field is required.",  false);
+
+			//Track Dirty Changes on a field.
+			var dirtyField = $("#dirtyField");
+			dirtyField.trackDirty();
+			//make it dirty for demo purposes
+			dirtyField.val("Dirty (Changed) Value").trigger("change");
+
+			//setup inline help text - placeholder works in some browsers but for others we need this plugin
+			$('input[placeholder], textarea[placeholder]').placeholder();	//is also done in $("body").inforForm();
+
+			//Integer only textbox
+			$("#integerOnly").attr("data-number-source-format", Globalize.culture().name).val(123).numericOnly(false);	//is also done in $("body").inforForm();
+
+			//decimal only textbox
+			$("#decimalOnly").attr("data-number-source-format", Globalize.culture().name).val(123.123).numericOnly(true);	//is also done in $("body").inforForm();
+
+
+			//make the labels size to the longest of all in the top collection
+			$('body').inforForm();
+			$("#test1").addClass('inforSearchField').addClass('fileInputField').inforTriggerField();
+		});
+	</script>
+</head>
+
+<body style="margin:10px">
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	  <label class="inforLabel" for="requiredField">Required Field</label>
+	  <input type="text" class="inforTextbox required"  id="requiredField" value="Required Field"/><br>
+
+	  <label class="inforLabel" for="focusField">Field in Focus</label>
+	  <input type="text" class="inforTextbox" id="focusField" name="focusField" value="Focused Value" /><br>
+
+	  <label class="inforLabel" for="readonlyField">Read Only Field</label>
+	  <input type="text" name="readOnlyTextBox" id="readonlyField" name="readonlyField" readonly class="inforTextbox" value="Read Only Value"/><br>
+
+	  <label class="inforLabel" for="disabledField">Disabled Field</label>
+	  <input type="text" name="disabledTextBox" id="disabledField" name="disabledField" disabled class="inforTextbox disabled" value="Disabled Value"/><br>
+
+	  <label class="inforLabel" for="textBox1" for="errorField">Field in Error</label>
+	  <input type="text" id="errorField" name="errorField" class="inforTextbox" /><br>
+
+	  <label class="inforLabel" for="dirtyField" for="dirtyField">Dirty Field</label>
+	  <input type="text" id="dirtyField" name="dirtyField" class="inforTextbox" /><br>
+
+	  <label class="inforLabel" for="inlineHelp">Inline Help</label>
+	  <input type="text" id="inlineHelp" name="inlineHelp" class="inforTextbox" placeholder='Inline help text..' /><br>
+
+	  <label class="inforLabel" for="integerOnly">Integer Only</label>
+	  <input type="text" id="integerOnly" name="integerOnly" placeholder='Enter a Number' autocomplete="off" data-number-format="n0" class="inforTextbox numericOnly" /><br>
+
+	  <label class="inforLabel" for="decimalOnly">Decimal Only</label>
+	  <input type="text" id="decimalOnly" name="decimalOnly" placeholder='Enter a Decimal' autocomplete="off" data-number-format="n9" class="inforTextbox decimalOnly" /><br>
+
+	   <label class="inforLabel" for="decimalOnly">Size Attribute</label>
+	  <input type="text"  class="inforTextbox" size="3" id="test1"/><br>
+
+	</div>
+</body>
+</html>

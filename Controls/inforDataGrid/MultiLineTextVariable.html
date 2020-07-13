@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid Sample</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+</head>
+<body>
+	<div>
+	   <div class="inforToolbar">
+			<button type="button" id="submitButton" onclick="save()" class="inforIconButton save" title="Click to Save Modified Rows" ></button>
+		</div>
+		<div id="inforDataGrid"></div>
+	</div>
+
+	<script>
+		var grid;
+		//Define Columns for the Grid.
+		var columns = [];
+
+		columns.push({ id: "name", name: "Name", field: "name", width: 300, formatter: MultiLineTextCellFormatter, editor: MultiLineTextCellEditor, filterType: IntegerFilter,cssClass: "autoHeight", });
+		columns.push({ id: "description", name: "Description", field: "description", width:500,formatter:MultiLineTextCellFormatter, editor: MultiLineTextCellEditor,cssClass: "autoHeight", });
+
+		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
+		var data =[];
+		data.push({id:'1', name:"Too many goods waiting for receiving and put away", description:"The unloading area is overflowing with goods waiting to be received. Sometimes goods are not delivered to customers due to a so called stock-out, although the goods are physically in the warehouse, waiting for receiving."});
+		data.push({id:'2', name:"Unnecessary put-aways and picks", description:""});
+		data.push({id:'3', name:"In order to cope with delivery problems (or rather ‘unpredictable demand’) supply (planning) has significantly increased the stock levels over time, resulting in a congested warehouse! At put-away people are ‘searching for empty spaces’ up to 50% of their time!", description:"In order to cope with delivery problems (or rather ‘unpredictable demand’) supply (planning) has significantly increased the stock levels over time, resulting in a congested warehouse! At put-away people are ‘searching for empty spaces’ up to 50% of their time!"});
+		data.push({id:'4', name:"Unnecessary put-aways and picks", description:""});
+
+		var options = {
+			columns: columns,
+			idProperty:'id',
+			dataset: data,
+			showFilter: false,
+			showDrillDown: false,
+			showFooter: false,
+			showGridSettings: false,
+			savePersonalization: false,
+			editable: true,
+			variableRowHeight: true,
+			variableRowHeightColumn: ["description", "name"]
+		};
+
+		grid = $("#inforDataGrid").inforDataGrid(options);
+	</script>
+</body>
+</html>

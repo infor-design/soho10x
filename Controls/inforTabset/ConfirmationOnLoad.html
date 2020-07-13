@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Small Number of Tabs</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTabset.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			var tabset = $('#inforTabContainer').inforTabset({chevron:false}),
+				confirmed = false;
+
+			tabset.on('tabsbeforeactivate', function(event, ui) {
+				var index = ui.index;
+
+				if (!confirmed) {
+					$('body').inforMessageDialog({
+						title: "Save Changes",
+						shortMessage: "Do you want to save your changes on tab 1?",
+						detailedMessage: "When you switch tabs you need to save changes on the active tab.",
+						dialogType: "Confirmation",
+						showTitleClose: false,
+						buttons: [{
+									text: Globalize.localize("Yes"),
+									click: function() {
+										console.log("saving changes and continuing");
+										confirmed = true;
+										tabset.tabs({ selected: index });
+										$(this).inforDialog("close");
+									},
+									isDefault: true
+								},{
+									text: Globalize.localize("No"),
+									click: function() {
+										console.log("cancel changes and continuing");
+										confirmed = true;
+										tabset.inforTabset("activate", index);
+										$(this).inforDialog("close");
+									}
+								},{
+									text: Globalize.localize("Cancel"),
+									click: function() {
+										confirmed = false;
+										$(this).inforDialog("close");
+									}
+								}]
+					});
+				}
+
+				if (confirmed) {
+					confirmed = false;
+					return true;
+				} else {
+					return false;
+				}
+			});
+		});
+	</script>
+</head>
+<body style='inforHidden'>
+	<div id="inforTabContainer">
+	  <ul class="inforTabset">
+		<li><a href="#tab1">My Profile</a></li>
+		<li><a href="#tab2">My Cloverleaf</a></li>
+		<li><a href="#tab3">Productivity</a></li>
+		<li><a href="#tab4">My Cloud</a></li>
+		<li><a href="#tab5">Services</a></li>
+	  </ul>
+	  <div id="tab1">
+		<p>Vestibulum pharetra aliquam libero.</p>
+	  </div>
+	  <div id="tab2">
+		<p>Vestibulum pharetra aliquam libero. Phasellus quis augue et elit vestibulum consectetuer. Aenean et nunc. Suspendisse potenti. Donec orci augue, dictum et, lobortis vehicula, hendrerit non, justo. Vestibulum sollicitudin mattis magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ornare. Sed metus turpis, viverra vitae, vehicula vel, porttitor porta, tortor. Vestibulum eleifend rutrum velit. Sed hendrerit, dui id fermentum dictum, eros nisi congue magna, eu vestibulum libero sapien eu sapien. Nullam leo lorem, porta in, gravida a, vulputate in, ligula. Suspendisse potenti. Phasellus id turpis. Nulla consequat tincidunt ante. Quisque urna.</p>
+		<p>Morbi vitae lorem. Nulla facilisi. Phasellus convallis. Vestibulum faucibus dapibus ipsum. In convallis turpis tincidunt eros. Donec nunc tellus, faucibus ut, rutrum laoreet, porttitor id, mi. Nullam vulputate lacinia dolor. Quisque ullamcorper, nulla iaculis placerat dapibus, justo massa scelerisque nisl, in accumsan lorem turpis vitae leo. Nam in felis sodales ligula eleifend convallis. Suspendisse ornare convallis velit. Duis sit amet dolor quis ipsum tincidunt commodo. In nec est. Cras consectetuer malesuada orci. Nunc pellentesque gravida nulla. Nam lacus tellus, molestie eget, venenatis non, bibendum vitae, tellus. Aenean non sem ac turpis fermentum scelerisque. Aliquam eros nisi, sodales eu, sodales nec, gravida ac, nibh. Curabitur id neque nec massa consectetuer suscipit. Quisque vulputate orci in tortor. Quisque euismod.</p>
+	  </div>
+	  <div id="tab3">
+		<button id="iconMenu" class="inforFormButton">
+			Click Me - Context Menu with Icons
+		</button>
+	  </div>
+	  <div id="tab4">
+		<p>Morbi vitae lorem. Nulla facilisi. Phasellus convallis. Vestibulum faucibus dapibus ipsum. In convallis turpis tincidunt eros. Donec nunc tellus, faucibus ut, rutrum laoreet, porttitor id, mi. Nullam vulputate lacinia dolor. Quisque ullamcorper, nulla iaculis placerat dapibus, justo massa scelerisque nisl, in accumsan lorem turpis vitae leo. Nam in felis sodales ligula eleifend convallis. Suspendisse ornare convallis velit. Duis sit amet dolor quis ipsum tincidunt commodo. In nec est. Cras consectetuer malesuada orci. Nunc pellentesque gravida nulla. Nam lacus tellus, molestie eget, venenatis non, bibendum vitae, tellus. Aenean non sem ac turpis fermentum scelerisque. Aliquam eros nisi, sodales eu, sodales nec, gravida ac, nibh. Curabitur id neque nec massa consectetuer suscipit. Quisque vulputate orci in tortor. Quisque euismod.</p>
+	  </div>
+	  <div id="tab5">
+		<p> Nulla facilisi. Phasellus convallis. Vestibulum faucibus dapibus ipsum. In convallis turpis tincidunt eros. Donec nunc tellus, faucibus ut, rutrum laoreet, porttitor id, mi. Nullam vulputate lacinia dolor. Quisque ullamcorper, nulla iaculis placerat dapibus, justo massa scelerisque nisl, in accumsan lorem turpis vitae leo. Nam in felis sodales ligula eleifend convallis. Suspendisse ornare convallis velit. Duis sit amet dolor quis ipsum tincidunt commodo. In nec est. Cras consectetuer malesuada orci. Nunc pellentesque gravida nulla. Nam lacus tellus, molestie eget, venenatis non, bibendum vitae, tellus. Aenean non sem ac turpis fermentum scelerisque. Aliquam eros nisi, sodales eu, sodales nec, gravida ac, nibh. Curabitur id neque nec massa consectetuer suscipit. Quisque vulputate orci in tortor. Quisque euismod.</p>
+	 </div>
+	</div>
+	<ul id="iconMenuOptions" class="inforContextMenu">
+		<li class="sortAsc"><a href="#sortAsc">Sort Ascending</a></li>
+		<li class="sortDesc"><a href="#sortDesc">Sort Descending</a></li>
+		<li class="separator locked"><a href="#locked">Lock Column</a></li>
+		<li class="unlocked disabled"><a href="#unlocked">Unlock Column</a></li>
+		<li class="separator columns"><a href="#columns">Columns</a></li>
+		<li class="columns disabled"><a href="#columns">Columns</a></li>
+		<li class="separator datePicker"><a href="#datePicker">Choose a Date</a></li>
+		<li class="disabled headerText"><a href="#headerText">Choose a Theme</a></li>
+		<li class="current defaultTheme"><a href="#defaultTheme">Default Theme</a></li>
+		<li class="silverTheme"><a href="#silverTheme">Silver Theme</a></li>
+		<li class="blueTheme"><a href="#blueTheme">Blue Theme</a></li>
+	</ul>
+</body>
+</html>

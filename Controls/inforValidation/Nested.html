@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Fieldset Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="js/inforValidation.js" ></script>
+
+	<script>
+		 $(function () {
+			//Set the locale. This control has a tooltip translated.
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+
+			var demoForm = $("#formExample");
+			demoForm.setupValidation(function(e) {	//set up validation on the form using the field metadata
+			   if (demoForm.isValid()) {
+					console.log("Form can be submitted");
+				} else
+					console.log("Form cannot be submitted");
+			});
+		 });
+	</script>
+	</head>
+	<body>
+		<form id='formExample'>
+			<fieldset id="AuditExtractDetailFieldSet" class="inforFieldSet">
+				<legend class="inforExpandButton open"></legend>
+				<span class="inforFieldSetLabel">Parent Field Set</span>
+				<div class="content">
+					<label class="inforLabel" for="requiredField">Required Field</label>
+					<input type="text" class="inforTextbox required" data-validation="required" id="requiredField"/><br>
+					<div class="inforFieldSet3ColumnLayout">
+					<fieldset id="AuditExtractDetailFieldSet" class="inforFieldSet">
+						<legend class="inforExpandButton open"></legend>
+						<span class="inforFieldSetLabel">Audit Extract Details</span>
+						<div class="content">
+							<label class="inforLabel" >Contents</label>
+						</div>
+					</fieldset>
+					<fieldset id="EventTypesTreeFieldSet" class="inforFieldSet">
+						<legend class="inforExpandButton open"></legend>
+						<span class="inforFieldSetLabel">Audit Events</span>
+						<div class="content">
+							<div class="content">
+								<label class="inforLabel" >Contents</label>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset class="inforFieldSet">
+						<legend class="inforExpandButton open"></legend>
+						<span class="inforFieldSetLabel">Users And Groups</span>
+						<div class="content">
+							<label class="inforLabel" >Contents</label>
+						</div>
+					</fieldset>
+				</div>
+				</div>
+			</fieldset>
+		</form>
+	</body>
+</html>

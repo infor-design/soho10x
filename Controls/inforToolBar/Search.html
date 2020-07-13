@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Search On a Toolbar.</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		  $(function () {
+			//Globalize.culture("ar-SA");
+			$("#menuButton").inforMenuButton({ menuId: 'menu1',
+				callback: function (action) {
+					alert("Not Implemented: " + action);
+				}
+			});
+
+			$(".inforSearchField").inforSearchField();
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	   <div class="inforToolbar" >
+			  <button type="button" class="inforTextButton ">New</button>
+			  <button type="button" class="inforTextButton">Edit</button>
+
+			  <span class="inforToolbarSpacer"></span>
+			  <button type="button" class="inforTextButton">Delete</button>
+
+			  <span class="inforToolbarSpacer"></span>
+			  <button type="button" class="inforTextButton disabled" >Sales</button>
+
+			  <span class="inforToolbarSpacer"></span>
+			  <button class="inforIconButton settings" title="Click to Show Filter Row" ></button>
+			  <button class="inforIconButton delete" title="Click to remove selected rows" ></button>
+			  <button class="inforIconButton new" title="Click to add a new row" ></button>
+
+		   <div class="alignRight">
+			   <input id="reportSearchText" class="inforSearchField" type="text" style="width: 200px;"/>
+			   <button type="button" class="inforMenuButton" id="menuButton">Label</button>
+			   <span class="inforToolbarSpacer"></span>
+			   <button id="help" class="inforIconButton help"  type="button"></button>
+		   </div>
+	   </div>
+</body>
+</html>

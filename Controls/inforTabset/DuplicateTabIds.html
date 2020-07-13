@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor Tab Set : Basic Features </title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<link href="css/inforTabset.css" rel="stylesheet">
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTabset.js"></script>
+
+	<script>
+		$(function($) {
+			//Globalize.culture("ar-SA");
+			$('#inforTabContainer, #inforSubTabContainer1').inforTabset();
+			$("body").removeClass("inforHidden");
+
+			$("#inforTabContainer").tabs({show: function (e, ui, newTab) {
+				$("#inforSubTabContainer2").inforTabset();
+			}});
+		});
+	</script>
+</head>
+<body>
+	<div id="inforTabContainer">
+		 <ul class="inforTabset">
+			  <li><a href="#tab1">Overview</a></li>
+			  <li><a href="#tab5">ProblemTab</a></li>
+		 </ul>
+		 <div id="tab1">
+			  <p>Tab1 text displays correctly</p>
+			  <div id="inforSubTabContainer1">
+				<ul class="inforTabset">
+					 <li><a href="#tab1">Duplicate ID</a></li>
+					 <li><a href="#subTab2">Normal Tab</a></li>
+				</ul>
+					   <div id="tab1">
+						   <p>Sub1 tab1 contents will show up fine</p>
+					 </div>
+					   <div id="subTab2">
+						   <p>Sub1 tab2 contents show up fine</p>
+					 </div>
+			  </div>
+		 </div>
+		 <div id="tab5">
+			  <div id="inforSubTabContainer2">
+				<ul class="inforTabset">
+					 <li><a href="#tabx">Duplicate ID</a></li>
+					 <li><a href="#subTab2">Normal Tab</a></li>
+				</ul>
+					   <div id="tabx">
+						   <p>Sub2 tab1 contents will show up fine</p>
+					 </div>
+					   <div id="subTab2">
+						   <p>Sub2 tab2 contents show up fine</p>
+					 </div>
+			  </div>
+		 </div>
+	</div>
+</body>
+</html>

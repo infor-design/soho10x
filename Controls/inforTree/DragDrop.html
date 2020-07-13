@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor Tree Sample with Drag Drop</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTree.js"></script>
+
+	<script src="js/sampleData.js"></script>
+	<style>
+		.inforDropTarget {
+			cursor: default; color: #999999;
+			clear:both; border: 1px dashed #E5E5E5; margin-top: 10px;height:50px; width: 200px; line-height:40px; text-align:center; font-size:20px;
+		}
+	</style>
+	<script>
+		$(function () {
+			//Globalize.culture("de-DE");
+			//AInitialize the Split panes.
+			$(".inforSplitter").inforSplitter();
+
+			//Initialize the Tree controls
+			$("#inforTree1").inforTree({
+				"json_data": getSampleJson(),
+				"dnd": {
+					"drop_finish": function (data) {
+						data.r.text($.trim(data.o.text()));
+					},
+					"drag_finish": function (data) {
+						this.create_node(data.r[0], "after", $.trim(data.o.value), false);
+					 }
+				}
+				 , "plugins": ["json_data", "themes", "ui", "dnd"]
+			}).bind("move_node.jstree", function(e, data){
+				var treeInstance = data.inst,
+						node = data.rslt.o,
+						oldParent = data.rslt.op,
+						parentNode = treeInstance._get_parent(node);
+				
+				console.log(oldParent, node);
+				
+				alert("Tree1 : nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
+			});
+
+			$("#inforTree2").inforTree({
+				"json_data": getSampleJson2(),
+				"dnd": {
+					"drop_finish": function (data) {
+						data.r.text($.trim(data.o.text()));
+					},
+					"drag_finish": function (data) {
+						this.create_node(data.r[0], "after", $.trim(data.o.value), false);
+					 }
+				}
+				 , "plugins": ["json_data", "themes", "ui", "dnd"]
+			}).bind("move_node.jstree", function(e, data){
+				var treeInstance = data.inst,
+						node = data.rslt.o,
+						oldParent = data.rslt.op,
+						parentNode = treeInstance._get_parent(node);
+				
+				console.log(oldParent, node);
+				
+				alert("Tree2 : nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
+			});
+
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforHidden" style="margin:10px">
+	<div class="inforModuleContainer">
+		 <div class="inforModuleHeader">
+				<div class="inforModuleHeaderLeft">
+					<span class="inforPageTitleText">Infor Tree with Drag Drop </span>
+				</div>
+				<div class="inforModuleHeaderRight">
+					<button class="inforModuleSettingsButton" type="button"></button>
+					<button class="inforModuleCloseButton" type="button"></button>
+				</div>
+		 </div>
+		 <div class="inforModuleContentArea">
+			<div class="inforToolbar">
+				<button class="inforTextButton" type="button" onclick='$("#inforTree1").inforTree("toggle_dots")' >Toggle Lines</button>
+				<button class="inforTextButton" type="button" onclick='$("#inforTree1").inforTree("toggle_icons")'>Toggle Icons</button>
+			</div>
+			<div class="inforSplitter">
+				<div id="leftPane" style="width:40%">
+					<div class="inforScrollableArea" style="overflow:auto;">
+				    <div class="inforSingleColumnLayout autoLabelWidth">
+
+						<div id="inforTree1" class="inforTree"></div>
+						<h2>Tree 2 below</h2>
+						<div id="inforTree2" class="inforTree"></div>
+					</div>
+					</div>
+				</div>
+				<div id="rightPane" style="width:60%; height:">
+					 <div class="inforSingleColumnLayout autoLabelWidth">
+						  <label class="inforLabel" for="treeId">Drag to inforTree</label>
+						  <input type="text" name="treeDragtext" id="treeDrag" class="inforTextbox jstree-draggable" value="drag me to InforTree"/><br>
+						  <label class="inforLabel" for="treeText">Drop from InforTree</label>
+						  <input type="text" name="treeDroptext" id="treeDrop" class="inforTextbox jstree-drop" value=""/><br>
+						  <div class="inforDropTarget jstree-drop" >Drop the node here</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

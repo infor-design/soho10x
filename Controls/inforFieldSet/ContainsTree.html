@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8" />
+
+	<title>Infor Fieldset Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforFieldset.css" rel="stylesheet" >
+
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="../inforTree/js/sampleData.js"></script>
+
+	<script>
+		$(function () {
+			$(".inforFieldSet").inforFieldSet();
+
+			$("#inforTree1").inforTree({"json_data" : getSampleJson()})
+				.bind("select_node.jstree", function (e, data) {
+					//Get the Node Id....
+					var treeId = $.data(data.rslt.obj[0], "id");
+					//refresh the content on the right side
+					$("#treeId").val(treeId);
+					var text = $(data.rslt.obj[0]).text();
+					if (text!=undefined)
+						$("#treeText").val($.trim(text));
+				});
+		});
+	</script>
+</head>
+<body class="inforScrollableArea">
+	<fieldset id="fs1" class="inforFieldSet">
+		<legend><span class="inforFieldSetLabel">Field Set 1</span></span></legend>
+		<button type="button" role="button" class="inforExpandButton open"></button>
+		<div class="content">
+			<div id="inforTree1" class="inforTree"></div>
+		</div>
+	</fieldset>
+	<fieldset id="fs2" class="inforFieldSet">
+		<legend><span class="inforFieldSetLabel">Field Set 2</span></span></legend>
+		<button type="button" role="button" class="inforExpandButton open"></button>
+		<div class="content">
+			<p>blah blah</p>
+		</div>
+	</fieldset>
+</body>
+</html>

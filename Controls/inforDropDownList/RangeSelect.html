@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1">
+  <meta charset="utf-8">
+
+  <title>DropDown : Use before change event to manipulate value </title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+     $(function () {
+      $('#rangeList').dropdown({
+          beforechange: function(e, item){  //TODO Event not working
+            var input = $('#rangeList');
+
+            if (item === undefined) {
+              item = {value: ''}; //empty value....
+
+              if (!input.attr('range')){
+                item.value = input.getValue();
+                return item;  //no range was set they can free type
+              }
+
+              //check that the value is in range and return the value if it is ok otherwise return the start of the range again.
+              var val  = parseInt(input.getValue()),
+                range = input.attr('range').split(':'),
+                startRange = parseInt(range[0]),
+                endRange = parseInt(range[1]);
+
+              if ((val >= startRange) && (val<= endRange)) {
+                item = {value: val};
+              }
+              else {
+                item = {value: startRange};
+              }
+
+            } else {
+              input.attr('range',item.value);
+              //Option 1 just select the first value...
+              item.value = item.id;
+
+              //Option 2: Show the range as place holder...
+              //input.next().find('input').attr('placeholder',item.value);
+              //item.value = '';
+              //input.val('');
+            }
+            return item;
+          }
+      });
+
+      $('#serialize').click(function(){
+        console.log($('#rangeList').getValue());
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+     <label class="inforLabel" id="dropDown1Label" for="rangeList">Range</label>
+     <select id="rangeList" name="rangeList" class="inforDropDownList" >
+       <option value="1900">1900 : 2010</option>
+    </select>
+  </div>
+  <button class="inforFormButton" id="serialize">Serialize</button>
+</body>
+
+</html>
