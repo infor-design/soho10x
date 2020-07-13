@@ -849,10 +849,6 @@
     <value>New Node</value>
     <comment>Create a New tree Node</comment>
   </data>
- <data name="SelectMonthYear" xml:space="preserve">
-    <value>Select Month and Year</value>
-    <comment>Button that opens a dialog to set Month and Year</comment>
-  </data>
   <data name="AboutText" xml:space="preserve">
     <value>Copyright © 2014 Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners. www.infor.com.
     </value>

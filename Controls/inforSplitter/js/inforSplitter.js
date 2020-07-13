@@ -60,8 +60,8 @@
       this.options = opts;
 
       if (o.direction == 'v') {
-        this._sideA = $('#leftPane');
-        this._sideB = $('#rightPane');
+        this._sideA = $splitter.find('#leftPane');
+        this._sideB = $splitter.find('#rightPane');
         if (this._sideA.length === 0 && this._sideB.length === 0) {
           this._sideA = $splitter.find('.leftPane:first');
           this._sideB = $splitter.find('.rightPane:first');
@@ -334,7 +334,7 @@
         this._splitBar.css("top", this._sideA.height() + this._sideA.offset().top + 1);
       } else {
         if (Globalize.culture().isRTL) {
-          this._splitBar.css("left", this._sideB.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideB.offset().left + 15));
+          this._splitBar.css("left", this._sideB.width() + 22);
         } else {
           this._splitBar.css("left", this._sideA.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideA.offset().left + 5));
         }

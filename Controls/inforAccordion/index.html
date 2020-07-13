@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
-  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
 
   <title>Infor Accordion Control</title>
   <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
@@ -13,62 +14,33 @@
 
   <script>
     $().ready(function () {
-      //Globalize.culture("ar-SA");
-      $(".inforAccordion").inforAccordion({onExpand: function(e, ui) {
-        console.log(e, $(ui).parent());
-      }});
+      $(".inforAccordion").inforAccordion();
     });
   </script>
 </head>
 <body>
-  <div class="inforAccordion" style="width: 250px">
+  <div class="inforAccordion" style="width: 50%" role="navigation"> <!--Can have an explict width or flow to size fx..style="width: 250px;" -->
     <fieldset class="inforFieldSet" >
       <legend>
         <span class="inforFieldSetLabel">Title One</span>
       </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
+      <button type="button" role="button" class="inforExpandButton open" aria-expanded="true"></button>
       <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
-
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title Two</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
-
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title Three</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
-
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title Four</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
+          <ol class="expandedtext" id="exp6">
+            <li class="numberedList">Choose to print a detail or summary restatement register.</li>
+            <li class="numberedList">Specify <span class="boldtext">Yes</span> in <span class="boldtext">Create Restatement Journal Entries</span>.</li>
+            <li class="numberedList">Complete the remaining information on this page.</li>
+            <li class="numberedList">Click <span class="boldtext">Next</span>. Both registers are printed, but restatement journal entries are not.</li>
+          </ol>
       </div>
     </fieldset>
   </div>
+  <br>
+  <ol class="expandedtext"  id="exp7" >
+    <li class="numberedList">Choose to print a detail or summary restatement register.</li>
+    <li class="numberedList">Specify <span class="boldtext">Yes</span> in <span class="boldtext">Create Restatement Journal Entries</span>.</li>
+    <li class="numberedList">Complete the remaining information on this page.</li>
+    <li class="numberedList">Click <span class="boldtext">Next</span>. Both registers are printed, but restatement journal entries are not.</li>
+  </ol>
 </body>
 </html>

@@ -21,7 +21,7 @@
 
      function doLogin() {
       //Do something to login - just faking things here...
-      var loginOk = true;
+      var loginOk = false;
       if (loginOk) {
         //Go to the page you want...return true
         window.location.assign('http://www.infor.com');
@@ -40,16 +40,16 @@
 </head>
 
   <body class="inforSignInDialog">
-    <form class="inforSignInDialogControls" autocomplete="off">
+    <form class="inforSignInDialogControls">
 
       <div class="inforLogo"></div>
       <p class="inforApplicationName">Infor Ming.le</p>
 
       <label class="scr-only label" for="userId" data-localizedText="text:UserID"></label>
-      <input type="text" name="userId" id="userId" class="inforTextbox" data-localizedText="placeholder:UserID" /><br>
+      <input type="text" name="userId" id="userId" autocomplete="on" class="inforTextbox" data-localizedText="placeholder:UserID" /><br>
 
       <label class="scr-only label" for="password" data-localizedText="text:Password"></label>
-      <input type="password" name="password" id="password" data-localizedText="placeholder:Password" class="inforTextbox"/><br>
+      <input type="password" name="password" id="password" autocomplete="on" data-localizedText="placeholder:Password" class="inforTextbox"/><br>
 
       <label class="scr-only label" for="serverName" data-localizedText="text:ServerName"></label>
       <select class="inforDropDownList" name="serverName" id="serverName" data-localizedText="placeholder:ServerName">

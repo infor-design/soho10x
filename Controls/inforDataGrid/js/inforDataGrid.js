@@ -359,9 +359,7 @@
       gridMenuOptions: null,
       showColumnHeaders: true,
       frozenColumn: -1,
-      frozenRow: -1,
-      //persistSelections will keep records checked between filter/paging
-      persistSelections: false
+      frozenRow: -1
     },
     columnDefaults = {
       name: "",
@@ -612,11 +610,11 @@
       $summaryRowL = $("<div class='slick-summaryrow-columns slick-summaryrow-columns-left' />").appendTo($summaryRowScrollerL);
       $summaryRowR = $("<div class='slick-summaryrow-columns slick-summaryrow-columns-right' />").appendTo($summaryRowScrollerR);
       $summaryRow = $().add($summaryRowL).add($summaryRowR);
-      var $summaryRowSpacerL = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
+      $summaryRowSpacerL = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
         .css("width", getCanvasWidth() + scrollbarDimensions.width + "px")
         .appendTo($summaryRowScrollerL);
 
-      var $summaryRowSpacerR = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
+      $summaryRowSpacerR = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
         .css("width", getCanvasWidth() + scrollbarDimensions.width + "px")
         .appendTo($summaryRowScrollerR);
 
@@ -792,7 +790,7 @@
       //refresh dimensions
       viewportW = parseFloat($.css($container[0], "width", true));
 
-      availableWidth = viewportHasVScroll ? viewportW - scrollbarDimensions.width - 1 : viewportW,
+      availableWidth = viewportHasVScroll ? viewportW - scrollbarDimensions.width : viewportW,
       i = columns.length;
 
       canvasWidthL = canvasWidthR = 0;
@@ -888,6 +886,8 @@
       getHeadersWidth();
       $headerL.css("width", headersWidthL + "px");
       $headerR.css("width", headersWidthR + "px");
+	  $headerParentL.css("width", headersWidthL + "px");
+      $headerParentR.css("width", headersWidthR + "px");
       $headerRowSpacerL.css("width", canvasWidth + (viewportHasVScroll ? scrollbarDimensions.width : 0) + "px");
       $headerRowSpacerR.css("width", canvasWidth + (viewportHasVScroll ? scrollbarDimensions.width : 0) + "px");
 
@@ -1068,7 +1068,21 @@
         dirty = [], i;
 
       for (i = 0; i < allRows.length; i++) {
-        if (allRows[i].indicator === "dirty") {
+        if (allRows[i].indicator === "dirty" || allRows[i].indicator === "error") {
+          dirty.push(allRows[i]);
+        }
+      }
+      return dirty;
+    }
+
+    function getErrorRows(commitEdits) {
+      //Commit any pending edits...
+      var commitEdits = commitEdits || false,
+        allRows = getData(commitEdits).getItems(),
+        dirty = [], i;
+
+      for (i = 0; i < allRows.length; i++) {
+        if (allRows[i].indicator === "error") {
           dirty.push(allRows[i]);
         }
       }
@@ -1078,14 +1092,6 @@
     //add and show the column picker
     function columnPersonalization(button) {
       saveColumns();  //save once ..
-
-      if (columnpicker) {
-        columnpicker.destroy();
-        columnpicker = null;
-      }
-      // clean up any column picker menus
-      $('.slick-columnpicker').remove();
-
       if (columnpicker == null) {
         columnpicker = new Slick.Controls.ColumnPicker(self, options);
       }
@@ -1118,13 +1124,13 @@
       while ((elem = elem.parentNode) !== document.body) {
         // bind to scroll containers only
         if (elem === $viewport[0] || elem.scrollWidth !== elem.clientWidth || elem.scrollHeight !== elem.clientHeight) {
-          $(elem).on("scroll.ancestors", handleActiveCellPositionChange);
+          $(elem).on("scroll", handleActiveCellPositionChange);
         }
       }
     }
 
     function unbindAncestorScrollEvents() {
-        $canvas.parents().off("scroll.ancestors");
+      $canvas.parents().off("scroll");
     }
 
     function getNestedColumn(columnId) {
@@ -1149,11 +1155,7 @@
         $header = $headers.children().eq(idx);
       }
 
-      if (hasNestedColumns && idx != null && columnDef.spacers.length > 0) {
-        $header = $headerParents.children().children().eq(idx);
-      }
-
-      if (hasNestedColumns && idx == null) {
+      if (hasNestedColumns) {
         $header = $("#" + uid+columnId);
         column = getNestedColumn(columnId);
         if (title !== undefined) {
@@ -1504,7 +1506,7 @@
           var columnMsgData = {};
           for (var oldColumnIndex in item.validationMessages.data){
             var messages = item.validationMessages.data[oldColumnIndex];
-            if (messages && columnsBeforeReordered[oldColumnIndex]) {
+            if (messages) {
               delete item.validationMessages.data[oldColumnIndex];
               var newColumnIndex = getColumnIndex(columnsBeforeReordered[oldColumnIndex].id);
               columnMsgData[newColumnIndex] = messages;
@@ -1623,7 +1625,7 @@
         if (i < firstResizable || (options.forceFitColumns && i >= lastResizable)) {
           return;
         }
-        var $col = $(e);
+        $col = $(e);
 
         $("<div class='slick-resizable-handle' />")
           .appendTo(e)
@@ -1918,7 +1920,7 @@
     }
 
     function setScroller() {
-    if ( options.frozenColumn > -1 ) {
+      if ( options.frozenColumn > -1 ) {
         $headerScrollContainer = $headerScrollerR;
         $headerRowScrollContainer = $headerRowScrollerR;
         $summaryRowScrollContainer = $summaryRowScrollerR;
@@ -2069,8 +2071,10 @@
       $style.remove();
     }
 
-    function destroy(isEditor) {
-      if (!isEditor) {
+    function destroy() {
+      // It's useless to cancel edit if this grid
+      // is a LookupGrid or is readonly
+      if (!this.isLookupGrid && this.getOptions().editable) {
         getEditorLock().cancelCurrentEdit();
       }
 
@@ -2099,10 +2103,6 @@
 
       if ($filterMenuButton) {
         $filterMenuButton.remove();
-      }
-
-      if (columnpicker) {
-        columnpicker.destroy();
       }
 
       $container.next(".inforGridFooter").remove();
@@ -2190,14 +2190,13 @@
       while (total < availWidth) {
         var growProportion = availWidth / total;
         for (var i = 0; i < columns.length && total < availWidth; i++) {
-          c = columns[i];
-          if (!c.resizable || c.maxWidth <= c.width) {
-            continue;
-          }
-          var growSize = Math.min(Math.floor(growProportion * c.width) - c.width, (c.maxWidth - c.width) || 1000000) || 1;
-          growSize = growSize < 0 ? 0 : growSize;
-          total += growSize;
-          widths[i] += growSize;
+        c = columns[i];
+        if (!c.resizable || c.maxWidth <= c.width) {
+          continue;
+        }
+        var growSize = Math.min(Math.floor(growProportion * c.width) - c.width, (c.maxWidth - c.width) || 1000000) || 1;
+        total += growSize;
+        widths[i] += growSize;
         }
         if (prevTotal == total) {  // avoid infinite loop
         break;
@@ -2397,10 +2396,10 @@
       }
     }
 
-    function setSortColumn(columnId, ascending, setSortColumnsOnly) {
+    function setSortColumn(columnId, ascending) {
       var cols = [];
       cols.push({ columnId: columnId, sortAsc: ascending});
-      setSortColumns(cols, setSortColumnsOnly);
+      setSortColumns(cols);
     }
 
     function getSortColumns() {
@@ -2409,7 +2408,7 @@
 
     var lastSort = "";
 
-    function setSortColumns(cols, setSortColumnsOnly) {
+    function setSortColumns(cols) {
       sortColumns = cols;
       if (sortColumns.length == 0) {
         return;
@@ -2470,9 +2469,7 @@
       //set the state of the grid and fire the events
       personalizationInfo.sortColumns = sortColumns;
       dataView.setPagingOptions({sortColumns: sortColumns, pageNum: 0});
-      if (!setSortColumnsOnly) {
-        dataView.requestNewPage("sort");
-      }
+      dataView.requestNewPage("sort");
       trigger(self.onPersonalizationChanged, getGridPersonalizationInfo('SortColumn'));
     }
 
@@ -2496,29 +2493,14 @@
       setCellCssStyles(options.selectedCellCssClass, hash);
 
       trigger(self.onSelectedRowsChanged, { rows: getSelectedRows(), active: ranges.active  }, e);
-    }
 
-    function updateFooterSelectionCounter() {
       //set the footer status
-      if ((selectedRecordArea == null || selectedRecordArea.length === 0) && options.showFooter) {
+      if (selectedRecordArea==null && options.showFooter) {
         selectedRecordArea = $container.next(".inforGridFooter").find(".slick-records-status");
       }
 
-      if (options.showFooter && selectedRecordArea.length != 0) {
-        var selectedPhrase,
-            visible = selectedRows.length;
-
-        if (options.persistSelections) {
-          var total = selectionModel.getPersistedIds().length;
-
-          selectedPhrase = Globalize.localize("Selected") + (total < 10 ? " " + total : total)
-              + (total === visible ? '' : ' (' + Globalize.localize('Displaying') + visible + ')');
-        }
-        else {
-          selectedPhrase = Globalize.localize("Selected") + (visible < 10 ? " " + visible : visible);
-        }
-        selectedRecordArea.html(selectedPhrase);
-      }
+      if (options.showFooter && selectedRecordArea.length!=0)
+        selectedRecordArea.html(Globalize.localize("Selected") + (selectedRows.length < 10 ? " " + selectedRows.length : selectedRows.length));
     }
 
     function getColumnIndexById(id) {
@@ -2534,7 +2516,7 @@
       var o = options;
       checkboxSelector = new Slick.CheckboxSelectColumn({ cssClass: "slick-cell-checkboxsel" });
 
-      //TODO: In case we don't want to mod the original array..
+      //TODO: In case we dont want to mod the orginal array..
       columnsInput = columnsInput.slice(0);
       if (o.showDrillDown && getColumnIndexById("drilldown") === -1) {
         columnsInput.splice(0, 0, {id: "drilldown", builtin: true, selectable: false, reorderable:false, sortable:false, resizable: false, width: 22, formatter: DrillDownCellFormatter, cssClass: "non-data-cell" });
@@ -2567,30 +2549,28 @@
       }
     }
 
-    function getVisibleItems(includeHeader) {
-        var visibleItems = [];
-        var headerRow = {};
-        $(getColumns()).each(function (i, col) {
-            if (!(col.cssClass && (col.cssClass.indexOf('non-data-cell') >= 0 || col.cssClass.indexOf('isCheckboxCell') >= 0))) {
-              headerRow[col.id] = col.name;
-            }
-        });
-
-        if (includeHeader) {
-          visibleItems.push(headerRow);
+        function getVisibleItems(includeHeader) {
+            var visibleItems = [];
+            var headerRow = {};
+            $(getColumns()).each(function (i, col) {
+                if (!(col.cssClass && (col.cssClass.indexOf('non-data-cell') >= 0 || col.cssClass.indexOf('isCheckboxCell') >= 0))) {
+          headerRow[col.id] = col.name;
         }
-
-        $(getData().getItems()).each(function (rowIndex, row) {
-            var visibleRow = {};
-            $(getColumns()).each(function (colIndex, hCol) {
-                if (!(hCol.cssClass && (hCol.cssClass.indexOf('non-data-cell') >= 0 || hCol.cssClass.indexOf('isCheckboxCell') >= 0))) {
-                  visibleRow[hCol.id] = row[hCol.id] == null ? "" : row[hCol.id];
-                }
             });
-            visibleItems.push(visibleRow);
-        });
-        return visibleItems;
-    }
+            if (includeHeader) {
+                visibleItems.push(headerRow);
+            }
+            $(getData().getItems()).each(function (rowIndex, row) {
+                var visibleRow = {};
+                $(getColumns()).each(function (colIndex, hCol) {
+                    if (!(hCol.cssClass && (hCol.cssClass.indexOf('non-data-cell') >= 0 || hCol.cssClass.indexOf('isCheckboxCell') >= 0))) {
+              visibleRow[hCol.id] = row[hCol.id] == null ? "" : row[hCol.id];
+          }
+                });
+                visibleItems.push(visibleRow);
+            });
+            return visibleItems;
+        }
 
     function updateColumnCaches() {
       // Pre-calculate cell boundaries.
@@ -2803,6 +2783,7 @@
       processHiddenColumns(defaultColumns);
       applyColumnWidths();
       updateFilterRow();
+      trigger(self.onPersonalizationChanged, getGridPersonalizationInfo('ResetColumnLayout'));
     }
 
     function processHiddenColumns(cols) {
@@ -3099,7 +3080,7 @@
       var validationResults = editor.validate(),
         cellNode = getCellNode(row, cell);
 
-      if (item.__group || item.__groupTotals) {
+      if (item !== undefined && item != null && (item.__group || item.__groupTotals)) {
         return;
       }
 
@@ -3235,7 +3216,7 @@
       }
     }
 
-    function setRowStatus (rownum, status, message) { //can be "dirty", "new", "error" or "" to clear.
+    function setRowStatus(rownum, status, message) { //can be "dirty", "new", "error" or "" to clear.
       if (status === "error") {
         addValidationMessage(rownum, null, message);
         return;
@@ -3442,6 +3423,7 @@
       if (offset != oldOffset) {
         var range = getVisibleRange(newScrollTop);
         cleanupRows(range);
+        updateRowPositions();
       }
 
       if (prevScrollTop != newScrollTop) {
@@ -3503,30 +3485,16 @@
     function getDataItemValueForColumn(item, field) {
       if (options.dataItemColumnValueExtractor) {
         return options.dataItemColumnValueExtractor(item, field, self);
-      }
-
-      if (options.dataItemColumnValueExtractor) {
-        return options.dataItemColumnValueExtractor(item, field, self);
       } else if (!item[field] && field !== undefined && field.indexOf(".") > -1) {
         var fn = getItemCache[field] = getItemCache[field] || new Function(["item", "field"], "with(item){try{return "+field+";}catch(e){return null;}}");
         return fn(item, field);
       } else {
-         var value = item[field];
-         if (typeof value === 'string') {
-           value = value.replace(/&amp;/g, '&');
-           value = value.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-         }
-         return value;
+        return item[field];
       }
     }
 
     var setItemCache = {};
     function setDataItemValueForColumn(item, field, value) {
-      if (typeof value === 'string') {
-         value = value.replace(/&/g, '&amp;');
-         value = value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      }
-
       if (options.dataItemColumnValueSetter) {
         options.dataItemColumnValueSetter(item, field, value, self);
       } else if (!item[field] && field !== undefined && field.indexOf(".") > -1) {
@@ -4780,7 +4748,6 @@
             }
             else {
               var handleLinkClick = !options.editable;
-
               if (options.editable) {
                 if (currentEditor) {
                   // adding new row
@@ -4800,9 +4767,11 @@
                   }
                 }
               }
-              if (handleLinkClick) {
+              if (handleLinkClick)
+              {
                 var link = $(e.currentTarget).find("a");
-                if (link.length > 0) {
+                if (link.length > 0)
+                {
                   link.click();
                 }
               }
@@ -4842,6 +4811,10 @@
       var cell = getCellFromEvent(e);
       if (!cell || (currentEditor !== null && activeRow == cell.row && activeCell == cell.cell)) {
         return;
+      }
+
+      if ($(e.target).is('.drilldown') || $(e.target).closest('.drilldown').length > 0) {
+          return;
       }
 
       trigger(self.onClick, { row: cell.row, cell: cell.cell }, e);
@@ -4971,6 +4944,7 @@
       if (!cellNode.className) {
         node = cellNode[0];
       }
+
       var cls = /l\d+/.exec(node.className);
       if (!cls) {
         throw "getCellFromNode: cannot get cell - " + node.className;
@@ -5056,7 +5030,7 @@
         if ($(activeCellNode).find(".checkbox").length == 0) {
           $(activeCellNode).removeClass("active");
         } else {
-          $(activeCellNode).find(".checkbox").removeClass("is-focused");
+          $(activeCellNode).removeClass("active").find("input").removeClass("focus");
         }
         $(rowsCache[activeRow].rowNode).removeClass("active");
       }
@@ -5143,13 +5117,17 @@
     }
 
     function makeActiveCellNormal(keepCurrentFocus) {
-
       if (activeCellNode && !keepCurrentFocus) {
         removeCellFocus($(activeCellNode));
       }
       if (!currentEditor) { return; }
 
-      if (keepCurrentFocus && currentEditor instanceof LookupCellEditor) {
+      // We don't want LookupCell to stay in edit mode while its popup is open
+      if (keepCurrentFocus && currentEditor instanceof LookupCellEditor && currentEditor.isPopupOpen()) {
+        return;
+      }
+
+      if (keepCurrentFocus && currentEditor.stayInEditMode && currentEditor.stayInEditMode()) {
         return;
       }
 
@@ -5216,9 +5194,7 @@
         column: columnDef,
         item: item || {},
         commitChanges: commitEditAndSetFocus,
-        cancelChanges: cancelEditAndSetFocus,
-        row: activeRow,
-        cell: activeCell
+        cancelChanges: cancelEditAndSetFocus
       });
 
       if (item) {
@@ -5378,8 +5354,8 @@
     }
 
     function scrollRowToTop(row) {
-    scrollTo( rowPositionCache[row].top );
-    render();
+      scrollTo( rowPositionCache[row].top );
+      render();
     }
 
     function getColspan(row, cell) {
@@ -5747,7 +5723,11 @@
 
     function getPrevNextFocusableFilterColumn(direction)
     {
-      var activePosX = getCellFromNode(activeHeaderCell.parent());
+      var node = activeHeaderCell.parent();
+      if (node.is('div.inforTriggerField')) {
+        node = node.parent();
+      }
+      var activePosX = getCellFromNode(node);
       var columns = getColumns();
       var index = activePosX + direction;
 
@@ -5766,7 +5746,7 @@
     {
       var newCell;
       var columns = getColumns();
-      var children = activeHeaderCell.parent().children(':visible:not(label)');
+      var children = activeHeaderCell.parent().children();
       var nodeIndex = children.index(activeHeaderCell);
 
       var stepFunctions = {
@@ -5789,7 +5769,7 @@
             if (prev >= 0)
             {
               newCell = $("#" + uid + "_headercell" + prev);
-              children = newCell.children(':visible');
+              children = newCell.children();
               nodeIndex = children.length;
               index = prev;
             }
@@ -5808,14 +5788,9 @@
             if (next < columns.length)
             {
               newCell = $("#" + uid + "_headercell" + next);
-              children = newCell.children(':visible');
+              children = newCell.children();
               nodeIndex = -1;
               index = next;
-            } else {
-              //Go To first cell
-              makeHeaderCellNormal();
-              setActiveCell(0, (options.showStatusIndicators ? 1 :0), options.autoEdit);
-              return null;
             }
           }
 
@@ -5843,6 +5818,7 @@
     {
 
       var isInHeader = activeHeaderCell.closest(".slick-headerrow-column").length > 0;
+
       var navFunc = isInHeader ? navigateFilter : navigateHeader;
 
       if (e.which == 37) {
@@ -5851,7 +5827,7 @@
       else if (e.which == 39) {
         navFunc("right");
       }
-      else if (e.which == 40 && isInHeader) {
+      else if (e.which == 40) {
         navFunc("down");
       }
       else if (e.which == 38 && isInHeader) {
@@ -5877,14 +5853,20 @@
     function makeHeaderActive(node, columnIndex)
     {
       makeHeaderCellNormal();
+
+
       activeHeaderCell = node;
       activeHeaderCell.addClass("active");
       activeHeaderCell.attr("tabindex", 0);
 
       activeHeaderCell.on("keydown", handleHeaderKeyDown);
-
       activeHeaderCell.focus();
       activeHeader = columnIndex;
+
+      if (activeHeaderCell && activeHeaderCell.hasClass('inforTriggerField')) {
+        console.log(node, activeHeaderCell)
+        activeHeaderCell.find('input').focus();
+      }
 
       if (activeCellNode)
       {
@@ -6170,40 +6152,8 @@
       return selectedRows;
     }
 
-    function getPersistedRowIds() {
-      return selectionModel.getPersistedIds();
-    }
-
-    function setPersistedRowIds(ids) {
-      selectionModel.setPersistedIds(ids);
-    }
-
-    function getPersistedDataItems() {
-      var dataItems = [],
-          persistedIds = getPersistedRowIds();
-
-      for (var i = 0; i < persistedIds.length; i++) {
-        dataItems.push(dataView.getItemById(persistedIds[i]));
-      }
-
-      return dataItems;
-    }
-
-    function clearPersistedSelections() {
-      setSelectedRows([]);
-      selectionModel.clearPersistedIds();
-      updateFooterSelectionCounter();
-      invalidateAllRows();
-      render();
-    }
-
     function setSelectedRows(rows, active) {
       selectionModel.setSelectedRanges(rowsToRanges(rows), active);
-      updateFooterSelectionCounter();
-    }
-
-    function uncheckPersistedRow(row) {
-      selectionModel.uncheckPersistedRow(row);
     }
 
     function selectAllRows() {
@@ -6475,10 +6425,7 @@
         }
         //scroll to top
         scrollRowIntoView(0, false);
-        //only blank out selections if we're not persisting them
-        if (!getOptions().persistSelections) {
-          setSelectedRows([]);
-        }
+        setSelectedRows([]);
       }
 
       isFiltering = false;
@@ -6519,7 +6466,7 @@
 
         if ($this.data("filterType")==ColumnContentsFilter())
         {
-          $this.addClass('inforFilterButton contains');
+          $this.addClass('inforFilterButton equals');
           $this.data("selections",null);
         }
 
@@ -6531,135 +6478,119 @@
       columnFilters = {};
       dataView.refresh();
 
-      if (pageInfo) {
-        pageInfo.filters = {};
-      }
       if (!filterInResults) {
         var pageInfo = dataView.getPagingInfo();
+        pageInfo.filters = {};
+        dataView.setPagingOptions(pageInfo);
         dataView.requestNewPage("clearFilter");
       }
-
-      dataView.setPagingOptions(pageInfo);
-      updateFilterRow();
     }
 
     var currentButton = "";
-    var gridTextFilters = {
-        equals: "EqualsStr",
-        doesNotEqual: "DoesNotEqual",
-        contains: "Contains",
-        doesNotContain: "DoesNotContain",
-        isEmpty: "IsEmpty",
-        isNotEmpty: "IsNotEmpty",
-        startsWith: "StartsWith",
-        doesNotStartWith: "DoesNotStartWith",
-        endsWith: "EndsWith",
-        doesNotEndWith: "DoesNotEndWith"
-    };
 
     /*Return a filter button with events for the filter based on column type*/
     function getFilterButton(columnId, filterType, initialValue, initialToolTip) {
-        var button = $("<button type='button' tabindex='-1' class='inforFilterButton " + initialValue + "'><span></span><span class='scr-only'>Filter Type</span></button>");
-        button.data("columnId", columnId);
-        button.data("filterType", filterType);
-        button.data("isOpen", false);
-        //set the initial tooltip
-        button.attr("title", Globalize.localize(initialToolTip)).tooltip();
-        button.off('click.filter').on('click.filter', function(e) {
-            var $button = $(this),
-                currentMenu = $('#inforFilterConditions');
 
-            if (currentMenu.length > 0) {
-                if (currentMenu.is(":visible")) {
-				  $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
-				  $('#inforFilterConditions').remove();
-				}
-                $(document).off('click.popupmenu');
-                if ($button.data('popupmenu')) {
-                    $button.data('popupmenu').destroy();
-                }
+      var button = $("<button type='button' tabindex='-1' class='inforFilterButton "+initialValue+"'><span></span><span class='scr-only'>Filter Type</span></button>");
+      button.data("columnId", columnId);
+      button.data("filterType", filterType);
+      button.data("isOpen", false);
+      //set the initial tooltip
+      button.attr("title",Globalize.localize(initialToolTip)).tooltip();
+      button.off('click.filter').on('click.filter', function(e) {
+          var $button = $(this),
+            currentMenu = $('#inforFilterConditions');
+
+          if (currentMenu.length > 0) {
+          //  if (currentMenu.is(":visible")) {
+              $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
+              $('#inforFilterConditions').remove();
+          //  }
+            $(document).off('click.popupmenu');
+            if ($button.data('popupmenu')) {
+              $button.data('popupmenu').destroy();
             }
-            currentButton = button.data("columnId");
-            //different menus for each filter option
-            var filterType = $(this).data("filterType");
-            var $textFilterData = $('<ul id="inforFilterConditions" class="popupmenu divider">');
+          }
+          currentButton = button.data("columnId");
 
-            $.each(gridTextFilters, function (key, value) {
-                $textFilterData.append($('<li><span class="icon ' + key + '"></span><a href="#' + key + '">' + value + '</a></li>'));
+          //different menus for each filter option
+          var filterType = $(this).data("filterType");
+
+          if (filterType=="TextFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon contains"></span><a href="#contains">Contains</a></li><li><span class="icon doesNotContain"></span><a href="#doesNotContain">DoesNotContain</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon startsWith"></span><a href="#startsWith">StartsWith</a></li><li><span class="icon doesNotStartWith"></span><a href="#doesNotStartWith">DoesNotStartWith</a></li><li><span class="icon endsWith"></span><a href="#endsWith">EndsWith</a></li><li><span class="icon doesNotEndWith"></span><a href="#doesNotEndWith">DoesNotEndWith</a></li></ul>');
+
+          if (filterType=="SelectFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li></ul>');
+
+          if (filterType=="CheckboxFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon eitherSelectedorNotSelected"></span><a href="#eitherSelectedorNotSelected">EitherSelectedorNotSelected</a></li><li><span class="icon checked"></span><a href="#selected">Selected</a></li><li><span class="icon notChecked"></span><a href="#notSelected">NotSelected</a></li></ul>');
+
+          if (filterType=="DateFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon today"></span><a href="#today">Today</a></li><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">GreaterThan</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
+
+          if (filterType=="IntegerFilter" || filterType=="DecimalFilter" || filterType=="PercentFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">GreaterThan</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
+
+          if (filterType=="LookupFilter")
+              $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">Equals</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">Does Not equal</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">Is Empty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">Is Not Empty</a></li></ul>');
+
+          var col = columns[getColumnIndex(columnId)];
+          if (col.filterExcludeList) {
+            $("#inforFilterConditions").find(col.filterExcludeList).parent().remove();
+          }
+
+          if (filterType=="ColumnContentsFilter") {
+            var isEmpty = addContentsFilterMenu(col, button);
+            if (isEmpty)
+              return;
+          }
+
+          if (filterType !== "ColumnContentsFilter") {
+            $('#inforFilterConditions').find('a[href]').each(function () {
+              $(this).text(Globalize.localize($(this).text()));
             });
+          }
 
-            //different menus for each filter option
-            var filterType = $(this).data("filterType");
+          $button.popupmenu({
+            menu: 'inforFilterConditions',
+            trigger: 'immediate'
+          }).on('selected', function(a, anchor) {
+            var el = $(this),
+              action = anchor.attr('href').substr(1);
 
-            if (filterType == "TextFilter")
-                $('body').append($textFilterData);
-            if (filterType == "SelectFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li></ul>');
-            if (filterType == "CheckboxFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon eitherSelectedorNotSelected"></span><a href="#eitherSelectedorNotSelected">EitherSelectedorNotSelected</a></li><li><span class="icon checked"></span><a href="#selected">Selected</a></li><li><span class="icon notChecked"></span><a href="#notSelected">NotSelected</a></li></ul>');
-            if (filterType == "DateFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon today"></span><a href="#today">Today</a></li><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">Greater Than</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
-            if (filterType == "IntegerFilter" || filterType == "DecimalFilter" || filterType == "PercentFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">Greater Than</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
-            if (filterType == "LookupFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">Equals</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">Does Not equal</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">Is Empty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">Is Not Empty</a></li></ul>');
+            if (el.data("filterType")=="ColumnContentsFilter")
+              return;
 
-            var col = columns[getColumnIndex(columnId)];
-            if (col.filterExcludeList) {
-                $("#inforFilterConditions").find(col.filterExcludeList).parent().remove();
+            var isChanged=!el.hasClass(action);
+
+            //toggle the button icon..
+            el.removeClass();
+            el.addClass('inforFilterButton '+action);
+
+            //set the tooltip
+            el.data('tooltip').content = anchor.text();
+
+            //apply filter...
+            if (el.data("filterType")=="CheckboxFilter" && isChanged)
+              applyFilter();
+
+            if (action=="isNotEmpty" || action=="isEmpty")
+              applyFilter();
+
+            if (action=="today")
+              $.datepicker.selectToday(el.next().find("input"));
+
+            el.focus();
+          }).on('close.popupmenu', function() {
+            $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
+            $('#inforFilterConditions').remove();
+            if ($button.data('popupmenu')) {
+              $button.data('popupmenu').destroy();
             }
+          });
+      });
 
-            if (filterType == "ColumnContentsFilter") {
-                var isEmpty = addContentsFilterMenu(col, button);
-                if (isEmpty)
-                    return;
-            }
-
-			if (filterType !== "ColumnContentsFilter") {
-				$('#inforFilterConditions').find('a[href]').each(function () {
-					$(this).text(Globalize.localize($(this).text()));
-				});
-			}
-
-            $button.popupmenu({
-                menu: 'inforFilterConditions',
-                trigger: 'immediate'
-            }).on('selected', function (a, anchor) {
-                var el = $(this),
-                    action = anchor.attr('href').substr(1);
-
-                if (el.data("filterType") == "ColumnContentsFilter")
-                    return;
-
-                var isChanged = !el.hasClass(action);
-
-                //toggle the button icon..
-                el.removeClass();
-                el.addClass('inforFilterButton ' + action);
-
-                //set the tooltip
-                if (el && el.data('tooltip')) {
-                    el.data('tooltip').content = anchor.text();
-                }
-
-                //apply filter...
-                if (el.data("filterType") == "CheckboxFilter" && isChanged)
-                    applyFilter();
-                if (action == "isNotEmpty" || action == "isEmpty")
-                    applyFilter();
-                if (action == "today")
-                    $.datepicker.selectToday(el.next().find("input"));
-                el.focus();
-            }).on('close.popupmenu', function() {
-	            $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
-	            $('#inforFilterConditions').remove();
-	            if ($button.data('popupmenu')) {
-	              $button.data('popupmenu').destroy();
-	            }
-            });
-        });
-
-        return button;
+      return button;
     }
 
     function addSelection(button, $this, isChecked) {
@@ -6673,6 +6604,7 @@
       for (var i = 0; i < selections.length; i++) {
         if (selections[i].id==$this.attr("id")) {
           selections[i].isChecked=isChecked;
+          found=true;
         }
       }
 
@@ -6695,7 +6627,7 @@
       if (data.length==0 && !suppliedValues)
         return true;
 
-      distinctValues.push({id:"selectAll", html: Globalize.localize("SelectDeselect")});
+      distinctValues.push({id:"selectAll", html: Globalize.localize("SelectAll")});
 
       if (suppliedValues) {
           for (i = 0; i < suppliedValues.length; i++) {
@@ -6740,6 +6672,10 @@
 
       for (i = 0; i < distinctValues.length; i++) {
         var isChecked = true;
+
+		if(col.contentsFilterSettings && col.contentsFilterSettings.startWithEmptyCheckboxes)
+    		  isChecked = !col.contentsFilterSettings.startWithEmptyCheckboxes;
+
         //check previous selections and retick
         if (prevSelections!=undefined) {
           for (j = 0; j < prevSelections.length; j++) {
@@ -6763,7 +6699,7 @@
       if (prevSelections==undefined) {
         var selections = [];
         for (i = 0; i < distinctValues.length; i++) {
-          selections.push({id: distinctValues[i].id, isChecked: true});
+          selections.push({id: distinctValues[i].id, isChecked: isChecked});
         }
         button.data("selections", selections);
       }
@@ -6785,7 +6721,46 @@
           });
 
         } else {
-          addSelection(button,$this,isChecked);
+			var selections = [];
+        	var inputs = $this.closest(".popupmenu").find("input");
+            inputs.each(function() {
+              var input = $(this);
+              var isChecked = input.prop("checked");
+              var id = input.prop("id");
+              selections.push({id: id, isChecked: isChecked});
+
+            });
+
+            button.data("selections", selections);
+
+			addSelection(button,$this,isChecked);
+
+			selections = button.data("selections");
+			var that = $($this.closest(".popupmenu").find("input")[0]);
+			for(var j = 1; j < selections.length; j++){
+				var checked = true;
+				if (!selections[j].isChecked){
+					checked = false;
+
+					if(selections[0].id == "selectAll" && selections[0].isChecked){
+						selections[0].isChecked = false;
+
+					if(that.attr('id') == "selectAll")
+						that.prop("checked", selections[0].isChecked);
+					}
+					break;
+				}
+
+				if(checked){
+					if(selections[0].id == "selectAll"){
+						selections[0].isChecked = true;
+
+						if(that.attr('id') == "selectAll")
+						  that.prop("checked", selections[0].isChecked);
+					}
+				}
+			}
+
         }
 
         //apply filter...
@@ -6835,7 +6810,7 @@
 
       $(header).empty();
       //add the button
-      var $button = getFilterButton(column.id,  ColumnContentsFilter(), "contains", "SelectContents");
+      var $button = getFilterButton(column.id,  ColumnContentsFilter(), "equals", "SelectContents");
 
       $(header).css("text-align","center");
 
@@ -6872,82 +6847,14 @@
           }
         });
 
-      if (column.cssClass) {
-        input.addClass(column.cssClass);
-      }
-
       if (column.maxLength) {
         input.attr("maxLength",column.maxLength).maxLength();
       }
 
-      var defaultFilterName = "contains";
-
-      if (typeof column.filterExcludeList != "undefined") {
-          var isDiff = false,
-              exList = [],
-              txtFilters = [],
-              arrDiff = [],
-              filterExcludeList = (column.filterExcludeList).replace(/\./g, '').split(",");
-
-          $.each(filterExcludeList, function () {
-              exList.push($.trim(this));
-          });
-
-          $.each(gridTextFilters, function (key, value) {
-              txtFilters.push(key);
-          });
-
-          arrDiff = $(txtFilters).not(exList).get();
-
-          defaultFilterName = arrDiff[0];
-      }
-
-      var theFilter = (typeof(filters[column.id]) != "undefined")?filters[column.id].operator:"contains";
-      var $button = getFilterButton(column.id, TextFilter(), theFilter, getTooltipContent(theFilter));
+      var $button = getFilterButton(column.id, TextFilter(), "contains", "Contains");
 
       restoreLastFilter(gridObj, $button, column);
       input.before($button);
-    }
-
-    /**
-     * Getting the corresponding Name based from the filter value
-     * return String
-     * */
-    function getTooltipContent(filter){
-    	var tooltip;
-    	switch(filter){
-    	case 'equals':
-    		tooltip = "Equals";
-    		break;
-    	case 'doesNotEqual':
-    		tooltip = "DoesNotEqual";
-    		break;
-    	case 'doesNotContain':
-    		tooltip = "DoesNotContain";
-    		break;
-    	case 'isEmpty':
-    		tooltip = "IsEmpty";
-    		break;
-    	case 'isNotEmpty':
-    		tooltip = "IsNotEmpty";
-    		break;
-    	case 'startsWith':
-    		tooltip = "StartsWith";
-    		break;
-    	case 'doesNotStartWith':
-    		tooltip = "DoesNotStartWith";
-    		break;
-    	case 'endsWith':
-    		tooltip = "EndsWith";
-    		break;
-    	case 'doesNotEndWith':
-    		tooltip = "DoesNotEndWith";
-    		break;
-	    	default:
-	    		tooltip = "Contains";
-    	}
-
-    	return tooltip;
     }
 
     function addSelectFilterColumn(gridObj, column) {
@@ -6963,7 +6870,7 @@
       }
 
       $(header).empty();
-        var inputWidth = column.width - 15, //column width - margin - button size - trigger button size.
+        var inputWidth = $(header).width() - 86, //column width - margin - button size - trigger button size.
         option_str = "", useCodes = false, hasEmpty = false;
 
       if (column.options) {
@@ -7065,7 +6972,8 @@
       }
 
       var input = $("<input data-mode='0' class='inforLookupField' type='text'>")
-        .attr('id', column.id)
+	    //LMCLIENT-23679 Adding id to lookupfilter causes conflict with column personalization functionality
+        //.attr('id', column.id)
         .data("columnId", column.id)
         .data("filterType", filterType)
         .width($(header).width() - 46) // 4 pixel padding + width of the button
@@ -7108,15 +7016,19 @@
         }
       });
 
-      input.change(function(event) {
-        gridObj.applyFilter();
-        event.preventDefault();
-        event.stopPropagation();
-        $(this).focus();
-      });
+      var filterOnChange = (column.editorOptions && typeof column.editorOptions.filterOnChange === "boolean")
+          ? column.editorOptions.filterOnChange : true;
+
+      if (filterOnChange) {
+          input.change(function(event) {
+            gridObj.applyFilter();
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).focus();
+          });
+      }
 
       var $button = getFilterButton(column.id, filterType, initialValue, initialTooltip);
-
       restoreLastFilter(gridObj, $button, column);
 
       input.closest(".inforTriggerField").before($button);
@@ -7130,7 +7042,6 @@
       lastValue = (filters && filters[column.id] ? filters[column.id].value : undefined);
 
       $(header).empty();
-      var inputWidth = column.width - 45;  //column width - margin - button size with padding
 
       var filterType = (isDecimal ?  DecimalFilter() :  IntegerFilter());
 
@@ -7138,7 +7049,7 @@
         .data("columnId", column.id)
         .data("filterType", filterType)
         .addClass((isDecimal  ? "numericOnly" : "decimalOnly"))
-        .width(inputWidth)
+        .width($(header).width() - 4 - 25)
         .val(lastValue)
         .appendTo(header)
         .numericOnly(isDecimal, (column.positiveOnly ? column.positiveOnly : false))
@@ -7151,10 +7062,6 @@
             $(this).focus();
           }
         });
-
-      if (column.cssClass) {
-        input.addClass(column.cssClass);
-      }
 
       if (column.maxLength) {
         input.attr("maxLength",column.maxLength).maxLength();
@@ -7199,11 +7106,7 @@
           }
         });
 
-      input.width(column.width - 45);  //4 pixel padding / width of the button
-
-      if (column.cssClass) {
-        input.addClass(column.cssClass);
-      }
+      input.width($(header).width() - 44);  //4 pixel padding / width of the button
 
       if (column.maxLength) {
         input.attr("maxLength",column.maxLength).maxLength();
@@ -7222,11 +7125,8 @@
         colValue="";
 
       colValue= colValue.toString().toLowerCase();
-
       if (filterValue) {
         filterValue = filterValue.toLowerCase();
-        filterValue = filterValue.replace(/&/g, '&amp;');
-        filterValue = filterValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         pattern = filterValue.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
         filterRegx = new RegExp(pattern, "i");
       }
@@ -7587,7 +7487,6 @@
       // Methods
       "registerPlugin": registerPlugin,
       "unregisterPlugin": unregisterPlugin,
-	  "getPlugin": getPlugin,
       "getColumns": getColumns,
       "setColumns": setColumns,
             "getVisibleItems": getVisibleItems,
@@ -7605,19 +7504,14 @@
       "getFilteredData" : getFilteredData,
       "getDataLength": getDataLength,
       "getDirtyRows": getDirtyRows,
+      "getErrorRows": getErrorRows,
       "getSelectableLength": getSelectableLength,
 
       "getDataItem": getDataItem,
       "getSelectionModel": getSelectionModel,
       "setSelectionModel": setSelectionModel,
       "getSelectedRows": getSelectedRows,
-      "getPersistedRowIds": getPersistedRowIds,
-      "setPersistedRowIds": setPersistedRowIds,
-      "getPersistedDataItems": getPersistedDataItems,
-      "clearPersistedSelections": clearPersistedSelections,
       "setSelectedRows": setSelectedRows,
-      "updateFooterSelectionCounter": updateFooterSelectionCounter,
-      "uncheckPersistedRow": uncheckPersistedRow,
       "selectAllRows": selectAllRows,
       "canRowBeSelected" : canRowBeSelected,
 
@@ -7847,11 +7741,11 @@
         isReadonly = true;
 
     return "<a class='inforHyperlink' "
-      + (linkHrefExpr=="" || isReadonly ? "" : "href='" + linkHrefExpr + "'")
+      + (linkHrefExpr == "" ? "": "href='" + linkHrefExpr + "'")
       + (columnDef.linkTarget==undefined  || isReadonly  ? "" :  "target='" + columnDef.linkTarget + "'")
-      + (linkOnClick==""  || isReadonly ? "" :  " onclick='" + linkOnClick + "'")
+      + (linkOnClick==""  ? "" :  " onclick='" + linkOnClick + "'")
       + (columnDef.toolTip ==undefined ? "" :  " title='" + columnDef.toolTip + "'")
-      + (isReadonly ? "disabled" : "")+">" + (value == undefined ? "" : value) + "</a>" ;
+      + ">" + (value == undefined ? "" : value) + "</a>" ;
     },
 
     CheckboxCellFormatter: function (row, cell, value, columnDef, dataContext, gridOptions) {
@@ -7890,10 +7784,7 @@
           thedate = (value === '' ? '' : Globalize.parseUtcDate(value));
         } else if (value!=undefined && value.substr(0,6)=="/Date(" || columnDef.DateSourceFormat=="JSON") //auto detect JSON Format or its specified.
           thedate = (value === '' ? '' : new Date(parseInt(value.substr(6))));
-        else if(value!=undefined && columnDef.DateSourceFormat=="ISO") {
-          var token = value.match(/\d+/g);
-          thedate = new Date(token[0], token[1] - 1, token[2], token[3], token[4], token[5]);
-        }  else if (columnDef.DateSourceFormat!=undefined)
+        else if (columnDef.DateSourceFormat!=undefined)
           thedate = $.datepicker.parseDate(value,columnDef.DateSourceFormat);
         else
           thedate = value;
@@ -8322,8 +8213,9 @@
 
       this.loadValue = function (item) {
         defaultValue = args.grid.getDataItemValueForColumn(item, args.column.field) || "";
+        defaultValue = defaultValue.toString();
+        defaultValue = defaultValue.replace('&lt;', '<').replace('&gt;', '>');
         $input.val(defaultValue);
-        $input[0].defaultValue = defaultValue;
         $input.select();
       };
 
@@ -8334,7 +8226,7 @@
       };
 
       this.applyValue = function (item, state) {
-        var val = state;
+        var val = state.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         args.grid.setDataItemValueForColumn(item, args.column.field, val);
       };
 
@@ -8760,8 +8652,8 @@
         var self = this;
          defaultValue = args.grid.getDataItemValueForColumn(item, args.column.field);
 
-        if (defaultValue == undefined || defaultValue == null) {
-          defaultValue = false;
+        if (defaultValue==undefined) {
+          defaultValue=0;
         }
 
         if (defaultValue == true) {
@@ -8770,20 +8662,13 @@
           $checkbox.prop('checked', false);
         }
 
-        if (args.column.editability !=undefined && args.column.editability(args.row, args.cell, defaultValue, args.column, item)) {
-          $checkbox.focus();
-          return;
-        }
-
         if (isClick) {
-
           $checkbox.toggleChecked();
           args.grid.getEditController().commitCurrentEdit();
           setTimeout(function () {
             $checkbox.focus();
           }, 300);
         }
-
         $checkbox.focus();
       };
 
@@ -8815,9 +8700,6 @@
       };
 
       this.applyValue = function (item, state) {
-        if (args.column.editability != undefined && args.column.editability(args.row, args.cell, defaultValue, args.column, item)) {
-          return;
-        }
         args.grid.setDataItemValueForColumn(item, args.column.field, state);
       };
 
@@ -8999,43 +8881,37 @@
       //  1:  Normal Edit Mode.  To get into this mode you have to press enter
       var mode = 0;
       this.init = function () {
-
         $(args.container).addClass("hasComboEditor hasEditor");
 
-        $lookup = $('<input data-mode="0" class="inforLookupField" type="text">');
+        $lookup = $('<input data-mode="0" class=" inforLookupField" type="text">');
         $lookup.appendTo(args.container)
-            .width($lookup.parent().width()-30)
-            .inforLookupField(args.column.editorOptions)
+          .width($lookup.parent().width()-30)
+          .inforLookupField(args.column.editorOptions)
+          .blur(function() {
+            args.grid.getEditController().conditionalAutoCommit();
+          })
+          .on("keydown.nav", function (e) {
+            if (e.keyCode === $.ui.keyCode.UP || e.keyCode === $.ui.keyCode.DOWN ) {
+              return;
+            }
+            if (args.grid.getOptions().allowTabs && e.keyCode === $.ui.keyCode.TAB) {
+              return;
+            }
+            if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
+              return;
+            }
 
-            .blur(function() {
-              args.grid.getEditController().conditionalAutoCommit();
-            })
-            .on("keydown.nav", function (e) {
-                if (e.keyCode === $.ui.keyCode.UP || e.keyCode === $.ui.keyCode.DOWN ) {
-                  return;
-                }
-                if (args.grid.getOptions().allowTabs && e.keyCode === $.ui.keyCode.TAB) {
-                  return;
-                }
-                if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
-                  return;
-                }
+            if (args.column.editorOptions && args.column.editorOptions.editable) {
+              $lookup.data("isChanged", true);
+            }
+          })
+          .closest("div.inforTriggerField").find(".inforTriggerButton").click(function() {
+            $lookup.val(displayValue);
+          });
 
-                if (args.column.editorOptions && args.column.editorOptions.editable) {
-                  $lookup.data("isChanged", true);
-                }
-
-                // if (e.keyCode === 13) {
-                //   e.stopImmediatePropagation();
-                //   return;
-                // }
-            })
-            .closest("div.inforTriggerField").find(".inforTriggerButton").click(function() {
-              $lookup.val(displayValue);
-            });
 
         var filterType = (args.column.editorOptions && args.column.editorOptions.lookupFilterType)
-            ? args.column.editorOptions.lookupFilterType.call() : "TextFilter";
+          ? args.column.editorOptions.lookupFilterType.call() : "TextFilter";
 
         if (filterType == "IntegerFilter") {
           $lookup.addClass("decimalOnly");
@@ -9064,11 +8940,7 @@
           $lookup.val(returnVal);
           $lookup.data("returnVal","");
         }
-        if ($lookup.data("uiInforLookupField")) {
-          $lookup.inforLookupField("destroy");
-        }
-        $(".inforLookupGridBoxShadow").remove();
-        $("#inforLookupOverlay").remove();
+        $lookup.inforLookupField("destroy");
       };
 
       this.focus = function () {
@@ -9076,30 +8948,31 @@
       };
 
       this.loadValue = function (item) {
+        var options = args.column.editorOptions;
         defaultValue = args.grid.getDataItemValueForColumn(item, args.column.field);
 
-        //set the codes ....
+        // codes may not be in the list if it's free typed or data retrieve via ajax
+        if (options && (options.editable || options.click || options.url || options.ajaxOptions)) {
+          displayValue = defaultValue;
+          $lookup.val(defaultValue).select();
+          return;
+        }
+
+        // set the codes ....
         if (defaultValue) {
           var codes = defaultValue.toString().split(",");
           $lookup.inforLookupField("setCode",codes).select();
           displayValue = $lookup.val();
         }
-
-        //some codes might not be in the list - free typed
-        if (args.column.editorOptions && (args.column.editorOptions.editable || args.column.editorOptions.click)) {
-          //defaultValue = item[args.column.field];
-          displayValue = defaultValue;
-          $lookup.val(defaultValue);
-        }
-
-        $lookup.select().focus();
       };
 
       this.getCodeList = function() {
+        var options = args.column.editorOptions;
         var selectList = $lookup.inforLookupField("getSelectedValues"),
           codeList = "";
 
-        if (args.column.editorOptions.editable  || args.column.editorOptions.click) {
+        // codes may not be in the list if it's free typed or data retrieve via ajax
+        if (options && (options.editable || options.click || options.url || options.ajaxOptions)) {
           codeList = $lookup.val();
           return codeList;
         }
@@ -9113,7 +8986,7 @@
       }
 
       this.serializeValue = function () {
-      if ($lookup.data("isChanged")) {
+        if ($lookup.data("isChanged")) {
           return this.getCodeList();
         } else {
           return defaultValue;
@@ -9126,6 +8999,10 @@
 
       this.isValueChanged = function () {
         return $lookup.data("isChanged");
+      }
+
+      this.isPopupOpen = function () {
+        return $lookup.inforLookupField("getIsPopupOpen");
       }
 
       this.validate = function () {
@@ -9206,7 +9083,7 @@
       };
 
       this.saveAndClose = function () {
-      args.grid.getEditorLock().commitCurrentEdit();
+        args.grid.getEditorLock().commitCurrentEdit();
       };
 
       this.cancel = function () {
@@ -9608,10 +9485,6 @@
       return items[i];
     }
 
-    function getIdProperty() {
-      return idProperty;
-    }
-
     function getIdxById(id) {
       return idxById[id];
     }
@@ -9805,7 +9678,7 @@
     }
 
     function getFilteredAndPagedItems(items, filter) {
-      var pageStartRow = (items.length == pagesize) ? 0 : pagesize * pagenum;
+      var pageStartRow = pagesize * pagenum;
       var pageEndRow = pageStartRow + pagesize;
 
       if (options.pagingMode=="PagerServerSide") {
@@ -9931,7 +9804,7 @@
       if (countBefore != rows.length)
         onRowCountChanged.notify({ previous: countBefore, current: rows.length }, null, self);
 
-      if (diff.length > 0 || options.persistSelections)
+      if (diff.length > 0)
         onRowsChanged.notify({ rows: diff }, null, self);
     }
 
@@ -9955,7 +9828,6 @@
       "expandGroup": expandGroup,
       "getGroups": getGroups,
       "getIdxById": getIdxById,
-      "getIdProperty": getIdProperty,
       "getRowById": getRowById,
       "getRowIdx": getRowIdx,
       "getItemById": getItemById,
@@ -10215,6 +10087,32 @@
       return selected;
     }
 
+    // inserts an item into sorted array
+    function sortedArrayInsert(sortedArray, item) {
+      if (!sortedArray.length)
+        return item;
+
+      var mid = Math.ceil(sortedArray.length / 2);
+      if (mid <= 1) {
+        if (item < sortedArray[0]) {
+          return item.concat(sortedArray);
+        } else if (item < sortedArray[1]) {
+          item.unshift(sortedArray[0]);
+          item.push(sortedArray[1])
+          return item;
+        } else {
+          return sortedArray.concat(item);
+        }
+      }
+
+      var left = sortedArray.slice(0, mid);
+      var right = sortedArray.slice(mid, sortedArray.length);
+      if (item < sortedArray[mid])
+        return sortedArrayInsert(left, item).concat(right);
+      else
+        return left.concat(sortedArrayInsert(right, item));
+    }
+
     function handleClick(e, args) {
       // clicking on a row select checkbox
       if (_options.columnId === "checkbox-selector" && ($(e.target).is(".selection-checkbox") || e.type=="keydown")) {
@@ -10230,12 +10128,12 @@
           });
 
           grepedRows = removeChildren(grepedRows,args.row);
-          _grid.uncheckPersistedRow(args.row);
           _grid.setSelectedRows(grepedRows, {row : args.row, cell : args.cell});
         }
         else if (_grid.getOptions().multiSelect) {
           var addedRows = addChildren(args.row);
-          _grid.setSelectedRows(_grid.getSelectedRows().concat(addedRows) , {row : args.row, cell : args.cell});
+          var newSelectedRows = sortedArrayInsert(_grid.getSelectedRows(), addedRows);
+          _grid.setSelectedRows(newSelectedRows, {row : args.row, cell : args.cell});
         }
         else {
           var empty = [];
@@ -10257,10 +10155,6 @@
         }
 
         if ($(e.target).hasClass("checked")) {
-          var rows = _grid.getFilteredData().length;
-          for (var i = 0; i < rows; i++) {
-            _grid.uncheckPersistedRow(i);
-          }
           _grid.setSelectedRows([]);
         }
         else {
@@ -10320,7 +10214,6 @@
   function RowSelectionModel(options) {
     var _grid;
     var _ranges = [];
-    var _persistSelectedIds = [];
     var _self = this;
     var _options;
     var _defaults = {
@@ -10375,73 +10268,12 @@
       return rangesToRows(_ranges);
     }
 
-    function setPersistedIds(ids) {
-      _persistSelectedIds = ids;
-    }
-
-    function getPersistedIds() {
-      return _persistSelectedIds;
-    }
-
     function setSelectedRows(rows) {
       setSelectedRanges(rowsToRanges(rows));
     }
 
-    function clearPersistedIds() {
-      _persistSelectedIds = [];
-    }
-
-    function uncheckPersistedRow(row) {
-      var id = getAsIds([row])[0],
-          index = $.inArray(id, _persistSelectedIds);
-
-      if (index !== -1) {
-        _persistSelectedIds.splice(index, 1);
-      }
-    }
-
-    function makeUnique(array) {
-      var uniqueObj = {},
-          uniqueArray = [],
-          isNumber;
-
-      //if the idProperty was a number, we need to keep it one, otherwise it'll turn into a string
-      isNumber = typeof array[0] == 'number';
-
-      for (var i = 0; i < array.length; i++) {
-        uniqueObj[array[i]] = true;
-      }
-
-      for (i in uniqueObj) {
-        if (uniqueObj.hasOwnProperty(i)) {
-          uniqueArray.push(isNumber ? parseFloat(i) : i);
-        }
-      }
-
-      return uniqueArray;
-    }
-
-    function getAsIds(arrayOfIndices) {
-      var arrayOfIds = [],
-          dataView = _grid.getData(),
-          idProperty = dataView.getIdProperty(),
-          filteredData = _grid.getFilteredData(),
-          index, someData;
-
-      for (var i = 0; i < arrayOfIndices.length; i++) {
-        index = arrayOfIndices[i];
-        someData = filteredData[index];
-        if (someData) {
-          arrayOfIds.push(filteredData[index][idProperty]);
-        }
-      }
-      return arrayOfIds;
-    }
-
     function setSelectedRanges(ranges, active) {
       _ranges = ranges;
-      //need to combine the current list of ids with the new list
-      _persistSelectedIds = makeUnique(getAsIds(rangesToRows(ranges)).concat(_persistSelectedIds));
       _ranges.active = active;
       _self.onSelectedRangesChanged.notify(_ranges);
     }
@@ -10564,10 +10396,6 @@
       "setSelectedRows": setSelectedRows,
       "getSelectedRanges": getSelectedRanges,
       "setSelectedRanges": setSelectedRanges,
-      "setPersistedIds": setPersistedIds,
-      "getPersistedIds": getPersistedIds,
-      "clearPersistedIds": clearPersistedIds,
-      "uncheckPersistedRow": uncheckPersistedRow,
       "init": init,
       "destroy": destroy,
       "onSelectedRangesChanged": new Slick.Event()
@@ -10707,9 +10535,9 @@
     $.extend(this, {
       "onBeforeMoveRows": new Slick.Event(),
       "onMoveRows":       new Slick.Event(),
-	  "name":  "RowMoveManager",
-      "init": init,
-      "destroy": destroy
+
+      "init":             init,
+      "destroy":          destroy
     });
   }
 })(jQuery);
@@ -11241,9 +11069,13 @@ function CellRangeSelector(options) {
 
     function getNavState() {
       var cannotLeaveEditMode = false;
-      //!Slick.GlobalEditorLock.commitCurrentEdit();
-      var pagingInfo = dataView.getPagingInfo();
+      // It's useless to commit edit if this grid
+      // is a LookupGrid or is readonly
+      if (!grid.isLookupGrid && grid.getOptions().editable) {
+        cannotLeaveEditMode = !Slick.GlobalEditorLock.commitCurrentEdit();
+      }
 
+      var pagingInfo = dataView.getPagingInfo();
       var lastPage = Math.floor(pagingInfo.totalRows/pagingInfo.pageSize);
       if (Math.floor(pagingInfo.totalRows/pagingInfo.pageSize)==pagingInfo.totalRows/pagingInfo.pageSize)
         lastPage -= 1;
@@ -11285,7 +11117,6 @@ function CellRangeSelector(options) {
     }
 
     function setPageSize(n) {
-      n = (isNaN(parseInt(n)) || n<1) ? grid.getOptions().pageSize : n;
       dataView.setPagingOptions({pageSize:n});
       dataView.requestNewPage("pageSize");
       grid.getOptions().pageSize = n;
@@ -11415,18 +11246,16 @@ function CellRangeSelector(options) {
 
         $pageSizeInput.numericOnly();
         //call when done typing
-        $pageSizeInput
-        .before("<label class='inforLabel recordsPerPage'>"+Globalize.localize("RecordsPerPage")+"</label>")
-        .keyup(function(){
-        	var val = $(this).val();
+        $pageSizeInput.before("<label class='inforLabel recordsPerPage'>"+Globalize.localize("RecordsPerPage")+"</label>")
+          .keyup(function(){
+            var val = isNaN(parseInt($(this).val())) ? grid.getOptions().pageSize : $(this).val();
             clearTimeout(typeTimer);
-            if (val || val < 1) {
+            if (val) {
               typeTimer = setTimeout(function() {
                 setPageSize(parseInt(val, 10));
               }, 1000);
             }
           });
-
         $div.appendTo($container);
       }
     }
@@ -11481,9 +11310,8 @@ function CellRangeSelector(options) {
         if (pagingInfo.pageSize == 0 || pagingInfo.pageSize == pagingInfo.totalRows) {
           $status.css("padding-top","4px").text(Globalize.localize("ShowingAll")+" " + pagingInfo.totalRows + " "+Globalize.localize("Rows"));
           $container.find(".inforGridPagingButton").hide();
-          $records.html("");
           if (grid.getOptions().multiSelect==true) {
-            grid.updateFooterSelectionCounter();
+            $selectedRecords.html(Globalize.localize("Selected") + " 0" );
           }
           return;
         }
@@ -11503,7 +11331,6 @@ function CellRangeSelector(options) {
         var timeout = null;
         pageNumTextBox.keydown(ensureValidKey).keyup(function(evt) {
           var $input = $(this);
-          $input.numericOnly();
           clearTimeout(timeout);
           timeout = setTimeout(function() {
             goToPage($input);
@@ -11544,7 +11371,7 @@ function CellRangeSelector(options) {
         $records.html(Globalize.localize("Displaying") + " " + recBegin + " - " + recEnd + " " + Globalize.localize("Of") + " " + pagingInfo.totalRows );
 
       if (grid.getOptions().multiSelect==true)
-        grid.updateFooterSelectionCounter();
+        $selectedRecords.html(Globalize.localize("Selected") + " 0" );
 
       if (pagingInfo.totalRows == 0)  {
         $records.html(Globalize.localize("NoRecordsFound"));
@@ -11559,7 +11386,8 @@ function CellRangeSelector(options) {
         if (pagingInfo.pageNum == -1 || pagingInfo.pageNum==99999)
           $records.html(Globalize.localize("Displaying") + " " + dataLength +" " + Globalize.localize("Rows"));
         else
-          $records.html(Globalize.localize("Displaying") + " " + Math.max(1,pagingInfo.pageSize*(pagingInfo.pageNum)+1) + " - " + parseInt(pagingInfo.pageSize*(pagingInfo.pageNum)+dataLength)  );
+          $records.html(Globalize.localize("Displaying") + " " + Math.max(1,pagingInfo.pageSize*(pagingInfo.pageNum)) + " - " + parseInt(pagingInfo.pageSize*(pagingInfo.pageNum)+dataLength)  );
+
         if ($status) {
           $status.hide();
         }
@@ -11608,10 +11436,6 @@ function CellRangeSelector(options) {
       $menu.on("click", updateColumn);
     }
 
-    function destroy()  {
-      $menu.remove();
-    }
-
     function open(button) {
       $menu.empty();
 
@@ -11648,7 +11472,8 @@ function CellRangeSelector(options) {
 
       for (var i=0; i<columns.length; i++) {
 
-        if (columns[i].name=="" || columns[i].id=="#" || columns[i].id=="" || !columns[i].hidable) {
+        if (columns[i].name=="" || columns[i].id=="#" || columns[i].id=="" || !columns[i].hidable
+            || (columns[i].displayField && columns[i].displayField.columnVisibility)) {
           continue;
         }
 
@@ -11716,8 +11541,7 @@ function CellRangeSelector(options) {
 
     //Create callable methods...
     $.extend(this, {
-      "open": open,
-      "destroy": destroy
+      "open": open
     });
   }
 
@@ -12009,8 +11833,7 @@ function AutoTooltips(options) {
       enableGrouping: false,  //Enable the grouping features.
       rowHeight: 25,  //Change This if using multiline editor
       fillHeight: true, //should the grid size itself to the bottom of the page. use if grid is on the bottom and nothing underneath
-      savePersonalization: true,  //should the personalization settings be saved in the browser? Or you use onPersonalizationChanged
-      useLocalStorage: false, //should the personalization settings be saved using HTML5 localStorage? Otherwise use cookies.
+      savePersonalization: true,  //should the personalization settings be saved in a cookie? Or you use onPersonalizationChanged
       enableCellRangeSelection: true, //allows you to select/copy a range of cells.
       selectOnRowChange: false, //always select row when you click it.
       showExport: false,  //adds an export function to the footer.
@@ -12053,7 +11876,7 @@ function AutoTooltips(options) {
       });
 
     //Create a DataView Which is used during sorting and selection.
-    dataView = new Slick.Data.DataView({idProperty: o.idProperty, pagingMode: o.pagingMode, persistSelections: o.persistSelections});
+    dataView = new Slick.Data.DataView({idProperty: o.idProperty, pagingMode: o.pagingMode });
     gridObj =  new Slick.Grid($grid, dataView, o.columns, slickOptions);
     $grid.data("gridInstance",gridObj); //save a ref ro the grid so it can be accessed by selector.
 
@@ -12067,16 +11890,13 @@ function AutoTooltips(options) {
     dataView.onRowsChanged.subscribe(function (e, args) {
       gridObj.invalidateRows(args.rows);
       gridObj.render();
-      //consider persisted selections (which may not have been previously visible) if we're persisting selections
-      var persist = gridObj.getOptions().persistSelections,
-          selRowIdsToUse = persist ? gridObj.getSelectionModel().getPersistedIds() : selectedRowIds;
 
-      if (selRowIdsToUse.length > 0) {
+      if (selectedRowIds.length > 0) {
         // since how the original data maps onto rows has changed,
         // the selected rows in the grid need to be updated
         var selRows = [];
-        for (var i = 0; i < selRowIdsToUse.length; i++) {
-          var idx = dataView.getRowById(selRowIdsToUse[i]);
+        for (var i = 0; i < selectedRowIds.length; i++) {
+          var idx = dataView.getRowById(selectedRowIds[i]);
           if (idx != undefined)
             selRows.push(idx);
         }
@@ -12107,13 +11927,14 @@ function AutoTooltips(options) {
     }
 
     //Attach listeners for loading indicators
-    var $viewport = $grid.find(".slick-viewport:visible").last();
     dataView.onDataLoading.subscribe(function(e,args) {
+      $viewport = $grid.find(".slick-viewport:visible").last();
       $viewport.inforBusyIndicator();
       $viewport.css("overflow","hidden");
     });
 
     dataView.onDataLoaded.subscribe(function(e,args) {
+      $viewport = $grid.find(".slick-viewport:visible").last();
       if ($viewport.data("uiInforBusyIndicator")) {
         $viewport.inforBusyIndicator("close");
         $viewport.css("overflow","auto");
@@ -12213,6 +12034,8 @@ function AutoTooltips(options) {
         var item = dataView.getItem(args.row);
         o.drilldown(item);
       }
+
+      // here.......
 
       //handle Grid buttons
       var target = $(e.target);
@@ -12339,7 +12162,7 @@ function AutoTooltips(options) {
 
     if (o.savePersonalization) {
       var cookieId = window.location.pathname+'#'+$grid.attr("id");
-      var cookieContents = o.useLocalStorage ? localStorage.getItem(cookieId) : $.cookie(cookieId);
+      var cookieContents = $.cookie(cookieId);
     }
 
     //process hidden columns
@@ -12361,11 +12184,7 @@ function AutoTooltips(options) {
     if (o.savePersonalization) {
       gridObj.onPersonalizationChanged.subscribe(function (e, args) {
         delete args.grid; //dont serialize the grid object.
-        if (o.useLocalStorage) {
-          localStorage.setItem(cookieId, JSON.stringify(args));
-        } else {
-          $.cookie(cookieId, JSON.stringify(args), { expires: 3650 });//convert the JSON to a string...
-        }
+        $.cookie(cookieId, JSON.stringify(args), { expires: 3650 });//convert the JSON to a string...
       });
 
       //restore previous - convert from string to JSON.
@@ -12404,7 +12223,7 @@ function AutoTooltips(options) {
 
     //excel copy and paste
     if (o.enableCellRangeSelection || o.showExport) {
-            var _selector = new Slick.CellRangeSelector({ enableCellRangeSelection: o.enableCellRangeSelection, exportScriptUrl: o.exportScriptUrl, exportFileName: o.exportFileName});
+      var _selector = new Slick.CellRangeSelector({ enableCellRangeSelection: o.enableCellRangeSelection, exportScriptUrl: o.exportScriptUrl, exportFileName: o.exportFileName});
       gridObj.registerPlugin(_selector);
     }
 
@@ -12425,9 +12244,8 @@ function AutoTooltips(options) {
         });
     }
 
-    gridObj.isLookupGrid = $(this).is("#lookupGridDivId");
     return gridObj;
-};
+  };
 
   function handleHeaderContextMenu(e, args) {
     //prevent normal menu

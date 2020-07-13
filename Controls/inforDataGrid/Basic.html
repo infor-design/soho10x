@@ -19,29 +19,22 @@
 	<div id="inforDataGrid">
 	</div>
 	<script>
+	 Globalize.culture('hu-HU');
 		//Store the Grid Obj For Later Api Calls..
 		var grid = null,
 			columns = [],
 			data = getSampleData([]);
 
-
-    function UrlFormatter(row, cell, value, columnDef, dataContext) {
-      var formattedVal = value;
-
-      return (formattedVal === null || formattedVal === undefined) ? "" : formattedVal.replace('&', '&amp;');
-    }
-
 		//Define Columns for the Grid.
 		columns.push({ id: "officeId", focusable: false, name: "Office Id", field: "officeId", width: 140, formatter:UneditableColumnFormatter });
-		columns.push({ id: "city", name: "City", field: "city", width: 125, formatter: UrlFormatter, filterType: TextFilter });
+		columns.push({ id: "city", name: "City", field: "city", width: 125, formatter: TextCellFormatter, filterType: TextFilter });
 		columns.push({ id: "phone", name: "Phone", field: "phone", width: 160, filterType: TextFilter, editor: TextCellEditor});
 		columns.push({ id: 'state', required: true, name: 'State', field: 'state', formatter: TextCellFormatter, filterType: SelectFilter, required: true, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: null});
 
 		grid = $("#inforDataGrid").inforDataGrid({
 			columns: columns,
 			idProperty:'officeId',
-			dataset: data,
-      frozenColumn: 1
+			dataset: data
 		});
 	</script>
 </body>

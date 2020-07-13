@@ -14,29 +14,32 @@
 
 	<!--Load a Flat file with JSON data-->
 	<script src="js/sampleData.js"></script>
+	<style>
+		.blueLabel {
+			color: blue;
+		}
+	</style>
 
 	<script>
 	$(function () {
-    //Globalize.culture('ja-JP');
 
-			Globalize.culture('ar-SA');
 		//Store the Grid Obj For Later Api Calls..
 			columns = [],
 			data = getSampleData([]);
 
 		//Define Columns for the Grid.
-		columns.push({ id: 'officeId', name: 'Office . Id', field: 'officeId', width: 40, sortable: false, formatter:UneditableColumnFormatter, title: 'This is a tooltip', hidden: true });
-		columns.push({ id: 'city', maxLength: 10, name: 'City', toolTip: 'City', field: 'city', width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		columns.push({ id: 'officeId', name: 'Office Id', field: 'officeId', width: 40, sortable: false, formatter:UneditableColumnFormatter, title: 'This is a tooltip', hidden: true });
+		columns.push({ id: 'city', maxLength: 10, name: 'City', toolTip: 'This is a test', field: 'city', width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
 		columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 10, editor: TextCellEditor, required: true, filterType: TextFilter});
 		columns.push({ id: 'addressLine1', name: 'Address 1', field: 'addressLine1', width: 140, formatter: UneditableColumnFormatter, editor: TextCellEditor, filterType: TextFilter });
 		columns.push({ id: 'addressLine2', name: 'Address 2', field: 'addressLine2', width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
-		columns.push({ id: 'state', required: true, name: 'State', field: 'state', formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [{id: ' ', label: ' ', value: ' '}, {id: '1', label: 'Option 1', value: '1'}, {id: '2', label: 'Option 2', value: '2'}]});
+		columns.push({ builtin: true, id: 'state', required: true, name: 'State', field: 'state', formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [{id: ' ', label: ' ', value: ' '}, {id: '1', label: 'Option 1', value: '1'}, {id: '2', label: 'Option 2', value: '2'}]});
 		columns.push({ id: 'officeType', name: 'Type', field: 'officeType', width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter, contentsFilterValues : ['empty', 'Remote', 'Satellite', 'Headquarters']  });
 		columns.push({ id: 'numberEmployees', name: 'Employees', field: 'numberEmployees', width: 90, positiveOnly: true, cssClass: 'alignRight', headerCssClass: 'alignHeaderRight', formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
-		columns.push({ id: 'revenue', name: 'Revenue', field: 'revenue', required: true, width: 80, headerCssClass: 'alignHeaderRight', formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter, numberFormat: 'n2'});
+		columns.push({ id: 'revenue', name: 'Revenue', field: 'revenue', required: true, width: 80, headerCssClass: 'alignHeaderRight', formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter, numberFormat: 'n2', cssClass: "blueLabel"});
 		columns.push({ id: 'isLeedCertified', cssClass : 'alignCenter', headerCssClass : 'alignHeaderCenter', name: 'Leed', field: 'isLeedCertified', width: 40, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter });
-		columns.push({ id: 'establishedDate', name: 'Established', field: 'establishedDate', width: 80, required: true, editor: DateCellEditor,  formatter: DateCellFormatter, filterType: DateFilter });
-		columns.push({ id: 'comments', name: 'Comments', field: 'comments', width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
+		columns.push({ id: 'establishedDate', name: 'Established', field: 'establishedDate', width: 80, required: true, editor: DateCellEditor,  formatter: DateCellFormatter, filterType: DateFilter, editorOptions: {showTimeInput: true}, cssClass: "blueLabel" });
+		columns.push({ id: 'comments', name: 'Comments', field: 'comments', width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter, cssClass: "blueLabel" });
 		columns.push({ id: 'country', name: 'Country', field: 'country', width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
 		columns.push({ id: 'postalCode', name: 'Postal Code', field: 'postalCode', width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
 		columns.push({ id: 'territory', required: true, name: 'Territory', field: 'territory', width: 'Territory'.textWidth()+8, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
@@ -44,21 +47,19 @@
 		grid = $('#inforDataGrid').inforDataGrid({
 			columns: columns,
 			idProperty:'officeId',
-      editable: true,
 			dataset:data,
 			showFilter: true,
 			showDrillDown: true,
       pagingMode: PagingModes.PagerClientSide,
       pageSize: 50,
       showFooter: true,
-      allowTabs: true,
-      persistSelections: true,
       drillDownTooltip: ''
 		});
 
 		$('body').inforForm();
 
-		grid.onClick.subscribe(function (e, args) {
+		grid.onCellChange.subscribe(function (e, args) {
+      console.log('Change');
 			console.log(args);
 		});
 
@@ -73,6 +74,12 @@
     grid.getData().onPageRequested.subscribe(function (e, args) {
       console.log('x', args);
     });
+
+    // grid.onKeyPress.subscribe(function(e, args) {
+    // grid.onKeyDown.subscribe(function(e, args) {
+    //   alert();
+    // });
+
 
 	});
 

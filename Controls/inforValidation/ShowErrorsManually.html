@@ -28,6 +28,8 @@
 
     function showErrors() {
       $('.inforDropDownList').removeError().addError({message: 'I have an Error.', showTooltip: true});
+
+      $('#gender').trigger('activate');
     }
 
     function hideErrors() {

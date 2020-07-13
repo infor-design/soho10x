@@ -125,7 +125,7 @@
               li.addClass('inforListBoxDisabled');
             }
 
-            if ($this.attr('selected')) {
+            if ($this.prop('selected')) {
               li.addClass('isSelected');
               li.find("input.inforCheckbox").prop('checked', true);
             }
@@ -162,7 +162,7 @@
           if ($this.attr('disabled')) {
             li.addClass('inforListBoxDisabled');
           }
-          if ($this.attr('selected')) {
+          if ($this.prop('selected')) {
             li.addClass('isSelected');
             li.find("input.inforCheckbox").prop('checked', true);
           }
@@ -242,11 +242,11 @@
       var i = 0,
         selection = [];
 
-      select.find("option").prop("selected", false).removeAttr("selected");
+      select.find("option").removeProp("selected");
 
       control.find('.isSelected A').each(function () {
         selection[i++] = $(this).attr('rel');
-        select.find("option[value='"+ $(this).attr('rel') +"']").prop("selected", true).attr("selected", "selected");
+        select.find("option[value='"+ $(this).attr('rel') +"']").prop("selected", true);
       });
 
       // Remember most recently selected item
@@ -393,7 +393,7 @@
         $li.removeClass('isSelected');
       });
 
-      $select.find("option").prop("selected", false).removeAttr("selected");
+      $select.find("option").removeProp("selected");
       this.refresh();
     },
     add: function (data, suppressRefresh) {
@@ -404,7 +404,7 @@
         option.attr("id", data.optionId);
       }
       if (data.selected) {
-        option.attr("selected", "");
+        option.prop("selected", true);
       }
       if (data.optionTitle) {
         option.attr("title", data.optionTitle);

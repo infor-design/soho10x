@@ -211,7 +211,7 @@ html[dir="rtl"]  .inforSplitBarVertical{
 
 html[dir="rtl"]  .inforSplitButtonVertical{
 	left: 0;
-	right: 7px;
+	right: 6px;
 }
 
 html[dir="rtl"]  .inforSplitter > #leftPane, html[dir="rtl"]  .inforSplitter > .leftPane {

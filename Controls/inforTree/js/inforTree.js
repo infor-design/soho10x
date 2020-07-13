@@ -871,28 +871,24 @@
   });
   $.jstree.plugin("ui", {
     __init : function () {
-      	var self = this;
-		this.scroll = 0;
-        this.data.ui.selected = $();
-        this.data.ui.last_selected = false;
-        this.data.ui.hovered = null;
-        this.data.ui.to_select = this.get_settings().ui.initially_select;
+      this.data.ui.selected = $();
+      this.data.ui.last_selected = false;
+      this.data.ui.hovered = null;
+      this.data.ui.to_select = this.get_settings().ui.initially_select;
 
-        this.get_container()
-          .delegate("a", "click.jstree", $.proxy(function (event) {
-              event.preventDefault();
-              event.currentTarget.blur();
-              if(!$(event.currentTarget).hasClass("jstree-loading")) {
-                this.select_node(event.currentTarget, true, event);
-              }
-  						self.get_container().scrollLeft(self.scroll);
-            }, this))
-          .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
-              if(!$(event.currentTarget).hasClass("jstree-loading")) {
-                this.hover_node(event.target);
-              }
-  						this.scroll = self.get_container().scrollLeft();
-            }, this))
+      this.get_container()
+        .delegate("a", "click.jstree", $.proxy(function (event) {
+            event.preventDefault();
+            event.currentTarget.blur();
+            if(!$(event.currentTarget).hasClass("jstree-loading")) {
+              this.select_node(event.currentTarget, true, event);
+            }
+          }, this))
+        .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
+            if(!$(event.currentTarget).hasClass("jstree-loading")) {
+              this.hover_node(event.target);
+            }
+          }, this))
         .delegate("a", "mouseleave.jstree", $.proxy(function (event) {
             if(!$(event.currentTarget).hasClass("jstree-loading")) {
               this.dehover_node(event.target);
@@ -1004,17 +1000,12 @@
             $(this).removeClass("jstree-focus");
         });
 
-        // get initial scroll value
-        this.scroll = this.get_container().scrollLeft();
-
         if(!obj.hasClass("jstree-focus")) { this.defocus_node(); }
         this.data.ui.hovered = obj.children("a").addClass("jstree-focus").parent();
         obj.children("a").focus();
         obj.children("a").attr("tabIndex", "0");
         this._fix_scroll(obj);
         this.__callback({ "obj" : obj });
-        // return to the initial scroll position
-        this.get_container().scrollLeft(this.scroll);
       },
       defocus_node : function () {
         var obj = this.data.ui.hovered, p;
@@ -3332,7 +3323,6 @@
     },
     _fn : {
       show_contextmenu : function (e) {
-        $('#inforTreeContextMenu').remove();
         obj = this._get_node(e.currentTarget);
         s = this.get_settings().contextmenu,
         menuItems = s.items;
@@ -3378,10 +3368,6 @@
               ul.append($('<li></li>').append(aa));
             }
           }
-        }
-
-        if ($('#inforTreeContextMenu').children().length === 0) {
-          return;
         }
 
         $('body').popupmenu({
@@ -3439,9 +3425,6 @@
             this.menu.height(menuHeight);
           }
         }
-	  //Set focus to first item in menu
-        wrapper.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
-
 
       }
     }

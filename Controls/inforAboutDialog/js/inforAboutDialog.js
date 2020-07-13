@@ -45,7 +45,7 @@
       if (!o.copyRight) {
         o.copyRight = '<span class="padded">'+ Globalize.localize('AboutText') +'</span>';
       }
-      o.copyRight = o.copyRight.replace('@year', (o.copyRightYear ? o.copyRightYear : '2015'));
+      o.copyRight = o.copyRight.replace('@year', (o.copyRightYear ? o.copyRightYear : '2014'));
       details = (o.details ? o.details : o.productName + ' ' + o.version + o.copyRight + (o.additionalDetails ? browserDetails : ''));
       $details = $('<p>' + details + '</p>');
       container = $('<div class="container"></div>').append($logo, $productName, $details);

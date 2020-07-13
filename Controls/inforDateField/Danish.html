@@ -13,16 +13,8 @@
 
 	<script>
 		$(function () {
-			//Globalize.culture("da-DK");
-
-			//example of extending resources
-			Globalize.addCultureInfo( "da-DK", {
-				messages: {
-					"Today": "i dag"
-				}
-			});
-			//this routine initializes all controls but is slow.
-			$("body").inforForm();
+			Globalize.culture("sv-SE");
+			$("#dateInput1").inforDateField({ constrainInput: false });
 		});
 	</script>
 </head>

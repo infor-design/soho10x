@@ -89,5 +89,7 @@
   display:none;
 }
 
-.inforTextbox.decimalOnly.has-error, .inforTextbox.numericOnly.has-error
-{ padding-right: 20px; width: 179px; } 
+.inforLookupField.is-busy  {
+  width: calc(100% - 13px) !important;
+}
+

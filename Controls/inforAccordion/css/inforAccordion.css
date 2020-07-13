@@ -1,71 +1,67 @@
 /*
-  Infor Accordian
+	Infor Accordian
 */
 
 .inforAccordion {
-  background-color: #f0f0f0;
-  border-right: 1px solid #d9d9d9;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
+	padding-top: 10px;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 .inforAccordion  legend {
-  height: 50px !important;
-  margin-bottom: 0 !important;
-  margin-left: 0px;
+	height: 44px !important;
+    margin-bottom: 0 !important;
+	margin-left: 0px;
 }
 
 .inforAccordion .inforIcon + legend {
-   margin-top: -24px !important;
-   margin-left: 0px;
+	 margin-top: -24px !important;
+	 margin-left: 0px;
 }
 
-.inforAccordion  legend:hover {
-  background-color: #d2d2d2;
-  cursor: pointer;
+.inforAccordion  legend:hover, .inforAccordion  legend.selected {
+	background-color: #f2f2f2;
+	cursor: pointer;
 }
 
-.inforAccordion  legend.selected {
-  color: #1a1a1a;
-}
 
 .inforAccordion legend:hover span {
-  border-bottom: 1px solid transparent;
+  color: #4444;
+	border-bottom: 1px solid transparent;
 }
 
 .inforAccordion .inforFieldSetLabel {
-  border-bottom: medium none;
-  font-size: 1.4em;
-  line-height: 54px;
-  height: 50px;
-  margin-bottom: 0;
-  margin-right: 0;
-  position: relative;
-  text-indent: 8px;
+	border-bottom: medium none;
+    color: #444;
+    font-size: 1.4em;
+    margin-bottom: 0;
+    margin-right: 0;
+    position: relative;
+    text-indent: 1px;
+    top: 10px;
 }
 
 .inforAccordion .inforFieldSetLabel.hover {
-  box-shadow: none;
-  border-radius: 0;
-  background-color: transparent;
+	box-shadow: none;
+	border-radius: 0;
+	background-color: transparent;
 }
 
 .inforAccordion  .inforIcon + legend  .inforFieldSetLabel{
-  text-indent: 36px;
+	text-indent: 36px;
 }
 
 .inforAccordion .inforFieldSet {
-  border-bottom: 1px solid #b3b3b3 !important;
+	border-bottom: 1px solid #b3b3b3 !important;
 }
 
 .inforAccordion  .inforFieldSet:first-child {
-  border-top: 1px solid #b3b3b3 !important;
+	border-top: 1px solid #b3b3b3 !important;
 }
 
 .inforAccordion  .inforFieldSet div.content{
-  background-color: #e6e6e6;
-  padding-bottom: 10px 0;
+	margin-left: 15px;
+	padding-bottom: 15px;
 }
 
 .inforIcon + legend + .inforExpandButton + .content {
@@ -74,27 +70,25 @@
 
 /*Steps for the accordion*/
 .inforIcon.incomplete {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA7ElEQVRIx9WVuw6DMAxF+T36uwhYmfgGJliqFjHCCricSKkilRBa6j6uZCmKHzexHSdKkiRe5LKIvFmIGUdKwe8kkWJwI98nKIpC6rqWYRhkmiYjrNlD9zJBmqbSNI3M8yw+oMMG26cIcOi6TvYCWx/JKgGnctG2rZRlKXmeG2HNngt8dhGQVzctVVV5r4/OTddaTR4IKJ578lAR3ZvgGySgQyxIRYgAGwt8gwS0oQX5DhFgY4GvKsE4jrop6vv+B4qs3qZbDy3LMiOHHtpHRoX6sPONawLSinTL4XH9Vz+a5qd/heDEQiH4mdg3JjRfZce5zD8AAAAASUVORK5CYII=") no-repeat scroll center center rgba(0, 0, 0, 0);
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA7ElEQVRIx9WVuw6DMAxF+T36uwhYmfgGJliqFjHCCricSKkilRBa6j6uZCmKHzexHSdKkiRe5LKIvFmIGUdKwe8kkWJwI98nKIpC6rqWYRhkmiYjrNlD9zJBmqbSNI3M8yw+oMMG26cIcOi6TvYCWx/JKgGnctG2rZRlKXmeG2HNngt8dhGQVzctVVV5r4/OTddaTR4IKJ578lAR3ZvgGySgQyxIRYgAGwt8gwS0oQX5DhFgY4GvKsE4jrop6vv+B4qs3qZbDy3LMiOHHtpHRoX6sPONawLSinTL4XH9Vz+a5qd/heDEQiH4mdg3JjRfZce5zD8AAAAASUVORK5CYII=") no-repeat scroll center center rgba(0, 0, 0, 0);
 }
 .inforIcon.add {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAYklEQVR42mPYvHmzNRDfAOL/VMZPgTicAUicoYHhMPwJZMEHGlrwf9QC6lnw7du3/8hgz549oxbQ2AJ0AwkBXBaOWkC+BaPJdPBZMFpc09SCizS04AvIAlsgfkADw98BcQQAXGs4v07/HtoAAAAASUVORK5CYII=");
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAYklEQVR42mPYvHmzNRDfAOL/VMZPgTicAUicoYHhMPwJZMEHGlrwf9QC6lnw7du3/8hgz549oxbQ2AJ0AwkBXBaOWkC+BaPJdPBZMFpc09SCizS04AvIAlsgfkADw98BcQQAXGs4v07/HtoAAAAASUVORK5CYII=");
 }
 .inforIcon.complete, .inforIcon.ok  {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA/UlEQVR42u2WywqCQBSGfZ0WPYFQdNWy23MEPV2rwsuiC3R9gVpEathkm8Byd/JIRpKZlgMtOvDPYmC+b3HODMOkuyneycYJJBxk8oyz6BTgXnSGItzNX0BfUFeqsDwuoCTmkhc0FAGITQBLtbZQFvPJCR7hXk3NSTIChB/sgw+un3XgpVJ0QabHwpAMoCqVffvNILilAScVo/cg22dhfVq5h42LcZcg3LTNyPCXgjEZ+SAo6UzbwXCxEH9Ma3IF9g40rDRLfQsP7UGYJCr87RQJMv8kQXjQvH98k1Fi3CSvLtPXT4UgczA/zmLD/6/p7wgIRQFBQYvSz2KH7Csx8AmfgeWx0wAAAABJRU5ErkJggg==");
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA/UlEQVR42u2WywqCQBSGfZ0WPYFQdNWy23MEPV2rwsuiC3R9gVpEathkm8Byd/JIRpKZlgMtOvDPYmC+b3HODMOkuyneycYJJBxk8oyz6BTgXnSGItzNX0BfUFeqsDwuoCTmkhc0FAGITQBLtbZQFvPJCR7hXk3NSTIChB/sgw+un3XgpVJ0QabHwpAMoCqVffvNILilAScVo/cg22dhfVq5h42LcZcg3LTNyPCXgjEZ+SAo6UzbwXCxEH9Ma3IF9g40rDRLfQsP7UGYJCr87RQJMv8kQXjQvH98k1Fi3CSvLtPXT4UgczA/zmLD/6/p7wgIRQFBQYvSz2KH7Csx8AmfgeWx0wAAAABJRU5ErkJggg==");
 }
 .inforIcon.pending {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABHUlEQVR42tWWXw5DQBDGXbBJXz0Q7oALcBoO4N8ZeCAO0IQm7QkQTI2E0O7a1XbT9EvGy6752W9nZ0myLJ/HuI4BX477GCdpfNwEJJ/jIglMPsXvAZZlQRiGUJYl1HUNXddBVVUQBAGYpvk+QFVViKIIhmEAmnAM4YqiHAPgC0VRAK/yPKdCiIA4jjcJkiQB27ZB07QpHMeBNE03c9AyLgB6vrYFv462fM/zlnl934NhGGyA7/svFmAiGgRXNwv3gwnACiGJBkHrZmGlMQFYhjSRILquL+Nt27IBTdPsVozrup8BcJksrSGHLSJt8h7k8CY/l+me1oeRu0xJB41H3AftnVaRZdmxViG82e21a/T6K+36r2404Ze+0N+WBzdFzLGPAStpAAAAAElFTkSuQmCC");
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABHUlEQVR42tWWXw5DQBDGXbBJXz0Q7oALcBoO4N8ZeCAO0IQm7QkQTI2E0O7a1XbT9EvGy6752W9nZ0myLJ/HuI4BX477GCdpfNwEJJ/jIglMPsXvAZZlQRiGUJYl1HUNXddBVVUQBAGYpvk+QFVViKIIhmEAmnAM4YqiHAPgC0VRAK/yPKdCiIA4jjcJkiQB27ZB07QpHMeBNE03c9AyLgB6vrYFv462fM/zlnl934NhGGyA7/svFmAiGgRXNwv3gwnACiGJBkHrZmGlMQFYhjSRILquL+Nt27IBTdPsVozrup8BcJksrSGHLSJt8h7k8CY/l+me1oeRu0xJB41H3AftnVaRZdmxViG82e21a/T6K+36r2404Ze+0N+WBzdFzLGPAStpAAAAAElFTkSuQmCC");
 }
 
-.inforAccordion .inforAccordionSubmenu {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  color: #666;
+.inforAccordion  .inforAccordionSubmenu{
   font-size: 1.2em;
   line-height: 12px;
   margin-left: 0px;
-  padding: 15px 30px;
+  padding: 10px 0 10px 10px;
   text-decoration: none;
+  color: #444;
   display: inline-block;
   width: 100%;
 }
@@ -104,73 +98,72 @@
 }
 
 .inforAccordion .inforAccordionSubmenu:hover  {
-  background-color: #d2d2d2;
+  background-color: #F2f2f2;
   border-radius: 2px;
+  color: #444;
 }
 
 .inforAccordion .inforAccordionSubmenu:focus {
-  background-color: #d2d2d2;
+  background-color: #F2F2F2;
 }
 
 .inforAccordion .inforAccordionSubmenu.selected {
-  border-bottom: 1px solid #fff;
-  border-top: 1px solid #fff;
   background-color: #13A3F7;
   color: white;
 }
 
 .inforAccordion .inforFieldSetLabel.open {
-  color: #1a1a1a;
+  color: #444;
 }
 
 .inforAccordion p {
-  margin: 0;
+	margin: 0;
 }
 
 .inforAccordion .inforExpandButton {
-  background-position: center center !important;
-  pointer-events: none;
-  top: -29px !important;
+	background-position: center center !important;
+	top: -28px;
 }
 
+
 .inforAccordion .inforIcon{
-  display: inline-block;
-  float: left;
-  left: 12px;
-  position: relative;
-  top: 10px;
+	display: inline-block;
+    float: left;
+    left: 12px;
+    position: relative;
+    top: 10px;
 }
 
 .inforAccordion .inforAccordionSubmenu.complete {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAABnRSTlMAAAAAAABupgeRAAAALUlEQVR42mNgoAfQ3axJWAUEEVaBUISmHLsKZD4WFWii2FXgUke0S/GoIz9UARQ/KWmFwsxrAAAAAElFTkSuQmCC");
-  background-position: 6px 10px;
-  background-repeat: no-repeat;
-  padding-left: 27px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAABnRSTlMAAAAAAABupgeRAAAALUlEQVR42mNgoAfQ3axJWAUEEVaBUISmHLsKZD4WFWii2FXgUke0S/GoIz9UARQ/KWmFwsxrAAAAAElFTkSuQmCC");
+    background-position: 6px 10px;
+    background-repeat: no-repeat;
+    padding-left: 27px;
 }
 
 .inforAccordion .inforAccordionSubmenu.current {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAHaTzTgAAAAhSURBVHjaY2BgYGBiYGAGogYG5gMM/x+AEJAB4oKlGBgAcPYGVaLVNvcAAAAASUVORK5CYII=");
-  background-position: 6px 10px;
-  background-repeat: no-repeat;
-  padding-left: 27px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAHaTzTgAAAAhSURBVHjaY2BgYGBiYGAGogYG5gMM/x+AEJAB4oKlGBgAcPYGVaLVNvcAAAAASUVORK5CYII=");
+    background-position: 6px 10px;
+    background-repeat: no-repeat;
+    padding-left: 27px;
 }
 
 .inforAccordion.isSequential .inforAccordionSubmenu {
-  padding-left: 27px;
+	padding-left: 27px;
 }
 
 html[dir="rtl"]  .inforAccordion .inforIcon {
-  float: right;
-  left: -12px;
+	float: right;
+	left: -12px;
 }
 
 html[dir="rtl"] .inforAccordion .inforExpandButton {
-  clear: both;
-  float: left;
-  right: -12px;
-  top: -27px;
+	clear: both;
+    float: left;
+    right: -12px;
+    top: -27px;
 }
 
 html[dir="rtl"] .inforAccordion .inforAccordionSubmenu  {
-  margin-right: 57px;
+	margin-right: 57px;
 }

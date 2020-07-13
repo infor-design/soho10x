@@ -198,7 +198,7 @@
 
 		/* Create a new instance object. */
 		_newInst: function (target, inline) {
-			var id = target[0].id; //.replace(/([^A-Za-z0-9_])/g, '\\\\$1'); // escape jQuery meta chars
+			var id = target[0].id;//.replace(/([^A-Za-z0-9_])/g, '\\\\$1'); // escape jQuery meta chars
 			return {id: id, input: target, // associated target
 				selectedDay: 0, selectedMonth: 0, selectedYear: 0, // current selection
 				drawMonth: 0, drawYear: 0, // month being drawn
@@ -423,11 +423,12 @@
 				default: handled = false;
 
 			}
-			else if (event.keyCode == $.ui.keyCode.ENTER || event.keyCode == $.ui.keyCode.DOWN ) // display the date picker on enter
-			{
+			else if (event.keyCode == $.ui.keyCode.ENTER || event.keyCode == $.ui.keyCode.DOWN ) {
+
 				if (inst.input.closest("div").parent().hasClass("slick-headerrow-column")) {	//let enter run the filter in the grid
 					return;
 				}
+
 				if (inst.input.attr("readonly") || inst.input.attr("disabled")){
 					return;
 				}
@@ -468,7 +469,7 @@
 			$.map( options, function (opt) {
 				//add the option and maybe a generic click handler function...
 				var li = $("<li></li>"),
-					a = $("<a></a>").attr("href","javascript:void(0);").text(opt.label).attr("onclick",
+					a = $("<a></a>").attr("href","#").text(opt.label).attr("onclick",
 						'DP_jQuery_' + dpuuid + '.datepicker._quickDateSelect(\'#' +inst.id + '\',' + opt.offset + ',\'' + opt.period + '\')');
 
 				li.append(a);
@@ -496,7 +497,7 @@
 				return;
 			}
 
-      if (!inst.selectedDay || inst.selectedDay === 0) {
+			if (!inst.selectedDay || inst.selectedDay === 0) {
         //Day should only be 0 if not set
         this._selectToday(target);
       }
@@ -679,13 +680,9 @@
 						});
 					}
 				};
+				inst.dpDiv.zIndex($(input).zIndex() + 3000);
 
-        //zIndex cannot be > 4000 since Quick Dates popup is 4001
-        var inputZIndex = $(input).zIndex() <= 1000 ? $(input).zIndex() : 1000;
-        inst.dpDiv.zIndex(inputZIndex + 3000);
-
-        $.datepicker._datepickerShowing = true;
-
+				$.datepicker._datepickerShowing = true;
 				if ($.effects && $.effects[showAnim]) {
 					inst.dpDiv.show(showAnim, $.datepicker._get(inst, 'showOptions'), duration, postProcess);
 				} else {
@@ -1063,9 +1060,13 @@
 
             //triggers the option from within a popupmenu and continues to hide the datepicker afterward
             if ($target.parents('.popupmenu').length > 0) {
+				
+				if ($target.parents('.checkbox').length > 0) 
+					return;
+            
                 $target.trigger('click');
             }
-
+			
 			if ($target[0].id != $.datepicker._mainDivId &&
 				$target.parents('#' + $.datepicker._mainDivId).length == 0 &&
 				!$target.data($.datepicker.markerClassName) &&
@@ -1563,9 +1564,8 @@
 			'<a class="inforDatePicker-prev l" onclick="DP_jQuery_' + dpuuid +
 			'.datepicker._adjustDate(\'#' + inst.id + '\', -' + stepMonths + ', \'M\');"' +
 			' title="' + prevText + '"><button type="button" class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '" title="' + prevText  + '"><i></i></button></a>' :
-			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-prev inforDatePicker-state-disabled" title="' + prevText + '"><button type="button" class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '" disabled>' + '<i></i></button></a>'));	//prevText - may need for screen reader
-
-      var nextText = this._get(inst, 'Next');
+			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-prev inforDatePicker-state-disabled" title="' + prevText + '"><span class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '">' + '</span></a>'));	//prevText - may need for screen reader
+			var nextText = this._get(inst, 'Next');
 			nextText = (!navigationAsDateFormat ? nextText : this.formatDate(nextText,
 			this._daylightSavingAdjust(new Date(drawYear, drawMonth + stepMonths, 1)),
 			this._getFormatConfig(inst)));
@@ -1573,7 +1573,7 @@
 			'<a class="inforDatePicker-next " onclick="DP_jQuery_' + dpuuid +
 			'.datepicker._adjustDate(\'#' + inst.id + '\', +' + stepMonths + ', \'M\');"' +
 			' title="' + nextText + '"><button type="button"  class="' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '" title="' + nextText + '"><i></i></button></a>' :
-			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-next inforDatePicker-state-disabled" title="' + nextText + '"><button type="button" class="inforIconButton ' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '" disabled>' + '<i></i></button></a>')); //nextText - may need for screen reader
+			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-next inforDatePicker-state-disabled" title="' + nextText + '"><span class="inforIconButton ' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '">' + '</span></a>')); //nextText - may need for screen reader
 			var currentText = this._get(inst, 'Today');
 			var gotoDate = (this._get(inst, 'gotoCurrent') && inst.currentDay ? currentDate : today);
 			currentText = (!navigationAsDateFormat ? currentText :
@@ -1779,15 +1779,10 @@
 
 			// month selection
 			monthHtml += '<span class="inforDatePicker-month">' + display[0] + '</span>';
-			var isRTL = this._get(inst, 'isRTL');
-			if (isRTL) {
-				html += '<button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
-				html += '<span class="inforDatePicker-year">' + display[1] + '</span>&#xa0;' + monthHtml + '</div>';
-			} else {
-				html += monthHtml + '&#xa0;';
-				html += '<span class="inforDatePicker-year">' + display[1] + '</span><button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
-				html += '</div>';
-			}
+
+			html += monthHtml + '&#xa0;';
+			html += '<span class="inforDatePicker-year">' + display[1] + '</span><button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
+			html += '</div>';
 			return html;
 		},
 

@@ -1,11 +1,11 @@
 /**
-* Autocomplete for inputs and searches
+* Autocomplete for inputs and searches - test
 * @name autocomplete
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('autocomplete', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -17,12 +17,11 @@
     // Settings and Options
     var pluginName = 'autocomplete',
       defaults = {
+        autoselect: false,
         source: ['Alabama', 'Alaska', 'California', 'Delaware'], //Defines the data to use, must be specified.
-        selectionRequired: false,
-        selectLabel: true // selectionRequired must be true when selectLabel: true
+        resizeToLabelSize: false
       },
       settings = $.extend({}, defaults, options);
-    var allowUpdate = false;
 
     // Plugin Constructor
     function Plugin(element) {
@@ -39,9 +38,7 @@
       },
 
       addMarkup: function () {
-        this.element.addClass('autocomplete')
-          .attr('data-value', '')
-          .attr('role', 'combobox')
+        this.element.addClass('autocomplete').attr('role', 'combobox')
           .attr('aria-owns', 'autocomplete-list')
           .attr('aria-autocomplete', 'list')
           .attr('aria-activedescendant', '');
@@ -58,7 +55,7 @@
           this.list = $('<ul id="autocomplete-list" aria-expanded="true"></ul>').appendTo('body');
         }
 
-        this.list.css({'height': 'auto', 'width': this.element.outerWidth()}).addClass('autocomplete');
+        this.list.css({'height': 'auto', 'width': settings.resizeToLabelSize ? 'auto' : this.element.outerWidth()}).addClass('autocomplete');
         this.list.empty();
 
         for (var i = 0; i < items.length; i++) {
@@ -77,131 +74,71 @@
         }
 
         this.element.addClass('is-open')
-          .popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: false})
+          .popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: settings.autoselect })
           .on('close.autocomplete', function () {
             self.list.parent('.popupmenu-wrapper').remove();
             self.element.removeClass('is-open');
           });
 
+        if (settings.resizeToLabelSize && this.list.outerWidth() < this.element.outerWidth()) {
+        	this.list.css({'width': this.element.outerWidth()});
+        }
+
         self.list.off('click.autocomplete').on('click.autocomplete', 'a', function (e) {
           var a = $(e.currentTarget),
             ret = a.text();
 
-          var dataValue = a.parent().attr('data-value');
-          self.element.val(a.text())
-              .attr('aria-activedescendant', a.parent().attr('id'))
-              .attr('data-value', dataValue)
-              .trigger('selected', { data: { value: dataValue, label: a.text() }, fireTabEvent: false });
+          self.element.val(a.text()).attr('aria-activedescendant', a.parent().attr('id'));
+
+          if (a.parent().attr('data-value')) {
+            for (var i = 0; i < items.length; i++) {
+              if (items[i].value.toString() === a.parent().attr('data-value')) {
+                ret = items[i];
+              }
+            }
+          }
+
+          self.element.trigger('selected', ret);
 
           e.preventDefault();
           return false;
         });
 
-        var all = self.list.find('a').on('focus', function () {
-          var anchor = $(this);
+        function setFocus(anchor) {
+          if (!anchor || !(anchor instanceof $)) {
+            anchor = $(this);
+          }
+
           all.parent('li').removeClass('is-selected');
-          if (allowUpdate) {
-            var dataValue = anchor.parent('li').attr('data-value');
-            anchor.parent('li').addClass('is-selected');
-            self.element.val(anchor.text())
-                .attr('data-value', dataValue)
-                .trigger('selected', { data: { value: dataValue, label: anchor.text() }, fireTabEvent: false });
-          }
-        });
-
-        this.noSelect = true;
-        allowUpdate = false;
-        this.element.focus();
-      },
-
-      updateValue: function (term, items, fireTabEvent, direction) {
-        var self = this;
-        var isUpdated = false;
-        for (var i = 0; i < items.length; i++) {
-          var optionLabel = (typeof items[i] === 'string' ? items[i] : items[i].label);
-          var optionValue = (typeof items[i] === 'string' ? items[i] : items[i].value);
-
-          if (optionLabel.toLowerCase().indexOf(term) > -1) {
-            self.element.val(optionLabel)
-                .attr('data-value', optionValue)
-                .trigger('selected', { data: { value: optionValue, label: optionLabel }, fireTabEvent: fireTabEvent, direction: direction });
-
-            isUpdated = true;
-            break;
-          }
+          anchor.parent('li').addClass('is-selected');
+          self.element.val(anchor.text());
         }
-        if (!isUpdated)
-          self.element.val('').trigger('selected', { data: { value: '', label: '' }, fireTabEvent: fireTabEvent, direction: direction });
+
+        var all = self.list.find('a').on('focus', setFocus);
+
+        if (settings.autoselect) {
+          setFocus(all.first());
+        }
       },
 
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var buffer = '', timer, self = this;
 
-        this.element.on('keyup.autocomplete', function (e) {
-          //open list
-          if ((e.altKey && e.keyCode === 40) || (e.keyCode === 8 && $(this).val() !== "")) {
-            allowUpdate = true;
-            buffer = $(this).val();
-            if (typeof settings.source === 'function') {
-              var response = function (data) {
-                $("body").inforBusyIndicator("close");
-                self.openList(buffer, data);
-              };
+        this.element.on('keyup.autocomplete', function(e) {
+          if (e.keyCode === 8) {
+            self.element.trigger('keypress');
+          }
+        }).on('keypress.autocomplete', function (e) {
 
-              $("body").inforBusyIndicator({ modal: true });
-              settings.source(buffer, response);
+          var field = $(this);
+          clearTimeout(timer);
 
-            } else {
-              self.openList(buffer, settings.source);
-            }
+          if (e.altKey && e.keyCode === 40) {  //open list
+            self.openList(field.val(), settings.source);
             return;
           }
 
-        }).on('keydown.autocomplete', function (e) {
-          if (e.keyCode === 40) {
-            if (self.element.hasClass('is-open')) {
-              var itemsList = self.list.find('a');
-              allowUpdate = true;
-              e.stopPropagation();
-              if (itemsList.length > 0)
-                itemsList.first().focus();
-            }
-          }
-
-          if (e.keyCode === 9) {
-            clearTimeout(timer);
-            var curVal = $(this).val().toLowerCase();
-            var dataValue;
-
-            if (!settings.selectionRequired || curVal === "") {
-              self.element.attr('data-value', curVal)
-                  .trigger('selected', { data: { value: curVal, label: curVal }, fireTabEvent: false });
-            }
-            else if (settings.selectionRequired) {
-              var items;
-
-              if (typeof settings.source === 'function') {
-                var response = function (data) {
-                  $("body").inforBusyIndicator("close");
-                  self.updateValue(curVal, data, true, e.shiftKey);
-                };
-                $("body").inforBusyIndicator({ modal: true });
-                settings.source(curVal, response);
-                e.stopPropagation();
-              }
-              else
-                self.updateValue(curVal, settings.source, false);
-            }
-            if (self.element.hasClass('is-open')) {
-              self.list.parent('.popupmenu-wrapper').remove();
-              self.element.removeClass('is-open');
-            }
-          }
-        }).on('keypress.autocomplete', function (e) {
-          var field = $(this);
-
-          clearTimeout(timer);
           timer = setTimeout(function () {
 
             buffer = field.val();
@@ -217,10 +154,11 @@
 
             if (typeof settings.source === 'function') {
               var response = function(data) {
-                $("body").inforBusyIndicator("close");
+                self.element.removeClass('is-busy');  //TODO: Need style for this
                 self.openList(buffer, data);
               };
-              $("body").inforBusyIndicator({ modal: true });
+
+              self.element.addClass('is-busy');
               settings.source(buffer, response);
 
             } else {
@@ -230,12 +168,12 @@
           }, 500);  //no pref for this lets keep it simple.
 
         }).on('focus.autocomplete', function () {
-          if (self.noSelect) {
-            self.noSelect = false;
-            return;
+          if (!settings.autoselect) {
+            //select all
+            setTimeout(function () {
+              self.element.select();
+            }, 10);
           }
-
-          self.element.select();
         });
       },
 

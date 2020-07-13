@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>InforHtmlControls</id>
-    <version>3.6.0-alpha</version>
-    <title>Infor Html Controls version next (trunk)</title>
+    <version>3.5.</version>
+    <title>Infor Html Controls v3.5</title>
     <authors>Hook and Loop</authors>
     <owners>Hook and Loop</owners >
     <projectUrl>http://soho.infor.com</projectUrl>

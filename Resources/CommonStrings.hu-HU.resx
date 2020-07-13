@@ -730,7 +730,7 @@
     <comment>Toolbar message for paging</comment>
   </data>
   <data name="More" xml:space="preserve">
-    <value>Tovább...</value>
+    <value>Továbbiak...</value>
     <comment>Overflow Text for Tabs and Dialogs</comment>
   </data>
   <data name="RecordsPerPage" xml:space="preserve">

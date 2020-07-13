@@ -56,14 +56,7 @@
 			if (settings.click != undefined) {
 				if (!$input.hasClass("fileInputField")) {	//bound inside the file field control.
 					$input.on("keydown.triggerfield",function(event) {
-						if (event.keyCode == 13 && $input.hasClass("inforSearchField")) {//13: enter
-							$triggerButton.trigger("click");
-							event.stopPropagation();
-							event.preventDefault();
-							return false;
-						}
-
-						if (event.keyCode==40) {//40: down arrow
+						if (event.keyCode==40 || (event.keyCode==13 && $triggerButton.is('.inforSearchButton'))) {//40: down arrow 
 							$triggerButton.trigger("click");
 							event.stopPropagation();
 							event.preventDefault();

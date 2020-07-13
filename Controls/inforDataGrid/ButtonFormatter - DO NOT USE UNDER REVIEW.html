@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -37,7 +37,7 @@
 		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
 		//Text In header
 		//columns.push({ id: "commentsColumn", name: "Comments", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "gridCommentsIcon", buttonClick: function (row) { console.log(row) }, cssClass: " non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
-		<!--columns.push({ id: "additionalInfo", name: "Additional info", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon drilldown", buttonClick: function (row) { console.log(row) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
+		<!--columns.push({ id: "additionalInfo", name: "Additional info", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon drilldown", buttonClick: function (row, b, c) { console.log(row, b, c) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
 		-->
 		columns.push({ id: "edit", name: "Edit", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon edit", buttonClick: function (row) { console.log(row) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
 		columns.push({ id: "approve", name: "Approve", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon approve", buttonClick: function (row) { console.log(row) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });

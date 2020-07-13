@@ -1598,7 +1598,7 @@ label.inforCardstackLabel {
   top: 0;
   margin: 0 auto;
   position: relative;
-  width: 18px;
+  width: 17px;
   cursor: pointer;
 }
 
@@ -1636,4 +1636,9 @@ label.inforCardstackLabel {
 
 #inforFilterConditions a {
   padding: 1px 0 1px 15px;
+}
+
+.inforFilterButton.is-filtered {
+  background-color: #bebebe;
+  box-shadow: 0 1px #767676 inset;
 }

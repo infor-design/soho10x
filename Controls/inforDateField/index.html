@@ -8,16 +8,15 @@
 	<title>Infor Datefield Example</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<link href="css/inforDateField.css" rel="stylesheet" />
-  <script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDateField.js"></script>
 
 	<script>
 		$(function () {
-      Globalize.culture("ar-SA");
-      $("#dateInput1").inforDateField({constrainInput: true, validateInput: false, maxDate: -1});
+			$("#dateInput1").inforDateField();//({mask: "99/99/9999"});
+			$("body").inforForm();
 		});
 	</script>
 </head>

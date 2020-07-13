@@ -10,6 +10,7 @@
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="../inforDataGrid/js/sampleData.js"></script>
+	<script src="js/inforLookupField.js"></script>
 
 	<script>
 		$(function () {
@@ -44,8 +45,8 @@
 				//set columns
 				var columns = [];
 				columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
-				columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true });
-				columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank"});
+				columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true});
+				columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
 				columns.push({ id: "country", name: "Country", field: "country", width: 70, formatter: TextCellFormatter});
 				columns.push({ id: "territory", name: "Territory", field: "territory", width: 70, formatter: TextCellFormatter});
 
@@ -58,7 +59,7 @@
 					idProperty: 'officeId',
 					editable: false,
 					showDrillDown: false,
-					showFilter: false,
+					showFilter: true,
 					showCheckboxes: false,
 					showStatusIndicators: false,
 					multiSelect: false //in theory true will work but not sure how to close the dialog so if you need this discuss with me.

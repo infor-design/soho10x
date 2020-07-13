@@ -398,7 +398,7 @@
         $.data(this, "processed", true);
 
         $curobj = $this.css({
-          zIndex: Math.abs(500 - i)
+          zIndex: Math.abs(600 - i)
         });
         $subul = $this.find('ul:eq(0)').css({
           display: 'block'
@@ -516,13 +516,13 @@
       //find the bottom of the window
       var winOffset = $(window).height(),
       rootDiv = $(submenu).closest(".inforApplicationNav"),
-      bottomOfNav = rootDiv.position().top + rootDiv.outerHeight(),
+      bottomOfNav = rootDiv.position().top == 0 ? 62 : rootDiv.position().top + rootDiv.outerHeight(), 
 	  // size of two scroll items
       scrollItemHeight = 24 * 2,
       //(from the top page to the top of the control)
       allowableHeight = winOffset - bottomOfNav - scrollItemHeight,
       //add height of the scrollbar buttons..
-      fittingMenus = allowableHeight / 33,
+      fittingMenus = (allowableHeight / 33)-1, //take into account arrow down height
       //each menu is 33 in height
       menuCounter = 1,
       hiddenTopItems = [],
@@ -556,9 +556,14 @@
         topOfNav = rootDiv.position().top;
         //(from the top page to the top of the control)
         if ($(submenu).parent().offset().top > topOfNav && $(submenu).parent().attr("id") !== "overFlowMenu") {
-          $(submenu).css("top", -($(submenu).offset().top - 33) + "px");
+          $(submenu).css("top", -($(submenu).offset().top - 33*2) + "px"); //taking into account the height of down arrow
         }
+
         this._addVerticalScrollbars($(submenu), hiddenTopItems, hiddenBottomItems, visibleSubMenus);
+      }
+      else if ($(submenu).offset().top + (visibleSubMenus.length * 33) > allowableHeight && $(submenu).parent().attr("id") !== "overFlowMenu"){
+    	  var offsetTop = $(submenu).offset().top + (visibleSubMenus.length * 33) - allowableHeight;
+    	  $(submenu).css("top", -(offsetTop) + "px"); //taking into account the height of down arrow
       }
     },
     _addVerticalScrollbars: function (submenu, hiddenTopItems, hiddenBottomItems, visibleSubMenus) {
@@ -571,7 +576,7 @@
       self = this;
 
       up.attr("disabled", "disabled").unbind('mouseenter mouseleave');
-      //submenu.width(submenu.outerWidth());
+//      submenu.width(submenu.outerWidth()); //width keeps growing because of this 
 
       //Attach the hover events on a timer
       up.mouseenter(function () {
@@ -1212,14 +1217,14 @@
         self._setVerticalOverflow($subul);
       }
 
-      if (offSetTop + expectedHeight > winHeight && winHeight > expectedHeight) {   //see if it will oveflow past the bottom and fit if to be moved up
-        // $subul.css("top", "-" + (offSetTop + expectedHeight - winHeight) + "px");
-
-        if ($subul.offset().top < 30) {
-          //$subul.css("top", "22px");
-        }
+//      if (offSetTop + expectedHeight > winHeight && winHeight > expectedHeight) {   //see if it will oveflow past the bottom and fit if to be moved up
+//        $subul.css("top", "-" + (offSetTop + expectedHeight - winHeight) + "px");
+//      }
+//
+      if ($subul.offset().top < 30 && $subul.parent().attr("id") == "overFlowMenu") {
+          $subul.css("top", "33px");
       }
-
+      
       if ($subul.parent().parent().parent().hasClass("inforApplicationNav")) {
         rootDiv.find(".activeHeader").removeClass("activeHeader");
       }
@@ -1254,3 +1259,4 @@
   });
 
 })(jQuery);
+/*

@@ -6,7 +6,8 @@
     options: {
       timeFormat: Globalize.culture().calendar.patterns.t, //Globalize Time Format https://github.com/jquery/globalize#dates
       interval: 30, //Interval in minutes between the times
-      range: [8, 20] //Limit the intervals to a range. Fx working hours 9-5 (24 hour clock) 0-23
+      range: [8, 20], //Limit the intervals to a range. Fx working hours 9-5 (24 hour clock) 0-23
+	  useRangeWhenBlank: true  //true: set range when field is blank | false: don't use range when field is blank
     },
     _init: function () {
       var self = this;
@@ -16,6 +17,7 @@
       self.isHHLeadingZero = self.options.timeFormat.toLowerCase().indexOf('hh') > -1;
       self.isMMLeadingZero = self.options.timeFormat.toLowerCase().indexOf('mm') > -1;
       self.is24HZero = self.options.timeFormat.indexOf('H') > -1;
+	  self.useRangeWhenBlank = self.options.useRangeWhenBlank;
 
       //make sure its not initialized twice.
       if (self.input.data('isInitialized')) {
@@ -78,7 +80,6 @@
       seltt = formattedD.substr(formattedD.indexOf(' ')+1);
 
       self._refreshTimes();
-      self.times.sort();
 
       for (i = 0; i < self.times.length-1 ; i++) {
         var hh = self.times[i].substr(0, self.times[i].indexOf(':')),
@@ -270,10 +271,10 @@
       if (self.input.is('[readonly]')) {
         return;
       }
-
-      if (time.trim() === ':') {
-        return;
-      }
+	  
+	  if (time.length === 0 && !self.useRangeWhenBlank)  {
+		  return;
+	  }
 
       if (self.showPeriod) {
         arr = time.split(' ');
@@ -302,10 +303,10 @@
       }
 
       var amPers = Globalize.culture(Globalize.cultureSelector).calendars.standard.AM,
-        pmPers = Globalize.culture(Globalize.cultureSelector).calendars.standard.AM,
+        pmPers = Globalize.culture(Globalize.cultureSelector).calendars.standard.PM,
         itsFine = false;
 
-      if ($.inArray(period, amPers) || $.inArray(period, pmPers)) {
+      if ($.inArray(period, amPers) > -1 || $.inArray(period, pmPers) > -1) {
         itsFine = true;
       }
 

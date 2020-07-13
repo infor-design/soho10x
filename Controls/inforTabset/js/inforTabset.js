@@ -331,6 +331,8 @@
 
       // disable click in any case
       this.anchors.bind("click.tabs", function () {
+        // LMCLIENT-19307: send click trigger before return
+        $(document).trigger("click.popupmenu");
         return false;
       });
     },
@@ -698,8 +700,8 @@
       //hide any visibile tooltips..
       $tabs.bind('tabsselect', function () {
         $("#inforTooltip, #validation-errors, #tooltip").addClass('is-hidden');
-        $('#dropdown-list, #multiselect-list').remove();
         $(".slick-columnpicker").hide();
+        $('#dropdown-list, #multiselect-list').remove();
 
         if (o.editable) {
           $("input.inforTabHeaderEditor").trigger("blur");

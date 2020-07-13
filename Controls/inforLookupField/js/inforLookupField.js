@@ -19,10 +19,11 @@
       ajaxOptions: null //optional ajaxOptions to control the request
     },
     associatedGrid: null,
-    gridDivId: "lookupGridDivId", //use a uuid not needed should only be one in a page at once.
+    gridDivId: "lookupGridDivId", // use a uuid not needed should only be one in a page at once.
     input: null,
     originalDataSet: null,
-    selectedIds: [], //The selected Rows.
+    selectedIds: [], // The selected Rows.
+    isPopupOpen: false, // true if the grid popup is opened or is opening
     _init: function () {
       var self = this,
       $input = $(this.element),
@@ -30,6 +31,7 @@
       gridDiv;
 
       this.input = $input;
+      this.gridDivId = 'lookupGridDiv' + this.element.attr('id');
 
       //attach a default source matcher in case one is not provided.
       if (!self.options.source) {
@@ -42,28 +44,23 @@
           }
 
           if (self.options.url || self.options.ajaxOptions) {
-            gridDiv = self._createGridDiv();
-
             if (!self.options.ajaxOptions) {
               self.options.ajaxOptions = {
                 url: self.options.url,
-                type: "GET",
-                dataType: "html",
-                complete: function (jqXHR, status) {
-                  gridDiv.html(jqXHR.responseText);
-                  self._search(request, response, gridDiv);
-                }
+                type: "GET"
               };
-            } else {
-              self.options.ajaxOptions.complete = function (jqXHR, status) {
-                gridDiv.html(jqXHR.responseText);
-                self._search(request, response, gridDiv);
-              };
-              self.options.ajaxOptions.dataType = "html";
             }
+
+            self.options.ajaxOptions.complete = function (jqXHR, status) {
+              self._removeGridDiv();
+              gridDiv = self._createGridDiv();
+              gridDiv.html(jqXHR.responseText);
+              self._search(request, response, gridDiv);
+            };
+            self.options.ajaxOptions.dataType = "html";
+
             $.ajax(self.options.ajaxOptions);
           } else {
-
             //set back the dataset
             if (self.originalDataSet) {
               self.options.gridOptions.dataset = self.originalDataSet;
@@ -78,6 +75,7 @@
       $input.inforTriggerField({
         click: function (event) {
           self.input.addClass("is-busy");
+          self.isPopupOpen = true;
 
           if (self.options.click) {
             self.options.click(event);
@@ -113,6 +111,10 @@
           }
           return;
         }
+      }).on('keydown', function (e) {
+        if (e.keyCode  === 27) {
+          self._closeGridPopup(true);
+        }
       });
 
       //Setup an editable type drop down styling and options
@@ -120,9 +122,18 @@
         $input.attr('readonly','readonly').data('selectOnly', true).parent().addClass('selectOnly');
       }
     },
+    _removeGridDiv: function () {
+      $('#' + this.gridDivId).parent('.inforLookupGridBoxShadow').remove();
+      $('#' + this.gridDivId).remove();
+    },
     _createGridDiv: function () {
+
+      if ($('#' + this.gridDivId).length > 0) {
+        return $('#' + this.gridDivId);
+      }
+
       var $gridDiv = $("<div></div>").attr("id", this.gridDivId).addClass("inforLookupGrid").appendTo("body");
-      $gridDiv.wrap("<div style='display:none' class='inforLookupGridBoxShadow'></div>");
+      $gridDiv.wrap("<div style='display:none' class='inforLookupGridBoxShadow'></div");
 
       return $gridDiv;
     },
@@ -131,26 +142,30 @@
         count = 0,
         timer;
 
-      if (gridDiv) { //we used an ajax url
-        self.associatedGrid = gridDiv.find(".inforDataGrid:first").data("gridInstance");
-        if (!self.associatedGrid) {
+      if (gridDiv) { // we used an ajax url
+        var setupGrid = function(grid) {
+          grid.isLookupGrid = true;
+          self.associatedGrid = grid;
+          self.options.gridOptions = grid.getOptions();
+          self.options.gridOptions.dataset = grid.getData().getItems();
+          self._completeResponse(request, response);
+        };
+
+        var gridInstance = gridDiv.find(".inforDataGrid:first").data("gridInstance");
+        if (!gridInstance) {
           timer = setInterval(function () {
-            var elem = gridDiv.find(".inforDataGrid:first").data("gridInstance");
-            if (count == 5) {
+            gridInstance = gridDiv.find(".inforDataGrid:first").data("gridInstance");
+
+            if (count == 5)
               clearTimeout(timer);
-            }
-            if (elem) {
-              self.associatedGrid = elem;
-              self.options.gridOptions = self.associatedGrid.getOptions();
-              self.options.gridOptions.dataset = self.associatedGrid.getData().getItems();
-              self._completeResponse(request, response);
-            }
+
+            if (gridInstance)
+              setupGrid(gridInstance);
+
             count++;
           }, 400);
         } else {
-          self.options.gridOptions = self.associatedGrid.getOptions();
-          self.options.gridOptions.dataset = self.associatedGrid.getData().getItems();
-          self._completeResponse(request, response);
+          setupGrid(gridInstance);
         }
       } else {
         self._completeResponse(request, response);
@@ -187,42 +202,48 @@
       return this.associatedGrid;
     },
     setCode: function (codeValue) {
-      var self = this, i, selectValue, row;
+      // This sets up Lookup field's selected values,
+      // where codeValue may contain 1 or more selections
+      var self = this;
 
-      this.selectedIds = [];
+      // Ensure that we always deal with an array
+      if (typeof (codeValue) === 'string')
+        codeValue = [codeValue];
 
-      //find the code value provided and set the associated text value in the input field and add to the selectedIds
-      if (typeof (codeValue) == "object") { //should handle multiselect but no way to close dialog yet.
-        for (i = 0; i < codeValue.length; i++) {
-          this.selectedIds.push({
-            id: codeValue[i]
+      // First we want to make sure we're not just
+      // setting values that are already selected
+      var newSelectedIds = codeValue.filter(function(value) {
+        if (self.selectedIds.length) {
+          var itemExists = self.selectedIds.filter(function(selected) {
+            return (value == selected.value || value == selected.id);
           });
+          if (itemExists.length)
+            return false;
         }
-      } else {
-        this.selectedIds.push({
-          id: codeValue
-        });
-      }
+        return true;
+      }).map(function(value) {
+        return {id: value};
+      });
 
-      selectValue = "";
-      if (!this.selectedIds) {
+      // Return if there are no selection
+      if (!newSelectedIds.length) {
         return;
       }
 
+      this.selectedIds = newSelectedIds;
+      var selectValue = "";
       $.each(this.selectedIds, function (index, value) {
         if (typeof value.id == "number" && isNaN(value.id)) {
           return;
         }
 
-        row = self.getRowById(value.id);
-
+        var row = self.getRowById(value.id);
         if (row) {
           selectValue += self.getDataItemValueForColumn(row, self.options.returnField) +
               (self.selectedIds.length - 1 != index ? "," : "");
         }
       });
 
-      //remove last ,
       this.input.val(selectValue);
     },
     dataView : null,
@@ -237,59 +258,62 @@
       }
     },
     getRowById: function (id) { //return the dataset row for the given id..using idProperty
-      if (!this.options.gridOptions) {
-        return null;
+      var self = this;
+      var gridOptions = this.options.gridOptions;
+      var isAjaxData = !!(this.options.url || this.options.ajaxOptions);
+
+      if (this.dataView)
+        return this.dataView.getItemById(id);
+
+      // Get DataView from grid if it
+      // was built via AJAX request
+      if (isAjaxData && this.associatedGrid) {
+        this.dataView = this.associatedGrid.getData();
+        return this.dataView.getItemById(id);
       }
 
-      var dataset = this.options.gridOptions.dataset,
-        self = this,
-        response;
-
-      if (!this.dataView) {
-        this.dataView = new Slick.Data.DataView({idProperty: this.options.gridOptions.idProperty});
-        this.dataView.setItems(this.options.gridOptions.dataset);
-
-        //Execute Source..
-        if (this.options.source) {
-          response = function (data) {
-            dataset = data;
-            //thats.options.gridOptions.dataset = data;
+      // Otherwise, data can be pulled from
+      // either gridOptions or from source
+      if (!isAjaxData && gridOptions) {
+        this.dataView = new Slick.Data.DataView({idProperty: gridOptions.idProperty});
+        var dataset = gridOptions.dataset;
+        if (dataset && dataset.length) {
+          this.dataView.setItems(dataset);
+        } else if (this.options.source) {
+          // Fallback to source when there's
+          // nothing from gridOptions.dataset
+          this.options.source("", function(data) {
             self.dataView.setItems(data);
-          };
-          this.options.source("", response);
+          });
         }
+        return this.dataView.getItemById(id);
       }
-      return this.dataView.getItemById(id);
     },
     destroy: function() {
-      if (this.associatedGrid) {
-        this.associatedGrid.destroy(true); //destroyed inside the grid editor
-        this.associatedGrid = null;
+      if (this.isPopupOpen) {
+        this._closeGridPopup(true);
       }
     },
     _closeGridPopup: function (isCancel) {
       //remove grid and page elements and animate
       var $gridDiv = $("#" + this.gridDivId),
-        self = this,
         cell = this.input.closest(".slick-cell");
+      this.isPopupOpen = false;
+
+      var $gridWrapper = $gridDiv.parent('.inforLookupGridBoxShadow');
+      $gridWrapper.css("opacity", 0); //improves appearance on ie 8 during fade out..
+      $gridDiv.hide((isCancel ? "fade" : "fadeOut"), function () {
+        $gridWrapper.remove();
+      });
 
       if (this.associatedGrid) {
         this.associatedGrid.destroy();
-        $('.popupmenu-wrapper:empty').remove();
+        this.associatedGrid = null;
       }
+      $('.popupmenu-wrapper:empty').remove();
 
-      $gridDiv.parent().css("opacity", 0); //improves appearance on ie 8 during fade out..
-      $gridDiv.hide((isCancel ? "fade" : "fadeOut"), function () {
-        $(".inforLookupGridBoxShadow").remove();
-      });
-
-      $("#inforLookupOverlay").remove();
+      this.overlay.remove();
       this.input.removeClass("is-busy");
-
-      //destroy grid
-      if (!cell || (cell && !cell.hasClass("hasComboEditor") && cell.length > 0)) {
-        this.destroy();
-      }
 
       //set back the dataset
       if (this.originalDataSet) {
@@ -302,11 +326,13 @@
     },
     _openGridPopup: function (dataset, columns, totalRows) {
       var self = this,
-        $gridDiv, isRTL, minHeight, ds, $overlay, selectedRows, dataRows, i, j, header, closeButton, dataView, filterExpr, columnFilterObject;
+        $gridDiv, isRTL, minHeight, ds, selectedRows, dataRows, i, j, header, closeButton, dataView, filterExpr, columnFilterObject;
+      var modal = this.element.closest('.modal, .inforLookupGridBoxShadow');
 
       if (!this.element.is(":focus")) {
         return;
       }
+
       //switch out the dataset with the passed in filtering one.
       if (dataset) {
         self.originalDataSet = self.options.gridOptions.dataset;
@@ -323,8 +349,10 @@
 
       //create a grid object..
       $gridDiv = $("#" + this.gridDivId);
-      if ($gridDiv.length === 0) {
-        $gridDiv = self._createGridDiv();
+      $gridDiv = self._createGridDiv();
+
+      if (modal.length > 0) {
+        $gridDiv.closest('.inforLookupGridBoxShadow').css('z-index', modal.zIndex() + 1);
       }
 
       //set height and width
@@ -382,6 +410,7 @@
         this.associatedGrid.setSortColumn(self.options.sortColumnId, self.options.sortAsc);
       }
 
+
       //Set total count for paging
       if (totalRows && ds) {
         this.associatedGrid.mergeData(ds, 0, parseInt(totalRows, 10));
@@ -402,29 +431,31 @@
 
       //add modal overlay..
       //create a grid object..
-      $overlay = $("#inforLookupOverlay");
-      if ($overlay.length === 0) {
-        $overlay = $('<div id="inforLookupOverlay"></div>').addClass('inforLookupOverlay')
-          .appendTo(document.body)
-          .css({
-            width: $(window).width(),
-            height: $(window).height()
-          }).click(function () {
-            if (self.options.gridOptions.multiSelect) {
-              self._select();
-            } else {
-              self._closeGridPopup(true);
-            }
-          });
+      var overlayId = "inforLookupOverlay" + this.gridDivId;
+      this.overlay = $('#' + overlayId);
+
+      if (this.overlay.length === 0)
+      {
+        var zIndex = modal.length > 0 ? modal.zIndex() : 900;
+	      this.overlay = $('<div id="' + overlayId + '"></div>').addClass('inforLookupOverlay')
+	        .appendTo(document.body)
+	        .css({
+	          width: $(window).width(),
+	          height: $(window).height(),
+	          zIndex: zIndex
+	        }).click(function () {
+	          if (self.options.gridOptions.multiSelect) {
+	            self._select();
+	          } else {
+	            self._closeGridPopup(true);
+	          }
+	        });
+
+	      this.overlay.css({
+	        width: $(window).width(),
+	        height: $(window).height()
+	      });
       }
-
-      $overlay.css({
-        width: $(window).width(),
-        height: $(window).height()
-      });
-
-      this.input.removeClass("is-busy");
-
       //select the selected rows based on the current value(s)..This would fail if the id was not selected.
       if (self.selectedIds.length > 0) {
         selectedRows = [];
@@ -433,15 +464,6 @@
           selectedRows.push(this.associatedGrid.getData().getIdxById(self.selectedIds[i].id));
         }
         this.associatedGrid.setSelectedRows([]);
-
-        if (this.options.gridOptions.persistSelections) {
-          var arrayOfIds = [];
-          for (i = 0; i < self.selectedIds.length; i++) {
-            arrayOfIds.push(self.selectedIds[i].id);
-          }
-          this.associatedGrid.setPersistedRowIds(arrayOfIds);
-        }
-
         this.associatedGrid.setSelectedRows(selectedRows);
         //scroll to last selected
         this.associatedGrid.scrollRowIntoView(selectedRows[selectedRows.length-1]);
@@ -449,7 +471,7 @@
 
       //selected rows events
       if (!self.options.gridOptions.multiSelect) {
-        this.associatedGrid.onClick.subscribe(function () {
+        this.associatedGrid.onClick.subscribe(function (e, a) {
           self._select();
         });
       }
@@ -459,6 +481,22 @@
         dataView = this.associatedGrid.getData();
         dataView.onPageRequested.subscribe(function (e, args) {
           e.datagrid = self.associatedGrid;
+          //pass in the term as a filter arg
+          if (!args.filters) {
+            if (self.input.val() === "") {
+              args.filters = undefined;
+            } else {
+              columnFilterObject = {};
+              filterExpr = {
+                value: self.input.val(),
+                operator: "contains",
+                filterType: TextFilter()    //ignore jslint - comes from the datagrid
+              };
+
+              columnFilterObject[self.options.gridOptions.idProperty] = filterExpr;
+              args.filters = columnFilterObject;
+            }
+          }
           self.options.onPageRequested(e, args);
         });
       }
@@ -472,7 +510,9 @@
         self._handleResize();
       });
 
-      self.setPosition();
+      this.input.data("isChanged", false);
+      this.input.removeClass("is-busy");
+      this.setPosition();
       this.input.closest(".inforTriggerField").addClass("focus");
     },
     resizeTimer: null,
@@ -481,6 +521,9 @@
     root: null,
     getSelectedValues: function () {
       return this.selectedIds;
+    },
+    getIsPopupOpen: function () {
+      return this.isPopupOpen;
     },
     setPosition: function () {
       var self = this,
@@ -493,7 +536,7 @@
         of: self.input
       });
 
-      $("#inforLookupOverlay").height($(window).height()).width($(window).width());
+      self.overlay.height($(window).height()).width($(window).width());
 
       self.windowHeight = $(window).height();
       self.windowWidth = $(window).width();
@@ -523,7 +566,6 @@
     _select: function () {
       var self = this,
         grid = self.associatedGrid,
-        dataItems = [],
         item, fieldValue, selectedRows, selectedRowData, itemValue, i;
 
       if (!grid) {
@@ -531,34 +573,27 @@
       }
 
       setTimeout(function () {
-        function getReturnDataFromDataItems(items) {
-          for (var i = 0; i < items.length; i++) {
-            item = items[i];
-            itemValue = self.getDataItemValueForColumn(item, self.options.returnField);
-            self.selectedIds.push({
-              id: item[self.options.gridOptions.idProperty],
-              value: itemValue
-            });
-            fieldValue += itemValue + (i + 1 == selectedRows.length ? "" : ",");
-            selectedRowData.push(item);
-          }
-        }
-
         self.selectedIds = [];
         fieldValue = "";
         selectedRows = grid.getSelectedRows();
         selectedRowData = [];
 
-        if (self.options.gridOptions.persistSelections) {
-          dataItems = grid.getPersistedDataItems();
-        }
-        else {
-          for (i = 0; i < selectedRows.length; i++) {
-            dataItems.push(grid.getDataItem(selectedRows[i]));
-          }
+        for (i = 0; i < selectedRows.length; i++) {
+          item = grid.getDataItem(selectedRows[i]);
+          if (item.isTreeMoreLink)
+            return;
+          itemValue = self.getDataItemValueForColumn(item, self.options.returnField);
+          self.selectedIds.push({
+            id: item[self.options.gridOptions.idProperty],
+            value: itemValue
+          });
+          fieldValue += itemValue + (i + 1 == selectedRows.length ? "" : ",");
+          selectedRowData.push(item);
         }
 
-        getReturnDataFromDataItems(dataItems);
+        //LMCLIENT-20637: null value guard for lookup fields
+        if (fieldValue == "null")
+          return;
 
         self.input.val(fieldValue);
         self._closeGridPopup(false);

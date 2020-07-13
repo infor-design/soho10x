@@ -18,9 +18,7 @@
 
   <script>
     $(function () {
-       Globalize.culture("ar-SA");
-       console.log(Globalize.culture().calendar.patterns.t)
-       $('#time1').inforTimeField({timeFormat: Globalize.culture().calendar.patterns.t});
+      $('#time1').inforTimeField();
     });
   </script>
 </head>

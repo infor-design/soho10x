@@ -9,7 +9,7 @@
   list-style: none;
   padding: 12px 0;
   margin: 0;
-  z-index: 5020;
+  z-index: 4000;
   display: none;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -24,7 +24,7 @@
 
 .popupmenu.is-open {
   display: block;
-  z-index: 5020;
+  z-index: 4000;
 }
 
 .submenu .popupmenu.is-open {
@@ -127,7 +127,6 @@
   margin-left: 13px;
   margin-top: 8px;
   opacity: 0.4;
-  pointer-events: none;
   position: absolute;
   width: 12px;
 }
@@ -183,7 +182,7 @@
 .popupmenu-wrapper {
   display: inline-block;
   position: absolute;
-  z-index: 5020;
+  z-index: 4000;
 }
 
 .submenu > .wrapper {

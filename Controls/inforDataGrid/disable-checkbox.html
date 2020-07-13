@@ -15,7 +15,14 @@
 	<!--Load a Flat file with JSON data-->
 	<script src="js/sampleData.js"></script>
 
-	<script>
+  <style>
+    .dimmed {
+      background-color: #f0f0f0;
+    }
+
+  </style>
+
+  <script>
 	$(function () {
     //Globalize.culture('ja-JP');
 
@@ -29,7 +36,7 @@
     }
 
 		//Define Columns for the Grid.
-		columns.push({ id: 'officeId', name: 'Office Id', field: 'officeId', width: 40, sortable: false, formatter:UneditableColumnFormatter, title: 'This is a tooltip', hidden: true });
+		columns.push({ id: 'officeId', name: 'Office Id', field: 'officeId', width: 40, sortable: false, formatter:UneditableColumnFormatter, cssClass: 'dimmed' });
 		columns.push({ id: 'city',name: 'City', field: 'city', width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, editability:isReadOnly });
 		columns.push({ id: 'phone', name: 'Phone', field: 'phone', width: 125, sortable: true, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter, editability:isReadOnly });
 		columns.push({ id: 'isLeedCertified', cssClass : 'alignCenter', headerCssClass : 'alignHeaderCenter', name: 'Leed', field: 'isLeedCertified', width: 100, formatter:CheckboxCellFormatter, editor:CheckboxCellEditor, filterType: CheckboxFilter, editability:isReadOnly });
@@ -48,6 +55,13 @@
 
 		$('body').inforForm();
 
+		grid.onCellChange.subscribe(function (e, args) {
+			//Workaround for not working editability on checkboxes
+      if (args.cell === 5 && args.item.city == "Memphis") {
+        args.item.isLeedCertified = args.previousCellValue;
+        grid.updateCell(args.row, args.cell);
+      }
+		});
 
 	});
 	</script>

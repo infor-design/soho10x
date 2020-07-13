@@ -95,6 +95,9 @@ html[dir="rtl"] .inforDropDownList.isDirty {
   margin-left: 4px;
 }
 
+.inforTopLabel .icon-error {
+  margin-left: 15px !important;
+}
 
 html[dir="rtl"]  .inforErrorIcon {
 	 left: 16px;

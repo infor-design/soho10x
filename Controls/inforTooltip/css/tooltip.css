@@ -7,7 +7,7 @@
   color: #ffffff;
   background-clip: padding-box;
   background-color: #333333;
-  border: none
+  border: 1px solid #d6d6d6;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);  /*GP: Popover 0 1px 5px 0 rgba(0, 0, 0, 0.25);*/
   left: -9999px;
@@ -96,7 +96,7 @@
 
 .popover.top .arrow, .tooltip.top .arrow {
   border-bottom-width: 0;
-  border-top-color: transparent;
+  border-top-color: #D6D6D6;
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
@@ -114,7 +114,7 @@
 }
 .popover.right .arrow, .tooltip.right .arrow  {
   border-left-width: 0;
-  border-right-color: transparent;
+  border-right-color: #D6D6D6;
   left: -11px;
   margin-top: -11px;
   top: 50%;
@@ -130,7 +130,7 @@
   border-right-color: #FFF;
 }
 .popover.bottom .arrow, .tooltip.bottom .arrow {
-  border-bottom-color: transparent;
+  border-bottom-color: #D6D6D6;
   border-top-width: 0;
   left: 50%;
   margin-left: -11px;

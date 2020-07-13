@@ -5,7 +5,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('message', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -38,7 +38,6 @@
     Plugin.prototype = {
       init: function() {
         var content,
-            self = this,
             isWrapped = false;
 
         //Create the Markup
@@ -55,9 +54,9 @@
         }
         //Add Second Message
         if (settings.detailedMessage !== '') {
-          this.content.append('<p class="detailed-message">'+ settings.detailedMessage +'</p>');
+          this.content.append('<p class="detailed-message">'+ settings.detailedMessage +'</p');
         }
-        this.closeBtn = $('<button type="button" class="inforFormButton default btn-close">'+Globalize.localize('Close')+'</button>').appendTo(this.content);
+        this.closeBtn = $('<button type="button" class="inforFormButton default btn-close">' +  Globalize.localize('Close')  + '</button>').appendTo(this.content);
 
         this.message.append(this.messageContent).appendTo('body');
         this.message.modal({trigger: 'immediate', isMessage: true, buttons: settings.buttons, resizable: settings.resizable, close: settings.close, minimizable: settings.minimizable, resize: settings.resize});
@@ -70,14 +69,6 @@
         if (settings.dialogType !== 'General' || settings.remove) {
           this.message.on('close.message', function () {
             $(this).remove();
-          });
-
-          this.message.on('beforeOpen.message', function () {
-            self.element.trigger('beforeOpen');
-          });
-
-          this.message.on('open.message', function () {
-            self.element.trigger('open');
           });
         }
 

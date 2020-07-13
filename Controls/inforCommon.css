@@ -89,19 +89,11 @@ table .dropdown, table .inforTriggerField {
 	content: ":";
 }
 
-html[lang="fr-FR"] .inforLabel:after, html[lang="fr-FR"] .label:after, html[lang="fr-FR"] .inforTopLabel:after {
+html[lang^="fr"] .inforLabel:after, html[lang^="fr"] .label:after, html[lang^="fr"] .inforTopLabel:after {
   content: " :";
 }
 
-html[lang="fr-CA"] .inforLabel:after, html[lang="fr-CA"] .label:after, html[lang="fr-CA"] .inforTopLabel:after {
-  content: " :";
-}
-
-.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang="fr-FR"] .inforLabel.noColon:after, html[lang="fr-FR"] .inforTopLabel.noColon:after  {
-	content: "";
-}
-
-.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang="fr-CA"] .inforLabel.noColon:after, html[lang="fr-CA"] .inforTopLabel.noColon:after  {
+.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang^="fr"] .inforLabel.noColon:after, html[lang^="fr"] .inforTopLabel.noColon:after  {
 	content: "";
 }
 
@@ -193,7 +185,7 @@ small {
 }
 
 /* Accessibility */
-.inforScreenReaderText, .scr-only, .audible, .sr-only  {
+.inforScreenReaderText, .scr-only  {
 	border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;

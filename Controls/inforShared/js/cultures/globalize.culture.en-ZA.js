@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Globalize Culture en-ZA
 *
 * http://github.com/jquery/globalize
@@ -30,14 +30,14 @@ Globalize.addCultureInfo( "en-ZA", "default", {
 	englishName: "English (South Africa)",
 	nativeName: "English (South Africa)",
 	numberFormat: {
-		",": " ",
+		",": " ",
 		percent: {
 			pattern: ["-n%","n%"],
-			",": " "
+			",": " "
 		},
 		currency: {
 			pattern: ["$-n","$ n"],
-			",": " ",
+			",": " ",
 			".": ",",
 			symbol: "R"
 		}
@@ -56,6 +56,7 @@ Globalize.addCultureInfo( "en-ZA", "default", {
 			}
 		}
 	}
+
 });
 
 }( this ));

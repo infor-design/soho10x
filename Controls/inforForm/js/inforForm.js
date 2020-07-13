@@ -168,7 +168,7 @@
       });
 
       if (o.trackDirty) {
-        $(":input").not(".noTrackDirty").not("button").each(function() {
+        $(":input", this).not(".noTrackDirty").not("button").each(function() {
           var input = $(this);
           if (input.closest(".slick-headerrow-column").length === 0) {
             input.trackDirty();

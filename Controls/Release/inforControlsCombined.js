@@ -1,6 +1,6 @@
 /*!
- Infor Html Controls v3.6.0 
- Date: 21-05-2018 25:03:52 
+ Infor Html Controls v3.5.0 
+ Date: 18-02-2020 40:10:05 
  Revision: undefined 
  */ 
  /*
@@ -791,10 +791,7 @@ formatDate = function( value, format, culture ) {
 			case "N":
 				formatInfo = nf;
 				// fall through
-			case "T":
-        formatInfo = nf;
-        // fall through
-      case "C":
+			case "C":
 				formatInfo = formatInfo || nf.currency;
 				// fall through
 			case "P":
@@ -993,6 +990,8 @@ getEraYear = function( date, cal, era, sortable ) {
 					add = "(\\D*)";
 					break;
 				case "yyyy":
+					add = "(\\d\\d\\d?\\d?)";
+					break;
 				case "fff":
 				case "ff":
 				case "f":
@@ -1095,7 +1094,7 @@ getEraYear = function( date, cal, era, sortable ) {
 						break;
 					case "y": case "yy":
 					case "yyyy":
-						year = clength < 4 ? expandYear( cal, matchInt ) : matchInt;
+						year = matchInt.toString().length < 4 ? expandYear( cal, matchInt ) : matchInt;
 						if ( outOfRange(year, 0, 9999) ) return null;
 						break;
 					case "h": case "hh":
@@ -1178,7 +1177,8 @@ getEraYear = function( date, cal, era, sortable ) {
 				}
 			}
 		}
-		var result = new Date(), defaultYear, convert = cal.convert;
+		//LMCLIENT-24809 : Changing the default year to 2016 considering Feb 29 that only occurs during leap year; 
+		var result = new Date(2016, 0), defaultYear, convert = cal.convert;
 		defaultYear = convert ? convert.fromGregorian( result )[ 0 ] : result.getFullYear();
 		if ( year === null ) {
 			year = defaultYear;
@@ -1656,10 +1656,22 @@ $(function () {
   ko.bindingHandlers.dropdown = {
     init: function(element, valueAccessor) {
       var opts = ko.utils.unwrapObservable(valueAccessor()),
-        elem = $(element);
+        elem = $(element),
+		setDataOnInit = true,
+		triggerOnInit = true;
 
+	  if (opts.initData != undefined) {
+		setDataOnInit = ko.utils.unwrapObservable(opts.initData);
+	  }
+	  
+	  if (opts.triggerInit != undefined) {
+		triggerOnInit = ko.utils.unwrapObservable(opts.triggerInit);
+	  }
+	  
       //set the data
-      ko.bindingHandlers.dropdown.setData(elem, opts);
+	  if (setDataOnInit) {
+        ko.bindingHandlers.dropdown.setData(elem, opts);
+	  }
 
       //init the control
       if (opts.options) {
@@ -1669,12 +1681,11 @@ $(function () {
       }
 
       //set the value
-      if (opts.value) {
+      if (opts.value && triggerOnInit) {
         $(element).val(valueAccessor().value()).trigger('updated');
       }
 
       //Setup events
-
       ko.utils.registerEventHandler(element, 'change', function() {
         var value = valueAccessor().value;
         value($(this).val());
@@ -1691,16 +1702,28 @@ $(function () {
     },
     setData: function(elem, opts) {
       if (opts.data) {
-        var data = ko.utils.unwrapObservable(opts.data);
-        if (data.length === elem[0].options.length && elem[0].options[0].id === data[0].id) {
+        var data = ko.utils.unwrapObservable(opts.data),
+			triggerData = true,
+			options = "";
+        if (data.length === elem[0].options.length && elem[0].options[0].value === data[0].id) {
           return;
         }
+
         elem.empty();
-        for (var i=0; i < data.length; i++) {
-          var opt = $('<option></option').attr('value', (opts.optionsValue ? data[i][opts.optionsValue] : data[i].key)).html((opts.optionsText ? data[i][opts.optionsText] : data[i].name));
-          elem.append(opt);
+        for (var i=0, len=data.length; i < len; i++) {
+          options += '<option value=\"' + (opts.optionsValue ? data[i][opts.optionsValue] : data[i].key) + '\">' 
+		  + (opts.optionsText ? data[i][opts.optionsText] : data[i].name)
+		  + '</option>';
         }
-        elem.trigger('updated');
+		elem.append(options);	
+
+		if (opts.triggerData != undefined) {
+		  triggerData = ko.utils.unwrapObservable(opts.triggerData);
+		}
+
+		if (triggerData) {
+          elem.trigger('updated');
+		}
       }
     }
   };
@@ -3037,7 +3060,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
 			}
 		},
 		destroy: function () {
-      if (this.contentArea.closest('.modal').data('modal')) {
+			if (this.contentArea.closest('.modal').data('modal')) {
         this.contentArea.closest('.modal').data('modal').close();
       }
       this.root.remove();
@@ -3128,7 +3151,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('multiselect', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -3177,7 +3200,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
         this.trigger = $('<button type="button" class="icon"><i></i></button>').insertAfter(this.input);
 
         //Add selected items
-        var selOpts = this.element[0].selectedOptions;
+        var selOpts = this.element.find('option:selected');
         $.each(selOpts, function (i, item) {
           self.addTag($(item));
         });
@@ -3229,7 +3252,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
         items = this.element[0].options;
         this.list.empty();
 
-        $(items).each(function (i, item) {
+        $.each(items, function (i, item) {
           var isDisabled = false,
             label = (typeof item === 'string' ? item : item.text),
             value = (typeof item === 'string' ? null : item.value),
@@ -3379,9 +3402,10 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
           return;
         }
 
-        if (this.input.prop('disabled')) {
-          return;
-        }
+        //HFC-3237
+        //if (this.input.prop('disabled')) {
+        //  return;
+        //}
 
         this.input.attr('aria-activedescendant', li.attr('id'));
 
@@ -3443,13 +3467,13 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
   };
 }));
 /**
-* Autocomplete for inputs and searches
+* Autocomplete for inputs and searches - test
 * @name autocomplete
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('autocomplete', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -3461,12 +3485,11 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
     // Settings and Options
     var pluginName = 'autocomplete',
       defaults = {
+        autoselect: false,
         source: ['Alabama', 'Alaska', 'California', 'Delaware'], //Defines the data to use, must be specified.
-        selectionRequired: false,
-        selectLabel: true // selectionRequired must be true when selectLabel: true
+        resizeToLabelSize: false
       },
       settings = $.extend({}, defaults, options);
-    var allowUpdate = false;
 
     // Plugin Constructor
     function Plugin(element) {
@@ -3483,9 +3506,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
       },
 
       addMarkup: function () {
-        this.element.addClass('autocomplete')
-          .attr('data-value', '')
-          .attr('role', 'combobox')
+        this.element.addClass('autocomplete').attr('role', 'combobox')
           .attr('aria-owns', 'autocomplete-list')
           .attr('aria-autocomplete', 'list')
           .attr('aria-activedescendant', '');
@@ -3502,7 +3523,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
           this.list = $('<ul id="autocomplete-list" aria-expanded="true"></ul>').appendTo('body');
         }
 
-        this.list.css({'height': 'auto', 'width': this.element.outerWidth()}).addClass('autocomplete');
+        this.list.css({'height': 'auto', 'width': settings.resizeToLabelSize ? 'auto' : this.element.outerWidth()}).addClass('autocomplete');
         this.list.empty();
 
         for (var i = 0; i < items.length; i++) {
@@ -3521,131 +3542,71 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
         }
 
         this.element.addClass('is-open')
-          .popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: false})
+          .popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: settings.autoselect })
           .on('close.autocomplete', function () {
             self.list.parent('.popupmenu-wrapper').remove();
             self.element.removeClass('is-open');
           });
 
+        if (settings.resizeToLabelSize && this.list.outerWidth() < this.element.outerWidth()) {
+        	this.list.css({'width': this.element.outerWidth()});
+        }
+
         self.list.off('click.autocomplete').on('click.autocomplete', 'a', function (e) {
           var a = $(e.currentTarget),
             ret = a.text();
 
-          var dataValue = a.parent().attr('data-value');
-          self.element.val(a.text())
-              .attr('aria-activedescendant', a.parent().attr('id'))
-              .attr('data-value', dataValue)
-              .trigger('selected', { data: { value: dataValue, label: a.text() }, fireTabEvent: false });
+          self.element.val(a.text()).attr('aria-activedescendant', a.parent().attr('id'));
+
+          if (a.parent().attr('data-value')) {
+            for (var i = 0; i < items.length; i++) {
+              if (items[i].value.toString() === a.parent().attr('data-value')) {
+                ret = items[i];
+              }
+            }
+          }
+
+          self.element.trigger('selected', ret);
 
           e.preventDefault();
           return false;
         });
 
-        var all = self.list.find('a').on('focus', function () {
-          var anchor = $(this);
+        function setFocus(anchor) {
+          if (!anchor || !(anchor instanceof $)) {
+            anchor = $(this);
+          }
+
           all.parent('li').removeClass('is-selected');
-          if (allowUpdate) {
-            var dataValue = anchor.parent('li').attr('data-value');
-            anchor.parent('li').addClass('is-selected');
-            self.element.val(anchor.text())
-                .attr('data-value', dataValue)
-                .trigger('selected', { data: { value: dataValue, label: anchor.text() }, fireTabEvent: false });
-          }
-        });
-
-        this.noSelect = true;
-        allowUpdate = false;
-        this.element.focus();
-      },
-
-      updateValue: function (term, items, fireTabEvent, direction) {
-        var self = this;
-        var isUpdated = false;
-        for (var i = 0; i < items.length; i++) {
-          var optionLabel = (typeof items[i] === 'string' ? items[i] : items[i].label);
-          var optionValue = (typeof items[i] === 'string' ? items[i] : items[i].value);
-
-          if (optionLabel.toLowerCase().indexOf(term) > -1) {
-            self.element.val(optionLabel)
-                .attr('data-value', optionValue)
-                .trigger('selected', { data: { value: optionValue, label: optionLabel }, fireTabEvent: fireTabEvent, direction: direction });
-
-            isUpdated = true;
-            break;
-          }
+          anchor.parent('li').addClass('is-selected');
+          self.element.val(anchor.text());
         }
-        if (!isUpdated)
-          self.element.val('').trigger('selected', { data: { value: '', label: '' }, fireTabEvent: fireTabEvent, direction: direction });
+
+        var all = self.list.find('a').on('focus', setFocus);
+
+        if (settings.autoselect) {
+          setFocus(all.first());
+        }
       },
 
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var buffer = '', timer, self = this;
 
-        this.element.on('keyup.autocomplete', function (e) {
-          //open list
-          if ((e.altKey && e.keyCode === 40) || (e.keyCode === 8 && $(this).val() !== "")) {
-            allowUpdate = true;
-            buffer = $(this).val();
-            if (typeof settings.source === 'function') {
-              var response = function (data) {
-                $("body").inforBusyIndicator("close");
-                self.openList(buffer, data);
-              };
+        this.element.on('keyup.autocomplete', function(e) {
+          if (e.keyCode === 8) {
+            self.element.trigger('keypress');
+          }
+        }).on('keypress.autocomplete', function (e) {
 
-              $("body").inforBusyIndicator({ modal: true });
-              settings.source(buffer, response);
+          var field = $(this);
+          clearTimeout(timer);
 
-            } else {
-              self.openList(buffer, settings.source);
-            }
+          if (e.altKey && e.keyCode === 40) {  //open list
+            self.openList(field.val(), settings.source);
             return;
           }
 
-        }).on('keydown.autocomplete', function (e) {
-          if (e.keyCode === 40) {
-            if (self.element.hasClass('is-open')) {
-              var itemsList = self.list.find('a');
-              allowUpdate = true;
-              e.stopPropagation();
-              if (itemsList.length > 0)
-                itemsList.first().focus();
-            }
-          }
-
-          if (e.keyCode === 9) {
-            clearTimeout(timer);
-            var curVal = $(this).val().toLowerCase();
-            var dataValue;
-
-            if (!settings.selectionRequired || curVal === "") {
-              self.element.attr('data-value', curVal)
-                  .trigger('selected', { data: { value: curVal, label: curVal }, fireTabEvent: false });
-            }
-            else if (settings.selectionRequired) {
-              var items;
-
-              if (typeof settings.source === 'function') {
-                var response = function (data) {
-                  $("body").inforBusyIndicator("close");
-                  self.updateValue(curVal, data, true, e.shiftKey);
-                };
-                $("body").inforBusyIndicator({ modal: true });
-                settings.source(curVal, response);
-                e.stopPropagation();
-              }
-              else
-                self.updateValue(curVal, settings.source, false);
-            }
-            if (self.element.hasClass('is-open')) {
-              self.list.parent('.popupmenu-wrapper').remove();
-              self.element.removeClass('is-open');
-            }
-          }
-        }).on('keypress.autocomplete', function (e) {
-          var field = $(this);
-
-          clearTimeout(timer);
           timer = setTimeout(function () {
 
             buffer = field.val();
@@ -3661,10 +3622,11 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
 
             if (typeof settings.source === 'function') {
               var response = function(data) {
-                $("body").inforBusyIndicator("close");
+                self.element.removeClass('is-busy');  //TODO: Need style for this
                 self.openList(buffer, data);
               };
-              $("body").inforBusyIndicator({ modal: true });
+
+              self.element.addClass('is-busy');
               settings.source(buffer, response);
 
             } else {
@@ -3674,12 +3636,12 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
           }, 500);  //no pref for this lets keep it simple.
 
         }).on('focus.autocomplete', function () {
-          if (self.noSelect) {
-            self.noSelect = false;
-            return;
+          if (!settings.autoselect) {
+            //select all
+            setTimeout(function () {
+              self.element.select();
+            }, 10);
           }
-
-          self.element.select();
         });
       },
 
@@ -3705,7 +3667,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('rating', ['jquery'], factory);
+      define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
       //Support for Atom/CommonJS
       module.exports = factory;
@@ -3806,1378 +3768,6 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
     });
   };
 }));
-/**
-* Chart Controls
-* @name Charts
-* TODO:
-
-  Make vertical bar chart (have horizontal)
-  Work on update functions or routine
-  Make responsive
-  Make Area/Dot Chart
-  Test With Screen readers
-*/
-
-window.Chart = function(container) {
-  'use strict';
-
-  var charts = this;
-
-  //IE8 and Below Message
-  if (typeof d3 === 'undefined') {
-    $(container).append('<p class="chart-message"></p>');
-    return null;
-  }
-
-  var colorRange = ['#1D5F8A', '#8ED1C6', '#9279A6', '#5C5C5C', '#F2BC41', '#66A140',
-   '#B94E4E', '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#999999', '#488421', '#C7B4DB', '#54A1D3', '#6E5282',
-   '#AFDC91', '#69ADA3', '#DB7726', '#D8D8D8'];
-
-  this.pieColors = d3.scale.ordinal().range(colorRange);
-  this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
-  this.sparklineColors = d3.scale.ordinal().range(['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8']);
-  this.colors = d3.scale.ordinal().range(colorRange);
-
-  this.chartColor = function(i, chartType, data) {
-    var specColor = data.color;
-
-    //error, alert, alertYellow, good, neutral or hex
-    if (specColor && specColor ==='error' ) {
-      return '#e84f4f';
-    }
-
-    if (specColor && specColor ==='alert' ) {
-      return '#ff9426';
-    }
-
-    if (specColor && specColor ==='alertYellow' ) {
-      return '#ffd726';
-    }
-
-    if (specColor && specColor ==='good' ) {
-      return '#80ce4d';
-    }
-
-    if (specColor && specColor ==='neutral' ) {
-      return '#BDBDBD';
-    }
-
-    if (specColor && specColor.indexOf('#') === 0) {
-      return data.color;
-    }
-
-    if (chartType === 'pie') {
-      return this.pieColors(i);
-    }
-
-    if (chartType === 'column-single') {
-      return '#368AC0';
-    }
-
-    if (chartType === 'bar-single') {
-      return '#368AC0';
-    }
-
-    if (chartType === 'bar') {
-      return this.colors(i);
-    }
-  };
-
-  // Help Function to Select from legend click
-  this.selectElem = function (line, series) {
-    var idx = $(line).index(),
-      elem = series[idx];
-
-    if (elem.selectionObj) {
-      charts.selectElement(d3.select(elem.selectionObj[0][idx]), elem.selectionInverse, elem.data);
-    }
-  };
-
-  this.addLegend = function(series) {
-    var legend = $('<div class="chart-legend"></div>');
-    if (series.length === 0) {
-      return;
-    }
-
-    for (var i = 0; i < series.length; i++) {
-      if (!series[i].name) {
-        continue;
-      }
-
-      var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
-        hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
-
-      var color = $('<span class="chart-legend-color"></span>').css('background-color', (series[i].pattern ? 'transparent' : hexColor)),
-        textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
-
-      if (series[i].pattern) {
-        color.append('<svg width="12" height="12"><rect style="'+ hexColor +'" mask="url(#'+ series[i].pattern +')" height="12" width="12"/></svg>');
-      }
-
-      if (series[i].percent) {
-        var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
-        textBlock.append(pct);
-      }
-
-      seriesLine.append(color, textBlock);
-      legend.append(seriesLine);
-    }
-
-    legend.on('click.chart', '.chart-legend-item', function () {
-        charts.selectElem(this, series);
-      }).on('keypress.chart', '.chart-legend-item', function (e) {
-        if (e.which === 13 || e.which === 32) {
-          charts.selectElem(this, series);
-        }
-      });
-
-    $(container).append(legend);
-  };
-
-  //Add Toolbar to the page
-  this.appendTooltip = function() {
-    this.tooltip = $('#svg-tooltip');
-    if (this.tooltip.length === 0) {
-      this.tooltip = $('<div id="svg-tooltip" class="tooltip right is-hidden"><div class="arrow"></div><div class="tooltip-content"><p><b>32</b> Element</p></div></div>').appendTo('body');
-    }
-  };
-
-  this.triggerContextMenu = function(elem, d) {
-    d3.event.preventDefault();
-    d3.event.stopPropagation();
-    d3.event.stopImmediatePropagation();
-
-    var e = $.Event('contextmenu');
-    e.target = elem;
-    e.pageX = d3.event.pageX;
-    e.pageY = d3.event.pageY;
-    $(container).trigger(e, [elem, d]);
-  };
-
-  //Show Tooltip
-  this.showTooltip = function(x, y, content, arrow) {
-    this.tooltip.css({'left': x + 'px', 'top': y + 'px'})
-      .find('.tooltip-content').html(content);
-
-    this.tooltip.removeClass('bottom top left right').addClass(arrow);
-    this.tooltip.removeClass('is-hidden');
-  };
-
-  this.getTooltipSize = function(content) {
-    this.tooltip.find('.tooltip-content').html(content);
-    return {height: this.tooltip.outerHeight(), width: this.tooltip.outerWidth()};
-  };
-
-  //Hide Tooltip
-  this.hideTooltip = function() {
-    d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
-  };
-
-  this.HorizontalBar = function(dataset, isNormalized) {
-    //Original http://jsfiddle.net/datashaman/rBfy5/2/
-    var maxTextWidth, width, height, series, rects, svg, stack,
-        xMax, xScale, yScale, yAxis, yMap, xAxis, groups;
-
-    var margins = {
-      top: 30,
-      left: 30,
-      right: 30,
-      bottom: 30 // 30px plus size of the bottom axis (20)
-    },
-    legendHeight = 40;
-
-    $(container).addClass('chart-vertical-bar');
-    $(container).closest('.widget-content').addClass('l-center');
-    $(container).closest('.card-content').addClass('l-center');
-
-    width =  parseInt($(container).parent().width()) - margins.left - margins.right;
-    height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - legendHeight;  //influences the bar width
-
-    //Get the Legend Series'
-    series = dataset.map(function (d) {
-      return {name: d.name, color: d.color, pattern: d.pattern};
-    });
-
-    //Map the Data Sets and Stack them.
-    dataset = dataset.map(function (d) {
-      return d.data.map(function (o) {
-        return $.extend({}, o, {
-            y: o.value,
-            x: o.name,
-            color: o.color,
-            pattern: o.pattern
-        });
-      });
-    });
-    stack = d3.layout.stack();
-    stack(dataset);
-
-    //Calculate max text width
-    maxTextWidth = 0;
-
-    dataset = dataset.map(function (group) {
-      return group.map(function (d) {
-        maxTextWidth = (d.x.length > maxTextWidth ? d.x.length : maxTextWidth);
-
-        // Invert the x and y values, and y0 becomes x0
-        return $.extend({}, d, {
-            x: d.y,
-            y: d.x,
-            x0: d.y0,
-            color: d.color,
-            pattern: d.pattern
-        });
-
-      });
-    });
-
-    var h = parseInt($(container).parent().height()) - margins.bottom,
-      w = parseInt($(container).parent().width()) - margins.left,
-      textWidth = margins.left + (maxTextWidth*6);
-
-    svg = d3.select(container)
-      .append('svg')
-      .attr('width',  w)
-      .attr('height', h)
-      .append('g')
-      .attr('class', 'group')
-      .attr('transform', 'translate(' + (textWidth) + ',' + margins.top + ')');
-
-    xMax = d3.max(dataset, function (group) {
-      return d3.max(group, function (d) {
-          return d.x + d.x0;
-      });
-    });
-
-    if (isNormalized) {
-      var gMax = [];
-      //get the max for each array group
-      dataset.forEach(function(d) {
-        d.forEach(function(d, i) {
-        gMax[i] = (gMax[i] === undefined ? 0 : gMax[i]) + d.x;
-       });
-      });
-
-      //Normalize Each Group
-      dataset.forEach(function(d) {
-        d.forEach(function(d, i) {
-          var xDif = gMax[i]/100;
-          d.x = d.x / xDif;
-          d.x0 = d.x0 / xDif;
-       });
-      });
-      xMax = 100;
-    }
-
-    //Width of he bar minus the margin
-    var barWith = w - textWidth - margins.left;
-
-    xScale = d3.scale.linear()
-      .domain([0, xMax])
-      .nice()
-      .range([0, barWith]).nice();
-
-    yMap = dataset[0].map(function (d) {
-      return d.y;
-    });
-
-    yScale = d3.scale.ordinal()
-      .domain(yMap)
-      .rangeRoundBands([0, height], 0.32, 0.32);
-
-    xAxis = d3.svg.axis()
-      .scale(xScale)
-      .tickSize(-height)
-      .orient('middle');
-
-    if (isNormalized) {
-      xAxis.tickFormat(function(d) { return d + '%'; });
-    }
-
-    yAxis = d3.svg.axis()
-      .scale(yScale)
-      .tickSize(0)
-      .orient('left');
-
-    svg.append('g')
-      .attr('class', 'axis x')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(xAxis);
-
-    svg.append('g')
-      .attr('class', 'axis y')
-      .call(yAxis);
-
-    groups = svg.selectAll('g.group')
-      .data(dataset)
-      .enter()
-      .append('g')
-      .attr('class', 'series-group')
-      .style('fill', function (d, i) {
-        return charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
-      });
-
-    rects = groups.selectAll('rect')
-      .data(function (d, i) {
-        d.forEach(function(d) {
-          d.index = i;
-        });
-
-        return d;
-    })
-    .enter()
-    .append('rect')
-    .attr('class', function(d, i) {
-      return 'series-'+i+' bar';
-    })
-    .style('fill', function(d, i) {
-      return charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i]);
-    })
-    .attr('mask', function (d, i) {
-      if (dataset.length === 1 && dataset[0][i].pattern){
-        return 'url(#' + dataset[0][i].pattern + ')';
-      }
-
-      if (series[d.index].pattern) {
-        return 'url(#' + series[d.index].pattern + ')';
-      }
-    })
-    .attr('x', function (d) {
-      return xScale(d.x0);
-    })
-    .attr('y', function (d) {
-      return yScale(d.y);
-    })
-    .attr('height', function () {
-      return yScale.rangeBand();
-    })
-    .attr('width', 0) //Animated in later
-    .on('mouseenter', function (d, i) {
-      var shape = d3.select(this),
-            content = '',
-            total = 0, totals = [];
-
-       if (dataset.length === 1) {
-          content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
-        } else {
-         content = '<div class="chart-swatch">';
-
-         for (var j = 0; j < dataset.length; j++) {
-          total = 0;
-
-          for (var k = 0; k < dataset.length; k++) {
-            total += dataset[k][i].x;
-            totals[k] = dataset[k][i].x;
-          }
-
-          content += '<div class="swatch-row"><div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></div>';
-         }
-         content += '</div>';
-        }
-
-        if (total > 0) {
-          content = '<span class="chart-tooltip-total"><b>' + Math.round(total) + '</b> '+ 'Total' +'</span>' +content;
-        }
-
-        var yPosS = shape[0][0].getBoundingClientRect().top + $(window).scrollTop(),
-            xPosS = shape[0][0].getBoundingClientRect().left + $(window).scrollLeft();
-
-        var size = charts.getTooltipSize(content),
-          x = xPosS + (parseFloat(shape.attr('width'))/2) - (size.width/2),
-          y = yPosS - size.height - 13;
-
-        charts.showTooltip(x, y, content, 'top');
-    })
-    .on('mouseleave', function () {
-      charts.hideTooltip();
-    })
-    .on('click', function (d, i) {
-      var bar = d3.select(this);
-
-      svg.selectAll('.axis.y .tick').style('font-weight', 'normal');
-      svg.selectAll('.bar').style('opacity', 1);
-      d3.select(this.parentNode).style('opacity', 1);
-
-      if (this.classList && this.classList.contains('is-selected')) {
-        svg.selectAll('.is-selected').classed('is-selected', false);
-      } else {
-        svg.selectAll('.is-selected').classed('is-selected', false);
-        bar.classed('is-selected', true);
-        svg.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
-        svg.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.6);
-      }
-      $(container).trigger('selected', [bar, d]);
-    });
-
-    //Adjust the labels
-    svg.selectAll('.axis.y text').attr({'x': -15});
-
-    //Animate the Bars In
-    svg.selectAll('.bar')
-      .transition().duration(1000)
-      .attr('width', function (d) {
-        return xScale(d.x);
-      });
-
-    //Add Legends
-    charts.addLegend(series);
-    charts.appendTooltip();
-    $(container).trigger('rendered');
-
-    return $(container);
-  };
-
-  this.Pie = function(initialData, isDonut) {
-
-	    var svg = d3.select(container).append('svg'),
-	      arcs = svg.append('g').attr('class','arcs'),
-	      labels = svg.append('g').attr('class','labels'),
-	      self = this,
-	      chartData,
-	      centerLabel,
-	      legendDisplay = "percent";
-
-	    if (typeof initialData.data !== "undefined") {
-	        legendDisplay = initialData.legendDisplay;
-	        chartData = initialData.data[0].data;
-	        centerLabel = initialData.centerLabel;
-	    }
-	    else {
-	        centerLabel = initialData[0].centerLabel;
-	        chartData = initialData[0].data;
-	    }
-
-	    $(container).addClass('chart-pie');
-
-    // Create the pie layout function.
-    var pie = d3.layout.pie().value(function (d) {
-      // what property of our data object to use
-      return d.value;
-    });
-
-    // Store our chart dimensions
-    var dims = {
-      height: parseInt($(container).parent().height()),  //header + 20 px padding
-      width: parseInt($(container).parent().width())
-    };
-
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 35 : 50));
-    dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
-    dims.labelRadius = dims.outerRadius + 11;
-
-    svg.attr('width', '100%')
-      .attr('height', '100%')
-      .attr('viewBox','0 0 ' + dims.width + ' ' + (dims.height + 10));
-
-    // move the origin of the group's coordinate space to the center of the SVG element
-    arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2)  + ')');
-    labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2) + ')');
-
-    var pieData = pie(chartData);
-
-    // calculate the path information for each wedge
-    var pieArcs = d3.svg.arc()
-        .innerRadius(dims.innerRadius)
-        .outerRadius(dims.outerRadius);
-
-    // Draw the arcs.
-    var enteringArcs = arcs.selectAll('.arc').data(pieData).enter();
-    charts.appendTooltip();
-
-    var g = enteringArcs.append('g')
-        .attr('class', 'arc')
-        .attr('d', pieArcs)
-        .on('contextmenu',function (d) {
-          self.triggerContextMenu(d3.select(this).select('path')[0][0], d);
-        })
-        .on('click', function (d, i) {
-          var isSelected = d3.select(this).classed('is-selected'),
-            color = charts.chartColor(i, 'pie', d.data);
-
-          d3.select('.chart-container .is-selected')
-            .classed('is-selected', false)
-            .style('stroke', '#fff')
-            .style('stroke-width', '1px')
-            .attr('transform', '');
-
-          var path = d3.select(this);
-
-          if (!isSelected) {
-            path.classed('is-selected', true)
-              .style('stroke', color)
-              .style('stroke-width', 0)
-              .attr('transform', 'scale(1.025, 1.025)');
-            $(container).trigger('selected', [path[0], d.data]);
-            return;
-          }
-
-          $(container).trigger('selected', [path[0], d.data]);
-        }).on('mouseenter', function () {
-          /*var shape = d3.select(this),
-            content = 'test';
-
-          var yPosS = shape[0][0].getBoundingClientRect().top + $(window).scrollTop(),
-              xPosS = shape[0][0].getBoundingClientRect().left + $(window).scrollLeft();
-
-          var size = charts.getTooltipSize(content),
-            x = xPosS + (parseFloat(shape.attr('width'))/2) - (size.width/2),
-            y = yPosS - size.height - 13;
-
-          charts.showTooltip(x, t, content, 'top');*/
-        })
-        .on('mouseleave', function () {
-          charts.hideTooltip();
-        });
-
-    g.append('path')
-      .style('fill', function(d, i) { return charts.chartColor(i, 'pie', d.data); })
-      .transition().duration(750)
-      .attrTween('d', function(d) {
-        var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-       return function(t) {
-           d.endAngle = i(t);
-           return pieArcs(d);
-         };
-      });
-
-    // Now we'll draw our label lines, etc.
-    var enteringLabels = labels.selectAll('.label').data(pieData).enter();
-    var labelGroups = enteringLabels.append('g').attr('class', 'label');
-    labelGroups.append('circle').attr({
-        x: 0,
-        y: 0,
-        r: 2,
-        fill: '#000000',
-        transform: function (d) {
-          var x = pieArcs.centroid(d)[0],
-            y = pieArcs.centroid(d)[1];
-
-          return 'translate(' + x + ',' + y + ')';
-        },
-        'class': 'label-circle'
-    });
-
-    var textLines = labelGroups.append('line').attr({
-        x1: function (d) {
-          return pieArcs.centroid(d)[0];
-        },
-        y1: function (d) {
-          return pieArcs.centroid(d)[1];
-        },
-        x2: function (d) {
-          var centroid = pieArcs.centroid(d),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = Math.cos(midAngle) * dims.labelRadius;
-          return x;
-        },
-        y2: function (d) {
-          var centroid = pieArcs.centroid(d),
-           midAngle = Math.atan2(centroid[1], centroid[0]),
-           y = Math.sin(midAngle) * dims.labelRadius;
-
-          return y;
-        },
-        'class': 'label-line'
-    });
-
-    var total = d3.sum(chartData, function(d){ return d.value; });
-    var textLabels = labelGroups.append('text').attr({
-        x: function (d) {
-          var centroid = pieArcs.centroid(d),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = Math.cos(midAngle) * dims.labelRadius,
-            sign = (x > 0) ? 1 : -1,
-            labelX = x + (1 * sign);
-
-          return labelX;
-        },
-        y: function (d) {
-          var centroid = pieArcs.centroid(d),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            y = Math.sin(midAngle) * dims.labelRadius;
-
-          return (y > 0) ? y + 25 : y;
-        },
-        'text-anchor': function (d) {
-          var centroid = pieArcs.centroid(d),
-           midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = Math.cos(midAngle) * dims.labelRadius;
-
-          return (x > 0) ? 'start' : 'end';
-        },
-        'class': 'label-text'
-    }).text(function (d) {
-      return d.data.name;
-    });
-
-    textLabels.append('tspan').text(function(d) {
-        var toPercent = d3.format(charts.format ? charts.format : '0.0%');
-        return (legendDisplay != "count") ? toPercent(d.value/total) : d.value;
-      })
-    .attr('dx', '5')
-    .style('font-weight', 'bold')
-    .style('font-size', '14px');
-
-    if (isDonut) {
-      arcs.append('text')
-      .attr('dy', '.35em')
-      .style('text-anchor', 'middle')
-      .attr('class', 'chart-donut-text')
-      .text(centerLabel);
-    }
-
-    //Calculate Percents for Legend
-    chartData.map(function (d, i) {
-        d.percent = d3.round(100*(d.value/total)) + '%';
-        d.elem = enteringArcs[0][i];
-
-        if (parseInt(d.percent) > 10) {
-          d3.select(textLines[0][i]).style('stroke', 'transparent');
-          d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
-        }
-        return {name: d.name, percent: d.percent, elem: d.elem};
-      });
-
-    var alpha = 0.9,
-    spacing = 25;
-
-    function relax() {
-      var again = false;
-      textLabels.each(function () {
-          var a = this,
-            da = d3.select(this),
-            y1 = da.attr('y');
-
-      textLabels.each(function () {
-            var b = this;
-            // a & b are the same element and don't collide.
-            if (a === b) {
-              return;
-            }
-            var db = d3.select(this);
-
-            // a & b are on opposite sides of the chart and don't collide
-            if (da.attr('text-anchor') !== db.attr('text-anchor')) {
-              return;
-            }
-
-            // calculate the distance between these elements.
-            var y2 = db.attr('y'),
-              deltaY = y1 - y2;
-
-            // they don't collide.
-            if (Math.abs(deltaY) > spacing) {
-              return;
-            }
-
-            // If the labels collide, we'll push each of the two labels up and down
-            again = true;
-            var sign = deltaY > 0 ? 1 : -1,
-              adjust = sign * alpha;
-
-            da.attr('y', +y1 + adjust);
-            db.attr('y', +y2 - adjust);
-        });
-      });
-
-      // Adjust our line leaders
-      if (again) {
-
-        var labelElements = textLabels[0];
-        textLines.attr('y2',function(d,i) {
-          var labelForLine = d3.select(labelElements[i]);
-          return labelForLine.attr('y');
-        });
-
-        relax();
-      }
-    }
-
-    relax();
-    $(container).trigger('rendered');
-
-    return $(container);
-  };
-
-  //TODO: Test this with two charts on the page.
-  this.handleResize = function () {
-    var timeout = null;
-
-    //Handle Resize / Redraw
-    function resizeCharts() {
-      clearTimeout(timeout);
-      timeout = setTimeout(function () {
-        var api = $(container).data('chart'),
-            cont = $(container);
-
-        if (!cont.is(':visible')) {
-          return true;
-        }
-        cont.empty();
-        api.initChartType(api.settings);
-      }, 100);
-    }
-
-    // $(window).off('resize.charts').on('resize.charts', resizeCharts);
-    $(window).on('resize.charts', resizeCharts);
-    $(container).off('resize').on('resize', resizeCharts);
-
-  };
-
-  // Donut Chart - Same as Pie but inner radius
-  this.Ring = function(chartData) {
-    return charts.Pie(chartData, true);
-  };
-
-  //Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
-  this.calculateAspectRatioFit = function (d) {
-    var ratio = Math.min(d.maxWidth / d.srcWidth, d.maxHeight / d.srcHeight);
-    return { width: d.srcWidth*ratio, height: d.srcHeight*ratio };
-  };
-
-  // Sparkline Chart
-  this.Sparkline = function(chartData, options) {
-    // calculate max and min values in the NLWest data
-    var max=0, min=0, len=0, i,
-      dimensions = this.calculateAspectRatioFit({
-        srcWidth: 385,
-        srcHeight: 65,
-        maxWidth: $(container).width(),
-        maxHeight: 600 //container min-height
-      }),
-      dotsize = dimensions.width > 300 ? 4 : 3;
-
-    for (i = 0; i < chartData.length; i++) {
-      min = d3.min([d3.min(chartData[i].data), min]);
-      max = d3.max([d3.max(chartData[i].data), max]);
-      len = d3.max([chartData[i].data.length, len]);
-    }
-
-    var p = 10,
-      w = dimensions.width,
-      h = dimensions.height,
-      x = d3.scale.linear().domain([0, len]).range([p, w - p]),
-      y = d3.scale.linear().domain([min, max]).range([h - p, p]),
-      line = d3.svg.line()
-                   .x(function(d, i) { return x(i); })
-                   .y(function(d) { return y(d); });
-
-    charts.appendTooltip();
-    var svg = d3.select(container)
-      .append('svg')
-      .attr('height', h)
-      .attr('width', w);
-
-    //Add Median Range
-    //https://www.purplemath.com/modules/meanmode.htm
-    if(options.isMedianRange) {
-      max = d3.max(chartData[0].data);
-      min = d3.min(chartData[0].data);
-
-      var minWidth = 10,
-        maxWidth = w-45,
-        median = d3.median(chartData[0].data),
-        range = max-min,
-        scaleMedianRange = d3.scale.linear().domain([min, max]).range([0, h]),
-        top = h-scaleMedianRange(median>range ? median : range),
-        bot = h-scaleMedianRange(median<range ? median : range);
-
-      svg.append('g')
-        .attr('class', 'medianrange')
-        .attr('transform', function() {return 'translate('+ minWidth +','+ top +')';})
-        .append('rect')
-        .attr('width', maxWidth)
-        .attr('height', bot)
-        .style('fill', '#d8d8d8')
-        .on('mouseenter', function() {
-          var rect = d3.select(this)[0][0].getBoundingClientRect(),
-          content = '<p>' + (chartData[0].name ? chartData[0].name +'<br> ' : '') +
-            'Median' + ': <b>'+ median +'</b><br>'+
-            'Range' +': <b>'+ range +'</b>'+
-            (options.isPeakDot ? '<br>'+ 'Peak' +': <b>'+ max +'</b>' : '') +'</p>',
-          size = charts.getTooltipSize(content),
-          x = (w-size.width)/2,
-          y = rect.y - size.height + $(window).scrollTop();
-          charts.showTooltip(x, y, content, 'top');
-        })
-        .on('mouseleave', function() {
-          charts.hideTooltip();
-        });
-    }
-
-    for (i = 0; i < chartData.length; i++) {
-      var set = chartData[i],
-        g = svg.append('g');
-        g.append('path')
-         .attr('d', line(set.data))
-         .attr('stroke', options.isMinMax ? '#999999' : charts.sparklineColors(i))
-         .attr('class', 'team');
-    }
-
-
-    //Add Dots (Dots/Peak/MinMAx)
-    min = d3.min(chartData[0].data);
-      svg.selectAll('.point')
-        .data(chartData[0].data)
-        .enter()
-        .append('circle')
-        .attr('r', function(d) {
-          return (options.isMinMax && max === d || options.isMinMax && min === d) ? (dotsize+1) :
-            (options.isDots || (options.isPeakDot && max === d)) ? dotsize : 0;
-        })
-        .attr('class', function(d) {
-          return (options.isPeakDot && max === d && !options.isMinMax) ? 'point peak' :
-            (options.isMinMax && max === d) ? 'point max' :
-            (options.isMinMax && min === d) ? 'point min' : 'point';
-        })
-        .style('fill', function(d) {
-          return (options.isPeakDot && max === d && !options.isMinMax) ? '#ffffff' :
-            (options.isMinMax && max === d) ? '#56932E' :
-            (options.isMinMax && min === d) ? '#941E1E' : charts.sparklineColors(0);
-        })
-        .style('stroke', function(d) {
-          return (options.isPeakDot && max === d && !options.isMinMax) ? charts.sparklineColors(0) :
-            (options.isMinMax && max === d) ? 'none' :
-            (options.isMinMax && min === d) ? 'none' : '#ffffff';
-        })
-        .style('cursor', 'pointer')
-        .attr('cx', function(d, i) { return x(i); })
-        .attr('cy', function(d) { return y(d); })
-        .on('mouseenter', function(d) {
-          var rect = d3.select(this)[0][0].getBoundingClientRect(),
-            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> ' +
-              ((options.isMinMax && max === d) ? 'Highest' + ': ' :
-               (options.isMinMax && min === d) ? 'Lowest' + ': ' :
-               (options.isPeakDot && max === d) ? 'Peak' + ': ' : '') : '') + '<b>' + d  + '</b></p>',
-            size = charts.getTooltipSize(content),
-            x = rect.x - (size.width /2) + 6,
-            y = rect.y - size.height - 18  + $(window).scrollTop();
-
-          charts.showTooltip(x, y, content, 'top');
-          d3.select(this).attr('r', (options.isMinMax && max === d ||
-            options.isMinMax && min === d) ? (dotsize+2) : (dotsize+1));
-        })
-        .on('mouseleave', function(d) {
-          charts.hideTooltip();
-          d3.select(this).attr('r', (options.isMinMax && max === d ||
-            options.isMinMax && min === d) ? (dotsize+1) : dotsize);
-        });
-
-    $(container).trigger('rendered');
-
-    return $(container);
-  };
-
-  // Column Chart - Sames as bar but reverse axis
-  this.Column = function(chartData) {
-
-   var dataset = chartData,
-      self = this,
-      parent = $(container).parent(),
-      isSingular = (dataset.length === 1),
-      margin = {top: 40, right: 40, bottom: (isSingular ? 50 : 35), left: 45},
-      legendHeight = 40,
-      width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular ? 0 : legendHeight);
-
-    $(container).addClass('column-chart');
-
-    var x0 = d3.scale.ordinal()
-        .rangeRoundBands([0, width], 0.1);
-
-    var x1 = d3.scale.ordinal();
-
-    var y = d3.scale.linear().nice()
-        .range([height, 0]);
-
-    //List the values along the x axis
-    var xAxisValues = dataset[0].data.map(function (d) {return d.name;});
-
-    var xAxis = d3.svg.axis()
-        .scale(x0)
-        .tickSize(0)
-        .tickPadding(12)
-        .orient('bottom');
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .tickSize(-width)
-        .tickPadding(12)
-        .orient('left');
-
-    var svg = d3.select(container).append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-    // Get the Different Names
-    var names = dataset.map(function (d) {
-      return d.name;
-    });
-
-    //Get the Maxes of each series
-    var maxes = dataset.map(function (d) {
-      return d3.max(d.data, function(d){ return d.value;});
-    });
-
-    if (isSingular) {
-      names = dataset[0].data.map(function (d) {
-        return d.name;
-      });
-    }
-
-    x0.domain(names);
-    if (isSingular) {
-      x1.domain(xAxisValues).rangeRoundBands([0, width]);
-    } else {
-      x1.domain(xAxisValues).rangeRoundBands([0, x0.rangeBand()]);
-    }
-
-    y.domain([0, d3.max(maxes)]);
-
-    svg.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis);
-
-    svg.append('g')
-        .attr('class', 'y axis')
-        .call(yAxis);
-
-    //Make an Array of objects with name + array of all values
-    var dataArray = [];
-    chartData.forEach(function(d) {
-      dataArray.push({name: d.name, shortName: d.shortName, abbrName: d.abbrName, values: d.data});
-    });
-
-    if (isSingular) {
-      dataArray = [];
-      names = dataset[0].data.forEach(function (d) {
-        dataArray.push({name: d.name, shortName: d.shortName, abbrName: d.abbrName, value: d.value});
-      });
-    }
-
-    var barMaxWidth = 25, bars;
-    // Add the bars - done different depending on if grouped or singlular
-    if (isSingular) {
-      bars = svg.selectAll('rect')
-        .data(dataArray)
-      .enter().append('rect')
-        .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
-        .attr('x', function(d) {
-          return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
-        })
-        .attr('y', function() {
-          return height;
-        })
-        .attr('height', function() {
-          return 0;
-        });
-
-        bars.transition().duration(1000)
-          .attr('y', function(d) { return y(d.value); })
-          .attr('height', function(d) { return height - y(d.value); });
-
-    } else {
-
-      var xValues = svg.selectAll('.x-value')
-          .data(dataArray)
-        .enter().append('g')
-          .attr('class', 'g')
-          .attr('transform', function(d) {
-            return 'translate(' + x0(d.name) + ',0)';
-          });
-
-        bars = xValues.selectAll('rect')
-          .data(function(d) {
-            return d.values;
-          })
-        .enter().append('rect')
-          .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
-          .attr('x', function(d) {
-            return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
-          })
-          .attr('y', function() {
-            return height;
-          })
-          .attr('height', function() {
-            return 0;
-          });
-
-          bars.transition().duration(1000)
-            .attr('y', function(d) { return y(d.value); })
-            .attr('height', function(d) { return height - y(d.value); });
-      }
-
-      //Style the bars and add interactivity
-      bars.style('fill', function(d, i) {
-        return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
-      })
-      .attr('mask', function (d, i) {
-        return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
-      })
-      .on('mouseenter', function(d) {
-        var shape = $(this),
-          content = '',
-          x = 0,
-          y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
-
-        if (dataset.length === 1) {
-          content = '<p><b>' + d.value + ' </b>' + d.name + '</p>';
-        } else {
-         content = '<div class="chart-swatch">';
-         var data = d3.select(this.parentNode).datum().values;
-
-         for (var j = 0; j < data.length; j++) {
-          content += '<div class="swatch-row"><div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + data[j].name + '</span><b> ' + data[j].value + ' </b></div>';
-         }
-         content += '</div>';
-        }
-
-        var size = charts.getTooltipSize(content);
-        x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
-        if (dataset.length > 1) {
-          x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
-          y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
-        }
-
-        charts.showTooltip(x, y, content, 'top');
-      }).on('mouseleave', function() {
-        charts.hideTooltip();
-      }) .on('click', function (d, i) {
-        var bar = d3.select(this);
-
-        charts.selectElement(bar, svg.selectAll('rect'), d);
-        charts.selectElement(svg.selectAll('.x .tick:nth-child(' + (i+1) +')'), svg.selectAll('.x .tick'), d);
-
-        return;
-      }).on('contextmenu',function (d) {
-        self.triggerContextMenu(d3.select(this)[0][0], d);
-      });
-
-    //Add Legend
-    var series = xAxisValues.map(function (d) {
-      return {name: d};
-    });
-
-    if (!isSingular) {
-      charts.addLegend(series);
-    }
-
-    //Add Tooltips
-    charts.appendTooltip();
-
-    //See if any labels overlap and use shorter */
-    if (charts.labelsColide(svg)) {
-      charts.applyAltLabels(svg, dataArray, 'shortName');
-    }
-
-    if (charts.labelsColide(svg)) {
-      charts.applyAltLabels(svg, dataArray, 'abbrName');
-    }
-
-    $(container).trigger('rendered');
-
-    return $(container);
-  };
-
-  this.labelsColide = function(svg) {
-    var ticks = svg.selectAll('.x text'),
-      collides = false;
-
-    ticks.each(function(d, i) {
-      var rect1 = this.getBoundingClientRect(), rect2;
-
-      ticks.each(function(d, j) {
-        if (i !== j) {
-          rect2 = this.getBoundingClientRect();
-
-          var overlap = !(rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom);
-
-          if (overlap) {
-            collides = true;
-          }
-        }
-
-      });
-    });
-
-    return collides;
-  };
-
-  this.applyAltLabels = function(svg, dataArray, elem) {
-    var ticks = svg.selectAll('.x text');
-
-    ticks.each(function(d, i) {
-      d3.select(this).text(dataArray[i][elem]);
-    });
-  };
-
-  this.Line = function(chartData, options, isArea) {
-    $(container).addClass('line-chart');
-
-    //Append the SVG in the parent area.
-    var dataset = chartData,
-      hideDots = (options.hideDots),
-      parent = $(container).parent(),
-      margin = {top: 30, right: 55, bottom: 35, left: 65},
-      width = parent.width() - margin.left - margin.right,
-      height = parent.height() - margin.top - margin.bottom - 30; //legend
-
-
-    var svg = d3.select(container).append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-    //Calculate the Domain X and Y Ranges
-    var x = d3.scale.linear().range([0, width]),
-      y = d3.scale.linear().range([height, 0]);
-
-    var maxes = dataset.map(function (d) {
-      return d3.max(d.data, function(d){ return d.value;});
-    });
-
-    var entries = d3.max(dataset.map(function(d){ return d.data.length;})) -1,
-      xScale = x.domain([0, entries]),
-      yScale = y.domain([0, d3.max(maxes)]).nice();
-
-    var names = dataset[0].data.map(function (o) {
-      return o.name;
-    });
-
-    var xAxis = d3.svg.axis()
-      .scale(xScale)
-      .orient('bottom')
-      .tickSize(0)
-      .ticks(entries)
-      .tickPadding(10)
-      .tickFormat(function (d, i) {
-        return names[i];
-      });
-
-    var yAxis = d3.svg.axis()
-      .scale(yScale)
-      .tickSize(-(width + 20))
-      .tickPadding(20)
-      .orient('left');
-
-    //Append The Axis to the svg
-    svg.append('g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + height + ')')
-    .call(xAxis);
-
-    svg.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis);
-
-    //Offset the tick inside, uses the fact that the yAxis has 20 added.
-    svg.selectAll('.tick line').attr('x1', '-10');
-
-    // Create the line generator
-    var line = d3.svg.line()
-      .x(function(d, i) {
-        return xScale(i);
-      })
-      .y(function(d) {
-        return yScale(d.value);
-      });
-
-    //append the three lines.
-    dataset.forEach(function(d, i) {
-
-      var lineGroups = svg.append('g')
-        .attr('class', 'line-group');
-
-      if (isArea) {
-        var area = d3.svg.area()
-          .x(function(d, i) {
-            return xScale(i);
-          })
-          .y0(height)
-          .y1(function(d) {
-            return yScale(d.value);
-          });
-
-        lineGroups.append('path')
-          .datum(d.data)
-          .attr('fill', charts.colors(i))
-          .style('opacity', '.2')
-          .attr('class', 'area')
-          .attr('d', area);
-      }
-
-      var path = lineGroups.append('path')
-        .attr('d', line(d.data))
-        .attr('stroke', charts.colors(i))
-        .attr('stroke-width', 2)
-        .attr('fill', 'none')
-        .attr('class', 'line')
-        .on('click.chart', function(d) {
-          charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
-        });
-
-      // Add animation
-      var totalLength = path.node().getTotalLength();
-      path
-        .attr('stroke-dasharray', totalLength + ' ' + totalLength)
-        .attr('stroke-dashoffset', totalLength)
-        .transition()
-          .duration(750)
-          .ease('cubic')
-          .attr('stroke-dashoffset', 0);
-
-      if (!hideDots) {
-          lineGroups.selectAll('circle')
-          .data(d.data)
-          .enter()
-          .append('circle')
-          .attr('class', 'dot')
-          .attr('cx', function (d, i) { return xScale(i); })
-          .attr('cy', function (d) { return yScale(d.value); })
-          .attr('r', 5)
-          .style('stroke', '#ffffff')
-          .style('stroke-width', 2)
-          .style('fill', charts.colors(i))
-          .on('mouseenter.chart', function(d) {
-            var rect = d3.select(this)[0][0].getBoundingClientRect() ,
-              content = '<p><b>' + d.name + ' </b> ' + d.value + '</p>',
-              size = charts.getTooltipSize(content),
-              x = rect.x - (size.width /2) + 6,
-              y = rect.y - size.height - 18 + $(window).scrollTop();
-
-            charts.showTooltip(x, y, content, 'top');
-
-            //Circle associated with hovered point
-            d3.select(this).attr('r', 7);
-          }).on('mouseleave.chart', function() {
-            charts.hideTooltip();
-            d3.select(this).attr('r', 5);
-          }).on('click.chart', function(d) {
-            charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
-          });
-      }
-
-    });
-
-    var series = dataset.map(function (d) {
-      return {name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d};
-    });
-
-    charts.addLegend(series);
-    charts.appendTooltip();
-
-    $(container).trigger('rendered');
-
-
-    return $(container);
-  };
-
-  //Select the element and fire the event, make the inverse selector opace
-  this.selectElement = function(elem, inverse, data) {
-    var isSelected = elem.classed('is-selected');
-
-    inverse.classed('is-not-selected', false)
-      .classed('is-selected', false)
-      .classed('is-not-selected', !isSelected);
-
-     elem.classed('is-not-selected', false)
-        .classed('is-selected', !isSelected);
-
-    //Fire Events
-     $(container).trigger('selected', [elem, data]);
-  };
-
-  this.initChartType = function (options) {
-    if (options.format) {
-      this.format = options.format;
-    }
-    if (options.type === 'pie') {
-      this.Pie(options.dataset);
-    }
-    if (options.type === 'bar') {
-      this.HorizontalBar(options.dataset);
-    }
-    if (options.type === 'bar-normalized') {
-      this.HorizontalBar(options.dataset, true);
-    }
-    if (options.type === 'bar-grouped') {
-      this.HorizontalBar(options.dataset, false, true);
-    }
-    if (options.type === 'column') {
-      this.Column(options.dataset);
-    }
-    if (options.type === 'column-grouped') {
-      this.Column(options.dataset);
-    }
-    if (options.type === 'donut') {
-      this.Pie(options.dataset, true);
-    }
-    if (options.type === 'sparkline') {
-      this.Sparkline(options.dataset, options);
-    }
-    if (options.type === 'sparkline-dots') {
-      this.Sparkline(options.dataset, {isDots: true});
-    }
-    if (options.type === 'sparkline-peak') {
-      this.Sparkline(options.dataset, {isPeakDot: true});
-    }
-    if (options.type === 'sparkline-dots-n-peak') {
-      this.Sparkline(options.dataset, {isDots: true, isPeakDot: true});
-    }
-    if (options.type === 'sparkline-minmax') {
-      this.Sparkline(options.dataset, {isMinMax: true});
-    }
-    if (options.type === 'sparkline-medianrange') {
-      this.Sparkline(options.dataset, {isMedianRange: true});
-    }
-    if (options.type === 'sparkline-medianrange-n-peak') {
-      this.Sparkline(options.dataset, {isMedianRange: true, isPeakDot: true});
-    }
-    if (options.type === 'line') {
-      this.Line(options.dataset, options);
-    }
-    if (options.type === 'area') {
-      this.Line(options.dataset, options, true);
-    }
-  };
-
-};
-
-//Make it a plugin
-$.fn.chart = function(options) {
-  return this.each(function() {
-    var instance = $.data(this, 'chart'),
-      chartInst;
-
-    if (instance) {
-      $(window).off('resize.line');
-      $(window).off('resize.pie');
-      $(window).off('resize.charts load.charts');
-      $(this).empty();
-    }
-
-    chartInst = new Chart(this, options);
-    instance = $.data(this, 'chart', chartInst);
-    instance.settings = options;
-
-    if ($.isEmptyObject(chartInst)) {
-     return;
-    }
-
-    setTimeout(function () {
-      chartInst.initChartType(options);
-      chartInst.handleResize();
-    }, 300);
-
-  });
-};
 /*
 * Infor About Dialog
 */
@@ -5225,7 +3815,7 @@ $.fn.chart = function(options) {
       if (!o.copyRight) {
         o.copyRight = '<span class="padded">'+ Globalize.localize('AboutText') +'</span>';
       }
-      o.copyRight = o.copyRight.replace('@year', (o.copyRightYear ? o.copyRightYear : '2015'));
+      o.copyRight = o.copyRight.replace('@year', (o.copyRightYear ? o.copyRightYear : '2014'));
       details = (o.details ? o.details : o.productName + ' ' + o.version + o.copyRight + (o.additionalDetails ? browserDetails : ''));
       $details = $('<p>' + details + '</p>');
       container = $('<div class="container"></div>').append($logo, $productName, $details);
@@ -5286,29 +3876,29 @@ $.fn.chart = function(options) {
 * Infor Accordion
 */
 (function($) {
-  $.widget('ui.inforAccordion', {
-    options: {
-      onExpand: null,
-      onCollapse: null,
-      selectOnClick: true
-    },
-    _init: function() {
-      var elem = $(this.element),
-        o = this.options;
+	$.widget('ui.inforAccordion', {
+		options: {
+			onExpand: null,
+			onCollapse: null,
+			selectOnClick: true
+		},
+		_init: function() {
+			var elem = $(this.element),
+				o = this.options;
 
-      elem.find('.inforFieldSet').inforFieldSet({onExpand: o.onExpand,
-                            onCollapse: o.onCollapse});
-      if (o.selectOnClick) {
-        elem.find('.inforAccordionSubmenu').click(function() {
-          //optionally add a selected class
-          elem.find('.inforAccordionSubmenu.selected').removeClass('selected');
-          $(this).addClass('selected');
-          elem.find('legend.selected').removeClass('selected');
-          $(this).parent().parent().find('legend').addClass('selected');
-        });
-      }
-    }
-  });
+			elem.find('.inforFieldSet').inforFieldSet({onExpand: o.onExpand,
+														onCollapse: o.onCollapse});
+			if (o.selectOnClick) {
+				elem.find('.inforAccordionSubmenu').click(function() {
+					//optionally add a selected class
+					elem.find('.inforAccordionSubmenu.selected').removeClass('selected');
+					$(this).addClass('selected');
+					elem.find('legend.selected').removeClass('selected');
+					$(this).parent().parent().find('legend').addClass('selected');
+				});
+			}
+		}
+	});
 })(jQuery);
 /*
 * Infor Application Navigation
@@ -5710,7 +4300,7 @@ $.fn.chart = function(options) {
         $.data(this, "processed", true);
 
         $curobj = $this.css({
-          zIndex: Math.abs(500 - i)
+          zIndex: Math.abs(600 - i)
         });
         $subul = $this.find('ul:eq(0)').css({
           display: 'block'
@@ -5828,13 +4418,13 @@ $.fn.chart = function(options) {
       //find the bottom of the window
       var winOffset = $(window).height(),
       rootDiv = $(submenu).closest(".inforApplicationNav"),
-      bottomOfNav = rootDiv.position().top + rootDiv.outerHeight(),
+      bottomOfNav = rootDiv.position().top == 0 ? 62 : rootDiv.position().top + rootDiv.outerHeight(), 
 	  // size of two scroll items
       scrollItemHeight = 24 * 2,
       //(from the top page to the top of the control)
       allowableHeight = winOffset - bottomOfNav - scrollItemHeight,
       //add height of the scrollbar buttons..
-      fittingMenus = allowableHeight / 33,
+      fittingMenus = (allowableHeight / 33)-1, //take into account arrow down height
       //each menu is 33 in height
       menuCounter = 1,
       hiddenTopItems = [],
@@ -5868,9 +4458,14 @@ $.fn.chart = function(options) {
         topOfNav = rootDiv.position().top;
         //(from the top page to the top of the control)
         if ($(submenu).parent().offset().top > topOfNav && $(submenu).parent().attr("id") !== "overFlowMenu") {
-          $(submenu).css("top", -($(submenu).offset().top - 33) + "px");
+          $(submenu).css("top", -($(submenu).offset().top - 33*2) + "px"); //taking into account the height of down arrow
         }
+
         this._addVerticalScrollbars($(submenu), hiddenTopItems, hiddenBottomItems, visibleSubMenus);
+      }
+      else if ($(submenu).offset().top + (visibleSubMenus.length * 33) > allowableHeight && $(submenu).parent().attr("id") !== "overFlowMenu"){
+    	  var offsetTop = $(submenu).offset().top + (visibleSubMenus.length * 33) - allowableHeight;
+    	  $(submenu).css("top", -(offsetTop) + "px"); //taking into account the height of down arrow
       }
     },
     _addVerticalScrollbars: function (submenu, hiddenTopItems, hiddenBottomItems, visibleSubMenus) {
@@ -5883,7 +4478,7 @@ $.fn.chart = function(options) {
       self = this;
 
       up.attr("disabled", "disabled").unbind('mouseenter mouseleave');
-      //submenu.width(submenu.outerWidth());
+//      submenu.width(submenu.outerWidth()); //width keeps growing because of this 
 
       //Attach the hover events on a timer
       up.mouseenter(function () {
@@ -6524,14 +5119,14 @@ $.fn.chart = function(options) {
         self._setVerticalOverflow($subul);
       }
 
-      if (offSetTop + expectedHeight > winHeight && winHeight > expectedHeight) {   //see if it will oveflow past the bottom and fit if to be moved up
-        // $subul.css("top", "-" + (offSetTop + expectedHeight - winHeight) + "px");
-
-        if ($subul.offset().top < 30) {
-          //$subul.css("top", "22px");
-        }
+//      if (offSetTop + expectedHeight > winHeight && winHeight > expectedHeight) {   //see if it will oveflow past the bottom and fit if to be moved up
+//        $subul.css("top", "-" + (offSetTop + expectedHeight - winHeight) + "px");
+//      }
+//
+      if ($subul.offset().top < 30 && $subul.parent().attr("id") == "overFlowMenu") {
+          $subul.css("top", "33px");
       }
-
+      
       if ($subul.parent().parent().parent().hasClass("inforApplicationNav")) {
         rootDiv.find(".activeHeader").removeClass("activeHeader");
       }
@@ -6565,6 +5160,124 @@ $.fn.chart = function(options) {
     }
   });
 
+})(jQuery);
+/*/*
+* Infor Bar Chart - SVG D3
+*/
+(function($) {
+$.widget('ui.inforBarChart', {
+		options: {
+			data: [4, 8, 15, 16, 23, 42],
+			title: 'Chart Title',
+			subTitle: null,
+			barColor: '#13A3F7'
+		},
+		_init: function() {
+			var o = this.options,
+				self = this,
+				zone = (self.element.attr('id') ? '#' + self.element.attr('id') : 'body'),
+				height = self.options.data.length * 30;
+
+			self.width = 320;
+			self.barHeight = 18;
+			self.barSpacing = 6;
+			self.textPadding = 100;
+
+			/*Random Colors
+				color = d3.scale.ordinal().range(["#61C5FF", "#13A3F7", "#005CE6", "#9ED927", "#2BD329", "#00733A", "#FFD500",
+					"#FFAA00", "#FF6400", "#FF574D", "#D5000E", "#B3000C", "#FF80A2", "#E63262",
+					"#BF2951", "#C680FF", "#a352cc", "#7533A6", "#B3B3B3", "#737373", "#595959", "#6DD9D1", "#00C2B4", "#00898C"]);
+
+				.style({"fill": function(d, i) { return color(i); }, "stroke":"white"})
+			*/
+
+			self.svg = d3.select(zone).append('svg:svg')
+				.attr('width', self.width)
+				.attr('height', height)
+				.style('font-family', 'Arial,helvetica,sans-serif');
+
+			//add title
+			self.title = self.svg.append('text')
+				.attr('transform', function() { return 'translate(0, 20)';})
+				.style({'fill': '#888A90' , 'font-size': '16px', 'font-weight': '400'})
+				.text(o.title);
+
+			if (self.options.subTitle) {
+				self.subTitle = self.svg.append('text')
+					.attr('transform', function() { return 'translate(0, 38)';})
+					.style({'fill': '#888A90' , 'font-size': '14px', 'font-weight': '400'})
+					.text(o.subTitle);
+			}
+
+			//add scale
+			var g = self.svg.append('g').attr('transform', function() { return 'translate(0, 55)';});
+
+			var bar = g.selectAll('rect')
+					.data(self.options.data)
+					.enter().append('g').attr('class', 'barGroup');
+
+			bar.append('rect')
+				.attr('y', function(d, i) {return (i * self.barHeight) + (self.barSpacing * i);})
+				.attr('x', self.textPadding)
+				.attr('width', function(d) {return d.value / self.width;})
+				.style({'fill': self.options.barColor, 'stroke': 'white'})
+				.attr('height', self.barHeight);
+
+			//Add Labels on the bars
+			bar.append('text')
+				.attr('class', 'barValue')
+				.attr('x', function(d) {return (d.value / self.width) + self.textPadding - 5;})
+				.attr('y', function(d, i) {return (i * self.barHeight) + (self.barSpacing * i);})
+				.attr('dy', '13')
+				.attr('text-anchor', 'end')
+				.style({'fill': 'white', 'font-size': '11px'})
+				.text(function(d) {return d.value;});
+
+			bar.append('text')
+				.attr('class', 'barLabel')
+				.attr('y', function(d, i) {return (i * self.barHeight) + (self.barSpacing * i);})
+				.attr('dy', '13')
+				.attr('text-anchor', 'start')
+				.style({'fill': '#888A90', 'font-size': '12px'})
+				.text(function(d) {return d.label;});
+		},
+		update: function(data, title, subTitle) {
+			var self = this;
+
+			if (title) {
+				self.title.text(title);
+			}
+			if (subTitle) {
+				self.subTitle.text(subTitle);
+			}
+
+			var rect = self.svg.selectAll('.barGroup')
+						.data(data);
+
+			//update the chart
+			rect.transition()
+				.select('rect')
+					.duration(1000)
+					.attr('y', function(d, i) {return (i * self.barHeight) + (self.barSpacing * i);})
+					.attr('x', self.textPadding)
+					.attr('width', function(d) {return d.value / self.width;})
+					.style({'fill': self.options.barColor, 'stroke': 'white'})
+					.attr('height', self.barHeight);
+
+			rect.transition()
+				.select('.barLabel')
+					.duration(1000)
+					.text(function(d) {return d.label;});
+
+			rect.transition()
+				.select('.barValue')
+					.duration(1000)
+					.attr('x', function(d) {return (d.value / self.width) + self.textPadding - 5;})
+					.text(function(d) {return d.value;});
+
+			rect.exit().remove();
+		}
+	});
 })(jQuery);
 /*
 * Infor Bread Crumb a Collapsible Breadcrumb
@@ -7374,7 +6087,7 @@ $.fn.chart = function(options) {
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('popupmenu', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -7386,8 +6099,9 @@ $.fn.chart = function(options) {
     // Settings and Options
     var pluginName = 'popupmenu',
       defaults = {
+        autoFocus: true,
         menuId: null,  //Menu's Id
-        trigger: 'click',  //click, rightClick, immediate
+        trigger: 'click',  //click, rightClick, immediate, ctrlRightClick
         event: null //Might pass in an event for immediate right clicking.
       },
       settings = $.extend({}, defaults, options);
@@ -7493,8 +6207,37 @@ $.fn.chart = function(options) {
           this.open(settings.event);
         }
 
+        if (settings.trigger === 'ctrlRightClick') {
+
+          this.menu.parent().on('contextmenu.popupmenu', function (e) {
+            if (e.ctrlKey) {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }
+          });
+
+          // Detch Ctrl+
+          this.element.on('contextmenu', function (e) {
+            if (e.ctrlKey) {
+              e.preventDefault();
+              return false;
+            }
+
+          }).on('mousedown.popupmenu', function (e) {
+            if (e.button === 2 && e.ctrlKey) {
+              self.open(e);
+            }
+            e.stopPropagation();
+          });
+        }
+
         this.element.on('keypress.popupmenu', function (e) {
           if (settings.trigger === 'rightClick' && e.shiftKey && e.keyCode === 121) {  //Shift F10
+            self.open(e, true);
+          }
+
+          if (settings.trigger === 'ctrlRightClick' && e.shiftKey && e.ctrlKey && e.keyCode === 121) {  //Shift + Ctrl + F10
             self.open(e, true);
           }
         });
@@ -7518,17 +6261,23 @@ $.fn.chart = function(options) {
             return;
           }
 
-		  self.close();
-		  
+		  if (self.element.is('.autocomplete')) {
+			self.close();
+
+		    //Not a very usefull call back use closed events
+		    if (callback && href) {
+			  callback(href.substr(1), self.element , self.menu.offset(), $(this));
+		    }
+			return;
+          }
+
           self.element.trigger('selected', [anchor]);
+
+          self.close();
 
           //Not a very usefull call back use closed events
           if (callback && href) {
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
-          }
-
-          if (self.element.is('.autocomplete')) {
-            return;
           }
 
           if (href && href.charAt(0) !== '#') {
@@ -7562,7 +6311,7 @@ $.fn.chart = function(options) {
           if (e.keyCode === 37) {
             e.preventDefault();
             if (focus.closest('.popupmenu').length > 0) {
-              focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
+              focus.closest('.popupmenu').removeClass('is-open').prev('a').focus();
             }
           }
 
@@ -7614,7 +6363,7 @@ $.fn.chart = function(options) {
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
-        if (settings.trigger === 'rightClick' || (e !== null && settings.trigger === 'immediate')) {
+        if (settings.trigger === 'rightClick' || settings.trigger === 'ctrlRightClick' || (e !== null && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
@@ -7639,6 +6388,14 @@ $.fn.chart = function(options) {
             var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
             menuHeight = menuHeight - differenceX - 32;
             this.menu.height(menuHeight);
+          }
+
+          if (this.element.is('.autocomplete')) {
+            var top = this.element.offset().top + this.element.outerHeight(),
+              h = menuHeight - top;
+
+            wrapper.css('top', top);
+            this.menu.height(h);
           }
         }
 
@@ -7665,9 +6422,8 @@ $.fn.chart = function(options) {
             }
 
             if ($(e.target).closest('.popupmenu').length === 0) {
-              self.close(true);
+              self.close();
             }
-
           });
 
           if (!($('html').hasClass('ie8'))) {
@@ -7676,26 +6432,43 @@ $.fn.chart = function(options) {
             });
           }
 
+          // attach window level events for every popupmenu instance. This will be detached when instance is destroyed.
+          // this event is used to close popupmenus on scroll (mouse wheel or via window scroll bar)
+          $(window)
+          .off('wheel.popupmenu mousedown.popupmenu')
+          .on('wheel.popupmenu mousedown.popupmenu', function (e) {
+            // filter event listeners to popupmenu namespace
+            if(e.handleObj.namespace === 'popupmenu') {
+              // filter events to mousedown and wheel
+              if(e.type === 'mousedown' || e.type === 'wheel') {
+                var className = "";
+                // not all targets has offsetParent/className
+                if(!!($(e.target).offsetParent().length > 0)) {
+                  className = $(e.target).offsetParent()[0].className;
+                }
+                // if the current target has NO popupmenu-wrapper and wrapper on its parent class, close the popupmenu 
+                if(!(className === 'popupmenu-wrapper' || className === 'wrapper')) {
+                  self.close();
+                }
+              }
+            }
+          });
+
           self.element.trigger('open', [self.menu]);
 
         }, 400);
 
-        //Hide on iFrame Clicks - only works if on same domain
-        $('iframe').each(function () {
-          var frame = $(this);
-          frame.ready(function () {
-
-            try {
-              frame.contents().find('body').on('click.popupmenu', function () {
-                self.close();
-              });
-            } catch (e)  {
-              //Ignore security errors on out of iframe
-            }
-
-          });
-        });
-
+        //Hide on iFrame Clicks
+		try {
+		  $('iframe').ready(function () {
+			$('iframe').contents().find('body').on('click.popupmenu', function () {
+			  self.close();
+			});
+		  });
+		} catch (e) {
+		  // Ignore security errors on out of iframe
+		}
+		
         this.handleKeys();
         this.element.attr('aria-expanded', 'true');
 
@@ -7726,8 +6499,12 @@ $.fn.chart = function(options) {
           clearTimeout(timeout);
         });
 
-       if (!settings.noFocus) {
-            self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        if (settings.autoFocus) {
+          self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        }
+
+        if (self.element.closest('.inforLookupGridBoxShadow').length === 1) {
+          self.menu.parent().css('z-index', '9001');
         }
       },
 
@@ -7810,19 +6587,18 @@ $.fn.chart = function(options) {
 
       detach: function () {
         $(document).off('click.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu');
+        $(window).off('scroll.popupmenu resize.popupmenu wheel.popupmenu mousedown.popupmenu');
         this.menu.off('click.popmenu');
-        $('iframe').each(function () {
-          var frame = $(this);
-          try {
-            frame.contents().find('body').off('click.popupmenu');
-          } catch (e) {
-            //Ignore security errors on out of iframe
-          }
-        });
+
+        try {
+          $('iframe').contents().find('body').off('click.popupmenu');
+        } catch (e) {
+          // Ignore security errors on out of iframe
+        }
+
       },
 
-      close: function (noFocus) {
+      close: function () {
         var wrapper = this.menu.parent('.popupmenu-wrapper');
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
         this.menu.css({'left': '-999px', 'top': '', 'height': ''});
@@ -7841,10 +6617,7 @@ $.fn.chart = function(options) {
           wrapper.remove();
         }
 
-        this.element.attr('aria-expanded', 'false');
-        if (!noFocus) {
-          this.element.focus();
-        }
+        this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 
         if (settings.trigger === 'immediate') {
@@ -7882,7 +6655,7 @@ $.fn.chart = function(options) {
     });
   };
 
-    //Migrate
+  //Migrate
   $.fn.inforContextMenu = $.fn.popupmenu;
   $.fn.inforMenuButton = $.fn.popupmenu;
 
@@ -8248,9 +7021,7 @@ $.fn.chart = function(options) {
       gridMenuOptions: null,
       showColumnHeaders: true,
       frozenColumn: -1,
-      frozenRow: -1,
-      //persistSelections will keep records checked between filter/paging
-      persistSelections: false
+      frozenRow: -1
     },
     columnDefaults = {
       name: "",
@@ -8501,11 +7272,11 @@ $.fn.chart = function(options) {
       $summaryRowL = $("<div class='slick-summaryrow-columns slick-summaryrow-columns-left' />").appendTo($summaryRowScrollerL);
       $summaryRowR = $("<div class='slick-summaryrow-columns slick-summaryrow-columns-right' />").appendTo($summaryRowScrollerR);
       $summaryRow = $().add($summaryRowL).add($summaryRowR);
-      var $summaryRowSpacerL = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
+      $summaryRowSpacerL = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
         .css("width", getCanvasWidth() + scrollbarDimensions.width + "px")
         .appendTo($summaryRowScrollerL);
 
-      var $summaryRowSpacerR = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
+      $summaryRowSpacerR = $("<div style='display:block;height:1px;position:absolute;top:0;left:0;'></div>")
         .css("width", getCanvasWidth() + scrollbarDimensions.width + "px")
         .appendTo($summaryRowScrollerR);
 
@@ -8681,7 +7452,7 @@ $.fn.chart = function(options) {
       //refresh dimensions
       viewportW = parseFloat($.css($container[0], "width", true));
 
-      availableWidth = viewportHasVScroll ? viewportW - scrollbarDimensions.width - 1 : viewportW,
+      availableWidth = viewportHasVScroll ? viewportW - scrollbarDimensions.width : viewportW,
       i = columns.length;
 
       canvasWidthL = canvasWidthR = 0;
@@ -8777,6 +7548,8 @@ $.fn.chart = function(options) {
       getHeadersWidth();
       $headerL.css("width", headersWidthL + "px");
       $headerR.css("width", headersWidthR + "px");
+	  $headerParentL.css("width", headersWidthL + "px");
+      $headerParentR.css("width", headersWidthR + "px");
       $headerRowSpacerL.css("width", canvasWidth + (viewportHasVScroll ? scrollbarDimensions.width : 0) + "px");
       $headerRowSpacerR.css("width", canvasWidth + (viewportHasVScroll ? scrollbarDimensions.width : 0) + "px");
 
@@ -8957,7 +7730,21 @@ $.fn.chart = function(options) {
         dirty = [], i;
 
       for (i = 0; i < allRows.length; i++) {
-        if (allRows[i].indicator === "dirty") {
+        if (allRows[i].indicator === "dirty" || allRows[i].indicator === "error") {
+          dirty.push(allRows[i]);
+        }
+      }
+      return dirty;
+    }
+
+    function getErrorRows(commitEdits) {
+      //Commit any pending edits...
+      var commitEdits = commitEdits || false,
+        allRows = getData(commitEdits).getItems(),
+        dirty = [], i;
+
+      for (i = 0; i < allRows.length; i++) {
+        if (allRows[i].indicator === "error") {
           dirty.push(allRows[i]);
         }
       }
@@ -8967,14 +7754,6 @@ $.fn.chart = function(options) {
     //add and show the column picker
     function columnPersonalization(button) {
       saveColumns();  //save once ..
-
-      if (columnpicker) {
-        columnpicker.destroy();
-        columnpicker = null;
-      }
-      // clean up any column picker menus
-      $('.slick-columnpicker').remove();
-
       if (columnpicker == null) {
         columnpicker = new Slick.Controls.ColumnPicker(self, options);
       }
@@ -9007,13 +7786,13 @@ $.fn.chart = function(options) {
       while ((elem = elem.parentNode) !== document.body) {
         // bind to scroll containers only
         if (elem === $viewport[0] || elem.scrollWidth !== elem.clientWidth || elem.scrollHeight !== elem.clientHeight) {
-          $(elem).on("scroll.ancestors", handleActiveCellPositionChange);
+          $(elem).on("scroll", handleActiveCellPositionChange);
         }
       }
     }
 
     function unbindAncestorScrollEvents() {
-        $canvas.parents().off("scroll.ancestors");
+      $canvas.parents().off("scroll");
     }
 
     function getNestedColumn(columnId) {
@@ -9038,11 +7817,7 @@ $.fn.chart = function(options) {
         $header = $headers.children().eq(idx);
       }
 
-      if (hasNestedColumns && idx != null && columnDef.spacers.length > 0) {
-        $header = $headerParents.children().children().eq(idx);
-      }
-
-      if (hasNestedColumns && idx == null) {
+      if (hasNestedColumns) {
         $header = $("#" + uid+columnId);
         column = getNestedColumn(columnId);
         if (title !== undefined) {
@@ -9393,7 +8168,7 @@ $.fn.chart = function(options) {
           var columnMsgData = {};
           for (var oldColumnIndex in item.validationMessages.data){
             var messages = item.validationMessages.data[oldColumnIndex];
-            if (messages && columnsBeforeReordered[oldColumnIndex]) {
+            if (messages) {
               delete item.validationMessages.data[oldColumnIndex];
               var newColumnIndex = getColumnIndex(columnsBeforeReordered[oldColumnIndex].id);
               columnMsgData[newColumnIndex] = messages;
@@ -9512,7 +8287,7 @@ $.fn.chart = function(options) {
         if (i < firstResizable || (options.forceFitColumns && i >= lastResizable)) {
           return;
         }
-        var $col = $(e);
+        $col = $(e);
 
         $("<div class='slick-resizable-handle' />")
           .appendTo(e)
@@ -9807,7 +8582,7 @@ $.fn.chart = function(options) {
     }
 
     function setScroller() {
-    if ( options.frozenColumn > -1 ) {
+      if ( options.frozenColumn > -1 ) {
         $headerScrollContainer = $headerScrollerR;
         $headerRowScrollContainer = $headerRowScrollerR;
         $summaryRowScrollContainer = $summaryRowScrollerR;
@@ -9958,8 +8733,10 @@ $.fn.chart = function(options) {
       $style.remove();
     }
 
-    function destroy(isEditor) {
-      if (!isEditor) {
+    function destroy() {
+      // It's useless to cancel edit if this grid
+      // is a LookupGrid or is readonly
+      if (!this.isLookupGrid && this.getOptions().editable) {
         getEditorLock().cancelCurrentEdit();
       }
 
@@ -9988,10 +8765,6 @@ $.fn.chart = function(options) {
 
       if ($filterMenuButton) {
         $filterMenuButton.remove();
-      }
-
-      if (columnpicker) {
-        columnpicker.destroy();
       }
 
       $container.next(".inforGridFooter").remove();
@@ -10079,14 +8852,13 @@ $.fn.chart = function(options) {
       while (total < availWidth) {
         var growProportion = availWidth / total;
         for (var i = 0; i < columns.length && total < availWidth; i++) {
-          c = columns[i];
-          if (!c.resizable || c.maxWidth <= c.width) {
-            continue;
-          }
-          var growSize = Math.min(Math.floor(growProportion * c.width) - c.width, (c.maxWidth - c.width) || 1000000) || 1;
-          growSize = growSize < 0 ? 0 : growSize;
-          total += growSize;
-          widths[i] += growSize;
+        c = columns[i];
+        if (!c.resizable || c.maxWidth <= c.width) {
+          continue;
+        }
+        var growSize = Math.min(Math.floor(growProportion * c.width) - c.width, (c.maxWidth - c.width) || 1000000) || 1;
+        total += growSize;
+        widths[i] += growSize;
         }
         if (prevTotal == total) {  // avoid infinite loop
         break;
@@ -10286,10 +9058,10 @@ $.fn.chart = function(options) {
       }
     }
 
-    function setSortColumn(columnId, ascending, setSortColumnsOnly) {
+    function setSortColumn(columnId, ascending) {
       var cols = [];
       cols.push({ columnId: columnId, sortAsc: ascending});
-      setSortColumns(cols, setSortColumnsOnly);
+      setSortColumns(cols);
     }
 
     function getSortColumns() {
@@ -10298,7 +9070,7 @@ $.fn.chart = function(options) {
 
     var lastSort = "";
 
-    function setSortColumns(cols, setSortColumnsOnly) {
+    function setSortColumns(cols) {
       sortColumns = cols;
       if (sortColumns.length == 0) {
         return;
@@ -10359,9 +9131,7 @@ $.fn.chart = function(options) {
       //set the state of the grid and fire the events
       personalizationInfo.sortColumns = sortColumns;
       dataView.setPagingOptions({sortColumns: sortColumns, pageNum: 0});
-      if (!setSortColumnsOnly) {
-        dataView.requestNewPage("sort");
-      }
+      dataView.requestNewPage("sort");
       trigger(self.onPersonalizationChanged, getGridPersonalizationInfo('SortColumn'));
     }
 
@@ -10385,29 +9155,14 @@ $.fn.chart = function(options) {
       setCellCssStyles(options.selectedCellCssClass, hash);
 
       trigger(self.onSelectedRowsChanged, { rows: getSelectedRows(), active: ranges.active  }, e);
-    }
 
-    function updateFooterSelectionCounter() {
       //set the footer status
-      if ((selectedRecordArea == null || selectedRecordArea.length === 0) && options.showFooter) {
+      if (selectedRecordArea==null && options.showFooter) {
         selectedRecordArea = $container.next(".inforGridFooter").find(".slick-records-status");
       }
 
-      if (options.showFooter && selectedRecordArea.length != 0) {
-        var selectedPhrase,
-            visible = selectedRows.length;
-
-        if (options.persistSelections) {
-          var total = selectionModel.getPersistedIds().length;
-
-          selectedPhrase = Globalize.localize("Selected") + (total < 10 ? " " + total : total)
-              + (total === visible ? '' : ' (' + Globalize.localize('Displaying') + visible + ')');
-        }
-        else {
-          selectedPhrase = Globalize.localize("Selected") + (visible < 10 ? " " + visible : visible);
-        }
-        selectedRecordArea.html(selectedPhrase);
-      }
+      if (options.showFooter && selectedRecordArea.length!=0)
+        selectedRecordArea.html(Globalize.localize("Selected") + (selectedRows.length < 10 ? " " + selectedRows.length : selectedRows.length));
     }
 
     function getColumnIndexById(id) {
@@ -10423,7 +9178,7 @@ $.fn.chart = function(options) {
       var o = options;
       checkboxSelector = new Slick.CheckboxSelectColumn({ cssClass: "slick-cell-checkboxsel" });
 
-      //TODO: In case we don't want to mod the original array..
+      //TODO: In case we dont want to mod the orginal array..
       columnsInput = columnsInput.slice(0);
       if (o.showDrillDown && getColumnIndexById("drilldown") === -1) {
         columnsInput.splice(0, 0, {id: "drilldown", builtin: true, selectable: false, reorderable:false, sortable:false, resizable: false, width: 22, formatter: DrillDownCellFormatter, cssClass: "non-data-cell" });
@@ -10456,30 +9211,28 @@ $.fn.chart = function(options) {
       }
     }
 
-    function getVisibleItems(includeHeader) {
-        var visibleItems = [];
-        var headerRow = {};
-        $(getColumns()).each(function (i, col) {
-            if (!(col.cssClass && (col.cssClass.indexOf('non-data-cell') >= 0 || col.cssClass.indexOf('isCheckboxCell') >= 0))) {
-              headerRow[col.id] = col.name;
-            }
-        });
-
-        if (includeHeader) {
-          visibleItems.push(headerRow);
+        function getVisibleItems(includeHeader) {
+            var visibleItems = [];
+            var headerRow = {};
+            $(getColumns()).each(function (i, col) {
+                if (!(col.cssClass && (col.cssClass.indexOf('non-data-cell') >= 0 || col.cssClass.indexOf('isCheckboxCell') >= 0))) {
+          headerRow[col.id] = col.name;
         }
-
-        $(getData().getItems()).each(function (rowIndex, row) {
-            var visibleRow = {};
-            $(getColumns()).each(function (colIndex, hCol) {
-                if (!(hCol.cssClass && (hCol.cssClass.indexOf('non-data-cell') >= 0 || hCol.cssClass.indexOf('isCheckboxCell') >= 0))) {
-                  visibleRow[hCol.id] = row[hCol.id] == null ? "" : row[hCol.id];
-                }
             });
-            visibleItems.push(visibleRow);
-        });
-        return visibleItems;
-    }
+            if (includeHeader) {
+                visibleItems.push(headerRow);
+            }
+            $(getData().getItems()).each(function (rowIndex, row) {
+                var visibleRow = {};
+                $(getColumns()).each(function (colIndex, hCol) {
+                    if (!(hCol.cssClass && (hCol.cssClass.indexOf('non-data-cell') >= 0 || hCol.cssClass.indexOf('isCheckboxCell') >= 0))) {
+              visibleRow[hCol.id] = row[hCol.id] == null ? "" : row[hCol.id];
+          }
+                });
+                visibleItems.push(visibleRow);
+            });
+            return visibleItems;
+        }
 
     function updateColumnCaches() {
       // Pre-calculate cell boundaries.
@@ -10692,6 +9445,7 @@ $.fn.chart = function(options) {
       processHiddenColumns(defaultColumns);
       applyColumnWidths();
       updateFilterRow();
+      trigger(self.onPersonalizationChanged, getGridPersonalizationInfo('ResetColumnLayout'));
     }
 
     function processHiddenColumns(cols) {
@@ -10988,7 +9742,7 @@ $.fn.chart = function(options) {
       var validationResults = editor.validate(),
         cellNode = getCellNode(row, cell);
 
-      if (item.__group || item.__groupTotals) {
+      if (item !== undefined && item != null && (item.__group || item.__groupTotals)) {
         return;
       }
 
@@ -11124,7 +9878,7 @@ $.fn.chart = function(options) {
       }
     }
 
-    function setRowStatus (rownum, status, message) { //can be "dirty", "new", "error" or "" to clear.
+    function setRowStatus(rownum, status, message) { //can be "dirty", "new", "error" or "" to clear.
       if (status === "error") {
         addValidationMessage(rownum, null, message);
         return;
@@ -11331,6 +10085,7 @@ $.fn.chart = function(options) {
       if (offset != oldOffset) {
         var range = getVisibleRange(newScrollTop);
         cleanupRows(range);
+        updateRowPositions();
       }
 
       if (prevScrollTop != newScrollTop) {
@@ -11392,30 +10147,16 @@ $.fn.chart = function(options) {
     function getDataItemValueForColumn(item, field) {
       if (options.dataItemColumnValueExtractor) {
         return options.dataItemColumnValueExtractor(item, field, self);
-      }
-
-      if (options.dataItemColumnValueExtractor) {
-        return options.dataItemColumnValueExtractor(item, field, self);
       } else if (!item[field] && field !== undefined && field.indexOf(".") > -1) {
         var fn = getItemCache[field] = getItemCache[field] || new Function(["item", "field"], "with(item){try{return "+field+";}catch(e){return null;}}");
         return fn(item, field);
       } else {
-         var value = item[field];
-         if (typeof value === 'string') {
-           value = value.replace(/&amp;/g, '&');
-           value = value.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-         }
-         return value;
+        return item[field];
       }
     }
 
     var setItemCache = {};
     function setDataItemValueForColumn(item, field, value) {
-      if (typeof value === 'string') {
-         value = value.replace(/&/g, '&amp;');
-         value = value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      }
-
       if (options.dataItemColumnValueSetter) {
         options.dataItemColumnValueSetter(item, field, value, self);
       } else if (!item[field] && field !== undefined && field.indexOf(".") > -1) {
@@ -12669,7 +11410,6 @@ $.fn.chart = function(options) {
             }
             else {
               var handleLinkClick = !options.editable;
-
               if (options.editable) {
                 if (currentEditor) {
                   // adding new row
@@ -12689,9 +11429,11 @@ $.fn.chart = function(options) {
                   }
                 }
               }
-              if (handleLinkClick) {
+              if (handleLinkClick)
+              {
                 var link = $(e.currentTarget).find("a");
-                if (link.length > 0) {
+                if (link.length > 0)
+                {
                   link.click();
                 }
               }
@@ -12731,6 +11473,10 @@ $.fn.chart = function(options) {
       var cell = getCellFromEvent(e);
       if (!cell || (currentEditor !== null && activeRow == cell.row && activeCell == cell.cell)) {
         return;
+      }
+
+      if ($(e.target).is('.drilldown') || $(e.target).closest('.drilldown').length > 0) {
+          return;
       }
 
       trigger(self.onClick, { row: cell.row, cell: cell.cell }, e);
@@ -12860,6 +11606,7 @@ $.fn.chart = function(options) {
       if (!cellNode.className) {
         node = cellNode[0];
       }
+
       var cls = /l\d+/.exec(node.className);
       if (!cls) {
         throw "getCellFromNode: cannot get cell - " + node.className;
@@ -12945,7 +11692,7 @@ $.fn.chart = function(options) {
         if ($(activeCellNode).find(".checkbox").length == 0) {
           $(activeCellNode).removeClass("active");
         } else {
-          $(activeCellNode).find(".checkbox").removeClass("is-focused");
+          $(activeCellNode).removeClass("active").find("input").removeClass("focus");
         }
         $(rowsCache[activeRow].rowNode).removeClass("active");
       }
@@ -13032,13 +11779,17 @@ $.fn.chart = function(options) {
     }
 
     function makeActiveCellNormal(keepCurrentFocus) {
-
       if (activeCellNode && !keepCurrentFocus) {
         removeCellFocus($(activeCellNode));
       }
       if (!currentEditor) { return; }
 
-      if (keepCurrentFocus && currentEditor instanceof LookupCellEditor) {
+      // We don't want LookupCell to stay in edit mode while its popup is open
+      if (keepCurrentFocus && currentEditor instanceof LookupCellEditor && currentEditor.isPopupOpen()) {
+        return;
+      }
+
+      if (keepCurrentFocus && currentEditor.stayInEditMode && currentEditor.stayInEditMode()) {
         return;
       }
 
@@ -13105,9 +11856,7 @@ $.fn.chart = function(options) {
         column: columnDef,
         item: item || {},
         commitChanges: commitEditAndSetFocus,
-        cancelChanges: cancelEditAndSetFocus,
-        row: activeRow,
-        cell: activeCell
+        cancelChanges: cancelEditAndSetFocus
       });
 
       if (item) {
@@ -13267,8 +12016,8 @@ $.fn.chart = function(options) {
     }
 
     function scrollRowToTop(row) {
-    scrollTo( rowPositionCache[row].top );
-    render();
+      scrollTo( rowPositionCache[row].top );
+      render();
     }
 
     function getColspan(row, cell) {
@@ -13636,7 +12385,11 @@ $.fn.chart = function(options) {
 
     function getPrevNextFocusableFilterColumn(direction)
     {
-      var activePosX = getCellFromNode(activeHeaderCell.parent());
+      var node = activeHeaderCell.parent();
+      if (node.is('div.inforTriggerField')) {
+        node = node.parent();
+      }
+      var activePosX = getCellFromNode(node);
       var columns = getColumns();
       var index = activePosX + direction;
 
@@ -13655,7 +12408,7 @@ $.fn.chart = function(options) {
     {
       var newCell;
       var columns = getColumns();
-      var children = activeHeaderCell.parent().children(':visible:not(label)');
+      var children = activeHeaderCell.parent().children();
       var nodeIndex = children.index(activeHeaderCell);
 
       var stepFunctions = {
@@ -13678,7 +12431,7 @@ $.fn.chart = function(options) {
             if (prev >= 0)
             {
               newCell = $("#" + uid + "_headercell" + prev);
-              children = newCell.children(':visible');
+              children = newCell.children();
               nodeIndex = children.length;
               index = prev;
             }
@@ -13697,14 +12450,9 @@ $.fn.chart = function(options) {
             if (next < columns.length)
             {
               newCell = $("#" + uid + "_headercell" + next);
-              children = newCell.children(':visible');
+              children = newCell.children();
               nodeIndex = -1;
               index = next;
-            } else {
-              //Go To first cell
-              makeHeaderCellNormal();
-              setActiveCell(0, (options.showStatusIndicators ? 1 :0), options.autoEdit);
-              return null;
             }
           }
 
@@ -13732,6 +12480,7 @@ $.fn.chart = function(options) {
     {
 
       var isInHeader = activeHeaderCell.closest(".slick-headerrow-column").length > 0;
+
       var navFunc = isInHeader ? navigateFilter : navigateHeader;
 
       if (e.which == 37) {
@@ -13740,7 +12489,7 @@ $.fn.chart = function(options) {
       else if (e.which == 39) {
         navFunc("right");
       }
-      else if (e.which == 40 && isInHeader) {
+      else if (e.which == 40) {
         navFunc("down");
       }
       else if (e.which == 38 && isInHeader) {
@@ -13766,14 +12515,19 @@ $.fn.chart = function(options) {
     function makeHeaderActive(node, columnIndex)
     {
       makeHeaderCellNormal();
+
+
       activeHeaderCell = node;
       activeHeaderCell.addClass("active");
       activeHeaderCell.attr("tabindex", 0);
 
       activeHeaderCell.on("keydown", handleHeaderKeyDown);
-
       activeHeaderCell.focus();
       activeHeader = columnIndex;
+
+      if (activeHeaderCell && activeHeaderCell.hasClass('inforTriggerField')) {
+        
+      }
 
       if (activeCellNode)
       {
@@ -14059,40 +12813,8 @@ $.fn.chart = function(options) {
       return selectedRows;
     }
 
-    function getPersistedRowIds() {
-      return selectionModel.getPersistedIds();
-    }
-
-    function setPersistedRowIds(ids) {
-      selectionModel.setPersistedIds(ids);
-    }
-
-    function getPersistedDataItems() {
-      var dataItems = [],
-          persistedIds = getPersistedRowIds();
-
-      for (var i = 0; i < persistedIds.length; i++) {
-        dataItems.push(dataView.getItemById(persistedIds[i]));
-      }
-
-      return dataItems;
-    }
-
-    function clearPersistedSelections() {
-      setSelectedRows([]);
-      selectionModel.clearPersistedIds();
-      updateFooterSelectionCounter();
-      invalidateAllRows();
-      render();
-    }
-
     function setSelectedRows(rows, active) {
       selectionModel.setSelectedRanges(rowsToRanges(rows), active);
-      updateFooterSelectionCounter();
-    }
-
-    function uncheckPersistedRow(row) {
-      selectionModel.uncheckPersistedRow(row);
     }
 
     function selectAllRows() {
@@ -14364,10 +13086,7 @@ $.fn.chart = function(options) {
         }
         //scroll to top
         scrollRowIntoView(0, false);
-        //only blank out selections if we're not persisting them
-        if (!getOptions().persistSelections) {
-          setSelectedRows([]);
-        }
+        setSelectedRows([]);
       }
 
       isFiltering = false;
@@ -14408,7 +13127,7 @@ $.fn.chart = function(options) {
 
         if ($this.data("filterType")==ColumnContentsFilter())
         {
-          $this.addClass('inforFilterButton contains');
+          $this.addClass('inforFilterButton equals');
           $this.data("selections",null);
         }
 
@@ -14420,135 +13139,119 @@ $.fn.chart = function(options) {
       columnFilters = {};
       dataView.refresh();
 
-      if (pageInfo) {
-        pageInfo.filters = {};
-      }
       if (!filterInResults) {
         var pageInfo = dataView.getPagingInfo();
+        pageInfo.filters = {};
+        dataView.setPagingOptions(pageInfo);
         dataView.requestNewPage("clearFilter");
       }
-
-      dataView.setPagingOptions(pageInfo);
-      updateFilterRow();
     }
 
     var currentButton = "";
-    var gridTextFilters = {
-        equals: "EqualsStr",
-        doesNotEqual: "DoesNotEqual",
-        contains: "Contains",
-        doesNotContain: "DoesNotContain",
-        isEmpty: "IsEmpty",
-        isNotEmpty: "IsNotEmpty",
-        startsWith: "StartsWith",
-        doesNotStartWith: "DoesNotStartWith",
-        endsWith: "EndsWith",
-        doesNotEndWith: "DoesNotEndWith"
-    };
 
     /*Return a filter button with events for the filter based on column type*/
     function getFilterButton(columnId, filterType, initialValue, initialToolTip) {
-        var button = $("<button type='button' tabindex='-1' class='inforFilterButton " + initialValue + "'><span></span><span class='scr-only'>Filter Type</span></button>");
-        button.data("columnId", columnId);
-        button.data("filterType", filterType);
-        button.data("isOpen", false);
-        //set the initial tooltip
-        button.attr("title", Globalize.localize(initialToolTip)).tooltip();
-        button.off('click.filter').on('click.filter', function(e) {
-            var $button = $(this),
-                currentMenu = $('#inforFilterConditions');
 
-            if (currentMenu.length > 0) {
-                if (currentMenu.is(":visible")) {
-				  $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
-				  $('#inforFilterConditions').remove();
-				}
-                $(document).off('click.popupmenu');
-                if ($button.data('popupmenu')) {
-                    $button.data('popupmenu').destroy();
-                }
+      var button = $("<button type='button' tabindex='-1' class='inforFilterButton "+initialValue+"'><span></span><span class='scr-only'>Filter Type</span></button>");
+      button.data("columnId", columnId);
+      button.data("filterType", filterType);
+      button.data("isOpen", false);
+      //set the initial tooltip
+      button.attr("title",Globalize.localize(initialToolTip)).tooltip();
+      button.off('click.filter').on('click.filter', function(e) {
+          var $button = $(this),
+            currentMenu = $('#inforFilterConditions');
+
+          if (currentMenu.length > 0) {
+          //  if (currentMenu.is(":visible")) {
+              $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
+              $('#inforFilterConditions').remove();
+          //  }
+            $(document).off('click.popupmenu');
+            if ($button.data('popupmenu')) {
+              $button.data('popupmenu').destroy();
             }
-            currentButton = button.data("columnId");
-            //different menus for each filter option
-            var filterType = $(this).data("filterType");
-            var $textFilterData = $('<ul id="inforFilterConditions" class="popupmenu divider">');
+          }
+          currentButton = button.data("columnId");
 
-            $.each(gridTextFilters, function (key, value) {
-                $textFilterData.append($('<li><span class="icon ' + key + '"></span><a href="#' + key + '">' + value + '</a></li>'));
+          //different menus for each filter option
+          var filterType = $(this).data("filterType");
+
+          if (filterType=="TextFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon contains"></span><a href="#contains">Contains</a></li><li><span class="icon doesNotContain"></span><a href="#doesNotContain">DoesNotContain</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon startsWith"></span><a href="#startsWith">StartsWith</a></li><li><span class="icon doesNotStartWith"></span><a href="#doesNotStartWith">DoesNotStartWith</a></li><li><span class="icon endsWith"></span><a href="#endsWith">EndsWith</a></li><li><span class="icon doesNotEndWith"></span><a href="#doesNotEndWith">DoesNotEndWith</a></li></ul>');
+
+          if (filterType=="SelectFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li></ul>');
+
+          if (filterType=="CheckboxFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon eitherSelectedorNotSelected"></span><a href="#eitherSelectedorNotSelected">EitherSelectedorNotSelected</a></li><li><span class="icon checked"></span><a href="#selected">Selected</a></li><li><span class="icon notChecked"></span><a href="#notSelected">NotSelected</a></li></ul>');
+
+          if (filterType=="DateFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon today"></span><a href="#today">Today</a></li><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">GreaterThan</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
+
+          if (filterType=="IntegerFilter" || filterType=="DecimalFilter" || filterType=="PercentFilter")
+            $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">GreaterThan</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
+
+          if (filterType=="LookupFilter")
+              $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">Equals</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">Does Not equal</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">Is Empty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">Is Not Empty</a></li></ul>');
+
+          var col = columns[getColumnIndex(columnId)];
+          if (col.filterExcludeList) {
+            $("#inforFilterConditions").find(col.filterExcludeList).parent().remove();
+          }
+
+          if (filterType=="ColumnContentsFilter") {
+            var isEmpty = addContentsFilterMenu(col, button);
+            if (isEmpty)
+              return;
+          }
+
+          if (filterType !== "ColumnContentsFilter") {
+            $('#inforFilterConditions').find('a[href]').each(function () {
+              $(this).text(Globalize.localize($(this).text()));
             });
+          }
 
-            //different menus for each filter option
-            var filterType = $(this).data("filterType");
+          $button.popupmenu({
+            menu: 'inforFilterConditions',
+            trigger: 'immediate'
+          }).on('selected', function(a, anchor) {
+            var el = $(this),
+              action = anchor.attr('href').substr(1);
 
-            if (filterType == "TextFilter")
-                $('body').append($textFilterData);
-            if (filterType == "SelectFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li></ul>');
-            if (filterType == "CheckboxFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon eitherSelectedorNotSelected"></span><a href="#eitherSelectedorNotSelected">EitherSelectedorNotSelected</a></li><li><span class="icon checked"></span><a href="#selected">Selected</a></li><li><span class="icon notChecked"></span><a href="#notSelected">NotSelected</a></li></ul>');
-            if (filterType == "DateFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon today"></span><a href="#today">Today</a></li><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">Greater Than</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
-            if (filterType == "IntegerFilter" || filterType == "DecimalFilter" || filterType == "PercentFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">EqualsStr</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">DoesNotEqual</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">IsEmpty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">IsNotEmpty</a></li><li><span class="icon lessThan"></span><a href="#lessThan">LessThan</a></li><li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">LessThanOrEquals</a></li><li><span class="icon greaterThan"></span><a href="#greaterThan">Greater Than</a></li><li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">GreaterThanOrEquals</a></li></ul>');
-            if (filterType == "LookupFilter")
-                $('body').append('<ul id="inforFilterConditions" class="popupmenu divider"><li><span class="icon equals"></span><a href="#equals">Equals</a></li><li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">Does Not equal</a></li><li><span class="icon isEmpty"></span><a href="#isEmpty">Is Empty</a></li><li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">Is Not Empty</a></li></ul>');
+            if (el.data("filterType")=="ColumnContentsFilter")
+              return;
 
-            var col = columns[getColumnIndex(columnId)];
-            if (col.filterExcludeList) {
-                $("#inforFilterConditions").find(col.filterExcludeList).parent().remove();
+            var isChanged=!el.hasClass(action);
+
+            //toggle the button icon..
+            el.removeClass();
+            el.addClass('inforFilterButton '+action);
+
+            //set the tooltip
+            el.data('tooltip').content = anchor.text();
+
+            //apply filter...
+            if (el.data("filterType")=="CheckboxFilter" && isChanged)
+              applyFilter();
+
+            if (action=="isNotEmpty" || action=="isEmpty")
+              applyFilter();
+
+            if (action=="today")
+              $.datepicker.selectToday(el.next().find("input"));
+
+            el.focus();
+          }).on('close.popupmenu', function() {
+            $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
+            $('#inforFilterConditions').remove();
+            if ($button.data('popupmenu')) {
+              $button.data('popupmenu').destroy();
             }
+          });
+      });
 
-            if (filterType == "ColumnContentsFilter") {
-                var isEmpty = addContentsFilterMenu(col, button);
-                if (isEmpty)
-                    return;
-            }
-
-			if (filterType !== "ColumnContentsFilter") {
-				$('#inforFilterConditions').find('a[href]').each(function () {
-					$(this).text(Globalize.localize($(this).text()));
-				});
-			}
-
-            $button.popupmenu({
-                menu: 'inforFilterConditions',
-                trigger: 'immediate'
-            }).on('selected', function (a, anchor) {
-                var el = $(this),
-                    action = anchor.attr('href').substr(1);
-
-                if (el.data("filterType") == "ColumnContentsFilter")
-                    return;
-
-                var isChanged = !el.hasClass(action);
-
-                //toggle the button icon..
-                el.removeClass();
-                el.addClass('inforFilterButton ' + action);
-
-                //set the tooltip
-                if (el && el.data('tooltip')) {
-                    el.data('tooltip').content = anchor.text();
-                }
-
-                //apply filter...
-                if (el.data("filterType") == "CheckboxFilter" && isChanged)
-                    applyFilter();
-                if (action == "isNotEmpty" || action == "isEmpty")
-                    applyFilter();
-                if (action == "today")
-                    $.datepicker.selectToday(el.next().find("input"));
-                el.focus();
-            }).on('close.popupmenu', function() {
-	            $('#inforFilterConditions').parent('.popupmenu-wrapper').remove();
-	            $('#inforFilterConditions').remove();
-	            if ($button.data('popupmenu')) {
-	              $button.data('popupmenu').destroy();
-	            }
-            });
-        });
-
-        return button;
+      return button;
     }
 
     function addSelection(button, $this, isChecked) {
@@ -14562,6 +13265,7 @@ $.fn.chart = function(options) {
       for (var i = 0; i < selections.length; i++) {
         if (selections[i].id==$this.attr("id")) {
           selections[i].isChecked=isChecked;
+          found=true;
         }
       }
 
@@ -14584,7 +13288,7 @@ $.fn.chart = function(options) {
       if (data.length==0 && !suppliedValues)
         return true;
 
-      distinctValues.push({id:"selectAll", html: Globalize.localize("SelectDeselect")});
+      distinctValues.push({id:"selectAll", html: Globalize.localize("SelectAll")});
 
       if (suppliedValues) {
           for (i = 0; i < suppliedValues.length; i++) {
@@ -14629,6 +13333,10 @@ $.fn.chart = function(options) {
 
       for (i = 0; i < distinctValues.length; i++) {
         var isChecked = true;
+
+		if(col.contentsFilterSettings && col.contentsFilterSettings.startWithEmptyCheckboxes)
+    		  isChecked = !col.contentsFilterSettings.startWithEmptyCheckboxes;
+
         //check previous selections and retick
         if (prevSelections!=undefined) {
           for (j = 0; j < prevSelections.length; j++) {
@@ -14652,7 +13360,7 @@ $.fn.chart = function(options) {
       if (prevSelections==undefined) {
         var selections = [];
         for (i = 0; i < distinctValues.length; i++) {
-          selections.push({id: distinctValues[i].id, isChecked: true});
+          selections.push({id: distinctValues[i].id, isChecked: isChecked});
         }
         button.data("selections", selections);
       }
@@ -14674,7 +13382,46 @@ $.fn.chart = function(options) {
           });
 
         } else {
-          addSelection(button,$this,isChecked);
+			var selections = [];
+        	var inputs = $this.closest(".popupmenu").find("input");
+            inputs.each(function() {
+              var input = $(this);
+              var isChecked = input.prop("checked");
+              var id = input.prop("id");
+              selections.push({id: id, isChecked: isChecked});
+
+            });
+
+            button.data("selections", selections);
+
+			addSelection(button,$this,isChecked);
+
+			selections = button.data("selections");
+			var that = $($this.closest(".popupmenu").find("input")[0]);
+			for(var j = 1; j < selections.length; j++){
+				var checked = true;
+				if (!selections[j].isChecked){
+					checked = false;
+
+					if(selections[0].id == "selectAll" && selections[0].isChecked){
+						selections[0].isChecked = false;
+
+					if(that.attr('id') == "selectAll")
+						that.prop("checked", selections[0].isChecked);
+					}
+					break;
+				}
+
+				if(checked){
+					if(selections[0].id == "selectAll"){
+						selections[0].isChecked = true;
+
+						if(that.attr('id') == "selectAll")
+						  that.prop("checked", selections[0].isChecked);
+					}
+				}
+			}
+
         }
 
         //apply filter...
@@ -14724,7 +13471,7 @@ $.fn.chart = function(options) {
 
       $(header).empty();
       //add the button
-      var $button = getFilterButton(column.id,  ColumnContentsFilter(), "contains", "SelectContents");
+      var $button = getFilterButton(column.id,  ColumnContentsFilter(), "equals", "SelectContents");
 
       $(header).css("text-align","center");
 
@@ -14761,82 +13508,14 @@ $.fn.chart = function(options) {
           }
         });
 
-      if (column.cssClass) {
-        input.addClass(column.cssClass);
-      }
-
       if (column.maxLength) {
         input.attr("maxLength",column.maxLength).maxLength();
       }
 
-      var defaultFilterName = "contains";
-
-      if (typeof column.filterExcludeList != "undefined") {
-          var isDiff = false,
-              exList = [],
-              txtFilters = [],
-              arrDiff = [],
-              filterExcludeList = (column.filterExcludeList).replace(/\./g, '').split(",");
-
-          $.each(filterExcludeList, function () {
-              exList.push($.trim(this));
-          });
-
-          $.each(gridTextFilters, function (key, value) {
-              txtFilters.push(key);
-          });
-
-          arrDiff = $(txtFilters).not(exList).get();
-
-          defaultFilterName = arrDiff[0];
-      }
-
-      var theFilter = (typeof(filters[column.id]) != "undefined")?filters[column.id].operator:"contains";
-      var $button = getFilterButton(column.id, TextFilter(), theFilter, getTooltipContent(theFilter));
+      var $button = getFilterButton(column.id, TextFilter(), "contains", "Contains");
 
       restoreLastFilter(gridObj, $button, column);
       input.before($button);
-    }
-
-    /**
-     * Getting the corresponding Name based from the filter value
-     * return String
-     * */
-    function getTooltipContent(filter){
-    	var tooltip;
-    	switch(filter){
-    	case 'equals':
-    		tooltip = "Equals";
-    		break;
-    	case 'doesNotEqual':
-    		tooltip = "DoesNotEqual";
-    		break;
-    	case 'doesNotContain':
-    		tooltip = "DoesNotContain";
-    		break;
-    	case 'isEmpty':
-    		tooltip = "IsEmpty";
-    		break;
-    	case 'isNotEmpty':
-    		tooltip = "IsNotEmpty";
-    		break;
-    	case 'startsWith':
-    		tooltip = "StartsWith";
-    		break;
-    	case 'doesNotStartWith':
-    		tooltip = "DoesNotStartWith";
-    		break;
-    	case 'endsWith':
-    		tooltip = "EndsWith";
-    		break;
-    	case 'doesNotEndWith':
-    		tooltip = "DoesNotEndWith";
-    		break;
-	    	default:
-	    		tooltip = "Contains";
-    	}
-
-    	return tooltip;
     }
 
     function addSelectFilterColumn(gridObj, column) {
@@ -14852,7 +13531,7 @@ $.fn.chart = function(options) {
       }
 
       $(header).empty();
-        var inputWidth = column.width - 15, //column width - margin - button size - trigger button size.
+        var inputWidth = $(header).width() - 86, //column width - margin - button size - trigger button size.
         option_str = "", useCodes = false, hasEmpty = false;
 
       if (column.options) {
@@ -14954,7 +13633,8 @@ $.fn.chart = function(options) {
       }
 
       var input = $("<input data-mode='0' class='inforLookupField' type='text'>")
-        .attr('id', column.id)
+	    //LMCLIENT-23679 Adding id to lookupfilter causes conflict with column personalization functionality
+        //.attr('id', column.id)
         .data("columnId", column.id)
         .data("filterType", filterType)
         .width($(header).width() - 46) // 4 pixel padding + width of the button
@@ -14997,15 +13677,19 @@ $.fn.chart = function(options) {
         }
       });
 
-      input.change(function(event) {
-        gridObj.applyFilter();
-        event.preventDefault();
-        event.stopPropagation();
-        $(this).focus();
-      });
+      var filterOnChange = (column.editorOptions && typeof column.editorOptions.filterOnChange === "boolean")
+          ? column.editorOptions.filterOnChange : true;
+
+      if (filterOnChange) {
+          input.change(function(event) {
+            gridObj.applyFilter();
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).focus();
+          });
+      }
 
       var $button = getFilterButton(column.id, filterType, initialValue, initialTooltip);
-
       restoreLastFilter(gridObj, $button, column);
 
       input.closest(".inforTriggerField").before($button);
@@ -15019,7 +13703,6 @@ $.fn.chart = function(options) {
       lastValue = (filters && filters[column.id] ? filters[column.id].value : undefined);
 
       $(header).empty();
-      var inputWidth = column.width - 45;  //column width - margin - button size with padding
 
       var filterType = (isDecimal ?  DecimalFilter() :  IntegerFilter());
 
@@ -15027,7 +13710,7 @@ $.fn.chart = function(options) {
         .data("columnId", column.id)
         .data("filterType", filterType)
         .addClass((isDecimal  ? "numericOnly" : "decimalOnly"))
-        .width(inputWidth)
+        .width($(header).width() - 4 - 25)
         .val(lastValue)
         .appendTo(header)
         .numericOnly(isDecimal, (column.positiveOnly ? column.positiveOnly : false))
@@ -15040,10 +13723,6 @@ $.fn.chart = function(options) {
             $(this).focus();
           }
         });
-
-      if (column.cssClass) {
-        input.addClass(column.cssClass);
-      }
 
       if (column.maxLength) {
         input.attr("maxLength",column.maxLength).maxLength();
@@ -15088,11 +13767,7 @@ $.fn.chart = function(options) {
           }
         });
 
-      input.width(column.width - 45);  //4 pixel padding / width of the button
-
-      if (column.cssClass) {
-        input.addClass(column.cssClass);
-      }
+      input.width($(header).width() - 44);  //4 pixel padding / width of the button
 
       if (column.maxLength) {
         input.attr("maxLength",column.maxLength).maxLength();
@@ -15111,11 +13786,8 @@ $.fn.chart = function(options) {
         colValue="";
 
       colValue= colValue.toString().toLowerCase();
-
       if (filterValue) {
         filterValue = filterValue.toLowerCase();
-        filterValue = filterValue.replace(/&/g, '&amp;');
-        filterValue = filterValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         pattern = filterValue.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
         filterRegx = new RegExp(pattern, "i");
       }
@@ -15476,7 +14148,6 @@ $.fn.chart = function(options) {
       // Methods
       "registerPlugin": registerPlugin,
       "unregisterPlugin": unregisterPlugin,
-	  "getPlugin": getPlugin,
       "getColumns": getColumns,
       "setColumns": setColumns,
             "getVisibleItems": getVisibleItems,
@@ -15494,19 +14165,14 @@ $.fn.chart = function(options) {
       "getFilteredData" : getFilteredData,
       "getDataLength": getDataLength,
       "getDirtyRows": getDirtyRows,
+      "getErrorRows": getErrorRows,
       "getSelectableLength": getSelectableLength,
 
       "getDataItem": getDataItem,
       "getSelectionModel": getSelectionModel,
       "setSelectionModel": setSelectionModel,
       "getSelectedRows": getSelectedRows,
-      "getPersistedRowIds": getPersistedRowIds,
-      "setPersistedRowIds": setPersistedRowIds,
-      "getPersistedDataItems": getPersistedDataItems,
-      "clearPersistedSelections": clearPersistedSelections,
       "setSelectedRows": setSelectedRows,
-      "updateFooterSelectionCounter": updateFooterSelectionCounter,
-      "uncheckPersistedRow": uncheckPersistedRow,
       "selectAllRows": selectAllRows,
       "canRowBeSelected" : canRowBeSelected,
 
@@ -15736,11 +14402,11 @@ $.fn.chart = function(options) {
         isReadonly = true;
 
     return "<a class='inforHyperlink' "
-      + (linkHrefExpr=="" || isReadonly ? "" : "href='" + linkHrefExpr + "'")
+      + (linkHrefExpr == "" ? "": "href='" + linkHrefExpr + "'")
       + (columnDef.linkTarget==undefined  || isReadonly  ? "" :  "target='" + columnDef.linkTarget + "'")
-      + (linkOnClick==""  || isReadonly ? "" :  " onclick='" + linkOnClick + "'")
+      + (linkOnClick==""  ? "" :  " onclick='" + linkOnClick + "'")
       + (columnDef.toolTip ==undefined ? "" :  " title='" + columnDef.toolTip + "'")
-      + (isReadonly ? "disabled" : "")+">" + (value == undefined ? "" : value) + "</a>" ;
+      + ">" + (value == undefined ? "" : value) + "</a>" ;
     },
 
     CheckboxCellFormatter: function (row, cell, value, columnDef, dataContext, gridOptions) {
@@ -15779,10 +14445,7 @@ $.fn.chart = function(options) {
           thedate = (value === '' ? '' : Globalize.parseUtcDate(value));
         } else if (value!=undefined && value.substr(0,6)=="/Date(" || columnDef.DateSourceFormat=="JSON") //auto detect JSON Format or its specified.
           thedate = (value === '' ? '' : new Date(parseInt(value.substr(6))));
-        else if(value!=undefined && columnDef.DateSourceFormat=="ISO") {
-          var token = value.match(/\d+/g);
-          thedate = new Date(token[0], token[1] - 1, token[2], token[3], token[4], token[5]);
-        }  else if (columnDef.DateSourceFormat!=undefined)
+        else if (columnDef.DateSourceFormat!=undefined)
           thedate = $.datepicker.parseDate(value,columnDef.DateSourceFormat);
         else
           thedate = value;
@@ -16211,8 +14874,9 @@ $.fn.chart = function(options) {
 
       this.loadValue = function (item) {
         defaultValue = args.grid.getDataItemValueForColumn(item, args.column.field) || "";
+        defaultValue = defaultValue.toString();
+        defaultValue = defaultValue.replace('&lt;', '<').replace('&gt;', '>');
         $input.val(defaultValue);
-        $input[0].defaultValue = defaultValue;
         $input.select();
       };
 
@@ -16223,7 +14887,7 @@ $.fn.chart = function(options) {
       };
 
       this.applyValue = function (item, state) {
-        var val = state;
+        var val = state.replace(/</g, '&lt;').replace(/>/g, '&gt;');
         args.grid.setDataItemValueForColumn(item, args.column.field, val);
       };
 
@@ -16649,8 +15313,8 @@ $.fn.chart = function(options) {
         var self = this;
          defaultValue = args.grid.getDataItemValueForColumn(item, args.column.field);
 
-        if (defaultValue == undefined || defaultValue == null) {
-          defaultValue = false;
+        if (defaultValue==undefined) {
+          defaultValue=0;
         }
 
         if (defaultValue == true) {
@@ -16659,20 +15323,13 @@ $.fn.chart = function(options) {
           $checkbox.prop('checked', false);
         }
 
-        if (args.column.editability !=undefined && args.column.editability(args.row, args.cell, defaultValue, args.column, item)) {
-          $checkbox.focus();
-          return;
-        }
-
         if (isClick) {
-
           $checkbox.toggleChecked();
           args.grid.getEditController().commitCurrentEdit();
           setTimeout(function () {
             $checkbox.focus();
           }, 300);
         }
-
         $checkbox.focus();
       };
 
@@ -16704,9 +15361,6 @@ $.fn.chart = function(options) {
       };
 
       this.applyValue = function (item, state) {
-        if (args.column.editability != undefined && args.column.editability(args.row, args.cell, defaultValue, args.column, item)) {
-          return;
-        }
         args.grid.setDataItemValueForColumn(item, args.column.field, state);
       };
 
@@ -16888,43 +15542,37 @@ $.fn.chart = function(options) {
       //  1:  Normal Edit Mode.  To get into this mode you have to press enter
       var mode = 0;
       this.init = function () {
-
         $(args.container).addClass("hasComboEditor hasEditor");
 
-        $lookup = $('<input data-mode="0" class="inforLookupField" type="text">');
+        $lookup = $('<input data-mode="0" class=" inforLookupField" type="text">');
         $lookup.appendTo(args.container)
-            .width($lookup.parent().width()-30)
-            .inforLookupField(args.column.editorOptions)
+          .width($lookup.parent().width()-30)
+          .inforLookupField(args.column.editorOptions)
+          .blur(function() {
+            args.grid.getEditController().conditionalAutoCommit();
+          })
+          .on("keydown.nav", function (e) {
+            if (e.keyCode === $.ui.keyCode.UP || e.keyCode === $.ui.keyCode.DOWN ) {
+              return;
+            }
+            if (args.grid.getOptions().allowTabs && e.keyCode === $.ui.keyCode.TAB) {
+              return;
+            }
+            if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
+              return;
+            }
 
-            .blur(function() {
-              args.grid.getEditController().conditionalAutoCommit();
-            })
-            .on("keydown.nav", function (e) {
-                if (e.keyCode === $.ui.keyCode.UP || e.keyCode === $.ui.keyCode.DOWN ) {
-                  return;
-                }
-                if (args.grid.getOptions().allowTabs && e.keyCode === $.ui.keyCode.TAB) {
-                  return;
-                }
-                if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
-                  return;
-                }
+            if (args.column.editorOptions && args.column.editorOptions.editable) {
+              $lookup.data("isChanged", true);
+            }
+          })
+          .closest("div.inforTriggerField").find(".inforTriggerButton").click(function() {
+            $lookup.val(displayValue);
+          });
 
-                if (args.column.editorOptions && args.column.editorOptions.editable) {
-                  $lookup.data("isChanged", true);
-                }
-
-                // if (e.keyCode === 13) {
-                //   e.stopImmediatePropagation();
-                //   return;
-                // }
-            })
-            .closest("div.inforTriggerField").find(".inforTriggerButton").click(function() {
-              $lookup.val(displayValue);
-            });
 
         var filterType = (args.column.editorOptions && args.column.editorOptions.lookupFilterType)
-            ? args.column.editorOptions.lookupFilterType.call() : "TextFilter";
+          ? args.column.editorOptions.lookupFilterType.call() : "TextFilter";
 
         if (filterType == "IntegerFilter") {
           $lookup.addClass("decimalOnly");
@@ -16953,11 +15601,7 @@ $.fn.chart = function(options) {
           $lookup.val(returnVal);
           $lookup.data("returnVal","");
         }
-        if ($lookup.data("uiInforLookupField")) {
-          $lookup.inforLookupField("destroy");
-        }
-        $(".inforLookupGridBoxShadow").remove();
-        $("#inforLookupOverlay").remove();
+        $lookup.inforLookupField("destroy");
       };
 
       this.focus = function () {
@@ -16965,30 +15609,31 @@ $.fn.chart = function(options) {
       };
 
       this.loadValue = function (item) {
+        var options = args.column.editorOptions;
         defaultValue = args.grid.getDataItemValueForColumn(item, args.column.field);
 
-        //set the codes ....
+        // codes may not be in the list if it's free typed or data retrieve via ajax
+        if (options && (options.editable || options.click || options.url || options.ajaxOptions)) {
+          displayValue = defaultValue;
+          $lookup.val(defaultValue).select();
+          return;
+        }
+
+        // set the codes ....
         if (defaultValue) {
           var codes = defaultValue.toString().split(",");
           $lookup.inforLookupField("setCode",codes).select();
           displayValue = $lookup.val();
         }
-
-        //some codes might not be in the list - free typed
-        if (args.column.editorOptions && (args.column.editorOptions.editable || args.column.editorOptions.click)) {
-          //defaultValue = item[args.column.field];
-          displayValue = defaultValue;
-          $lookup.val(defaultValue);
-        }
-
-        $lookup.select().focus();
       };
 
       this.getCodeList = function() {
+        var options = args.column.editorOptions;
         var selectList = $lookup.inforLookupField("getSelectedValues"),
           codeList = "";
 
-        if (args.column.editorOptions.editable  || args.column.editorOptions.click) {
+        // codes may not be in the list if it's free typed or data retrieve via ajax
+        if (options && (options.editable || options.click || options.url || options.ajaxOptions)) {
           codeList = $lookup.val();
           return codeList;
         }
@@ -17002,7 +15647,7 @@ $.fn.chart = function(options) {
       }
 
       this.serializeValue = function () {
-      if ($lookup.data("isChanged")) {
+        if ($lookup.data("isChanged")) {
           return this.getCodeList();
         } else {
           return defaultValue;
@@ -17015,6 +15660,10 @@ $.fn.chart = function(options) {
 
       this.isValueChanged = function () {
         return $lookup.data("isChanged");
+      }
+
+      this.isPopupOpen = function () {
+        return $lookup.inforLookupField("getIsPopupOpen");
       }
 
       this.validate = function () {
@@ -17095,7 +15744,7 @@ $.fn.chart = function(options) {
       };
 
       this.saveAndClose = function () {
-      args.grid.getEditorLock().commitCurrentEdit();
+        args.grid.getEditorLock().commitCurrentEdit();
       };
 
       this.cancel = function () {
@@ -17497,10 +16146,6 @@ $.fn.chart = function(options) {
       return items[i];
     }
 
-    function getIdProperty() {
-      return idProperty;
-    }
-
     function getIdxById(id) {
       return idxById[id];
     }
@@ -17694,7 +16339,7 @@ $.fn.chart = function(options) {
     }
 
     function getFilteredAndPagedItems(items, filter) {
-      var pageStartRow = (items.length == pagesize) ? 0 : pagesize * pagenum;
+      var pageStartRow = pagesize * pagenum;
       var pageEndRow = pageStartRow + pagesize;
 
       if (options.pagingMode=="PagerServerSide") {
@@ -17820,7 +16465,7 @@ $.fn.chart = function(options) {
       if (countBefore != rows.length)
         onRowCountChanged.notify({ previous: countBefore, current: rows.length }, null, self);
 
-      if (diff.length > 0 || options.persistSelections)
+      if (diff.length > 0)
         onRowsChanged.notify({ rows: diff }, null, self);
     }
 
@@ -17844,7 +16489,6 @@ $.fn.chart = function(options) {
       "expandGroup": expandGroup,
       "getGroups": getGroups,
       "getIdxById": getIdxById,
-      "getIdProperty": getIdProperty,
       "getRowById": getRowById,
       "getRowIdx": getRowIdx,
       "getItemById": getItemById,
@@ -18104,6 +16748,32 @@ $.fn.chart = function(options) {
       return selected;
     }
 
+    // inserts an item into sorted array
+    function sortedArrayInsert(sortedArray, item) {
+      if (!sortedArray.length)
+        return item;
+
+      var mid = Math.ceil(sortedArray.length / 2);
+      if (mid <= 1) {
+        if (item < sortedArray[0]) {
+          return item.concat(sortedArray);
+        } else if (item < sortedArray[1]) {
+          item.unshift(sortedArray[0]);
+          item.push(sortedArray[1])
+          return item;
+        } else {
+          return sortedArray.concat(item);
+        }
+      }
+
+      var left = sortedArray.slice(0, mid);
+      var right = sortedArray.slice(mid, sortedArray.length);
+      if (item < sortedArray[mid])
+        return sortedArrayInsert(left, item).concat(right);
+      else
+        return left.concat(sortedArrayInsert(right, item));
+    }
+
     function handleClick(e, args) {
       // clicking on a row select checkbox
       if (_options.columnId === "checkbox-selector" && ($(e.target).is(".selection-checkbox") || e.type=="keydown")) {
@@ -18119,12 +16789,12 @@ $.fn.chart = function(options) {
           });
 
           grepedRows = removeChildren(grepedRows,args.row);
-          _grid.uncheckPersistedRow(args.row);
           _grid.setSelectedRows(grepedRows, {row : args.row, cell : args.cell});
         }
         else if (_grid.getOptions().multiSelect) {
           var addedRows = addChildren(args.row);
-          _grid.setSelectedRows(_grid.getSelectedRows().concat(addedRows) , {row : args.row, cell : args.cell});
+          var newSelectedRows = sortedArrayInsert(_grid.getSelectedRows(), addedRows);
+          _grid.setSelectedRows(newSelectedRows, {row : args.row, cell : args.cell});
         }
         else {
           var empty = [];
@@ -18146,10 +16816,6 @@ $.fn.chart = function(options) {
         }
 
         if ($(e.target).hasClass("checked")) {
-          var rows = _grid.getFilteredData().length;
-          for (var i = 0; i < rows; i++) {
-            _grid.uncheckPersistedRow(i);
-          }
           _grid.setSelectedRows([]);
         }
         else {
@@ -18209,7 +16875,6 @@ $.fn.chart = function(options) {
   function RowSelectionModel(options) {
     var _grid;
     var _ranges = [];
-    var _persistSelectedIds = [];
     var _self = this;
     var _options;
     var _defaults = {
@@ -18264,73 +16929,12 @@ $.fn.chart = function(options) {
       return rangesToRows(_ranges);
     }
 
-    function setPersistedIds(ids) {
-      _persistSelectedIds = ids;
-    }
-
-    function getPersistedIds() {
-      return _persistSelectedIds;
-    }
-
     function setSelectedRows(rows) {
       setSelectedRanges(rowsToRanges(rows));
     }
 
-    function clearPersistedIds() {
-      _persistSelectedIds = [];
-    }
-
-    function uncheckPersistedRow(row) {
-      var id = getAsIds([row])[0],
-          index = $.inArray(id, _persistSelectedIds);
-
-      if (index !== -1) {
-        _persistSelectedIds.splice(index, 1);
-      }
-    }
-
-    function makeUnique(array) {
-      var uniqueObj = {},
-          uniqueArray = [],
-          isNumber;
-
-      //if the idProperty was a number, we need to keep it one, otherwise it'll turn into a string
-      isNumber = typeof array[0] == 'number';
-
-      for (var i = 0; i < array.length; i++) {
-        uniqueObj[array[i]] = true;
-      }
-
-      for (i in uniqueObj) {
-        if (uniqueObj.hasOwnProperty(i)) {
-          uniqueArray.push(isNumber ? parseFloat(i) : i);
-        }
-      }
-
-      return uniqueArray;
-    }
-
-    function getAsIds(arrayOfIndices) {
-      var arrayOfIds = [],
-          dataView = _grid.getData(),
-          idProperty = dataView.getIdProperty(),
-          filteredData = _grid.getFilteredData(),
-          index, someData;
-
-      for (var i = 0; i < arrayOfIndices.length; i++) {
-        index = arrayOfIndices[i];
-        someData = filteredData[index];
-        if (someData) {
-          arrayOfIds.push(filteredData[index][idProperty]);
-        }
-      }
-      return arrayOfIds;
-    }
-
     function setSelectedRanges(ranges, active) {
       _ranges = ranges;
-      //need to combine the current list of ids with the new list
-      _persistSelectedIds = makeUnique(getAsIds(rangesToRows(ranges)).concat(_persistSelectedIds));
       _ranges.active = active;
       _self.onSelectedRangesChanged.notify(_ranges);
     }
@@ -18453,10 +17057,6 @@ $.fn.chart = function(options) {
       "setSelectedRows": setSelectedRows,
       "getSelectedRanges": getSelectedRanges,
       "setSelectedRanges": setSelectedRanges,
-      "setPersistedIds": setPersistedIds,
-      "getPersistedIds": getPersistedIds,
-      "clearPersistedIds": clearPersistedIds,
-      "uncheckPersistedRow": uncheckPersistedRow,
       "init": init,
       "destroy": destroy,
       "onSelectedRangesChanged": new Slick.Event()
@@ -18596,9 +17196,9 @@ $.fn.chart = function(options) {
     $.extend(this, {
       "onBeforeMoveRows": new Slick.Event(),
       "onMoveRows":       new Slick.Event(),
-	  "name":  "RowMoveManager",
-      "init": init,
-      "destroy": destroy
+
+      "init":             init,
+      "destroy":          destroy
     });
   }
 })(jQuery);
@@ -19130,9 +17730,13 @@ function CellRangeSelector(options) {
 
     function getNavState() {
       var cannotLeaveEditMode = false;
-      //!Slick.GlobalEditorLock.commitCurrentEdit();
-      var pagingInfo = dataView.getPagingInfo();
+      // It's useless to commit edit if this grid
+      // is a LookupGrid or is readonly
+      if (!grid.isLookupGrid && grid.getOptions().editable) {
+        cannotLeaveEditMode = !Slick.GlobalEditorLock.commitCurrentEdit();
+      }
 
+      var pagingInfo = dataView.getPagingInfo();
       var lastPage = Math.floor(pagingInfo.totalRows/pagingInfo.pageSize);
       if (Math.floor(pagingInfo.totalRows/pagingInfo.pageSize)==pagingInfo.totalRows/pagingInfo.pageSize)
         lastPage -= 1;
@@ -19174,7 +17778,6 @@ function CellRangeSelector(options) {
     }
 
     function setPageSize(n) {
-      n = (isNaN(parseInt(n)) || n<1) ? grid.getOptions().pageSize : n;
       dataView.setPagingOptions({pageSize:n});
       dataView.requestNewPage("pageSize");
       grid.getOptions().pageSize = n;
@@ -19304,18 +17907,16 @@ function CellRangeSelector(options) {
 
         $pageSizeInput.numericOnly();
         //call when done typing
-        $pageSizeInput
-        .before("<label class='inforLabel recordsPerPage'>"+Globalize.localize("RecordsPerPage")+"</label>")
-        .keyup(function(){
-        	var val = $(this).val();
+        $pageSizeInput.before("<label class='inforLabel recordsPerPage'>"+Globalize.localize("RecordsPerPage")+"</label>")
+          .keyup(function(){
+            var val = isNaN(parseInt($(this).val())) ? grid.getOptions().pageSize : $(this).val();
             clearTimeout(typeTimer);
-            if (val || val < 1) {
+            if (val) {
               typeTimer = setTimeout(function() {
                 setPageSize(parseInt(val, 10));
               }, 1000);
             }
           });
-
         $div.appendTo($container);
       }
     }
@@ -19370,9 +17971,8 @@ function CellRangeSelector(options) {
         if (pagingInfo.pageSize == 0 || pagingInfo.pageSize == pagingInfo.totalRows) {
           $status.css("padding-top","4px").text(Globalize.localize("ShowingAll")+" " + pagingInfo.totalRows + " "+Globalize.localize("Rows"));
           $container.find(".inforGridPagingButton").hide();
-          $records.html("");
           if (grid.getOptions().multiSelect==true) {
-            grid.updateFooterSelectionCounter();
+            $selectedRecords.html(Globalize.localize("Selected") + " 0" );
           }
           return;
         }
@@ -19392,7 +17992,6 @@ function CellRangeSelector(options) {
         var timeout = null;
         pageNumTextBox.keydown(ensureValidKey).keyup(function(evt) {
           var $input = $(this);
-          $input.numericOnly();
           clearTimeout(timeout);
           timeout = setTimeout(function() {
             goToPage($input);
@@ -19433,7 +18032,7 @@ function CellRangeSelector(options) {
         $records.html(Globalize.localize("Displaying") + " " + recBegin + " - " + recEnd + " " + Globalize.localize("Of") + " " + pagingInfo.totalRows );
 
       if (grid.getOptions().multiSelect==true)
-        grid.updateFooterSelectionCounter();
+        $selectedRecords.html(Globalize.localize("Selected") + " 0" );
 
       if (pagingInfo.totalRows == 0)  {
         $records.html(Globalize.localize("NoRecordsFound"));
@@ -19448,7 +18047,8 @@ function CellRangeSelector(options) {
         if (pagingInfo.pageNum == -1 || pagingInfo.pageNum==99999)
           $records.html(Globalize.localize("Displaying") + " " + dataLength +" " + Globalize.localize("Rows"));
         else
-          $records.html(Globalize.localize("Displaying") + " " + Math.max(1,pagingInfo.pageSize*(pagingInfo.pageNum)+1) + " - " + parseInt(pagingInfo.pageSize*(pagingInfo.pageNum)+dataLength)  );
+          $records.html(Globalize.localize("Displaying") + " " + Math.max(1,pagingInfo.pageSize*(pagingInfo.pageNum)) + " - " + parseInt(pagingInfo.pageSize*(pagingInfo.pageNum)+dataLength)  );
+
         if ($status) {
           $status.hide();
         }
@@ -19497,10 +18097,6 @@ function CellRangeSelector(options) {
       $menu.on("click", updateColumn);
     }
 
-    function destroy()  {
-      $menu.remove();
-    }
-
     function open(button) {
       $menu.empty();
 
@@ -19537,7 +18133,8 @@ function CellRangeSelector(options) {
 
       for (var i=0; i<columns.length; i++) {
 
-        if (columns[i].name=="" || columns[i].id=="#" || columns[i].id=="" || !columns[i].hidable) {
+        if (columns[i].name=="" || columns[i].id=="#" || columns[i].id=="" || !columns[i].hidable
+            || (columns[i].displayField && columns[i].displayField.columnVisibility)) {
           continue;
         }
 
@@ -19605,8 +18202,7 @@ function CellRangeSelector(options) {
 
     //Create callable methods...
     $.extend(this, {
-      "open": open,
-      "destroy": destroy
+      "open": open
     });
   }
 
@@ -19898,8 +18494,7 @@ function AutoTooltips(options) {
       enableGrouping: false,  //Enable the grouping features.
       rowHeight: 25,  //Change This if using multiline editor
       fillHeight: true, //should the grid size itself to the bottom of the page. use if grid is on the bottom and nothing underneath
-      savePersonalization: true,  //should the personalization settings be saved in the browser? Or you use onPersonalizationChanged
-      useLocalStorage: false, //should the personalization settings be saved using HTML5 localStorage? Otherwise use cookies.
+      savePersonalization: true,  //should the personalization settings be saved in a cookie? Or you use onPersonalizationChanged
       enableCellRangeSelection: true, //allows you to select/copy a range of cells.
       selectOnRowChange: false, //always select row when you click it.
       showExport: false,  //adds an export function to the footer.
@@ -19942,7 +18537,7 @@ function AutoTooltips(options) {
       });
 
     //Create a DataView Which is used during sorting and selection.
-    dataView = new Slick.Data.DataView({idProperty: o.idProperty, pagingMode: o.pagingMode, persistSelections: o.persistSelections});
+    dataView = new Slick.Data.DataView({idProperty: o.idProperty, pagingMode: o.pagingMode });
     gridObj =  new Slick.Grid($grid, dataView, o.columns, slickOptions);
     $grid.data("gridInstance",gridObj); //save a ref ro the grid so it can be accessed by selector.
 
@@ -19956,16 +18551,13 @@ function AutoTooltips(options) {
     dataView.onRowsChanged.subscribe(function (e, args) {
       gridObj.invalidateRows(args.rows);
       gridObj.render();
-      //consider persisted selections (which may not have been previously visible) if we're persisting selections
-      var persist = gridObj.getOptions().persistSelections,
-          selRowIdsToUse = persist ? gridObj.getSelectionModel().getPersistedIds() : selectedRowIds;
 
-      if (selRowIdsToUse.length > 0) {
+      if (selectedRowIds.length > 0) {
         // since how the original data maps onto rows has changed,
         // the selected rows in the grid need to be updated
         var selRows = [];
-        for (var i = 0; i < selRowIdsToUse.length; i++) {
-          var idx = dataView.getRowById(selRowIdsToUse[i]);
+        for (var i = 0; i < selectedRowIds.length; i++) {
+          var idx = dataView.getRowById(selectedRowIds[i]);
           if (idx != undefined)
             selRows.push(idx);
         }
@@ -19996,13 +18588,14 @@ function AutoTooltips(options) {
     }
 
     //Attach listeners for loading indicators
-    var $viewport = $grid.find(".slick-viewport:visible").last();
     dataView.onDataLoading.subscribe(function(e,args) {
+      $viewport = $grid.find(".slick-viewport:visible").last();
       $viewport.inforBusyIndicator();
       $viewport.css("overflow","hidden");
     });
 
     dataView.onDataLoaded.subscribe(function(e,args) {
+      $viewport = $grid.find(".slick-viewport:visible").last();
       if ($viewport.data("uiInforBusyIndicator")) {
         $viewport.inforBusyIndicator("close");
         $viewport.css("overflow","auto");
@@ -20102,6 +18695,8 @@ function AutoTooltips(options) {
         var item = dataView.getItem(args.row);
         o.drilldown(item);
       }
+
+      // here.......
 
       //handle Grid buttons
       var target = $(e.target);
@@ -20228,7 +18823,7 @@ function AutoTooltips(options) {
 
     if (o.savePersonalization) {
       var cookieId = window.location.pathname+'#'+$grid.attr("id");
-      var cookieContents = o.useLocalStorage ? localStorage.getItem(cookieId) : $.cookie(cookieId);
+      var cookieContents = $.cookie(cookieId);
     }
 
     //process hidden columns
@@ -20250,11 +18845,7 @@ function AutoTooltips(options) {
     if (o.savePersonalization) {
       gridObj.onPersonalizationChanged.subscribe(function (e, args) {
         delete args.grid; //dont serialize the grid object.
-        if (o.useLocalStorage) {
-          localStorage.setItem(cookieId, JSON.stringify(args));
-        } else {
-          $.cookie(cookieId, JSON.stringify(args), { expires: 3650 });//convert the JSON to a string...
-        }
+        $.cookie(cookieId, JSON.stringify(args), { expires: 3650 });//convert the JSON to a string...
       });
 
       //restore previous - convert from string to JSON.
@@ -20293,7 +18884,7 @@ function AutoTooltips(options) {
 
     //excel copy and paste
     if (o.enableCellRangeSelection || o.showExport) {
-            var _selector = new Slick.CellRangeSelector({ enableCellRangeSelection: o.enableCellRangeSelection, exportScriptUrl: o.exportScriptUrl, exportFileName: o.exportFileName});
+      var _selector = new Slick.CellRangeSelector({ enableCellRangeSelection: o.enableCellRangeSelection, exportScriptUrl: o.exportScriptUrl, exportFileName: o.exportFileName});
       gridObj.registerPlugin(_selector);
     }
 
@@ -20314,9 +18905,8 @@ function AutoTooltips(options) {
         });
     }
 
-    gridObj.isLookupGrid = $(this).is("#lookupGridDivId");
     return gridObj;
-};
+  };
 
   function handleHeaderContextMenu(e, args) {
     //prevent normal menu
@@ -20602,7 +19192,7 @@ function AutoTooltips(options) {
 
 		/* Create a new instance object. */
 		_newInst: function (target, inline) {
-			var id = target[0].id; //.replace(/([^A-Za-z0-9_])/g, '\\\\$1'); // escape jQuery meta chars
+			var id = target[0].id;//.replace(/([^A-Za-z0-9_])/g, '\\\\$1'); // escape jQuery meta chars
 			return {id: id, input: target, // associated target
 				selectedDay: 0, selectedMonth: 0, selectedYear: 0, // current selection
 				drawMonth: 0, drawYear: 0, // month being drawn
@@ -20827,11 +19417,12 @@ function AutoTooltips(options) {
 				default: handled = false;
 
 			}
-			else if (event.keyCode == $.ui.keyCode.ENTER || event.keyCode == $.ui.keyCode.DOWN ) // display the date picker on enter
-			{
+			else if (event.keyCode == $.ui.keyCode.ENTER || event.keyCode == $.ui.keyCode.DOWN ) {
+
 				if (inst.input.closest("div").parent().hasClass("slick-headerrow-column")) {	//let enter run the filter in the grid
 					return;
 				}
+
 				if (inst.input.attr("readonly") || inst.input.attr("disabled")){
 					return;
 				}
@@ -20872,7 +19463,7 @@ function AutoTooltips(options) {
 			$.map( options, function (opt) {
 				//add the option and maybe a generic click handler function...
 				var li = $("<li></li>"),
-					a = $("<a></a>").attr("href","javascript:void(0);").text(opt.label).attr("onclick",
+					a = $("<a></a>").attr("href","#").text(opt.label).attr("onclick",
 						'DP_jQuery_' + dpuuid + '.datepicker._quickDateSelect(\'#' +inst.id + '\',' + opt.offset + ',\'' + opt.period + '\')');
 
 				li.append(a);
@@ -20900,7 +19491,7 @@ function AutoTooltips(options) {
 				return;
 			}
 
-      if (!inst.selectedDay || inst.selectedDay === 0) {
+			if (!inst.selectedDay || inst.selectedDay === 0) {
         //Day should only be 0 if not set
         this._selectToday(target);
       }
@@ -21083,13 +19674,9 @@ function AutoTooltips(options) {
 						});
 					}
 				};
+				inst.dpDiv.zIndex($(input).zIndex() + 3000);
 
-        //zIndex cannot be > 4000 since Quick Dates popup is 4001
-        var inputZIndex = $(input).zIndex() <= 1000 ? $(input).zIndex() : 1000;
-        inst.dpDiv.zIndex(inputZIndex + 3000);
-
-        $.datepicker._datepickerShowing = true;
-
+				$.datepicker._datepickerShowing = true;
 				if ($.effects && $.effects[showAnim]) {
 					inst.dpDiv.show(showAnim, $.datepicker._get(inst, 'showOptions'), duration, postProcess);
 				} else {
@@ -21467,9 +20054,13 @@ function AutoTooltips(options) {
 
             //triggers the option from within a popupmenu and continues to hide the datepicker afterward
             if ($target.parents('.popupmenu').length > 0) {
+				
+				if ($target.parents('.checkbox').length > 0) 
+					return;
+            
                 $target.trigger('click');
             }
-
+			
 			if ($target[0].id != $.datepicker._mainDivId &&
 				$target.parents('#' + $.datepicker._mainDivId).length == 0 &&
 				!$target.data($.datepicker.markerClassName) &&
@@ -21967,9 +20558,8 @@ function AutoTooltips(options) {
 			'<a class="inforDatePicker-prev l" onclick="DP_jQuery_' + dpuuid +
 			'.datepicker._adjustDate(\'#' + inst.id + '\', -' + stepMonths + ', \'M\');"' +
 			' title="' + prevText + '"><button type="button" class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '" title="' + prevText  + '"><i></i></button></a>' :
-			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-prev inforDatePicker-state-disabled" title="' + prevText + '"><button type="button" class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '" disabled>' + '<i></i></button></a>'));	//prevText - may need for screen reader
-
-      var nextText = this._get(inst, 'Next');
+			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-prev inforDatePicker-state-disabled" title="' + prevText + '"><span class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '">' + '</span></a>'));	//prevText - may need for screen reader
+			var nextText = this._get(inst, 'Next');
 			nextText = (!navigationAsDateFormat ? nextText : this.formatDate(nextText,
 			this._daylightSavingAdjust(new Date(drawYear, drawMonth + stepMonths, 1)),
 			this._getFormatConfig(inst)));
@@ -21977,7 +20567,7 @@ function AutoTooltips(options) {
 			'<a class="inforDatePicker-next " onclick="DP_jQuery_' + dpuuid +
 			'.datepicker._adjustDate(\'#' + inst.id + '\', +' + stepMonths + ', \'M\');"' +
 			' title="' + nextText + '"><button type="button"  class="' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '" title="' + nextText + '"><i></i></button></a>' :
-			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-next inforDatePicker-state-disabled" title="' + nextText + '"><button type="button" class="inforIconButton ' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '" disabled>' + '<i></i></button></a>')); //nextText - may need for screen reader
+			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-next inforDatePicker-state-disabled" title="' + nextText + '"><span class="inforIconButton ' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '">' + '</span></a>')); //nextText - may need for screen reader
 			var currentText = this._get(inst, 'Today');
 			var gotoDate = (this._get(inst, 'gotoCurrent') && inst.currentDay ? currentDate : today);
 			currentText = (!navigationAsDateFormat ? currentText :
@@ -22183,15 +20773,10 @@ function AutoTooltips(options) {
 
 			// month selection
 			monthHtml += '<span class="inforDatePicker-month">' + display[0] + '</span>';
-			var isRTL = this._get(inst, 'isRTL');
-			if (isRTL) {
-				html += '<button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
-				html += '<span class="inforDatePicker-year">' + display[1] + '</span>&#xa0;' + monthHtml + '</div>';
-			} else {
-				html += monthHtml + '&#xa0;';
-				html += '<span class="inforDatePicker-year">' + display[1] + '</span><button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
-				html += '</div>';
-			}
+
+			html += monthHtml + '&#xa0;';
+			html += '<span class="inforDatePicker-year">' + display[1] + '</span><button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
+			html += '</div>';
 			return html;
 		},
 
@@ -22479,6 +21064,245 @@ function AutoTooltips(options) {
 	window['DP_jQuery_' + dpuuid] = $;
 })(jQuery);
 /*
+* Infor Dot Chart - SVG D3
+*/
+(function ($) {
+$.widget("ui.inforDotChart", {
+		options: {
+			data: [3,7,9,1,4,6,8,2,5],
+			title: "Chart Title",
+			colorRange: ["#13a3f7", "#7533a6", "#2db329", "#a352cc", "#e63262", "#d5000e", "#737373",
+						 "#00c2b4", "#61c5ff", "#9ed927", "#ffd500", "#ff574d", "#ff80a2", "#c680ff",
+						 "#b3b3b3", "#6dd9d1", "#005ce6", "#00733a", "#ff6400", "#b3000c", "#bf2951",
+						 "#ffaa00", "#595959", "#00898c"],
+			onSelected: null,
+			height: 350,  //320
+			width: 350	//320
+		},
+		parseDate: null,
+		_init: function () {
+		
+			var svg, x, y, i, tickRound,
+				self = this,
+				zone = (self.element.attr("id") ? "#" + self.element.attr("id"): "body"),
+				margin = {top: 80, right: 20, bottom: 40, left: 50};
+				
+			//Document width and height
+			self.w = self.options.width,
+			self.h = self.options.height;
+			
+			//Massage the tabular data into : labels and seperate arrays
+			self._parseData(self.options.data);
+			
+			//Set scales
+			x = d3.scale.linear().domain([0, self.longest - 1]).range([0, self.w]);
+			tickRound = (self.max-self.min) / 4 /2;
+			y = d3.scale.linear().domain([self.min, self.max + tickRound]).range([self.h, 0]);
+			//Ordinalize the colors
+			self.color = d3.scale.ordinal().range(self.options.colorRange);
+				
+			//Add the Base Svg Layer
+			self.svg = d3.select(zone)
+				.append("svg")
+					.attr("width", self.w + margin.left + margin.right)
+					.attr("height", self.h + margin.top + margin.bottom)
+					.attr("class", "inforDotChart")
+				.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				
+			//Add Ticks and Lines
+			var ticks = self.svg.selectAll(".ticky")
+							.data(y.ticks(6))
+							.enter().append("svg:g").attr("transform", function(d) {
+								return "translate(0, " + (y(d)) + ")";
+							}).attr("class", "ticky");
+							
+			ticks.append("line")
+				.attr("y1", 0)
+				.attr("y2", 0)
+				.attr("x1", 0)
+				.attr("x2", self.w);
+				
+			ticks.append("text")
+				.text(function(d) {
+					return d;
+				})
+				.attr("text-anchor", "end")
+				.attr("dy", 2)
+				.attr("dx", -14);
+			
+			ticks = self.svg.selectAll(".tickx")
+						.data(x.ticks(self.longest))
+						.enter()
+							.append("g").attr("transform", function(d, i) {
+								return "translate(" + x(i) + ", " + (self.h + 12) + ")";
+							})
+							.style("text-transform", "uppercase")
+							.attr("class", "tickx");
+
+			//Add Tick labels
+			ticks.append("text")
+				.text(function(d, i) {
+					return self.axisLabels[i];
+				})
+				.attr("transform", "rotate(90)");
+				
+					
+			//Add 1 to n lines - we add after so they are above the lines.
+			self.svg.selectAll("path.line")
+					.data(self.mergedData)
+				.enter().append("path")
+					.attr("d", d3.svg.line()
+						.x(function(d,i) { return x(i);})
+						.y(y))
+					.attr("class", "line")
+					.style("stroke", function(d, i) { return self.color(i); });
+				
+			
+			// Define 'div' for tooltips
+			var tooltip = d3.select("body").append("div")	
+				.attr("class", "inforTooltip arrowBottom")	
+				.style("opacity", 0);						
+				
+			//Add the Dots and Interactivity with them	
+			var cnt = 0;
+			for (i=0; i < self.mergedData.length; i++) {
+					self.svg.selectAll(".point-" + i).data(self.mergedData[i]).enter().append("circle").attr("class", "point")
+						.attr("r", 3)
+						.style("stroke", self.color(i))
+						.style("fill", self.color(i))
+						.style("cursor", "pointer")
+						.attr("class", "dot")
+						.attr("cx", function(d, i) {
+							return x(i);
+						}).attr("cy", function(d) {
+							return y(d);
+						}).on("mouseover", function (d, i) {
+							var dot = d3.select(this),
+								coord = d3.event.currentTarget.getBoundingClientRect();
+							
+							tooltip.transition()								
+									.duration(300)								
+									.style("opacity", 1);							
+							
+							tooltip.html(self.axisLabels[i] + "<br>" + d)	
+								.style("left", (coord.left) - 42 + "px")
+								.style("width", 70 + "px")	
+								.style("text-transform", "uppercase")
+								.style("top", (coord.top - 60) + "px");
+									
+							dot.attr("r", 5);
+						}).on("mouseout", function() {
+							var dot = d3.select(this);
+								isSelected = dot.classed("selected");
+							
+							tooltip.transition()
+									.duration(500)
+									.style("opacity", 0);
+								
+							if (!isSelected) {
+								d3.select(this).attr("r", 3);
+							}
+						}).on("click", function(d, i) {
+							var dot = d3.select(this);
+								isSelected = dot.classed("selected");
+							
+							if (isSelected) {
+								dot.attr("r", 3).style("stroke", "");
+							} else {
+								dot.attr("r", 4).style("stroke", d3.rgb(dot.style("fill")).darker().darker());
+							}
+							dot.classed("selected", !isSelected);	
+							
+							if (self.options.onSelected){
+								self.options.onSelected(d,i, dot);
+							}
+							return;
+						});
+						
+				cnt++;
+			}
+				
+					
+			//Add the title	
+			self.svg.append("text")
+				.attr("x", 0)             
+				.attr("y", - 40)
+				.attr("text-anchor", "start")  
+				.attr("class", "heading")
+				.text(self.options.title);	
+				
+			//Add the legend
+			var legend = self.svg.selectAll('g.legend')
+				.data(self.legendLabels)
+				.enter()
+				.append('g')
+				.attr('class', 'legend');
+			
+			legend.append('rect')
+				.attr('x', self.w - 90)
+				.attr('y', function(d, i){ return (i *  17) - 52;})
+				.attr('width', 15)
+				.attr('height', 10)
+				.style('fill', function(d,i) { 
+					return self.color(i);
+				});
+			
+			legend.append('text')
+				.attr('x', self.w - 70)
+				.attr('y', function(d, i){ return (i *  17) - 42.5;})
+				.text(function(d){ return d; });
+				
+		},
+		_parseData: function () {
+			var self = this;
+			self.mergedData = [];	
+			self.legendLabels = [];
+			self.axisLabels = [];
+				
+			self.mergedData = new Array(self.options.data[0].length-1);
+			for (i = 0; i < self.mergedData.length; i++) {
+				self.mergedData[i] = new Array(self.options.data.length-1);
+			}
+			
+			$.map(self.options.data, function(line, i) {
+				if (i === 0) {
+					self.legendLabels = line.slice(1);
+					return;
+				}
+				self.axisLabels.push(self.options.data[i].splice(0,1)[0]);
+				
+				var linePoints = line;
+				for (var j=0; j < linePoints.length; j++) {
+					self.mergedData[j][i-1] = linePoints[j];
+				}
+				
+			});
+			
+			//Find the max in all arrays
+			self.max = d3.max(self.mergedData, function(array) {
+				return d3.max(array);
+			});
+			
+			self.min = d3.min(self.mergedData, function(array) {
+				return d3.min(array);
+			});
+			
+			//find the longest
+			self.longest = self.mergedData[0].length;
+			
+			return self.mergedData;
+		},
+		update: function(data, title, subTitle) {
+			var self = this;
+			self.options.data = data;
+			
+			self.element.empty();
+			self._init();
+		}
+	});
+})(jQuery);
+/*
 * Infor Draggable List
 */
 (function ($) {
@@ -22516,7 +21340,7 @@ function AutoTooltips(options) {
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('dropdown', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -22529,8 +21353,7 @@ function AutoTooltips(options) {
     var pluginName = 'dropdown',
         defaults = {
           editable: 'false',
-          source: null,  //A function that can do an ajax call.
-          keydown: null
+          source: null  //A function that can do an ajax call.
         },
         settings = $.extend({}, defaults, options);
 
@@ -22605,10 +21428,6 @@ function AutoTooltips(options) {
         //Keep a list generated and append it when we need to.
         self.list = $('<ul id="dropdown-list" class="dropdown-list" tabindex="-1" aria-expanded="true"></ul>');
 
-        if ($(self.input).hasClass('alignRight')) {
-          self.list.addClass('alignRight');
-        }
-		
         self.element.find('option').each(function(i) {
           var option = $(this),
               listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.html() + '</li>');
@@ -22663,9 +21482,6 @@ function AutoTooltips(options) {
        if (this.isHidden) {
         this.input.hide().prev('label').hide();
        }
-       if (this.element.css('text-align') === 'right') {
-        this.input.addClass('alignRight');
-       }
       },
       bindEvents: function() {
         var self = this,
@@ -22676,19 +21492,24 @@ function AutoTooltips(options) {
           if (self.element.is(':disabled') || self.input.hasClass('is-readonly')) {
             return;
           }
-
-          if(typeof settings.keydown === 'function') {
-            settings.keydown(e);
+          if (e.which === 8) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
           }
 
-          if(e.isImmediatePropagationStopped() === false) {
-            self.handleKeyDown($(this), e);
-          }
+          self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           var charCode = e.which;
           //Needed for browsers that use keypress events to manipulate the window.
           if (e.altKey && (charCode === 38 || charCode === 40)) {
             e.stopPropagation();
+            return false;
+          }
+          // Prevent Backspace from returning to the previous page.
+          if (charCode === 8) {
+            e.stopPropagation();
+            e.preventDefault();
             return false;
           }
 
@@ -22738,27 +21559,12 @@ function AutoTooltips(options) {
           }, 1);
         });
       },
-
       activate: function () {
         this.input.focus();
         if (this.input[0].setSelectionRange&& !this.input[0].readOnly) {
           this.input[0].setSelectionRange(0, 0);  //scroll to left
         }
       },
-
-      selectBlank: function() {
-
-        var blank = this.element.find('option').filter(function() {
-          return !this.value || $.trim(this.value).length === 0;
-        });
-
-        if (blank.length > 0) {
-          blank[0].selected = true;
-          this.element.trigger('updated').trigger('change');
-        }
-
-      },
-
       open: function() {
         //Prep for opening list,make ajax call ect...
         var self = this;
@@ -22790,7 +21596,7 @@ function AutoTooltips(options) {
             'left': '-9999px'
           }).show().focus().click();
 
-          self.element.trigger('dropdownopen');
+          this.element.trigger('dropdownopen');
 
           self.element.off('change.dropdown').one('change.dropdown', function() {
             var idx = self.element.find('option:selected').index(),
@@ -22813,6 +21619,7 @@ function AutoTooltips(options) {
 
         this.scrollToOption(current);
         this.input.addClass('is-open');
+
         this.element.trigger('dropdownopen');
 
         self.list.on('click.list', 'li', function () {
@@ -22843,6 +21650,7 @@ function AutoTooltips(options) {
         });
 
         $('#validation-errors').css('left', '-999px');
+
       },
       position: function() {
         var isFixed = false, isAbs = false,
@@ -22883,8 +21691,8 @@ function AutoTooltips(options) {
         }
 
         // If the menu is off the bottom of the screen, cut up the size
-        var newHeight = $(window).height() - this.list.offset().top - 5;
-        if (this.list.offset().top + this.list.outerHeight() >  $(window).height() && newHeight > 100) {
+        if (this.list.offset().top + this.list.outerHeight() >  $(window).height()) {
+          var newHeight = $(window).height() - this.list.offset().top - 5;
           this.list.height(newHeight);
         }
 
@@ -22944,17 +21752,9 @@ function AutoTooltips(options) {
           return false;
         }
         switch (e.keyCode) {
-          case 37: //backspace
-          case 8: //del & backspace
+          case 8:    //backspace could clear
           case 46: { //del
-
-            if (!self.isOpen()) {
-              self.selectBlank();
-            }
-
-            // Prevent Backspace from returning to the previous page.
             e.stopPropagation();
-            e.preventDefault();
             return false;
           }
           case 9: {  //tab - save the current selection
@@ -22972,13 +21772,12 @@ function AutoTooltips(options) {
             if (self.isOpen()) {
               // Close the option list
               self.closeList(true);
-			  e.stopPropagation();
-			  return false;
-			}
-			break;
+            }
+
+            e.stopPropagation();
+            return false;
           }
           case 13: {  //enter
-
             if (self.isOpen()) {
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
@@ -22989,9 +21788,6 @@ function AutoTooltips(options) {
             return false;
           }
           case 38: {  //up
-            if (e.shiftKey) {
-              return;
-            }
 
             if (selectedIndex > 0) {
               var prev = $(options[selectedIndex - 1]);
@@ -23003,9 +21799,7 @@ function AutoTooltips(options) {
             return false;
           }
           case 40: {  //down
-            if (e.shiftKey) {
-              return;
-            }
+
             if (selectedIndex < options.length - 1) {
               var next = $(options[selectedIndex + 1]);
               this.selectOption(next);
@@ -23954,7 +22748,7 @@ function AutoTooltips(options) {
         thousandSepartor = Globalize.culture().numberFormat[","];
 
             if (e.charCode != null) {
-        chrCode = e.charCode;
+              chrCode = e.charCode;
             }
             else if (e.which != null) {
               chrCode = e.which;
@@ -23968,18 +22762,28 @@ function AutoTooltips(options) {
             }
 
             chrTyped = String.fromCharCode(chrCode);
+
+            var isTextSelected = function (input) {
+              if (typeof input.selectionStart == "number") {
+                return input.selectionStart == 0 && input.selectionEnd == input.value.length;
+              } else if (typeof document.selection != "undefined") {
+                input.focus();
+                return document.selection.createRange().text == input.value;
+              }
+            };
+
             //Allow one , and one .
             if (decimalSeparator == chrTyped && allowDecimal) {
-              if ($input.val().indexOf(decimalSeparator) > -1) {
-                // if the input is not hightlight
-                if ($input[0].selectionEnd - $input[0].selectionStart != $input.val().length)
-                  e.preventDefault();
-
+              if (isTextSelected($input[0])) {
                 return;
+              }
+
+              if ($input.val().indexOf(decimalSeparator) > -1) {
+                 e.preventDefault();
+                 return;
               }
               return;
             }
-
 
             if (thousandSepartor == chrTyped  && allowDecimal) {
                 //Once a decimal separator has been entered, no thousand separators are allowed.
@@ -24753,7 +23557,7 @@ $.fn.extend({
       });
 
       if (o.trackDirty) {
-        $(":input").not(".noTrackDirty").not("button").each(function() {
+        $(":input", this).not(".noTrackDirty").not("button").each(function() {
           var input = $(this);
           if (input.closest(".slick-headerrow-column").length === 0) {
             input.trackDirty();
@@ -24971,7 +23775,7 @@ $.fn.extend({
               li.addClass('inforListBoxDisabled');
             }
 
-            if ($this.attr('selected')) {
+            if ($this.prop('selected')) {
               li.addClass('isSelected');
               li.find("input.inforCheckbox").prop('checked', true);
             }
@@ -25008,7 +23812,7 @@ $.fn.extend({
           if ($this.attr('disabled')) {
             li.addClass('inforListBoxDisabled');
           }
-          if ($this.attr('selected')) {
+          if ($this.prop('selected')) {
             li.addClass('isSelected');
             li.find("input.inforCheckbox").prop('checked', true);
           }
@@ -25088,11 +23892,11 @@ $.fn.extend({
       var i = 0,
         selection = [];
 
-      select.find("option").prop("selected", false).removeAttr("selected");
+      select.find("option").removeProp("selected");
 
       control.find('.isSelected A').each(function () {
         selection[i++] = $(this).attr('rel');
-        select.find("option[value='"+ $(this).attr('rel') +"']").prop("selected", true).attr("selected", "selected");
+        select.find("option[value='"+ $(this).attr('rel') +"']").prop("selected", true);
       });
 
       // Remember most recently selected item
@@ -25239,7 +24043,7 @@ $.fn.extend({
         $li.removeClass('isSelected');
       });
 
-      $select.find("option").prop("selected", false).removeAttr("selected");
+      $select.find("option").removeProp("selected");
       this.refresh();
     },
     add: function (data, suppressRefresh) {
@@ -25250,7 +24054,7 @@ $.fn.extend({
         option.attr("id", data.optionId);
       }
       if (data.selected) {
-        option.attr("selected", "");
+        option.prop("selected", true);
       }
       if (data.optionTitle) {
         option.attr("title", data.optionTitle);
@@ -25354,10 +24158,11 @@ $.fn.extend({
       ajaxOptions: null //optional ajaxOptions to control the request
     },
     associatedGrid: null,
-    gridDivId: "lookupGridDivId", //use a uuid not needed should only be one in a page at once.
+    gridDivId: "lookupGridDivId", // use a uuid not needed should only be one in a page at once.
     input: null,
     originalDataSet: null,
-    selectedIds: [], //The selected Rows.
+    selectedIds: [], // The selected Rows.
+    isPopupOpen: false, // true if the grid popup is opened or is opening
     _init: function () {
       var self = this,
       $input = $(this.element),
@@ -25365,6 +24170,7 @@ $.fn.extend({
       gridDiv;
 
       this.input = $input;
+      this.gridDivId = 'lookupGridDiv' + this.element.attr('id');
 
       //attach a default source matcher in case one is not provided.
       if (!self.options.source) {
@@ -25377,28 +24183,23 @@ $.fn.extend({
           }
 
           if (self.options.url || self.options.ajaxOptions) {
-            gridDiv = self._createGridDiv();
-
             if (!self.options.ajaxOptions) {
               self.options.ajaxOptions = {
                 url: self.options.url,
-                type: "GET",
-                dataType: "html",
-                complete: function (jqXHR, status) {
-                  gridDiv.html(jqXHR.responseText);
-                  self._search(request, response, gridDiv);
-                }
+                type: "GET"
               };
-            } else {
-              self.options.ajaxOptions.complete = function (jqXHR, status) {
-                gridDiv.html(jqXHR.responseText);
-                self._search(request, response, gridDiv);
-              };
-              self.options.ajaxOptions.dataType = "html";
             }
+
+            self.options.ajaxOptions.complete = function (jqXHR, status) {
+              self._removeGridDiv();
+              gridDiv = self._createGridDiv();
+              gridDiv.html(jqXHR.responseText);
+              self._search(request, response, gridDiv);
+            };
+            self.options.ajaxOptions.dataType = "html";
+
             $.ajax(self.options.ajaxOptions);
           } else {
-
             //set back the dataset
             if (self.originalDataSet) {
               self.options.gridOptions.dataset = self.originalDataSet;
@@ -25413,6 +24214,7 @@ $.fn.extend({
       $input.inforTriggerField({
         click: function (event) {
           self.input.addClass("is-busy");
+          self.isPopupOpen = true;
 
           if (self.options.click) {
             self.options.click(event);
@@ -25448,6 +24250,10 @@ $.fn.extend({
           }
           return;
         }
+      }).on('keydown', function (e) {
+        if (e.keyCode  === 27) {
+          self._closeGridPopup(true);
+        }
       });
 
       //Setup an editable type drop down styling and options
@@ -25455,9 +24261,18 @@ $.fn.extend({
         $input.attr('readonly','readonly').data('selectOnly', true).parent().addClass('selectOnly');
       }
     },
+    _removeGridDiv: function () {
+      $('#' + this.gridDivId).parent('.inforLookupGridBoxShadow').remove();
+      $('#' + this.gridDivId).remove();
+    },
     _createGridDiv: function () {
+
+      if ($('#' + this.gridDivId).length > 0) {
+        return $('#' + this.gridDivId);
+      }
+
       var $gridDiv = $("<div></div>").attr("id", this.gridDivId).addClass("inforLookupGrid").appendTo("body");
-      $gridDiv.wrap("<div style='display:none' class='inforLookupGridBoxShadow'></div>");
+      $gridDiv.wrap("<div style='display:none' class='inforLookupGridBoxShadow'></div");
 
       return $gridDiv;
     },
@@ -25466,26 +24281,30 @@ $.fn.extend({
         count = 0,
         timer;
 
-      if (gridDiv) { //we used an ajax url
-        self.associatedGrid = gridDiv.find(".inforDataGrid:first").data("gridInstance");
-        if (!self.associatedGrid) {
+      if (gridDiv) { // we used an ajax url
+        var setupGrid = function(grid) {
+          grid.isLookupGrid = true;
+          self.associatedGrid = grid;
+          self.options.gridOptions = grid.getOptions();
+          self.options.gridOptions.dataset = grid.getData().getItems();
+          self._completeResponse(request, response);
+        };
+
+        var gridInstance = gridDiv.find(".inforDataGrid:first").data("gridInstance");
+        if (!gridInstance) {
           timer = setInterval(function () {
-            var elem = gridDiv.find(".inforDataGrid:first").data("gridInstance");
-            if (count == 5) {
+            gridInstance = gridDiv.find(".inforDataGrid:first").data("gridInstance");
+
+            if (count == 5)
               clearTimeout(timer);
-            }
-            if (elem) {
-              self.associatedGrid = elem;
-              self.options.gridOptions = self.associatedGrid.getOptions();
-              self.options.gridOptions.dataset = self.associatedGrid.getData().getItems();
-              self._completeResponse(request, response);
-            }
+
+            if (gridInstance)
+              setupGrid(gridInstance);
+
             count++;
           }, 400);
         } else {
-          self.options.gridOptions = self.associatedGrid.getOptions();
-          self.options.gridOptions.dataset = self.associatedGrid.getData().getItems();
-          self._completeResponse(request, response);
+          setupGrid(gridInstance);
         }
       } else {
         self._completeResponse(request, response);
@@ -25522,42 +24341,48 @@ $.fn.extend({
       return this.associatedGrid;
     },
     setCode: function (codeValue) {
-      var self = this, i, selectValue, row;
+      // This sets up Lookup field's selected values,
+      // where codeValue may contain 1 or more selections
+      var self = this;
 
-      this.selectedIds = [];
+      // Ensure that we always deal with an array
+      if (typeof (codeValue) === 'string')
+        codeValue = [codeValue];
 
-      //find the code value provided and set the associated text value in the input field and add to the selectedIds
-      if (typeof (codeValue) == "object") { //should handle multiselect but no way to close dialog yet.
-        for (i = 0; i < codeValue.length; i++) {
-          this.selectedIds.push({
-            id: codeValue[i]
+      // First we want to make sure we're not just
+      // setting values that are already selected
+      var newSelectedIds = codeValue.filter(function(value) {
+        if (self.selectedIds.length) {
+          var itemExists = self.selectedIds.filter(function(selected) {
+            return (value == selected.value || value == selected.id);
           });
+          if (itemExists.length)
+            return false;
         }
-      } else {
-        this.selectedIds.push({
-          id: codeValue
-        });
-      }
+        return true;
+      }).map(function(value) {
+        return {id: value};
+      });
 
-      selectValue = "";
-      if (!this.selectedIds) {
+      // Return if there are no selection
+      if (!newSelectedIds.length) {
         return;
       }
 
+      this.selectedIds = newSelectedIds;
+      var selectValue = "";
       $.each(this.selectedIds, function (index, value) {
         if (typeof value.id == "number" && isNaN(value.id)) {
           return;
         }
 
-        row = self.getRowById(value.id);
-
+        var row = self.getRowById(value.id);
         if (row) {
           selectValue += self.getDataItemValueForColumn(row, self.options.returnField) +
               (self.selectedIds.length - 1 != index ? "," : "");
         }
       });
 
-      //remove last ,
       this.input.val(selectValue);
     },
     dataView : null,
@@ -25572,59 +24397,62 @@ $.fn.extend({
       }
     },
     getRowById: function (id) { //return the dataset row for the given id..using idProperty
-      if (!this.options.gridOptions) {
-        return null;
+      var self = this;
+      var gridOptions = this.options.gridOptions;
+      var isAjaxData = !!(this.options.url || this.options.ajaxOptions);
+
+      if (this.dataView)
+        return this.dataView.getItemById(id);
+
+      // Get DataView from grid if it
+      // was built via AJAX request
+      if (isAjaxData && this.associatedGrid) {
+        this.dataView = this.associatedGrid.getData();
+        return this.dataView.getItemById(id);
       }
 
-      var dataset = this.options.gridOptions.dataset,
-        self = this,
-        response;
-
-      if (!this.dataView) {
-        this.dataView = new Slick.Data.DataView({idProperty: this.options.gridOptions.idProperty});
-        this.dataView.setItems(this.options.gridOptions.dataset);
-
-        //Execute Source..
-        if (this.options.source) {
-          response = function (data) {
-            dataset = data;
-            //thats.options.gridOptions.dataset = data;
+      // Otherwise, data can be pulled from
+      // either gridOptions or from source
+      if (!isAjaxData && gridOptions) {
+        this.dataView = new Slick.Data.DataView({idProperty: gridOptions.idProperty});
+        var dataset = gridOptions.dataset;
+        if (dataset && dataset.length) {
+          this.dataView.setItems(dataset);
+        } else if (this.options.source) {
+          // Fallback to source when there's
+          // nothing from gridOptions.dataset
+          this.options.source("", function(data) {
             self.dataView.setItems(data);
-          };
-          this.options.source("", response);
+          });
         }
+        return this.dataView.getItemById(id);
       }
-      return this.dataView.getItemById(id);
     },
     destroy: function() {
-      if (this.associatedGrid) {
-        this.associatedGrid.destroy(true); //destroyed inside the grid editor
-        this.associatedGrid = null;
+      if (this.isPopupOpen) {
+        this._closeGridPopup(true);
       }
     },
     _closeGridPopup: function (isCancel) {
       //remove grid and page elements and animate
       var $gridDiv = $("#" + this.gridDivId),
-        self = this,
         cell = this.input.closest(".slick-cell");
+      this.isPopupOpen = false;
+
+      var $gridWrapper = $gridDiv.parent('.inforLookupGridBoxShadow');
+      $gridWrapper.css("opacity", 0); //improves appearance on ie 8 during fade out..
+      $gridDiv.hide((isCancel ? "fade" : "fadeOut"), function () {
+        $gridWrapper.remove();
+      });
 
       if (this.associatedGrid) {
         this.associatedGrid.destroy();
-        $('.popupmenu-wrapper:empty').remove();
+        this.associatedGrid = null;
       }
+      $('.popupmenu-wrapper:empty').remove();
 
-      $gridDiv.parent().css("opacity", 0); //improves appearance on ie 8 during fade out..
-      $gridDiv.hide((isCancel ? "fade" : "fadeOut"), function () {
-        $(".inforLookupGridBoxShadow").remove();
-      });
-
-      $("#inforLookupOverlay").remove();
+      this.overlay.remove();
       this.input.removeClass("is-busy");
-
-      //destroy grid
-      if (!cell || (cell && !cell.hasClass("hasComboEditor") && cell.length > 0)) {
-        this.destroy();
-      }
 
       //set back the dataset
       if (this.originalDataSet) {
@@ -25637,11 +24465,13 @@ $.fn.extend({
     },
     _openGridPopup: function (dataset, columns, totalRows) {
       var self = this,
-        $gridDiv, isRTL, minHeight, ds, $overlay, selectedRows, dataRows, i, j, header, closeButton, dataView, filterExpr, columnFilterObject;
+        $gridDiv, isRTL, minHeight, ds, selectedRows, dataRows, i, j, header, closeButton, dataView, filterExpr, columnFilterObject;
+      var modal = this.element.closest('.modal, .inforLookupGridBoxShadow');
 
       if (!this.element.is(":focus")) {
         return;
       }
+
       //switch out the dataset with the passed in filtering one.
       if (dataset) {
         self.originalDataSet = self.options.gridOptions.dataset;
@@ -25658,8 +24488,10 @@ $.fn.extend({
 
       //create a grid object..
       $gridDiv = $("#" + this.gridDivId);
-      if ($gridDiv.length === 0) {
-        $gridDiv = self._createGridDiv();
+      $gridDiv = self._createGridDiv();
+
+      if (modal.length > 0) {
+        $gridDiv.closest('.inforLookupGridBoxShadow').css('z-index', modal.zIndex() + 1);
       }
 
       //set height and width
@@ -25717,6 +24549,7 @@ $.fn.extend({
         this.associatedGrid.setSortColumn(self.options.sortColumnId, self.options.sortAsc);
       }
 
+
       //Set total count for paging
       if (totalRows && ds) {
         this.associatedGrid.mergeData(ds, 0, parseInt(totalRows, 10));
@@ -25737,29 +24570,31 @@ $.fn.extend({
 
       //add modal overlay..
       //create a grid object..
-      $overlay = $("#inforLookupOverlay");
-      if ($overlay.length === 0) {
-        $overlay = $('<div id="inforLookupOverlay"></div>').addClass('inforLookupOverlay')
-          .appendTo(document.body)
-          .css({
-            width: $(window).width(),
-            height: $(window).height()
-          }).click(function () {
-            if (self.options.gridOptions.multiSelect) {
-              self._select();
-            } else {
-              self._closeGridPopup(true);
-            }
-          });
+      var overlayId = "inforLookupOverlay" + this.gridDivId;
+      this.overlay = $('#' + overlayId);
+
+      if (this.overlay.length === 0)
+      {
+        var zIndex = modal.length > 0 ? modal.zIndex() : 900;
+	      this.overlay = $('<div id="' + overlayId + '"></div>').addClass('inforLookupOverlay')
+	        .appendTo(document.body)
+	        .css({
+	          width: $(window).width(),
+	          height: $(window).height(),
+	          zIndex: zIndex
+	        }).click(function () {
+	          if (self.options.gridOptions.multiSelect) {
+	            self._select();
+	          } else {
+	            self._closeGridPopup(true);
+	          }
+	        });
+
+	      this.overlay.css({
+	        width: $(window).width(),
+	        height: $(window).height()
+	      });
       }
-
-      $overlay.css({
-        width: $(window).width(),
-        height: $(window).height()
-      });
-
-      this.input.removeClass("is-busy");
-
       //select the selected rows based on the current value(s)..This would fail if the id was not selected.
       if (self.selectedIds.length > 0) {
         selectedRows = [];
@@ -25768,15 +24603,6 @@ $.fn.extend({
           selectedRows.push(this.associatedGrid.getData().getIdxById(self.selectedIds[i].id));
         }
         this.associatedGrid.setSelectedRows([]);
-
-        if (this.options.gridOptions.persistSelections) {
-          var arrayOfIds = [];
-          for (i = 0; i < self.selectedIds.length; i++) {
-            arrayOfIds.push(self.selectedIds[i].id);
-          }
-          this.associatedGrid.setPersistedRowIds(arrayOfIds);
-        }
-
         this.associatedGrid.setSelectedRows(selectedRows);
         //scroll to last selected
         this.associatedGrid.scrollRowIntoView(selectedRows[selectedRows.length-1]);
@@ -25784,7 +24610,7 @@ $.fn.extend({
 
       //selected rows events
       if (!self.options.gridOptions.multiSelect) {
-        this.associatedGrid.onClick.subscribe(function () {
+        this.associatedGrid.onClick.subscribe(function (e, a) {
           self._select();
         });
       }
@@ -25794,6 +24620,22 @@ $.fn.extend({
         dataView = this.associatedGrid.getData();
         dataView.onPageRequested.subscribe(function (e, args) {
           e.datagrid = self.associatedGrid;
+          //pass in the term as a filter arg
+          if (!args.filters) {
+            if (self.input.val() === "") {
+              args.filters = undefined;
+            } else {
+              columnFilterObject = {};
+              filterExpr = {
+                value: self.input.val(),
+                operator: "contains",
+                filterType: TextFilter()    //ignore jslint - comes from the datagrid
+              };
+
+              columnFilterObject[self.options.gridOptions.idProperty] = filterExpr;
+              args.filters = columnFilterObject;
+            }
+          }
           self.options.onPageRequested(e, args);
         });
       }
@@ -25807,7 +24649,9 @@ $.fn.extend({
         self._handleResize();
       });
 
-      self.setPosition();
+      this.input.data("isChanged", false);
+      this.input.removeClass("is-busy");
+      this.setPosition();
       this.input.closest(".inforTriggerField").addClass("focus");
     },
     resizeTimer: null,
@@ -25816,6 +24660,9 @@ $.fn.extend({
     root: null,
     getSelectedValues: function () {
       return this.selectedIds;
+    },
+    getIsPopupOpen: function () {
+      return this.isPopupOpen;
     },
     setPosition: function () {
       var self = this,
@@ -25828,7 +24675,7 @@ $.fn.extend({
         of: self.input
       });
 
-      $("#inforLookupOverlay").height($(window).height()).width($(window).width());
+      self.overlay.height($(window).height()).width($(window).width());
 
       self.windowHeight = $(window).height();
       self.windowWidth = $(window).width();
@@ -25858,7 +24705,6 @@ $.fn.extend({
     _select: function () {
       var self = this,
         grid = self.associatedGrid,
-        dataItems = [],
         item, fieldValue, selectedRows, selectedRowData, itemValue, i;
 
       if (!grid) {
@@ -25866,34 +24712,27 @@ $.fn.extend({
       }
 
       setTimeout(function () {
-        function getReturnDataFromDataItems(items) {
-          for (var i = 0; i < items.length; i++) {
-            item = items[i];
-            itemValue = self.getDataItemValueForColumn(item, self.options.returnField);
-            self.selectedIds.push({
-              id: item[self.options.gridOptions.idProperty],
-              value: itemValue
-            });
-            fieldValue += itemValue + (i + 1 == selectedRows.length ? "" : ",");
-            selectedRowData.push(item);
-          }
-        }
-
         self.selectedIds = [];
         fieldValue = "";
         selectedRows = grid.getSelectedRows();
         selectedRowData = [];
 
-        if (self.options.gridOptions.persistSelections) {
-          dataItems = grid.getPersistedDataItems();
-        }
-        else {
-          for (i = 0; i < selectedRows.length; i++) {
-            dataItems.push(grid.getDataItem(selectedRows[i]));
-          }
+        for (i = 0; i < selectedRows.length; i++) {
+          item = grid.getDataItem(selectedRows[i]);
+          if (item.isTreeMoreLink)
+            return;
+          itemValue = self.getDataItemValueForColumn(item, self.options.returnField);
+          self.selectedIds.push({
+            id: item[self.options.gridOptions.idProperty],
+            value: itemValue
+          });
+          fieldValue += itemValue + (i + 1 == selectedRows.length ? "" : ",");
+          selectedRowData.push(item);
         }
 
-        getReturnDataFromDataItems(dataItems);
+        //LMCLIENT-20637: null value guard for lookup fields
+        if (fieldValue == "null")
+          return;
 
         self.input.val(fieldValue);
         self._closeGridPopup(false);
@@ -25930,7 +24769,7 @@ $.fn.extend({
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('message', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -25963,7 +24802,6 @@ $.fn.extend({
     Plugin.prototype = {
       init: function() {
         var content,
-            self = this,
             isWrapped = false;
 
         //Create the Markup
@@ -25980,9 +24818,9 @@ $.fn.extend({
         }
         //Add Second Message
         if (settings.detailedMessage !== '') {
-          this.content.append('<p class="detailed-message">'+ settings.detailedMessage +'</p>');
+          this.content.append('<p class="detailed-message">'+ settings.detailedMessage +'</p');
         }
-        this.closeBtn = $('<button type="button" class="inforFormButton default btn-close">'+Globalize.localize('Close')+'</button>').appendTo(this.content);
+        this.closeBtn = $('<button type="button" class="inforFormButton default btn-close">' +  Globalize.localize('Close')  + '</button>').appendTo(this.content);
 
         this.message.append(this.messageContent).appendTo('body');
         this.message.modal({trigger: 'immediate', isMessage: true, buttons: settings.buttons, resizable: settings.resizable, close: settings.close, minimizable: settings.minimizable, resize: settings.resize});
@@ -25995,14 +24833,6 @@ $.fn.extend({
         if (settings.dialogType !== 'General' || settings.remove) {
           this.message.on('close.message', function () {
             $(this).remove();
-          });
-
-          this.message.on('beforeOpen.message', function () {
-            self.element.trigger('beforeOpen');
-          });
-
-          this.message.on('open.message', function () {
-            self.element.trigger('open');
           });
         }
 
@@ -26044,7 +24874,7 @@ $.fn.extend({
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('modal', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -26102,7 +24932,6 @@ $.fn.extend({
         if (settings.draggable) {
           this.element.draggable({handle: '.modal-title', containment: 'document', start: function() {
             self.revertTransition();
-            $('#dropdown-list').hide();
           }});
         }
 
@@ -26256,9 +25085,7 @@ $.fn.extend({
         // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
         // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
         // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-        var x = this.overlay.width();
         $('body').addClass('modal-engaged');
-        x = null;
 
         //Handle Default button.
         $(this.element).on('keypress.modal keydown.modal', function (e) {
@@ -26389,123 +25216,233 @@ $.fn.extend({
 
 }));
 /*
+* Infor Pie Chart - SVG D3
+*/
+(function ($) {
+$.widget("ui.inforPieChart", {
+		options: {
+			data:  [{label: "20%", value: 20, tooltip: "20 Percent"},
+					{label: "50%", value: 50, tooltip: "50 Percent"},
+					{label: "10%", value: 10, tooltip: "10 Percent"},
+					{label: "15%", value: 15, tooltip: "15 Percent"}],
+			title: "Chart Title"
+		},
+		_init: function () {
+			var o = this.options,
+				self = this,
+				zone = (self.element.attr("id") ? "#" + self.element.attr("id"): "body"),
+				width = 185,
+				height = 240,
+				radius = Math.min(width, height) / 2,
+				color = d3.scale.ordinal().range(["#13a3f7", "#2db329", "#ffaa00", "#a352cc", "#e63262", "#d5000e", "#737373",
+						"#00c2b4", "#61c5ff", "#9ed927", "#ffd500", "#ff574d", "#ff80a2", "#c680ff",
+						"#b3b3b3", "#6dd9d1", "#005ce6", "#00733a", "#ff6400", "#b3000c", "#bf2951", "#7533a6", "#595959", "#00898c"]);
+						
+			self.donut = d3.layout.pie().sort(null).value(function(d) { return d.value; });
+			self.arc = d3.svg.arc().innerRadius(radius - 10).outerRadius(radius - 45);
+
+			var data = o.data;
+			self.svg = d3.select(zone).append("svg:svg")
+				.attr("width", width)
+				.attr("height", height)
+				.style("font-family", "Arial,helvetica,sans-serif")
+				.append("g")
+					.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+			self.title = self.svg.append("text")
+				.attr("transform", function() { return "translate(0,-100)";})
+				.style({"text-anchor":"middle", "fill":"#888A90" , "font-size": "16px", "font-weight": "400"})
+				.text(o.title);
+
+			var tooltip = $("#svgtooltip");
+			if (tooltip.length == 0) {
+				tooltip = $("<div id='svgtooltip' class='inforTooltip arrowBottomLeft'>").hide();
+				$("body").append(tooltip);
+			}
+			
+			var g = self.svg.selectAll("path")
+				.data(self.donut(data))
+				.enter().append("g")
+				.attr("class", "arc")
+				.on("mouseover", function(d) {
+					if (d.data.tooltip) {
+						tooltip.text(d.data.tooltip).show();
+					}
+				})
+				.on("mousemove", function (d, i, e) {
+					var pos = d3.event.currentTarget.getBoundingClientRect();
+					tooltip.css("left", (pos.left)+"px").css("top",(pos.top - tooltip.height() - 30)+"px");
+				})
+				.on("mouseout", function() {
+					tooltip.hide();
+				});
+
+				//.style("cursor", "pointer")
+				//.on("click", function() {
+				//	//Future selected styling... d3.select(this).attr("transform", "translate(1,1)");
+				//});
+
+			self.arcs = g.append("svg:path")
+					.attr("fill", function(d, i) { return color(i); })
+					.attr("d", self.arc)
+					.each(function(d) { this._current = d;});
+			
+			self.labels = g.append("text")
+					.attr("transform", function(d) { return "translate(" + self.arc.centroid(d) + ")"; })
+					.attr("dy", ".35em")
+					.attr("class", "label")
+					.style({"text-anchor":"middle", "fill":"white", "font-size": "14px", "font-weight": "400", "pointer-events": "none"})
+					.text(function(d) { return d.data.label; });
+					
+			g.append("title").text(function(d) {return d.data.tooltip;});
+		},
+		update: function(data, title) {
+			var self = this;
+
+			self.arcs = self.arcs.data(self.donut(data));
+			self.arcs.transition().duration(750).attrTween("d", arcTween);
+
+			self.labels.data(self.donut(data));
+			self.labels.transition().duration(600)
+				.attr("transform", function(d) {return "translate(" + self.arc.centroid(d) + ")"; })
+				.text(function(d) { return d.data.label; })
+				.style("fill-opacity", function(d) {return d.value === 0 ? 1e-6 : 1;});
+
+			self.title.text(title);
+
+			// Store the currently-displayed angles in this._current.
+			// Then, interpolate from this._current to the new angles.
+			function arcTween(a) {
+				var i = d3.interpolate(this._current, a);
+					this._current = i(0);
+					return function(t) {
+					return self.arc(i(t));
+				};
+			}
+		}
+	});
+})(jQuery);
+/*
 * Infor Radio Button
 */
 (function ($) {
-  $.widget( "ui.inforRadioButton", {
-    _init: function() {
-      this.create();
-    },
-    create: function() {
-      //Wrap the buttons in a label
-      var radio = this.element,
-      label = null,
-      startLabel = radio.next("label"),
-      groupName = radio.attr("name");
+	$.widget( "ui.inforRadioButton", {
+		_init: function() {
+			this.create();
+		},
+		create: function() {
+			//Wrap the buttons in a label
+			var radio = this.element,
+			label = null,
+			startLabel = radio.next("label"),
+			groupName = radio.attr("name");
 
-      if (radio.parent().hasClass("inforRadioButtonSet")) {
-        radio.parent().attr("role","radiogroup");
-      }
-      radio.parent().find("br, span, label").attr("role", "presentation");
-      radio.addClass("inforRadioButton");
+			if (radio.parent().hasClass("inforRadioButtonSet")) {
+				radio.parent().attr("role","radiogroup");
+			}
+			radio.parent().find("br, span, label").attr("role", "presentation");
+			radio.addClass("inforRadioButton");
 
-      if (!radio.parent().hasClass("inforRadioButtonLabel")) {
-        label = $('<label class="inforRadioButtonLabel" for="'+radio.attr("id")+'"></label>');
-        radio.empty();
+			if (!radio.parent().hasClass("inforRadioButtonLabel")) {
+				label = $('<label class="inforRadioButtonLabel" for="'+radio.attr("id")+'"></label>');
+				radio.empty();
 
-        if (radio.is(":checked")) {
-          label.addClass("checked");
-          radio.attr("aria-checked","true").attr("role", "radio");
-        }
+				if (radio.is(":checked")) {
+					label.addClass("checked");
+					radio.attr("aria-checked","true").attr("role", "radio");
+				}
 
-        if (radio.is(":disabled")) {
-          label.addClass("disabled");
-          radio.attr("aria-disabled","true");
-        }
+				if (radio.is(":disabled")) {
+					label.addClass("disabled");
+					radio.attr("aria-disabled","true");
+				}
 
-        //set initial states and values
-        radio.wrap(label);
+				//set initial states and values
+				radio.wrap(label);
 
-        radio.on("change", function () {
-          var $this=$(this),
-            others = $('input[name="'+groupName+'"]');
+				radio.on("change", function () {
+					var $this=$(this),
+						others = $('input[name="'+groupName+'"]');
 
           //uncheck everything else in that group
-          others.parent().removeClass("checked");
-          others.attr("aria-checked", "false");
-          $this.parent().addClass("checked").removeClass("hover");
-          $this.attr("aria-checked","true");
-        });
+					others.parent().removeClass("checked");
+					others.attr("aria-checked", "false");
+					$this.parent().addClass("checked").removeClass("hover");
+					$this.attr("aria-checked","true");
+				});
 
-        radio.focusin(function () {
-          var $this=$(this);
-          //unfocus everything else in that group
-          $('input[name="'+groupName+'"]').parent().removeClass("focus");
-          $this.parent().addClass("focus");
-        });
+				radio.focusin(function () {
+					var $this=$(this);
+					//unfocus everything else in that group
+					$('input[name="'+groupName+'"]').parent().removeClass("focus");
+					$this.parent().addClass("focus");
+				});
 
-        radio.focusout(function () {
-          $(this).parent().removeClass("focus");
-        });
+				radio.focusout(function () {
+					$(this).parent().removeClass("focus");
+				});
 
-        //add hover states
-        radio.hover(function() {
-          $(this).parent().addClass("hover");
-        }, function() {
-          $(this).parent().removeClass("hover");
-        });
+				//add hover states
+				radio.hover(function() {
+					$(this).parent().addClass("hover");
+				}, function() {
+					$(this).parent().removeClass("hover");
+				});
 
-        label = $("<span class='labelText'>"+startLabel.html()+"</span>");
-        //update label
-        radio.after(label);
+				label = $("<span class='labelText'>"+startLabel.html()+"</span>");
+				//update label
+				radio.after(label);
 
-        label.hover(function() {
-          if (!$(this).parent().hasClass("disabled")) {
-            $(this).parent().addClass("hover");
-          }
-        }, function() {
-          if (!$(this).parent().hasClass("disabled")) {
-            $(this).parent().removeClass("hover");
-          }
-        });
+				label.hover(function() {
+					if (!$(this).parent().hasClass("disabled")) {
+						$(this).parent().addClass("hover");
+					}
+				}, function() {
+					if (!$(this).parent().hasClass("disabled")) {
+						$(this).parent().removeClass("hover");
+					}
+				});
 
-        startLabel.remove();
-      }
-    }
-  });
+				startLabel.remove();
+			}
+		}
+	});
 })(jQuery);
 /*
 * Infor Rich Text Editor
 */
 (function ($) {
-	$.fn.inforRichTextEditor = function(options) {
+    $.fn.inforRichTextEditor = function(options) {
 
     // Settings and Options
     var pluginName = 'inforRichTextEditor',
         defaults = {
           buttons: [
-			{icon: 'h2', execCommand: 'formatblock', args: 'h2', text: 'H2', isToggle: false},
-			{icon: 'h3', execCommand: 'formatblock', args: 'h3', text: 'H3', isToggle: false},
-			{icon: 'normal', execCommand: 'formatblock', args: 'p', text: 'normal', isToggle: false},
-			{icon: 'spacer'},
-			//{icon: 'formatblock', execCommand: 'fontname', title: 'Format'},
-			{icon: 'forecolor', execCommand: 'forecolor', title: 'Font Color'},
-			{icon: 'spacer'},
-			{icon: 'bold', execCommand: 'bold', title: 'Make Text Bold', isToggle: true},
-			{icon: 'italic', execCommand: 'italic', title: 'Make Text Italicized', isToggle: true },
-			{icon: 'underline', execCommand: 'underline', title: 'Make Text Underlined', isToggle: true },
-			{icon: 'spacer'},
-			{icon: 'justifyLeft', execCommand: 'justifyLeft', title: 'Align Content Left'},
-			{icon: 'justifyCenter', execCommand: 'justifyCenter', title: 'Align Content Center'},
-			{icon: 'justifyRight', execCommand: 'justifyRight', title: 'Align Content Right'},
-			{icon: 'spacer'},
+            {icon: 'h2', execCommand: 'formatblock', args: 'h2', text: 'H2', isToggle: false},
+            {icon: 'h3', execCommand: 'formatblock', args: 'h3', text: 'H3', isToggle: false},
+            {icon: 'normal', execCommand: 'formatblock', args: 'p', text: 'normal', isToggle: false},
+            {icon: 'spacer'},
+            //{icon: 'formatblock', execCommand: 'fontname', title: 'Format'},
+            {icon: 'forecolor', execCommand: 'forecolor', title: 'Font Color'},
+            {icon: 'spacer'},
+            {icon: 'bold', execCommand: 'bold', title: 'Make Text Bold', isToggle: true},
+            {icon: 'italic', execCommand: 'italic', title: 'Make Text Italicized', isToggle: true },
+            {icon: 'underline', execCommand: 'underline', title: 'Make Text Underlined', isToggle: true },
+            {icon: 'spacer'},
+            {icon: 'justifyLeft', execCommand: 'justifyLeft', title: 'Align Content Left'},
+            {icon: 'justifyCenter', execCommand: 'justifyCenter', title: 'Align Content Center'},
+            {icon: 'justifyRight', execCommand: 'justifyRight', title: 'Align Content Right'},
+            {icon: 'spacer'},
             //{icon: 'blockQuote', execCommand: 'formatblock', title: 'Block Quote', args: 'blockquote', text: '“'},
             {icon: 'numberList', execCommand: 'insertorderedlist', title: 'Create a Numbered List'},
             {icon: 'bulletList', execCommand: 'insertunorderedlist', title: 'Create a Bulleted List'},
+            /*{icon: 'spacer'},
+            {icon: 'links', execCommand: 'links', title: 'Insert a Link', click: function(e, self) {self.insertLink($(e.currentTarget));}},
             {icon: 'spacer'},
-            {icon: 'links', execCommand: 'createLink', title: 'Create a Link', click: function(e, self) {self.insertLink($(e.currentTarget));}},
-			{icon: 'spacer'},
-            {icon: 'showHtml', execCommand: 'showHtml', title: 'Show Html', isToggle: true}
+            {icon: 'image', execCommand: 'image', title: 'Insert an Image', click: function() {}},
+            {icon: 'video', execCommand: 'video', title: 'Insert an Video', click: function() {}},
+            {icon: 'spacer'},
+            {icon: 'showHtml', execCommand: 'showHtml', title: 'Show Html', isToggle: true}*/
             ]
         },
         settings = $.extend({}, defaults, options);
@@ -26519,168 +25456,115 @@ $.fn.extend({
     // Actual Plugin Code
     Plugin.prototype = {
       init: function(){
-				var self = this,
-					editor = $(this.element);
+                var self = this,
+                    editor = $(this.element);
 
-				//Make it Content Editable
-				editor.addClass('inforRichTextEditor').attr('contenteditable', true);
+                //Make it Content Editable
+                editor.addClass('inforRichTextEditor').attr('contenteditable', true);
 
-				//Add the Toolbar Buttons
-				self.addButtons();
+                //Add the Toolbar Buttons
+                self.addButtons();
 
-				//Handle Readonly
-				if (editor.attr('readonly')) {	//Was initialized in hidden state
-					editor.prev('.inforToolbar').hide();
-					editor.attr('contenteditable', 'false');
-				}
+                //Handle Readonly
+                if (editor.attr('readonly')) {  //Was initialized in hidden state
+                    editor.prev('.inforToolbar').hide();
+                    editor.attr('contenteditable', 'false');
+                }
 
-				//Setup keys
-				self.handleKeys();
+                //Setup keys
+                self.handleKeys();
       },
       _saveSelection: function () {
-				var sel;
-				if (window.getSelection) {
-					sel = window.getSelection();
-					if (sel.getRangeAt && sel.rangeCount) {
-						var ranges = [];
+                var sel;
+                if (window.getSelection) {
+                    sel = window.getSelection();
+                    if (sel.getRangeAt && sel.rangeCount) {
+                        var ranges = [];
             for (var i = 0, len = sel.rangeCount; i < len; ++i) {
                 ranges.push(sel.getRangeAt(i));
             }
-			return ranges;
-          }
-        } else if (document.selection && document.selection.createRange) {
-            return document.selection.createRange();
-				}
-				return null;
-		},
-		_restoreSelection: function (range) {
-			var sel;
-			if (range) {
-				if (window.getSelection) {
-					sel = window.getSelection();
-					sel.removeAllRanges();
-					for (var i = 0, len = range.length; i < len; ++i) {
+                    }
+                } else if (document.selection && document.selection.createRange) {
+                        return document.selection.createRange();
+                }
+                return null;
+        },
+        _restoreSelection: function (range) {
+            var sel;
+            if (range) {
+                if (window.getSelection) {
+                    sel = window.getSelection();
+                    sel.removeAllRanges();
+                    for (var i = 0, len = range.length; i < len; ++i) {
               sel.addRange(range[i]);
           }
-				} else if (document.selection && range.select) {
-					range.select();
-        }
-      }
-    },
-	insertLink: function (url) {
-		
-		//First add the html to the page..
-		$("body").append('<div id="_newHTMLLink" style="display:none"><label class="inforLabel" for="_newHTMLLinkURL">URL</label><input style="width:300px" id="_newHTMLLinkURL" class="inforTextbox"/><br/><br/></div>');
-		var self = this;
-		self.selection = self._saveSelection();
-		
-		
-		
-		//Invoke the dialog on it
-		$('#_newHTMLLink').inforMessageDialog({
-			title: "Insert Url",
-			dialogType: "General",
-			width: 400,
-			height: "auto",
-			modal: true,
-			beforeClose: function() {
-				//do something and return false to cancel closing
-			},
-			close: function(event, ui) {
-				$('#_newHTMLLink').remove();
-				self._restoreSelection(self.selection);
-			},
-			buttons: [{
-				id: 'InsertButton',
-				text: "Insert",
-				click: function() {
-					self._restoreSelection(self.selection);
-					$("#InsertButton").addClass("active");
-					var linkURL = $(this).find("#_newHTMLLinkURL").val();
-					var text = window.document.getSelection();
-					if (!text)
-					{
-						text = linkURL;
-					}
-					window.document.execCommand('insertHTML', false, '<a href="' + linkURL + '" target="_blank">' + text + '</a>');
-					$(this).inforDialog("close");
-					},
-					isDefault: true
-			 },{
-				text: Globalize.localize("Cancel"),
-				click: function() {
-					$(this).inforDialog("close"); }
-			 }]
-		});
-	
-		$('#_newHTMLLink').inforForm();
-		$(document).find("#_newHTMLLinkURL").val('');
-      },
+                } else if (document.selection && range.select) {
+                    range.select();
+                }
+            }
+        },
     addButtons: function () {
-      var self = this,
-            html = '',
-						editor = $(this.element),
-						tb, container;
+            var self = this,
+                        html = '',
+                        editor = $(this.element),
+                        tb, container;
 
-					container = $('<div class="inforRichTextContainer"></div>');
-					if (editor.attr('id')) {
-						container.attr('id', editor.attr('id') + 'Container');
-					}
+                    container = $('<div class="inforRichTextContainer"></div>');
+                    if (editor.attr('id')) {
+                        container.attr('id', editor.attr('id') + 'Container');
+                    }
 
-					if (editor.css('position') === 'absolute') {
-						container.css({position: 'absolute', left: editor.css('left'), top: editor.css('top'), bottom: editor.css('bottom')});
-						editor.css({position: '', left: '', top: '', bottom: ''});
-					}
+                    if (editor.css('position') === 'absolute') {
+                        container.css({position: 'absolute', left: editor.css('left'), top: editor.css('top'), bottom: editor.css('bottom')});
+                        editor.css({position: '', left: '', top: '', bottom: ''});
+                    }
 
-					editor.wrap(container);
-					tb = $('<div class="inforToolbar inforRTToolbar" ></div>').insertBefore(editor);
-          editor.on('blur', function () {
-            self.selection = self._saveSelection();
-            setTimeout(function () {
-				if (document.activeElement.tagName != "INPUT")
-				{
-					self._restoreSelection(self.selection);
-				}
-            }, 1);
-          });
+                    editor.wrap(container);
+                    tb = $('<div class="inforToolbar inforRTToolbar" ></div>').insertBefore(editor);
+                    editor.on('blur', function () {
+                        self.selection = self._saveSelection();
+                        setTimeout(function () {
+                            self._restoreSelection(self.selection);
+                        }, 1);
+                    });
 
-					//Create buttons
-					self.buttons = [];
-					$.each(settings.buttons, function (name, props) {
-						if (props.icon ==='spacer') {
-							$('<span class="inforToolbarSpacer"></span>').appendTo(tb);
-							return;
-						}
-						/*
-						if (props.icon === 'formatblock') {
-							html = '<select class="inforDropDownList" style="width: 70px"> <option value="<h2>">Heading 2</option> <option value="<h3>">Heading 3</option> <option value="<p>">Normal</option> </select>';
-							//add color picker
-							self.fontsize = $(html).appendTo(tb);
-							self.fontsize.inforDropDownList({editable: false, noFocus: true, autoFocus: false, typeAheadSearch: false})
-							.on('change', function() {
-								var format = this[this.selectedIndex].value;
-								setTimeout(function () {
-									self._restoreSelection(self.selection);
-									document.execCommand('formatblock', false, format);
-								}, 1);
-							});
-							return;
-						}*/
+                    //Create buttons
+                    self.buttons = [];
+                    $.each(settings.buttons, function (name, props) {
+                        if (props.icon ==='spacer') {
+                            $('<span class="inforToolbarSpacer"></span>').appendTo(tb);
+                            return;
+                        }
+                        /*
+                        if (props.icon === 'formatblock') {
+                            html = '<select class="inforDropDownList" style="width: 70px"> <option value="<h2>">Heading 2</option> <option value="<h3>">Heading 3</option> <option value="<p>">Normal</option> </select>';
+                            //add color picker
+                            self.fontsize = $(html).appendTo(tb);
+                            self.fontsize.inforDropDownList({editable: false, noFocus: true, autoFocus: false, typeAheadSearch: false})
+                            .on('change', function() {
+                                var format = this[this.selectedIndex].value;
+                                setTimeout(function () {
+                                    self._restoreSelection(self.selection);
+                                    document.execCommand('formatblock', false, format);
+                                }, 1);
+                            });
+                            return;
+                        }*/
 
-						if (props.icon === 'forecolor') {
-							//add color picker
-							self.colorpicker = $('<input type="text" class="inforColorPicker" >').appendTo(tb);
-							self.colorpicker.inforColorPicker().change(function() {
-								$(self.element).focus();
-								document.execCommand('forecolor', false, $(this).val());
-							});
-							var picker = self.colorpicker.closest('.inforTriggerField');
-							picker.find('input').hide();
-							picker.find('.inforColorButton')
-								.attr('style', 'border-right: none !important; margin-left: -1px !important')
-								.attr('title', Globalize.localize('SetTextColor')).inforToolTip();
-							return;
-						}
+                        if (props.icon === 'forecolor') {
+                            //add color picker
+                            self.colorpicker = $('<input type="text" class="inforColorPicker" >').appendTo(tb);
+                            self.colorpicker.inforColorPicker().change(function() {
+                                $(self.element).focus();
+                                document.execCommand('forecolor', false, $(this).val());
+                            });
+                            var picker = self.colorpicker.closest('.inforTriggerField');
+                            picker.find('input').hide();
+                            picker.find('.inforColorButton')
+                                .attr('style', 'border-right: none !important; margin-left: -1px !important')
+                                .attr('title', Globalize.localize('SetTextColor')).inforToolTip();
+                            return;
+                        }
 
 						var button = $('<button type="button" class="inforIconButton"><span></span></button>').appendTo(tb)
 						.click(function (e) {
@@ -26703,82 +25587,80 @@ $.fn.extend({
               }
 
               document.execCommand(props.execCommand, false, el);
-							$(self.element).focus();
+                            $(self.element).focus();
 
-							if (props.isToggle) {
-								$(this).toggleClass('checked');
-							}
-							
+                            if (props.isToggle) {
+                                $(this).toggleClass('checked');
+                            }
+
 							window.setTimeout(function()
 							{
 								$(self.element).focus();
 							}, 10);
-						})
-						.addClass(props.icon)
-						.addClass(props.isToggle ? 'inforToggleButton' : '')
-						.attr('title', props.title).inforToolTip();
+                        })
+                        .addClass(props.icon)
+                        .addClass(props.isToggle ? 'inforToggleButton' : '')
+                        .attr('title', props.title).inforToolTip();
 
-						if (props.text) {
-							button.html(props.text);
-						}
+                        if (props.text) {
+                            button.html(props.text);
+                        }
 
-						if (props.icon === 'showHtml') {
-							var id = editor.attr('id') + 'HtmlView';
-							self.sourceView = $('<label for="' + id + '">Html View</label><textarea class="inforRichTextHtmlView" id="'+ id +'">').appendTo(editor.parent()).hide();
+                        if (props.icon === 'showHtml') {
+                            var id = editor.attr('id') + 'HtmlView';
+                            self.sourceView = $('<label for="' + id + '">Html View</label><textarea class="inforRichTextHtmlView" id="'+ id +'">').appendTo(editor.parent()).hide();
 
-              button.html('HTML').on('click', function() {
-                var btn = $(this);
-				var isSourceView = self.sourceView.is(':visible');
-                if (isSourceView) {
-                  self.sourceView.hide();
-				  editor.html($("#" + id).val().trim());
-                  editor.show();
-                  btn.removeClass('checked');
-                } else {
-                  self.sourceView.show();
-				  $("#" + id).val(editor.html().trim());
-                  editor.hide();
-                  btn.addClass('checked');
-                }
+                            button.html('HTML').on('click', function() {
+                                var btn = $(this);
 
-							});
-						}
+                                if (btn.hasClass('checked')) {
+                                    self.sourceView.hide().val(editor.html().trim());
+                                    editor.show();
+                                    btn.removeClass('checked');
+                                } else {
+                                    self.sourceView.hide().val(editor.html().trim());
+                                    editor.hide();
+                                    btn.addClass('checked');
+                                }
 
-						self.buttons.push({id: props.icon, button: button});
-					});
+                            });
+                        }
+
+                        self.buttons.push({id: props.icon, button: button});
+                    });
       },
       handleKeys: function () {
-				var elem = this.element,
-					self = this;
+                var elem = this.element,
+                    self = this;
 
-				elem.on('keyup.richtext', function() {
-					self.setButtonStates();
-				}).on('mouseup.richtext', function() {
-					self.setButtonStates();
-				});
-			},
-			setButtonStates: function() {
-				this.testButtonState('bold');
-				this.testButtonState('italic');
-				this.testButtonState('underline');
-			},
-			testButtonState: function(command) {
-				var elem;
-				if (!document.queryCommandState) {
-					return;
-				}
+                elem.on('keyup.richtext', function() {
+                    self.setButtonStates();
+                }).on('mouseup.richtext', function() {
+                    self.setButtonStates();
+                });
+            },
+            setButtonStates: function() {
+                this.testButtonState('bold');
+                this.testButtonState('italic');
+                this.testButtonState('underline');
+            },
+            testButtonState: function(command) {
+                var elem;
+                if (!document.queryCommandState) {
+                    return;
+                }
 
-				elem = $.grep(this.buttons, function(e){ return e.id === command; });
-				if (!elem[0].button) {
-					return;
-				}
+                elem = $.grep(this.buttons, function(e){ return e.id === command; });
+                if (!elem[0].button) {
+                    return;
+                }
 
-				if (document.queryCommandState(command)) {
-					elem[0].button.addClass('checked');
-				} else {
-					elem[0].button.removeClass('checked');
-				}
-			}
+                if (document.queryCommandState(command)) {
+                    elem[0].button.addClass('checked');
+                } else {
+                    elem[0].button.removeClass('checked');
+                }
+            }
     };
 
     // Support Chaining and Init the Control or Set Settings
@@ -27952,36 +26834,39 @@ $.fn.extend({
     var settings = {
       menuId: null, //id on the form of the menu
       callback: null, //function to execute on a menu item click
-      click: null
+      click: null, //function to execute on button part click
+      backgroundIFrame: false, // pass backgroundIFrame to open an iFrame overtop of submenus for pdf/applet issues
+      iframeFix: false //pass iframe fix to close menus on iframe click
     };
 
     return this.each(function () {
       var o = $.extend({}, settings, options),
         $textButton = $(this),
+        buttonText = $textButton.html(),
         isIconButton = false,
         isDisabled, classes, $rightButton, container;
 
-      if (!$textButton.parent().is('.inforSplitButtonContainer')) {
+      if (!$textButton.parent().is(".inforSplitButtonContainer")) {
 
-        isDisabled = $textButton.hasClass('disabled') || $textButton.is(':disabled');
-        classes = $textButton.attr('class').replace('inforSplitButton', '').replace('disabled', '');
+        isDisabled = $textButton.hasClass("disabled") || $textButton.is(":disabled");
+        classes = $textButton.attr("class").replace("inforSplitButton", "").replace("disabled", "");
 
-        if (classes === '' || classes === ' ') {
+        if (classes === "" || classes === " ") {
           isIconButton = false;
         } else {
-          $textButton.addClass('inforIconButton');
-          if ($textButton.children('span').length === 0) {
-            $textButton.append('<span></span>');
+          $textButton.addClass("inforIconButton");
+          if ($textButton.children("span").length === 0) {
+            $textButton.append("<span></span>");
           }
           isIconButton = true;
         }
 
-        $rightButton = $('<button type="button" aria-haspopup="true" aria-expanded="false" class="inforSplitButtonArrow"><i></i><span class="scr-only">' + Globalize.localize('Menu') + '</span></button>');
+        $rightButton = $("<button type='button' aria-haspopup='true' aria-expanded='false' class=\"inforSplitButtonArrow\"><i></i><span class='scr-only'>" + Globalize.localize("Menu") + "</span></button>");
 
         //wrap in a div and add the button on the right.
-        container = $('<div class="inforSplitButtonContainer"></div>');
+        container = $("<div class='inforSplitButtonContainer'></div>");
         if (isIconButton) {
-          container.addClass('icon');
+          container.addClass("icon");
         }
 
         $textButton.wrap(container);
@@ -27989,7 +26874,7 @@ $.fn.extend({
 
         //attach the events.
         $textButton.click(function (e) {
-          if ($textButton.parent().hasClass('disabled') || $textButton.hasClass('disabled')) {
+          if ($textButton.parent().hasClass("disabled") || $textButton.hasClass("disabled")) {
             return;
           }
 
@@ -28000,7 +26885,19 @@ $.fn.extend({
 
         if (o.menuId !== null) {
           $rightButton.popupmenu({
-            menu: o.menuId});
+            menu: o.menuId,
+            beforeOpening: function () {
+              $rightButton.addClass("active").attr("aria-expanded", "true").attr("aria-controls",o.menuId);
+            },
+            onClose: function () {
+              $rightButton.removeClass("active").attr("aria-expanded", "false");
+            }
+          }, (!o.callback ? null : function (action, el, pos, item) {
+            if ($textButton.hasClass('disabled')) {
+              return;
+            }
+            o.callback(action, el, pos, item);
+          }));
         }
 
         //set the initial disabled state.
@@ -28011,8 +26908,8 @@ $.fn.extend({
         }
 
         //copy tab index..
-        if ($textButton.attr('tabindex') === -1) {
-          $textButton.parent().find('button').attr('tabindex', -1);
+        if ($textButton.attr("tabindex") == -1) {
+          $textButton.parent().find("button").attr("tabindex", -1);
         }
       }
     });
@@ -28081,8 +26978,8 @@ $.fn.extend({
       this.options = opts;
 
       if (o.direction == 'v') {
-        this._sideA = $('#leftPane');
-        this._sideB = $('#rightPane');
+        this._sideA = $splitter.find('#leftPane');
+        this._sideB = $splitter.find('#rightPane');
         if (this._sideA.length === 0 && this._sideB.length === 0) {
           this._sideA = $splitter.find('.leftPane:first');
           this._sideB = $splitter.find('.rightPane:first');
@@ -28355,7 +27252,7 @@ $.fn.extend({
         this._splitBar.css("top", this._sideA.height() + this._sideA.offset().top + 1);
       } else {
         if (Globalize.culture().isRTL) {
-          this._splitBar.css("left", this._sideB.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideB.offset().left + 15));
+          this._splitBar.css("left", this._sideB.width() + 22);
         } else {
           this._splitBar.css("left", this._sideA.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideA.offset().left + 5));
         }
@@ -28394,6 +27291,7 @@ $.fn.extend({
       sortable: true,
       availableItemText: Globalize.localize('Available'), //Translated text for the top headers
       selectedItemText: Globalize.localize('Selected'),
+	  validator: null,
       available: [],
       selected: []
     },
@@ -28455,6 +27353,14 @@ $.fn.extend({
         if (elem.hasClass('disabled')) {
           return;
         }
+		var items = [];
+		self.leftList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canAdd && !self.options.validator.canAdd(items))
+		{
+			return;
+		}
         self.rightList.next().find('ul').append(self.leftList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -28465,6 +27371,14 @@ $.fn.extend({
         if (elem.hasClass('disabled')) {
           return;
         }
+		var items = [];
+		self.leftList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canRemove && !self.options.validator.canRemove(items))
+		{
+			return;
+		}
         self.leftList.next().find('ul').append(self.rightList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -28475,6 +27389,15 @@ $.fn.extend({
         if (elem.hasClass('disabled')) {
           return;
         }
+
+		var items = [];
+		self.leftList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canAdd && !self.options.validator.canAdd(items))
+		{
+			return;
+		}
         self.rightList.next().find('ul').append(self.leftList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -28484,6 +27407,14 @@ $.fn.extend({
         if (elem.hasClass('disabled')) {
           return;
         }
+		var items = [];
+		self.rightList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canRemove && !self.options.validator.canRemove(items))
+		{
+			return;
+		}
         self.leftList.next().find('ul').append(self.rightList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -28901,6 +27832,8 @@ $.fn.extend({
 
       // disable click in any case
       this.anchors.bind("click.tabs", function () {
+        // LMCLIENT-19307: send click trigger before return
+        $(document).trigger("click.popupmenu");
         return false;
       });
     },
@@ -29268,8 +28201,8 @@ $.fn.extend({
       //hide any visibile tooltips..
       $tabs.bind('tabsselect', function () {
         $("#inforTooltip, #validation-errors, #tooltip").addClass('is-hidden');
-        $('#dropdown-list, #multiselect-list').remove();
         $(".slick-columnpicker").hide();
+        $('#dropdown-list, #multiselect-list').remove();
 
         if (o.editable) {
           $("input.inforTabHeaderEditor").trigger("blur");
@@ -30187,7 +29120,8 @@ $.fn.extend({
     options: {
       timeFormat: Globalize.culture().calendar.patterns.t, //Globalize Time Format https://github.com/jquery/globalize#dates
       interval: 30, //Interval in minutes between the times
-      range: [8, 20] //Limit the intervals to a range. Fx working hours 9-5 (24 hour clock) 0-23
+      range: [8, 20], //Limit the intervals to a range. Fx working hours 9-5 (24 hour clock) 0-23
+	  useRangeWhenBlank: true  //true: set range when field is blank | false: don't use range when field is blank
     },
     _init: function () {
       var self = this;
@@ -30197,6 +29131,7 @@ $.fn.extend({
       self.isHHLeadingZero = self.options.timeFormat.toLowerCase().indexOf('hh') > -1;
       self.isMMLeadingZero = self.options.timeFormat.toLowerCase().indexOf('mm') > -1;
       self.is24HZero = self.options.timeFormat.indexOf('H') > -1;
+	  self.useRangeWhenBlank = self.options.useRangeWhenBlank;
 
       //make sure its not initialized twice.
       if (self.input.data('isInitialized')) {
@@ -30259,7 +29194,6 @@ $.fn.extend({
       seltt = formattedD.substr(formattedD.indexOf(' ')+1);
 
       self._refreshTimes();
-      self.times.sort();
 
       for (i = 0; i < self.times.length-1 ; i++) {
         var hh = self.times[i].substr(0, self.times[i].indexOf(':')),
@@ -30451,10 +29385,10 @@ $.fn.extend({
       if (self.input.is('[readonly]')) {
         return;
       }
-
-      if (time.trim() === ':') {
-        return;
-      }
+	  
+	  if (time.length === 0 && !self.useRangeWhenBlank)  {
+		  return;
+	  }
 
       if (self.showPeriod) {
         arr = time.split(' ');
@@ -30483,10 +29417,10 @@ $.fn.extend({
       }
 
       var amPers = Globalize.culture(Globalize.cultureSelector).calendars.standard.AM,
-        pmPers = Globalize.culture(Globalize.cultureSelector).calendars.standard.AM,
+        pmPers = Globalize.culture(Globalize.cultureSelector).calendars.standard.PM,
         itsFine = false;
 
-      if ($.inArray(period, amPers) || $.inArray(period, pmPers)) {
+      if ($.inArray(period, amPers) > -1 || $.inArray(period, pmPers) > -1) {
         itsFine = true;
       }
 
@@ -30678,7 +29612,7 @@ $.fn.extend({
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('tooltip', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(window.jQuery || window.Zepto);
@@ -31847,28 +30781,24 @@ $.fn.extend({
   });
   $.jstree.plugin("ui", {
     __init : function () {
-      	var self = this;
-		this.scroll = 0;
-        this.data.ui.selected = $();
-        this.data.ui.last_selected = false;
-        this.data.ui.hovered = null;
-        this.data.ui.to_select = this.get_settings().ui.initially_select;
+      this.data.ui.selected = $();
+      this.data.ui.last_selected = false;
+      this.data.ui.hovered = null;
+      this.data.ui.to_select = this.get_settings().ui.initially_select;
 
-        this.get_container()
-          .delegate("a", "click.jstree", $.proxy(function (event) {
-              event.preventDefault();
-              event.currentTarget.blur();
-              if(!$(event.currentTarget).hasClass("jstree-loading")) {
-                this.select_node(event.currentTarget, true, event);
-              }
-  						self.get_container().scrollLeft(self.scroll);
-            }, this))
-          .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
-              if(!$(event.currentTarget).hasClass("jstree-loading")) {
-                this.hover_node(event.target);
-              }
-  						this.scroll = self.get_container().scrollLeft();
-            }, this))
+      this.get_container()
+        .delegate("a", "click.jstree", $.proxy(function (event) {
+            event.preventDefault();
+            event.currentTarget.blur();
+            if(!$(event.currentTarget).hasClass("jstree-loading")) {
+              this.select_node(event.currentTarget, true, event);
+            }
+          }, this))
+        .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
+            if(!$(event.currentTarget).hasClass("jstree-loading")) {
+              this.hover_node(event.target);
+            }
+          }, this))
         .delegate("a", "mouseleave.jstree", $.proxy(function (event) {
             if(!$(event.currentTarget).hasClass("jstree-loading")) {
               this.dehover_node(event.target);
@@ -31980,17 +30910,12 @@ $.fn.extend({
             $(this).removeClass("jstree-focus");
         });
 
-        // get initial scroll value
-        this.scroll = this.get_container().scrollLeft();
-
         if(!obj.hasClass("jstree-focus")) { this.defocus_node(); }
         this.data.ui.hovered = obj.children("a").addClass("jstree-focus").parent();
         obj.children("a").focus();
         obj.children("a").attr("tabIndex", "0");
         this._fix_scroll(obj);
         this.__callback({ "obj" : obj });
-        // return to the initial scroll position
-        this.get_container().scrollLeft(this.scroll);
       },
       defocus_node : function () {
         var obj = this.data.ui.hovered, p;
@@ -34308,7 +33233,6 @@ $.fn.extend({
     },
     _fn : {
       show_contextmenu : function (e) {
-        $('#inforTreeContextMenu').remove();
         obj = this._get_node(e.currentTarget);
         s = this.get_settings().contextmenu,
         menuItems = s.items;
@@ -34354,10 +33278,6 @@ $.fn.extend({
               ul.append($('<li></li>').append(aa));
             }
           }
-        }
-
-        if ($('#inforTreeContextMenu').children().length === 0) {
-          return;
         }
 
         $('body').popupmenu({
@@ -34415,9 +33335,6 @@ $.fn.extend({
             this.menu.height(menuHeight);
           }
         }
-	  //Set focus to first item in menu
-        wrapper.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
-
 
       }
     }
@@ -34481,14 +33398,7 @@ $.fn.extend({
 			if (settings.click != undefined) {
 				if (!$input.hasClass("fileInputField")) {	//bound inside the file field control.
 					$input.on("keydown.triggerfield",function(event) {
-						if (event.keyCode == 13 && $input.hasClass("inforSearchField")) {//13: enter
-							$triggerButton.trigger("click");
-							event.stopPropagation();
-							event.preventDefault();
-							return false;
-						}
-
-						if (event.keyCode==40) {//40: down arrow
+						if (event.keyCode==40 || (event.keyCode==13 && $triggerButton.is('.inforSearchButton'))) {//40: down arrow 
 							$triggerButton.trigger("click");
 							event.stopPropagation();
 							event.preventDefault();
@@ -34750,7 +33660,7 @@ $.fn.extend({
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('validator', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(window.jQuery || window.Zepto);
@@ -34766,13 +33676,13 @@ $.fn.extend({
   // Plugin Object
   Validator.prototype = {
     init: function() {
-      this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
+      var fields = 'input, textarea, select, div[data-validate], div[data-validation]';
 
       //If we initialize with a form find all inputs
-      this.inputs = this.element.find(this.fields);
+      this.inputs = this.element.find(fields);
 
       //Or Just use the current input
-      if (this.element.is(this.fields)) {
+      if (this.element.is(fields)) {
         this.inputs = $().add(this.element);
         if (this.element.is('select')) {
           this.inputs = $().add(this.element.nextAll('input.dropdown'));
@@ -34824,7 +33734,6 @@ $.fn.extend({
         events = (attribs ? attribs : 'blur.validate change.validate');
 
         field.on(events, function () {
-
           var field = $(this);
           if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
             return;
@@ -34879,9 +33788,7 @@ $.fn.extend({
       var self = this,
         deferreds = [];
 
-      self.inputs = this.element.find(self.fields);
-
-      self.inputs.filter(':visible').each(function () {
+      self.inputs.each(function () {
         var dfds = self.validate($(this), false);
         for (var i = 0; i < dfds.length; i++) {
           deferreds.push(dfds[i]);
@@ -34938,7 +33845,6 @@ $.fn.extend({
           }
         };
 
-	  self.tabErrorCounts = {};
       self.removeError(field);
       field.removeData('data-errormessage');
 
@@ -34976,29 +33882,6 @@ $.fn.extend({
     hasError: function(field) {
       return this.getField(field).hasClass('has-error');
     },
-	setErrorIconOnTab: function(loc) {
-	  var tabPanel = $(loc).closest('.ui-tabs-panel');
-	  var id = '';
-	  var errorCount = 0;
-	  if (tabPanel && tabPanel.length > 0) {
-		id = tabPanel.attr('id');
-		id = '#' + id;
-		errorCount = tabPanel.find('.has-error').length;
-	  }
-	  if (id) {
-		// override position, margin-left, and margin-top on icon-error class
-		var errorIcon = '<i style="position: static; margin-left:0px; margin-top:2px;" class="icon-error label">&nbsp;</i>';
-		var tab = $("a[href=" + id + "]").parent();
-		var isErrorIconOnTab = tab.children('.icon-error').length > 0;
-		if (errorCount > 0) {
-			if (!isErrorIconOnTab) {
-				tab.append(errorIcon);		
-			}
-		} else {
-			tab.children('.icon-error').remove();  
-		}
-	  }
-	},
     addError: function(field, message, showTooltip) {
       var loc = this.getField(field).addClass('has-error'),
         self = this,
@@ -35006,15 +33889,13 @@ $.fn.extend({
         appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
       loc.data('data-errormessage', appendedMsg);
-	  
-      if (!loc.next().is('.icon-error') && !loc.is('input[type=checkbox]')) {
-        loc.after(icon);
-		self.setErrorIconOnTab(loc);
-      }
 
-      if (!loc.next().next().is('.icon-error') && loc.is('input[type=checkbox]')) {
+      if (loc.is('.inforRadioButtonSet')) {
+        loc.find('.inforTopLabel').append(icon);
+      } else if (!loc.next().is('.icon-error') && !loc.is('input[type=checkbox]')) {
+        loc.after(icon);
+      } else if (!loc.next().next().is('.icon-error') && loc.is('input[type=checkbox]')) {
         loc.next('.inforCheckboxLabel').after(icon);
-		self.setErrorIconOnTab(loc);
       }
 
       icon.data('field', loc);
@@ -35029,7 +33910,8 @@ $.fn.extend({
         this.showTooltip(appendedMsg, field);
       }
 
-      this.inputs.filter('input, textarea').on('focus.validate', function () {
+
+        this.inputs.filter('input, textarea').on('focus.validate', function () {
         var field = $(this);
         setTimeout(function () {
           if (self.hasError(field)) {
@@ -35072,11 +33954,16 @@ $.fn.extend({
         topPos += 6;
       }
 
+      if (field.is('.inforRadioButtonSet')) {
+        leftPos = field.find('.icon-error').offset().left - tooltipWidth + 36;
+        topPos += 6;
+      }
+
       if ($('#dropdown-list').is(':visible') || $('#lookupGridDivId').is(':visible')) {
         return;
       }
 
-      this.tooltip.css({left: leftPos, top: topPos, maxWidth: ''});
+      this.tooltip.css({left: leftPos, top: topPos});
 
       //Make sure its not off the left
       if (leftPos < 0) {
@@ -35116,19 +34003,12 @@ $.fn.extend({
         $(document).on('scroll.validation', function () {
           self.hideTooltip();
         });
-
         $(window).on('resize.validation', function () {
           self.hideTooltip();
         });
-
         self.tooltip.on('click.validation', function () {
           self.hideTooltip();
         });
-
-        field.on('blur', function() {
-          self.hideTooltip();
-        });
-
       }, 100);
 
     },
@@ -35139,9 +34019,9 @@ $.fn.extend({
       this.inputs.filter('input, textarea').off('focus.validate');
       loc.removeClass('has-error');
       loc.removeData('data-errormessage');
-	  self.setErrorIconOnTab(loc);
       loc.next('.icon-error').remove();
       loc.next('.inforCheckboxLabel').next('.icon-error').remove();
+      loc.find('.inforTopLabel .icon-error').remove();
 
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function () {
@@ -35200,10 +34080,13 @@ $.fn.extend({
   var Validation = function () {
     this.rules = {
       required: {
-        check: function (value) {
+        check: function (value, input) {
           this.message = Globalize.localize('Required');
           if (typeof value === 'string' && $.trim(value).length === 0) {
             return false;
+          }
+          if (input.is('.inforRadioButtonSet')) {
+            return (input.find('input:checked').length > 0);
           }
           return (value ? true : false);
         },
@@ -35616,7 +34499,7 @@ Globalize.addCultureInfo( "ar-EG", "default", {
 			AM: ["ص","ص","ص"],
 			PM: ["م","م","م"],
 			patterns: {
-				d: "yyyy/MM/dd",
+				d: "dd/MM/yyyy",
 				D: "dd MMMM, yyyy",
 				t: "hh:mm tt",
 				T: "hh:mm:ss tt",
@@ -35643,7 +34526,7 @@ Globalize.addCultureInfo( "ar-EG", "default", {
 			eras: [{"name":"بعد الهجرة","start":null,"offset":0}],
 			twoDigitYearMax: 1451,
 			patterns: {
-				d: "yyyy/MM/dd",
+				d: "dd/MM/yyyy",
 				D: "dd/MMMM/yyyy",
 				t: "hh:mm tt",
 				T: "hh:mm:ss tt",
@@ -36041,11 +34924,10 @@ Globalize.addCultureInfo( "ar-EG", "default", {
 			}
 		}
 	},
-	messages : {"AdditionalHelp":"تعليمات إضافية","AddNewTab":"إضافة علامة تبويب جديدة","Alerts":"تنبيهات","ApplyFilter":"تطبيق التصفية","Approve":"موافقة","Attachments":"المرفقات","Back":"السابق","Basic":"أساسي","Between":"بين","Book":"حجز","Cancel":"إلغاء","Checked":"تم فحصه","ClearFilter":"مسح التصفية","Close":"إغلاق","CloseCancelChanges":"إغلاق التغييرات وإلغائها","CloseSaveChanges":"إغلاق التغييرات وحفظها","CloseTab":"إغلاق علامة التبويب","ColumnPersonalization":"تخصيص عمود","Comments":"التعليقات","Confirmation":"تأكيد","Contains":"يحتوي على","CreateTab":"إنشاء علامة تبويب جديدة","Cut":"قص","Delete":"حذف","DiscardUndo":"تجاهل/تراجع","DisplayDropDownList":"عرض القائمة المنسدلة","Displaying":"عرض: ","DocWord":"مستند","DoesNotContain":"لا يحتوي على","DoesNotEndWith":"لا ينتهي ب","DoesNotEqual":"لا يساوي","DoesNotStartWith":"لا يبدأ ب","Download":"تنزيل","Duplicate":"مكرر","Edit":"تحرير","EitherSelectedorNotSelected":"إما محدد أو غير محدد","Email":"البريد الإلكتروني","EndsWith":"ينتهي ب","EqualsStr":"يساوي","ExpandCollapse":"توسيع/طي","ExportFailed":"فشل التصدير","ExportToExcel":"تصدير إلى Excel","FileInUse":"يتم استخدام ملف محدد","FileInUseDetail":"قم بإغلاق الملف في التطبيق الذي يستخدمه أو حدد اسم ملف مختلف.","Filter":"تصفية","FilterMenu":"قائمة التصفية","FilterOptions":"خيارات التصفية","FilterWithinResults":"التصفية ضمن النتائج","First":"الأول","FirstView":"العرض الأول","Folder":"مجلد","ForgotPassword":"هل نسيت كلمة المرور؟","Forward":"للأمام","GetMoreRows":"الحصول على مزيد من الصفوف","GreaterThan":"أكبر من","GreaterThanOrEquals":"أكبر من أو يساوي","GridSettings":"إعدادات خطوط الشبكة","GroupSelection":"تحديد مجموعة","Help":"التعليمات","HideColumn":"إخفاء العمود","IsEmpty":"فارغ","IsNotEmpty":"غير فارغ","Last":"الأخير","LastView":"العرض الأخير","LaunchActivate":"تشغيل/تنشيط","LessThan":"أقل من","LessThanOrEquals":"أقل من أو يساوي","Links":"الارتباطات","ListTabs":"سرد كل علامات التبويب","LoadingItem":"يتم تحميل العنصر ","Maintenance":"الصيانة","Menu":"القائمة","New":"جديد","Next":"التالي","NextView":"العرض التالي","No":"لا","NotChecked":"لم يتم فحصه","Notes":"ملاحظات","NotSelected":"غير محدد","Of":" من ","Ok":"موافق","Open":"فتح","Password":"كلمة المرور","Paste":"لصق","Phone":"الهاتف","PleaseWait":"يرجى الانتظار","Previous":"السابق","PreviousView":"العرض السابق","Print":"طباعة","Queries":"استعلامات","Redo":"إعادة","Refresh":"تحديث","Reject":"رفض","RememberMe":"تذكر الحساب الخاص بي على هذا الكمبيوتر","Reports":"تقارير","Reset":"إعادة تعيين","Review":"مراجعة","RunFilter":"تشغيل التصفية","RunJob":"تشغيل مهمة","Save":"حفظ","SaveBeforeClosing":"حفظ قبل الإغلاق","SavedFilters":"عوامل التصفية المحفوظة","SaveSubmit":"حفظ/إرسال","ScreenDesign":"تصميم الشاشة","Search":"بحث","SelectContents":"تحديد المحتويات","SelectDate":"تحديد التاريخ","SelectDeselect":"تحديد/إلغاء تحديد الكل","Selected":"المحدد: ","ServerName":"اسم الخادم","Settings":"إعدادات","ShowFilterRow":"عرض صف التصفية","SignIn":"تسجيل الدخول","SortAscending":"فرز تصاعدي","SortDescending":"فرز تنازلي","Spreadsheet":"جدول بيانات","StartsWith":"يبدأ ب","StatusIndicator":"مؤشر الحالة","Tasks":"مهام","Today":"اليوم","Translate":"ترجمة","UserID":"معرّف المستخدم","Utilities":"أدوات مساعدة","Yes":"نعم","Page":"صفحة","Rows":"صفوف","ShowingAll":"عرض الكل","SessionNavigation":"التنقل بين الجلسات","ListAllMenuItems":"سرد كل عناضر القائمة","NoRecordsFound":"لم يتم العثور على سجلات","SearchTree":"شجرة بحث","Clear":"مسح","DrillDown":"التنقل لأسفل","Required":"هذا الحقل مطلوب","Available":"المتوفر:","Add":"إضافة","MoveDown":"تحريك إلى أسفل","MoveUp":"تحريك إلى أعلى","Remove":"إزالة","LastYear":"العام الماضي","NextMonth":"الشهر التالي","NextWeek":"الأسبوع التالي","NextYear":"العام التالي","OneMonthAgo":"قبل شهر واحد","OneWeekAgo":"قبل أسبوع واحد","SixMonthsAgo":"قبل ستة أشهر","Time":"الوقت","CannotBeSelected":"يتعذر تحديد هذا الصف.","ResetToDefault":"إعادة التعيين إلى التخطيط الافتراضي","CloseOtherTabs":"إغلاق علامات التبويب الأخرى","String2":"إغلاق علامة التبويب","Maximize":"تحقيق أقصى قدر من","Minimize":"خفض", "SelectMonthYear":"اختر الشهر و السنة"}
+	messages : {"SelectAll":"تحديد الكل", "AdditionalHelp":"تعليمات إضافية","AddNewTab":"إضافة علامة تبويب جديدة","Alerts":"تنبيهات","ApplyFilter":"تطبيق التصفية","Approve":"موافقة","Attachments":"المرفقات","Back":"السابق","Basic":"أساسي","Between":"بين","Book":"حجز","Cancel":"إلغاء","Checked":"تم فحصه","ClearFilter":"مسح التصفية","Close":"إغلاق","CloseCancelChanges":"إغلاق التغييرات وإلغائها","CloseSaveChanges":"إغلاق التغييرات وحفظها","CloseTab":"إغلاق علامة التبويب","ColumnPersonalization":"تخصيص عمود","Comments":"التعليقات","Confirmation":"تأكيد","Contains":"يحتوي على","CreateTab":"إنشاء علامة تبويب جديدة","Cut":"قص","Delete":"حذف","DiscardUndo":"تجاهل/تراجع","DisplayDropDownList":"عرض القائمة المنسدلة","Displaying":"عرض: ","DocWord":"مستند","DoesNotContain":"لا يحتوي على","DoesNotEndWith":"لا ينتهي ب","DoesNotEqual":"لا يساوي","DoesNotStartWith":"لا يبدأ ب","Download":"تنزيل","Duplicate":"مكرر","Edit":"تحرير","EitherSelectedorNotSelected":"إما محدد أو غير محدد","Email":"البريد الإلكتروني","EndsWith":"ينتهي ب","EqualsStr":"يساوي","ExpandCollapse":"توسيع/طي","ExportFailed":"فشل التصدير","ExportToExcel":"تصدير إلى Excel","FileInUse":"يتم استخدام ملف محدد","FileInUseDetail":"قم بإغلاق الملف في التطبيق الذي يستخدمه أو حدد اسم ملف مختلف.","Filter":"تصفية","FilterMenu":"قائمة التصفية","FilterOptions":"خيارات التصفية","FilterWithinResults":"التصفية ضمن النتائج","First":"الأول","FirstView":"العرض الأول","Folder":"مجلد","ForgotPassword":"هل نسيت كلمة المرور؟","Forward":"للأمام","GetMoreRows":"الحصول على مزيد من الصفوف","GreaterThan":"أكبر من","GreaterThanOrEquals":"أكبر من أو يساوي","GridSettings":"إعدادات خطوط الشبكة","GroupSelection":"تحديد مجموعة","Help":"التعليمات","HideColumn":"إخفاء العمود","IsEmpty":"فارغ","IsNotEmpty":"غير فارغ","Last":"الأخير","LastView":"العرض الأخير","LaunchActivate":"تشغيل/تنشيط","LessThan":"أقل من","LessThanOrEquals":"أقل من أو يساوي","Links":"الارتباطات","ListTabs":"سرد كل علامات التبويب","LoadingItem":"يتم تحميل العنصر ","Maintenance":"الصيانة","Menu":"القائمة","New":"جديد","Next":"التالي","NextView":"العرض التالي","No":"لا","NotChecked":"لم يتم فحصه","Notes":"ملاحظات","NotSelected":"غير محدد","Of":" من ","Ok":"موافق","Open":"فتح","Password":"كلمة المرور","Paste":"لصق","Phone":"الهاتف","PleaseWait":"يرجى الانتظار","Previous":"السابق","PreviousView":"العرض السابق","Print":"طباعة","Queries":"استعلامات","Redo":"إعادة","Refresh":"تحديث","Reject":"رفض","RememberMe":"تذكر الحساب الخاص بي على هذا الكمبيوتر","Reports":"تقارير","Reset":"إعادة تعيين","Review":"مراجعة","RunFilter":"تشغيل التصفية","RunJob":"تشغيل مهمة","Save":"حفظ","SaveBeforeClosing":"حفظ قبل الإغلاق","SavedFilters":"عوامل التصفية المحفوظة","SaveSubmit":"حفظ/إرسال","ScreenDesign":"تصميم الشاشة","Search":"بحث","SelectContents":"تحديد المحتويات","SelectDate":"تحديد التاريخ","SelectDeselect":"تحديد/إلغاء تحديد الكل","Selected":"المحدد: ","ServerName":"اسم الخادم","Settings":"إعدادات","ShowFilterRow":"عرض صف التصفية","SignIn":"تسجيل الدخول","SortAscending":"فرز تصاعدي","SortDescending":"فرز تنازلي","Spreadsheet":"جدول بيانات","StartsWith":"يبدأ ب","StatusIndicator":"مؤشر الحالة","Tasks":"مهام","Today":"اليوم","Translate":"ترجمة","UserID":"معرّف المستخدم","Utilities":"أدوات مساعدة","Yes":"نعم","Page":"صفحة","Rows":"صفوف","ShowingAll":"عرض الكل","SessionNavigation":"التنقل بين الجلسات","ListAllMenuItems":"سرد كل عناضر القائمة","NoRecordsFound":"لم يتم العثور على سجلات","SearchTree":"شجرة بحث","Clear":"مسح","DrillDown":"التنقل لأسفل","Required":"هذا الحقل مطلوب","Available":"المتوفر:","Add":"إضافة","MoveDown":"تحريك إلى أسفل","MoveUp":"تحريك إلى أعلى","Remove":"إزالة","LastYear":"العام الماضي","NextMonth":"الشهر التالي","NextWeek":"الأسبوع التالي","NextYear":"العام التالي","OneMonthAgo":"قبل شهر واحد","OneWeekAgo":"قبل أسبوع واحد","SixMonthsAgo":"قبل ستة أشهر","Time":"الوقت","CannotBeSelected":"يتعذر تحديد هذا الصف.","ResetToDefault":"إعادة التعيين إلى التخطيط الافتراضي","CloseOtherTabs":"إغلاق علامات التبويب الأخرى","String2":"إغلاق علامة التبويب","Maximize":"تحقيق أقصى قدر من","Minimize":"خفض"}
 });
 
-}( this ));
-/*
+}( this ));/*
 * Globalize Culture ar-SA
 *
 * http://github.com/jquery/globalize
@@ -36301,7 +35183,7 @@ Globalize.addCultureInfo( "ar-SA", "default", {
 			eras: [{"name":"بعد الهجرة","start":null,"offset":0}],
 			twoDigitYearMax: 1451,
 			patterns: {
-				d: "yyyy/MM/dd",
+				d: "dd/MM/yyyy",
 				D: "dd/MMMM/yyyy",
 				t: "hh:mm tt",
 				T: "hh:mm:ss tt",
@@ -36329,7 +35211,7 @@ Globalize.addCultureInfo( "ar-SA", "default", {
 			eras: [{"name":"بعد الهجرة","start":null,"offset":0}],
 			twoDigitYearMax: 1451,
 			patterns: {
-				d: "yyyy/MM/dd",
+				d: "dd/MM/yyyy",
 				D: "dd/MMMM/yyyy",
 				t: "hh:mm tt",
 				T: "hh:mm:ss tt",
@@ -36465,7 +35347,7 @@ Globalize.addCultureInfo( "ar-SA", "default", {
 			}
 		}
 	},
-		messages :{"AdditionalHelp":"تعليمات إضافية","AddNewTab":"إضافة علامة تبويب جديدة","Alerts":"تنبيهات","ApplyFilter":"تطبيق التصفية","Approve":"موافقة","Attachments":"المرفقات","Back":"السابق","Basic":"أساسي","Between":"بين","Book":"حجز","Cancel":"إلغاء","Checked":"تم فحصه","ClearFilter":"مسح التصفية","Close":"إغلاق","CloseCancelChanges":"إغلاق التغييرات وإلغائها","CloseSaveChanges":"إغلاق التغييرات وحفظها","CloseTab":"إغلاق علامة التبويب","ColumnPersonalization":"تخصيص عمود","Comments":"التعليقات","Confirmation":"تأكيد","Contains":"يحتوي على","CreateTab":"إنشاء علامة تبويب جديدة","Cut":"قص","Delete":"حذف","DiscardUndo":"تجاهل/تراجع","DisplayDropDownList":"عرض القائمة المنسدلة","Displaying":"عرض: ","DocWord":"مستند","DoesNotContain":"لا يحتوي على","DoesNotEndWith":"لا ينتهي ب","DoesNotEqual":"لا يساوي","DoesNotStartWith":"لا يبدأ ب","Download":"تنزيل","Duplicate":"مكرر","Edit":"تحرير","EitherSelectedorNotSelected":"إما محدد أو غير محدد","Email":"البريد الإلكتروني","EndsWith":"ينتهي ب","EqualsStr":"يساوي","ExpandCollapse":"توسيع/طي","ExportFailed":"فشل التصدير","ExportToExcel":"تصدير إلى Excel","FileInUse":"الملف المحدد قيد الاستخدام","FileInUseDetail":"قم بإغلاق الملف في التطبيق الذي يستخدمه أو حدد اسم ملف مختلف.","Filter":"تصفية","FilterMenu":"قائمة التصفية","FilterOptions":"خيارات التصفية","FilterWithinResults":"التصفية ضمن النتائج","First":"الأول","FirstView":"العرض الأول","Folder":"مجلد","ForgotPassword":"هل نسيت كلمة المرور؟","Forward":"للأمام","GetMoreRows":"الحصول على مزيد من الصفوف","GreaterThan":"أكبر من","GreaterThanOrEquals":"أكبر من أو يساوي","GridSettings":"إعدادات خطوط الشبكة","GroupSelection":"تحديد مجموعة","Help":"التعليمات","HideColumn":"إخفاء العمود","IsEmpty":"فارغ","IsNotEmpty":"غير فارغ","Last":"الأخير","LastView":"العرض الأخير","LaunchActivate":"تشغيل/تنشيط","LessThan":"أقل من","LessThanOrEquals":"أقل من أو يساوي","Links":"الارتباطات","ListTabs":"سرد كل علامات التبويب","LoadingItem":"يتم تحميل العنصر ","Maintenance":"الصيانة","Menu":"القائمة","New":"جديد","Next":"التالي","NextView":"العرض التالي","No":"لا","NotChecked":"لم يتم فحصه","Notes":"ملاحظات","NotSelected":"غير محدد","Of":" من ","Ok":"موافق","Open":"فتح","Password":"كلمة المرور","Paste":"لصق","Phone":"الهاتف","PleaseWait":"الرجاء الانتظار","Previous":"السابق","PreviousView":"العرض السابق","Print":"طباعة","Queries":"استعلامات","Redo":"إعادة","Refresh":"تحديث","Reject":"رفض","RememberMe":"تذكر الحساب الخاص بي على هذا الكمبيوتر","Reports":"تقارير","Reset":"إعادة تعيين","Review":"مراجعة","RunFilter":"تشغيل التصفية","RunJob":"تشغيل مهمة","Save":"حفظ","SaveBeforeClosing":"حفظ قبل الإغلاق","SavedFilters":"عوامل التصفية المحفوظة","SaveSubmit":"حفظ/إرسال","ScreenDesign":"تصميم الشاشة","Search":"بحث","SelectContents":"تحديد المحتويات","SelectDate":"تحديد التاريخ","SelectDeselect":"تحديد/إلغاء تحديد الكل","Selected":"المحدد: ","ServerName":"اسم الخادم","Settings":"إعدادات","ShowFilterRow":"عرض صف التصفية","SignIn":"تسجيل الدخول","SortAscending":"فرز تصاعدي","SortDescending":"فرز تنازلي","Spreadsheet":"جدول بيانات","StartsWith":"يبدأ ب","StatusIndicator":"مؤشر الحالة","Tasks":"مهام","Today":"اليوم","Translate":"ترجمة","UserID":"معرّف المستخدم","Utilities":"أدوات مساعدة","Yes":"نعم","Page":"صفحة","Rows":"صفوف","ShowingAll":"عرض الكل","SessionNavigation":"التنقل بين الجلسات","ListAllMenuItems":"سرد كل عناضر القائمة","NoRecordsFound":"لم يتم العثور على سجلات","SearchTree":"شجرة بحث","Clear":"مسح","DrillDown":"التنقل لأسفل","Required":"هذا الحقل مطلوب","Available":"المتوفر:","Add":"إضافة","MoveDown":"تحريك لأسفل","MoveUp":"تحريك لأعلى","Remove":"إزالة","LastYear":"العام الماضي","NextMonth":"الشهر التالي","NextWeek":"الأسبوع التالي","NextYear":"العام التالي","OneMonthAgo":"قبل شهر واحد","OneWeekAgo":"قبل أسبوع واحد","SixMonthsAgo":"قبل ستة أشهر","Time":"الوقت","CannotBeSelected":"لا يمكن تحديد هذا الصف.","ResetToDefault":"إعادة التعيين إلى التخطيط الافتراضي","CloseOtherTabs":"إغلاق علامات التبويب الأخرى","EmailValidation":"أدخل عنوان بريد إلكتروني صالح","UrlValidation":"أدخل URL صالح","EndofResults":"نهاية نتائج","More":"المزيد...","RecordsPerPage":"عدد السجلات في كل صفحة","Maximize":"تحقيق أقصى قدر من","Minimize":"خفض"}
+		messages :{"SelectAll":"تحديد الكل", "AdditionalHelp":"تعليمات إضافية","AddNewTab":"إضافة علامة تبويب جديدة","Alerts":"تنبيهات","ApplyFilter":"تطبيق التصفية","Approve":"موافقة","Attachments":"المرفقات","Back":"السابق","Basic":"أساسي","Between":"بين","Book":"حجز","Cancel":"إلغاء","Checked":"تم فحصه","ClearFilter":"مسح التصفية","Close":"إغلاق","CloseCancelChanges":"إغلاق التغييرات وإلغائها","CloseSaveChanges":"إغلاق التغييرات وحفظها","CloseTab":"إغلاق علامة التبويب","ColumnPersonalization":"تخصيص عمود","Comments":"التعليقات","Confirmation":"تأكيد","Contains":"يحتوي على","CreateTab":"إنشاء علامة تبويب جديدة","Cut":"قص","Delete":"حذف","DiscardUndo":"تجاهل/تراجع","DisplayDropDownList":"عرض القائمة المنسدلة","Displaying":"عرض: ","DocWord":"مستند","DoesNotContain":"لا يحتوي على","DoesNotEndWith":"لا ينتهي ب","DoesNotEqual":"لا يساوي","DoesNotStartWith":"لا يبدأ ب","Download":"تنزيل","Duplicate":"مكرر","Edit":"تحرير","EitherSelectedorNotSelected":"إما محدد أو غير محدد","Email":"البريد الإلكتروني","EndsWith":"ينتهي ب","EqualsStr":"يساوي","ExpandCollapse":"توسيع/طي","ExportFailed":"فشل التصدير","ExportToExcel":"تصدير إلى Excel","FileInUse":"الملف المحدد قيد الاستخدام","FileInUseDetail":"قم بإغلاق الملف في التطبيق الذي يستخدمه أو حدد اسم ملف مختلف.","Filter":"تصفية","FilterMenu":"قائمة التصفية","FilterOptions":"خيارات التصفية","FilterWithinResults":"التصفية ضمن النتائج","First":"الأول","FirstView":"العرض الأول","Folder":"مجلد","ForgotPassword":"هل نسيت كلمة المرور؟","Forward":"للأمام","GetMoreRows":"الحصول على مزيد من الصفوف","GreaterThan":"أكبر من","GreaterThanOrEquals":"أكبر من أو يساوي","GridSettings":"إعدادات خطوط الشبكة","GroupSelection":"تحديد مجموعة","Help":"التعليمات","HideColumn":"إخفاء العمود","IsEmpty":"فارغ","IsNotEmpty":"غير فارغ","Last":"الأخير","LastView":"العرض الأخير","LaunchActivate":"تشغيل/تنشيط","LessThan":"أقل من","LessThanOrEquals":"أقل من أو يساوي","Links":"الارتباطات","ListTabs":"سرد كل علامات التبويب","LoadingItem":"يتم تحميل العنصر ","Maintenance":"الصيانة","Menu":"القائمة","New":"جديد","Next":"التالي","NextView":"العرض التالي","No":"لا","NotChecked":"لم يتم فحصه","Notes":"ملاحظات","NotSelected":"غير محدد","Of":" من ","Ok":"موافق","Open":"فتح","Password":"كلمة المرور","Paste":"لصق","Phone":"الهاتف","PleaseWait":"الرجاء الانتظار","Previous":"السابق","PreviousView":"العرض السابق","Print":"طباعة","Queries":"استعلامات","Redo":"إعادة","Refresh":"تحديث","Reject":"رفض","RememberMe":"تذكر الحساب الخاص بي على هذا الكمبيوتر","Reports":"تقارير","Reset":"إعادة تعيين","Review":"مراجعة","RunFilter":"تشغيل التصفية","RunJob":"تشغيل مهمة","Save":"حفظ","SaveBeforeClosing":"حفظ قبل الإغلاق","SavedFilters":"عوامل التصفية المحفوظة","SaveSubmit":"حفظ/إرسال","ScreenDesign":"تصميم الشاشة","Search":"بحث","SelectContents":"تحديد المحتويات","SelectDate":"تحديد التاريخ","SelectDeselect":"تحديد/إلغاء تحديد الكل","Selected":"المحدد: ","ServerName":"اسم الخادم","Settings":"إعدادات","ShowFilterRow":"عرض صف التصفية","SignIn":"تسجيل الدخول","SortAscending":"فرز تصاعدي","SortDescending":"فرز تنازلي","Spreadsheet":"جدول بيانات","StartsWith":"يبدأ ب","StatusIndicator":"مؤشر الحالة","Tasks":"مهام","Today":"اليوم","Translate":"ترجمة","UserID":"معرّف المستخدم","Utilities":"أدوات مساعدة","Yes":"نعم","Page":"صفحة","Rows":"صفوف","ShowingAll":"عرض الكل","SessionNavigation":"التنقل بين الجلسات","ListAllMenuItems":"سرد كل عناضر القائمة","NoRecordsFound":"لم يتم العثور على سجلات","SearchTree":"شجرة بحث","Clear":"مسح","DrillDown":"التنقل لأسفل","Required":"هذا الحقل مطلوب","Available":"المتوفر:","Add":"إضافة","MoveDown":"تحريك لأسفل","MoveUp":"تحريك لأعلى","Remove":"إزالة","LastYear":"العام الماضي","NextMonth":"الشهر التالي","NextWeek":"الأسبوع التالي","NextYear":"العام التالي","OneMonthAgo":"قبل شهر واحد","OneWeekAgo":"قبل أسبوع واحد","SixMonthsAgo":"قبل ستة أشهر","Time":"الوقت","CannotBeSelected":"لا يمكن تحديد هذا الصف.","ResetToDefault":"إعادة التعيين إلى التخطيط الافتراضي","CloseOtherTabs":"إغلاق علامات التبويب الأخرى","EmailValidation":"أدخل عنوان بريد إلكتروني صالح","UrlValidation":"أدخل URL صالح","EndofResults":"نهاية نتائج","More":"المزيد...","RecordsPerPage":"عدد السجلات في كل صفحة","Maximize":"تحقيق أقصى قدر من","Minimize":"خفض"}
 	});
 
 
@@ -36546,7 +35428,7 @@ Globalize.addCultureInfo( "bg-BG", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Допълнителна помощ","AddNewTab":"Добави нов раздел","Alerts":"Известявания","ApplyFilter":"Приложи филтър","Approve":"Одобри","Attachments":"Прикачени файлове","Back":"Назад","Basic":"Основни","Between":"Между","Book":"Книга","Cancel":"Отмени","Checked":"Проверен","ClearFilter":"Изчисти филтър","Close":"Затвори","CloseCancelChanges":"Затвори и отмени промените","CloseSaveChanges":"Затвори и запиши промените","CloseTab":"Затвори раздел","ColumnPersonalization":"Персонализиране на колони","Comments":"Коментари","Confirmation":"Потвърждение","Contains":"Съдържа","CreateTab":"Създай нов раздел","Cut":"Изрежи","Delete":"Изтрий","DiscardUndo":"Анулирай/отмени","DisplayDropDownList":"Покажи падащ списък","Displaying":"Изобразяване: ","DocWord":"Документ","DoesNotContain":"Не съдържа","DoesNotEndWith":"Не завършва с","DoesNotEqual":"Не се равнява на","DoesNotStartWith":"Не започва с","Download":"Изтегли","Duplicate":"Дублирай","Edit":"Редактирай","EitherSelectedorNotSelected":"Избраните или тези, които не са избрани","Email":"Имейл","EndsWith":"Свършва с","EqualsStr":"Равнява се на","ExpandCollapse":"Разшири/свий","ExportFailed":"Неуспешно експортиране","ExportToExcel":"Експортирай в Excel","FileInUse":"Указаният файл се използва","FileInUseDetail":"Затвори файла в приложението, в което се използва или укажи друго име на файла.","Filter":"Филтър","FilterMenu":"Меню на филтър","FilterOptions":"Опции за филтър","FilterWithinResults":"Филтър в резултати","First":"Първи","FirstView":"Първи изглед","Folder":"Папка","ForgotPassword":"Забравихте паролата си?","Forward":"Напред","GetMoreRows":"Добави още редове","GreaterThan":"По-голямо от","GreaterThanOrEquals":"По-голямо от или равно на","GridSettings":"Настройки на решетка","GroupSelection":"Групов избор","Help":"Помощ","HideColumn":"Скрий колони","IsEmpty":"Е празно","IsNotEmpty":"Не е празно","Last":"Последен","LastView":"Последен изглед","LaunchActivate":"Стартирай/активирай","LessThan":"По-малко от","LessThanOrEquals":"По-голямо от или равно на","Links":"Връзки","ListTabs":"Изведи в списък всички раздели","LoadingItem":"Зареждане на елемент ","Maintenance":"Поддръжка","Menu":"Меню","New":"Нов","Next":"Следващ","NextView":"Следващ изглед","No":"Не","NotChecked":"Не е отметнат","Notes":"Забележки","NotSelected":"Не е избран","Of":" на ","Ok":"ОК.","Open":"Отвори","Password":"Парола","Paste":"Постави","Phone":"Телефон","PleaseWait":"Моля, изчакайте","Previous":"Предишен","PreviousView":"Предишен изглед","Print":"Печат","Queries":"Запитвания","Redo":"Върни","Refresh":"Опресни","Reject":"Отхвърли","RememberMe":"Запомни ме на този компютър","Reports":"Отчети","Reset":"Възстанови","Review":"Прегледай","RunFilter":"Изпълни филтър","RunJob":"Изпълни задача","Save":"Запис","SaveBeforeClosing":"Запиши преди да затвориш","SavedFilters":"Записани филтри","SaveSubmit":"Запиши/изпрати","ScreenDesign":"Организация на екрана","Search":"Търсене","SelectContents":"Избери съдържание","SelectDate":"Избери дата","SelectDeselect":"Избери/премахни избора от","Selected":"Избрани: ","ServerName":"Име на сървър","Settings":"Настройки","ShowFilterRow":"Покажи ред от филтър","SignIn":"Вписване","SortAscending":"Сортирай възходящо","SortDescending":"Сортирай низходящо","Spreadsheet":"Таблица","StartsWith":"Започва с","StatusIndicator":"Индикатор на състоянието","Tasks":"Задачи","Today":"Днес","Translate":"Преведи","UserID":"ИД на потребител","Utilities":"Помощни програми","Yes":"Да","Page":"Страница","Rows":"Редове","ShowingAll":"Показване на всички","SessionNavigation":"Навигация на сесия","ListAllMenuItems":"Изведи в списък всички елементи на менюто","NoRecordsFound":"Няма открити записи","SearchTree":"Дървовидна структура на търсенето","Clear":"Изчисти","DrillDown":"Изведи подробно","Required":"Това поле е задължително","Available":"Налично:","Add":"Добави:","MoveDown":"Премести надолу","MoveUp":"Премести нагоре","Remove":"Премахни","LastYear":"Миналата година","NextMonth":"Следващия месец","NextWeek":"Следващата седмица","NextYear":"Следващата година","OneMonthAgo":"Преди един месец","OneWeekAgo":"Преди една седмица","SixMonthsAgo":"Преди шест месеца","Time":"Час","CannotBeSelected":"Този ред не може да бъде избран.","ResetToDefault":"Възстанови оформлението по подразбиране","CloseOtherTabs":"Затвори останалите раздели","EmailValidation":"Въведи валиден имейл адрес","UrlValidation":"Въведи валиден URL адрес","EndofResults":"Последни резултати","More":"Още...","RecordsPerPage":"Записа на страница","Maximize":"Увеличете","Minimize":"Минимизиране"}
+	messages: {"SelectAll":"Избор на всички", "AdditionalHelp":"Допълнителна помощ","AddNewTab":"Добави нов раздел","Alerts":"Известявания","ApplyFilter":"Приложи филтър","Approve":"Одобри","Attachments":"Прикачени файлове","Back":"Назад","Basic":"Основни","Between":"Между","Book":"Книга","Cancel":"Отмени","Checked":"Проверен","ClearFilter":"Изчисти филтър","Close":"Затвори","CloseCancelChanges":"Затвори и отмени промените","CloseSaveChanges":"Затвори и запиши промените","CloseTab":"Затвори раздел","ColumnPersonalization":"Персонализиране на колони","Comments":"Коментари","Confirmation":"Потвърждение","Contains":"Съдържа","CreateTab":"Създай нов раздел","Cut":"Изрежи","Delete":"Изтрий","DiscardUndo":"Анулирай/отмени","DisplayDropDownList":"Покажи падащ списък","Displaying":"Изобразяване: ","DocWord":"Документ","DoesNotContain":"Не съдържа","DoesNotEndWith":"Не завършва с","DoesNotEqual":"Не се равнява на","DoesNotStartWith":"Не започва с","Download":"Изтегли","Duplicate":"Дублирай","Edit":"Редактирай","EitherSelectedorNotSelected":"Избраните или тези, които не са избрани","Email":"Имейл","EndsWith":"Свършва с","EqualsStr":"Равнява се на","ExpandCollapse":"Разшири/свий","ExportFailed":"Неуспешно експортиране","ExportToExcel":"Експортирай в Excel","FileInUse":"Указаният файл се използва","FileInUseDetail":"Затвори файла в приложението, в което се използва или укажи друго име на файла.","Filter":"Филтър","FilterMenu":"Меню на филтър","FilterOptions":"Опции за филтър","FilterWithinResults":"Филтър в резултати","First":"Първи","FirstView":"Първи изглед","Folder":"Папка","ForgotPassword":"Забравихте паролата си?","Forward":"Напред","GetMoreRows":"Добави още редове","GreaterThan":"По-голямо от","GreaterThanOrEquals":"По-голямо от или равно на","GridSettings":"Настройки на решетка","GroupSelection":"Групов избор","Help":"Помощ","HideColumn":"Скрий колони","IsEmpty":"Е празно","IsNotEmpty":"Не е празно","Last":"Последен","LastView":"Последен изглед","LaunchActivate":"Стартирай/активирай","LessThan":"По-малко от","LessThanOrEquals":"По-голямо от или равно на","Links":"Връзки","ListTabs":"Изведи в списък всички раздели","LoadingItem":"Зареждане на елемент ","Maintenance":"Поддръжка","Menu":"Меню","New":"Нов","Next":"Следващ","NextView":"Следващ изглед","No":"Не","NotChecked":"Не е отметнат","Notes":"Забележки","NotSelected":"Не е избран","Of":" на ","Ok":"ОК.","Open":"Отвори","Password":"Парола","Paste":"Постави","Phone":"Телефон","PleaseWait":"Моля, изчакайте","Previous":"Предишен","PreviousView":"Предишен изглед","Print":"Печат","Queries":"Запитвания","Redo":"Върни","Refresh":"Опресни","Reject":"Отхвърли","RememberMe":"Запомни ме на този компютър","Reports":"Отчети","Reset":"Възстанови","Review":"Прегледай","RunFilter":"Изпълни филтър","RunJob":"Изпълни задача","Save":"Запис","SaveBeforeClosing":"Запиши преди да затвориш","SavedFilters":"Записани филтри","SaveSubmit":"Запиши/изпрати","ScreenDesign":"Организация на екрана","Search":"Търсене","SelectContents":"Избери съдържание","SelectDate":"Избери дата","SelectDeselect":"Избери/премахни избора от","Selected":"Избрани: ","ServerName":"Име на сървър","Settings":"Настройки","ShowFilterRow":"Покажи ред от филтър","SignIn":"Вписване","SortAscending":"Сортирай възходящо","SortDescending":"Сортирай низходящо","Spreadsheet":"Таблица","StartsWith":"Започва с","StatusIndicator":"Индикатор на състоянието","Tasks":"Задачи","Today":"Днес","Translate":"Преведи","UserID":"ИД на потребител","Utilities":"Помощни програми","Yes":"Да","Page":"Страница","Rows":"Редове","ShowingAll":"Показване на всички","SessionNavigation":"Навигация на сесия","ListAllMenuItems":"Изведи в списък всички елементи на менюто","NoRecordsFound":"Няма открити записи","SearchTree":"Дървовидна структура на търсенето","Clear":"Изчисти","DrillDown":"Изведи подробно","Required":"Това поле е задължително","Available":"Налично:","Add":"Добави:","MoveDown":"Премести надолу","MoveUp":"Премести нагоре","Remove":"Премахни","LastYear":"Миналата година","NextMonth":"Следващия месец","NextWeek":"Следващата седмица","NextYear":"Следващата година","OneMonthAgo":"Преди един месец","OneWeekAgo":"Преди една седмица","SixMonthsAgo":"Преди шест месеца","Time":"Час","CannotBeSelected":"Този ред не може да бъде избран.","ResetToDefault":"Възстанови оформлението по подразбиране","CloseOtherTabs":"Затвори останалите раздели","EmailValidation":"Въведи валиден имейл адрес","UrlValidation":"Въведи валиден URL адрес","EndofResults":"Последни резултати","More":"Още...","RecordsPerPage":"Записа на страница","Maximize":"Увеличете","Minimize":"Минимизиране"}
 });
 
 }( this ));
@@ -36632,7 +35514,7 @@ Globalize.addCultureInfo( "cs-CZ", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Další nápověda","AddNewTab":"Přidat novou kartu","Alerts":"Upozornění","ApplyFilter":"Použít filtr","Approve":"Schválit","Attachments":"Přílohy","Back":"Zpět","Basic":"Základní","Between":"Mezi","Book":"Kniha","Cancel":"Storno","Checked":"Zaškrtnuto","ClearFilter":"Vymazat filtr","Close":"Zavřít","CloseCancelChanges":"Zavřít a zrušit změny","CloseSaveChanges":"Zavřít a uložit změny","CloseTab":"Zavřít kartu","ColumnPersonalization":"Přizpůsobení sloupce","Comments":"Komentáře","Confirmation":"Potvrzení","Contains":"Obsahuje","CreateTab":"Vytvořit novou kartu","Cut":"Vyjmout","Delete":"Odstranit","DiscardUndo":"Zrušit/Vrátit zpět","DisplayDropDownList":"Zobrazit rozbalovací seznam","Displaying":"Zobrazeno: ","DocWord":"Dokument","DoesNotContain":"Neobsahuje","DoesNotEndWith":"Nekončí na","DoesNotEqual":"Nerovná se","DoesNotStartWith":"Nezačíná na","Download":"Stáhnout","Duplicate":"Duplikovat","Edit":"Upravit","EitherSelectedorNotSelected":"Buďto vybráno nebo nevybráno","Email":"E-mail","EndsWith":"Končí na","EqualsStr":"Rovná se","ExpandCollapse":"Rozbalit/Sbalit","ExportFailed":"Export se nezdařil","ExportToExcel":"Export do Excelu","FileInUse":"Určený soubor se používá","FileInUseDetail":"Zavřete soubor v aplikaci, která jej používá, nebo zadejte jiný název souboru.","Filter":"Filtr","FilterMenu":"Filtrovat nabídku","FilterOptions":"Filtrovat možnosti","FilterWithinResults":"Filtrovat výsledky","First":"První","FirstView":"První zobrazení","Folder":"Složka","ForgotPassword":"Zapomněli jste heslo?","Forward":"Vpřed","GetMoreRows":"Získat další řádky","GreaterThan":"Větší než","GreaterThanOrEquals":"Větší než nebo rovno","GridSettings":"Nastavení mřížky","GroupSelection":"Skupinový výběr","Help":"Nápověda","HideColumn":"Skrýt sloupec","IsEmpty":"Je prázdný","IsNotEmpty":"Není prázdný","Last":"Poslední","LastView":"Poslední zobrazení","LaunchActivate":"Spustit/Aktivovat","LessThan":"Menší než","LessThanOrEquals":"Menší než nebo rovno","Links":"Odkazy","ListTabs":"Vypsat všechny karty","LoadingItem":"Načítání položky ","Maintenance":"Údržba","Menu":"Nabídka","New":"Nový","Next":"Následující","NextView":"Následující zobrazení","No":"Ne","NotChecked":"Nezaškrtnuto","Notes":"Poznámky","NotSelected":"Nevybráno","Of":" z ","Ok":"OK","Open":"Otevřít","Password":"Heslo","Paste":"Vložit","Phone":"Telefon","PleaseWait":"Prosím čekejte","Previous":"Předchozí","PreviousView":"Předchozí zobrazení","Print":"Tisk","Queries":"Dotazy","Redo":"Opakovat","Refresh":"Aktualizovat","Reject":"Odmítnout","RememberMe":"Zapamatovat si mě na tomto počítači","Reports":"Reporty","Reset":"Reset","Review":"Revidovat","RunFilter":"Spustit filtr","RunJob":"Spustit úlohu","Save":"Uložit","SaveBeforeClosing":"Uložit před zavřením","SavedFilters":"Uložené filtry","SaveSubmit":"Uložit/Odeslat","ScreenDesign":"Uspořádání obrazovky","Search":"Vyhledat","SelectContents":"Vybrat obsah","SelectDate":"Vybrat datum","SelectDeselect":"Vybrat vše / Zrušit výběr všeho","Selected":"Vybráno: ","ServerName":"Název serveru","Settings":"Nastavení","ShowFilterRow":"Zobrazit řádek filtru","SignIn":"Přihlásit se","SortAscending":"Řadit vzestupně","SortDescending":"Řadit sestupně","Spreadsheet":"Tabulka","StartsWith":"Začíná na","StatusIndicator":"Indikátor stavu","Tasks":"Úlohy","Today":"Dnes","Translate":"Přeložit","UserID":"ID uživatele","Utilities":"Nástroje","Yes":"Ano","Page":"Stránka","Rows":"Řádky","ShowingAll":"Zobrazeno vše","SessionNavigation":"Navigace relací","ListAllMenuItems":"Vypsat všechny položky nabídky","NoRecordsFound":"Nebyly nalezeny žádné záznamy","SearchTree":"Prohledat strom","Clear":"Vymazat","DrillDown":"Procházet hierarchii","Required":"Toto pole je vyžadováno","Available":"K dispozici:","Add":"Přidat","MoveDown":"Přesunout dolů","MoveUp":"Přesunout nahoru","Remove":"Odebrat","LastYear":"Minulý rok","NextMonth":"Příští měsíc","NextWeek":"Příští týden","NextYear":"Příští rok","OneMonthAgo":"Před měsícem","OneWeekAgo":"Před týdnem","SixMonthsAgo":"Před půl rokem","Time":"Čas","CannotBeSelected":"Tento řádek nelze vybrat.","ResetToDefault":"Obnovit výchozí uspořádání","CloseOtherTabs":"Zavřít ostatní karty","EmailValidation":"Zadejte platnou e-mailovou adresu","UrlValidation":"Zadejte platné URL","EndofResults":"Konec výsledků","More":"Další...","RecordsPerPage":"Záznamů na stránku","Maximize":"Maximalizovat","Minimize":"Minimalizovat","CloseAllTabs":"Zavřít všechny karty","QuickDates":"Rychlá data","Finish":"Dokončit","SetTextColor":"Nastavit barvu textu","AttachmentRules":"Pravidla příloh","AutoRefresh":"Automatická aktualizace","BarChart":"Pruhový graf","CopyMail":"Kopírovat a poslat e-mailem","CopyUrl":"Kopírovat URL","DistributeHorizontally":"Distribuovat vodorovně","ExpandAll":"Rozbalit vše","Generate":"Generovat","GenerateScript":"Generovat skript","NoAttachments":"Bez příloh","PieChart":"Výsečový graf","QuickAccess":"Rychlý přístup","RestoreUser":"Obnovit uživatele","SaveConsolidate":"Uložit s místní konsolidací","Screen Design":"Návrh obrazovky","SelectAll":"Vybrat vše","SpellCheck":"Kontrola pravopisu","SubmitForApproval":"Odeslat ke schválení","Timezone":"Časové pásmo","Loading":"Načítání...","NewNode":"Nový uzel","RememberSettings":"Uložit tato nastavení","Company":"Společnost","Environment":"Prostředí","DontHaveAccount":"Nemáte účet?","ResetPassword":"Obnovit mé heslo","SignUpNow":"Přihlásit se","SelectMonthYear":"Vyberte měsíc a rok"}
+	messages: {"SelectAll":"Vybrat vše", "AdditionalHelp":"Další nápověda","AddNewTab":"Přidat novou kartu","Alerts":"Upozornění","ApplyFilter":"Použít filtr","Approve":"Schválit","Attachments":"Přílohy","Back":"Zpět","Basic":"Základní","Between":"Mezi","Book":"Kniha","Cancel":"Storno","Checked":"Zaškrtnuto","ClearFilter":"Vymazat filtr","Close":"Zavřít","CloseCancelChanges":"Zavřít a zrušit změny","CloseSaveChanges":"Zavřít a uložit změny","CloseTab":"Zavřít kartu","ColumnPersonalization":"Přizpůsobení sloupce","Comments":"Komentáře","Confirmation":"Potvrzení","Contains":"Obsahuje","CreateTab":"Vytvořit novou kartu","Cut":"Vyjmout","Delete":"Odstranit","DiscardUndo":"Zrušit/Vrátit zpět","DisplayDropDownList":"Zobrazit rozbalovací seznam","Displaying":"Zobrazeno: ","DocWord":"Dokument","DoesNotContain":"Neobsahuje","DoesNotEndWith":"Nekončí na","DoesNotEqual":"Nerovná se","DoesNotStartWith":"Nezačíná na","Download":"Stáhnout","Duplicate":"Duplikovat","Edit":"Upravit","EitherSelectedorNotSelected":"Buďto vybráno nebo nevybráno","Email":"E-mail","EndsWith":"Končí na","EqualsStr":"Rovná se","ExpandCollapse":"Rozbalit/Sbalit","ExportFailed":"Export se nezdařil","ExportToExcel":"Export do Excelu","FileInUse":"Určený soubor se používá","FileInUseDetail":"Zavřete soubor v aplikaci, která jej používá, nebo zadejte jiný název souboru.","Filter":"Filtr","FilterMenu":"Filtrovat nabídku","FilterOptions":"Filtrovat možnosti","FilterWithinResults":"Filtrovat výsledky","First":"První","FirstView":"První zobrazení","Folder":"Složka","ForgotPassword":"Zapomněli jste heslo?","Forward":"Vpřed","GetMoreRows":"Získat další řádky","GreaterThan":"Větší než","GreaterThanOrEquals":"Větší než nebo rovno","GridSettings":"Nastavení mřížky","GroupSelection":"Skupinový výběr","Help":"Nápověda","HideColumn":"Skrýt sloupec","IsEmpty":"Je prázdný","IsNotEmpty":"Není prázdný","Last":"Poslední","LastView":"Poslední zobrazení","LaunchActivate":"Spustit/Aktivovat","LessThan":"Menší než","LessThanOrEquals":"Menší než nebo rovno","Links":"Odkazy","ListTabs":"Vypsat všechny karty","LoadingItem":"Načítání položky ","Maintenance":"Údržba","Menu":"Nabídka","New":"Nový","Next":"Následující","NextView":"Následující zobrazení","No":"Ne","NotChecked":"Nezaškrtnuto","Notes":"Poznámky","NotSelected":"Nevybráno","Of":" z ","Ok":"OK","Open":"Otevřít","Password":"Heslo","Paste":"Vložit","Phone":"Telefon","PleaseWait":"Prosím čekejte","Previous":"Předchozí","PreviousView":"Předchozí zobrazení","Print":"Tisk","Queries":"Dotazy","Redo":"Opakovat","Refresh":"Aktualizovat","Reject":"Odmítnout","RememberMe":"Zapamatovat si mě na tomto počítači","Reports":"Sestavy","Reset":"Reset","Review":"Revidovat","RunFilter":"Spustit filtr","RunJob":"Spustit úlohu","Save":"Uložit","SaveBeforeClosing":"Uložit před zavřením","SavedFilters":"Uložené filtry","SaveSubmit":"Uložit/Odeslat","ScreenDesign":"Uspořádání obrazovky","Search":"Vyhledat","SelectContents":"Vybrat obsah","SelectDate":"Vybrat datum","SelectDeselect":"Vybrat vše / Zrušit výběr všeho","Selected":"Vybráno: ","ServerName":"Název serveru","Settings":"Nastavení","ShowFilterRow":"Zobrazit řádek filtru","SignIn":"Přihlásit se","SortAscending":"Řadit vzestupně","SortDescending":"Řadit sestupně","Spreadsheet":"Tabulka","StartsWith":"Začíná na","StatusIndicator":"Indikátor stavu","Tasks":"Úlohy","Today":"Dnes","Translate":"Přeložit","UserID":"ID uživatele","Utilities":"Nástroje","Yes":"Ano","Page":"Stránka","Rows":"Řádky","ShowingAll":"Zobrazeno vše","SessionNavigation":"Navigace relací","ListAllMenuItems":"Vypsat všechny položky nabídky","NoRecordsFound":"Nebyly nalezeny žádné záznamy","SearchTree":"Prohledat strom","Clear":"Vymazat","DrillDown":"Procházet hierarchii","Required":"Toto pole je vyžadováno","Available":"K dispozici:","Add":"Přidat","MoveDown":"Přesunout dolů","MoveUp":"Přesunout nahoru","Remove":"Odebrat","LastYear":"Minulý rok","NextMonth":"Příští měsíc","NextWeek":"Příští týden","NextYear":"Příští rok","OneMonthAgo":"Před měsícem","OneWeekAgo":"Před týdnem","SixMonthsAgo":"Před půl rokem","Time":"Čas","CannotBeSelected":"Tento řádek nelze vybrat.","ResetToDefault":"Obnovit výchozí uspořádání","CloseOtherTabs":"Zavřít ostatní karty","EmailValidation":"Zadejte platnou e-mailovou adresu","UrlValidation":"Zadejte platné URL","EndofResults":"Konec výsledků","More":"Další...","RecordsPerPage":"Záznamů na stránku","Maximize":"maximalizovat","Minimize":"minimalizovat", "Loading": "Načítání..."}
 });
 
 }( this ));
@@ -36712,7 +35594,7 @@ Globalize.addCultureInfo( "da-DK", "default", {
 		}
 	},
 	// For localized strings
-	messages: {"AdditionalHelp":"Yderligere hjælp","AddNewTab":"Tilføj ny fane","Alerts":"Advarsler","ApplyFilter":"Anvend filter","Approve":"Godkend","Attachments":"Vedhæftede filer","Back":"Tilbage","Basic":"Grundlæggende","Between":"Mellem","Book":"Bog","Cancel":"Annuller","Checked":"Kontrolleret","ClearFilter":"Ryd filter","Close":"Luk","CloseCancelChanges":"Luk og annuller ændringer","CloseSaveChanges":"Luk og gem ændringer","CloseTab":"Luk fanen","ColumnPersonalization":"Brugertilpasning af kolonne","Comments":"Kommentarer","Confirmation":"Bekræftelse","Contains":"Indeholder","CreateTab":"Opret en ny fane","Cut":"Klip","Delete":"Slet","DiscardUndo":"Kassér/Fortryd","DisplayDropDownList":"Vis rulleliste","Displaying":"Viser: ","DocWord":"Dokument","DoesNotContain":"Indeholder ikke","DoesNotEndWith":"Slutter ikke med","DoesNotEqual":"Ikke lig med","DoesNotStartWith":"Starter ikke med","Download":"Hent","Duplicate":"Dupliker","Edit":"Rediger","EitherSelectedorNotSelected":"Enten valgt eller ikke valgt","Email":"E-mail","EndsWith":"Slutter med","EqualsStr":"Lig med","ExpandCollapse":"Udvid/Skjul","ExportFailed":"Eksporten mislykkedes","ExportToExcel":"Eksporter til Excel","FileInUse":"Den angivne fil anvendes i øjeblikket","FileInUseDetail":"Luk filen i det program, hvor den anvendes, eller angiv et andet filnavn.","Filter":"Filter","FilterMenu":"Menuen Filter","FilterOptions":"Filterindstillinger","FilterWithinResults":"Filtrer resultaterne","First":"Første","FirstView":"Første visning","Folder":"Mappe","ForgotPassword":"Har du glemt din adgangskode?","Forward":"Frem","GetMoreRows":"Hent flere rækker","GreaterThan":"Større end","GreaterThanOrEquals":"Større end eller lig med","GridSettings":"Gitterindstillinger","GroupSelection":"Valg af gruppe","Help":"Hjælp","HideColumn":"Skjul kolonne","IsEmpty":"Er tom","IsNotEmpty":"Er ikke tom","Last":"Sidste","LastView":"Sidste visning","LaunchActivate":"Start/Aktiver","LessThan":"Mindre end","LessThanOrEquals":"Mindre end eller lig med","Links":"Links","ListTabs":"Vis alle faner","LoadingItem":"Indlæser element ","Maintenance":"Vedligeholdelse","Menu":"Menu","New":"Ny","Next":"Næste","NextView":"Næste visning","No":"Nej","NotChecked":"Ikke kontrolleret","Notes":"Noter","NotSelected":"Ikke valgt","Of":" af ","Ok":"OK","Open":"Åbn","Password":"Adgangskode","Paste":"Sæt ind","Phone":"Telefon","PleaseWait":"Vent","Previous":"Forrige","PreviousView":"Forrige visning","Print":"Udskriv","Queries":"Forespørgsler","Redo":"Annuller fortryd","Refresh":"Opdater","Reject":"Afvis","RememberMe":"Husk mig på denne computer","Reports":"Rapporter","Reset":"Nulstil","Review":"Gennemgå","RunFilter":"Kør filter","RunJob":"Kør job","Save":"Gem","SaveBeforeClosing":"Gem før lukning","SavedFilters":"Gemte filtre","SaveSubmit":"Gem/Send","ScreenDesign":"Skærmdesign","Search":"Søg","SelectContents":"Vælg indhold","SelectDate":"Vælg en dato","SelectDeselect":"Vælg/Fravælg alt","Selected":"Valgt: ","ServerName":"Servernavn","Settings":"Indstillinger","ShowFilterRow":"Vis filterrække","SignIn":"Log på","SortAscending":"Sorter stigende","SortDescending":"Sorter faldende","Spreadsheet":"Regneark","StartsWith":"Starter med","StatusIndicator":"Statusindikator","Tasks":"Opgaver","Today":"I dag","Translate":"Oversæt","UserID":"Bruger-id","Utilities":"Hjælpeprogrammer","Yes":"Ja","Page":"Side","Rows":"Rækker","ShowingAll":"Viser alt","SessionNavigation":"Sessionsnavigation","ListAllMenuItems":"Vis alle menupunkter","NoRecordsFound":"Der blev ikke fundet nogen poster","SearchTree":"Søg i træ","Clear":"Ryd","DrillDown":"Analyser ned","Required":"Dette felt er obligatorisk","Available":"Tilgængelig:","Add":"Tilføj","MoveDown":"Flyt ned","MoveUp":"Flyt op","Remove":"Fjern","LastYear":"Sidste år","NextMonth":"Næste måned","NextWeek":"Næste uge","NextYear":"Næste år","OneMonthAgo":"En måned siden","OneWeekAgo":"En uge siden","SixMonthsAgo":"Seks måneder siden","Time":"Tid","CannotBeSelected":"Denne række kan ikke vælges.","ResetToDefault":"Gendan standardlayout","CloseOtherTabs":"Luk andre faner","EmailValidation":"Indtast en gyldig e-mailadresse","UrlValidation":"Indtast en gyldig webadresse","EndofResults":"Slut på resultater","More":"Mere...","RecordsPerPage":"Poster pr. side","Maximize":"Maksimer","Minimize":"Minimer"}
+	messages: {"SelectAll":"Vælg alt", "AdditionalHelp":"Yderligere hjælp","AddNewTab":"Tilføj ny fane","Alerts":"Advarsler","ApplyFilter":"Anvend filter","Approve":"Godkend","Attachments":"Vedhæftede filer","Back":"Tilbage","Basic":"Grundlæggende","Between":"Mellem","Book":"Bog","Cancel":"Annuller","Checked":"Kontrolleret","ClearFilter":"Ryd filter","Close":"Luk","CloseCancelChanges":"Luk og annuller ændringer","CloseSaveChanges":"Luk og gem ændringer","CloseTab":"Luk fanen","ColumnPersonalization":"Brugertilpasning af kolonne","Comments":"Kommentarer","Confirmation":"Bekræftelse","Contains":"Indeholder","CreateTab":"Opret en ny fane","Cut":"Klip","Delete":"Slet","DiscardUndo":"Kassér/Fortryd","DisplayDropDownList":"Vis rulleliste","Displaying":"Viser: ","DocWord":"Dokument","DoesNotContain":"Indeholder ikke","DoesNotEndWith":"Slutter ikke med","DoesNotEqual":"Ikke lig med","DoesNotStartWith":"Starter ikke med","Download":"Hent","Duplicate":"Dupliker","Edit":"Rediger","EitherSelectedorNotSelected":"Enten valgt eller ikke valgt","Email":"E-mail","EndsWith":"Slutter med","EqualsStr":"Lig med","ExpandCollapse":"Udvid/Skjul","ExportFailed":"Eksporten mislykkedes","ExportToExcel":"Eksporter til Excel","FileInUse":"Den angivne fil anvendes i øjeblikket","FileInUseDetail":"Luk filen i det program, hvor den anvendes, eller angiv et andet filnavn.","Filter":"Filter","FilterMenu":"Menuen Filter","FilterOptions":"Filterindstillinger","FilterWithinResults":"Filtrer resultaterne","First":"Første","FirstView":"Første visning","Folder":"Mappe","ForgotPassword":"Har du glemt din adgangskode?","Forward":"Frem","GetMoreRows":"Hent flere rækker","GreaterThan":"Større end","GreaterThanOrEquals":"Større end eller lig med","GridSettings":"Gitterindstillinger","GroupSelection":"Valg af gruppe","Help":"Hjælp","HideColumn":"Skjul kolonne","IsEmpty":"Er tom","IsNotEmpty":"Er ikke tom","Last":"Sidste","LastView":"Sidste visning","LaunchActivate":"Start/Aktiver","LessThan":"Mindre end","LessThanOrEquals":"Mindre end eller lig med","Links":"Links","ListTabs":"Vis alle faner","LoadingItem":"Indlæser element ","Maintenance":"Vedligeholdelse","Menu":"Menu","New":"Ny","Next":"Næste","NextView":"Næste visning","No":"Nej","NotChecked":"Ikke kontrolleret","Notes":"Noter","NotSelected":"Ikke valgt","Of":" af ","Ok":"OK","Open":"Åbn","Password":"Adgangskode","Paste":"Sæt ind","Phone":"Telefon","PleaseWait":"Vent","Previous":"Forrige","PreviousView":"Forrige visning","Print":"Udskriv","Queries":"Forespørgsler","Redo":"Annuller fortryd","Refresh":"Opdater","Reject":"Afvis","RememberMe":"Husk mig på denne computer","Reports":"Rapporter","Reset":"Nulstil","Review":"Gennemgå","RunFilter":"Kør filter","RunJob":"Kør job","Save":"Gem","SaveBeforeClosing":"Gem før lukning","SavedFilters":"Gemte filtre","SaveSubmit":"Gem/Send","ScreenDesign":"Skærmdesign","Search":"Søg","SelectContents":"Vælg indhold","SelectDate":"Vælg en dato","SelectDeselect":"Vælg/Fravælg alt","Selected":"Valgt: ","ServerName":"Servernavn","Settings":"Indstillinger","ShowFilterRow":"Vis filterrække","SignIn":"Log på","SortAscending":"Sorter stigende","SortDescending":"Sorter faldende","Spreadsheet":"Regneark","StartsWith":"Starter med","StatusIndicator":"Statusindikator","Tasks":"Opgaver","Today":"I dag","Translate":"Oversæt","UserID":"Bruger-id","Utilities":"Hjælpeprogrammer","Yes":"Ja","Page":"Side","Rows":"Rækker","ShowingAll":"Viser alt","SessionNavigation":"Sessionsnavigation","ListAllMenuItems":"Vis alle menupunkter","NoRecordsFound":"Der blev ikke fundet nogen poster","SearchTree":"Søg i træ","Clear":"Ryd","DrillDown":"Analyser ned","Required":"Dette felt er obligatorisk","Available":"Tilgængelig:","Add":"Tilføj","MoveDown":"Flyt ned","MoveUp":"Flyt op","Remove":"Fjern","LastYear":"Sidste år","NextMonth":"Næste måned","NextWeek":"Næste uge","NextYear":"Næste år","OneMonthAgo":"En måned siden","OneWeekAgo":"En uge siden","SixMonthsAgo":"Seks måneder siden","Time":"Tid","CannotBeSelected":"Denne række kan ikke vælges.","ResetToDefault":"Gendan standardlayout","CloseOtherTabs":"Luk andre faner","EmailValidation":"Indtast en gyldig e-mailadresse","UrlValidation":"Indtast en gyldig webadresse","EndofResults":"Slut på resultater","More":"Mere...","RecordsPerPage":"Poster pr. side","Maximize":"Maksimer","Minimize":"Minimer"}
 });
 
 }( this ));
@@ -36794,7 +35676,7 @@ Globalize.addCultureInfo( "de-DE", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Zusätzliche Hilfe","AddNewTab":"Neues Register hinzufügen","Alerts":"Alarmmeldungen","ApplyFilter":"Filter anwenden","Approve":"Genehmigen","Attachments":"Anhänge","Back":"Zurück","Basic":"Einfach","Between":"Zwischen","Book":"Buch","Cancel":"Abbrechen","Checked":"Markiert","ClearFilter":"Filter löschen","Close":"Schließen","CloseCancelChanges":"Schließen und Änderungen verwerfen","CloseSaveChanges":"Schließen und Änderungen speichern","CloseTab":"Register schließen","ColumnPersonalization":"Spaltenpersonalisierung","Comments":"Anmerkungen","Confirmation":"Bestätigung","Contains":"Enthält","CreateTab":"Neues Register erstellen","Cut":"Ausschneiden","Delete":"Löschen","DiscardUndo":"Verwerfen/Rückgängig machen","DisplayDropDownList":"Dropdownliste anzeigen","Displaying":"Anzeige: ","DocWord":"Dokument","DoesNotContain":"Enthält nicht","DoesNotEndWith":"Endet nicht mit","DoesNotEqual":"Ungleich","DoesNotStartWith":"Beginnt nicht mit","Download":"Herunterladen","Duplicate":"Kopieren","Edit":"Bearbeiten","EitherSelectedorNotSelected":"Ausgewählt/Nicht ausgewählt","Email":"E-Mail","EndsWith":"Endet mit","EqualsStr":"Gleich","ExpandCollapse":"Einblenden/Ausblenden","ExportFailed":"Fehler bei Export","ExportToExcel":"Export nach Excel","FileInUse":"Angegebene Datei wird verwendet","FileInUseDetail":"Schließen Sie die Datei in der Anwendung, in der sie verwendet wird, oder geben Sie einen anderen Dateinamen ein.","Filter":"Filter","FilterMenu":"Filtermenü","FilterOptions":"Filteroptionen","FilterWithinResults":"Ergebnisse filtern","First":"Erster Wert","FirstView":"Erste Ansicht","Folder":"Ordner","ForgotPassword":"Kennwort vergessen?","Forward":"Vorwärts","GetMoreRows":"Weitere Zeilen anzeigen","GreaterThan":"Größer als","GreaterThanOrEquals":"Größer als oder gleich","GridSettings":"Rastereinstellungen","GroupSelection":"Gruppenauswahl","Help":"Hilfe","HideColumn":"Spalte ausblenden","IsEmpty":"Ist leer","IsNotEmpty":"Ist nicht leer","Last":"Letzter Wert","LastView":"Letzte Ansicht","LaunchActivate":"Starten/Aktivieren","LessThan":"Kleiner als","LessThanOrEquals":"Kleiner als oder gleich","Links":"Verknüpfungen","ListTabs":"Alle Register auflisten","LoadingItem":"Lade Objekt  ","Maintenance":"Verwaltung","Menu":"Menü","New":"Neu","Next":"Weiter","NextView":"Nächste Ansicht","No":"Nein","NotChecked":"Nicht markiert","Notes":"Kommentare","NotSelected":"Nicht ausgewählt","Of":" von ","Ok":"OK","Open":"Öffnen","Password":"Kennwort","Paste":"Einfügen","Phone":"Telefon","PleaseWait":"Bitte warten","Previous":"Zurück","PreviousView":"Vorherige Ansicht","Print":"Drucken","Queries":"Abfragen","Redo":"Wiederherstellen","Refresh":"Aktualisieren","Reject":"Ablehnen","RememberMe":"Login auf diesem Computer speichern","Reports":"Berichte","Reset":"Zurücksetzen","Review":"Überprüfen","RunFilter":"Filter ausführen","RunJob":"Job ausführen","Save":"Speichern","SaveBeforeClosing":"Vor dem Schließen speichern","SavedFilters":"Gespeicherte Filter","SaveSubmit":"Speichern/Übermitteln","ScreenDesign":"Bildschirmgestaltung","Search":"Suchen","SelectContents":"Inhalt auswählen","SelectDate":"Datum auswählen","SelectDeselect":"Alle auswählen/Auswahl für alle aufheben","Selected":"Ausgewählt: ","ServerName":"Server-Name","Settings":"Einstellungen","ShowFilterRow":"Filterzeile anzeigen","SignIn":"Anmelden","SortAscending":"Aufsteigend sortieren","SortDescending":"Absteigend sortieren","Spreadsheet":"Tabelle","StartsWith":"Beginnt mit","StatusIndicator":"Statusanzeige","Tasks":"Aufgaben","Today":"Heute","Translate":"Übersetzen","UserID":"Benutzer-ID","Utilities":"Dienstprogramme","Yes":"Ja","Page":"Seite","Rows":"Zeilen","ShowingAll":"Alle anzeigen","SessionNavigation":"Sitzungsnavigation","ListAllMenuItems":"Alle Menüoptionen auflisten","NoRecordsFound":"Keine Datensätze gefunden","SearchTree":"Hierarchie durchsuchen","Clear":"Löschen","DrillDown":"Drill-Down","Required":"Dieses Feld ist obligatorisch.","Available":"Verfügbar:","Add":"Hinzufügen","MoveDown":"Nach unten","MoveUp":"Nach oben","Remove":"Entfernen","LastYear":"Letztes Jahr","NextMonth":"Nächster Monat","NextWeek":"Nächste Woche","NextYear":"Nächstes Jahr","OneMonthAgo":"Vor einem Monat","OneWeekAgo":"Vor einer Woche","SixMonthsAgo":"Vor sechs Monaten","Time":"Zeit","CannotBeSelected":"Diese Zeile kann nicht ausgewählt werden.","ResetToDefault":"Auf Standardlayout zurücksetzen","CloseOtherTabs":"Andere Registerkarten schließen","EmailValidation":"Gültige E-Mail-Adresse eingeben","UrlValidation":"Gültige URL eingeben","EndofResults":"Ende der Ergebnisse","More":"Mehr...","RecordsPerPage":"Datensätze pro Seite","Maximize":"Maximieren","Minimize":"Minimieren","CloseAllTabs":"Alle Registerkarten schließen","QuickDates":"Datumsoptionen","Finish":"Fertig stellen","SetTextColor":"Farbe für Text festlegen","AttachmentRules":"Regeln für Anhänge","AutoRefresh":"Automatisch aktualisieren","BarChart":"Balkendiagramm","CopyMail":"Kopieren und per E-Mail senden","CopyUrl":"URL kopieren","DistributeHorizontally":"Horizontal verteilen","ExpandAll":"Alle erweitern","Generate":"Generieren","GenerateScript":"Skript generieren","NoAttachments":"Keine Anhänge","PieChart":"Kreisdiagramm","QuickAccess":"Schnellzugriff","RestoreUser":"Benutzerdaten wiederherstellen","SaveConsolidate":"Mit lokaler Konsolidierung speichern","Screen Design":"Bildschirmgestaltung","SelectAll":"Alle auswählen","SpellCheck":"Rechtschreibprüfung","SubmitForApproval":"Zur Genehmigung absenden","Timezone":"Zeitzone","Loading":"Laden...","NewNode":"Neuer Knoten","AboutText":"Copyright © 2015 Infor. Alle Rechte vorbehalten. Die hier aufgelisteten Wort- und Designmarken sind Markenzeichen und/oder geschützte Marken der Infor und/oder verbundener Unternehmen. Alle Rechte vorbehalten. Alle anderen hier genannten Markenzeichen sind das Eigentum der betreffenden Unternehmen. www.infor.com.", "SelectMonthYear": "Wählen Sie Monat und Jahr"}
+	messages: {"SelectAll":"Alle auswählen", "AdditionalHelp":"Zusätzliche Hilfe","AddNewTab":"Neues Register hinzufügen","Alerts":"Alarmmeldungen","ApplyFilter":"Filter anwenden","Approve":"Genehmigen","Attachments":"Anhänge","Back":"Zurück","Basic":"Einfach","Between":"Zwischen","Book":"Buch","Cancel":"Abbrechen","Checked":"Markiert","ClearFilter":"Filter löschen","Close":"Schließen","CloseCancelChanges":"Schließen und Änderungen verwerfen","CloseSaveChanges":"Schließen und Änderungen speichern","CloseTab":"Register schließen","ColumnPersonalization":"Spaltenpersonalisierung","Comments":"Anmerkungen","Confirmation":"Bestätigung","Contains":"Enthält","CreateTab":"Neues Register erstellen","Cut":"Ausschneiden","Delete":"Löschen","DiscardUndo":"Verwerfen/Rückgängig machen","DisplayDropDownList":"Dropdownliste anzeigen","Displaying":"Anzeige: ","DocWord":"Dokument","DoesNotContain":"Enthält nicht","DoesNotEndWith":"Endet nicht mit","DoesNotEqual":"Ungleich","DoesNotStartWith":"Beginnt nicht mit","Download":"Herunterladen","Duplicate":"Kopieren","Edit":"Bearbeiten","EitherSelectedorNotSelected":"Ausgewählt/Nicht ausgewählt","Email":"E-Mail","EndsWith":"Endet mit","EqualsStr":"Gleich","ExpandCollapse":"Einblenden/Ausblenden","ExportFailed":"Fehler bei Export","ExportToExcel":"Export nach Excel","FileInUse":"Angegebene Datei wird verwendet","FileInUseDetail":"Schließen Sie die Datei in der Anwendung, in der sie verwendet wird, oder geben Sie einen anderen Dateinamen ein.","Filter":"Filter","FilterMenu":"Filtermenü","FilterOptions":"Filteroptionen","FilterWithinResults":"Ergebnisse filtern","First":"Erster Wert","FirstView":"Erste Ansicht","Folder":"Ordner","ForgotPassword":"Kennwort vergessen?","Forward":"Vorwärts","GetMoreRows":"Weitere Zeilen anzeigen","GreaterThan":"Größer als","GreaterThanOrEquals":"Größer als oder gleich","GridSettings":"Rastereinstellungen","GroupSelection":"Gruppenauswahl","Help":"Hilfe","HideColumn":"Spalte ausblenden","IsEmpty":"Ist leer","IsNotEmpty":"Ist nicht leer","Last":"Letzter Wert","LastView":"Letzte Ansicht","LaunchActivate":"Starten/Aktivieren","LessThan":"Kleiner als","LessThanOrEquals":"Kleiner als oder gleich","Links":"Verknüpfungen","ListTabs":"Alle Register auflisten","LoadingItem":"Lade Objekt  ","Maintenance":"Verwaltung","Menu":"Menü","New":"Neu","Next":"Weiter","NextView":"Nächste Ansicht","No":"Nein","NotChecked":"Nicht markiert","Notes":"Kommentare","NotSelected":"Nicht ausgewählt","Of":" von ","Ok":"OK","Open":"Öffnen","Password":"Kennwort","Paste":"Einfügen","Phone":"Telefon","PleaseWait":"Bitte warten","Previous":"Zurück","PreviousView":"Vorherige Ansicht","Print":"Drucken","Queries":"Abfragen","Redo":"Wiederherstellen","Refresh":"Aktualisieren","Reject":"Ablehnen","RememberMe":"Login auf diesem Computer speichern","Reports":"Berichte","Reset":"Zurücksetzen","Review":"Überprüfen","RunFilter":"Filter ausführen","RunJob":"Job ausführen","Save":"Speichern","SaveBeforeClosing":"Vor dem Schließen speichern","SavedFilters":"Gespeicherte Filter","SaveSubmit":"Speichern/Übermitteln","ScreenDesign":"Bildschirmgestaltung","Search":"Suchen","SelectContents":"Inhalt auswählen","SelectDate":"Datum auswählen","SelectDeselect":"Alle auswählen/Auswahl für alle aufheben","Selected":"Ausgewählt: ","ServerName":"Server-Name","Settings":"Einstellungen","ShowFilterRow":"Filterzeile anzeigen","SignIn":"Anmelden","SortAscending":"Aufsteigend sortieren","SortDescending":"Absteigend sortieren","Spreadsheet":"Tabelle","StartsWith":"Beginnt mit","StatusIndicator":"Statusanzeige","Tasks":"Aufgaben","Today":"Heute","Translate":"Übersetzen","UserID":"Benutzer-ID","Utilities":"Dienstprogramme","Yes":"Ja","Page":"Seite","Rows":"Zeilen","ShowingAll":"Alle anzeigen","SessionNavigation":"Sitzungsnavigation","ListAllMenuItems":"Alle Menüoptionen auflisten","NoRecordsFound":"Keine Datensätze gefunden","SearchTree":"Hierarchie durchsuchen","Clear":"Löschen","DrillDown":"Drill-Down","Required":"Dieses Feld ist obligatorisch.","Available":"Verfügbar:","Add":"Hinzufügen","MoveDown":"Nach unten","MoveUp":"Nach oben","Remove":"Entfernen","LastYear":"Letztes Jahr","NextMonth":"Nächster Monat","NextWeek":"Nächste Woche","NextYear":"Nächstes Jahr","OneMonthAgo":"Vor einem Monat","OneWeekAgo":"Vor einer Woche","SixMonthsAgo":"Vor sechs Monaten","Time":"Zeit","CannotBeSelected":"Diese Zeile kann nicht ausgewählt werden.","ResetToDefault":"Auf Standardlayout zurücksetzen","CloseOtherTabs":"Andere Registerkarten schließen","EmailValidation":"Gültige E-Mail-Adresse eingeben","UrlValidation":"Gültige URL eingeben","EndofResults":"Ende der Ergebnisse","More":"Mehr...","RecordsPerPage":"Datensätze pro Seite","Maximize":"Maximieren","Minimize":"Minimieren","CloseAllTabs":"Alle Registerkarten schließen","QuickDates":"Datumsoptionen","Finish":"Fertig stellen","SetTextColor":"Farbe für Text festlegen","AttachmentRules":"Regeln für Anhänge","AutoRefresh":"Automatisch aktualisieren","BarChart":"Balkendiagramm","CopyMail":"Kopieren und per E-Mail senden","CopyUrl":"URL kopieren","DistributeHorizontally":"Horizontal verteilen","ExpandAll":"Alle erweitern","Generate":"Generieren","GenerateScript":"Skript generieren","NoAttachments":"Keine Anhänge","PieChart":"Kreisdiagramm","QuickAccess":"Schnellzugriff","RestoreUser":"Benutzerdaten wiederherstellen","SaveConsolidate":"Mit lokaler Konsolidierung speichern","Screen Design":"Bildschirmgestaltung","SelectAll":"Alle auswählen","SpellCheck":"Rechtschreibprüfung","SubmitForApproval":"Zur Genehmigung absenden","Timezone":"Zeitzone","Loading":"Laden...","NewNode":"Neuer Knoten","AboutText":"Copyright © 2014 Infor. Alle Rechte vorbehalten. Die hier aufgelisteten Wort- und Designmarken sind Markenzeichen und/oder geschützte Marken der Infor und/oder verbundener Unternehmen. Alle Rechte vorbehalten. Alle anderen hier genannten Markenzeichen sind das Eigentum der betreffenden Unternehmen. www.infor.com."}
 });
 
 }( this ));
@@ -36989,66 +35871,6 @@ Globalize.addCultureInfo( "en-GB", "default", {
 
 }( this ));
 /*
- * Globalize Culture en-IN
- *
- * http://github.com/jquery/globalize
- *
- * Copyright Software Freedom Conservancy, Inc.
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * This file was generated by the Globalize Culture Generator
- * Translation: bugs found in this file need to be fixed in the generator
- */
-
-(function( window, undefined ) {
-
-var Globalize;
-
-if ( typeof require !== "undefined"
-	&& typeof exports !== "undefined"
-	&& typeof module !== "undefined" ) {
-	// Assume CommonJS
-	Globalize = require( "globalize" );
-} else {
-	// Global variable
-	Globalize = window.Globalize;
-}
-
-Globalize.addCultureInfo( "en-IN", "default", {
-	name: "en-IN",
-	englishName: "English (India)",
-	nativeName: "English (India)",
-	numberFormat: {
-		groupSizes: [3,2],
-		percent: {
-			groupSizes: [3,2]
-		},
-		currency: {
-			pattern: ["$ -n","$ n"],
-			groupSizes: [3,2],
-			symbol: "Rs."
-		}
-	},
-	calendars: {
-		standard: {
-			"/": "-",
-			firstDay: 1,
-			patterns: {
-				d: "dd-MM-yyyy",
-				D: "dd MMMM yyyy",
-				t: "HH:mm",
-				T: "HH:mm:ss",
-				f: "dd MMMM yyyy HH:mm",
-				F: "dd MMMM yyyy HH:mm:ss",
-				M: "dd MMMM"
-			}
-		}
-	}
-});
-
-}( this ));
-/*
 * Globalize Culture en-NZ
 *
 * http://github.com/jquery/globalize
@@ -37134,14 +35956,14 @@ Globalize.addCultureInfo( "en-ZA", "default", {
 	englishName: "English (South Africa)",
 	nativeName: "English (South Africa)",
 	numberFormat: {
-		",": " ",
+		",": " ",
 		percent: {
 			pattern: ["-n%","n%"],
-			",": " "
+			",": " "
 		},
 		currency: {
 			pattern: ["$-n","$ n"],
-			",": " ",
+			",": " ",
 			".": ",",
 			symbol: "R"
 		}
@@ -37160,6 +35982,7 @@ Globalize.addCultureInfo( "en-ZA", "default", {
 			}
 		}
 	}
+
 });
 
 }( this ));
@@ -37237,7 +36060,7 @@ Globalize.addCultureInfo( "es-AR", "default", {
 			}
 		}
 	},
-  messages: {"AdditionalHelp":"Ayuda adicional","AddNewTab":"Añadir nueva ficha","Alerts":"Alertas","ApplyFilter":"Aplicar filtro","Approve":"Aprobar","Attachments":"Datos adjuntos","Back":"Atrás","Basic":"Básico","Between":"Entre","Book":"Libro","Cancel":"Cancelar","Checked":"Activado","ClearFilter":"Borrar filtro","Close":"Cerrar","CloseCancelChanges":"Cerrar y cancelar cambios","CloseSaveChanges":"Cerrar y guardar cambios","CloseTab":"Cerrar ficha","ColumnPersonalization":"Personalización de columnas","Comments":"Comentarios","Confirmation":"Confirmación","Contains":"Contiene","CreateTab":"Crear nueva ficha","Cut":"Cortar","Delete":"Eliminar","DiscardUndo":"Descartar/Deshacer","DisplayDropDownList":"Mostrar lista desplegable","Displaying":"Mostrado: ","DocWord":"Documento","DoesNotContain":"No contiene","DoesNotEndWith":"No acaba en","DoesNotEqual":"No es igual a","DoesNotStartWith":"No empieza por","Download":"Descargar","Duplicate":"Duplicar","Edit":"Editar","EitherSelectedorNotSelected":"Tanto seleccionado como no seleccionado","Email":"Correo electrónico","EndsWith":"Acaba en","EqualsStr":"Es igual a","ExpandCollapse":"Expandir/Contraer","ExportFailed":"No se pudo exportar","ExportToExcel":"Exportar a Excel","FileInUse":"El archivo especificado está en uso","FileInUseDetail":"Cierre el archivo en la aplicación donde está en uso o especifique un nombre de archivo diferente.","Filter":"Filtro","FilterMenu":"Menú de filtro","FilterOptions":"Opciones de filtro","FilterWithinResults":"Filtrar en resultados","First":"Primero","FirstView":"Primera vista","Folder":"Carpeta","ForgotPassword":"¿Olvidó la contraseña?","Forward":"Adelante","GetMoreRows":"Obtener más filas","GreaterThan":"Mayor que","GreaterThanOrEquals":"Mayor que o igual a","GridSettings":"Configuración de cuadrícula","GroupSelection":"Selección de grupo","Help":"Ayuda","HideColumn":"Ocultar columna","IsEmpty":"Esta vacío","IsNotEmpty":"No está vacío","Last":"Último","LastView":"Última vista","LaunchActivate":"Iniciar/Activar","LessThan":"Menos que","LessThanOrEquals":"Menor que o igual a","Links":"Vínculos","ListTabs":"Listar todas las fichas","LoadingItem":"Cargando elemento ","Maintenance":"Mantenimiento","Menu":"Menú","New":"Nuevo","Next":"Siguiente","NextView":"Siguiente vista","No":"No","NotChecked":"No activado","Notes":"Notas","NotSelected":"Sin seleccionar","Of":" de ","Ok":"Aceptar","Open":"Abrir","Password":"Contraseña","Paste":"Pegar","Phone":"Teléfono","PleaseWait":"Espere","Previous":"Anterior","PreviousView":"Vista anterior","Print":"Imprimir","Queries":"Consultas","Redo":"Rehacer","Refresh":"Actualizar","Reject":"Rechazar","RememberMe":"Recordar mis datos en este equipo","Reports":"Informes","Reset":"Restablecer","Review":"Revisar","RunFilter":"Ejecutar filtro","RunJob":"Ejecutar trabajo","Save":"Guardar","SaveBeforeClosing":"Guardar antes de cerrar","SavedFilters":"Filtros guardados","SaveSubmit":"Guardar/Enviar","ScreenDesign":"Diseño de pantalla","Search":"Buscar","SelectContents":"Seleccionar contenidos","SelectDate":"Seleccionar una fecha","SelectDeselect":"Seleccionar todo/Anular selección","Selected":"Seleccionado: ","ServerName":"Nombre de servidor","Settings":"Configuración","ShowFilterRow":"Mostrar fila de filtro","SignIn":"Iniciar sesión","SortAscending":"Orden ascendente","SortDescending":"Orden descendente","Spreadsheet":"Hoja de cálculo","StartsWith":"Empieza por","StatusIndicator":"Indicador de estado","Tasks":"Tareas","Today":"Hoy","Translate":"Traducir","UserID":"Id. de usuario","Utilities":"Utilidades","Yes":"Sí","Page":"Página","Rows":"Filas","ShowingAll":"Mostrando todo","SessionNavigation":"Navegación de sesión","ListAllMenuItems":"Listar todos los elementos de menú","NoRecordsFound":"No se encontraron registros","SearchTree":"Buscar en árbol","Clear":"Borrar","DrillDown":"Aumentar detalles","Required":"Este campo es obligatorio","Available":"Disponible:","Add":"Añadir","MoveDown":"Bajar","MoveUp":"Subir","Remove":"Quitar","LastYear":"Último año","NextMonth":"Siguiente mes","NextWeek":"Siguiente semana","NextYear":"Siguiente año","OneMonthAgo":"Hace un mes","OneWeekAgo":"Hace una semana","SixMonthsAgo":"Hace seis meses","Time":"Hora","CannotBeSelected":"Esta fila no se puede seleccionar.","ResetToDefault":"Restablecer diseño predeterminado","CloseOtherTabs":"Cerrar otras fichas","EmailValidation":"Introduzca una dirección de correo electrónico válida","UrlValidation":"Introduzca una dirección URL válida","EndofResults":"Fin de resultados","More":"Más...","RecordsPerPage":"Registros por página","Maximize":"Maximizar","Minimize":"Minimizar","CloseAllTabs":"Cerrar todas las fichas","QuickDates":"Fechas rápidas","Finish":"Finalizar","SetTextColor":"Establecer color de texto","AttachmentRules":"Reglas de adjuntos","AutoRefresh":"Actualización automática","BarChart":"Gráfico de barras","CopyMail":"Copiar y enviar por correo","CopyUrl":"Copiar URL","DistributeHorizontally":"Distribuir horizontalmente","ExpandAll":"Expandir todo","Generate":"Generar","GenerateScript":"Generar sec. comandos","NoAttachments":"Sin adjuntos","PieChart":"Gráfico circular","QuickAccess":"Acceso rápido","RestoreUser":"Restaurar usuario","SaveConsolidate":"Guardar con consolidación local","Screen Design":"Diseño de pantalla","SelectAll":"Seleccionar todo","SpellCheck":"Corregir ortografía","SubmitForApproval":"Enviar para aprobación","Timezone":"Zona horaria","Loading":"Cargando...","NewNode":"Nuevo nodo","AboutText":"Copyright © 2015 Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias", "SelectMonthYear":"Seleccione Mes y Año"}
+  messages: {"AdditionalHelp":"Ayuda adicional","AddNewTab":"Añadir nueva ficha","Alerts":"Alertas","ApplyFilter":"Aplicar filtro","Approve":"Aprobar","Attachments":"Datos adjuntos","Back":"Atrás","Basic":"Básico","Between":"Entre","Book":"Libro","Cancel":"Cancelar","Checked":"Activado","ClearFilter":"Borrar filtro","Close":"Cerrar","CloseCancelChanges":"Cerrar y cancelar cambios","CloseSaveChanges":"Cerrar y guardar cambios","CloseTab":"Cerrar ficha","ColumnPersonalization":"Personalización de columnas","Comments":"Comentarios","Confirmation":"Confirmación","Contains":"Contiene","CreateTab":"Crear nueva ficha","Cut":"Cortar","Delete":"Eliminar","DiscardUndo":"Descartar/Deshacer","DisplayDropDownList":"Mostrar lista desplegable","Displaying":"Mostrado: ","DocWord":"Documento","DoesNotContain":"No contiene","DoesNotEndWith":"No acaba en","DoesNotEqual":"No es igual a","DoesNotStartWith":"No empieza por","Download":"Descargar","Duplicate":"Duplicar","Edit":"Editar","EitherSelectedorNotSelected":"Tanto seleccionado como no seleccionado","Email":"Correo electrónico","EndsWith":"Acaba en","EqualsStr":"Es igual a","ExpandCollapse":"Expandir/Contraer","ExportFailed":"No se pudo exportar","ExportToExcel":"Exportar a Excel","FileInUse":"El archivo especificado está en uso","FileInUseDetail":"Cierre el archivo en la aplicación donde está en uso o especifique un nombre de archivo diferente.","Filter":"Filtro","FilterMenu":"Menú de filtro","FilterOptions":"Opciones de filtro","FilterWithinResults":"Filtrar en resultados","First":"Primero","FirstView":"Primera vista","Folder":"Carpeta","ForgotPassword":"¿Olvidó la contraseña?","Forward":"Adelante","GetMoreRows":"Obtener más filas","GreaterThan":"Mayor que","GreaterThanOrEquals":"Mayor que o igual a","GridSettings":"Configuración de cuadrícula","GroupSelection":"Selección de grupo","Help":"Ayuda","HideColumn":"Ocultar columna","IsEmpty":"Esta vacío","IsNotEmpty":"No está vacío","Last":"Último","LastView":"Última vista","LaunchActivate":"Iniciar/Activar","LessThan":"Menos que","LessThanOrEquals":"Menor que o igual a","Links":"Vínculos","ListTabs":"Listar todas las fichas","LoadingItem":"Cargando elemento ","Maintenance":"Mantenimiento","Menu":"Menú","New":"Nuevo","Next":"Siguiente","NextView":"Siguiente vista","No":"No","NotChecked":"No activado","Notes":"Notas","NotSelected":"Sin seleccionar","Of":" de ","Ok":"Aceptar","Open":"Abrir","Password":"Contraseña","Paste":"Pegar","Phone":"Teléfono","PleaseWait":"Espere","Previous":"Anterior","PreviousView":"Vista anterior","Print":"Imprimir","Queries":"Consultas","Redo":"Rehacer","Refresh":"Actualizar","Reject":"Rechazar","RememberMe":"Recordar mis datos en este equipo","Reports":"Informes","Reset":"Restablecer","Review":"Revisar","RunFilter":"Ejecutar filtro","RunJob":"Ejecutar trabajo","Save":"Guardar","SaveBeforeClosing":"Guardar antes de cerrar","SavedFilters":"Filtros guardados","SaveSubmit":"Guardar/Enviar","ScreenDesign":"Diseño de pantalla","Search":"Buscar","SelectContents":"Seleccionar contenidos","SelectDate":"Seleccionar una fecha","SelectDeselect":"Seleccionar todo/Anular selección","Selected":"Seleccionado: ","ServerName":"Nombre de servidor","Settings":"Configuración","ShowFilterRow":"Mostrar fila de filtro","SignIn":"Iniciar sesión","SortAscending":"Orden ascendente","SortDescending":"Orden descendente","Spreadsheet":"Hoja de cálculo","StartsWith":"Empieza por","StatusIndicator":"Indicador de estado","Tasks":"Tareas","Today":"Hoy","Translate":"Traducir","UserID":"Id. de usuario","Utilities":"Utilidades","Yes":"Sí","Page":"Página","Rows":"Filas","ShowingAll":"Mostrando todo","SessionNavigation":"Navegación de sesión","ListAllMenuItems":"Listar todos los elementos de menú","NoRecordsFound":"No se encontraron registros","SearchTree":"Buscar en árbol","Clear":"Borrar","DrillDown":"Aumentar detalles","Required":"Este campo es obligatorio","Available":"Disponible:","Add":"Añadir","MoveDown":"Bajar","MoveUp":"Subir","Remove":"Quitar","LastYear":"Último año","NextMonth":"Siguiente mes","NextWeek":"Siguiente semana","NextYear":"Siguiente año","OneMonthAgo":"Hace un mes","OneWeekAgo":"Hace una semana","SixMonthsAgo":"Hace seis meses","Time":"Hora","CannotBeSelected":"Esta fila no se puede seleccionar.","ResetToDefault":"Restablecer diseño predeterminado","CloseOtherTabs":"Cerrar otras fichas","EmailValidation":"Introduzca una dirección de correo electrónico válida","UrlValidation":"Introduzca una dirección URL válida","EndofResults":"Fin de resultados","More":"Más...","RecordsPerPage":"Registros por página","Maximize":"Maximizar","Minimize":"Minimizar","CloseAllTabs":"Cerrar todas las fichas","QuickDates":"Fechas rápidas","Finish":"Finalizar","SetTextColor":"Establecer color de texto","AttachmentRules":"Reglas de adjuntos","AutoRefresh":"Actualización automática","BarChart":"Gráfico de barras","CopyMail":"Copiar y enviar por correo","CopyUrl":"Copiar URL","DistributeHorizontally":"Distribuir horizontalmente","ExpandAll":"Expandir todo","Generate":"Generar","GenerateScript":"Generar sec. comandos","NoAttachments":"Sin adjuntos","PieChart":"Gráfico circular","QuickAccess":"Acceso rápido","RestoreUser":"Restaurar usuario","SaveConsolidate":"Guardar con consolidación local","Screen Design":"Diseño de pantalla","SelectAll":"Seleccionar todo","SpellCheck":"Corregir ortografía","SubmitForApproval":"Enviar para aprobación","Timezone":"Zona horaria","Loading":"Cargando...","NewNode":"Nuevo nodo","AboutText":"Copyright © 2014 Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias"}
 });
 
 }( this ));
@@ -37317,7 +36140,7 @@ Globalize.addCultureInfo( "es-ES", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Ayuda adicional","AddNewTab":"Añadir nueva ficha","Alerts":"Alertas","ApplyFilter":"Aplicar filtro","Approve":"Aprobar","Attachments":"Datos adjuntos","Back":"Atrás","Basic":"Básico","Between":"Entre","Book":"Libro","Cancel":"Cancelar","Checked":"Activado","ClearFilter":"Borrar filtro","Close":"Cerrar","CloseCancelChanges":"Cerrar y cancelar cambios","CloseSaveChanges":"Cerrar y guardar cambios","CloseTab":"Cerrar ficha","ColumnPersonalization":"Personalización de columnas","Comments":"Comentarios","Confirmation":"Confirmación","Contains":"Contiene","CreateTab":"Crear nueva ficha","Cut":"Cortar","Delete":"Eliminar","DiscardUndo":"Descartar/Deshacer","DisplayDropDownList":"Mostrar lista desplegable","Displaying":"Mostrado: ","DocWord":"Documento","DoesNotContain":"No contiene","DoesNotEndWith":"No acaba en","DoesNotEqual":"No es igual a","DoesNotStartWith":"No empieza por","Download":"Descargar","Duplicate":"Duplicar","Edit":"Editar","EitherSelectedorNotSelected":"Tanto seleccionado como no seleccionado","Email":"Correo electrónico","EndsWith":"Acaba en","EqualsStr":"Es igual a","ExpandCollapse":"Expandir/Contraer","ExportFailed":"No se pudo exportar","ExportToExcel":"Exportar a Excel","FileInUse":"El archivo especificado está en uso","FileInUseDetail":"Cierre el archivo en la aplicación donde está en uso o especifique un nombre de archivo diferente.","Filter":"Filtro","FilterMenu":"Menú de filtro","FilterOptions":"Opciones de filtro","FilterWithinResults":"Filtrar en resultados","First":"Primero","FirstView":"Primera vista","Folder":"Carpeta","ForgotPassword":"¿Olvidó la contraseña?","Forward":"Adelante","GetMoreRows":"Obtener más filas","GreaterThan":"Mayor que","GreaterThanOrEquals":"Mayor que o igual a","GridSettings":"Configuración de cuadrícula","GroupSelection":"Selección de grupo","Help":"Ayuda","HideColumn":"Ocultar columna","IsEmpty":"Esta vacío","IsNotEmpty":"No está vacío","Last":"Último","LastView":"Última vista","LaunchActivate":"Iniciar/Activar","LessThan":"Menos que","LessThanOrEquals":"Menor que o igual a","Links":"Vínculos","ListTabs":"Listar todas las fichas","LoadingItem":"Cargando elemento ","Maintenance":"Mantenimiento","Menu":"Menú","New":"Nuevo","Next":"Siguiente","NextView":"Siguiente vista","No":"No","NotChecked":"No activado","Notes":"Notas","NotSelected":"Sin seleccionar","Of":" de ","Ok":"Aceptar","Open":"Abrir","Password":"Contraseña","Paste":"Pegar","Phone":"Teléfono","PleaseWait":"Espere","Previous":"Anterior","PreviousView":"Vista anterior","Print":"Imprimir","Queries":"Consultas","Redo":"Rehacer","Refresh":"Actualizar","Reject":"Rechazar","RememberMe":"Recordar mis datos en este equipo","Reports":"Informes","Reset":"Restablecer","Review":"Revisar","RunFilter":"Ejecutar filtro","RunJob":"Ejecutar trabajo","Save":"Guardar","SaveBeforeClosing":"Guardar antes de cerrar","SavedFilters":"Filtros guardados","SaveSubmit":"Guardar/Enviar","ScreenDesign":"Diseño de pantalla","Search":"Buscar","SelectContents":"Seleccionar contenidos","SelectDate":"Seleccionar una fecha","SelectDeselect":"Seleccionar todo/Anular selección","Selected":"Seleccionado: ","ServerName":"Nombre de servidor","Settings":"Configuración","ShowFilterRow":"Mostrar fila de filtro","SignIn":"Iniciar sesión","SortAscending":"Orden ascendente","SortDescending":"Orden descendente","Spreadsheet":"Hoja de cálculo","StartsWith":"Empieza por","StatusIndicator":"Indicador de estado","Tasks":"Tareas","Today":"Hoy","Translate":"Traducir","UserID":"Id. de usuario","Utilities":"Utilidades","Yes":"Sí","Page":"Página","Rows":"Filas","ShowingAll":"Mostrando todo","SessionNavigation":"Navegación de sesión","ListAllMenuItems":"Listar todos los elementos de menú","NoRecordsFound":"No se encontraron registros","SearchTree":"Buscar en árbol","Clear":"Borrar","DrillDown":"Aumentar detalles","Required":"Este campo es obligatorio","Available":"Disponible:","Add":"Añadir","MoveDown":"Bajar","MoveUp":"Subir","Remove":"Quitar","LastYear":"Último año","NextMonth":"Siguiente mes","NextWeek":"Siguiente semana","NextYear":"Siguiente año","OneMonthAgo":"Hace un mes","OneWeekAgo":"Hace una semana","SixMonthsAgo":"Hace seis meses","Time":"Hora","CannotBeSelected":"Esta fila no se puede seleccionar.","ResetToDefault":"Restablecer diseño predeterminado","CloseOtherTabs":"Cerrar otras fichas","EmailValidation":"Introduzca una dirección de correo electrónico válida","UrlValidation":"Introduzca una dirección URL válida","EndofResults":"Fin de resultados","More":"Más...","RecordsPerPage":"Registros por página","Maximize":"Maximizar","Minimize":"Minimizar","CloseAllTabs":"Cerrar todas las fichas","QuickDates":"Fechas rápidas","Finish":"Finalizar","SetTextColor":"Establecer color de texto","AttachmentRules":"Reglas de adjuntos","AutoRefresh":"Actualización automática","BarChart":"Gráfico de barras","CopyMail":"Copiar y enviar por correo","CopyUrl":"Copiar URL","DistributeHorizontally":"Distribuir horizontalmente","ExpandAll":"Expandir todo","Generate":"Generar","GenerateScript":"Generar sec. comandos","NoAttachments":"Sin adjuntos","PieChart":"Gráfico circular","QuickAccess":"Acceso rápido","RestoreUser":"Restaurar usuario","SaveConsolidate":"Guardar con consolidación local","Screen Design":"Diseño de pantalla","SelectAll":"Seleccionar todo","SpellCheck":"Corregir ortografía","SubmitForApproval":"Enviar para aprobación","Timezone":"Zona horaria","Loading":"Cargando...","NewNode":"Nuevo nodo","AboutText":"Copyright © 2015 Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias", "SelectMonthYear":"Seleccione Mes y Año"}
+	messages: {"AdditionalHelp":"Ayuda adicional","AddNewTab":"Añadir nueva ficha","Alerts":"Alertas","ApplyFilter":"Aplicar filtro","Approve":"Aprobar","Attachments":"Datos adjuntos","Back":"Atrás","Basic":"Básico","Between":"Entre","Book":"Libro","Cancel":"Cancelar","Checked":"Activado","ClearFilter":"Borrar filtro","Close":"Cerrar","CloseCancelChanges":"Cerrar y cancelar cambios","CloseSaveChanges":"Cerrar y guardar cambios","CloseTab":"Cerrar ficha","ColumnPersonalization":"Personalización de columnas","Comments":"Comentarios","Confirmation":"Confirmación","Contains":"Contiene","CreateTab":"Crear nueva ficha","Cut":"Cortar","Delete":"Eliminar","DiscardUndo":"Descartar/Deshacer","DisplayDropDownList":"Mostrar lista desplegable","Displaying":"Mostrado: ","DocWord":"Documento","DoesNotContain":"No contiene","DoesNotEndWith":"No acaba en","DoesNotEqual":"No es igual a","DoesNotStartWith":"No empieza por","Download":"Descargar","Duplicate":"Duplicar","Edit":"Editar","EitherSelectedorNotSelected":"Tanto seleccionado como no seleccionado","Email":"Correo electrónico","EndsWith":"Acaba en","EqualsStr":"Es igual a","ExpandCollapse":"Expandir/Contraer","ExportFailed":"No se pudo exportar","ExportToExcel":"Exportar a Excel","FileInUse":"El archivo especificado está en uso","FileInUseDetail":"Cierre el archivo en la aplicación donde está en uso o especifique un nombre de archivo diferente.","Filter":"Filtro","FilterMenu":"Menú de filtro","FilterOptions":"Opciones de filtro","FilterWithinResults":"Filtrar en resultados","First":"Primero","FirstView":"Primera vista","Folder":"Carpeta","ForgotPassword":"¿Olvidó la contraseña?","Forward":"Adelante","GetMoreRows":"Obtener más filas","GreaterThan":"Mayor que","GreaterThanOrEquals":"Mayor que o igual a","GridSettings":"Configuración de cuadrícula","GroupSelection":"Selección de grupo","Help":"Ayuda","HideColumn":"Ocultar columna","IsEmpty":"Esta vacío","IsNotEmpty":"No está vacío","Last":"Último","LastView":"Última vista","LaunchActivate":"Iniciar/Activar","LessThan":"Menos que","LessThanOrEquals":"Menor que o igual a","Links":"Vínculos","ListTabs":"Listar todas las fichas","LoadingItem":"Cargando elemento ","Maintenance":"Mantenimiento","Menu":"Menú","New":"Nuevo","Next":"Siguiente","NextView":"Siguiente vista","No":"No","NotChecked":"No activado","Notes":"Notas","NotSelected":"Sin seleccionar","Of":" de ","Ok":"Aceptar","Open":"Abrir","Password":"Contraseña","Paste":"Pegar","Phone":"Teléfono","PleaseWait":"Espere","Previous":"Anterior","PreviousView":"Vista anterior","Print":"Imprimir","Queries":"Consultas","Redo":"Rehacer","Refresh":"Actualizar","Reject":"Rechazar","RememberMe":"Recordar mis datos en este equipo","Reports":"Informes","Reset":"Restablecer","Review":"Revisar","RunFilter":"Ejecutar filtro","RunJob":"Ejecutar trabajo","Save":"Guardar","SaveBeforeClosing":"Guardar antes de cerrar","SavedFilters":"Filtros guardados","SaveSubmit":"Guardar/Enviar","ScreenDesign":"Diseño de pantalla","Search":"Buscar","SelectContents":"Seleccionar contenidos","SelectDate":"Seleccionar una fecha","SelectDeselect":"Seleccionar todo/Anular selección","Selected":"Seleccionado: ","ServerName":"Nombre de servidor","Settings":"Configuración","ShowFilterRow":"Mostrar fila de filtro","SignIn":"Iniciar sesión","SortAscending":"Orden ascendente","SortDescending":"Orden descendente","Spreadsheet":"Hoja de cálculo","StartsWith":"Empieza por","StatusIndicator":"Indicador de estado","Tasks":"Tareas","Today":"Hoy","Translate":"Traducir","UserID":"Id. de usuario","Utilities":"Utilidades","Yes":"Sí","Page":"Página","Rows":"Filas","ShowingAll":"Mostrando todo","SessionNavigation":"Navegación de sesión","ListAllMenuItems":"Listar todos los elementos de menú","NoRecordsFound":"No se encontraron registros","SearchTree":"Buscar en árbol","Clear":"Borrar","DrillDown":"Aumentar detalles","Required":"Este campo es obligatorio","Available":"Disponible:","Add":"Añadir","MoveDown":"Bajar","MoveUp":"Subir","Remove":"Quitar","LastYear":"Último año","NextMonth":"Siguiente mes","NextWeek":"Siguiente semana","NextYear":"Siguiente año","OneMonthAgo":"Hace un mes","OneWeekAgo":"Hace una semana","SixMonthsAgo":"Hace seis meses","Time":"Hora","CannotBeSelected":"Esta fila no se puede seleccionar.","ResetToDefault":"Restablecer diseño predeterminado","CloseOtherTabs":"Cerrar otras fichas","EmailValidation":"Introduzca una dirección de correo electrónico válida","UrlValidation":"Introduzca una dirección URL válida","EndofResults":"Fin de resultados","More":"Más...","RecordsPerPage":"Registros por página","Maximize":"Maximizar","Minimize":"Minimizar","CloseAllTabs":"Cerrar todas las fichas","QuickDates":"Fechas rápidas","Finish":"Finalizar","SetTextColor":"Establecer color de texto","AttachmentRules":"Reglas de adjuntos","AutoRefresh":"Actualización automática","BarChart":"Gráfico de barras","CopyMail":"Copiar y enviar por correo","CopyUrl":"Copiar URL","DistributeHorizontally":"Distribuir horizontalmente","ExpandAll":"Expandir todo","Generate":"Generar","GenerateScript":"Generar sec. comandos","NoAttachments":"Sin adjuntos","PieChart":"Gráfico circular","QuickAccess":"Acceso rápido","RestoreUser":"Restaurar usuario","SaveConsolidate":"Guardar con consolidación local","Screen Design":"Diseño de pantalla","SelectAll":"Seleccionar todo","SpellCheck":"Corregir ortografía","SubmitForApproval":"Enviar para aprobación","Timezone":"Zona horaria","Loading":"Cargando...","NewNode":"Nuevo nodo","AboutText":"Copyright © 2014 Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias"}
 });
 
 }( this ));
@@ -37459,7 +36282,7 @@ Globalize.addCultureInfo( "et-EE", "default", {
 			}
 		}
 	},
-  messages: {"AdditionalHelp":"Täiendav abi","AddNewTab":"Lisa uus vahekaart","Alerts":"Hoiatused","ApplyFilter":"Rakenda filter","Approve":"Kinnita","Attachments":"Manused","Back":"Tagasi","Basic":"Tavaline","Between":"Vahel","Book":"Raamat","Cancel":"Tühista","Checked":"Kontrollitud","ClearFilter":"Tühjenda filter","Close":"Sulge","CloseCancelChanges":"Tühista muudatused ja sulge","CloseSaveChanges":"Salvesta muudatused ja sulge","CloseTab":"Sulge vahekaart","ColumnPersonalization":"Veeru isikustamine","Comments":"Kommentaarid","Confirmation":"Kinnitamine","Contains":"Sisaldab","CreateTab":"Loo uus vahekaart","Cut":"Lõika","Delete":"Kustuta","DiscardUndo":"Hülga/võta tagasi","DisplayDropDownList":"Kuva rippmenüü nimistu","Displaying":"Kuvab: ","DocWord":"Dokument","DoesNotContain":"Ei sisalda","DoesNotEndWith":"Ei lõppe:","DoesNotEqual":"Ei ole võrdne:","DoesNotStartWith":"Ei alga:","Download":"Laadi alla","Duplicate":"Duplikaat","Edit":"Redigeeri","EitherSelectedorNotSelected":"Kas valitud või valimata","Email":"E-post","EndsWith":"Lõppeb:","EqualsStr":"Võrdub","ExpandCollapse":"Laienda/ahenda","ExportFailed":"Eksportimine nurjus","ExportToExcel":"Ekspordi Excelisse","FileInUse":"Täpsustatud fail on kasutuses","FileInUseDetail":"Sulgege fail rakenduses, kus see kasutuses on, või määrake kindlaks teine failinimi.","Filter":"Filter","FilterMenu":"Filtrimenüü","FilterOptions":"Filtrisuvandid","FilterWithinResults":"Filtreeri tulemustes","First":"Esimene","FirstView":"Esimene vaade","Folder":"Kaust","ForgotPassword":"Parool ununes?","Forward":"Edasi","GetMoreRows":"Too veel ridu","GreaterThan":"Suurem kui","GreaterThanOrEquals":"On suurem või võrdne","GridSettings":"Ruudustiku seaded","GroupSelection":"Rühma valimine","Help":"Abi","HideColumn":"Peida veerg","IsEmpty":"On tühi","IsNotEmpty":"Ei ole tühi","Last":"Viimane","LastView":"Viimane vaade","LaunchActivate":"Käivita/aktiveer","LessThan":"Vähem kui","LessThanOrEquals":"Väiksem või võrdne","Links":"Lingid","ListTabs":"Kõigi vahekaartide nimistu","LoadingItem":"Elemendi laadimine ","Maintenance":"Haldus","Menu":"Menüü","New":"Uus","Next":"Järgmine","NextView":"Järgmine vaade","No":"Ei","NotChecked":"Kontrollimata","Notes":"Märkused","NotSelected":"Ei ole valitud","Of":"  / ","Ok":"OK","Open":"Ava","Password":"Salasõna","Paste":"Kleebi","Phone":"Telefon","PleaseWait":"Palun oodake","Previous":"Eelmine","PreviousView":"Eelmine vaade","Print":"Trüki","Queries":"Päringud","Redo":"Tee uuesti","Refresh":"Värskenda","Reject":"Lükka tagasi","RememberMe":"Jäta mind selles arvutis meelde","Reports":"Aruanded","Reset":"Lähtesta","Review":"Läbivaatus","RunFilter":"Käivita filter","RunJob":"Käivita töö","Save":"Salvesta","SaveBeforeClosing":"Salvesta enne sulgemist","SavedFilters":"Salvestatud filtrid","SaveSubmit":"Salvesta/esita","ScreenDesign":"Ekraani kujundus","Search":"Otsing","SelectContents":"Vali sisu","SelectDate":"Vali kuupäev","SelectDeselect":"Vali kõik / tühista kõigi valimine","Selected":"Valitud: ","ServerName":"Serveri nimi","Settings":"Seaded","ShowFilterRow":"Kuva filtri rida","SignIn":"Logi sisse","SortAscending":"Sorteeri väiksemast suuremaks","SortDescending":"Sorteeri suuremast väiksemaks","Spreadsheet":"Arvutustabel","StartsWith":"Algab:","StatusIndicator":"Olekunäidik","Tasks":"Ülesanded","Today":"Täna","Translate":"Tõlgi","UserID":"Kasutaja ID","Utilities":"Utiliidid","Yes":"Jah","Page":"Lehekülg","Rows":"Read","ShowingAll":"Kuvab kõike","SessionNavigation":"Seansi navigeerimine","ListAllMenuItems":"Loetle kõik menüüelemendid","NoRecordsFound":"Kirjeid ei leitud","SearchTree":"Otsingupuu","Clear":"Tühjenda","DrillDown":"Vaata süvitsi alla","Required":"Väli on nõutav","Available":"Olemasolev:","Add":"Lisa","MoveDown":"Liiguta alla","MoveUp":"Liiguta üles","Remove":"Eemalda","LastYear":"Eelmine aasta","NextMonth":"Järgmine kuu","NextWeek":"Järgmine nädal","NextYear":"Järgmine aasta","OneMonthAgo":"Üks kuu tagasi","OneWeekAgo":"Üks nädal tagasi","SixMonthsAgo":"Kuus kuud tagasi","Time":"Kellaaeg","CannotBeSelected":"Seda rida ei saa valida.","ResetToDefault":"Lähtesta vaikepaigutusele","CloseOtherTabs":"Sulge teised vahekaardid","EmailValidation":"Sisestage kehtiv e-posti aadress","UrlValidation":"Sisestage kehtiv URL","EndofResults":"Tulemuste lõpp","More":"Veel...","RecordsPerPage":"Kirjeid lehekülje kohta","Maximize":"Maksimeeri","Minimize":"Minimeeri","CloseAllTabs":"Sulge kõik vahekaardid","QuickDates":"Kiirkuupäevad","Finish":"Lõpeta","SetTextColor":"Määra teksti värv","AttachmentRules":"Manuse reeglid","AutoRefresh":"Värskenda automaatselt","BarChart":"Lintdiagramm","CopyMail":"Koopia ja e-post","CopyUrl":"Kopeeri URL","DistributeHorizontally":"Jaota horisontaalselt","ExpandAll":"Laienda kõik","Generate":"Loo","GenerateScript":"Loo skript","NoAttachments":"Manuseid pole","PieChart":"Sektordiagramm","QuickAccess":"Kiirpääs","RestoreUser":"Taasta kasutaja","SaveConsolidate":"Salvesta koos kohaliku konsolideerimisega","Screen Design":"ScreenDesign","SelectAll":"Vali kõik","SpellCheck":"Õigekirjakontroll","SubmitForApproval":"Esita kinnitamiseks","Timezone":"Ajatsoon","Loading":"Laadimine...","NewNode":"Uus sõlm","AboutText":"Autoriõigus © 2015 Infor. Kõik õigused on reserveeritud. Sõna- ja kujutismärgid on Infori ja/või selle filiaalide ja tütarettevõtete kaubamärgid ja/või registreeritud kaubamärgid. Kõik õigused on reserveeritud. Kõik muud selles dokumendis loetletud kaubamärgid kuuluvad nende omanikele. www.infor.com."}
+  messages: {"AdditionalHelp":"Täiendav abi","AddNewTab":"Lisa uus vahekaart","Alerts":"Hoiatused","ApplyFilter":"Rakenda filter","Approve":"Kinnita","Attachments":"Manused","Back":"Tagasi","Basic":"Tavaline","Between":"Vahel","Book":"Raamat","Cancel":"Tühista","Checked":"Kontrollitud","ClearFilter":"Tühjenda filter","Close":"Sulge","CloseCancelChanges":"Tühista muudatused ja sulge","CloseSaveChanges":"Salvesta muudatused ja sulge","CloseTab":"Sulge vahekaart","ColumnPersonalization":"Veeru isikustamine","Comments":"Kommentaarid","Confirmation":"Kinnitamine","Contains":"Sisaldab","CreateTab":"Loo uus vahekaart","Cut":"Lõika","Delete":"Kustuta","DiscardUndo":"Hülga/võta tagasi","DisplayDropDownList":"Kuva rippmenüü nimistu","Displaying":"Kuvab: ","DocWord":"Dokument","DoesNotContain":"Ei sisalda","DoesNotEndWith":"Ei lõppe:","DoesNotEqual":"Ei ole võrdne:","DoesNotStartWith":"Ei alga:","Download":"Laadi alla","Duplicate":"Duplikaat","Edit":"Redigeeri","EitherSelectedorNotSelected":"Kas valitud või valimata","Email":"E-post","EndsWith":"Lõppeb:","EqualsStr":"Võrdub","ExpandCollapse":"Laienda/ahenda","ExportFailed":"Eksportimine nurjus","ExportToExcel":"Ekspordi Excelisse","FileInUse":"Täpsustatud fail on kasutuses","FileInUseDetail":"Sulgege fail rakenduses, kus see kasutuses on, või määrake kindlaks teine failinimi.","Filter":"Filter","FilterMenu":"Filtrimenüü","FilterOptions":"Filtrisuvandid","FilterWithinResults":"Filtreeri tulemustes","First":"Esimene","FirstView":"Esimene vaade","Folder":"Kaust","ForgotPassword":"Parool ununes?","Forward":"Edasi","GetMoreRows":"Too veel ridu","GreaterThan":"Suurem kui","GreaterThanOrEquals":"On suurem või võrdne","GridSettings":"Ruudustiku seaded","GroupSelection":"Rühma valimine","Help":"Abi","HideColumn":"Peida veerg","IsEmpty":"On tühi","IsNotEmpty":"Ei ole tühi","Last":"Viimane","LastView":"Viimane vaade","LaunchActivate":"Käivita/aktiveer","LessThan":"Vähem kui","LessThanOrEquals":"Väiksem või võrdne","Links":"Lingid","ListTabs":"Kõigi vahekaartide nimistu","LoadingItem":"Elemendi laadimine ","Maintenance":"Haldus","Menu":"Menüü","New":"Uus","Next":"Järgmine","NextView":"Järgmine vaade","No":"Ei","NotChecked":"Kontrollimata","Notes":"Märkused","NotSelected":"Ei ole valitud","Of":"  / ","Ok":"OK","Open":"Ava","Password":"Salasõna","Paste":"Kleebi","Phone":"Telefon","PleaseWait":"Palun oodake","Previous":"Eelmine","PreviousView":"Eelmine vaade","Print":"Trüki","Queries":"Päringud","Redo":"Tee uuesti","Refresh":"Värskenda","Reject":"Lükka tagasi","RememberMe":"Jäta mind selles arvutis meelde","Reports":"Aruanded","Reset":"Lähtesta","Review":"Läbivaatus","RunFilter":"Käivita filter","RunJob":"Käivita töö","Save":"Salvesta","SaveBeforeClosing":"Salvesta enne sulgemist","SavedFilters":"Salvestatud filtrid","SaveSubmit":"Salvesta/esita","ScreenDesign":"Ekraani kujundus","Search":"Otsing","SelectContents":"Vali sisu","SelectDate":"Vali kuupäev","SelectDeselect":"Vali kõik / tühista kõigi valimine","Selected":"Valitud: ","ServerName":"Serveri nimi","Settings":"Seaded","ShowFilterRow":"Kuva filtri rida","SignIn":"Logi sisse","SortAscending":"Sorteeri väiksemast suuremaks","SortDescending":"Sorteeri suuremast väiksemaks","Spreadsheet":"Arvutustabel","StartsWith":"Algab:","StatusIndicator":"Olekunäidik","Tasks":"Ülesanded","Today":"Täna","Translate":"Tõlgi","UserID":"Kasutaja ID","Utilities":"Utiliidid","Yes":"Jah","Page":"Lehekülg","Rows":"Read","ShowingAll":"Kuvab kõike","SessionNavigation":"Seansi navigeerimine","ListAllMenuItems":"Loetle kõik menüüelemendid","NoRecordsFound":"Kirjeid ei leitud","SearchTree":"Otsingupuu","Clear":"Tühjenda","DrillDown":"Vaata süvitsi alla","Required":"Väli on nõutav","Available":"Olemasolev:","Add":"Lisa","MoveDown":"Liiguta alla","MoveUp":"Liiguta üles","Remove":"Eemalda","LastYear":"Eelmine aasta","NextMonth":"Järgmine kuu","NextWeek":"Järgmine nädal","NextYear":"Järgmine aasta","OneMonthAgo":"Üks kuu tagasi","OneWeekAgo":"Üks nädal tagasi","SixMonthsAgo":"Kuus kuud tagasi","Time":"Kellaaeg","CannotBeSelected":"Seda rida ei saa valida.","ResetToDefault":"Lähtesta vaikepaigutusele","CloseOtherTabs":"Sulge teised vahekaardid","EmailValidation":"Sisestage kehtiv e-posti aadress","UrlValidation":"Sisestage kehtiv URL","EndofResults":"Tulemuste lõpp","More":"Veel...","RecordsPerPage":"Kirjeid lehekülje kohta","Maximize":"Maksimeeri","Minimize":"Minimeeri","CloseAllTabs":"Sulge kõik vahekaardid","QuickDates":"Kiirkuupäevad","Finish":"Lõpeta","SetTextColor":"Määra teksti värv","AttachmentRules":"Manuse reeglid","AutoRefresh":"Värskenda automaatselt","BarChart":"Lintdiagramm","CopyMail":"Koopia ja e-post","CopyUrl":"Kopeeri URL","DistributeHorizontally":"Jaota horisontaalselt","ExpandAll":"Laienda kõik","Generate":"Loo","GenerateScript":"Loo skript","NoAttachments":"Manuseid pole","PieChart":"Sektordiagramm","QuickAccess":"Kiirpääs","RestoreUser":"Taasta kasutaja","SaveConsolidate":"Salvesta koos kohaliku konsolideerimisega","Screen Design":"ScreenDesign","SelectAll":"Vali kõik","SpellCheck":"Õigekirjakontroll","SubmitForApproval":"Esita kinnitamiseks","Timezone":"Ajatsoon","Loading":"Laadimine...","NewNode":"Uus sõlm","AboutText":"Autoriõigus © 2014 Infor. Kõik õigused on reserveeritud. Sõna- ja kujutismärgid on Infori ja/või selle filiaalide ja tütarettevõtete kaubamärgid ja/või registreeritud kaubamärgid. Kõik õigused on reserveeritud. Kõik muud selles dokumendis loetletud kaubamärgid kuuluvad nende omanikele. www.infor.com."}
 });
 
 }( this ));
@@ -37538,7 +36361,7 @@ Globalize.addCultureInfo( "fi-FI", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Lisäohjeita","AddNewTab":"Lisää uusi välilehti","Alerts":"Hälytykset","ApplyFilter":"Käytä suodatinta","Approve":"Hyväksy","Attachments":"Liitteet","Back":"Takaisin","Basic":"Perus","Between":"Välillä","Book":"Kirja","Cancel":"Peruuta","Checked":"Valittu","ClearFilter":"Tyhjennä suodatin","Close":"Sulje","CloseCancelChanges":"Sulje ja peruuta muutokset","CloseSaveChanges":"Sulje ja tallenna muutokset","CloseTab":"Sulje välilehti","ColumnPersonalization":"Sarakkeen mukautus","Comments":"Kommentit","Confirmation":"Vahvistus","Contains":"Sisältää","CreateTab":"Luo uusi välilehti","Cut":"Leikkaa","Delete":"Poista","DiscardUndo":"Hylkää/kumoa","DisplayDropDownList":"Näytä avattava luettelo","Displaying":"Näytetään: ","DocWord":"Asiakirja","DoesNotContain":"Ei sisällä","DoesNotEndWith":"Ei pääty merkkijonoon","DoesNotEqual":"Ei ole yhtä suuri kuin","DoesNotStartWith":"Ei ala merkkijonolla","Download":"Lataa","Duplicate":"Kaksoiskappale","Edit":"Muokkaa","EitherSelectedorNotSelected":"Joko valittu tai ei valittu","Email":"Sähköposti","EndsWith":"Päättyy merkkijonoon","EqualsStr":"Yhtä suuri kuin","ExpandCollapse":"Laajenna/pienennä","ExportFailed":"Vienti epäonnistui","ExportToExcel":"Vie Exceliin","FileInUse":"Määritetty tiedosto on käytössä","FileInUseDetail":"Sulje tiedosto sovelluksesta, jossa se on käytössä, tai määritä eri tiedostonimi.","Filter":"Suodata","FilterMenu":"Suodata-valikko","FilterOptions":"Suodatusasetukset","FilterWithinResults":"Suodata tuloksista","First":"Ensimmäinen","FirstView":"Ensimmäinen näkymä","Folder":"Kansio","ForgotPassword":"Unohditko salasanasi?","Forward":"Eteenpäin","GetMoreRows":"Hae lisää rivejä","GreaterThan":"Suurempi kuin","GreaterThanOrEquals":"Suurempi tai yhtä suuri kuin","GridSettings":"Ruudukon asetukset","GroupSelection":"Ryhmän valinta","Help":"Ohje","HideColumn":"Piilota sarake","IsEmpty":"On tyhjä","IsNotEmpty":"Ei ole tyhjä","Last":"Viimeinen","LastView":"Viimeinen näkymä","LaunchActivate":"Käynnistä/aktivoi","LessThan":"Pienempi kuin","LessThanOrEquals":"Pienempi tai yhtä suuri kuin","Links":"Linkit","ListTabs":"Luettele kaikki välilehdet","LoadingItem":"Ladataan kohdetta ","Maintenance":"Ylläpito","Menu":"Valikko","New":"Uusi","Next":"Seuraava","NextView":"Seuraava näkymä","No":"Ei","NotChecked":"Ei tarkistettu","Notes":"Huomautukset","NotSelected":"Ei valittu","Of":" / ","Ok":"OK","Open":"Avaa","Password":"Salasana","Paste":"Liitä","Phone":"Puhelin","PleaseWait":"Odota","Previous":"Edellinen","PreviousView":"Edellinen näkymä","Print":"Tulosta","Queries":"Kyselyt","Redo":"Toista","Refresh":"Päivitä","Reject":"Hylkää","RememberMe":"Muista minut tällä tietokoneella","Reports":"Raportit","Reset":"Nollaa","Review":"Tarkista","RunFilter":"Suorita suodatin","RunJob":"Suorita työ","Save":"Tallenna","SaveBeforeClosing":"Tallenna ennen sulkemista","SavedFilters":"Tallennetut suodattimet","SaveSubmit":"Tallenna/lähetä","ScreenDesign":"Näytön rakenne","Search":"Haku","SelectContents":"Valitse sisältö","SelectDate":"Valitse päivämäärä","SelectDeselect":"Valitse / poista kaikkien valinta","Selected":"Valittu: ","ServerName":"Palvelimen nimi","Settings":"Asetukset","ShowFilterRow":"Näytä suodatinrivi","SignIn":"Kirjaudu sisään","SortAscending":"Lajittele nousevassa järjestyksessä","SortDescending":"Lajittele laskevassa järjestyksessä","Spreadsheet":"Laskentataulukko","StartsWith":"Alkaa merkkijonolla","StatusIndicator":"Tilan ilmaisin","Tasks":"Tehtävät","Today":"Tänään","Translate":"Käännä","UserID":"Käyttäjätunnus","Utilities":"Apuohjelmat","Yes":"Kyllä","Page":"Sivu","Rows":"Rivit","ShowingAll":"Näytetään kaikki","SessionNavigation":"Istunnon navigointi","ListAllMenuItems":"Luettelo kaikki valikkokohteet","NoRecordsFound":"Tietueita ei löytynyt","SearchTree":"Hae puusta","Clear":"Tyhjennä","DrillDown":"Poraudu","Required":"Tämä kenttä on pakollinen","Available":"Käytettävissä:","Add":"Lisää","MoveDown":"Siirry alaspäin","MoveUp":"Siirry ylöspäin","Remove":"Poista","LastYear":"Viime vuosi","NextMonth":"Seuraava kuukausi","NextWeek":"Seuraava viikko","NextYear":"Seuraava vuosi","OneMonthAgo":"Kuukausi sitten","OneWeekAgo":"Viikko sitten","SixMonthsAgo":"Kuusi kuukautta sitten","Time":"Aika","CannotBeSelected":"Tätä riviä ei voi valita.","ResetToDefault":"Palauta oletusasettelu","CloseOtherTabs":"Sulje muut välilehdet","EmailValidation":"Anna kelvollinen sähköpostiosoite","UrlValidation":"Anna kelvollinen URL-osoite","EndofResults":"Tulosten loppu","More":"Lisää...","RecordsPerPage":"Tietueita sivulla","Maximize":"Maksimoida","Minimize":"Minimoida"}
+	messages: {"SelectAll":"Valitse kaikki", "AdditionalHelp":"Lisäohjeita","AddNewTab":"Lisää uusi välilehti","Alerts":"Hälytykset","ApplyFilter":"Käytä suodatinta","Approve":"Hyväksy","Attachments":"Liitteet","Back":"Takaisin","Basic":"Perus","Between":"Välillä","Book":"Kirja","Cancel":"Peruuta","Checked":"Valittu","ClearFilter":"Tyhjennä suodatin","Close":"Sulje","CloseCancelChanges":"Sulje ja peruuta muutokset","CloseSaveChanges":"Sulje ja tallenna muutokset","CloseTab":"Sulje välilehti","ColumnPersonalization":"Sarakkeen mukautus","Comments":"Kommentit","Confirmation":"Vahvistus","Contains":"Sisältää","CreateTab":"Luo uusi välilehti","Cut":"Leikkaa","Delete":"Poista","DiscardUndo":"Hylkää/kumoa","DisplayDropDownList":"Näytä avattava luettelo","Displaying":"Näytetään: ","DocWord":"Asiakirja","DoesNotContain":"Ei sisällä","DoesNotEndWith":"Ei pääty merkkijonoon","DoesNotEqual":"Ei ole yhtä suuri kuin","DoesNotStartWith":"Ei ala merkkijonolla","Download":"Lataa","Duplicate":"Kaksoiskappale","Edit":"Muokkaa","EitherSelectedorNotSelected":"Joko valittu tai ei valittu","Email":"Sähköposti","EndsWith":"Päättyy merkkijonoon","EqualsStr":"Yhtä suuri kuin","ExpandCollapse":"Laajenna/pienennä","ExportFailed":"Vienti epäonnistui","ExportToExcel":"Vie Exceliin","FileInUse":"Määritetty tiedosto on käytössä","FileInUseDetail":"Sulje tiedosto sovelluksesta, jossa se on käytössä, tai määritä eri tiedostonimi.","Filter":"Suodata","FilterMenu":"Suodata-valikko","FilterOptions":"Suodatusasetukset","FilterWithinResults":"Suodata tuloksista","First":"Ensimmäinen","FirstView":"Ensimmäinen näkymä","Folder":"Kansio","ForgotPassword":"Unohditko salasanasi?","Forward":"Eteenpäin","GetMoreRows":"Hae lisää rivejä","GreaterThan":"Suurempi kuin","GreaterThanOrEquals":"Suurempi tai yhtä suuri kuin","GridSettings":"Ruudukon asetukset","GroupSelection":"Ryhmän valinta","Help":"Ohje","HideColumn":"Piilota sarake","IsEmpty":"On tyhjä","IsNotEmpty":"Ei ole tyhjä","Last":"Viimeinen","LastView":"Viimeinen näkymä","LaunchActivate":"Käynnistä/aktivoi","LessThan":"Pienempi kuin","LessThanOrEquals":"Pienempi tai yhtä suuri kuin","Links":"Linkit","ListTabs":"Luettele kaikki välilehdet","LoadingItem":"Ladataan kohdetta ","Maintenance":"Ylläpito","Menu":"Valikko","New":"Uusi","Next":"Seuraava","NextView":"Seuraava näkymä","No":"Ei","NotChecked":"Ei tarkistettu","Notes":"Huomautukset","NotSelected":"Ei valittu","Of":" / ","Ok":"OK","Open":"Avaa","Password":"Salasana","Paste":"Liitä","Phone":"Puhelin","PleaseWait":"Odota","Previous":"Edellinen","PreviousView":"Edellinen näkymä","Print":"Tulosta","Queries":"Kyselyt","Redo":"Toista","Refresh":"Päivitä","Reject":"Hylkää","RememberMe":"Muista minut tällä tietokoneella","Reports":"Raportit","Reset":"Nollaa","Review":"Tarkista","RunFilter":"Suorita suodatin","RunJob":"Suorita työ","Save":"Tallenna","SaveBeforeClosing":"Tallenna ennen sulkemista","SavedFilters":"Tallennetut suodattimet","SaveSubmit":"Tallenna/lähetä","ScreenDesign":"Näytön rakenne","Search":"Haku","SelectContents":"Valitse sisältö","SelectDate":"Valitse päivämäärä","SelectDeselect":"Valitse / poista kaikkien valinta","Selected":"Valittu: ","ServerName":"Palvelimen nimi","Settings":"Asetukset","ShowFilterRow":"Näytä suodatinrivi","SignIn":"Kirjaudu sisään","SortAscending":"Lajittele nousevassa järjestyksessä","SortDescending":"Lajittele laskevassa järjestyksessä","Spreadsheet":"Laskentataulukko","StartsWith":"Alkaa merkkijonolla","StatusIndicator":"Tilan ilmaisin","Tasks":"Tehtävät","Today":"Tänään","Translate":"Käännä","UserID":"Käyttäjätunnus","Utilities":"Apuohjelmat","Yes":"Kyllä","Page":"Sivu","Rows":"Rivit","ShowingAll":"Näytetään kaikki","SessionNavigation":"Istunnon navigointi","ListAllMenuItems":"Luettelo kaikki valikkokohteet","NoRecordsFound":"Tietueita ei löytynyt","SearchTree":"Hae puusta","Clear":"Tyhjennä","DrillDown":"Poraudu","Required":"Tämä kenttä on pakollinen","Available":"Käytettävissä:","Add":"Lisää","MoveDown":"Siirry alaspäin","MoveUp":"Siirry ylöspäin","Remove":"Poista","LastYear":"Viime vuosi","NextMonth":"Seuraava kuukausi","NextWeek":"Seuraava viikko","NextYear":"Seuraava vuosi","OneMonthAgo":"Kuukausi sitten","OneWeekAgo":"Viikko sitten","SixMonthsAgo":"Kuusi kuukautta sitten","Time":"Aika","CannotBeSelected":"Tätä riviä ei voi valita.","ResetToDefault":"Palauta oletusasettelu","CloseOtherTabs":"Sulje muut välilehdet","EmailValidation":"Anna kelvollinen sähköpostiosoite","UrlValidation":"Anna kelvollinen URL-osoite","EndofResults":"Tulosten loppu","More":"Lisää...","RecordsPerPage":"Tietueita sivulla","Maximize":"Maksimoida","Minimize":"Minimoida"}
 });
 
 }( this ));
@@ -37616,7 +36439,7 @@ Globalize.addCultureInfo( "fr-CA", "default", {
 			}
 		}
 	},
-  messages: {"AdditionalHelp":"Aide supplémentaire","AddNewTab":"Ajouter un onglet","Alerts":"Alertes","ApplyFilter":"Appliquer filtre","Approve":"Approuver","Attachments":"Pièces jointes","Back":"Précédent","Basic":"De base","Between":"Entre","Book":"Livre","Cancel":"Annuler","Checked":"Coché(e)","ClearFilter":"Effacer le filtre","Close":"Fermer","CloseCancelChanges":"Fermer et annuler les modifications","CloseSaveChanges":"Fermer et enregistrer les modifications","CloseTab":"Fermer l\u0027onglet","ColumnPersonalization":"Personnalisation de colonne","Comments":"Commentaires","Confirmation":"Confirmation","Contains":"Contient","CreateTab":"Créer un nouvel onglet","Cut":"Couper","Delete":"Supprimer","DiscardUndo":"Supprimer/annuler","DisplayDropDownList":"Afficher la liste déroulante","Displaying":"Affichage : ","DocWord":"Document","DoesNotContain":"Ne contient pas","DoesNotEndWith":"Ne finit pas par","DoesNotEqual":"N\u0027est pas égal(e)","DoesNotStartWith":"Ne commence pas par","Download":"Télécharger","Duplicate":"Copier","Edit":"Modifier","EitherSelectedorNotSelected":"Sélectionné ou Non sélectionné","Email":"E-mail","EndsWith":"Finit par","EqualsStr":"Est égal(e)","ExpandCollapse":"Développer/réduire","ExportFailed":"Echec de l\u0027exportation","ExportToExcel":"Exporter vers Excel","FileInUse":"Fichier spécifié est en cours d\u0027utilisation","FileInUseDetail":"Fermez le fichier dans l\u0027application qui l\u0027utilise ou spécifiez un nom de fichier différent.","Filter":"Filtrer","FilterMenu":"Menu Filtre","FilterOptions":"Options filtre","FilterWithinResults":"Filtrer les résultats","First":"Premier","FirstView":"Première vue","Folder":"Dossier","ForgotPassword":"Mot de passe oublié ?","Forward":"Faire suivre","GetMoreRows":"Lignes supplémentaires","GreaterThan":"Supérieur à","GreaterThanOrEquals":"Supérieur ou égal à","GridSettings":"Paramètres de grille","GroupSelection":"Sélection de groupe","Help":"Aide","HideColumn":"Masquer la colonne","IsEmpty":"Est vide","IsNotEmpty":"N\u0027est pas vide","Last":"Dernier","LastView":"Dernière vue","LaunchActivate":"Lancer/activer","LessThan":"Inférieur à","LessThanOrEquals":"Inférieur ou égal à","Links":"Liens","ListTabs":"Lister tous les onglets","LoadingItem":"Chargement d\u0027article ","Maintenance":"Maintenance","Menu":"Menu","New":"Nouveau","Next":"Suivant","NextView":"Vue suivante","No":"Non","NotChecked":"Pas coché(e)","Notes":"Remarques","NotSelected":"Pas sélectionné(e)","Of":" sur ","Ok":"OK","Open":"Ouvrir","Password":"Mot de passe","Paste":"Coller","Phone":"Téléphone","PleaseWait":"Patientez","Previous":"Précédent","PreviousView":"Vue précédente","Print":"Imprimer","Queries":"Demandes","Redo":"Rétablir","Refresh":"Actualiser","Reject":"Rejeter","RememberMe":"Se souvenir de moi à cet ordinateur","Reports":"Etats","Reset":"Réinitialiser","Review":"Réviser","RunFilter":"Exécuter le filtre","RunJob":"Exécuter la tâche","Save":"Enregistrer","SaveBeforeClosing":"Enregistrer avant de fermer","SavedFilters":"Filtres enregistrés","SaveSubmit":"Enregistrer/soumettre","ScreenDesign":"Conception d\u0027écran","Search":"Rechercher","SelectContents":"Sélectionner les contenus","SelectDate":"Sélectionner une date","SelectDeselect":"Sélectionner / désélectionner tout","Selected":"Sélection : ","ServerName":"Nom du serveur","Settings":"Paramètres","ShowFilterRow":"Afficher la ligne de filtre","SignIn":"Connexion","SortAscending":"Tri ascendant","SortDescending":"Tri descendant","Spreadsheet":"Tableur","StartsWith":"Commence par","StatusIndicator":"Indicateur d\u0027état","Tasks":"Tâches","Today":"Aujourd\u0027hui","Translate":"Traduire","UserID":"ID utilisateur","Utilities":"Outils","Yes":"Oui","Page":"Page","Rows":"Lignes","ShowingAll":"Afficher tout","SessionNavigation":"Navigation de session","ListAllMenuItems":"Lister tous les éléments de menu","NoRecordsFound":"Enregistrements introuvables","SearchTree":"Rechercher arborescence","Clear":"Effacer","DrillDown":"Zoom avant","Required":"Champ requis","Available":"Disponible :","Add":"Ajouter","MoveDown":"Déplacer vers le bas","MoveUp":"Déplacer vers le haut","Remove":"Supprimer","LastYear":"Année précédente","NextMonth":"Mois suivant","NextWeek":"Semaine suivante","NextYear":"Année suivante","OneMonthAgo":"Il y a 1 mois","OneWeekAgo":"Il y a une semaine","SixMonthsAgo":"Il y a 6 mois","Time":"Heure","CannotBeSelected":"Impossible de sélectionner cette ligne.","ResetToDefault":"Rétablir à disposition par défaut","CloseOtherTabs":"Fermer les autres onglets","EmailValidation":"Saisissez une adresse e-mail valide","UrlValidation":"Saisissez une URL valide","EndofResults":"Fin des résultats","More":"Plus...","RecordsPerPage":"Enregistrements par page","Maximize":"Agrandir","Minimize":"Réduire","CloseAllTabs":"Fermer tous les onglets","QuickDates":"Dates rapides","Finish":"Terminer","SetTextColor":"Définir la couleur du texte","AttachmentRules":"Règles de pièces jointes","AutoRefresh":"Actualiser automatiquement","BarChart":"Graphique à barres","CopyMail":"Copier et envoyer","CopyUrl":"Copier Url","DistributeHorizontally":"Répartir horizontalement","ExpandAll":"Développer tout","Generate":"Générer","GenerateScript":"Générer un script","NoAttachments":"Aucune pièce jointe","PieChart":"Graphique en secteurs","QuickAccess":"Accès rapide","RestoreUser":"Restaurer l\u0027utilisateur","SaveConsolidate":"Enregistrer avec consolidation locale","Screen Design":"Conception d\u0027écran","SelectAll":"Sélectionner tout","SpellCheck":"Vérifier l\u0027orthographe","SubmitForApproval":"Soumettre pour approbation","Timezone":"Fuseau horaire","Loading":"Chargement...","NewNode":"Nouveau noeud","AboutText":"Copyright © 2015 Infor. Tous droits réservés. Les termes et marques de conception mentionnés ci-après sont des marques et/ou des marques déposées d\u0027Infor et/ou de ses partenaires et filiales. Tous droits réservés. Toutes les autres marques répertoriées ci-après sont la propriété de leurs propriétaires respectifs. www.infor.com."}
+  messages: {"AdditionalHelp":"Aide supplémentaire","AddNewTab":"Ajouter un onglet","Alerts":"Alertes","ApplyFilter":"Appliquer filtre","Approve":"Approuver","Attachments":"Pièces jointes","Back":"Précédent","Basic":"De base","Between":"Entre","Book":"Livre","Cancel":"Annuler","Checked":"Coché(e)","ClearFilter":"Effacer le filtre","Close":"Fermer","CloseCancelChanges":"Fermer et annuler les modifications","CloseSaveChanges":"Fermer et enregistrer les modifications","CloseTab":"Fermer l\u0027onglet","ColumnPersonalization":"Personnalisation de colonne","Comments":"Commentaires","Confirmation":"Confirmation","Contains":"Contient","CreateTab":"Créer un nouvel onglet","Cut":"Couper","Delete":"Supprimer","DiscardUndo":"Supprimer/annuler","DisplayDropDownList":"Afficher la liste déroulante","Displaying":"Affichage : ","DocWord":"Document","DoesNotContain":"Ne contient pas","DoesNotEndWith":"Ne finit pas par","DoesNotEqual":"N\u0027est pas égal(e)","DoesNotStartWith":"Ne commence pas par","Download":"Télécharger","Duplicate":"Copier","Edit":"Modifier","EitherSelectedorNotSelected":"Sélectionné ou Non sélectionné","Email":"E-mail","EndsWith":"Finit par","EqualsStr":"Est égal(e)","ExpandCollapse":"Développer/réduire","ExportFailed":"Echec de l\u0027exportation","ExportToExcel":"Exporter vers Excel","FileInUse":"Fichier spécifié est en cours d\u0027utilisation","FileInUseDetail":"Fermez le fichier dans l\u0027application qui l\u0027utilise ou spécifiez un nom de fichier différent.","Filter":"Filtrer","FilterMenu":"Menu Filtre","FilterOptions":"Options filtre","FilterWithinResults":"Filtrer les résultats","First":"Premier","FirstView":"Première vue","Folder":"Dossier","ForgotPassword":"Mot de passe oublié ?","Forward":"Faire suivre","GetMoreRows":"Lignes supplémentaires","GreaterThan":"Supérieur à","GreaterThanOrEquals":"Supérieur ou égal à","GridSettings":"Paramètres de grille","GroupSelection":"Sélection de groupe","Help":"Aide","HideColumn":"Masquer la colonne","IsEmpty":"Est vide","IsNotEmpty":"N\u0027est pas vide","Last":"Dernier","LastView":"Dernière vue","LaunchActivate":"Lancer/activer","LessThan":"Inférieur à","LessThanOrEquals":"Inférieur ou égal à","Links":"Liens","ListTabs":"Lister tous les onglets","LoadingItem":"Chargement d\u0027article ","Maintenance":"Maintenance","Menu":"Menu","New":"Nouveau","Next":"Suivant","NextView":"Vue suivante","No":"Non","NotChecked":"Pas coché(e)","Notes":"Remarques","NotSelected":"Pas sélectionné(e)","Of":" sur ","Ok":"OK","Open":"Ouvrir","Password":"Mot de passe","Paste":"Coller","Phone":"Téléphone","PleaseWait":"Patientez","Previous":"Précédent","PreviousView":"Vue précédente","Print":"Imprimer","Queries":"Demandes","Redo":"Rétablir","Refresh":"Actualiser","Reject":"Rejeter","RememberMe":"Se souvenir de moi à cet ordinateur","Reports":"Etats","Reset":"Réinitialiser","Review":"Réviser","RunFilter":"Exécuter le filtre","RunJob":"Exécuter la tâche","Save":"Enregistrer","SaveBeforeClosing":"Enregistrer avant de fermer","SavedFilters":"Filtres enregistrés","SaveSubmit":"Enregistrer/soumettre","ScreenDesign":"Conception d\u0027écran","Search":"Rechercher","SelectContents":"Sélectionner les contenus","SelectDate":"Sélectionner une date","SelectDeselect":"Sélectionner / désélectionner tout","Selected":"Sélection : ","ServerName":"Nom du serveur","Settings":"Paramètres","ShowFilterRow":"Afficher la ligne de filtre","SignIn":"Connexion","SortAscending":"Tri ascendant","SortDescending":"Tri descendant","Spreadsheet":"Tableur","StartsWith":"Commence par","StatusIndicator":"Indicateur d\u0027état","Tasks":"Tâches","Today":"Aujourd\u0027hui","Translate":"Traduire","UserID":"ID utilisateur","Utilities":"Outils","Yes":"Oui","Page":"Page","Rows":"Lignes","ShowingAll":"Afficher tout","SessionNavigation":"Navigation de session","ListAllMenuItems":"Lister tous les éléments de menu","NoRecordsFound":"Enregistrements introuvables","SearchTree":"Rechercher arborescence","Clear":"Effacer","DrillDown":"Zoom avant","Required":"Champ requis","Available":"Disponible :","Add":"Ajouter","MoveDown":"Déplacer vers le bas","MoveUp":"Déplacer vers le haut","Remove":"Supprimer","LastYear":"Année précédente","NextMonth":"Mois suivant","NextWeek":"Semaine suivante","NextYear":"Année suivante","OneMonthAgo":"Il y a 1 mois","OneWeekAgo":"Il y a une semaine","SixMonthsAgo":"Il y a 6 mois","Time":"Heure","CannotBeSelected":"Impossible de sélectionner cette ligne.","ResetToDefault":"Rétablir à disposition par défaut","CloseOtherTabs":"Fermer les autres onglets","EmailValidation":"Saisissez une adresse e-mail valide","UrlValidation":"Saisissez une URL valide","EndofResults":"Fin des résultats","More":"Plus...","RecordsPerPage":"Enregistrements par page","Maximize":"Agrandir","Minimize":"Réduire","CloseAllTabs":"Fermer tous les onglets","QuickDates":"Dates rapides","Finish":"Terminer","SetTextColor":"Définir la couleur du texte","AttachmentRules":"Règles de pièces jointes","AutoRefresh":"Actualiser automatiquement","BarChart":"Graphique à barres","CopyMail":"Copier et envoyer","CopyUrl":"Copier Url","DistributeHorizontally":"Répartir horizontalement","ExpandAll":"Développer tout","Generate":"Générer","GenerateScript":"Générer un script","NoAttachments":"Aucune pièce jointe","PieChart":"Graphique en secteurs","QuickAccess":"Accès rapide","RestoreUser":"Restaurer l\u0027utilisateur","SaveConsolidate":"Enregistrer avec consolidation locale","Screen Design":"Conception d\u0027écran","SelectAll":"Sélectionner tout","SpellCheck":"Vérifier l\u0027orthographe","SubmitForApproval":"Soumettre pour approbation","Timezone":"Fuseau horaire","Loading":"Chargement...","NewNode":"Nouveau noeud","AboutText":"Copyright © 2014 Infor. Tous droits réservés. Les termes et marques de conception mentionnés ci-après sont des marques et/ou des marques déposées d\u0027Infor et/ou de ses partenaires et filiales. Tous droits réservés. Toutes les autres marques répertoriées ci-après sont la propriété de leurs propriétaires respectifs. www.infor.com."}
 });
 
 }( this ));
@@ -37696,7 +36519,7 @@ Globalize.addCultureInfo( "fr-FR", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Aide supplémentaire","AddNewTab":"Ajouter un onglet","Alerts":"Alertes","ApplyFilter":"Appliquer filtre","Approve":"Approuver","Attachments":"Pièces jointes","Back":"Précédent","Basic":"De base","Between":"Entre","Book":"Livre","Cancel":"Annuler","Checked":"Coché(e)","ClearFilter":"Effacer le filtre","Close":"Fermer","CloseCancelChanges":"Fermer et annuler les modifications","CloseSaveChanges":"Fermer et enregistrer les modifications","CloseTab":"Fermer l\u0027onglet","ColumnPersonalization":"Personnalisation de colonne","Comments":"Commentaires","Confirmation":"Confirmation","Contains":"Contient","CreateTab":"Créer un nouvel onglet","Cut":"Couper","Delete":"Supprimer","DiscardUndo":"Supprimer/annuler","DisplayDropDownList":"Afficher la liste déroulante","Displaying":"Affichage : ","DocWord":"Document","DoesNotContain":"Ne contient pas","DoesNotEndWith":"Ne finit pas par","DoesNotEqual":"N\u0027est pas égal(e)","DoesNotStartWith":"Ne commence pas par","Download":"Télécharger","Duplicate":"Copier","Edit":"Modifier","EitherSelectedorNotSelected":"Sélectionné ou Non sélectionné","Email":"E-mail","EndsWith":"Finit par","EqualsStr":"Est égal(e)","ExpandCollapse":"Développer/réduire","ExportFailed":"Echec de l\u0027exportation","ExportToExcel":"Exporter vers Excel","FileInUse":"Fichier spécifié est en cours d\u0027utilisation","FileInUseDetail":"Fermez le fichier dans l\u0027application qui l\u0027utilise ou spécifiez un nom de fichier différent.","Filter":"Filtrer","FilterMenu":"Menu Filtre","FilterOptions":"Options filtre","FilterWithinResults":"Filtrer les résultats","First":"Premier","FirstView":"Première vue","Folder":"Dossier","ForgotPassword":"Mot de passe oublié ?","Forward":"Faire suivre","GetMoreRows":"Lignes supplémentaires","GreaterThan":"Supérieur à","GreaterThanOrEquals":"Supérieur ou égal à","GridSettings":"Paramètres de grille","GroupSelection":"Sélection de groupe","Help":"Aide","HideColumn":"Masquer la colonne","IsEmpty":"Est vide","IsNotEmpty":"N\u0027est pas vide","Last":"Dernier","LastView":"Dernière vue","LaunchActivate":"Lancer/activer","LessThan":"Inférieur à","LessThanOrEquals":"Inférieur ou égal à","Links":"Liens","ListTabs":"Lister tous les onglets","LoadingItem":"Chargement d\u0027article ","Maintenance":"Maintenance","Menu":"Menu","New":"Nouveau","Next":"Suivant","NextView":"Vue suivante","No":"Non","NotChecked":"Pas coché(e)","Notes":"Remarques","NotSelected":"Pas sélectionné(e)","Of":" sur ","Ok":"OK","Open":"Ouvrir","Password":"Mot de passe","Paste":"Coller","Phone":"Téléphone","PleaseWait":"Patientez","Previous":"Précédent","PreviousView":"Vue précédente","Print":"Imprimer","Queries":"Demandes","Redo":"Rétablir","Refresh":"Actualiser","Reject":"Rejeter","RememberMe":"Se souvenir de moi à cet ordinateur","Reports":"Etats","Reset":"Réinitialiser","Review":"Réviser","RunFilter":"Exécuter le filtre","RunJob":"Exécuter la tâche","Save":"Enregistrer","SaveBeforeClosing":"Enregistrer avant de fermer","SavedFilters":"Filtres enregistrés","SaveSubmit":"Enregistrer/soumettre","ScreenDesign":"Conception d\u0027écran","Search":"Rechercher","SelectContents":"Sélectionner les contenus","SelectDate":"Sélectionner une date","SelectDeselect":"Sélectionner / désélectionner tout","Selected":"Sélection : ","ServerName":"Nom du serveur","Settings":"Paramètres","ShowFilterRow":"Afficher la ligne de filtre","SignIn":"Connexion","SortAscending":"Tri ascendant","SortDescending":"Tri descendant","Spreadsheet":"Tableur","StartsWith":"Commence par","StatusIndicator":"Indicateur d\u0027état","Tasks":"Tâches","Today":"Aujourd\u0027hui","Translate":"Traduire","UserID":"ID utilisateur","Utilities":"Outils","Yes":"Oui","Page":"Page","Rows":"Lignes","ShowingAll":"Afficher tout","SessionNavigation":"Navigation de session","ListAllMenuItems":"Lister tous les éléments de menu","NoRecordsFound":"Enregistrements introuvables","SearchTree":"Rechercher arborescence","Clear":"Effacer","DrillDown":"Zoom avant","Required":"Champ requis","Available":"Disponible :","Add":"Ajouter","MoveDown":"Déplacer vers le bas","MoveUp":"Déplacer vers le haut","Remove":"Supprimer","LastYear":"Année précédente","NextMonth":"Mois suivant","NextWeek":"Semaine suivante","NextYear":"Année suivante","OneMonthAgo":"Il y a 1 mois","OneWeekAgo":"Il y a une semaine","SixMonthsAgo":"Il y a 6 mois","Time":"Heure","CannotBeSelected":"Impossible de sélectionner cette ligne.","ResetToDefault":"Rétablir la disposition par défaut","CloseOtherTabs":"Fermer les autres onglets","EmailValidation":"Saisissez une adresse e-mail valide","UrlValidation":"Saisissez une URL valide","EndofResults":"Fin des résultats","More":"Plus...","RecordsPerPage":"Enregistrements par page","Maximize":"Agrandir","Minimize":"Réduire","CloseAllTabs":"Fermer tous les onglets","QuickDates":"Dates rapides","Finish":"Terminer","SetTextColor":"Définir la couleur du texte","AttachmentRules":"Règles de pièces jointes","AutoRefresh":"Actualiser automatiquement","BarChart":"Graphique à barres","CopyMail":"Copier et envoyer","CopyUrl":"Copier Url","DistributeHorizontally":"Répartir horizontalement","ExpandAll":"Développer tout","Generate":"Générer","GenerateScript":"Générer un script","NoAttachments":"Aucune pièce jointe","PieChart":"Graphique en secteurs","QuickAccess":"Accès rapide","RestoreUser":"Restaurer l\u0027utilisateur","SaveConsolidate":"Enregistrer avec consolidation locale","Screen Design":"Conception d\u0027écran","SelectAll":"Sélectionner tout","SpellCheck":"Vérifier l\u0027orthographe","SubmitForApproval":"Soumettre pour approbation","Timezone":"Fuseau horaire","Loading":"Chargement...","NewNode":"Nouveau noeud","AboutText":"Copyright © 2015 Infor. Tous droits réservés. Les termes et marques de conception mentionnés ci-après sont des marques et/ou des marques déposées d\u0027Infor et/ou de ses partenaires et filiales. Tous droits réservés. Toutes les autres marques répertoriées ci-après sont la propriété de leurs propriétaires respectifs. www.infor.com.", "SelectMonthYear":"Sélectionnez un mois et une année"}
+	messages: {"AdditionalHelp":"Aide supplémentaire","AddNewTab":"Ajouter un onglet","Alerts":"Alertes","ApplyFilter":"Appliquer filtre","Approve":"Approuver","Attachments":"Pièces jointes","Back":"Précédent","Basic":"De base","Between":"Entre","Book":"Livre","Cancel":"Annuler","Checked":"Coché(e)","ClearFilter":"Effacer le filtre","Close":"Fermer","CloseCancelChanges":"Fermer et annuler les modifications","CloseSaveChanges":"Fermer et enregistrer les modifications","CloseTab":"Fermer l\u0027onglet","ColumnPersonalization":"Personnalisation de colonne","Comments":"Commentaires","Confirmation":"Confirmation","Contains":"Contient","CreateTab":"Créer un nouvel onglet","Cut":"Couper","Delete":"Supprimer","DiscardUndo":"Supprimer/annuler","DisplayDropDownList":"Afficher la liste déroulante","Displaying":"Affichage : ","DocWord":"Document","DoesNotContain":"Ne contient pas","DoesNotEndWith":"Ne finit pas par","DoesNotEqual":"N\u0027est pas égal(e)","DoesNotStartWith":"Ne commence pas par","Download":"Télécharger","Duplicate":"Copier","Edit":"Modifier","EitherSelectedorNotSelected":"Sélectionné ou Non sélectionné","Email":"E-mail","EndsWith":"Finit par","EqualsStr":"Est égal(e)","ExpandCollapse":"Développer/réduire","ExportFailed":"Echec de l\u0027exportation","ExportToExcel":"Exporter vers Excel","FileInUse":"Fichier spécifié est en cours d\u0027utilisation","FileInUseDetail":"Fermez le fichier dans l\u0027application qui l\u0027utilise ou spécifiez un nom de fichier différent.","Filter":"Filtrer","FilterMenu":"Menu Filtre","FilterOptions":"Options filtre","FilterWithinResults":"Filtrer les résultats","First":"Premier","FirstView":"Première vue","Folder":"Dossier","ForgotPassword":"Mot de passe oublié ?","Forward":"Faire suivre","GetMoreRows":"Lignes supplémentaires","GreaterThan":"Supérieur à","GreaterThanOrEquals":"Supérieur ou égal à","GridSettings":"Paramètres de grille","GroupSelection":"Sélection de groupe","Help":"Aide","HideColumn":"Masquer la colonne","IsEmpty":"Est vide","IsNotEmpty":"N\u0027est pas vide","Last":"Dernier","LastView":"Dernière vue","LaunchActivate":"Lancer/activer","LessThan":"Inférieur à","LessThanOrEquals":"Inférieur ou égal à","Links":"Liens","ListTabs":"Lister tous les onglets","LoadingItem":"Chargement d\u0027article ","Maintenance":"Maintenance","Menu":"Menu","New":"Nouveau","Next":"Suivant","NextView":"Vue suivante","No":"Non","NotChecked":"Pas coché(e)","Notes":"Remarques","NotSelected":"Pas sélectionné(e)","Of":" sur ","Ok":"OK","Open":"Ouvrir","Password":"Mot de passe","Paste":"Coller","Phone":"Téléphone","PleaseWait":"Patientez","Previous":"Précédent","PreviousView":"Vue précédente","Print":"Imprimer","Queries":"Demandes","Redo":"Rétablir","Refresh":"Actualiser","Reject":"Rejeter","RememberMe":"Se souvenir de moi à cet ordinateur","Reports":"Etats","Reset":"Réinitialiser","Review":"Réviser","RunFilter":"Exécuter le filtre","RunJob":"Exécuter la tâche","Save":"Enregistrer","SaveBeforeClosing":"Enregistrer avant de fermer","SavedFilters":"Filtres enregistrés","SaveSubmit":"Enregistrer/soumettre","ScreenDesign":"Conception d\u0027écran","Search":"Rechercher","SelectContents":"Sélectionner les contenus","SelectDate":"Sélectionner une date","SelectDeselect":"Sélectionner / désélectionner tout","Selected":"Sélection : ","ServerName":"Nom du serveur","Settings":"Paramètres","ShowFilterRow":"Afficher la ligne de filtre","SignIn":"Connexion","SortAscending":"Tri ascendant","SortDescending":"Tri descendant","Spreadsheet":"Tableur","StartsWith":"Commence par","StatusIndicator":"Indicateur d\u0027état","Tasks":"Tâches","Today":"Aujourd\u0027hui","Translate":"Traduire","UserID":"ID utilisateur","Utilities":"Outils","Yes":"Oui","Page":"Page","Rows":"Lignes","ShowingAll":"Afficher tout","SessionNavigation":"Navigation de session","ListAllMenuItems":"Lister tous les éléments de menu","NoRecordsFound":"Enregistrements introuvables","SearchTree":"Rechercher arborescence","Clear":"Effacer","DrillDown":"Zoom avant","Required":"Champ requis","Available":"Disponible :","Add":"Ajouter","MoveDown":"Déplacer vers le bas","MoveUp":"Déplacer vers le haut","Remove":"Supprimer","LastYear":"Année précédente","NextMonth":"Mois suivant","NextWeek":"Semaine suivante","NextYear":"Année suivante","OneMonthAgo":"Il y a 1 mois","OneWeekAgo":"Il y a une semaine","SixMonthsAgo":"Il y a 6 mois","Time":"Heure","CannotBeSelected":"Impossible de sélectionner cette ligne.","ResetToDefault":"Rétablir à disposition par défaut","CloseOtherTabs":"Fermer les autres onglets","EmailValidation":"Saisissez une adresse e-mail valide","UrlValidation":"Saisissez une URL valide","EndofResults":"Fin des résultats","More":"Plus...","RecordsPerPage":"Enregistrements par page","Maximize":"Agrandir","Minimize":"Réduire","CloseAllTabs":"Fermer tous les onglets","QuickDates":"Dates rapides","Finish":"Terminer","SetTextColor":"Définir la couleur du texte","AttachmentRules":"Règles de pièces jointes","AutoRefresh":"Actualiser automatiquement","BarChart":"Graphique à barres","CopyMail":"Copier et envoyer","CopyUrl":"Copier Url","DistributeHorizontally":"Répartir horizontalement","ExpandAll":"Développer tout","Generate":"Générer","GenerateScript":"Générer un script","NoAttachments":"Aucune pièce jointe","PieChart":"Graphique en secteurs","QuickAccess":"Accès rapide","RestoreUser":"Restaurer l\u0027utilisateur","SaveConsolidate":"Enregistrer avec consolidation locale","Screen Design":"Conception d\u0027écran","SelectAll":"Sélectionner tout","SpellCheck":"Vérifier l\u0027orthographe","SubmitForApproval":"Soumettre pour approbation","Timezone":"Fuseau horaire","Loading":"Chargement...","NewNode":"Nouveau noeud","AboutText":"Copyright © 2014 Infor. Tous droits réservés. Les termes et marques de conception mentionnés ci-après sont des marques et/ou des marques déposées d\u0027Infor et/ou de ses partenaires et filiales. Tous droits réservés. Toutes les autres marques répertoriées ci-après sont la propriété de leurs propriétaires respectifs. www.infor.com.", "SelectMonthYear":"Sélectionnez un mois et une année"}
 });
 
 }( this ));
@@ -37794,7 +36617,7 @@ Globalize.addCultureInfo( "he-IL", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"עזרה נוספת","AddNewTab":"הוסף כרטיסייה חדשה","Alerts":"התראות","ApplyFilter":"החל מסנן","Approve":"אישור","Attachments":"קבצים מצורפים","Back":"הקודם","Basic":"בסיסי","Between":"בין","Book":"ספר","Cancel":"ביטול","Checked":"מסומן","ClearFilter":"נקה מסנן","Close":"סגור","CloseCancelChanges":"סגור ובטל שינויים","CloseSaveChanges":"סגור ושמור שינויים","CloseTab":"סגור כרטיסייה","ColumnPersonalization":"התאמה אישית של עמודה","Comments":"הערות","Confirmation":"אישור","Contains":"מכיל","CreateTab":"צור כרטיסייה חדשה","Cut":"גזור","Delete":"מחק","DiscardUndo":"בטל","DisplayDropDownList":"הצג רשימה נפתחת","Displaying":"מציג: ","DocWord":"מסמך","DoesNotContain":"אינו מכיל","DoesNotEndWith":"אינו מסתיים ב-","DoesNotEqual":"אינו שווה ל-","DoesNotStartWith":"אינו מתחיל ב-","Download":"הורד","Duplicate":"שכפל","Edit":"ערוך","EitherSelectedorNotSelected":"נבחר או לא נבחר","Email":"דואר אלקטרוני","EndsWith":"מסתיים ב-","EqualsStr":"שווה ל-","ExpandCollapse":"הרחב/כווץ","ExportFailed":"היצוא נכשל","ExportToExcel":"יצוא ל-Excel","FileInUse":"הקובץ שצוין נמצא בשימוש","FileInUseDetail":"סגור את הקובץ ביישום שבו הוא נמצא בשימוש או ציין שם קובץ אחר.","Filter":"מסנן","FilterMenu":"תפריט מסנן","FilterOptions":"אפשרויות מסנן","FilterWithinResults":"סינון בתוך התוצאות","First":"ראשון","FirstView":"הצג ראשון","Folder":"תיקייה","ForgotPassword":"שכחת את הסיסמה?","Forward":"קדימה","GetMoreRows":"קבל שורות נוספות","GreaterThan":"גדול מ-","GreaterThanOrEquals":"גדול או שווה ל-","GridSettings":"הגדרות רשת","GroupSelection":"בחירת קבוצה","Help":"עזרה","HideColumn":"הסתר עמודה","IsEmpty":"ריק","IsNotEmpty":"אינו ריק","Last":"אחרון","LastView":"הצג אחרון","LaunchActivate":"הפעל","LessThan":"קטן מ-","LessThanOrEquals":"קטן או שווה ל-","Links":"קישורים","ListTabs":"פרט את כל הכרטיסיות","LoadingItem":"טוען פריט ","Maintenance":"תחזוקה","Menu":"תפריט","New":"חדש","Next":"הבא","NextView":"הצג את הבא","No":"לא","NotChecked":"לא מסומן","Notes":"הערות","NotSelected":"לא נבחר","Of":" מתוך ","Ok":"אישור","Open":"פתח","Password":"סיסמה","Paste":"הדבק","Phone":"טלפון","PleaseWait":"אנא המתן","Previous":"הקודם","PreviousView":"הצג את הקודם","Print":"הדפס","Queries":"שאילתות","Redo":"בצע שוב","Refresh":"רענן","Reject":"דחה","RememberMe":"זכור אותי במחשב זה","Reports":"דוחות","Reset":"איפוס","Review":"סקירה","RunFilter":"הפעל מסנן","RunJob":"הפעל משימה","Save":"שמור","SaveBeforeClosing":"שמור לפני סגירה","SavedFilters":"מסננים שנשמרו","SaveSubmit":"שמור/שלח","ScreenDesign":"עיצוב מסך","Search":"חיפוש","SelectContents":"בחר תוכן","SelectDate":"בחר תאריך","SelectDeselect":"בחר הכול / בטל בחירת הכול","Selected":"נבחר: ","ServerName":"שם שרת","Settings":"הגדרות","ShowFilterRow":"הצג שורת מסנן","SignIn":"כניסה","SortAscending":"מיין בסדר עולה","SortDescending":"מיין בסדר יורד","Spreadsheet":"גיליון אלקטרוני","StartsWith":"מתחיל ב-","StatusIndicator":"מחוון מצב","Tasks":"משימות","Today":"היום","Translate":"תרגם","UserID":"מזהה משתמש","Utilities":"תוכניות שירות","Yes":"כן","Page":"דף","Rows":"שורות","ShowingAll":"מציג את הכול","SessionNavigation":"ניווט בהפעלה","ListAllMenuItems":"פרט את כל פריטי התפריט","NoRecordsFound":"לא נמצאו רשומות","SearchTree":"חיפוש בעץ","Clear":"נקה","DrillDown":"הסתעפות","Required":"שדה זה נדרש","Available":"זמין:","Add":"הוסף","MoveDown":"הזז למטה","MoveUp":"הזז למעלה","Remove":"הסר","LastYear":"השנה שעברה","NextMonth":"החודש הבא","NextWeek":"השבוע הבא","NextYear":"השנה הבאה","OneMonthAgo":"לפני חודש","OneWeekAgo":"לפני שבוע","SixMonthsAgo":"לפני שישה חודשים","Time":"שעה","CannotBeSelected":"לא ניתן לבחור שורה זו.","ResetToDefault":"איפוס לפריסת ברירת המחדל","CloseOtherTabs":"סגור כרטיסיות אחרות","EmailValidation":"הזן כתובת דואר אלקטרוני חוקית","UrlValidation":"הזן כתובת URL חוקית","EndofResults":"סוף התוצאות","More":"עוד...","RecordsPerPage":"רשומות בדף","Maximize":"להגדיל","Minimize":"לצמצם"}
+	messages: {"SelectAll":"בחר הכול", "AdditionalHelp":"עזרה נוספת","AddNewTab":"הוסף כרטיסייה חדשה","Alerts":"התראות","ApplyFilter":"החל מסנן","Approve":"אישור","Attachments":"קבצים מצורפים","Back":"הקודם","Basic":"בסיסי","Between":"בין","Book":"ספר","Cancel":"ביטול","Checked":"מסומן","ClearFilter":"נקה מסנן","Close":"סגור","CloseCancelChanges":"סגור ובטל שינויים","CloseSaveChanges":"סגור ושמור שינויים","CloseTab":"סגור כרטיסייה","ColumnPersonalization":"התאמה אישית של עמודה","Comments":"הערות","Confirmation":"אישור","Contains":"מכיל","CreateTab":"צור כרטיסייה חדשה","Cut":"גזור","Delete":"מחק","DiscardUndo":"בטל","DisplayDropDownList":"הצג רשימה נפתחת","Displaying":"מציג: ","DocWord":"מסמך","DoesNotContain":"אינו מכיל","DoesNotEndWith":"אינו מסתיים ב-","DoesNotEqual":"אינו שווה ל-","DoesNotStartWith":"אינו מתחיל ב-","Download":"הורד","Duplicate":"שכפל","Edit":"ערוך","EitherSelectedorNotSelected":"נבחר או לא נבחר","Email":"דואר אלקטרוני","EndsWith":"מסתיים ב-","EqualsStr":"שווה ל-","ExpandCollapse":"הרחב/כווץ","ExportFailed":"היצוא נכשל","ExportToExcel":"יצוא ל-Excel","FileInUse":"הקובץ שצוין נמצא בשימוש","FileInUseDetail":"סגור את הקובץ ביישום שבו הוא נמצא בשימוש או ציין שם קובץ אחר.","Filter":"מסנן","FilterMenu":"תפריט מסנן","FilterOptions":"אפשרויות מסנן","FilterWithinResults":"סינון בתוך התוצאות","First":"ראשון","FirstView":"הצג ראשון","Folder":"תיקייה","ForgotPassword":"שכחת את הסיסמה?","Forward":"קדימה","GetMoreRows":"קבל שורות נוספות","GreaterThan":"גדול מ-","GreaterThanOrEquals":"גדול או שווה ל-","GridSettings":"הגדרות רשת","GroupSelection":"בחירת קבוצה","Help":"עזרה","HideColumn":"הסתר עמודה","IsEmpty":"ריק","IsNotEmpty":"אינו ריק","Last":"אחרון","LastView":"הצג אחרון","LaunchActivate":"הפעל","LessThan":"קטן מ-","LessThanOrEquals":"קטן או שווה ל-","Links":"קישורים","ListTabs":"פרט את כל הכרטיסיות","LoadingItem":"טוען פריט ","Maintenance":"תחזוקה","Menu":"תפריט","New":"חדש","Next":"הבא","NextView":"הצג את הבא","No":"לא","NotChecked":"לא מסומן","Notes":"הערות","NotSelected":"לא נבחר","Of":" מתוך ","Ok":"אישור","Open":"פתח","Password":"סיסמה","Paste":"הדבק","Phone":"טלפון","PleaseWait":"אנא המתן","Previous":"הקודם","PreviousView":"הצג את הקודם","Print":"הדפס","Queries":"שאילתות","Redo":"בצע שוב","Refresh":"רענן","Reject":"דחה","RememberMe":"זכור אותי במחשב זה","Reports":"דוחות","Reset":"איפוס","Review":"סקירה","RunFilter":"הפעל מסנן","RunJob":"הפעל משימה","Save":"שמור","SaveBeforeClosing":"שמור לפני סגירה","SavedFilters":"מסננים שנשמרו","SaveSubmit":"שמור/שלח","ScreenDesign":"עיצוב מסך","Search":"חיפוש","SelectContents":"בחר תוכן","SelectDate":"בחר תאריך","SelectDeselect":"בחר הכול / בטל בחירת הכול","Selected":"נבחר: ","ServerName":"שם שרת","Settings":"הגדרות","ShowFilterRow":"הצג שורת מסנן","SignIn":"כניסה","SortAscending":"מיין בסדר עולה","SortDescending":"מיין בסדר יורד","Spreadsheet":"גיליון אלקטרוני","StartsWith":"מתחיל ב-","StatusIndicator":"מחוון מצב","Tasks":"משימות","Today":"היום","Translate":"תרגם","UserID":"מזהה משתמש","Utilities":"תוכניות שירות","Yes":"כן","Page":"דף","Rows":"שורות","ShowingAll":"מציג את הכול","SessionNavigation":"ניווט בהפעלה","ListAllMenuItems":"פרט את כל פריטי התפריט","NoRecordsFound":"לא נמצאו רשומות","SearchTree":"חיפוש בעץ","Clear":"נקה","DrillDown":"הסתעפות","Required":"שדה זה נדרש","Available":"זמין:","Add":"הוסף","MoveDown":"הזז למטה","MoveUp":"הזז למעלה","Remove":"הסר","LastYear":"השנה שעברה","NextMonth":"החודש הבא","NextWeek":"השבוע הבא","NextYear":"השנה הבאה","OneMonthAgo":"לפני חודש","OneWeekAgo":"לפני שבוע","SixMonthsAgo":"לפני שישה חודשים","Time":"שעה","CannotBeSelected":"לא ניתן לבחור שורה זו.","ResetToDefault":"איפוס לפריסת ברירת המחדל","CloseOtherTabs":"סגור כרטיסיות אחרות","EmailValidation":"הזן כתובת דואר אלקטרוני חוקית","UrlValidation":"הזן כתובת URL חוקית","EndofResults":"סוף התוצאות","More":"עוד...","RecordsPerPage":"רשומות בדף","Maximize":"להגדיל","Minimize":"לצמצם"}
 });
 
 }( this ));
@@ -38030,7 +36853,197 @@ Globalize.addCultureInfo( "hu-HU", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"További súgó","AddNewTab":"Új fül felvétele","Alerts":"Figyelmeztetések","ApplyFilter":"Szűrő alkalmazása","Approve":"Jóváhagyás","Attachments":"Csatolmányok","Back":"Vissza","Basic":"Alapvető","Between":"Között","Book":"Könyv","Cancel":"Mégsem","Checked":"Bejelölve","ClearFilter":"Szűrő törlése","Close":"Bezárás","CloseCancelChanges":"Bezárás és módosítások elvetése","CloseSaveChanges":"Bezárás és módosítások mentése","CloseTab":"Fül bezárása","ColumnPersonalization":"Oszlop testreszabása","Comments":"Megjegyzések","Confirmation":"Megerősítés","Contains":"Tartalmazza","CreateTab":"Új fül létrehozása","Cut":"Kivágás","Delete":"Törlés","DiscardUndo":"Elvetés/Visszavonás","DisplayDropDownList":"Legördülő lista megjelenítése","Displaying":"Megjelenítve: ","DocWord":"Dokumentum","DoesNotContain":"Nem tartalmazza","DoesNotEndWith":"Nem vége","DoesNotEqual":"Nem egyenlő","DoesNotStartWith":"Nem kezdete","Download":"Letöltés","Duplicate":"Duplikátum","Edit":"Szerkesztés","EitherSelectedorNotSelected":"Kiválasztott vagy nem kiválasztott","Email":"E-mail","EndsWith":"Vége","EqualsStr":"Egyenlő","ExpandCollapse":"Kibontás/Összecsukás","ExportFailed":"Exportálás sikertelen","ExportToExcel":"Exportálás Excelbe","FileInUse":"A megadott fájl használatban van","FileInUseDetail":"Zárja be az alkalmazást, amely használja, vagy adjon meg másik fájlnevet.","Filter":"Szűrő","FilterMenu":"Szűrő menü","FilterOptions":"Szűrő beállítások","FilterWithinResults":"Találatok szűrése","First":"Első","FirstView":"Első nézet","Folder":"Mappa","ForgotPassword":"Elfelejtette a jelszavát?","Forward":"Előre","GetMoreRows":"További sorok behívása","GreaterThan":"Nagyobb, mint","GreaterThanOrEquals":"Nagyobb, vagy egyenlő","GridSettings":"Rácsbeállítások","GroupSelection":"Csoport kiválasztása","Help":"Súgó","HideColumn":"Oszlop elrejtése","IsEmpty":"Üres","IsNotEmpty":"Nem üres","Last":"Utolsó","LastView":"Utolsó nézet","LaunchActivate":"Elindítás/Aktiválás","LessThan":"Kisebb, mint","LessThanOrEquals":"Kisebb, vagy egyenlő","Links":"Hivatkozások","ListTabs":"Minden fül listázása","LoadingItem":"Elem betöltése ","Maintenance":"Karbantartás","Menu":"Menü","New":"Új","Next":"Következő","NextView":"Következő nézet","No":"Nem","NotChecked":"Nincs bejelölve","Notes":"Jegyzetek","NotSelected":"Nem kiválasztott","Of":" / ","Ok":"OK","Open":"Megnyitás","Password":"Jelszó","Paste":"Beszúrás","Phone":"Telefon","PleaseWait":"Kérjük, várjon.","Previous":"Előző","PreviousView":"Előző nézet","Print":"Nyomtatás","Queries":"Lekérdezések","Redo":"Mégis","Refresh":"Frissítés","Reject":"Elutasítás","RememberMe":"Emlékezzen rám ezen a számítógépen","Reports":"Jelentések","Reset":"Visszaállítás","Review":"Áttekintés","RunFilter":"Szűrő futtatása","RunJob":"Feladat futtatása","Save":"Mentés","SaveBeforeClosing":"Mentés és bezárás","SavedFilters":"Mentett szűrők","SaveSubmit":"Mentés/Beadás Mentés/Elküldés","ScreenDesign":"Képernyőterv","Search":"Keresés","SelectContents":"Tartalom kiválasztása","SelectDate":"Dátum kiválasztása","SelectDeselect":"Mindet kiválasztja / Minden kiválasztás megszüntetése","Selected":"Kiválasztva: ","ServerName":"Kiszolgáló neve","Settings":"Beállítások","ShowFilterRow":"Szűrősor mutatása","SignIn":"Bejelentkezés","SortAscending":"Rendezés növekvő sorrendben","SortDescending":"Rendezés csökkenő sorrendben","Spreadsheet":"Táblázatkezelő","StartsWith":"Kezdete","StatusIndicator":"Állapotjelző","Tasks":"Feladatok","Today":"Ma","Translate":"Fordítás","UserID":"Felhasználói azonosító","Utilities":"Segédprogramok","Yes":"Igen","Page":"Oldal","Rows":"Sorok","ShowingAll":"Mindet mutatja","SessionNavigation":"Munkamenet navigáció","ListAllMenuItems":"Minden menüelem listázása","NoRecordsFound":"Nem található rekord","SearchTree":"Fa keresése","Clear":"Törlés","DrillDown":"Lefúrás","Required":"Ez egy kötelező mező","Available":"Elérhető:","Add":"Hozzáadás","MoveDown":"Mozgatás lefelé","MoveUp":"Mozgatás felfelé","Remove":"Eltávolítás","LastYear":"Elmúlt év","NextMonth":"Következő hónap","NextWeek":"Következő hét","NextYear":"Következő év","OneMonthAgo":"Egy hónappal ezelőtt","OneWeekAgo":"Egy héttel ezelőtt","SixMonthsAgo":"Hat hónappal ezelőtt","Time":"Idő","CannotBeSelected":"Ezt a sort nem lehet kiválasztani.","ResetToDefault":"Visszaállítás alapértelmezett elrendezésre","CloseOtherTabs":"Többi fül bezárása","EmailValidation":"Adjon meg érvényes e-mail címet","UrlValidation":"Adjon meg érvényes URL-t","EndofResults":"Eredmények vége","More":"Tovább...","RecordsPerPage":"Rekord oldalanként","Maximize":"Teljes méretűvé tesz","Minimize":"Kis méretűvé tesz","CloseAllTabs":"Minden fül bezárása","QuickDates":"Gyors dátumok","Finish":"Befejezés","SetTextColor":"Szövegszín beállítása","AttachmentRules":"Csatolmány szabályok","AutoRefresh":"Automatikus frissítés","BarChart":"Oszlopdiagram","CopyMail":"Másolás és e-mail küldés","CopyUrl":"URL másolása","DistributeHorizontally":"Elosztás vízszintesen","ExpandAll":"Minden kibontása","Generate":"Generálás","GenerateScript":"Parancsfájl generálása","NoAttachments":"Nincs csatolmány","PieChart":"Tortadiagram","QuickAccess":"Gyors hozzáférés","RestoreUser":"Felhasználó visszaállítása","SaveConsolidate":"Mentés helyi konszolidálással","Screen Design":"Képernyőterv","SelectAll":"Mindet kiválasztja","SpellCheck":"Helyesírás-ellenőrzés","SubmitForApproval":"Jóváhagyásra küldés","Timezone":"Időzóna","Loading":"Betöltés...","NewNode":"Új csomópont","RememberSettings":"Beállítások megjegyzése","Company":"Vállalat","Environment":"Környezet","DontHaveAccount":"Nincs fiókja?","ResetPassword":"Jelszó visszaállítása","SignUpNow":"Bejelentkezés","SelectMonthYear":"Hónap és év kiválasztása"}
+	messages: {
+    "AdditionalHelp": "További súgó",
+    "AddNewTab": "Új fül felvétele",
+    "Alerts": "Figyelmeztetések",
+    "ApplyFilter": "Szűrő alkalmazása",
+    "Approve": "Jóváhagyás",
+    "Attachments": "Csatolmányok",
+    "Back": "Vissza",
+    "Basic": "Alapvető",
+    "Between": "Között",
+    "Book": "Könyv",
+    "Cancel": "Mégsem",
+    "Checked": "Bejelölve",
+    "ClearFilter": "Szűrő törlése",
+    "Close": "Bezárás",
+    "CloseCancelChanges": "Bezárás és módosítások elvetése",
+    "CloseSaveChanges": "Bezárás és módosítások mentése",
+    "CloseTab": "Fül bezárása",
+    "ColumnPersonalization": "Oszlop testreszabása",
+    "Comments": "Megjegyzések",
+    "Confirmation": "Megerősítés",
+    "Contains": "Tartalmazza",
+    "CreateTab": "Új fül létrehozása",
+    "Cut": "Kivágás",
+    "Delete": "Törlés",
+    "DiscardUndo": "Elvetés/Visszavonás",
+    "DisplayDropDownList": "Legördülő lista megjelenítése",
+    "Displaying": "Megjelenítve: ",
+    "DocWord": "Dokumentum",
+    "DoesNotContain": "Nem tartalmazza",
+    "DoesNotEndWith": "Nem vége",
+    "DoesNotEqual": "Nem egyenlő",
+    "DoesNotStartWith": "Nem kezdete",
+    "Download": "Letöltés",
+    "Duplicate": "Duplikátum",
+    "Edit": "Szerkesztés",
+    "EitherSelectedorNotSelected": "Kiválasztott vagy nem kiválasztott",
+    "Email": "E-mail",
+    "EndsWith": "Vége",
+    "EqualsStr": "Egyenlő",
+    "ExpandCollapse": "Kibontás/Összecsukás",
+    "ExportFailed": "Exportálás sikertelen",
+    "ExportToExcel": "Exportálás Excelbe",
+    "FileInUse": "A megadott fájl használatban van",
+    "FileInUseDetail": "Zárja be az alkalmazást, amely használja, vagy adjon meg másik fájlnevet.",
+    "Filter": "Szűrő",
+    "FilterMenu": "Szűrő menü",
+    "FilterOptions": "Szűrő beállítások",
+    "FilterWithinResults": "Találatok szűrése",
+    "First": "Első",
+    "FirstView": "Első nézet",
+    "Folder": "Mappa",
+    "ForgotPassword": "Elfelejtette a jelszavát?",
+    "Forward": "Előre",
+    "GetMoreRows": "További sorok behívása",
+    "GreaterThan": "Nagyobb, mint",
+    "GreaterThanOrEquals": "Nagyobb, vagy egyenlő",
+    "GridSettings": "Rácsbeállítások",
+    "GroupSelection": "Csoport kiválasztása",
+    "Help": "Súgó",
+    "HideColumn": "Oszlop elrejtése",
+    "IsEmpty": "Üres",
+    "IsNotEmpty": "Nem üres",
+    "Last": "Utolsó",
+    "LastView": "Utolsó nézet",
+    "LaunchActivate": "Elindítás/Aktiválás",
+    "LessThan": "Kisebb, mint",
+    "LessThanOrEquals": "Kisebb, vagy egyenlő",
+    "Links": "Hivatkozások",
+    "ListTabs": "Minden fül listázása",
+    "LoadingItem": "Elem betöltése ",
+    "Maintenance": "Karbantartás",
+    "Menu": "Menü",
+    "New": "Új",
+    "Next": "Következő",
+    "NextView": "Következő nézet",
+    "No": "Nem",
+    "NotChecked": "Nincs bejelölve",
+    "Notes": "Jegyzetek",
+    "NotSelected": "Nem kiválasztott",
+    "Of": " / ",
+    "Ok": "OK",
+    "Open": "Megnyitás",
+    "Password": "Jelszó",
+    "Paste": "Beszúrás",
+    "Phone": "Telefon",
+    "PleaseWait": "Kérjük, várjon.",
+    "Previous": "Előző",
+    "PreviousView": "Előző nézet",
+    "Print": "Nyomtatás",
+    "Queries": "Lekérdezések",
+    "Redo": "Mégis",
+    "Refresh": "Frissítés",
+    "Reject": "Elutasítás",
+    "RememberMe": "Emlékezzen rám ezen a számítógépen",
+    "Reports": "Jelentések",
+    "Reset": "Visszaállítás",
+    "Review": "Áttekintés",
+    "RunFilter": "Szűrő futtatása",
+    "RunJob": "Feladat futtatása",
+    "Save": "Mentés",
+    "SaveBeforeClosing": "Mentés és bezárás",
+    "SavedFilters": "Mentett szűrők",
+    "SaveSubmit": "Mentés/Beadás Mentés/Elküldés",
+    "ScreenDesign": "Képernyőterv",
+    "Search": "Keresés",
+    "SelectContents": "Tartalom kiválasztása",
+    "SelectDate": "Dátum kiválasztása",
+    "SelectDeselect": "Mindet kiválasztja / Minden kiválasztás megszüntetése",
+    "Selected": "Kiválasztva: ",
+    "ServerName": "Kiszolgáló neve",
+    "Settings": "Beállítások",
+    "ShowFilterRow": "Szűrősor mutatása",
+    "SignIn": "Bejelentkezés",
+    "SortAscending": "Rendezés növekvő sorrendben",
+    "SortDescending": "Rendezés csökkenő sorrendben",
+    "Spreadsheet": "Táblázatkezelő",
+    "StartsWith": "Kezdete",
+    "StatusIndicator": "Állapotjelző",
+    "Tasks": "Feladatok",
+    "Today": "Ma",
+    "Translate": "Fordítás",
+    "UserID": "Felhasználói azonosító",
+    "Utilities": "Segédprogramok",
+    "Yes": "Igen",
+    "Page": "Oldal",
+    "Rows": "Sorok",
+    "ShowingAll": "Mindet mutatja",
+    "SessionNavigation": "Munkamenet navigáció",
+    "ListAllMenuItems": "Minden menüelem listázása",
+    "NoRecordsFound": "Nem található rekord",
+    "SearchTree": "Fa keresése",
+    "Clear": "Törlés",
+    "DrillDown": "Lefúrás",
+    "Required": "Ez egy kötelező mező",
+    "Available": "Elérhető:",
+    "Add": "Hozzáadás",
+    "MoveDown": "Mozgatás lefelé",
+    "MoveUp": "Mozgatás felfelé",
+    "Remove": "Eltávolítás",
+    "LastYear": "Elmúlt év",
+    "NextMonth": "Következő hónap",
+    "NextWeek": "Következő hét",
+    "NextYear": "Következő év",
+    "OneMonthAgo": "Egy hónappal ezelőtt",
+    "OneWeekAgo": "Egy héttel ezelőtt",
+    "SixMonthsAgo": "Hat hónappal ezelőtt",
+    "Time": "Idő",
+    "CannotBeSelected": "Ezt a sort nem lehet kiválasztani.",
+    "ResetToDefault": "Visszaállítás alapértelmezett elrendezésre",
+    "CloseOtherTabs": "Többi fül bezárása",
+    "EmailValidation": "Adjon meg érvényes e-mail címet",
+    "UrlValidation": "Adjon meg érvényes URL-t",
+    "EndofResults": "Eredmények vége",
+    "More": "Továbbiak...",
+    "RecordsPerPage": "Rekord oldalanként",
+    "Maximize": "Teljes méretűvé tesz",
+    "Minimize": "Kis méretűvé tesz",
+    "CloseAllTabs": "Minden fül bezárása",
+    "QuickDates": "Gyors dátumok",
+    "Finish": "Befejezés",
+    "SetTextColor": "Szövegszín beállítása",
+    "AttachmentRules": "Csatolmány szabályok",
+    "AutoRefresh": "Automatikus frissítés",
+    "BarChart": "Oszlopdiagram",
+    "CopyMail": "Másolás és e-mail küldés",
+    "CopyUrl": "URL másolása",
+    "DistributeHorizontally": "Elosztás vízszintesen",
+    "ExpandAll": "Minden kibontása",
+    "Generate": "Generálás",
+    "GenerateScript": "Parancsfájl generálása",
+    "NoAttachments": "Nincs csatolmány",
+    "PieChart": "Tortadiagram",
+    "QuickAccess": "Gyors hozzáférés",
+    "RestoreUser": "Felhasználó visszaállítása",
+    "SaveConsolidate": "Mentés helyi konszolidálással",
+    "Screen Design": "Képernyőterv",
+    "SelectAll": "Mindet kiválasztja",
+    "SpellCheck": "Helyesírás-ellenőrzés",
+    "SubmitForApproval": "Jóváhagyásra küldés",
+    "Timezone": "Időzóna",
+    "Loading": "Betöltés...",
+    "NewNode": "Új csomópont",
+    "RememberSettings": "Beállítások megjegyzése",
+    "Company": "Vállalat",
+    "Environment": "Környezet",
+    "DontHaveAccount": "Nincs fiókja?",
+    "ResetPassword": "Jelszó visszaállítása",
+    "SignUpNow": "Bejelentkezés",
+    "SelectMonthYear": "Hónap és év kiválasztása"
+  }
 });
 
 }( this ));
@@ -38106,7 +37119,83 @@ Globalize.addCultureInfo( "id-ID", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Bantuan Tambahan","AddNewTab":"Tambahkan Tab Baru","Alerts":"Peringatan","ApplyFilter":"Terapkan Filter","Approve":"Setuju","Attachments":"Lampiran","Back":"Kembali","Basic":"Dasar","Between":"Antara","Book":"Buku","Cancel":"Batalkan","Checked":"Diperiksa","ClearFilter":"Bersihkan Filter","Close":"Tutup","CloseCancelChanges":"Tutup dan Batalkan Perubahan","CloseSaveChanges":"Tutup dan Simpan Perubahan","CloseTab":"Tutup Tab","ColumnPersonalization":"Personalisasi Kolom","Comments":"Komentar","Confirmation":"Konfirmasi","Contains":"Berisi","CreateTab":"Buat Tab baru","Cut":"Potong","Delete":"Hapus","DiscardUndo":"Batalkan/Kembalikan","DisplayDropDownList":"Tampilkan daftar Dropdown","Displaying":"Sedang menampilkan: ","DocWord":"Dokumen","DoesNotContain":"Tidak Berisi","DoesNotEndWith":"Tidak Berakhir Dengan","DoesNotEqual":"Tidak Sama Dengan","DoesNotStartWith":"Tidak Mulai Dengan","Download":"Unduh","Duplicate":"Duplikat","Edit":"Edit","EitherSelectedorNotSelected":"Salah Satu Dipilih atau Tidak Dipilih","Email":"Email","EndsWith":"Berakhir Dengan","EqualsStr":"Sama dengan","ExpandCollapse":"Luaskan/Ciutkan","ExportFailed":"Ekspor Gagal","ExportToExcel":"Ekspor ke Excel","FileInUse":"File yang diminta sedang Digunakan","FileInUseDetail":"Tutup file pada aplikasi yang menggunakan file tersebut atau tentukan nama file yang berbeda.","Filter":"Filter","FilterMenu":"Menu Filter","FilterOptions":"Opsi Filter","FilterWithinResults":"Filter Pada Hasil","First":"Pertama","FirstView":"Tampilan Pertama","Folder":"Folder","ForgotPassword":"Lupa Kata Sandi?","Forward":"Teruskan","GetMoreRows":"Dapatkan Baris Lagi","GreaterThan":"Lebih Besar Dari","GreaterThanOrEquals":"Lebih Besar Dari atau Sama Dengan","GridSettings":"Pengaturan Grid","GroupSelection":"Pemilihan Grup","Help":"Bantuan","HideColumn":"Sembunyikan Kolom","IsEmpty":"Kosong","IsNotEmpty":"Tidak Kosong","Last":"Terakhir","LastView":"Tampilan Terakhir","LaunchActivate":"Luncurkan/Aktifkan","LessThan":"Kurang Dari","LessThanOrEquals":"Kurang Dari atau Sama Dengan","Links":"Tautan","ListTabs":"Daftar semua Tab","LoadingItem":"Memuat item ","Maintenance":"Pemeliharaan","Menu":"Menu","New":"Baru","Next":"Berikutnya","NextView":"Tampilan Selanjutnya","No":"Tidak","NotChecked":"Tidak Diperiksa","Notes":"Catatan","NotSelected":"Tidak Dipilih","Of":" dari ","Ok":"OKE","Open":"Buka","Password":"Kata Sandi","Paste":"Tempel","Phone":"Telepon","PleaseWait":"Mohon Tunggu","Previous":"Sebelumnya","PreviousView":"Tampilan Sebelumnya","Print":"Cetak","Queries":"Kueri","Redo":"Lakukan lagi","Refresh":"Segarkan","Reject":"Tolak","RememberMe":"Ingat saya pada komputer ini","Reports":"Laporan","Reset":"Reset","Review":"Kaji Ulang","RunFilter":"Jalankan Filter","RunJob":"Jalankan Pekerjaan","Save":"Simpan","SaveBeforeClosing":"Simpan Sebelum Menutup","SavedFilters":"Filter Tersimpan","SaveSubmit":"Simpan/Serahkan","ScreenDesign":"Desain Layar","Search":"Cari","SelectContents":"Pilih Konten","SelectDate":"Pilih Tanggal","SelectDeselect":"Pilih / Batal Pilih Semua","Selected":"Dipilih: ","ServerName":"Nama Server","Settings":"Pengaturan","ShowFilterRow":"Tampilkan Baris Filter","SignIn":"Masuk","SortAscending":"Sortir Naik","SortDescending":"Sortir Turun","Spreadsheet":"Lembar matriks","StartsWith":"Mulai Dengan","StatusIndicator":"Indikator Status","Tasks":"Tugas","Today":"Hari Ini","Translate":"Terjemahkan","UserID":"ID Pengguna","Utilities":"Utilitas","Yes":"Ya","Page":"Halaman","Rows":"Baris","ShowingAll":"Menampilkan Semua","SessionNavigation":"Navigasi Sesi","ListAllMenuItems":"Daftar Semua Item Menu","NoRecordsFound":"Rekaman Tidak Ditemukan","SearchTree":"Pohon Pencarian","Clear":"Bersihkan","DrillDown":"Drill Turun","Required":"Bidang ini harus diisi","Available":"Tersedia:","Add":"Tambahkan","MoveDown":"Geser ke Bawah","MoveUp":"Geser ke Atas","Remove":"Buang","LastYear":"Tahun Lalu","NextMonth":"Bulan Depan","NextWeek":"Minggu Depan","NextYear":"Tahun Depan","OneMonthAgo":"Satu Bulan Lalu","OneWeekAgo":"Satu Minggu Lalu","SixMonthsAgo":"Enam Bulan Lalu","Time":"Waktu","CannotBeSelected":"Baris ini tidak dapat dipilih.","ResetToDefault":"Reset ke Tata Letak Awal","CloseOtherTabs":"Tutup Tab Lain","EmailValidation":"Masukkan alamat email yang valid","UrlValidation":"Masukkan URL yang valid","EndofResults":"Akhir Hasil","More":"Lebih banyak lagi...","RecordsPerPage":"Rekaman Per Halaman","Maximize":"Maksimalkan","Minimize":"Memperkecil"}
+	messages: { "AdditionalHelp": "Bantuan Tambahan", "AddNewTab": "Tambahkan Tab Baru", "Alerts": "Peringatan", "ApplyFilter": "Terapkan Filter", "Approve": "Setuju", "Attachments": "Lampiran", "Back": "Kembali", "Basic": "Dasar", "Between": "Antara", "Book": "Buku", "Cancel": "Batalkan", "Checked": "Diperiksa", "ClearFilter": "Bersihkan Filter", "Close": "Tutup", "CloseCancelChanges": "Tutup dan Batalkan Perubahan", "CloseSaveChanges": "Tutup dan Simpan Perubahan", "CloseTab": "Tutup Tab", "ColumnPersonalization": "Personalisasi Kolom", "Comments": "Komentar", "Confirmation": "Konfirmasi", "Contains": "Berisi", "CreateTab": "Buat Tab baru", "Cut": "Potong", "Delete": "Hapus", "DiscardUndo": "Batalkan/Kembalikan", "DisplayDropDownList": "Tampilkan daftar Dropdown", "Displaying": "Sedang menampilkan: ", "DocWord": "Dokumen", "DoesNotContain": "Tidak Berisi", "DoesNotEndWith": "Tidak Berakhir Dengan", "DoesNotEqual": "Tidak Sama Dengan", "DoesNotStartWith": "Tidak Mulai Dengan", "Download": "Unduh", "Duplicate": "Duplikat", "Edit": "Edit", "EitherSelectedorNotSelected": "Salah Satu Dipilih atau Tidak Dipilih", "Email": "Email", "EndsWith": "Berakhir Dengan", "EqualsStr": "Sama dengan", "ExpandCollapse": "Luaskan/Ciutkan", "ExportFailed": "Ekspor Gagal", "ExportToExcel": "Ekspor ke Excel", "FileInUse": "File yang diminta sedang Digunakan", "FileInUseDetail": "Tutup file pada aplikasi yang menggunakan file tersebut atau tentukan nama file yang berbeda.", "Filter": "Filter", "FilterMenu": "Menu Filter", "FilterOptions": "Opsi Filter", "FilterWithinResults": "Filter Pada Hasil", "First": "Pertama", "FirstView": "Tampilan Pertama", "Folder": "Folder", "ForgotPassword": "Lupa Kata Sandi?", "Forward": "Teruskan", "GetMoreRows": "Dapatkan Baris Lagi", "GreaterThan": "Lebih Besar Dari", "GreaterThanOrEquals": "Lebih Besar Dari atau Sama Dengan", "GridSettings": "Pengaturan Grid", "GroupSelection": "Pemilihan Grup", "Help": "Bantuan", "HideColumn": "Sembunyikan Kolom", "IsEmpty": "Kosong", "IsNotEmpty": "Tidak Kosong", "Last": "Terakhir", "LastView": "Tampilan Terakhir", "LaunchActivate": "Luncurkan/Aktifkan", "LessThan": "Kurang Dari", "LessThanOrEquals": "Kurang Dari atau Sama Dengan", "Links": "Tautan", "ListTabs": "Daftar semua Tab", "LoadingItem": "Memuat item ", "Maintenance": "Pemeliharaan", "Menu": "Menu", "New": "Baru", "Next": "Berikutnya", "NextView": "Tampilan Selanjutnya", "No": "Tidak", "NotChecked": "Tidak Diperiksa", "Notes": "Catatan", "NotSelected": "Tidak Dipilih", "Of": " dari ", "Ok": "OKE", "Open": "Buka", "Password": "Kata Sandi", "Paste": "Tempel", "Phone": "Telepon", "PleaseWait": "Mohon Tunggu", "Previous": "Sebelumnya", "PreviousView": "Tampilan Sebelumnya", "Print": "Cetak", "Queries": "Kueri", "Redo": "Lakukan lagi", "Refresh": "Segarkan", "Reject": "Tolak", "RememberMe": "Ingat saya pada komputer ini", "Reports": "Laporan", "Reset": "Reset", "Review": "Kaji Ulang", "RunFilter": "Jalankan Filter", "RunJob": "Jalankan Pekerjaan", "Save": "Simpan", "SaveBeforeClosing": "Simpan Sebelum Menutup", "SavedFilters": "Filter Tersimpan", "SaveSubmit": "Simpan/Serahkan", "ScreenDesign": "Desain Layar", "Search": "Cari", "SelectContents": "Pilih Konten", "SelectDate": "Pilih Tanggal", "SelectDeselect": "Pilih / Batal Pilih Semua", "Selected": "Dipilih: ", "ServerName": "Nama Server", "Settings": "Pengaturan", "ShowFilterRow": "Tampilkan Baris Filter", "SignIn": "Masuk", "SortAscending": "Sortir Naik", "SortDescending": "Sortir Turun", "Spreadsheet": "Lembar matriks", "StartsWith": "Mulai Dengan", "StatusIndicator": "Indikator Status", "Tasks": "Tugas", "Today": "Hari Ini", "Translate": "Terjemahkan", "UserID": "ID Pengguna", "Utilities": "Utilitas", "Yes": "Ya", "Page": "Halaman", "Rows": "Baris", "ShowingAll": "Menampilkan Semua", "SessionNavigation": "Navigasi Sesi", "ListAllMenuItems": "Daftar Semua Item Menu", "NoRecordsFound": "Rekaman Tidak Ditemukan", "SearchTree": "Pohon Pencarian", "Clear": "Bersihkan", "DrillDown": "Drill Turun", "Required": "Bidang ini harus diisi", "Available": "Tersedia:", "Add": "Tambahkan", "MoveDown": "Geser ke Bawah", "MoveUp": "Geser ke Atas", "Remove": "Buang", "LastYear": "Tahun Lalu", "NextMonth": "Bulan Depan", "NextWeek": "Minggu Depan", "NextYear": "Tahun Depan", "OneMonthAgo": "Satu Bulan Lalu", "OneWeekAgo": "Satu Minggu Lalu", "SixMonthsAgo": "Enam Bulan Lalu", "Time": "Waktu", "CannotBeSelected": "Baris ini tidak dapat dipilih.", "ResetToDefault": "Atur Ulang ke Tata Letak Standar", "CloseOtherTabs": "Tutup Tab Lain", "EmailValidation": "Masukkan alamat email yang valid", "UrlValidation": "Masukkan URL yang valid", "EndofResults": "Akhir Hasil", "More": "Lebih banyak lagi...", "RecordsPerPage": "Rekaman Per Halaman", "Maximize": "Maksimalkan", "Minimize": "Memperkecil", "SelectAll" : "Pilih Semua"}
+});
+
+}( this ));
+/*
+* Globalize Culture id-ID
+*
+* http://github.com/jquery/globalize
+*
+* Copyright Software Freedom Conservancy, Inc.
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+* This file was generated by the Globalize Culture Generator
+* Translation: bugs found in this file need to be fixed in the generator
+*/
+
+(function( window, undefined ) {
+
+var Globalize;
+
+if ( typeof require !== "undefined"
+	&& typeof exports !== "undefined"
+	&& typeof module !== "undefined" ) {
+	// Assume CommonJS
+	Globalize = require( "globalize" );
+} else {
+	// Global variable
+	Globalize = window.Globalize;
+}
+
+Globalize.addCultureInfo( "in-ID", "default", {
+	name: "in-ID",
+	englishName: "Indonesian (Indonesia)",
+	nativeName: "Bahasa Indonesia (Indonesia)",
+	language: "in",
+	numberFormat: {
+		",": ".",
+		".": ",",
+		percent: {
+			",": ".",
+			".": ","
+		},
+		currency: {
+			decimals: 0,
+			",": ".",
+			".": ",",
+			symbol: "Rp"
+		}
+	},
+	calendars: {
+		standard: {
+			firstDay: 1,
+			days: {
+				names: ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"],
+				namesAbbr: ["Minggu","Sen","Sel","Rabu","Kamis","Jumat","Sabtu"],
+				namesShort: ["M","S","S","R","K","J","S"]
+			},
+			months: {
+				names: ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","Nopember","Desember",""],
+				namesAbbr: ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agust","Sep","Okt","Nop","Des",""]
+			},
+			AM: null,
+			PM: null,
+			patterns: {
+				d: "dd/MM/yyyy",
+				D: "dd MMMM yyyy",
+				t: "H:mm",
+				T: "H:mm:ss",
+				f: "dd MMMM yyyy H:mm",
+				F: "dd MMMM yyyy H:mm:ss",
+				M: "dd MMMM",
+				Y: "MMMM yyyy"
+			}
+		}
+	},
+	messages: {"AdditionalHelp":"Bantuan Tambahan","AddNewTab":"Tambahkan Tab Baru","Alerts":"Peringatan","ApplyFilter":"Terapkan Filter","Approve":"Setuju","Attachments":"Lampiran","Back":"Kembali","Basic":"Dasar","Between":"Antara","Book":"Buku","Cancel":"Batalkan","Checked":"Diperiksa","ClearFilter":"Bersihkan Filter","Close":"Tutup","CloseCancelChanges":"Tutup dan Batalkan Perubahan","CloseSaveChanges":"Tutup dan Simpan Perubahan","CloseTab":"Tutup Tab","ColumnPersonalization":"Personalisasi Kolom","Comments":"Komentar","Confirmation":"Konfirmasi","Contains":"Berisi","CreateTab":"Buat Tab baru","Cut":"Potong","Delete":"Hapus","DiscardUndo":"Batalkan/Kembalikan","DisplayDropDownList":"Tampilkan daftar Dropdown","Displaying":"Sedang menampilkan: ","DocWord":"Dokumen","DoesNotContain":"Tidak Berisi","DoesNotEndWith":"Tidak Berakhir Dengan","DoesNotEqual":"Tidak Sama Dengan","DoesNotStartWith":"Tidak Mulai Dengan","Download":"Unduh","Duplicate":"Duplikat","Edit":"Edit","EitherSelectedorNotSelected":"Salah Satu Dipilih atau Tidak Dipilih","Email":"Email","EndsWith":"Berakhir Dengan","EqualsStr":"Sama dengan","ExpandCollapse":"Luaskan/Ciutkan","ExportFailed":"Ekspor Gagal","ExportToExcel":"Ekspor ke Excel","FileInUse":"File yang diminta sedang Digunakan","FileInUseDetail":"Tutup file pada aplikasi yang menggunakan file tersebut atau tentukan nama file yang berbeda.","Filter":"Filter","FilterMenu":"Menu Filter","FilterOptions":"Opsi Filter","FilterWithinResults":"Filter Pada Hasil","First":"Pertama","FirstView":"Tampilan Pertama","Folder":"Folder","ForgotPassword":"Lupa Kata Sandi?","Forward":"Teruskan","GetMoreRows":"Dapatkan Baris Lagi","GreaterThan":"Lebih Besar Dari","GreaterThanOrEquals":"Lebih Besar Dari atau Sama Dengan","GridSettings":"Pengaturan Grid","GroupSelection":"Pemilihan Grup","Help":"Bantuan","HideColumn":"Sembunyikan Kolom","IsEmpty":"Kosong","IsNotEmpty":"Tidak Kosong","Last":"Terakhir","LastView":"Tampilan Terakhir","LaunchActivate":"Luncurkan/Aktifkan","LessThan":"Kurang Dari","LessThanOrEquals":"Kurang Dari atau Sama Dengan","Links":"Tautan","ListTabs":"Daftar semua Tab","LoadingItem":"Memuat item ","Maintenance":"Pemeliharaan","Menu":"Menu","New":"Baru","Next":"Berikutnya","NextView":"Tampilan Selanjutnya","No":"Tidak","NotChecked":"Tidak Diperiksa","Notes":"Catatan","NotSelected":"Tidak Dipilih","Of":" dari ","Ok":"OKE","Open":"Buka","Password":"Kata Sandi","Paste":"Tempel","Phone":"Telepon","PleaseWait":"Mohon Tunggu","Previous":"Sebelumnya","PreviousView":"Tampilan Sebelumnya","Print":"Cetak","Queries":"Kueri","Redo":"Lakukan lagi","Refresh":"Segarkan","Reject":"Tolak","RememberMe":"Ingat saya pada komputer ini","Reports":"Laporan","Reset":"Reset","Review":"Kaji Ulang","RunFilter":"Jalankan Filter","RunJob":"Jalankan Pekerjaan","Save":"Simpan","SaveBeforeClosing":"Simpan Sebelum Menutup","SavedFilters":"Filter Tersimpan","SaveSubmit":"Simpan/Serahkan","ScreenDesign":"Desain Layar","Search":"Cari","SelectContents":"Pilih Konten","SelectDate":"Pilih Tanggal","SelectDeselect":"Pilih / Batal Pilih Semua","Selected":"Dipilih: ","ServerName":"Nama Server","Settings":"Pengaturan","ShowFilterRow":"Tampilkan Baris Filter","SignIn":"Masuk","SortAscending":"Sortir Naik","SortDescending":"Sortir Turun","Spreadsheet":"Lembar matriks","StartsWith":"Mulai Dengan","StatusIndicator":"Indikator Status","Tasks":"Tugas","Today":"Hari Ini","Translate":"Terjemahkan","UserID":"ID Pengguna","Utilities":"Utilitas","Yes":"Ya","Page":"Halaman","Rows":"Baris","ShowingAll":"Menampilkan Semua","SessionNavigation":"Navigasi Sesi","ListAllMenuItems":"Daftar Semua Item Menu","NoRecordsFound":"Rekaman Tidak Ditemukan","SearchTree":"Pohon Pencarian","Clear":"Bersihkan","DrillDown":"Drill Turun","Required":"Bidang ini harus diisi","Available":"Tersedia:","Add":"Tambahkan","MoveDown":"Geser ke Bawah","MoveUp":"Geser ke Atas","Remove":"Buang","LastYear":"Tahun Lalu","NextMonth":"Bulan Depan","NextWeek":"Minggu Depan","NextYear":"Tahun Depan","OneMonthAgo":"Satu Bulan Lalu","OneWeekAgo":"Satu Minggu Lalu","SixMonthsAgo":"Enam Bulan Lalu","Time":"Waktu","CannotBeSelected":"Baris ini tidak dapat dipilih.","ResetToDefault":"Atur Ulang ke Tata Letak Standar","CloseOtherTabs":"Tutup Tab Lain","EmailValidation":"Masukkan alamat email yang valid","UrlValidation":"Masukkan URL yang valid","EndofResults":"Akhir Hasil","More":"Lebih banyak lagi...","RecordsPerPage":"Rekaman Per Halaman","Maximize":"Maksimalkan","Minimize":"Memperkecil"}
 });
 
 }( this ));
@@ -38187,7 +37276,105 @@ Globalize.addCultureInfo( "it-IT", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Informazioni aggiuntive","AddNewTab":"Aggiungi nuova scheda","Alerts":"Avvisi","ApplyFilter":"Applica filtro","Approve":"Approva","Attachments":"Allegati","Back":"Indietro","Basic":"Di base","Between":"Compreso tra","Book":"Libro","Cancel":"Annulla","Checked":"Selezionato","ClearFilter":"Annulla filtro","Close":"Chiudi","CloseCancelChanges":"Chiudi e annulla modifiche","CloseSaveChanges":"Chiudi e salva modifiche","CloseTab":"Chiudi scheda","ColumnPersonalization":"Personalizzazione colonne","Comments":"Commenti","Confirmation":"Conferma","Contains":"Contiene","CreateTab":"Crea nuova scheda","Cut":"Taglia","Delete":"Elimina","DiscardUndo":"Ignora/Annulla","DisplayDropDownList":"Visualizza elenco a discesa","Displaying":"Visualizzazione corrente: ","DocWord":"Documento","DoesNotContain":"Non contiene","DoesNotEndWith":"Non finisce con","DoesNotEqual":"Diverso da","DoesNotStartWith":"Non inizia con","Download":"Scarica","Duplicate":"Duplica","Edit":"Modifica","EitherSelectedorNotSelected":"Selezionati o non selezionati","Email":"E-mail","EndsWith":"Finisce con","EqualsStr":"Uguale a","ExpandCollapse":"Espandi/Comprimi","ExportFailed":"Esportazione non riuscita","ExportToExcel":"Esporta in Excel","FileInUse":"Il file specificato è in uso","FileInUseDetail":"Chiudere il file nell\u0027applicazione in cui è in uso oppure specificare un altro nome file.","Filter":"Filtro","FilterMenu":"Menu filtro","FilterOptions":"Opzioni filtro","FilterWithinResults":"Filtra nei risultati","First":"Primo","FirstView":"Prima vista","Folder":"Cartella","ForgotPassword":"Password dimenticata?","Forward":"Avanti","GetMoreRows":"Ottieni altre righe","GreaterThan":"Maggiore di","GreaterThanOrEquals":"Maggiore o uguale a","GridSettings":"Impostazioni griglia","GroupSelection":"Selezione gruppo","Help":"Guida","HideColumn":"Nascondi colonna","IsEmpty":"È vuoto","IsNotEmpty":"Non è vuoto","Last":"Ultimo","LastView":"Ultima vista","LaunchActivate":"Avvia/Attiva","LessThan":"Minore di","LessThanOrEquals":"Minore o uguale a","Links":"Collegamenti","ListTabs":"Elenca tutte le schede","LoadingItem":"Caricamento elemento in corso ","Maintenance":"Gestione","Menu":"Menu","New":"Nuovo","Next":"Successivo","NextView":"Vista successiva","No":"No","NotChecked":"Non selezionato","Notes":"Note","NotSelected":"Non selezionati","Of":" di ","Ok":"OK","Open":"Apri","Password":"Password","Paste":"Incolla","Phone":"Telefono","PleaseWait":"Attendere","Previous":"Precedente","PreviousView":"Vista precedente","Print":"Stampa","Queries":"Query","Redo":"Ripeti","Refresh":"Aggiorna","Reject":"Rifiuta","RememberMe":"Memorizza nel computer in uso","Reports":"Report","Reset":"Reimposta","Review":"Rivedi","RunFilter":"Esegui filtro","RunJob":"Esegui processo","Save":"Salva","SaveBeforeClosing":"Salva prima di chiudere","SavedFilters":"Filtri salvati","SaveSubmit":"Salva/Inoltra","ScreenDesign":"Design schermo","Search":"Ricerca","SelectContents":"Seleziona contenuto","SelectDate":"Seleziona data","SelectDeselect":"Seleziona/Deseleziona tutto","Selected":"Selezione corrente: ","ServerName":"Nome server","Settings":"Impostazioni","ShowFilterRow":"Mostra riga filtro","SignIn":"Accesso","SortAscending":"Ordinamento crescente","SortDescending":"Ordinamento decrescente","Spreadsheet":"Foglio di lavoro","StartsWith":"Inizia con","StatusIndicator":"Indicatore di stato","Tasks":"Attività","Today":"Oggi","Translate":"Traduci","UserID":"ID utente","Utilities":"Utilità","Yes":"Sì","Page":"Pagina","Rows":"Righe","ShowingAll":"Visualizzazione completa","SessionNavigation":"Esplorazione della sessione","ListAllMenuItems":"Elenca tutte le voci di menu","NoRecordsFound":"Nessun record individuato","SearchTree":"Struttura di ricerca","Clear":"Cancella","DrillDown":"Visualizza dettagli","Required":"Questo campo è obbligatorio","Available":"Disponibile:","Add":"Aggiungi","MoveDown":"Sposta giù","MoveUp":"Sposta su","Remove":"Rimuovi","LastYear":"Ultimo anno","NextMonth":"Mese successivo","NextWeek":"Settimana successiva","NextYear":"Esercizio successivo","OneMonthAgo":"Un mese fa","OneWeekAgo":"Una settimana fa","SixMonthsAgo":"Sei mesi fa","Time":"Ora","CannotBeSelected":"Impossibile selezionare questa riga.","ResetToDefault":"Ripristina layout predefinito","CloseOtherTabs":"Chiudi le altre schede","EmailValidation":"Immettere un indirizzo e-mail valido","UrlValidation":"Immettere un URL valido","EndofResults":"Fine dei risultati","More":"Altro...","RecordsPerPage":"Record per pagina","Maximize":"Ingrandisci","Minimize":"Riduci a icona","CloseAllTabs":"Chiudi tutte le schede","QuickDates":"Selezione rapida data","Finish":"Fine","SetTextColor":"Imposta colore testo","AttachmentRules":"Regole allegati","AutoRefresh":"Aggiornamento automatico","BarChart":"Grafico a barre","CopyMail":"Copia e invia e-mail","CopyUrl":"Copia URL","DistributeHorizontally":"Distribuisci orizzontalmente","ExpandAll":"Espandi tutto","Generate":"Genera","GenerateScript":"Genera script","NoAttachments":"Nessun allegato","PieChart":"Grafico a torta","QuickAccess":"Accesso rapido","RestoreUser":"Ripristina utente","SaveConsolidate":"Salva con consolidamento locale","Screen Design":"Struttura schermata","SelectAll":"Seleziona tutto","SpellCheck":"Controllo ortografico","SubmitForApproval":"Invia per approvazione","Timezone":"Fuso orario","Loading":"Caricamento in corso...","NewNode":"Nuovo nodo","AboutText":"Copyright © 2015 Infor. Tutti i diritti riservati. I marchi, ovvero il testo e gli elementi grafici che li costituiscono, citati nel presente documento sono marchi o marchi registrati di Infor e/o delle relative società affiliate o controllate. Tutti i diritti riservati. Tutti gli altri marchi citati appartengono ai rispettivi proprietari. www.infor.com","SelectMonthYear":"Seleziona mese e anno"}
+	messages: {"AdditionalHelp":"Informazioni aggiuntive","AddNewTab":"Aggiungi nuova scheda","Alerts":"Avvisi","ApplyFilter":"Applica filtro","Approve":"Approva","Attachments":"Allegati","Back":"Indietro","Basic":"Di base","Between":"Compreso tra","Book":"Libro","Cancel":"Annulla","Checked":"Selezionato","ClearFilter":"Annulla filtro","Close":"Chiudi","CloseCancelChanges":"Chiudi e annulla modifiche","CloseSaveChanges":"Chiudi e salva modifiche","CloseTab":"Chiudi scheda","ColumnPersonalization":"Personalizzazione colonne","Comments":"Commenti","Confirmation":"Conferma","Contains":"Contiene","CreateTab":"Crea nuova scheda","Cut":"Taglia","Delete":"Elimina","DiscardUndo":"Ignora/Annulla","DisplayDropDownList":"Visualizza elenco a discesa","Displaying":"Visualizzazione corrente: ","DocWord":"Documento","DoesNotContain":"Non contiene","DoesNotEndWith":"Non finisce con","DoesNotEqual":"Diverso da","DoesNotStartWith":"Non inizia con","Download":"Scarica","Duplicate":"Duplica","Edit":"Modifica","EitherSelectedorNotSelected":"Selezionati o non selezionati","Email":"E-mail","EndsWith":"Finisce con","EqualsStr":"Uguale a","ExpandCollapse":"Espandi/Comprimi","ExportFailed":"Esportazione non riuscita","ExportToExcel":"Esporta in Excel","FileInUse":"Il file specificato è in uso","FileInUseDetail":"Chiudere il file nell\u0027applicazione in cui è in uso oppure specificare un altro nome file.","Filter":"Filtro","FilterMenu":"Menu filtro","FilterOptions":"Opzioni filtro","FilterWithinResults":"Filtra nei risultati","First":"Primo","FirstView":"Prima vista","Folder":"Cartella","ForgotPassword":"Password dimenticata?","Forward":"Avanti","GetMoreRows":"Ottieni altre righe","GreaterThan":"Maggiore di","GreaterThanOrEquals":"Maggiore o uguale a","GridSettings":"Impostazioni griglia","GroupSelection":"Selezione gruppo","Help":"Guida","HideColumn":"Nascondi colonna","IsEmpty":"È vuoto","IsNotEmpty":"Non è vuoto","Last":"Ultimo","LastView":"Ultima vista","LaunchActivate":"Avvia/Attiva","LessThan":"Minore di","LessThanOrEquals":"Minore o uguale a","Links":"Collegamenti","ListTabs":"Elenca tutte le schede","LoadingItem":"Caricamento elemento in corso ","Maintenance":"Gestione","Menu":"Menu","New":"Nuovo","Next":"Successivo","NextView":"Vista successiva","No":"No","NotChecked":"Non selezionato","Notes":"Note","NotSelected":"Non selezionati","Of":" di ","Ok":"OK","Open":"Apri","Password":"Password","Paste":"Incolla","Phone":"Telefono","PleaseWait":"Attendere","Previous":"Precedente","PreviousView":"Vista precedente","Print":"Stampa","Queries":"Query","Redo":"Ripeti","Refresh":"Aggiorna","Reject":"Rifiuta","RememberMe":"Memorizza nel computer in uso","Reports":"Report","Reset":"Reimposta","Review":"Rivedi","RunFilter":"Esegui filtro","RunJob":"Esegui processo","Save":"Salva","SaveBeforeClosing":"Salva prima di chiudere","SavedFilters":"Filtri salvati","SaveSubmit":"Salva/Inoltra","ScreenDesign":"Design schermo","Search":"Ricerca","SelectContents":"Seleziona contenuto","SelectDate":"Seleziona data","SelectDeselect":"Seleziona/Deseleziona tutto","Selected":"Selezione corrente: ","ServerName":"Nome server","Settings":"Impostazioni","ShowFilterRow":"Mostra riga filtro","SignIn":"Accesso","SortAscending":"Ordinamento crescente","SortDescending":"Ordinamento decrescente","Spreadsheet":"Foglio di lavoro","StartsWith":"Inizia con","StatusIndicator":"Indicatore di stato","Tasks":"Attività","Today":"Oggi","Translate":"Traduci","UserID":"ID utente","Utilities":"Utilità","Yes":"Sì","Page":"Pagina","Rows":"Righe","ShowingAll":"Visualizzazione completa","SessionNavigation":"Esplorazione della sessione","ListAllMenuItems":"Elenca tutte le voci di menu","NoRecordsFound":"Nessun record individuato","SearchTree":"Struttura di ricerca","Clear":"Cancella","DrillDown":"Visualizza dettagli","Required":"Questo campo è obbligatorio","Available":"Disponibile:","Add":"Aggiungi","MoveDown":"Sposta giù","MoveUp":"Sposta su","Remove":"Rimuovi","LastYear":"Ultimo anno","NextMonth":"Mese successivo","NextWeek":"Settimana successiva","NextYear":"Esercizio successivo","OneMonthAgo":"Un mese fa","OneWeekAgo":"Una settimana fa","SixMonthsAgo":"Sei mesi fa","Time":"Ora","CannotBeSelected":"Impossibile selezionare questa riga.","ResetToDefault":"Ripristina layout predefinito","CloseOtherTabs":"Chiudi le altre schede","EmailValidation":"Immettere un indirizzo e-mail valido","UrlValidation":"Immettere un URL valido","EndofResults":"Fine dei risultati","More":"Altro...","RecordsPerPage":"Record per pagina","Maximize":"Ingrandisci","Minimize":"Riduci a icona","CloseAllTabs":"Chiudi tutte le schede","QuickDates":"Selezione rapida data","Finish":"Fine","SetTextColor":"Imposta colore testo","AttachmentRules":"Regole allegati","AutoRefresh":"Aggiornamento automatico","BarChart":"Grafico a barre","CopyMail":"Copia e invia e-mail","CopyUrl":"Copia URL","DistributeHorizontally":"Distribuisci orizzontalmente","ExpandAll":"Espandi tutto","Generate":"Genera","GenerateScript":"Genera script","NoAttachments":"Nessun allegato","PieChart":"Grafico a torta","QuickAccess":"Accesso rapido","RestoreUser":"Ripristina utente","SaveConsolidate":"Salva con consolidamento locale","Screen Design":"Struttura schermata","SelectAll":"Seleziona tutto","SpellCheck":"Controllo ortografico","SubmitForApproval":"Invia per approvazione","Timezone":"Fuso orario","Loading":"Caricamento in corso...","NewNode":"Nuovo nodo","AboutText":"Copyright © 2014 Infor. Tutti i diritti riservati. I marchi, ovvero il testo e gli elementi grafici che li costituiscono, citati nel presente documento sono marchi o marchi registrati di Infor e/o delle relative società affiliate o controllate. Tutti i diritti riservati. Tutti gli altri marchi citati appartengono ai rispettivi proprietari. www.infor.com"}
+});
+
+}( this ));
+/*
+* Globalize Culture he-IL
+*
+* http://github.com/jquery/globalize
+*
+* Copyright Software Freedom Conservancy, Inc.
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+* This file was generated by the Globalize Culture Generator
+* Translation: bugs found in this file need to be fixed in the generator
+*/
+
+(function( window, undefined ) {
+
+var Globalize;
+
+if ( typeof require !== "undefined"
+	&& typeof exports !== "undefined"
+	&& typeof module !== "undefined" ) {
+	// Assume CommonJS
+	Globalize = require( "globalize" );
+} else {
+	// Global variable
+	Globalize = window.Globalize;
+}
+
+Globalize.addCultureInfo( "iw-IL", "default", {
+	name: "iw-IL",
+	englishName: "Hebrew (Israel)",
+	nativeName: "עברית (ישראל)",
+	language: "iw",
+	isRTL: true,
+	numberFormat: {
+		NaN: "לא מספר",
+		negativeInfinity: "אינסוף שלילי",
+		positiveInfinity: "אינסוף חיובי",
+		percent: {
+			pattern: ["-n%","n%"]
+		},
+		currency: {
+			pattern: ["$-n","$ n"],
+			symbol: "₪"
+		}
+	},
+	calendars: {
+		standard: {
+			days: {
+				names: ["יום ראשון","יום שני","יום שלישי","יום רביעי","יום חמישי","יום שישי","שבת"],
+				namesAbbr: ["יום א","יום ב","יום ג","יום ד","יום ה","יום ו","שבת"],
+				namesShort: ["א","ב","ג","ד","ה","ו","ש"]
+			},
+			months: {
+				names: ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר",""],
+				namesAbbr: ["ינו","פבר","מרץ","אפר","מאי","יונ","יול","אוג","ספט","אוק","נוב","דצמ",""]
+			},
+			eras: [{"name":"לספירה","start":null,"offset":0}],
+			patterns: {
+				d: "dd/MM/yyyy",
+				D: "dddd dd MMMM yyyy",
+				t: "HH:mm",
+				T: "HH:mm:ss",
+				f: "dddd dd MMMM yyyy HH:mm",
+				F: "dddd dd MMMM yyyy HH:mm:ss",
+				M: "dd MMMM",
+				Y: "MMMM yyyy"
+			}
+		},
+		Hebrew: {
+			name: "Hebrew",
+			"/": " ",
+			days: {
+				names: ["יום ראשון","יום שני","יום שלישי","יום רביעי","יום חמישי","יום שישי","שבת"],
+				namesAbbr: ["א","ב","ג","ד","ה","ו","ש"],
+				namesShort: ["א","ב","ג","ד","ה","ו","ש"]
+			},
+			months: {
+				names: ["תשרי","חשון","כסלו","טבת","שבט","אדר","אדר ב","ניסן","אייר","סיון","תמוז","אב","אלול"],
+				namesAbbr: ["תשרי","חשון","כסלו","טבת","שבט","אדר","אדר ב","ניסן","אייר","סיון","תמוז","אב","אלול"]
+			},
+			eras: [{"name":"C.E.","start":null,"offset":0}],
+			twoDigitYearMax: 5790,
+			patterns: {
+				d: "dd MMMM yyyy",
+				D: "dddd dd MMMM yyyy",
+				t: "HH:mm",
+				T: "HH:mm:ss",
+				f: "dddd dd MMMM yyyy HH:mm",
+				F: "dddd dd MMMM yyyy HH:mm:ss",
+				M: "dd MMMM",
+				Y: "MMMM yyyy"
+			}
+		}
+	},
+	messages: {"AdditionalHelp":"עזרה נוספת","AddNewTab":"הוסף כרטיסייה חדשה","Alerts":"התראות","ApplyFilter":"החל מסנן","Approve":"אישור","Attachments":"קבצים מצורפים","Back":"הקודם","Basic":"בסיסי","Between":"בין","Book":"ספר","Cancel":"ביטול","Checked":"מסומן","ClearFilter":"נקה מסנן","Close":"סגור","CloseCancelChanges":"סגור ובטל שינויים","CloseSaveChanges":"סגור ושמור שינויים","CloseTab":"סגור כרטיסייה","ColumnPersonalization":"התאמה אישית של עמודה","Comments":"הערות","Confirmation":"אישור","Contains":"מכיל","CreateTab":"צור כרטיסייה חדשה","Cut":"גזור","Delete":"מחק","DiscardUndo":"בטל","DisplayDropDownList":"הצג רשימה נפתחת","Displaying":"מציג: ","DocWord":"מסמך","DoesNotContain":"אינו מכיל","DoesNotEndWith":"אינו מסתיים ב-","DoesNotEqual":"אינו שווה ל-","DoesNotStartWith":"אינו מתחיל ב-","Download":"הורד","Duplicate":"שכפל","Edit":"ערוך","EitherSelectedorNotSelected":"נבחר או לא נבחר","Email":"דואר אלקטרוני","EndsWith":"מסתיים ב-","EqualsStr":"שווה ל-","ExpandCollapse":"הרחב/כווץ","ExportFailed":"היצוא נכשל","ExportToExcel":"יצוא ל-Excel","FileInUse":"הקובץ שצוין נמצא בשימוש","FileInUseDetail":"סגור את הקובץ ביישום שבו הוא נמצא בשימוש או ציין שם קובץ אחר.","Filter":"מסנן","FilterMenu":"תפריט מסנן","FilterOptions":"אפשרויות מסנן","FilterWithinResults":"סינון בתוך התוצאות","First":"ראשון","FirstView":"הצג ראשון","Folder":"תיקייה","ForgotPassword":"שכחת את הסיסמה?","Forward":"קדימה","GetMoreRows":"קבל שורות נוספות","GreaterThan":"גדול מ-","GreaterThanOrEquals":"גדול או שווה ל-","GridSettings":"הגדרות רשת","GroupSelection":"בחירת קבוצה","Help":"עזרה","HideColumn":"הסתר עמודה","IsEmpty":"ריק","IsNotEmpty":"אינו ריק","Last":"אחרון","LastView":"הצג אחרון","LaunchActivate":"הפעל","LessThan":"קטן מ-","LessThanOrEquals":"קטן או שווה ל-","Links":"קישורים","ListTabs":"פרט את כל הכרטיסיות","LoadingItem":"טוען פריט ","Maintenance":"תחזוקה","Menu":"תפריט","New":"חדש","Next":"הבא","NextView":"הצג את הבא","No":"לא","NotChecked":"לא מסומן","Notes":"הערות","NotSelected":"לא נבחר","Of":" מתוך ","Ok":"אישור","Open":"פתח","Password":"סיסמה","Paste":"הדבק","Phone":"טלפון","PleaseWait":"אנא המתן","Previous":"הקודם","PreviousView":"הצג את הקודם","Print":"הדפס","Queries":"שאילתות","Redo":"בצע שוב","Refresh":"רענן","Reject":"דחה","RememberMe":"זכור אותי במחשב זה","Reports":"דוחות","Reset":"איפוס","Review":"סקירה","RunFilter":"הפעל מסנן","RunJob":"הפעל משימה","Save":"שמור","SaveBeforeClosing":"שמור לפני סגירה","SavedFilters":"מסננים שנשמרו","SaveSubmit":"שמור/שלח","ScreenDesign":"עיצוב מסך","Search":"חיפוש","SelectContents":"בחר תוכן","SelectDate":"בחר תאריך","SelectDeselect":"בחר הכול / בטל בחירת הכול","Selected":"נבחר: ","ServerName":"שם שרת","Settings":"הגדרות","ShowFilterRow":"הצג שורת מסנן","SignIn":"כניסה","SortAscending":"מיין בסדר עולה","SortDescending":"מיין בסדר יורד","Spreadsheet":"גיליון אלקטרוני","StartsWith":"מתחיל ב-","StatusIndicator":"מחוון מצב","Tasks":"משימות","Today":"היום","Translate":"תרגם","UserID":"מזהה משתמש","Utilities":"תוכניות שירות","Yes":"כן","Page":"דף","Rows":"שורות","ShowingAll":"מציג את הכול","SessionNavigation":"ניווט בהפעלה","ListAllMenuItems":"פרט את כל פריטי התפריט","NoRecordsFound":"לא נמצאו רשומות","SearchTree":"חיפוש בעץ","Clear":"נקה","DrillDown":"הסתעפות","Required":"שדה זה נדרש","Available":"זמין:","Add":"הוסף","MoveDown":"הזז למטה","MoveUp":"הזז למעלה","Remove":"הסר","LastYear":"השנה שעברה","NextMonth":"החודש הבא","NextWeek":"השבוע הבא","NextYear":"השנה הבאה","OneMonthAgo":"לפני חודש","OneWeekAgo":"לפני שבוע","SixMonthsAgo":"לפני שישה חודשים","Time":"שעה","CannotBeSelected":"לא ניתן לבחור שורה זו.","ResetToDefault":"איפוס לפריסת ברירת המחדל","CloseOtherTabs":"סגור כרטיסיות אחרות","EmailValidation":"הזן כתובת דואר אלקטרוני חוקית","UrlValidation":"הזן כתובת URL חוקית","EndofResults":"סוף התוצאות","More":"עוד...","RecordsPerPage":"רשומות בדף","Maximize":"להגדיל","Minimize":"לצמצם"}
 });
 
 }( this ));
@@ -38288,7 +37475,7 @@ Globalize.addCultureInfo( "ja-JP", "default", {
 			}
 		}
 	},
-	messages : {"AdditionalHelp":"追加のヘルプ","AddNewTab":"タブの新規追加","Alerts":"アラート","ApplyFilter":"フィルターの適用","Approve":"承認","Attachments":"添付","Back":"戻る","Basic":"基本","Between":"次の値の間","Book":"ブック","Cancel":"キャンセル","Checked":"チェック済","ClearFilter":"フィルターのクリア","Close":"閉じる","CloseCancelChanges":"閉じて変更をキャンセル","CloseSaveChanges":"閉じて変更を保存","CloseTab":"タブを閉じる","ColumnPersonalization":"列の個人用設定","Comments":"コメント","Confirmation":"確認","Contains":"含む","CreateTab":"タブの新規作成","Cut":"切り取り","Delete":"削除","DiscardUndo":"破棄/元に戻す","DisplayDropDownList":"ドロップダウンリストを表示","Displaying":"表示中: ","DocWord":"ドキュメント","DoesNotContain":"次の値を含まない","DoesNotEndWith":"次の値で終わらない","DoesNotEqual":"次の値に等しくない","DoesNotStartWith":"次の値で始まらない","Download":"ダウンロード","Duplicate":"複製","Edit":"編集","EitherSelectedorNotSelected":"選択済か未選択","Email":"電子メール","EndsWith":"次の値で終了","EqualsStr":"等しい","ExpandCollapse":"展開/折りたたみ","ExportFailed":"エクスポートできませんでした","ExportToExcel":"Excel にエクスポート","FileInUse":"指定のファイルは既に使用されています","FileInUseDetail":"既に使用されているアプリケーションのファイルを閉じるか、別のファイル名を指定します。","Filter":"フィルター","FilterMenu":"フィルターメニュー","FilterOptions":"フィルターオプション","FilterWithinResults":"結果のフィルター","First":"最初","FirstView":"最初のビュー","Folder":"フォルダー","ForgotPassword":"パスワードを忘れた場合","Forward":"進む","GetMoreRows":"追加の行を取得","GreaterThan":"これより大きい","GreaterThanOrEquals":"より大か等しい","GridSettings":"グリッドの設定","GroupSelection":"グループの選択","Help":"ヘルプ","HideColumn":"列を非表示","IsEmpty":"空","IsNotEmpty":"空ではない","Last":"最後","LastView":"最後のビュー","LaunchActivate":"開始/有効化","LessThan":"より小さい","LessThanOrEquals":"より小か等しい","Links":"リンク","ListTabs":"すべてのタブの一覧表示","LoadingItem":"項目をロードしています","Maintenance":"管理","Menu":"メニュー","New":"新規作成","Next":"次へ","NextView":"次のビュー","No":"いいえ","NotChecked":"未チェック","Notes":"注記","NotSelected":"未選択","Of":" / ","Ok":"OK","Open":"オープン","Password":"パスワード","Paste":"貼り付け","Phone":"電話","PleaseWait":"お待ちください","Previous":"前へ","PreviousView":"前のビュー","Print":"印刷","Queries":"クエリ","Redo":"やり直し","Refresh":"リフレッシュ","Reject":"拒否","RememberMe":"このコンピュータに保存する","Reports":"レポート","Reset":"リセット","Review":"レビュー","RunFilter":"フィルターの実行","RunJob":"ジョブの実行","Save":"保存","SaveBeforeClosing":"閉じる前に保存","SavedFilters":"保存したフィルター","SaveSubmit":"保存/送信","ScreenDesign":"画面デザイン","Search":"検索","SelectContents":"コンテンツの選択","SelectDate":"日付を選択","SelectDeselect":"すべて選択/選択解除","Selected":"選択済: ","ServerName":"サーバー名","Settings":"設定","ShowFilterRow":"フィルター行の表示","SignIn":"サインイン","SortAscending":"昇順に並べ替え","SortDescending":"降順に並べ替え","Spreadsheet":"スプレッドシート","StartsWith":"次で開始","StatusIndicator":"状況インジケーター","Tasks":"タスク","Today":"今日","Translate":"翻訳","UserID":"ユーザー ID","Utilities":"ユーティリティ","Yes":"はい","Page":"ページ","Rows":"行","ShowingAll":"すべて表示","SessionNavigation":"セッションナビゲーション","ListAllMenuItems":"全メニュー項目のリスト","NoRecordsFound":"レコードがありません","SearchTree":"ツリーを検索","Clear":"クリア","DrillDown":"ドリルダウン","Required":"このフィールドは必須です","Available":"使用可能:","Add":"追加","MoveDown":"下に移動","MoveUp":"上に移動","Remove":"削除","LastYear":"前年","NextMonth":"来月","NextWeek":"来週","NextYear":"来年","OneMonthAgo":"1 か月前","OneWeekAgo":"1 週間前","SixMonthsAgo":"6 か月前","Time":"時間","CannotBeSelected":"この行は選択できません。","ResetToDefault":"デフォルトのレイアウトに戻す","CloseOtherTabs":"他のタブを閉じる","EmailValidation":"有効な電子メールアドレスを入力してください","UrlValidation":"有効な URL を入力してください","EndofResults":"結果の終わり","More":"その他...","RecordsPerPage":"1 ページのレコード数","Maximize":"最大化","Minimize":"最小化","CloseAllTabs":"全てのタブを閉じる","QuickDates":"クイック日付入力","Finish":"完了","SetTextColor":"文字の色の設定","AttachmentRules":"添付ルール","AutoRefresh":"自動更新","BarChart":"横棒グラフ","CopyMail":"コピーしてメール","CopyUrl":"URL のコピー","DistributeHorizontally":"左右に整列","ExpandAll":"すべて展開","Generate":"生成","GenerateScript":"スクリプトの生成","NoAttachments":"添付なし","PieChart":"円グラフ","QuickAccess":"クイックアクセス","RestoreUser":"ユーザーの復元","SaveConsolidate":"ローカル連結で保存","Screen Design":"画面デザイン","SelectAll":"すべて選択","SpellCheck":"スペルチェック","SubmitForApproval":"承認のため送信","Timezone":"タイムゾーン","Loading":"ロードしています...","NewNode":"新規ノード","AboutText":"Copyright © 2015 Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。無断複製・転載を禁ず。本書に記載されるその他すべての商標名は各所有者の所有物です。www.infor.com","SelectMonthYear":"月と年度の選択"}
+	messages: {"AdditionalHelp":"追加のヘルプ","AddNewTab":"タブの新規追加","Alerts":"アラート","ApplyFilter":"フィルターの適用","Approve":"承認","Attachments":"添付","Back":"戻る","Basic":"基本","Between":"次の値の間","Book":"ブック","Cancel":"キャンセル","Checked":"チェック済","ClearFilter":"フィルターのクリア","Close":"閉じる","CloseCancelChanges":"閉じて変更をキャンセル","CloseSaveChanges":"閉じて変更を保存","CloseTab":"タブを閉じる","ColumnPersonalization":"列の個人用設定","Comments":"コメント","Confirmation":"確認","Contains":"含む","CreateTab":"タブの新規作成","Cut":"切り取り","Delete":"削除","DiscardUndo":"破棄/元に戻す","DisplayDropDownList":"ドロップダウンリストを表示","Displaying":"表示中: ","DocWord":"ドキュメント","DoesNotContain":"含まない","DoesNotEndWith":"次の値で終わらない","DoesNotEqual":"等しくない","DoesNotStartWith":"次の値で始まらない","Download":"ダウンロード","Duplicate":"複製","Edit":"編集","EitherSelectedorNotSelected":"選択済か未選択","Email":"電子メール","EndsWith":"次の値で終わる","EqualsStr":"等しい","ExpandCollapse":"展開/折りたたみ","ExportFailed":"エクスポートできませんでした","ExportToExcel":"Excel にエクスポート","FileInUse":"指定のファイルは既に使用されています","FileInUseDetail":"既に使用されているアプリケーションのファイルを閉じるか、別のファイル名を指定します。","Filter":"フィルター","FilterMenu":"フィルターメニュー","FilterOptions":"フィルターオプション","FilterWithinResults":"結果のフィルター","First":"最初","FirstView":"最初のビュー","Folder":"フォルダー","ForgotPassword":"パスワードを忘れた場合","Forward":"進む","GetMoreRows":"追加の行を取得","GreaterThan":"より大きい","GreaterThanOrEquals":"より大きいか等しい","GridSettings":"グリッドの設定","GroupSelection":"グループの選択","Help":"ヘルプ","HideColumn":"列を非表示","IsEmpty":"空","IsNotEmpty":"空でない","Last":"最後","LastView":"最後のビュー","LaunchActivate":"開始/有効化","LessThan":"より小さい","LessThanOrEquals":"より小さいか等しい","Links":"リンク","ListTabs":"すべてのタブの一覧表示","LoadingItem":"項目をロードしています ","Maintenance":"管理","Menu":"メニュー","New":"新規作成","Next":"次へ","NextView":"次のビュー","No":"いいえ","NotChecked":"未チェック","Notes":"注記","NotSelected":"未選択","Of":" / ","Ok":"OK","Open":"オープン","Password":"パスワード","Paste":"貼り付け","Phone":"電話","PleaseWait":"お待ちください","Previous":"前へ","PreviousView":"前のビュー","Print":"印刷","Queries":"クエリ","Redo":"やり直し","Refresh":"リフレッシュ","Reject":"拒否","RememberMe":"このコンピュータに保存する","Reports":"レポート","Reset":"リセット","Review":"レビュー","RunFilter":"フィルターの実行","RunJob":"ジョブの実行","Save":"保存","SaveBeforeClosing":"閉じる前に保存","SavedFilters":"保存したフィルター","SaveSubmit":"保存/送信","ScreenDesign":"画面デザイン","Search":"検索","SelectContents":"コンテンツの選択","SelectDate":"日付を選択","SelectDeselect":"すべて選択/選択解除","Selected":"選択済: ","ServerName":"サーバー名","Settings":"設定","ShowFilterRow":"フィルター行の表示","SignIn":"サインイン","SortAscending":"昇順に並べ替え","SortDescending":"降順に並べ替え","Spreadsheet":"スプレッドシート","StartsWith":"次の値で始まる","StatusIndicator":"状況インジケーター","Tasks":"タスク","Today":"今日","Translate":"翻訳","UserID":"ユーザー ID","Utilities":"ユーティリティ","Yes":"はい","Page":"ページ","Rows":"行","ShowingAll":"すべて表示","SessionNavigation":"セッションナビゲーション","ListAllMenuItems":"全メニュー項目のリスト","NoRecordsFound":"レコードがありません","SearchTree":"ツリーを検索","Clear":"クリア","DrillDown":"ドリルダウン","Required":"このフィールドは必須です","Available":"使用可能:","Add":"追加","MoveDown":"下に移動","MoveUp":"上に移動","Remove":"削除","LastYear":"前年","NextMonth":"来月","NextWeek":"来週","NextYear":"来年","OneMonthAgo":"1 か月前","OneWeekAgo":"1 週間前","SixMonthsAgo":"6 か月前","Time":"時間","CannotBeSelected":"この行は選択できません。","ResetToDefault":"デフォルトのレイアウトに戻す","CloseOtherTabs":"他のタブを閉じる","EmailValidation":"有効な電子メールアドレスを入力してください","UrlValidation":"有効な URL を入力してください","EndofResults":"結果の終わり","More":"その他...","RecordsPerPage":"1 ページのレコード数","Maximize":"最大化","Minimize":"最小化","CloseAllTabs":"全てのタブを閉じる","QuickDates":"クイック日付入力","Finish":"完了","SetTextColor":"文字の色の設定","AttachmentRules":"添付ルール","AutoRefresh":"自動更新","BarChart":"横棒グラフ","CopyMail":"コピーしてメール","CopyUrl":"URL のコピー","DistributeHorizontally":"左右に整列","ExpandAll":"すべて展開","Generate":"生成","GenerateScript":"スクリプトの生成","NoAttachments":"添付なし","PieChart":"円グラフ","QuickAccess":"クイックアクセス","RestoreUser":"ユーザーの復元","SaveConsolidate":"ローカル連結で保存","Screen Design":"画面デザイン","SelectAll":"すべて選択","SpellCheck":"スペルチェック","SubmitForApproval":"承認のため送信","Timezone":"タイムゾーン","Loading":"ロードしています...","NewNode":"新規ノード","AboutText":"Copyright © 2014 Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。無断複製・転載を禁ず。本書に記載されるその他すべての商標名は各所有者の所有物です。www.infor.com"}
 });
 
 }( this ));
@@ -38469,7 +37656,7 @@ Globalize.addCultureInfo( "lt-LT", "default", {
 			}
 		}
 	},
-  messages: {"AdditionalHelp":"Papildomas žinynas","AddNewTab":"Pridėti naują skirtuką","Alerts":"Įspėjimai","ApplyFilter":"Taikyti filtrą","Approve":"Patvirtinti","Attachments":"Priedai","Back":"Atgal","Basic":"Pagrindinis","Between":"Tarp","Book":"Užsakyti","Cancel":"Atšaukti","Checked":"Pažymėta","ClearFilter":"Valyti filtrą","Close":"Uždaryti","CloseCancelChanges":"Uždaryti ir atšaukti keitimus","CloseSaveChanges":"Uždaryti ir įrašyti keitimus","CloseTab":"Uždaryti skirtuką","ColumnPersonalization":"Stulpelio personalizavimas","Comments":"Komentarai","Confirmation":"Patvirtinimas","Contains":"Yra","CreateTab":"Kurti naują skirtuką","Cut":"Iškirpti","Delete":"Naikinti","DiscardUndo":"Atsisakyti / anuliuoti","DisplayDropDownList":"Rodyti išplečiamąjį sąrašą","Displaying":"Rodoma: ","DocWord":"Dokumentas","DoesNotContain":"Nėra","DoesNotEndWith":"Nesibaigia","DoesNotEqual":"Nėra lygu","DoesNotStartWith":"Neprasideda","Download":"Atsisiųsti","Duplicate":"Kopijuoti","Edit":"Redaguoti","EitherSelectedorNotSelected":"Pasirinkta arba nepasirinkta","Email":"El. paštas","EndsWith":"Baigiasi","EqualsStr":"Lygu","ExpandCollapse":"Išplėsti/sutraukti","ExportFailed":"Eksportuoti nepavyko","ExportToExcel":"Eksportuoti į „Excel“","FileInUse":"Nurodytas failas yra naudojamas","FileInUseDetail":"Uždarykite failą programoje, kurioje jis naudojamas, arba nurodykite kitą failo pavadinimą.","Filter":"Filtruoti","FilterMenu":"Filtro meniu","FilterOptions":"Filtro parinktys","FilterWithinResults":"Filtruoti rezultatus","First":"Pirmas","FirstView":"Pirmas rodinys","Folder":"Aplankas","ForgotPassword":"Pamiršote slaptažodį?","Forward":"Pirmyn","GetMoreRows":"Gauti daugiau eilučių","GreaterThan":"Daugiau nei","GreaterThanOrEquals":"Daugiau nei arba lygu","GridSettings":"Tinklelio parametrai","GroupSelection":"Grupės pasirinkimas","Help":"Žinynas","HideColumn":"Slėpti stulpelį","IsEmpty":"Tuščia","IsNotEmpty":"Netuščia","Last":"Paskutinis","LastView":"Paskutinis rodinys","LaunchActivate":"Paleisti/aktyvinti","LessThan":"Mažiau nei","LessThanOrEquals":"Mažiau nei arba lygu","Links":"Saitai","ListTabs":"Visų skirtukų sąrašas","LoadingItem":"Įkeliamas elementas ","Maintenance":"Priežiūra","Menu":"Meniu","New":"Naujas","Next":"Paskesnis","NextView":"Paskesnis rodinys","No":"Ne","NotChecked":"Nepažymėta","Notes":"Pastabos","NotSelected":"Nepasirinkta","Of":" iš ","Ok":"Gerai","Open":"Atidaryti","Password":"Slaptažodis","Paste":"Įklijuoti","Phone":"Telefonas","PleaseWait":"Palaukite","Previous":"Ankstesnis","PreviousView":"Ankstesnis rodinys","Print":"Spausdinti","Queries":"Užklausos","Redo":"Perdaryti","Refresh":"Atnaujinti","Reject":"Atmesti","RememberMe":"Prisiminti mane šiame kompiuteryje","Reports":"Ataskaitos","Reset":"Nustatyti iš naujo","Review":"Peržiūrėti","RunFilter":"Vykdyti filtrą","RunJob":"Vykdyti užduotį","Save":"Įrašyti","SaveBeforeClosing":"Įrašyti prieš uždarant","SavedFilters":"Įrašyti filtrus","SaveSubmit":"Įrašyti/pateikti","ScreenDesign":"Ekrano dizainas","Search":"Ieškoti","SelectContents":"Pasirinkti turinį","SelectDate":"Pasirinkti datą","SelectDeselect":"Pasirinkti / naikinti visą pasirinkimą","Selected":"Pasirinkta: ","ServerName":"Serverio pavadinimas","Settings":"Parametrai","ShowFilterRow":"Rodyti atfiltruotą eilutę","SignIn":"Prisijungti","SortAscending":"Rūšiuoti didėjimo tvarka","SortDescending":"Rūšiuoti mažėjimo tvarka","Spreadsheet":"Skaičiuoklė","StartsWith":"Prasideda","StatusIndicator":"Būsenos indikatorius","Tasks":"Užduotys","Today":"Šiandien","Translate":"Išversti","UserID":"Vartotojo ID","Utilities":"Naudmenos","Yes":"Taip","Page":"Puslapis","Rows":"Eilutės","ShowingAll":"Rodoma viskas","SessionNavigation":"Seanso naršymas","ListAllMenuItems":"Rodyti visus meniu elementus","NoRecordsFound":"Įrašų nerasta","SearchTree":"Ieškoti medyje","Clear":"Valyti","DrillDown":"Išskleisti","Required":"Šis laukas privalomas","Available":"Pasiekiama:","Add":"Pridėti","MoveDown":"Pereiti žemyn","MoveUp":"Pereiti aukštyn","Remove":"Šalinti","LastYear":"Praėję metai","NextMonth":"Paskesnis mėnuo","NextWeek":"Paskesnė savaitė","NextYear":"Paskesni metai","OneMonthAgo":"Prieš mėnesį","OneWeekAgo":"Prieš savaitę","SixMonthsAgo":"Prieš šešis mėnesius","Time":"Laikas","CannotBeSelected":"Šios eilutės negalima pasirinkti","ResetToDefault":"Iš naujo nustatyti numatytąjį išdėstymą","CloseOtherTabs":"Uždaryti kitus skirtukus","EmailValidation":"Įveskite galiojantį el. pašto adresą","UrlValidation":"Įveskite galiojantį URL","EndofResults":"Rezultatų pabaiga","More":"Daugiau...","RecordsPerPage":"Įrašų puslapyje","Maximize":"Maksimizuoti","Minimize":"Minimizuoti","CloseAllTabs":"Uždaryti visus skirtukus","QuickDates":"Sparčiosios datos","Finish":"Baigti","SetTextColor":"Nustatyti teksto spalvą","AttachmentRules":"Priedų taisyklės","AutoRefresh":"Automatiškai atnaujinti","BarChart":"Juostinė diagrama","CopyMail":"Kopijuoti ir siųsti","CopyUrl":"Kopijuoti URL","DistributeHorizontally":"Paskirstyti horizontaliai","ExpandAll":"Išplėsti viską","Generate":"Generuoti","GenerateScript":"Generuoti scenarijų","NoAttachments":"Priedų nėra","PieChart":"Skritulinė diagrama","QuickAccess":"Sparčioji prieiga","RestoreUser":"Atkurti vartotoją","SaveConsolidate":"Įrašyti naudojant vietos konsolidavimą","Screen Design":"Ekrano dizainas","SelectAll":"Pasirinkti viską","SpellCheck":"Rašybos tikrinimas","SubmitForApproval":"Pateikti tvirtinti","Timezone":"Laiko juosta","Loading":"Įkeliama...","NewNode":"Naujas mazgas","AboutText":"© 2015, autoriaus teisės priklauso „Infor“. Visos teisės ginamos. Čia pateikti tekstiniai ar vaizdiniai ženklai yra „Infor“ ir (arba) jos filialų ir priklausančių įmonių prekės ženklai ir (arba) registruotieji prekės ženklai. Visos teisės ginamos. Visi kiti čia pateikti prekės ženklai priklauso atitinkamiems jų savininkams. www.infor.com."}
+  messages: {"AdditionalHelp":"Papildomas žinynas","AddNewTab":"Pridėti naują skirtuką","Alerts":"Įspėjimai","ApplyFilter":"Taikyti filtrą","Approve":"Patvirtinti","Attachments":"Priedai","Back":"Atgal","Basic":"Pagrindinis","Between":"Tarp","Book":"Užsakyti","Cancel":"Atšaukti","Checked":"Pažymėta","ClearFilter":"Valyti filtrą","Close":"Uždaryti","CloseCancelChanges":"Uždaryti ir atšaukti keitimus","CloseSaveChanges":"Uždaryti ir įrašyti keitimus","CloseTab":"Uždaryti skirtuką","ColumnPersonalization":"Stulpelio personalizavimas","Comments":"Komentarai","Confirmation":"Patvirtinimas","Contains":"Yra","CreateTab":"Kurti naują skirtuką","Cut":"Iškirpti","Delete":"Naikinti","DiscardUndo":"Atsisakyti / anuliuoti","DisplayDropDownList":"Rodyti išplečiamąjį sąrašą","Displaying":"Rodoma: ","DocWord":"Dokumentas","DoesNotContain":"Nėra","DoesNotEndWith":"Nesibaigia","DoesNotEqual":"Nėra lygu","DoesNotStartWith":"Neprasideda","Download":"Atsisiųsti","Duplicate":"Kopijuoti","Edit":"Redaguoti","EitherSelectedorNotSelected":"Pasirinkta arba nepasirinkta","Email":"El. paštas","EndsWith":"Baigiasi","EqualsStr":"Lygu","ExpandCollapse":"Išplėsti/sutraukti","ExportFailed":"Eksportuoti nepavyko","ExportToExcel":"Eksportuoti į „Excel“","FileInUse":"Nurodytas failas yra naudojamas","FileInUseDetail":"Uždarykite failą programoje, kurioje jis naudojamas, arba nurodykite kitą failo pavadinimą.","Filter":"Filtruoti","FilterMenu":"Filtro meniu","FilterOptions":"Filtro parinktys","FilterWithinResults":"Filtruoti rezultatus","First":"Pirmas","FirstView":"Pirmas rodinys","Folder":"Aplankas","ForgotPassword":"Pamiršote slaptažodį?","Forward":"Pirmyn","GetMoreRows":"Gauti daugiau eilučių","GreaterThan":"Daugiau nei","GreaterThanOrEquals":"Daugiau nei arba lygu","GridSettings":"Tinklelio parametrai","GroupSelection":"Grupės pasirinkimas","Help":"Žinynas","HideColumn":"Slėpti stulpelį","IsEmpty":"Tuščia","IsNotEmpty":"Netuščia","Last":"Paskutinis","LastView":"Paskutinis rodinys","LaunchActivate":"Paleisti/aktyvinti","LessThan":"Mažiau nei","LessThanOrEquals":"Mažiau nei arba lygu","Links":"Saitai","ListTabs":"Visų skirtukų sąrašas","LoadingItem":"Įkeliamas elementas ","Maintenance":"Priežiūra","Menu":"Meniu","New":"Naujas","Next":"Paskesnis","NextView":"Paskesnis rodinys","No":"Ne","NotChecked":"Nepažymėta","Notes":"Pastabos","NotSelected":"Nepasirinkta","Of":" iš ","Ok":"Gerai","Open":"Atidaryti","Password":"Slaptažodis","Paste":"Įklijuoti","Phone":"Telefonas","PleaseWait":"Palaukite","Previous":"Ankstesnis","PreviousView":"Ankstesnis rodinys","Print":"Spausdinti","Queries":"Užklausos","Redo":"Perdaryti","Refresh":"Atnaujinti","Reject":"Atmesti","RememberMe":"Prisiminti mane šiame kompiuteryje","Reports":"Ataskaitos","Reset":"Nustatyti iš naujo","Review":"Peržiūrėti","RunFilter":"Vykdyti filtrą","RunJob":"Vykdyti užduotį","Save":"Įrašyti","SaveBeforeClosing":"Įrašyti prieš uždarant","SavedFilters":"Įrašyti filtrus","SaveSubmit":"Įrašyti/pateikti","ScreenDesign":"Ekrano dizainas","Search":"Ieškoti","SelectContents":"Pasirinkti turinį","SelectDate":"Pasirinkti datą","SelectDeselect":"Pasirinkti / naikinti visą pasirinkimą","Selected":"Pasirinkta: ","ServerName":"Serverio pavadinimas","Settings":"Parametrai","ShowFilterRow":"Rodyti atfiltruotą eilutę","SignIn":"Prisijungti","SortAscending":"Rūšiuoti didėjimo tvarka","SortDescending":"Rūšiuoti mažėjimo tvarka","Spreadsheet":"Skaičiuoklė","StartsWith":"Prasideda","StatusIndicator":"Būsenos indikatorius","Tasks":"Užduotys","Today":"Šiandien","Translate":"Išversti","UserID":"Vartotojo ID","Utilities":"Naudmenos","Yes":"Taip","Page":"Puslapis","Rows":"Eilutės","ShowingAll":"Rodoma viskas","SessionNavigation":"Seanso naršymas","ListAllMenuItems":"Rodyti visus meniu elementus","NoRecordsFound":"Įrašų nerasta","SearchTree":"Ieškoti medyje","Clear":"Valyti","DrillDown":"Išskleisti","Required":"Šis laukas privalomas","Available":"Pasiekiama:","Add":"Pridėti","MoveDown":"Pereiti žemyn","MoveUp":"Pereiti aukštyn","Remove":"Šalinti","LastYear":"Praėję metai","NextMonth":"Paskesnis mėnuo","NextWeek":"Paskesnė savaitė","NextYear":"Paskesni metai","OneMonthAgo":"Prieš mėnesį","OneWeekAgo":"Prieš savaitę","SixMonthsAgo":"Prieš šešis mėnesius","Time":"Laikas","CannotBeSelected":"Šios eilutės negalima pasirinkti","ResetToDefault":"Iš naujo nustatyti numatytąjį išdėstymą","CloseOtherTabs":"Uždaryti kitus skirtukus","EmailValidation":"Įveskite galiojantį el. pašto adresą","UrlValidation":"Įveskite galiojantį URL","EndofResults":"Rezultatų pabaiga","More":"Daugiau...","RecordsPerPage":"Įrašų puslapyje","Maximize":"Maksimizuoti","Minimize":"Minimizuoti","CloseAllTabs":"Uždaryti visus skirtukus","QuickDates":"Sparčiosios datos","Finish":"Baigti","SetTextColor":"Nustatyti teksto spalvą","AttachmentRules":"Priedų taisyklės","AutoRefresh":"Automatiškai atnaujinti","BarChart":"Juostinė diagrama","CopyMail":"Kopijuoti ir siųsti","CopyUrl":"Kopijuoti URL","DistributeHorizontally":"Paskirstyti horizontaliai","ExpandAll":"Išplėsti viską","Generate":"Generuoti","GenerateScript":"Generuoti scenarijų","NoAttachments":"Priedų nėra","PieChart":"Skritulinė diagrama","QuickAccess":"Sparčioji prieiga","RestoreUser":"Atkurti vartotoją","SaveConsolidate":"Įrašyti naudojant vietos konsolidavimą","Screen Design":"Ekrano dizainas","SelectAll":"Pasirinkti viską","SpellCheck":"Rašybos tikrinimas","SubmitForApproval":"Pateikti tvirtinti","Timezone":"Laiko juosta","Loading":"Įkeliama...","NewNode":"Naujas mazgas","AboutText":"© 2014, autoriaus teisės priklauso „Infor“. Visos teisės ginamos. Čia pateikti tekstiniai ar vaizdiniai ženklai yra „Infor“ ir (arba) jos filialų ir priklausančių įmonių prekės ženklai ir (arba) registruotieji prekės ženklai. Visos teisės ginamos. Visi kiti čia pateikti prekės ženklai priklauso atitinkamiems jų savininkams. www.infor.com."}
 });
 
 }( this ));
@@ -38553,7 +37740,7 @@ Globalize.addCultureInfo( "lv-LV", "default", {
 			}
 		}
 	},
-  messages: {"AdditionalHelp":"Papildu palīdzība","AddNewTab":"Pievienot jaunu cilni","Alerts":"Trauksmes","ApplyFilter":"Piemērot filtru","Approve":"Apstiprināt","Attachments":"Pielikumi","Back":"Atpakaļ","Basic":"Galvenais","Between":"Starp","Book":"Reģistrs","Cancel":"Atcelt","Checked":"Pārbaudīts","ClearFilter":"Attīrīt filtru","Close":"Aizvērt","CloseCancelChanges":"Aizvērt un atcelt izmaiņas","CloseSaveChanges":"Aizvērt un saglabāt izmaiņas","CloseTab":"Aizvērt cilni","ColumnPersonalization":"Kolonnas personiskie iestatījumi","Comments":"Komentāri","Confirmation":"Apstiprināšana","Contains":"Satur","CreateTab":"Izveidot jaunu cilni","Cut":"Izgriezt","Delete":"Dzēst","DiscardUndo":"Izmest/atsaukt","DisplayDropDownList":"Attēlot izvelkamo sarakstu","Displaying":"Attēlošana: ","DocWord":"Dokuments","DoesNotContain":"Nesatur","DoesNotEndWith":"Nebeidzas ar","DoesNotEqual":"Nav vienāds ar","DoesNotStartWith":"Nesākas ar","Download":"Lejupielādēt","Duplicate":"Dublēt","Edit":"Rediģēt","EitherSelectedorNotSelected":"Atlasīts vai neatlasīts","Email":"E-pasts","EndsWith":"Beidzas ar","EqualsStr":"Vienāds ar","ExpandCollapse":"Paplašināt/sašaurināt","ExportFailed":"Eksports neizdevās","ExportToExcel":"Eksports uz Excel","FileInUse":"Norādītais fails tiek lietots","FileInUseDetail":"Izvēlieties failu lietojumprogrammā, kur tas tiek lietots, vai norādiet citu faila nosaukumu.","Filter":"Filtrs","FilterMenu":"Filtra izvēlne","FilterOptions":"Filtra opcijas","FilterWithinResults":"Filtrs rezultātu ietvaros","First":"Pirmais","FirstView":"Sākuma skats","Folder":"Mape","ForgotPassword":"Aizmirsāt savu paroli?","Forward":"Uz priekšu","GetMoreRows":"Izveidot vairāk rindu","GreaterThan":"Lielāks nekā","GreaterThanOrEquals":"Lielāks vai vienāds ar","GridSettings":"Režģa iestatījumi","GroupSelection":"Grupas atlase","Help":"Palīdzība","HideColumn":"Paslēpt kolonnu","IsEmpty":"Ir tukšs","IsNotEmpty":"Nav tukšs","Last":"Pēdējais","LastView":"Pēdējais skats","LaunchActivate":"Palaišana/aktivizēšana","LessThan":"Mazāks nekā","LessThanOrEquals":"Mazāks vai vienāds ar","Links":"Saites","ListTabs":"Uzskaitīt visas cilnes","LoadingItem":"Notiek vienuma ielāde ","Maintenance":"Apkope","Menu":"Izvēlne","New":"Jauns","Next":"Nākamais","NextView":"Nākamais skats","No":"Nē","NotChecked":"Nav pārbaudīts","Notes":"Piezīmes","NotSelected":"Nav atlasīts","Of":" no ","Ok":"Labi","Open":"Atvērt","Password":"Parole","Paste":"Ielīmēt","Phone":"Tālrunis","PleaseWait":"Lūdzu, gaidiet","Previous":"Iepriekšējais","PreviousView":"Iepriekšējais skats","Print":"Drukāt","Queries":"Vaicājumi","Redo":"Atcelt atsaukšanu","Refresh":"Atsvaidzināt","Reject":"Noraidīt","RememberMe":"Atcerēties mani šajā datorā","Reports":"Ziņojumi","Reset":"Atiestatīt","Review":"Pārskatīt","RunFilter":"Palaist filtru","RunJob":"Palaist darbu","Save":"Saglabāt","SaveBeforeClosing":"Saglabāt pirms aizvēršanas","SavedFilters":"Saglabātie filtri","SaveSubmit":"Saglabāt/iesniegt","ScreenDesign":"Ekrāna noformējums","Search":"Meklēt","SelectContents":"Atlasīt komentāru","SelectDate":"Atlasīt datumu","SelectDeselect":"Atlasīt/dzēst visu atlasi","Selected":"Atlasīts: ","ServerName":"Servera nosaukums","Settings":"Iestatījumi","ShowFilterRow":"Rādīt filtra rindu","SignIn":"Pierakstīties","SortAscending":"Šķirot augošā secībā","SortDescending":"Šķirot dilstošā secībā","Spreadsheet":"Izklājlapa","StartsWith":"Sākas ar","StatusIndicator":"Statusa indikators","Tasks":"Uzdevumi","Today":"Šodien","Translate":"Tulkot","UserID":"Lietotāja ID","Utilities":"Utilītprogrammas","Yes":"Jā","Page":"Lapa","Rows":"Rindas","ShowingAll":"Rāda visu","SessionNavigation":"Sesijas navigācija","ListAllMenuItems":"Uzskaitīt visus izvēlnes vienumus","NoRecordsFound":"Nav atrasti ieraksti","SearchTree":"Meklēt koku","Clear":"Attīrīt","DrillDown":"Pārskatīt virzienā uz leju","Required":"Šis lauks ir obligāts","Available":"Pieejams:","Add":"Pievienot","MoveDown":"Virzīties uz leju","MoveUp":"Virzīties uz augšu","Remove":"Noņemt","LastYear":"Pagājušais gads","NextMonth":"Nākamais mēnesis","NextWeek":"Nākamā nedēļa","NextYear":"Nākamais gads","OneMonthAgo":"Pirms viena mēneša","OneWeekAgo":"Pirms vienas nedēļas","SixMonthsAgo":"Pirms sešiem mēnešiem","Time":"Laiks","CannotBeSelected":"Šo rindu nevar atlasīt.","ResetToDefault":"Atiestatīt noklusējuma izkārtojumu","CloseOtherTabs":"Aizvērt citas cilnes","EmailValidation":"Ievadīt derīgu e-pasta adresi","UrlValidation":"Ievadīt derīgu URL","EndofResults":"Rezultātu beigas","More":"Vairāk...","RecordsPerPage":"Ieraksti vienā lapā","Maximize":"Maksimāli palielināt","Minimize":"Samazināt","CloseAllTabs":"Aizvērt visas cilnes","QuickDates":"Ātrais datums","Finish":"Beigt","SetTextColor":"Iestatīt teksta krāsu","AttachmentRules":"Pielikuma noteikumi","AutoRefresh":"Atsvaidzināt automātiski","BarChart":"Joslu diagramma","CopyMail":"Kopēt un nosūtīt","CopyUrl":"Kopēt URL","DistributeHorizontally":"Izkārtot horizontāli","ExpandAll":"Paplašināt visu","Generate":"Ģenerēt","GenerateScript":"Ģenerēt skriptu","NoAttachments":"Nav pielikuma","PieChart":"Sektoru diagramma","QuickAccess":"Ātrā piekļuve","RestoreUser":"Atjaunot lietotāju","SaveConsolidate":"Saglabāt ar lokālu apvienošanu","Screen Design":"ScreenDesign","SelectAll":"Atlasīt visu","SpellCheck":"Pārbaudīt pareizrakstību","SubmitForApproval":"Iesniegt apstiprināšanai","Timezone":"Laika zona","Loading":"Notiek ielāde...","NewNode":"Jauns mezgls","AboutText":"Autortiesības © 2015 Infor. Visas tiesības aizsargātas. Šeit iekļautās teksta un dizaina zīmes ir uzņēmuma Infor un/vai tā filiāļu un meitasuzņēmumu preču zīmes un/vai reģistrētas preču zīmes. Visas tiesības aizsargātas. Citas šeit uzskaitītās preču zīmes pieder to attiecīgajiem īpašniekiem. www.infor.com."}
+  messages: {"AdditionalHelp":"Papildu palīdzība","AddNewTab":"Pievienot jaunu cilni","Alerts":"Trauksmes","ApplyFilter":"Piemērot filtru","Approve":"Apstiprināt","Attachments":"Pielikumi","Back":"Atpakaļ","Basic":"Galvenais","Between":"Starp","Book":"Reģistrs","Cancel":"Atcelt","Checked":"Pārbaudīts","ClearFilter":"Attīrīt filtru","Close":"Aizvērt","CloseCancelChanges":"Aizvērt un atcelt izmaiņas","CloseSaveChanges":"Aizvērt un saglabāt izmaiņas","CloseTab":"Aizvērt cilni","ColumnPersonalization":"Kolonnas personiskie iestatījumi","Comments":"Komentāri","Confirmation":"Apstiprināšana","Contains":"Satur","CreateTab":"Izveidot jaunu cilni","Cut":"Izgriezt","Delete":"Dzēst","DiscardUndo":"Izmest/atsaukt","DisplayDropDownList":"Attēlot izvelkamo sarakstu","Displaying":"Attēlošana: ","DocWord":"Dokuments","DoesNotContain":"Nesatur","DoesNotEndWith":"Nebeidzas ar","DoesNotEqual":"Nav vienāds ar","DoesNotStartWith":"Nesākas ar","Download":"Lejupielādēt","Duplicate":"Dublēt","Edit":"Rediģēt","EitherSelectedorNotSelected":"Atlasīts vai neatlasīts","Email":"E-pasts","EndsWith":"Beidzas ar","EqualsStr":"Vienāds ar","ExpandCollapse":"Paplašināt/sašaurināt","ExportFailed":"Eksports neizdevās","ExportToExcel":"Eksports uz Excel","FileInUse":"Norādītais fails tiek lietots","FileInUseDetail":"Izvēlieties failu lietojumprogrammā, kur tas tiek lietots, vai norādiet citu faila nosaukumu.","Filter":"Filtrs","FilterMenu":"Filtra izvēlne","FilterOptions":"Filtra opcijas","FilterWithinResults":"Filtrs rezultātu ietvaros","First":"Pirmais","FirstView":"Sākuma skats","Folder":"Mape","ForgotPassword":"Aizmirsāt savu paroli?","Forward":"Uz priekšu","GetMoreRows":"Izveidot vairāk rindu","GreaterThan":"Lielāks nekā","GreaterThanOrEquals":"Lielāks vai vienāds ar","GridSettings":"Režģa iestatījumi","GroupSelection":"Grupas atlase","Help":"Palīdzība","HideColumn":"Paslēpt kolonnu","IsEmpty":"Ir tukšs","IsNotEmpty":"Nav tukšs","Last":"Pēdējais","LastView":"Pēdējais skats","LaunchActivate":"Palaišana/aktivizēšana","LessThan":"Mazāks nekā","LessThanOrEquals":"Mazāks vai vienāds ar","Links":"Saites","ListTabs":"Uzskaitīt visas cilnes","LoadingItem":"Notiek vienuma ielāde ","Maintenance":"Apkope","Menu":"Izvēlne","New":"Jauns","Next":"Nākamais","NextView":"Nākamais skats","No":"Nē","NotChecked":"Nav pārbaudīts","Notes":"Piezīmes","NotSelected":"Nav atlasīts","Of":" no ","Ok":"Labi","Open":"Atvērt","Password":"Parole","Paste":"Ielīmēt","Phone":"Tālrunis","PleaseWait":"Lūdzu, gaidiet","Previous":"Iepriekšējais","PreviousView":"Iepriekšējais skats","Print":"Drukāt","Queries":"Vaicājumi","Redo":"Atcelt atsaukšanu","Refresh":"Atsvaidzināt","Reject":"Noraidīt","RememberMe":"Atcerēties mani šajā datorā","Reports":"Ziņojumi","Reset":"Atiestatīt","Review":"Pārskatīt","RunFilter":"Palaist filtru","RunJob":"Palaist darbu","Save":"Saglabāt","SaveBeforeClosing":"Saglabāt pirms aizvēršanas","SavedFilters":"Saglabātie filtri","SaveSubmit":"Saglabāt/iesniegt","ScreenDesign":"Ekrāna noformējums","Search":"Meklēt","SelectContents":"Atlasīt komentāru","SelectDate":"Atlasīt datumu","SelectDeselect":"Atlasīt/dzēst visu atlasi","Selected":"Atlasīts: ","ServerName":"Servera nosaukums","Settings":"Iestatījumi","ShowFilterRow":"Rādīt filtra rindu","SignIn":"Pierakstīties","SortAscending":"Šķirot augošā secībā","SortDescending":"Šķirot dilstošā secībā","Spreadsheet":"Izklājlapa","StartsWith":"Sākas ar","StatusIndicator":"Statusa indikators","Tasks":"Uzdevumi","Today":"Šodien","Translate":"Tulkot","UserID":"Lietotāja ID","Utilities":"Utilītprogrammas","Yes":"Jā","Page":"Lapa","Rows":"Rindas","ShowingAll":"Rāda visu","SessionNavigation":"Sesijas navigācija","ListAllMenuItems":"Uzskaitīt visus izvēlnes vienumus","NoRecordsFound":"Nav atrasti ieraksti","SearchTree":"Meklēt koku","Clear":"Attīrīt","DrillDown":"Pārskatīt virzienā uz leju","Required":"Šis lauks ir obligāts","Available":"Pieejams:","Add":"Pievienot","MoveDown":"Virzīties uz leju","MoveUp":"Virzīties uz augšu","Remove":"Noņemt","LastYear":"Pagājušais gads","NextMonth":"Nākamais mēnesis","NextWeek":"Nākamā nedēļa","NextYear":"Nākamais gads","OneMonthAgo":"Pirms viena mēneša","OneWeekAgo":"Pirms vienas nedēļas","SixMonthsAgo":"Pirms sešiem mēnešiem","Time":"Laiks","CannotBeSelected":"Šo rindu nevar atlasīt.","ResetToDefault":"Atiestatīt noklusējuma izkārtojumu","CloseOtherTabs":"Aizvērt citas cilnes","EmailValidation":"Ievadīt derīgu e-pasta adresi","UrlValidation":"Ievadīt derīgu URL","EndofResults":"Rezultātu beigas","More":"Vairāk...","RecordsPerPage":"Ieraksti vienā lapā","Maximize":"Maksimāli palielināt","Minimize":"Samazināt","CloseAllTabs":"Aizvērt visas cilnes","QuickDates":"Ātrais datums","Finish":"Beigt","SetTextColor":"Iestatīt teksta krāsu","AttachmentRules":"Pielikuma noteikumi","AutoRefresh":"Atsvaidzināt automātiski","BarChart":"Joslu diagramma","CopyMail":"Kopēt un nosūtīt","CopyUrl":"Kopēt URL","DistributeHorizontally":"Izkārtot horizontāli","ExpandAll":"Paplašināt visu","Generate":"Ģenerēt","GenerateScript":"Ģenerēt skriptu","NoAttachments":"Nav pielikuma","PieChart":"Sektoru diagramma","QuickAccess":"Ātrā piekļuve","RestoreUser":"Atjaunot lietotāju","SaveConsolidate":"Saglabāt ar lokālu apvienošanu","Screen Design":"ScreenDesign","SelectAll":"Atlasīt visu","SpellCheck":"Pārbaudīt pareizrakstību","SubmitForApproval":"Iesniegt apstiprināšanai","Timezone":"Laika zona","Loading":"Notiek ielāde...","NewNode":"Jauns mezgls","AboutText":"Autortiesības © 2014 Infor. Visas tiesības aizsargātas. Šeit iekļautās teksta un dizaina zīmes ir uzņēmuma Infor un/vai tā filiāļu un meitasuzņēmumu preču zīmes un/vai reģistrētas preču zīmes. Visas tiesības aizsargātas. Citas šeit uzskaitītās preču zīmes pieder to attiecīgajiem īpašniekiem. www.infor.com."}
 });
 
 }( this ));
@@ -38732,7 +37919,7 @@ Globalize.addCultureInfo( "nb-NO", "default", {
 	name: "nb-NO",
 	englishName: "Norwegian, Bokmål (Norway)",
 	nativeName: "norsk, bokmål (Norge)",
-	language: "no",
+	language: "nb",
 	numberFormat: {
 		",": " ",
 		".": ",",
@@ -38776,7 +37963,7 @@ Globalize.addCultureInfo( "nb-NO", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Ekstra hjelp","AddNewTab":"Legg til ny kategori","Alerts":"Varsler","ApplyFilter":"Bruk filter","Approve":"Godkjenn","Attachments":"Vedlegg","Back":"Tilbake","Basic":"Basis","Between":"Mellom","Book":"Bok","Cancel":"Avbryt","Checked":"Kontrollert","ClearFilter":"Fjern filter","Close":"Lukk","CloseCancelChanges":"Lukk og avbryt endringer","CloseSaveChanges":"Lukk og lagre endringer","CloseTab":"Lukk kategori","ColumnPersonalization":"Egendefinering av kolonne","Comments":"Kommentarer","Confirmation":"Bekreftelse","Contains":"Inneholder","CreateTab":"Opprett en ny kategori","Cut":"Klipp ut","Delete":"Slett","DiscardUndo":"Forkast/angre","DisplayDropDownList":"Vis nedtrekksliste","Displaying":"Viser: ","DocWord":"Dokument","DoesNotContain":"Inneholder ikke","DoesNotEndWith":"Slutter ikke med","DoesNotEqual":"Er ikke lik","DoesNotStartWith":"Starter ikke med","Download":"Last ned","Duplicate":"Dupliser","Edit":"Rediger","EitherSelectedorNotSelected":"Rediger valgte eller ikke valgte","Email":"E-post","EndsWith":"Slutter med","EqualsStr":"Er lik","ExpandCollapse":"Utvid/skjul","ExportFailed":"Eksport mislyktes","ExportToExcel":"Eksporter til Excel","FileInUse":"Spesifisert fil er i bruk","FileInUseDetail":"Lukk filen i programmet det er i bruk eller angi et annet filnavn.","Filter":"Filter","FilterMenu":"Filtermeny","FilterOptions":"Filteralternativer","FilterWithinResults":"Filtrer i resultater","First":"Først","FirstView":"Vis først","Folder":"Mappe","ForgotPassword":"Glemt passord?","Forward":"Videresend","GetMoreRows":"Få flere rader","GreaterThan":"Mer enn","GreaterThanOrEquals":"Mer enn eller lik","GridSettings":"Rutenettinnstillinger","GroupSelection":"Gruppevalg","Help":"Hjelp","HideColumn":"Skjul kolonne","IsEmpty":"Er tom","IsNotEmpty":"Er ikke tom","Last":"Siste","LastView":"Siste visning","LaunchActivate":"Åpne/aktiver","LessThan":"Mindre enn","LessThanOrEquals":"Mindre enn eller lik","Links":"Koblinger","ListTabs":"List opp alle kategorier","LoadingItem":"Laster opp element ","Maintenance":"Vedlikehold","Menu":"Meny","New":"Ny","Next":"Neste","NextView":"Neste visning","No":"Nei","NotChecked":"Ikke kontrollert","Notes":"Merknader","NotSelected":"Ikke valgt","Of":" av ","Ok":"OK","Open":"Åpne","Password":"Passord","Paste":"Lim inn","Phone":"Telefon","PleaseWait":"Vennligst vent","Previous":"Forrige","PreviousView":"Forrige visning","Print":"Skriv ut","Queries":"Forespørsler","Redo":"Gjør om","Refresh":"Oppdater","Reject":"Avvis","RememberMe":"Husk meg på denne datamaskinen","Reports":"Rapporter","Reset":"Tilbakestill","Review":"Se gjennom","RunFilter":"Kjør filter","RunJob":"Kjør jobb","Save":"Lagre","SaveBeforeClosing":"Lagre og lukk","SavedFilters":"Lagrede filtre","SaveSubmit":"Lagre/send","ScreenDesign":"Skjermdesign","Search":"Søk","SelectContents":"Velg innhold","SelectDate":"Velg en dato","SelectDeselect":"Velg/fjern merking av alle","Selected":"Valgt: ","ServerName":"Servernavn","Settings":"Innstillinger","ShowFilterRow":"Vis filterrad","SignIn":"Logge på","SortAscending":"Sorter stigende","SortDescending":"Sorter synkende","Spreadsheet":"Regneark","StartsWith":"Starter med","StatusIndicator":"Statusindikator","Tasks":"Oppgaver","Today":"I dag","Translate":"Oversett","UserID":"Bruker-ID","Utilities":"Verktøy","Yes":"Ja","Page":"Side","Rows":"Rader","ShowingAll":"Viser alle","SessionNavigation":"Navigere i økt","ListAllMenuItems":"List opp alle menyelementer","NoRecordsFound":"Ingen poster funnet","SearchTree":"Søk tre","Clear":"Fjern","DrillDown":"Drille ned","Required":"Dette feltet er obligatorisk","Available":"Tilgjengelig:","Add":"Legg til","MoveDown":"Flytt ned","MoveUp":"Flytt opp","Remove":"Fjern","LastYear":"I fjor","NextMonth":"Neste måned","NextWeek":"Neste uke","NextYear":"Neste år","OneMonthAgo":"Én måned siden","OneWeekAgo":"Én uke siden","SixMonthsAgo":"Seks måneder siden","Time":"Tid","CannotBeSelected":"Denne raden kan ikke slettes.","ResetToDefault":"Tilbakestill til standardoppsett","CloseOtherTabs":"Lukk andre kategorier","EmailValidation":"Skriv inn en gyldig e-postadresse","UrlValidation":"Skriv inn en gyldig URL","EndofResults":"Slutten av resultatene","More":"Mer...","RecordsPerPage":"Oppføringer per side","Maximize":"Maksimer","Minimize":"Minimer"}
+	messages: {"SelectAll":"Velg alle", "AdditionalHelp":"Ekstra hjelp","AddNewTab":"Legg til ny kategori","Alerts":"Varsler","ApplyFilter":"Bruk filter","Approve":"Godkjenn","Attachments":"Vedlegg","Back":"Tilbake","Basic":"Basis","Between":"Mellom","Book":"Bok","Cancel":"Avbryt","Checked":"Kontrollert","ClearFilter":"Fjern filter","Close":"Lukk","CloseCancelChanges":"Lukk og avbryt endringer","CloseSaveChanges":"Lukk og lagre endringer","CloseTab":"Lukk kategori","ColumnPersonalization":"Egendefinering av kolonne","Comments":"Kommentarer","Confirmation":"Bekreftelse","Contains":"Inneholder","CreateTab":"Opprett en ny kategori","Cut":"Klipp ut","Delete":"Slett","DiscardUndo":"Forkast/angre","DisplayDropDownList":"Vis nedtrekksliste","Displaying":"Viser: ","DocWord":"Dokument","DoesNotContain":"Inneholder ikke","DoesNotEndWith":"Slutter ikke med","DoesNotEqual":"Er ikke lik","DoesNotStartWith":"Starter ikke med","Download":"Last ned","Duplicate":"Dupliser","Edit":"Rediger","EitherSelectedorNotSelected":"Rediger valgte eller ikke valgte","Email":"E-post","EndsWith":"Slutter med","EqualsStr":"Er lik","ExpandCollapse":"Utvid/skjul","ExportFailed":"Eksport mislyktes","ExportToExcel":"Eksporter til Excel","FileInUse":"Spesifisert fil er i bruk","FileInUseDetail":"Lukk filen i programmet det er i bruk eller angi et annet filnavn.","Filter":"Filter","FilterMenu":"Filtermeny","FilterOptions":"Filteralternativer","FilterWithinResults":"Filtrer i resultater","First":"Først","FirstView":"Vis først","Folder":"Mappe","ForgotPassword":"Glemt passord?","Forward":"Videresend","GetMoreRows":"Få flere rader","GreaterThan":"Mer enn","GreaterThanOrEquals":"Mer enn eller lik","GridSettings":"Rutenettinnstillinger","GroupSelection":"Gruppevalg","Help":"Hjelp","HideColumn":"Skjul kolonne","IsEmpty":"Er tom","IsNotEmpty":"Er ikke tom","Last":"Siste","LastView":"Siste visning","LaunchActivate":"Åpne/aktiver","LessThan":"Mindre enn","LessThanOrEquals":"Mindre enn eller lik","Links":"Koblinger","ListTabs":"List opp alle kategorier","LoadingItem":"Laster opp element ","Maintenance":"Vedlikehold","Menu":"Meny","New":"Ny","Next":"Neste","NextView":"Neste visning","No":"Nei","NotChecked":"Ikke kontrollert","Notes":"Merknader","NotSelected":"Ikke valgt","Of":" av ","Ok":"OK","Open":"Åpne","Password":"Passord","Paste":"Lim inn","Phone":"Telefon","PleaseWait":"Vennligst vent","Previous":"Forrige","PreviousView":"Forrige visning","Print":"Skriv ut","Queries":"Forespørsler","Redo":"Gjør om","Refresh":"Oppdater","Reject":"Avvis","RememberMe":"Husk meg på denne datamaskinen","Reports":"Rapporter","Reset":"Tilbakestill","Review":"Se gjennom","RunFilter":"Kjør filter","RunJob":"Kjør jobb","Save":"Lagre","SaveBeforeClosing":"Lagre og lukk","SavedFilters":"Lagrede filtre","SaveSubmit":"Lagre/send","ScreenDesign":"Skjermdesign","Search":"Søk","SelectContents":"Velg innhold","SelectDate":"Velg en dato","SelectDeselect":"Velg/fjern merking av alle","Selected":"Valgt: ","ServerName":"Servernavn","Settings":"Innstillinger","ShowFilterRow":"Vis filterrad","SignIn":"Logge på","SortAscending":"Sorter stigende","SortDescending":"Sorter synkende","Spreadsheet":"Regneark","StartsWith":"Starter med","StatusIndicator":"Statusindikator","Tasks":"Oppgaver","Today":"I dag","Translate":"Oversett","UserID":"Bruker-ID","Utilities":"Verktøy","Yes":"Ja","Page":"Side","Rows":"Rader","ShowingAll":"Viser alle","SessionNavigation":"Navigere i økt","ListAllMenuItems":"List opp alle menyelementer","NoRecordsFound":"Ingen poster funnet","SearchTree":"Søk tre","Clear":"Fjern","DrillDown":"Drille ned","Required":"Dette feltet er obligatorisk","Available":"Tilgjengelig:","Add":"Legg til","MoveDown":"Flytt ned","MoveUp":"Flytt opp","Remove":"Fjern","LastYear":"I fjor","NextMonth":"Neste måned","NextWeek":"Neste uke","NextYear":"Neste år","OneMonthAgo":"Én måned siden","OneWeekAgo":"Én uke siden","SixMonthsAgo":"Seks måneder siden","Time":"Tid","CannotBeSelected":"Denne raden kan ikke slettes.","ResetToDefault":"Tilbakestill til standardoppsett","CloseOtherTabs":"Lukk andre kategorier","EmailValidation":"Skriv inn en gyldig e-postadresse","UrlValidation":"Skriv inn en gyldig URL","EndofResults":"Slutten av resultatene","More":"Mer...","RecordsPerPage":"Oppføringer per side","Maximize":"Maksimer","Minimize":"Minimer"}
 });
 
 }( this ));
@@ -38853,7 +38040,7 @@ Globalize.addCultureInfo( "nl-NL", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Extra help","AddNewTab":"Nieuw tabblad toevoegen","Alerts":"Alarmeringen","ApplyFilter":"Filter toepassen","Approve":"Goedkeuren","Attachments":"Bijlagen","Back":"Terug","Basic":"Basis","Between":"Tussen","Book":"Boeken","Cancel":"Annuleren","Checked":"Ingeschakeld","ClearFilter":"Filter wissen","Close":"Sluiten","CloseCancelChanges":"Afsluiten en wijzigingen annuleren","CloseSaveChanges":"Afsluiten en wijzigingen opslaan","CloseTab":"Tabblad sluiten","ColumnPersonalization":"Personalisatie kolommen","Comments":"Opmerkingen","Confirmation":"Bevestiging","Contains":"Bevat","CreateTab":"Een  nieuw tabblad aanmaken","Cut":"Knippen","Delete":"Verwijderen","DiscardUndo":"Ongedaan maken","DisplayDropDownList":"Keuzelijst weergeven","Displaying":"Weergave: ","DocWord":"Document","DoesNotContain":"Bevat niet","DoesNotEndWith":"Eindigt niet op","DoesNotEqual":"Is niet gelijk aan","DoesNotStartWith":"Begint niet met","Download":"Downloaden","Duplicate":"Kopiëren","Edit":"Bewerken","EitherSelectedorNotSelected":"Ingeschakeld of Uitgeschakeld","Email":"E-mail","EndsWith":"Eindigt op","EqualsStr":"Is gelijk aan","ExpandCollapse":"Uit-/invouwen","ExportFailed":"Exporteren is niet gelukt","ExportToExcel":"Naar Excel exporteren","FileInUse":"Opgegeven bestand is in gebruik","FileInUseDetail":"Sluit het bestand in de applicatie waar het in gebruik is of geef een andere bestandsnaam op.","Filter":"Filter","FilterMenu":"Filtermenu","FilterOptions":"Filteropties","FilterWithinResults":"Binnen resultaten filteren","First":"Eerste","FirstView":"Eerste weergave","Folder":"Map","ForgotPassword":"Bent u uw wachtwoord vergeten?","Forward":"Vooruit","GetMoreRows":"Meer rijen ophalen","GreaterThan":"Groter dan","GreaterThanOrEquals":"Groter dan of gelijk aan","GridSettings":"Rasterinstellingen","GroupSelection":"Groepsselectie","Help":"Help","HideColumn":"Kolom verbergen","IsEmpty":"Is leeg","IsNotEmpty":"Is niet leeg","Last":"Laatste","LastView":"Laatste weergave","LaunchActivate":"Starten/activeren","LessThan":"Kleiner dan","LessThanOrEquals":"Kleiner dan of gelijk aan","Links":"Koppelingen","ListTabs":"Alle tabbladen weergeven","LoadingItem":"Artikel laden ","Maintenance":"Onderhoud","Menu":"Menu","New":"Nieuw","Next":"Volgende","NextView":"Volgende weergave","No":"Nee","NotChecked":"Niet ingeschakeld","Notes":"Notities","NotSelected":"Niet geselecteerd","Of":" van ","Ok":"OK","Open":"Open","Password":"Wachtwoord","Paste":"Plakken","Phone":"Telefoon","PleaseWait":"Ogenblik svp","Previous":"Vorige","PreviousView":"Vorige weergave","Print":"Afdrukken","Queries":"Query\u0027s","Redo":"Opnieuw uitvoeren","Refresh":"Vernieuwen","Reject":"Afkeuren","RememberMe":"Herinner mij op deze computer","Reports":"Rapporten","Reset":"Herstellen","Review":"Bekijken","RunFilter":"Filter uitvoeren","RunJob":"Job uitvoeren","Save":"Opslaan","SaveBeforeClosing":"Opslaan vóór afsluiten","SavedFilters":"Opgeslagen filters","SaveSubmit":"Opslaan","ScreenDesign":"Schermontwerp","Search":"Zoeken","SelectContents":"Inhoud selecteren","SelectDate":"Een datum selecteren","SelectDeselect":"Alles selecteren /deselecteren","Selected":"Geselecteerd: ","ServerName":"Servernaam","Settings":"Instellingen","ShowFilterRow":"Filterrij tonen","SignIn":"Aanmelden","SortAscending":"Oplopend sorteren","SortDescending":"Aflopend sorteren","Spreadsheet":"Rekenblad","StartsWith":"Begint met","StatusIndicator":"Statusindicator","Tasks":"Taken","Today":"Vandaag","Translate":"Vertalen","UserID":"Gebruiker-ID","Utilities":"Hulpprogramma\u0027s","Yes":"Ja","Page":"Pagina","Rows":"Rijen","ShowingAll":"Alles weergeven","SessionNavigation":"Navigeren in sessie","ListAllMenuItems":"Alle menuopdrachten weergeven","NoRecordsFound":"Geen records aanwezig","SearchTree":"In structuur zoeken","Clear":"Wissen","DrillDown":"Drill-down","Required":"Dit veld is verplicht","Available":"Beschikbaar:","Add":"Toevoegen","MoveDown":"Omlaag","MoveUp":"Omhoog","Remove":"Verwijderen","LastYear":"Vorig jaar","NextMonth":"Volgende maand","NextWeek":"Volgende week","NextYear":"Volgend jaar","OneMonthAgo":"Eén maand geleden","OneWeekAgo":"Eén week geleden","SixMonthsAgo":"Half jaar geleden","Time":"Tijd","CannotBeSelected":"Deze rij kan niet worden geselecteerd.","ResetToDefault":"Naar standaardinstelling terugzetten","CloseOtherTabs":"Overige tabbladen sluliten","EmailValidation":"Voer een geldig e-mailadres in","UrlValidation":"Voer een geldige URL in","EndofResults":"Einde resultaten","More":"Meer...","RecordsPerPage":"Records per pagina","Maximize":"Maximaliseren","Minimize":"Minimaliseren","CloseAllTabs":"Alle tabbladen sluiten","QuickDates":"Snelle datums","Finish":"Beëindigen","SetTextColor":"Tekstkleur instellen","AttachmentRules":"Regels bijlagen","AutoRefresh":"Automatisch vernieuwen","BarChart":"staafdiagram","CopyMail":"Kopiëren en per e-mail verzenden","CopyUrl":"URL kopiëren","DistributeHorizontally":"Horizontaal verdelen","ExpandAll":"Alles uitvouwen","Generate":"Genereren","GenerateScript":"Script genereren","NoAttachments":"Geen bijlagen","PieChart":"Cirkeldiagram","QuickAccess":"Snelle toegang","RestoreUser":"Gebruiker terugzetten","SaveConsolidate":"Met lokale consolidatie opslaan","Screen Design":"Schermontwerp","SelectAll":"Alles selecteren","SpellCheck":"Spellingscontrole","SubmitForApproval":"Ter goedkeuring voorleggen","Timezone":"Tijdzone","Loading":"Laden...","NewNode":"Nieuw knooppunt","AboutText":"Copyright © 2015 Infor. Alle rechten voorbehouden. De woord- en merktekens die in dit document worden gebruikt zijn handelsmerken en/of geregistreerde handelsmerken van Infor en/of haar vestigingen en gelieerde bedrijven. Alle rechten voorbehouden. Alle overige handelsmerken in dit document zijn eigendom van de respectievelijke eigenaren. www.infor.com."}
+	messages: {"AdditionalHelp":"Extra help","AddNewTab":"Nieuw tabblad toevoegen","Alerts":"Alarmeringen","ApplyFilter":"Filter toepassen","Approve":"Goedkeuren","Attachments":"Bijlagen","Back":"Terug","Basic":"Basis","Between":"Tussen","Book":"Boeken","Cancel":"Annuleren","Checked":"Ingeschakeld","ClearFilter":"Filter wissen","Close":"Sluiten","CloseCancelChanges":"Afsluiten en wijzigingen annuleren","CloseSaveChanges":"Afsluiten en wijzigingen opslaan","CloseTab":"Tabblad sluiten","ColumnPersonalization":"Personalisatie kolommen","Comments":"Opmerkingen","Confirmation":"Bevestiging","Contains":"Bevat","CreateTab":"Een  nieuw tabblad aanmaken","Cut":"Knippen","Delete":"Verwijderen","DiscardUndo":"Ongedaan maken","DisplayDropDownList":"Keuzelijst weergeven","Displaying":"Weergave: ","DocWord":"Document","DoesNotContain":"Bevat niet","DoesNotEndWith":"Eindigt niet op","DoesNotEqual":"Is niet gelijk aan","DoesNotStartWith":"Begint niet met","Download":"Downloaden","Duplicate":"Kopiëren","Edit":"Bewerken","EitherSelectedorNotSelected":"Ingeschakeld of Uitgeschakeld","Email":"E-mail","EndsWith":"Eindigt op","EqualsStr":"Is gelijk aan","ExpandCollapse":"Uit-/invouwen","ExportFailed":"Exporteren is niet gelukt","ExportToExcel":"Naar Excel exporteren","FileInUse":"Opgegeven bestand is in gebruik","FileInUseDetail":"Sluit het bestand in de applicatie waar het in gebruik is of geef een andere bestandsnaam op.","Filter":"Filter","FilterMenu":"Filtermenu","FilterOptions":"Filteropties","FilterWithinResults":"Binnen resultaten filteren","First":"Eerste","FirstView":"Eerste weergave","Folder":"Map","ForgotPassword":"Bent u uw wachtwoord vergeten?","Forward":"Vooruit","GetMoreRows":"Meer rijen ophalen","GreaterThan":"Groter dan","GreaterThanOrEquals":"Groter dan of gelijk aan","GridSettings":"Rasterinstellingen","GroupSelection":"Groepsselectie","Help":"Help","HideColumn":"Kolom verbergen","IsEmpty":"Is leeg","IsNotEmpty":"Is niet leeg","Last":"Laatste","LastView":"Laatste weergave","LaunchActivate":"Starten/activeren","LessThan":"Kleiner dan","LessThanOrEquals":"Kleiner dan of gelijk aan","Links":"Koppelingen","ListTabs":"Alle tabbladen weergeven","LoadingItem":"Artikel laden ","Maintenance":"Onderhoud","Menu":"Menu","New":"Nieuw","Next":"Volgende","NextView":"Volgende weergave","No":"Nee","NotChecked":"Niet ingeschakeld","Notes":"Notities","NotSelected":"Niet geselecteerd","Of":" van ","Ok":"OK","Open":"Open","Password":"Wachtwoord","Paste":"Plakken","Phone":"Telefoon","PleaseWait":"Ogenblik svp","Previous":"Vorige","PreviousView":"Vorige weergave","Print":"Afdrukken","Queries":"Query\u0027s","Redo":"Opnieuw uitvoeren","Refresh":"Vernieuwen","Reject":"Afkeuren","RememberMe":"Herinner mij op deze computer","Reports":"Rapporten","Reset":"Herstellen","Review":"Bekijken","RunFilter":"Filter uitvoeren","RunJob":"Job uitvoeren","Save":"Opslaan","SaveBeforeClosing":"Opslaan vóór afsluiten","SavedFilters":"Opgeslagen filters","SaveSubmit":"Opslaan","ScreenDesign":"Schermontwerp","Search":"Zoeken","SelectContents":"Inhoud selecteren","SelectDate":"Een datum selecteren","SelectDeselect":"Alles selecteren /deselecteren","Selected":"Geselecteerd: ","ServerName":"Servernaam","Settings":"Instellingen","ShowFilterRow":"Filterrij tonen","SignIn":"Aanmelden","SortAscending":"Oplopend sorteren","SortDescending":"Aflopend sorteren","Spreadsheet":"Rekenblad","StartsWith":"Begint met","StatusIndicator":"Statusindicator","Tasks":"Taken","Today":"Vandaag","Translate":"Vertalen","UserID":"Gebruiker-ID","Utilities":"Hulpprogramma\u0027s","Yes":"Ja","Page":"Pagina","Rows":"Rijen","ShowingAll":"Alles weergeven","SessionNavigation":"Navigeren in sessie","ListAllMenuItems":"Alle menuopdrachten weergeven","NoRecordsFound":"Geen records aanwezig","SearchTree":"In structuur zoeken","Clear":"Wissen","DrillDown":"Drill-down","Required":"Dit veld is verplicht","Available":"Beschikbaar:","Add":"Toevoegen","MoveDown":"Omlaag","MoveUp":"Omhoog","Remove":"Verwijderen","LastYear":"Vorig jaar","NextMonth":"Volgende maand","NextWeek":"Volgende week","NextYear":"Volgend jaar","OneMonthAgo":"Eén maand geleden","OneWeekAgo":"Eén week geleden","SixMonthsAgo":"Half jaar geleden","Time":"Tijd","CannotBeSelected":"Deze rij kan niet worden geselecteerd.","ResetToDefault":"Naar standaardinstelling terugzetten","CloseOtherTabs":"Overige tabbladen sluliten","EmailValidation":"Voer een geldig e-mailadres in","UrlValidation":"Voer een geldige URL in","EndofResults":"Einde resultaten","More":"Meer...","RecordsPerPage":"Records per pagina","Maximize":"Maximaliseren","Minimize":"Minimaliseren","CloseAllTabs":"Alle tabbladen sluiten","QuickDates":"Snelle datums","Finish":"Beëindigen","SetTextColor":"Tekstkleur instellen","AttachmentRules":"Regels bijlagen","AutoRefresh":"Automatisch vernieuwen","BarChart":"staafdiagram","CopyMail":"Kopiëren en per e-mail verzenden","CopyUrl":"URL kopiëren","DistributeHorizontally":"Horizontaal verdelen","ExpandAll":"Alles uitvouwen","Generate":"Genereren","GenerateScript":"Script genereren","NoAttachments":"Geen bijlagen","PieChart":"Cirkeldiagram","QuickAccess":"Snelle toegang","RestoreUser":"Gebruiker terugzetten","SaveConsolidate":"Met lokale consolidatie opslaan","Screen Design":"Schermontwerp","SelectAll":"Alles selecteren","SpellCheck":"Spellingscontrole","SubmitForApproval":"Ter goedkeuring voorleggen","Timezone":"Tijdzone","Loading":"Laden...","NewNode":"Nieuw knooppunt","AboutText":"Copyright © 2014 Infor. Alle rechten voorbehouden. De woord- en merktekens die in dit document worden gebruikt zijn handelsmerken en/of geregistreerde handelsmerken van Infor en/of haar vestigingen en gelieerde bedrijven. Alle rechten voorbehouden. Alle overige handelsmerken in dit document zijn eigendom van de respectievelijke eigenaren. www.infor.com."}
 });
 
 }( this ));
@@ -38932,7 +38119,7 @@ Globalize.addCultureInfo( "no-NO", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Ekstra hjelp","AddNewTab":"Legg til ny kategori","Alerts":"Varsler","ApplyFilter":"Bruk filter","Approve":"Godkjenn","Attachments":"Vedlegg","Back":"Tilbake","Basic":"Basis","Between":"Mellom","Book":"Bok","Cancel":"Avbryt","Checked":"Kontrollert","ClearFilter":"Fjern filter","Close":"Lukk","CloseCancelChanges":"Lukk og avbryt endringer","CloseSaveChanges":"Lukk og lagre endringer","CloseTab":"Lukk kategori","ColumnPersonalization":"Egendefinering av kolonne","Comments":"Kommentarer","Confirmation":"Bekreftelse","Contains":"Inneholder","CreateTab":"Opprett en ny kategori","Cut":"Klipp ut","Delete":"Slett","DiscardUndo":"Forkast/angre","DisplayDropDownList":"Vis nedtrekksliste","Displaying":"Viser: ","DocWord":"Dokument","DoesNotContain":"Inneholder ikke","DoesNotEndWith":"Slutter ikke med","DoesNotEqual":"Er ikke lik","DoesNotStartWith":"Starter ikke med","Download":"Last ned","Duplicate":"Dupliser","Edit":"Rediger","EitherSelectedorNotSelected":"Rediger valgte eller ikke valgte","Email":"E-post","EndsWith":"Slutter med","EqualsStr":"Er lik","ExpandCollapse":"Utvid/skjul","ExportFailed":"Eksport mislyktes","ExportToExcel":"Eksporter til Excel","FileInUse":"Spesifisert fil er i bruk","FileInUseDetail":"Lukk filen i programmet det er i bruk eller angi et annet filnavn.","Filter":"Filter","FilterMenu":"Filtermeny","FilterOptions":"Filteralternativer","FilterWithinResults":"Filtrer i resultater","First":"Først","FirstView":"Vis først","Folder":"Mappe","ForgotPassword":"Glemt passord?","Forward":"Videresend","GetMoreRows":"Få flere rader","GreaterThan":"Mer enn","GreaterThanOrEquals":"Mer enn eller lik","GridSettings":"Rutenettinnstillinger","GroupSelection":"Gruppevalg","Help":"Hjelp","HideColumn":"Skjul kolonne","IsEmpty":"Er tom","IsNotEmpty":"Er ikke tom","Last":"Siste","LastView":"Siste visning","LaunchActivate":"Åpne/aktiver","LessThan":"Mindre enn","LessThanOrEquals":"Mindre enn eller lik","Links":"Koblinger","ListTabs":"List opp alle kategorier","LoadingItem":"Laster opp element ","Maintenance":"Vedlikehold","Menu":"Meny","New":"Ny","Next":"Neste","NextView":"Neste visning","No":"Nei","NotChecked":"Ikke kontrollert","Notes":"Merknader","NotSelected":"Ikke valgt","Of":" av ","Ok":"OK","Open":"Åpne","Password":"Passord","Paste":"Lim inn","Phone":"Telefon","PleaseWait":"Vennligst vent","Previous":"Forrige","PreviousView":"Forrige visning","Print":"Skriv ut","Queries":"Forespørsler","Redo":"Gjør om","Refresh":"Oppdater","Reject":"Avvis","RememberMe":"Husk meg på denne datamaskinen","Reports":"Rapporter","Reset":"Tilbakestill","Review":"Se gjennom","RunFilter":"Kjør filter","RunJob":"Kjør jobb","Save":"Lagre","SaveBeforeClosing":"Lagre og lukk","SavedFilters":"Lagrede filtre","SaveSubmit":"Lagre/send","ScreenDesign":"Skjermdesign","Search":"Søk","SelectContents":"Velg innhold","SelectDate":"Velg en dato","SelectDeselect":"Velg/fjern merking av alle","Selected":"Valgt: ","ServerName":"Servernavn","Settings":"Innstillinger","ShowFilterRow":"Vis filterrad","SignIn":"Logge på","SortAscending":"Sorter stigende","SortDescending":"Sorter synkende","Spreadsheet":"Regneark","StartsWith":"Starter med","StatusIndicator":"Statusindikator","Tasks":"Oppgaver","Today":"I dag","Translate":"Oversett","UserID":"Bruker-ID","Utilities":"Verktøy","Yes":"Ja","Page":"Side","Rows":"Rader","ShowingAll":"Viser alle","SessionNavigation":"Navigere i økt","ListAllMenuItems":"List opp alle menyelementer","NoRecordsFound":"Ingen poster funnet","SearchTree":"Søk tre","Clear":"Fjern","DrillDown":"Drille ned","Required":"Dette feltet er obligatorisk","Available":"Tilgjengelig:","Add":"Legg til","MoveDown":"Flytt ned","MoveUp":"Flytt opp","Remove":"Fjern","LastYear":"I fjor","NextMonth":"Neste måned","NextWeek":"Neste uke","NextYear":"Neste år","OneMonthAgo":"Én måned siden","OneWeekAgo":"Én uke siden","SixMonthsAgo":"Seks måneder siden","Time":"Tid","CannotBeSelected":"Denne raden kan ikke slettes.","ResetToDefault":"Tilbakestill til standardoppsett","CloseOtherTabs":"Lukk andre kategorier","EmailValidation":"Skriv inn en gyldig e-postadresse","UrlValidation":"Skriv inn en gyldig URL","EndofResults":"Slutten av resultatene","More":"Mer...","RecordsPerPage":"Oppføringer per side","Maximize":"Maksimer","Minimize":"Minimer"}
+	messages: {"SelectAll":"Velg alle", "AdditionalHelp":"Ekstra hjelp","AddNewTab":"Legg til ny kategori","Alerts":"Varsler","ApplyFilter":"Bruk filter","Approve":"Godkjenn","Attachments":"Vedlegg","Back":"Tilbake","Basic":"Basis","Between":"Mellom","Book":"Bok","Cancel":"Avbryt","Checked":"Kontrollert","ClearFilter":"Fjern filter","Close":"Lukk","CloseCancelChanges":"Lukk og avbryt endringer","CloseSaveChanges":"Lukk og lagre endringer","CloseTab":"Lukk kategori","ColumnPersonalization":"Egendefinering av kolonne","Comments":"Kommentarer","Confirmation":"Bekreftelse","Contains":"Inneholder","CreateTab":"Opprett en ny kategori","Cut":"Klipp ut","Delete":"Slett","DiscardUndo":"Forkast/angre","DisplayDropDownList":"Vis nedtrekksliste","Displaying":"Viser: ","DocWord":"Dokument","DoesNotContain":"Inneholder ikke","DoesNotEndWith":"Slutter ikke med","DoesNotEqual":"Er ikke lik","DoesNotStartWith":"Starter ikke med","Download":"Last ned","Duplicate":"Dupliser","Edit":"Rediger","EitherSelectedorNotSelected":"Rediger valgte eller ikke valgte","Email":"E-post","EndsWith":"Slutter med","EqualsStr":"Er lik","ExpandCollapse":"Utvid/skjul","ExportFailed":"Eksport mislyktes","ExportToExcel":"Eksporter til Excel","FileInUse":"Spesifisert fil er i bruk","FileInUseDetail":"Lukk filen i programmet det er i bruk eller angi et annet filnavn.","Filter":"Filter","FilterMenu":"Filtermeny","FilterOptions":"Filteralternativer","FilterWithinResults":"Filtrer i resultater","First":"Først","FirstView":"Vis først","Folder":"Mappe","ForgotPassword":"Glemt passord?","Forward":"Videresend","GetMoreRows":"Få flere rader","GreaterThan":"Mer enn","GreaterThanOrEquals":"Mer enn eller lik","GridSettings":"Rutenettinnstillinger","GroupSelection":"Gruppevalg","Help":"Hjelp","HideColumn":"Skjul kolonne","IsEmpty":"Er tom","IsNotEmpty":"Er ikke tom","Last":"Siste","LastView":"Siste visning","LaunchActivate":"Åpne/aktiver","LessThan":"Mindre enn","LessThanOrEquals":"Mindre enn eller lik","Links":"Koblinger","ListTabs":"List opp alle kategorier","LoadingItem":"Laster opp element ","Maintenance":"Vedlikehold","Menu":"Meny","New":"Ny","Next":"Neste","NextView":"Neste visning","No":"Nei","NotChecked":"Ikke kontrollert","Notes":"Merknader","NotSelected":"Ikke valgt","Of":" av ","Ok":"OK","Open":"Åpne","Password":"Passord","Paste":"Lim inn","Phone":"Telefon","PleaseWait":"Vennligst vent","Previous":"Forrige","PreviousView":"Forrige visning","Print":"Skriv ut","Queries":"Forespørsler","Redo":"Gjør om","Refresh":"Oppdater","Reject":"Avvis","RememberMe":"Husk meg på denne datamaskinen","Reports":"Rapporter","Reset":"Tilbakestill","Review":"Se gjennom","RunFilter":"Kjør filter","RunJob":"Kjør jobb","Save":"Lagre","SaveBeforeClosing":"Lagre og lukk","SavedFilters":"Lagrede filtre","SaveSubmit":"Lagre/send","ScreenDesign":"Skjermdesign","Search":"Søk","SelectContents":"Velg innhold","SelectDate":"Velg en dato","SelectDeselect":"Velg/fjern merking av alle","Selected":"Valgt: ","ServerName":"Servernavn","Settings":"Innstillinger","ShowFilterRow":"Vis filterrad","SignIn":"Logge på","SortAscending":"Sorter stigende","SortDescending":"Sorter synkende","Spreadsheet":"Regneark","StartsWith":"Starter med","StatusIndicator":"Statusindikator","Tasks":"Oppgaver","Today":"I dag","Translate":"Oversett","UserID":"Bruker-ID","Utilities":"Verktøy","Yes":"Ja","Page":"Side","Rows":"Rader","ShowingAll":"Viser alle","SessionNavigation":"Navigere i økt","ListAllMenuItems":"List opp alle menyelementer","NoRecordsFound":"Ingen poster funnet","SearchTree":"Søk tre","Clear":"Fjern","DrillDown":"Drille ned","Required":"Dette feltet er obligatorisk","Available":"Tilgjengelig:","Add":"Legg til","MoveDown":"Flytt ned","MoveUp":"Flytt opp","Remove":"Fjern","LastYear":"I fjor","NextMonth":"Neste måned","NextWeek":"Neste uke","NextYear":"Neste år","OneMonthAgo":"Én måned siden","OneWeekAgo":"Én uke siden","SixMonthsAgo":"Seks måneder siden","Time":"Tid","CannotBeSelected":"Denne raden kan ikke slettes.","ResetToDefault":"Tilbakestill til standardoppsett","CloseOtherTabs":"Lukk andre kategorier","EmailValidation":"Skriv inn en gyldig e-postadresse","UrlValidation":"Skriv inn en gyldig URL","EndofResults":"Slutten av resultatene","More":"Mer...","RecordsPerPage":"Oppføringer per side","Maximize":"Maksimer","Minimize":"Minimer"}
 });
 
 }( this ));
@@ -39102,6 +38289,278 @@ Globalize.addCultureInfo( "pt-BR", "default", {
 
 }( this ));
 /*
+* Globalize Culture pt-BR
+*
+* http://github.com/jquery/globalize
+*
+* Copyright Software Freedom Conservancy, Inc.
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+* This file was generated by the Globalize Culture Generator
+* Translation: bugs found in this file need to be fixed in the generator
+*/
+
+(function( window, undefined ) {
+
+var Globalize;
+
+if ( typeof require !== "undefined" &&
+	typeof exports !== "undefined" &&
+	typeof module !== "undefined" ) {
+	// Assume CommonJS
+	Globalize = require( "globalize" );
+} else {
+	// Global variable
+	Globalize = window.Globalize;
+}
+
+Globalize.addCultureInfo( "pt-PT", "default", {
+	name: "pt-PT",
+	englishName: "Portuguese (Portugal)",
+	nativeName: "português (Portugal)",
+	language: "pt",
+	numberFormat: {
+		",": ".",
+		".": ",",
+		"NaN": "NaN (Não é um número)",
+		negativeInfinity: "-Infinito",
+		positiveInfinity: "+Infinito",
+		percent: {
+			pattern: ["-n%","n%"],
+			",": ".",
+			".": ","
+		},
+		currency: {
+			pattern: ["-n $","n $"],
+			",": ".",
+			".": ",",
+			symbol: "€"
+		}
+	},
+	calendars: {
+		standard: {
+			"/": "-",
+			firstDay: 1,
+			days: {
+				names: ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"],
+				namesAbbr: ["dom","seg","ter","qua","qui","sex","sáb"],
+				namesShort: ["D","S","T","Q","Q","S","S"]
+			},
+			months: {
+				names: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",""],
+				namesAbbr: ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez",""]
+			},
+			AM: null,
+			PM: null,
+			eras: [{"name":"d.C.","start":null,"offset":0}],
+			patterns: {
+				d: "dd-MM-yyyy",
+				D: "dddd, d' de 'MMMM' de 'yyyy",
+				t: "HH:mm",
+				T: "HH:mm:ss",
+				f: "dddd, d' de 'MMMM' de 'yyyy HH:mm",
+				F: "dddd, d' de 'MMMM' de 'yyyy HH:mm:ss",
+				M: "d/M",
+				Y: "MMMM' de 'yyyy"
+			}
+		}
+	},
+  messages: {
+    "AdditionalHelp": "Additional Help",
+    "AddNewTab": "Adicionar novo separador",
+    "Alerts": "Alertas",
+    "ApplyFilter": "Apply Filter",
+    "Approve": "Aprovar",
+    "Attachments": "Anexos",
+    "Back": "Retroceder",
+    "Basic": "Básica",
+    "Between": "Entre",
+    "Book": "Book",
+    "Cancel": "Cancelar",
+    "Checked": "Marcado",
+    "ClearFilter": "Limpar filtro",
+    "Close": "Fechar",
+    "CloseCancelChanges": "Close and Cancel Changes",
+    "CloseSaveChanges": "Close and Save Changes",
+    "CloseTab": "Close Tab",
+    "ColumnPersonalization": "Column Personalization",
+    "Comments": "Comentários",
+    "Confirmation": "Confirmação",
+    "Contains": "Contém",
+    "CreateTab": "Create a new Tab",
+    "Cut": "Cortar",
+    "Delete": "Eliminar",
+    "DiscardUndo": "Discard/Undo",
+    "DisplayDropDownList": "Display Dropdown list",
+    "Displaying": "Displaying: ",
+    "DocWord": "Documento",
+    "DoesNotContain": "Não contém",
+    "DoesNotEndWith": "Não termina com",
+    "DoesNotEqual": "Não é igual",
+    "DoesNotStartWith": "Does not Start With",
+    "Download": "Transferir",
+    "Duplicate": "Duplicar",
+    "Edit": "Editar",
+    "EitherSelectedorNotSelected": "Either Selected or Not Selected",
+    "Email": "Correio eletrónico",
+    "EndsWith": "Termina com",
+    "EqualsStr": "Igual a",
+    "ExpandCollapse": "Expand/Collapse",
+    "ExportFailed": "Export Failed",
+    "ExportToExcel": "Export to Excel",
+    "FileInUse": "Specified File is In Use",
+    "FileInUseDetail": "Close the file in the application where it is in use or specify a different file name.",
+    "Filter": "Filtrar",
+    "FilterMenu": "Filter Menu",
+    "FilterOptions": "Filter Options",
+    "FilterWithinResults": "Filter Within Results",
+    "First": "Primeiro",
+    "FirstView": "First View",
+    "Folder": "Pasta",
+    "ForgotPassword": "Forgot your Password?",
+    "Forward": "Avançar",
+    "GetMoreRows": "Get More Rows",
+    "GreaterThan": "Superior a",
+    "GreaterThanOrEquals": "Greater Than or Equals",
+    "GridSettings": "Grid Settings",
+    "GroupSelection": "Group Selection",
+    "Help": "Ajuda",
+    "HideColumn": "Hide Column",
+    "IsEmpty": "Está vazio",
+    "IsNotEmpty": "Não está vazio",
+    "Last": "Último",
+    "LastView": "Last View",
+    "LaunchActivate": "Launch/Activate",
+    "LessThan": "Inferior a",
+    "LessThanOrEquals": "Less Than or Equals",
+    "Links": "Ligações",
+    "ListTabs": "List all Tabs",
+    "LoadingItem": "Loading item ",
+    "Maintenance": "Maintenance",
+    "Menu": "Menu",
+    "New": "Novo(a)",
+    "Next": "Seguinte",
+    "NextView": "Next View",
+    "No": "Não",
+    "NotChecked": "Not Checked",
+    "Notes": "Notas",
+    "NotSelected": "Não selecionado",
+    "Of": " de ",
+    "Ok": "OK",
+    "Open": "Abrir",
+    "Password": "Palavra-passe",
+    "Paste": "Colar",
+    "Phone": "Phone",
+    "PleaseWait": "Aguarde",
+    "Previous": "Anterior",
+    "PreviousView": "Previous View",
+    "Print": "Imprimir",
+    "Queries": "Queries",
+    "Redo": "Refazer",
+    "Refresh": "Atualizar",
+    "Reject": "Rejeitar",
+    "RememberMe": "Remember me on this computer",
+    "Reports": "Reports",
+    "Reset": "Repor",
+    "Review": "Avaliar",
+    "RunFilter": "Executar filtro",
+    "RunJob": "Run Job",
+    "Save": "Guardar",
+    "SaveBeforeClosing": "Save Before Closing",
+    "SavedFilters": "Saved Filters",
+    "SaveSubmit": "Save/Submit",
+    "ScreenDesign": "Screen Design",
+    "Search": "Procurar",
+    "SelectContents": "Select Contents",
+    "SelectDate": "Select a Date",
+    "SelectDeselect": "Select / Deselect All",
+    "Selected": "Selecionado: ",
+    "ServerName": "Server Name",
+    "Settings": "Definições",
+    "ShowFilterRow": "Mostrar linha do filtro",
+    "SignIn": "Iniciar sessão",
+    "SortAscending": "Ordenação ascendente",
+    "SortDescending": "Ordenação descendente",
+    "Spreadsheet": "Spreadsheet",
+    "StartsWith": "Começa com",
+    "StatusIndicator": "Status Indicator",
+    "Tasks": "Tarefas",
+    "Today": "Hoje",
+    "Translate": "Translate",
+    "UserID": "ID de utilizador",
+    "Utilities": "Utilitários",
+    "Yes": "Sim",
+    "Page": "Página",
+    "Rows": "Linhas",
+    "ShowingAll": "Showing All",
+    "SessionNavigation": "Session Navigation",
+    "ListAllMenuItems": "List All Menu Items",
+    "NoRecordsFound": "Nenhum registo encontrado",
+    "SearchTree": "Árvore de procura",
+    "Clear": "Limpar",
+    "DrillDown": "Drill Down",
+    "Required": "Requerido",
+    "RequiredField": "Este campo é obrigatório",
+    "Available": "Disponível:",
+    "Add": "Adicionar",
+    "MoveDown": "Move Down",
+    "MoveUp": "Move Up",
+    "Remove": "Remover",
+    "LastYear": "Last Year",
+    "NextMonth": "Mês seguinte",
+    "NextWeek": "Next Week",
+    "NextYear": "Next Year",
+    "OneMonthAgo": "One Month Ago",
+    "OneWeekAgo": "One Week Ago",
+    "SixMonthsAgo": "Six Months Ago",
+    "Time": "Hora",
+    "CannotBeSelected": "This row cannot be selected.",
+    "ResetToDefault": "Reset to Default Layout",
+    "CloseOtherTabs": "Close Other Tabs",
+    "EmailValidation": "Enter a valid e-mail address",
+    "UrlValidation": "Introduzir um URL válido",
+    "EndofResults": "End of Results",
+    "More": "Mais...",
+    "RecordsPerPage": "Records Per Page",
+    "Maximize": "Maximizar",
+    "Minimize": "Minimizar",
+    "CloseAllTabs": "Close All Tabs",
+    "QuickDates": "Quick Dates",
+    "Finish": "Terminar",
+    "SetTextColor": "Set text color",
+    "AttachmentRules": "Attachment Rules",
+    "AutoRefresh": "Auto Refresh",
+    "BarChart": "Gráfico de barras",
+    "CopyMail": "Copy and Mail",
+    "CopyUrl": "Copy Url",
+    "DistributeHorizontally": "Distribuir horizontalmente",
+    "ExpandAll": "Expand All",
+    "Generate": "Gerar",
+    "GenerateScript": "Generate Script",
+    "NoAttachments": "No Attachments",
+    "PieChart": "Pie Chart",
+    "QuickAccess": "Quick Access",
+    "RestoreUser": "Restaurar utilizador",
+    "SaveConsolidate": "Save with local Consolidation",
+    "Screen Design": "ScreenDesign",
+    "SelectAll": "Selecionar tudo",
+    "SpellCheck": "Spell Check",
+    "SubmitForApproval": "Submit For Approval",
+    "Timezone": "Fuso horário",
+    "Loading": "A carregar...",
+    "NewNode": "New Node",
+    "SelectMonthYear": "Select Month and Year",
+    "AboutText": "Copyright © 2014 Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners. www.infor.com.\n    ",
+    "Browser": "Navegador\n    ",
+    "OS": "OS\n    ",
+    "Language": "en-US\n    ",
+    "CookiesEnabled": "Cookies ativados\n    "
+  }
+});
+
+}( this ));
+/*
 * Globalize Culture ro-RO
 *
 * http://github.com/jquery/globalize
@@ -39175,7 +38634,7 @@ Globalize.addCultureInfo( "ro-RO", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Ajutor suplimentar","AddNewTab":"Adăugare filă nouă","Alerts":"Alerte","ApplyFilter":"Aplicare filtru","Approve":"Aprobare","Attachments":"Ataşamente","Back":"Înapoi","Basic":"De bază","Between":"Între","Book":"Rezervare","Cancel":"Revocare","Checked":"Bifat","ClearFilter":"Golire filtru","Close":"Închidere","CloseCancelChanges":"Închidere şi revocare modificări","CloseSaveChanges":"Închidere şi salvare modificări","CloseTab":"Închidere filă","ColumnPersonalization":"Personalizare coloană","Comments":"Comentarii","Confirmation":"Confirmare","Contains":"Conţine","CreateTab":"Creare filă nouă","Cut":"Decupare","Delete":"Ştergere","DiscardUndo":"Renunţare/Anulare","DisplayDropDownList":"Afişare listă verticală","Displaying":"Se afişează: ","DocWord":"Document","DoesNotContain":"Nu conţine","DoesNotEndWith":"Nu se termină cu","DoesNotEqual":"Nu este egal cu","DoesNotStartWith":"Nu începe cu","Download":"Descărcare","Duplicate":"Dublare","Edit":"Editare","EitherSelectedorNotSelected":"Selectat sau neselectat","Email":"E-mail","EndsWith":"Se termină cu","EqualsStr":"Este egal cu","ExpandCollapse":"Extindere/Restrângere","ExportFailed":"Export eşuat","ExportToExcel":"Export în Excel","FileInUse":"Fişierul specificat este utilizat","FileInUseDetail":"Închideţi fişierul din aplicaţia în care este utilizat sau specificaţi un nume de fişier diferit.","Filter":"Filtru","FilterMenu":"Meniu filtru","FilterOptions":"Opţiuni filtru","FilterWithinResults":"Filtru în rezultate","First":"Primul","FirstView":"Prima vizualizare","Folder":"Folder","ForgotPassword":"Aţi uitat parola?","Forward":"Înainte","GetMoreRows":"Obţinere mai multe rânduri","GreaterThan":"Mai mare ca","GreaterThanOrEquals":"Mai mare sau egal cu","GridSettings":"Setări grilă","GroupSelection":"Selecţie grup","Help":"Ajutor","HideColumn":"Ascundere coloană","IsEmpty":"Este gol","IsNotEmpty":"Nu este gol","Last":"Ultimul","LastView":"Ultima vizualizare","LaunchActivate":"Lansare/Activare","LessThan":"Mai mic decât","LessThanOrEquals":"Mai mic sau egal cu","Links":"Legături","ListTabs":"Listare toate filele","LoadingItem":"Încărcare element ","Maintenance":"Întreţinere","Menu":"Meniu","New":"Nou","Next":"Următor","NextView":"Următoarea vizualizare","No":"Nu","NotChecked":"Nebifat","Notes":"Note","NotSelected":"Neselectat","Of":" din ","Ok":"OK","Open":"Deschidere","Password":"Parolă","Paste":"Lipire","Phone":"Telefon","PleaseWait":"Aşteptaţi","Previous":"Anterior","PreviousView":"Vizualizarea anterioară","Print":"Imprimare","Queries":"Interogări","Redo":"Refacere","Refresh":"Reîmprospătare","Reject":"Respingere","RememberMe":"Memorare utilizator pe acest computer","Reports":"Rapoarte","Reset":"Resetare","Review":"Revizuire","RunFilter":"Executare filtru","RunJob":"Executare lucrare","Save":"Salvare","SaveBeforeClosing":"Salvare înainte de închidere","SavedFilters":"Salvare filtre","SaveSubmit":"Salvare/Trimitere","ScreenDesign":"Design ecran","Search":"Căutare","SelectContents":"Selectare conţinut","SelectDate":"Selectare dată","SelectDeselect":"Selectare/Deselectare toate","Selected":"Selectat: ","ServerName":"Nume server","Settings":"Setări","ShowFilterRow":"Afişare rând filtru","SignIn":"Conectare","SortAscending":"Sortare ascendentă","SortDescending":"Sortare descendentă","Spreadsheet":"Foaie de calcul","StartsWith":"Începe cu","StatusIndicator":"Indicator stare","Tasks":"Sarcini","Today":"Astăzi","Translate":"Traducere","UserID":"ID utilizator","Utilities":"Utilitare","Yes":"Da","Page":"Pagina","Rows":"Rânduri","ShowingAll":"Afişare toate","SessionNavigation":"Navigare sesisune","ListAllMenuItems":"Listare toate elementele de meniu","NoRecordsFound":"Nicio înregistrare găsită","SearchTree":"Arbore de căutare","Clear":"Golire","DrillDown":"Detaliere","Required":"Acest câmp este necesar","Available":"Disponibil:","Add":"Adăugare","MoveDown":"Mutare în jos","MoveUp":"Mutare în sus","Remove":"Eliminare","LastYear":"Anul trecut","NextMonth":"Luna următoare","NextWeek":"Săptămâna următoare","NextYear":"Anul următor","OneMonthAgo":"Acum o lună","OneWeekAgo":"Acum o săptămână","SixMonthsAgo":"Acum şase luni","Time":"Oră","CannotBeSelected":"Acest rând nu poate fi selectat.","ResetToDefault":"Resetare aspect implicit","CloseOtherTabs":"Închidere alte file","EmailValidation":"Introduceţi o adresă de e-mail validă","UrlValidation":"Introduceţi URL valid","EndofResults":"Sfârşit rezultate","More":"Mai multe...","RecordsPerPage":"Înregistrări pe pagină","Maximize":"Maximaliza","Minimize":"Minimaliza"}
+	messages: {"SelectAll":"Selectare toate", "AdditionalHelp":"Ajutor suplimentar","AddNewTab":"Adăugare filă nouă","Alerts":"Alerte","ApplyFilter":"Aplicare filtru","Approve":"Aprobare","Attachments":"Ataşamente","Back":"Înapoi","Basic":"De bază","Between":"Între","Book":"Rezervare","Cancel":"Revocare","Checked":"Bifat","ClearFilter":"Golire filtru","Close":"Închidere","CloseCancelChanges":"Închidere şi revocare modificări","CloseSaveChanges":"Închidere şi salvare modificări","CloseTab":"Închidere filă","ColumnPersonalization":"Personalizare coloană","Comments":"Comentarii","Confirmation":"Confirmare","Contains":"Conţine","CreateTab":"Creare filă nouă","Cut":"Decupare","Delete":"Ştergere","DiscardUndo":"Renunţare/Anulare","DisplayDropDownList":"Afişare listă verticală","Displaying":"Se afişează: ","DocWord":"Document","DoesNotContain":"Nu conţine","DoesNotEndWith":"Nu se termină cu","DoesNotEqual":"Nu este egal cu","DoesNotStartWith":"Nu începe cu","Download":"Descărcare","Duplicate":"Dublare","Edit":"Editare","EitherSelectedorNotSelected":"Selectat sau neselectat","Email":"E-mail","EndsWith":"Se termină cu","EqualsStr":"Este egal cu","ExpandCollapse":"Extindere/Restrângere","ExportFailed":"Export eşuat","ExportToExcel":"Export în Excel","FileInUse":"Fişierul specificat este utilizat","FileInUseDetail":"Închideţi fişierul din aplicaţia în care este utilizat sau specificaţi un nume de fişier diferit.","Filter":"Filtru","FilterMenu":"Meniu filtru","FilterOptions":"Opţiuni filtru","FilterWithinResults":"Filtru în rezultate","First":"Primul","FirstView":"Prima vizualizare","Folder":"Folder","ForgotPassword":"Aţi uitat parola?","Forward":"Înainte","GetMoreRows":"Obţinere mai multe rânduri","GreaterThan":"Mai mare ca","GreaterThanOrEquals":"Mai mare sau egal cu","GridSettings":"Setări grilă","GroupSelection":"Selecţie grup","Help":"Ajutor","HideColumn":"Ascundere coloană","IsEmpty":"Este gol","IsNotEmpty":"Nu este gol","Last":"Ultimul","LastView":"Ultima vizualizare","LaunchActivate":"Lansare/Activare","LessThan":"Mai mic decât","LessThanOrEquals":"Mai mic sau egal cu","Links":"Legături","ListTabs":"Listare toate filele","LoadingItem":"Încărcare element ","Maintenance":"Întreţinere","Menu":"Meniu","New":"Nou","Next":"Următor","NextView":"Următoarea vizualizare","No":"Nu","NotChecked":"Nebifat","Notes":"Note","NotSelected":"Neselectat","Of":" din ","Ok":"OK","Open":"Deschidere","Password":"Parolă","Paste":"Lipire","Phone":"Telefon","PleaseWait":"Aşteptaţi","Previous":"Anterior","PreviousView":"Vizualizarea anterioară","Print":"Imprimare","Queries":"Interogări","Redo":"Refacere","Refresh":"Reîmprospătare","Reject":"Respingere","RememberMe":"Memorare utilizator pe acest computer","Reports":"Rapoarte","Reset":"Resetare","Review":"Revizuire","RunFilter":"Executare filtru","RunJob":"Executare lucrare","Save":"Salvare","SaveBeforeClosing":"Salvare înainte de închidere","SavedFilters":"Salvare filtre","SaveSubmit":"Salvare/Trimitere","ScreenDesign":"Design ecran","Search":"Căutare","SelectContents":"Selectare conţinut","SelectDate":"Selectare dată","SelectDeselect":"Selectare/Deselectare toate","Selected":"Selectat: ","ServerName":"Nume server","Settings":"Setări","ShowFilterRow":"Afişare rând filtru","SignIn":"Conectare","SortAscending":"Sortare ascendentă","SortDescending":"Sortare descendentă","Spreadsheet":"Foaie de calcul","StartsWith":"Începe cu","StatusIndicator":"Indicator stare","Tasks":"Sarcini","Today":"Astăzi","Translate":"Traducere","UserID":"ID utilizator","Utilities":"Utilitare","Yes":"Da","Page":"Pagina","Rows":"Rânduri","ShowingAll":"Afişare toate","SessionNavigation":"Navigare sesisune","ListAllMenuItems":"Listare toate elementele de meniu","NoRecordsFound":"Nicio înregistrare găsită","SearchTree":"Arbore de căutare","Clear":"Golire","DrillDown":"Detaliere","Required":"Acest câmp este necesar","Available":"Disponibil:","Add":"Adăugare","MoveDown":"Mutare în jos","MoveUp":"Mutare în sus","Remove":"Eliminare","LastYear":"Anul trecut","NextMonth":"Luna următoare","NextWeek":"Săptămâna următoare","NextYear":"Anul următor","OneMonthAgo":"Acum o lună","OneWeekAgo":"Acum o săptămână","SixMonthsAgo":"Acum şase luni","Time":"Oră","CannotBeSelected":"Acest rând nu poate fi selectat.","ResetToDefault":"Resetare aspect implicit","CloseOtherTabs":"Închidere alte file","EmailValidation":"Introduceţi o adresă de e-mail validă","UrlValidation":"Introduceţi URL valid","EndofResults":"Sfârşit rezultate","More":"Mai multe...","RecordsPerPage":"Înregistrări pe pagină","Maximize":"Maximaliza","Minimize":"Minimaliza"}
 });
 
 }( this ));
@@ -39258,7 +38717,283 @@ Globalize.addCultureInfo( "ru-RU", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Дополнительная справка","AddNewTab":"Добавить новую вкладку","Alerts":"Оповещения","ApplyFilter":"Применить фильтр","Approve":"Утвердить","Attachments":"Вложения","Back":"Назад","Basic":"Обычное","Between":"Между","Book":"Книга","Cancel":"Отменить","Checked":"Отмечено","ClearFilter":"Очистить фильтр","Close":"Закрыть","CloseCancelChanges":"Закрыть и отменить изменения","CloseSaveChanges":"Закрыть и сохранить изменения","CloseTab":"Закрыть вкладку","ColumnPersonalization":"Персонализация столбца","Comments":"Комментарии","Confirmation":"Подтверждение","Contains":"Содержит","CreateTab":"Создать новую вкладку","Cut":"Вырезать","Delete":"Удалить","DiscardUndo":"Отменить/удалить","DisplayDropDownList":"Отобразить раскрывающийся список","Displaying":"Отображение: ","DocWord":"Документ","DoesNotContain":"Не содержит","DoesNotEndWith":"Не заканчивается на","DoesNotEqual":"Не равняется","DoesNotStartWith":"Не начинается с","Download":"Загрузить","Duplicate":"Дублировать","Edit":"Изменить","EitherSelectedorNotSelected":"Выбрано или не выбрано","Email":"Электронная почта","EndsWith":"Заканчивается на","EqualsStr":"Равняется","ExpandCollapse":"Развернуть/свернуть","ExportFailed":"Сбой экспорта","ExportToExcel":"Экспорт в Excel","FileInUse":"Указанный файл используется","FileInUseDetail":"Закройте файл в приложении, где он используется или укажите другое имя файла.","Filter":"Фильтр","FilterMenu":"Меню фильтра","FilterOptions":"Параметры фильтра","FilterWithinResults":"Фильтровать результаты","First":"Перв.","FirstView":"Первое представление","Folder":"Папка","ForgotPassword":"Забыли пароль?","Forward":"Вперед","GetMoreRows":"Больше строк","GreaterThan":"Больше чем","GreaterThanOrEquals":"Больше чем или равняется","GridSettings":"Настройки сетки","GroupSelection":"Выбор группы","Help":"Справка","HideColumn":"Скрыть столбец","IsEmpty":"Пусто","IsNotEmpty":"Не пусто","Last":"Последн.","LastView":"Последнее представление","LaunchActivate":"Запустить/активировать","LessThan":"Меньше чем","LessThanOrEquals":"Меньше чем или равняется","Links":"Ссылки","ListTabs":"Список всех вкладок","LoadingItem":"Загрузка элемента ","Maintenance":"Обслуживание","Menu":"Меню","New":"Создать","Next":"Далее","NextView":"Следующее представление","No":"Нет","NotChecked":"Не отмечено","Notes":"Примечания","NotSelected":"Не выбрано","Of":" из ","Ok":"OК","Open":"Открыть","Password":"Пароль","Paste":"Вставить","Phone":"Телефон","PleaseWait":"Подождите","Previous":"Назад","PreviousView":"Предыдущее представление","Print":"Печать","Queries":"Запросы","Redo":"Вернуть","Refresh":"Обновить","Reject":"Отклонить","RememberMe":"Запомнить меня на этом компьютере","Reports":"Отчеты","Reset":"Сбросить","Review":"Пересмотр","RunFilter":"Запустить фильтр","RunJob":"Запустить задание","Save":"Сохранить","SaveBeforeClosing":"Сохранить перед закрытием","SavedFilters":"Сохраненные фильтры","SaveSubmit":"Сохранить/отправить","ScreenDesign":"Дизайн экрана","Search":"Поиск","SelectContents":"Выделить содержимое","SelectDate":"Выбрать дату","SelectDeselect":"Выделить/очистить все","Selected":"Выбрано: ","ServerName":"Имя сервера","Settings":"Настройки","ShowFilterRow":"Показать фильтры строки","SignIn":"Войти","SortAscending":"Сортировать по возрастанию","SortDescending":"Сортировать по убыванию","Spreadsheet":"Электронная таблица","StartsWith":"Начинается с","StatusIndicator":"Индикатор статуса","Tasks":"Задачи","Today":"Сегодня","Translate":"Перевести","UserID":"Идентификатор пользователя","Utilities":"Служебные программы","Yes":"Да","Page":"Страница","Rows":"Строки","ShowingAll":"Показано все","SessionNavigation":"Навигация по сеансу","ListAllMenuItems":"Список всех элементов меню","NoRecordsFound":"Записей не найдено","SearchTree":"Поиск дерева","Clear":"Очистить","DrillDown":"Детализация","Required":"Данное поле является обязательным","Available":"Доступно:","Add":"Добавить","MoveDown":"Переместить вниз","MoveUp":"Переместить вверх","Remove":"Удалить","LastYear":"В прошлом году","NextMonth":"В следующем месяце","NextWeek":"На следующей неделе","NextYear":"В следующем году","OneMonthAgo":"Один месяц назад","OneWeekAgo":"Одну неделю назад","SixMonthsAgo":"Полгода назад","Time":"Время","CannotBeSelected":"Невозможно выбрать эту строку.","ResetToDefault":"Восстановить значения макета по умолчанию","CloseOtherTabs":"Закрыть другие вкладки","EmailValidation":"Введите допустимый адрес электронной почты","UrlValidation":"Введите допустимый URL-адрес","EndofResults":"Конец результатов","More":"Дополнительно...","RecordsPerPage":"Число записей на странице","Maximize":"Развернуть","Minimize":"Свернуть","CloseAllTabs":"Закрыть все вкладки","QuickDates":"Быстрые даты","Finish":"Готово","SetTextColor":"Задать цвет текста","AttachmentRules":"Правила для вложений","AutoRefresh":"Автоматическое обновление","BarChart":"Линейчатая диаграмма","CopyMail":"Копировать и отправить","CopyUrl":"Копировать URL-адрес","DistributeHorizontally":"Распределить по горизонтали","ExpandAll":"Развернуть все","Generate":"Создать","GenerateScript":"Создать сценарий","NoAttachments":"Нет вложений","PieChart":"Круговая диаграмма","QuickAccess":"Быстрый доступ","RestoreUser":"Восстановить пользователя","SaveConsolidate":"Сохранить с локальной консолидацией","Screen Design":"Дизайн экрана","SelectAll":"Выбрать все","SpellCheck":"Проверка орфографии","SubmitForApproval":"Отправить на утверждение","Timezone":"Часовой пояс","Loading":"Загрузка...","NewNode":"Создать узел","AboutText":"Авторские права © Infor, 2015. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев. www.infor.com.", "SelectMonthYear": "Выберите месяц и год"}
+	messages: {"AdditionalHelp":"Дополнительная справка","AddNewTab":"Добавить новую вкладку","Alerts":"Оповещения","ApplyFilter":"Применить фильтр","Approve":"Утвердить","Attachments":"Вложения","Back":"Назад","Basic":"Обычное","Between":"Между","Book":"Книга","Cancel":"Отменить","Checked":"Отмечено","ClearFilter":"Очистить фильтр","Close":"Закрыть","CloseCancelChanges":"Закрыть и отменить изменения","CloseSaveChanges":"Закрыть и сохранить изменения","CloseTab":"Закрыть вкладку","ColumnPersonalization":"Персонализация столбца","Comments":"Комментарии","Confirmation":"Подтверждение","Contains":"Содержит","CreateTab":"Создать новую вкладку","Cut":"Вырезать","Delete":"Удалить","DiscardUndo":"Отменить/удалить","DisplayDropDownList":"Отобразить раскрывающийся список","Displaying":"Отображение: ","DocWord":"Документ","DoesNotContain":"Не содержит","DoesNotEndWith":"Не заканчивается на","DoesNotEqual":"Не равняется","DoesNotStartWith":"Не начинается с","Download":"Загрузить","Duplicate":"Дублировать","Edit":"Изменить","EitherSelectedorNotSelected":"Выбрано или не выбрано","Email":"Электронная почта","EndsWith":"Заканчивается на","EqualsStr":"Равняется","ExpandCollapse":"Развернуть/свернуть","ExportFailed":"Сбой экспорта","ExportToExcel":"Экспорт в Excel","FileInUse":"Указанный файл используется","FileInUseDetail":"Закройте файл в приложении, где он используется или укажите другое имя файла.","Filter":"Фильтр","FilterMenu":"Меню фильтра","FilterOptions":"Параметры фильтра","FilterWithinResults":"Фильтровать результаты","First":"Перв.","FirstView":"Первое представление","Folder":"Папка","ForgotPassword":"Забыли пароль?","Forward":"Вперед","GetMoreRows":"Больше строк","GreaterThan":"Больше чем","GreaterThanOrEquals":"Больше чем или равняется","GridSettings":"Настройки сетки","GroupSelection":"Выбор группы","Help":"Справка","HideColumn":"Скрыть столбец","IsEmpty":"Пусто","IsNotEmpty":"Не пусто","Last":"Последн.","LastView":"Последнее представление","LaunchActivate":"Запустить/активировать","LessThan":"Меньше чем","LessThanOrEquals":"Меньше чем или равняется","Links":"Ссылки","ListTabs":"Список всех вкладок","LoadingItem":"Загрузка элемента ","Maintenance":"Обслуживание","Menu":"Меню","New":"Создать","Next":"Далее","NextView":"Следующее представление","No":"Нет","NotChecked":"Не отмечено","Notes":"Примечания","NotSelected":"Не выбрано","Of":" из ","Ok":"OК","Open":"Открыть","Password":"Пароль","Paste":"Вставить","Phone":"Телефон","PleaseWait":"Подождите","Previous":"Назад","PreviousView":"Предыдущее представление","Print":"Печать","Queries":"Запросы","Redo":"Вернуть","Refresh":"Обновить","Reject":"Отклонить","RememberMe":"Запомнить меня на этом компьютере","Reports":"Отчеты","Reset":"Сбросить","Review":"Пересмотр","RunFilter":"Запустить фильтр","RunJob":"Запустить задание","Save":"Сохранить","SaveBeforeClosing":"Сохранить перед закрытием","SavedFilters":"Сохраненные фильтры","SaveSubmit":"Сохранить/отправить","ScreenDesign":"Дизайн экрана","Search":"Поиск","SelectContents":"Выделить содержимое","SelectDate":"Выбрать дату","SelectDeselect":"Выделить/очистить все","Selected":"Выбрано: ","ServerName":"Имя сервера","Settings":"Настройки","ShowFilterRow":"Показать фильтры строки","SignIn":"Войти","SortAscending":"Сортировать по возрастанию","SortDescending":"Сортировать по убыванию","Spreadsheet":"Электронная таблица","StartsWith":"Начинается с","StatusIndicator":"Индикатор статуса","Tasks":"Задачи","Today":"Сегодня","Translate":"Перевести","UserID":"Идентификатор пользователя","Utilities":"Служебные программы","Yes":"Да","Page":"Страница","Rows":"Строки","ShowingAll":"Показано все","SessionNavigation":"Навигация по сеансу","ListAllMenuItems":"Список всех элементов меню","NoRecordsFound":"Записей не найдено","SearchTree":"Поиск дерева","Clear":"Очистить","DrillDown":"Детализация","Required":"Данное поле является обязательным","Available":"Доступно:","Add":"Добавить","MoveDown":"Переместить вниз","MoveUp":"Переместить вверх","Remove":"Удалить","LastYear":"В прошлом году","NextMonth":"В следующем месяце","NextWeek":"На следующей неделе","NextYear":"В следующем году","OneMonthAgo":"Один месяц назад","OneWeekAgo":"Одну неделю назад","SixMonthsAgo":"Полгода назад","Time":"Время","CannotBeSelected":"Невозможно выбрать эту строку.","ResetToDefault":"Восстановить значения макета по умолчанию","CloseOtherTabs":"Закрыть другие вкладки","EmailValidation":"Введите допустимый адрес электронной почты","UrlValidation":"Введите допустимый URL-адрес","EndofResults":"Конец результатов","More":"Дополнительно...","RecordsPerPage":"Число записей на странице","Maximize":"Развернуть","Minimize":"Свернуть","CloseAllTabs":"Закрыть все вкладки","QuickDates":"Быстрые даты","Finish":"Готово","SetTextColor":"Задать цвет текста","AttachmentRules":"Правила для вложений","AutoRefresh":"Автоматическое обновление","BarChart":"Линейчатая диаграмма","CopyMail":"Копировать и отправить","CopyUrl":"Копировать URL-адрес","DistributeHorizontally":"Распределить по горизонтали","ExpandAll":"Развернуть все","Generate":"Создать","GenerateScript":"Создать сценарий","NoAttachments":"Нет вложений","PieChart":"Круговая диаграмма","QuickAccess":"Быстрый доступ","RestoreUser":"Восстановить пользователя","SaveConsolidate":"Сохранить с локальной консолидацией","Screen Design":"Дизайн экрана","SelectAll":"Выбрать все","SpellCheck":"Проверка орфографии","SubmitForApproval":"Отправить на утверждение","Timezone":"Часовой пояс","Loading":"Загрузка...","NewNode":"Создать узел","AboutText":"Авторские права © Infor, 2014. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев. www.infor.com."}
+});
+
+}( this ));
+/*
+ * Globalize Culture sk-SK
+ *
+ * http://github.com/jquery/globalize
+ *
+ * Copyright Software Freedom Conservancy, Inc.
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * This file was generated by the Globalize Culture Generator
+ * Translation: bugs found in this file need to be fixed in the generator
+ */
+
+(function( window, undefined ) {
+
+var Globalize;
+
+if ( typeof require !== "undefined" &&
+	typeof exports !== "undefined" &&
+	typeof module !== "undefined" ) {
+	// Assume CommonJS
+	Globalize = require( "globalize" );
+} else {
+	// Global variable
+	Globalize = window.Globalize;
+}
+
+Globalize.addCultureInfo( "sk-SK", "default", {
+	name: "sk-SK",
+	englishName: "Slovak (Slovakia)",
+	nativeName: "slovenčina (Slovenská republika)",
+	language: "sk",
+	numberFormat: {
+		",": " ",
+		".": ",",
+		"NaN": "Nie je číslo",
+		negativeInfinity: "-nekonečno",
+		positiveInfinity: "+nekonečno",
+		percent: {
+			pattern: ["-n%","n%"],
+			",": " ",
+			".": ","
+		},
+		currency: {
+			pattern: ["-n $","n $"],
+			",": " ",
+			".": ",",
+			symbol: "€"
+		}
+	},
+	calendars: {
+		standard: {
+			"/": ". ",
+			firstDay: 1,
+			days: {
+				names: ["nedeľa","pondelok","utorok","streda","štvrtok","piatok","sobota"],
+				namesAbbr: ["ne","po","ut","st","št","pi","so"],
+				namesShort: ["ne","po","ut","st","št","pi","so"]
+			},
+			months: {
+				names: ["január","február","marec","apríl","máj","jún","júl","august","september","október","november","december",""],
+				namesAbbr: ["1","2","3","4","5","6","7","8","9","10","11","12",""]
+			},
+			monthsGenitive: {
+				names: ["januára","februára","marca","apríla","mája","júna","júla","augusta","septembra","októbra","novembra","decembra",""],
+				namesAbbr: ["1","2","3","4","5","6","7","8","9","10","11","12",""]
+			},
+			AM: null,
+			PM: null,
+			eras: [{"name":"n. l.","start":null,"offset":0}],
+			patterns: {
+				d: "d. M. yyyy",
+				D: "d. MMMM yyyy",
+				t: "H:mm",
+				T: "H:mm:ss",
+				f: "d. MMMM yyyy H:mm",
+				F: "d. MMMM yyyy H:mm:ss",
+				M: "dd MMMM",
+				Y: "MMMM yyyy"
+			}
+		}
+	},
+  messages: {
+    "AdditionalHelp": "Additional Help",
+    "AddNewTab": "Pridať novú kartu",
+    "Alerts": "Upozornenia",
+    "ApplyFilter": "Apply Filter",
+    "Approve": "Schváliť",
+    "Attachments": "Prílohy",
+    "Back": "Späť",
+    "Basic": "Základné",
+    "Between": "Medzi",
+    "Book": "Book",
+    "Cancel": "Zrušiť",
+    "Checked": "Začiarknuté",
+    "ClearFilter": "Vymazať filter",
+    "Close": "Zavrieť",
+    "CloseCancelChanges": "Close and Cancel Changes",
+    "CloseSaveChanges": "Close and Save Changes",
+    "CloseTab": "Close Tab",
+    "ColumnPersonalization": "Column Personalization",
+    "Comments": "Komentáre",
+    "Confirmation": "Potvrdenie",
+    "Contains": "Obsahuje",
+    "CreateTab": "Create a new Tab",
+    "Cut": "Vystrihnúť",
+    "Delete": "Odstrániť",
+    "DiscardUndo": "Discard/Undo",
+    "DisplayDropDownList": "Display Dropdown list",
+    "Displaying": "Displaying: ",
+    "DocWord": "Dokument",
+    "DoesNotContain": "Neobsahuje",
+    "DoesNotEndWith": "Nekončí sa na",
+    "DoesNotEqual": "Nerovná sa",
+    "DoesNotStartWith": "Nezačína sa na",
+    "Download": "Prevziať",
+    "Duplicate": "Duplikovať",
+    "Edit": "Upraviť",
+    "EitherSelectedorNotSelected": "Buď vybrané, alebo nevybrané",
+    "Email": "E-mail",
+    "EndsWith": "Končí sa na",
+    "EqualsStr": "Rovná sa",
+    "ExpandCollapse": "Expand/Collapse",
+    "ExportFailed": "Export Failed",
+    "ExportToExcel": "Exportovať do súboru programu Excel",
+    "FileInUse": "Specified File is In Use",
+    "FileInUseDetail": "Close the file in the application where it is in use or specify a different file name.",
+    "Filter": "Filter",
+    "FilterMenu": "Filter Menu",
+    "FilterOptions": "Filter Options",
+    "FilterWithinResults": "Filter Within Results",
+    "First": "Prvý",
+    "FirstView": "First View",
+    "Folder": "Priečinok",
+    "ForgotPassword": "Zabudli ste heslo?",
+    "Forward": "Dopredu",
+    "GetMoreRows": "Get More Rows",
+    "GreaterThan": "Väčšie ako",
+    "GreaterThanOrEquals": "Väčšie ako alebo rovná sa",
+    "GridSettings": "Grid Settings",
+    "GroupSelection": "Group Selection",
+    "Help": "Pomoc",
+    "HideColumn": "Hide Column",
+    "IsEmpty": "Je prázdne",
+    "IsNotEmpty": "Nie je prázdne",
+    "Last": "Posledný",
+    "LastView": "Last View",
+    "LaunchActivate": "Launch/Activate",
+    "LessThan": "Menej ako",
+    "LessThanOrEquals": "Menej ako alebo rovná sa",
+    "Links": "Prepojenia",
+    "ListTabs": "List all Tabs",
+    "LoadingItem": "Loading item ",
+    "Maintenance": "Maintenance",
+    "Menu": "Ponuka",
+    "New": "Nové",
+    "Next": "Ďalšie",
+    "NextView": "Ďalšie zobrazenie",
+    "No": "Nie",
+    "NotChecked": "Not Checked",
+    "Notes": "Poznámky",
+    "NotSelected": "Nevybrané",
+    "Of": " z ",
+    "Ok": "OK",
+    "Open": "Otvoriť",
+    "Password": "Heslo",
+    "Paste": "Prilepiť",
+    "Phone": "Phone",
+    "PleaseWait": "Počkajte, prosím",
+    "Previous": "Predchádzajúce",
+    "PreviousView": "Predchádzajúce zobrazenie",
+    "Print": "Tlačiť",
+    "Queries": "Queries",
+    "Redo": "Znova",
+    "Refresh": "Obnoviť",
+    "Reject": "Odmietnuť",
+    "RememberMe": "Remember me on this computer",
+    "Reports": "Správy",
+    "Reset": "Obnoviť",
+    "Review": "Skontrolovať",
+    "RunFilter": "Spustiť filter",
+    "RunJob": "Spustiť pracovnú úlohu",
+    "Save": "Uložiť",
+    "SaveBeforeClosing": "Save Before Closing",
+    "SavedFilters": "Saved Filters",
+    "SaveSubmit": "Save/Submit",
+    "ScreenDesign": "Screen Design",
+    "Search": "Vyhľadať",
+    "SelectContents": "Select Contents",
+    "SelectDate": "Vyberte dátum",
+    "SelectDeselect": "Select / Deselect All",
+    "Selected": "Vybraté: ",
+    "ServerName": "Názov serveru",
+    "Settings": "Nastavenia",
+    "ShowFilterRow": "Zobraziť riadok filtra",
+    "SignIn": "Prihlásiť sa",
+    "SortAscending": "Zoradiť vzostupne",
+    "SortDescending": "Zoradiť zostupne",
+    "Spreadsheet": "Spreadsheet",
+    "StartsWith": "Začína sa na",
+    "StatusIndicator": "Status Indicator",
+    "Tasks": "Úlohy",
+    "Today": "Dnes",
+    "Translate": "Preložiť",
+    "UserID": "ID používateľa",
+    "Utilities": "Pomôcky",
+    "Yes": "Áno",
+    "Page": "Stránka",
+    "Rows": "Riadky",
+    "ShowingAll": "Showing All",
+    "SessionNavigation": "Session Navigation",
+    "ListAllMenuItems": "List All Menu Items",
+    "NoRecordsFound": "Nenašli sa žiadne záznamy",
+    "SearchTree": "Search Tree",
+    "Clear": "Vymazať",
+    "DrillDown": "Prejsť na detaily",
+    "Required": "Požadované",
+    "RequiredField": "Toto pole je povinné",
+    "Available": "Dostupné:",
+    "Add": "Pridať",
+    "MoveDown": "Posunúť nadol",
+    "MoveUp": "Posunúť nahor",
+    "Remove": "Odstrániť",
+    "LastYear": "Last Year",
+    "NextMonth": "Ďalší mesiac",
+    "NextWeek": "Next Week",
+    "NextYear": "Next Year",
+    "OneMonthAgo": "One Month Ago",
+    "OneWeekAgo": "One Week Ago",
+    "SixMonthsAgo": "Six Months Ago",
+    "Time": "Čas",
+    "CannotBeSelected": "This row cannot be selected.",
+    "ResetToDefault": "Reset to Default Layout",
+    "CloseOtherTabs": "Zavrieť iné karty",
+    "EmailValidation": "Enter a valid e-mail address",
+    "UrlValidation": "Zadajte platnú adresu URL",
+    "EndofResults": "End of Results",
+    "More": "Viac...",
+    "RecordsPerPage": "Počet záznamov na stranu",
+    "Maximize": "Maximalizovať",
+    "Minimize": "Minimalizovať",
+    "CloseAllTabs": "Zavrieť všetky karty",
+    "QuickDates": "Quick Dates",
+    "Finish": "Dokončiť",
+    "SetTextColor": "Set text color",
+    "AttachmentRules": "Attachment Rules",
+    "AutoRefresh": "Auto Refresh",
+    "BarChart": "Stĺpcový graf",
+    "CopyMail": "Copy and Mail",
+    "CopyUrl": "Copy Url",
+    "DistributeHorizontally": "Prerozdeliť vodorovne",
+    "ExpandAll": "Rozbaliť všetky",
+    "Generate": "Generovať",
+    "GenerateScript": "Generate Script",
+    "NoAttachments": "Žiadne prílohy.",
+    "PieChart": "Koláčový graf",
+    "QuickAccess": "Quick Access",
+    "RestoreUser": "Restore User",
+    "SaveConsolidate": "Save with local Consolidation",
+    "Screen Design": "ScreenDesign",
+    "SelectAll": "Vybrať všetky",
+    "SpellCheck": "Kontrola pravopisu",
+    "SubmitForApproval": "Submit For Approval",
+    "Timezone": "Časové pásmo",
+    "Loading": "Načítava sa...",
+    "NewNode": "New Node",
+    "SelectMonthYear": "Select Month and Year",
+    "AboutText": "Copyright © 2014 Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners. www.infor.com.\n    ",
+    "Browser": "Prehliadač\n    ",
+    "OS": "OS\n    ",
+    "Language": "en-US\n    ",
+    "CookiesEnabled": "Súbory cookie sú povolené\n    "
+  }
 });
 
 }( this ));
@@ -39338,7 +39073,7 @@ Globalize.addCultureInfo( "sl-SI", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Dodatna pomoč","AddNewTab":"Dodaj nov zavihek","Alerts":"Opozorila","ApplyFilter":"Uporabi filter","Approve":"Odobri","Attachments":"Priloge","Back":"Nazaj","Basic":"Osnovno","Between":"Med","Book":"Knjiga","Cancel":"Prekliči","Checked":"Potrjeno","ClearFilter":"Počisti filter","Close":"Zapri","CloseCancelChanges":"Zapri in prekliči spremembe","CloseSaveChanges":"Zapri in shrani spremembe","CloseTab":"Zapri zavihek","ColumnPersonalization":"Prilagajanje stolpca","Comments":"Komentarji","Confirmation":"Potrditev","Contains":"Vsebuje","CreateTab":"Ustvari nov zavihek","Cut":"Izreži","Delete":"Izbriši","DiscardUndo":"Zavrzi/razveljavi","DisplayDropDownList":"Prikaži spustni seznam","Displaying":"Prikazovanje: ","DocWord":"Dokument","DoesNotContain":"Ne vsebuje","DoesNotEndWith":"Se ne konča z","DoesNotEqual":"Ni enako","DoesNotStartWith":"Se ne začne z","Download":"Prenesi","Duplicate":"Podvoji","Edit":"Uredi","EitherSelectedorNotSelected":"Izbrano ali ni izbrano","Email":"E-pošta","EndsWith":"Se konča z","EqualsStr":"Je enako","ExpandCollapse":"Razširi/strni","ExportFailed":"Izvoz ni uspel","ExportToExcel":"Izvozi v Excel","FileInUse":"Navedena datoteka je v uporabi","FileInUseDetail":"Zaprite datoteko v aplikaciji, v kateri se uporablja, ali navedite drugo ime datoteke.","Filter":"Filter","FilterMenu":"Meni filtra","FilterOptions":"Možnosti filtra","FilterWithinResults":"Filter v rezultatih","First":"Prvi","FirstView":"Prvi pogled","Folder":"Mapa","ForgotPassword":"Ste pozabili svoje geslo?","Forward":"Posreduj","GetMoreRows":"Pridobi več vrstic","GreaterThan":"Večji od","GreaterThanOrEquals":"Večji od ali enak","GridSettings":"Nastavitve mreže","GroupSelection":"Izbira skupine","Help":"Pomoč","HideColumn":"Skrij stolpec","IsEmpty":"Je prazen","IsNotEmpty":"Ni prazen","Last":"Zadnji","LastView":"Zadnji pogled","LaunchActivate":"Zaženi/aktiviraj","LessThan":"Manjši od","LessThanOrEquals":"Manjši od ali enak","Links":"Povezave","ListTabs":"Navedi vse zavihke","LoadingItem":"Nalaganje elementa ","Maintenance":"Vzdrževanje","Menu":"Meni","New":"Novo","Next":"Naprej","NextView":"Naslednji pogled","No":"Ne","NotChecked":"Ni potrjeno","Notes":"Opombe","NotSelected":"Ni izbrano","Of":" od ","Ok":"V redu","Open":"Odpri","Password":"Geslo","Paste":"Prilepi","Phone":"Telefon","PleaseWait":"Prosimo, počakajte","Previous":"Prejšnji","PreviousView":"Prejšnji pogled","Print":"Natisni","Queries":"Poizvedbe","Redo":"Uveljavi","Refresh":"Osveži","Reject":"Zavrni","RememberMe":"Zapomni si me v tem računalniku","Reports":"Poročila","Reset":"Ponastavi","Review":"Preglej","RunFilter":"Zaženi filter","RunJob":"Zaženi posel","Save":"Shrani","SaveBeforeClosing":"Shrani pred zapiranjem","SavedFilters":"Shranjeni filtri","SaveSubmit":"Shrani/predloži","ScreenDesign":"Načrt zaslona","Search":"Išči","SelectContents":"Izberi vsebine","SelectDate":"Izberi datum","SelectDeselect":"Izberi vse/počisti vse","Selected":"Izbrano: ","ServerName":"Ime strežnika","Settings":"Nastavitve","ShowFilterRow":"Prikaži vrstico filtra","SignIn":"Vpis","SortAscending":"Razvrsti naraščajoče","SortDescending":"Razvrsti padajoče","Spreadsheet":"Preglednica","StartsWith":"Začne se z","StatusIndicator":"Indikator stanja","Tasks":"Opravila","Today":"Danes","Translate":"Prevedi","UserID":"ID uporabnika","Utilities":"Pripomočki","Yes":"Da","Page":"Stran","Rows":"Vrstice","ShowingAll":"Prikazuje vse","SessionNavigation":"Krmarjenje po seji","ListAllMenuItems":"Navedi vse menijske elemente","NoRecordsFound":"Noben zapis ni bil najden","SearchTree":"Iskalno drevo","Clear":"Počisti","DrillDown":"Prikaži na ravni z več podrobnostmi","Required":"To polje je zahtevano","Available":"Na voljo:","Add":"Dodaj","MoveDown":"Premakni navzdol","MoveUp":"Premakni navzgor","Remove":"Odstrani","LastYear":"Prejšnje leto","NextMonth":"Naslednji mesec","NextWeek":"Naslednji teden","NextYear":"Naslednje leto","OneMonthAgo":"Pred enim mesecem","OneWeekAgo":"Pred enim tednom","SixMonthsAgo":"Pred šestimi meseci","Time":"Čas","CannotBeSelected":"Te vrstice ni mogoče izbrati.","ResetToDefault":"Ponastavi na privzeto postavitev","CloseOtherTabs":"Zapri druge zavihke","EmailValidation":"Vnesi veljaven e-poštni naslov","UrlValidation":"Vnesi veljaven URL","EndofResults":"Konec rezultatov","More":"Več ...","RecordsPerPage":"Zapisov na stran","Maximize":"Povečajte","Minimize":"Minimiranje"}
+	messages: {"SelectAll":"Izberi vse", "AdditionalHelp":"Dodatna pomoč","AddNewTab":"Dodaj nov zavihek","Alerts":"Opozorila","ApplyFilter":"Uporabi filter","Approve":"Odobri","Attachments":"Priloge","Back":"Nazaj","Basic":"Osnovno","Between":"Med","Book":"Knjiga","Cancel":"Prekliči","Checked":"Potrjeno","ClearFilter":"Počisti filter","Close":"Zapri","CloseCancelChanges":"Zapri in prekliči spremembe","CloseSaveChanges":"Zapri in shrani spremembe","CloseTab":"Zapri zavihek","ColumnPersonalization":"Prilagajanje stolpca","Comments":"Komentarji","Confirmation":"Potrditev","Contains":"Vsebuje","CreateTab":"Ustvari nov zavihek","Cut":"Izreži","Delete":"Izbriši","DiscardUndo":"Zavrzi/razveljavi","DisplayDropDownList":"Prikaži spustni seznam","Displaying":"Prikazovanje: ","DocWord":"Dokument","DoesNotContain":"Ne vsebuje","DoesNotEndWith":"Se ne konča z","DoesNotEqual":"Ni enako","DoesNotStartWith":"Se ne začne z","Download":"Prenesi","Duplicate":"Podvoji","Edit":"Uredi","EitherSelectedorNotSelected":"Izbrano ali ni izbrano","Email":"E-pošta","EndsWith":"Se konča z","EqualsStr":"Je enako","ExpandCollapse":"Razširi/strni","ExportFailed":"Izvoz ni uspel","ExportToExcel":"Izvozi v Excel","FileInUse":"Navedena datoteka je v uporabi","FileInUseDetail":"Zaprite datoteko v aplikaciji, v kateri se uporablja, ali navedite drugo ime datoteke.","Filter":"Filter","FilterMenu":"Meni filtra","FilterOptions":"Možnosti filtra","FilterWithinResults":"Filter v rezultatih","First":"Prvi","FirstView":"Prvi pogled","Folder":"Mapa","ForgotPassword":"Ste pozabili svoje geslo?","Forward":"Posreduj","GetMoreRows":"Pridobi več vrstic","GreaterThan":"Večji od","GreaterThanOrEquals":"Večji od ali enak","GridSettings":"Nastavitve mreže","GroupSelection":"Izbira skupine","Help":"Pomoč","HideColumn":"Skrij stolpec","IsEmpty":"Je prazen","IsNotEmpty":"Ni prazen","Last":"Zadnji","LastView":"Zadnji pogled","LaunchActivate":"Zaženi/aktiviraj","LessThan":"Manjši od","LessThanOrEquals":"Manjši od ali enak","Links":"Povezave","ListTabs":"Navedi vse zavihke","LoadingItem":"Nalaganje elementa ","Maintenance":"Vzdrževanje","Menu":"Meni","New":"Novo","Next":"Naprej","NextView":"Naslednji pogled","No":"Ne","NotChecked":"Ni potrjeno","Notes":"Opombe","NotSelected":"Ni izbrano","Of":" od ","Ok":"V redu","Open":"Odpri","Password":"Geslo","Paste":"Prilepi","Phone":"Telefon","PleaseWait":"Prosimo, počakajte","Previous":"Prejšnji","PreviousView":"Prejšnji pogled","Print":"Natisni","Queries":"Poizvedbe","Redo":"Uveljavi","Refresh":"Osveži","Reject":"Zavrni","RememberMe":"Zapomni si me v tem računalniku","Reports":"Poročila","Reset":"Ponastavi","Review":"Preglej","RunFilter":"Zaženi filter","RunJob":"Zaženi posel","Save":"Shrani","SaveBeforeClosing":"Shrani pred zapiranjem","SavedFilters":"Shranjeni filtri","SaveSubmit":"Shrani/predloži","ScreenDesign":"Načrt zaslona","Search":"Išči","SelectContents":"Izberi vsebine","SelectDate":"Izberi datum","SelectDeselect":"Izberi vse/počisti vse","Selected":"Izbrano: ","ServerName":"Ime strežnika","Settings":"Nastavitve","ShowFilterRow":"Prikaži vrstico filtra","SignIn":"Vpis","SortAscending":"Razvrsti naraščajoče","SortDescending":"Razvrsti padajoče","Spreadsheet":"Preglednica","StartsWith":"Začne se z","StatusIndicator":"Indikator stanja","Tasks":"Opravila","Today":"Danes","Translate":"Prevedi","UserID":"ID uporabnika","Utilities":"Pripomočki","Yes":"Da","Page":"Stran","Rows":"Vrstice","ShowingAll":"Prikazuje vse","SessionNavigation":"Krmarjenje po seji","ListAllMenuItems":"Navedi vse menijske elemente","NoRecordsFound":"Noben zapis ni bil najden","SearchTree":"Iskalno drevo","Clear":"Počisti","DrillDown":"Prikaži na ravni z več podrobnostmi","Required":"To polje je zahtevano","Available":"Na voljo:","Add":"Dodaj","MoveDown":"Premakni navzdol","MoveUp":"Premakni navzgor","Remove":"Odstrani","LastYear":"Prejšnje leto","NextMonth":"Naslednji mesec","NextWeek":"Naslednji teden","NextYear":"Naslednje leto","OneMonthAgo":"Pred enim mesecem","OneWeekAgo":"Pred enim tednom","SixMonthsAgo":"Pred šestimi meseci","Time":"Čas","CannotBeSelected":"Te vrstice ni mogoče izbrati.","ResetToDefault":"Ponastavi na privzeto postavitev","CloseOtherTabs":"Zapri druge zavihke","EmailValidation":"Vnesi veljaven e-poštni naslov","UrlValidation":"Vnesi veljaven URL","EndofResults":"Konec rezultatov","More":"Več ...","RecordsPerPage":"Zapisov na stran","Maximize":"Povečajte","Minimize":"Minimiranje"}
 });
 
 }( this ));
@@ -39498,7 +39233,7 @@ Globalize.addCultureInfo( "sv-SE", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Ytterligare hjälp","AddNewTab":"Lägg till ny flik","Alerts":"Aviseringar","ApplyFilter":"Använd filter","Approve":"Godkänn","Attachments":"Bilagor","Back":"Tillbaka","Basic":"Grundläggande","Between":"Mellan","Book":"Bok","Cancel":"Avbryt","Checked":"Kontrollerade","ClearFilter":"Rensa filter","Close":"Stäng","CloseCancelChanges":"Stäng och avbryt ändringar","CloseSaveChanges":"Stäng och spara ändringar","CloseTab":"Stäng flik","ColumnPersonalization":"Kolumnanpassning","Comments":"Kommentarer","Confirmation":"Bekräftelse","Contains":"Innehåller","CreateTab":"Skapa en ny flik","Cut":"Klipp ut","Delete":"Radera","DiscardUndo":"Kasta/ångra","DisplayDropDownList":"Visa listruta","Displaying":"Visar: ","DocWord":"Dokument","DoesNotContain":"Innehåller inte","DoesNotEndWith":"Slutar inte med","DoesNotEqual":"Är inte lika med","DoesNotStartWith":"Börjar inte med","Download":"Hämta","Duplicate":"Duplicera","Edit":"Redigera","EitherSelectedorNotSelected":"Antingen markerad eller inte","Email":"E-post","EndsWith":"Slutar med","EqualsStr":"Lika med","ExpandCollapse":"Visa/dölj","ExportFailed":"Exporten misslyckades","ExportToExcel":"Exportera till Excel","FileInUse":"Angiven fil används","FileInUseDetail":"Stäng filen i programmet där den används eller byt namn på den.","Filter":"Filter","FilterMenu":"Filtermeny","FilterOptions":"Filteralternativ","FilterWithinResults":"Filtrera resultatet","First":"Första","FirstView":"Första vyn","Folder":"Mapp","ForgotPassword":"Glömt lösenordet?","Forward":"Framåt","GetMoreRows":"Visa fler rader","GreaterThan":"Större än","GreaterThanOrEquals":"Större än eller lika med","GridSettings":"Rutnätsinställningar","GroupSelection":"Gruppval","Help":"Hjälp","HideColumn":"Dölj kolumn","IsEmpty":"Är tom","IsNotEmpty":"Är inte tom","Last":"Sista","LastView":"Sista vyn","LaunchActivate":"Starta/aktivera","LessThan":"Mindre än","LessThanOrEquals":"Mindre än eller lika med","Links":"Länkar","ListTabs":"Visa alla flikar","LoadingItem":"Läser in artikel ","Maintenance":"Underhåll","Menu":"Meny","New":"Nytt","Next":"Nästa","NextView":"Nästa vy","No":"Nej","NotChecked":"Inte kontrollerade","Notes":"Anteckningar","NotSelected":"Ej vald","Of":" av ","Ok":"OK","Open":"Öppna","Password":"Lösenord","Paste":"Klistra in","Phone":"Telefon","PleaseWait":"Vänta","Previous":"Föregående","PreviousView":"Föregående vy","Print":"Skriv ut","Queries":"Frågor","Redo":"Gör om","Refresh":"Uppdatera","Reject":"Avvisa","RememberMe":"Kom ihåg mig på den här datorn","Reports":"Rapporter","Reset":"Återställ","Review":"Granska","RunFilter":"Kör filter","RunJob":"Kör jobb","Save":"Spara","SaveBeforeClosing":"Spara innan stängning","SavedFilters":"Sparade filter","SaveSubmit":"Spara/skicka","ScreenDesign":"Skärmbildsdesign","Search":"Sök","SelectContents":"Välj innehåll","SelectDate":"Välj ett datum","SelectDeselect":"Markera/avmarkera allt","Selected":"Markerade: ","ServerName":"Servernamn","Settings":"Inställningar","ShowFilterRow":"Visa filterrad","SignIn":"Logga in","SortAscending":"Sortera stigande","SortDescending":"Sortera fallande","Spreadsheet":"Kalkylblad","StartsWith":"Börjar med","StatusIndicator":"Statusindikator","Tasks":"Uppgifter","Today":"Idag","Translate":"Översätt","UserID":"Användar-ID","Utilities":"Verktyg","Yes":"Ja","Page":"Sida","Rows":"Rader","ShowingAll":"Visa alla","SessionNavigation":"Sessionsnavigering","ListAllMenuItems":"Visa alla menyposter","NoRecordsFound":"Inga poster hittades","SearchTree":"Sök i träd","Clear":"Rensa","DrillDown":"Bryt ned","Required":"Fältet är obligatoriskt","Available":"Tillgängligt:","Add":"Lägg till","MoveDown":"Flytta ned","MoveUp":"Flytta upp","Remove":"Ta bort","LastYear":"Senaste året","NextMonth":"Nästa månad","NextWeek":"Nästa vecka","NextYear":"Nästa år","OneMonthAgo":"En månad sedan","OneWeekAgo":"En vecka sedan","SixMonthsAgo":"Sex månader sedan","Time":"Klockslag","CannotBeSelected":"Den här raden kan inte väljas.","ResetToDefault":"Återställ till standardlayouten","CloseOtherTabs":"Stäng andra flikar","EmailValidation":"Ange en giltig e-postadress","UrlValidation":"Ange en giltig URL","EndofResults":"Slut på resultaten","More":"Fler ...","RecordsPerPage":"Poster per sida","Maximize":"Maximera","Minimize":"Minimera","CloseAllTabs":"Stäng alla flikar","QuickDates":"Snabbdatum","Finish":"Slutför","SetTextColor":"Välj textfärg","AttachmentRules":"Kriterier för bilaga","AutoRefresh":"Automatisk uppdatering","BarChart":"Stapeldiagram","CopyMail":"Kopiera och skicka e-post","CopyUrl":"Kopiera URL","DistributeHorizontally":"Fördela horisontellt","ExpandAll":"Expandera alla","Generate":"Generera","GenerateScript":"Generera skript","NoAttachments":"Inga bilagor","PieChart":"Cirkeldiagram","QuickAccess":"Snabb åtkomst","RestoreUser":"Återställ användare","SaveConsolidate":"Spara med lokal konsolidering","Screen Design":"Skärmdesign","SelectAll":"Markera alla","SpellCheck":"Stavningskontroll","SubmitForApproval":"Skicka för godkännande","Timezone":"Tidszon","Loading":"Läser in ...","NewNode":"Ny nod","AboutText":"Copyright © 2015 Infor. Med ensamrätt. Ord- och figurmärken i den här publikationen är varumärken och/eller registrerade varumärken som tillhör Infor och/eller dess dotterbolag. Med ensamrätt. Alla andra varumärken i den här publikationen tillhör respektive ägare. www.infor.com."}
+	messages: {"AdditionalHelp":"Ytterligare hjälp","AddNewTab":"Lägg till ny flik","Alerts":"Aviseringar","ApplyFilter":"Använd filter","Approve":"Godkänn","Attachments":"Bilagor","Back":"Tillbaka","Basic":"Grundläggande","Between":"Mellan","Book":"Bok","Cancel":"Avbryt","Checked":"Kontrollerade","ClearFilter":"Rensa filter","Close":"Stäng","CloseCancelChanges":"Stäng och avbryt ändringar","CloseSaveChanges":"Stäng och spara ändringar","CloseTab":"Stäng flik","ColumnPersonalization":"Kolumnanpassning","Comments":"Kommentarer","Confirmation":"Bekräftelse","Contains":"Innehåller","CreateTab":"Skapa en ny flik","Cut":"Klipp ut","Delete":"Radera","DiscardUndo":"Kasta/ångra","DisplayDropDownList":"Visa listruta","Displaying":"Visar: ","DocWord":"Dokument","DoesNotContain":"Innehåller inte","DoesNotEndWith":"Slutar inte med","DoesNotEqual":"Är inte lika med","DoesNotStartWith":"Börjar inte med","Download":"Hämta","Duplicate":"Duplicera","Edit":"Redigera","EitherSelectedorNotSelected":"Antingen markerad eller inte","Email":"E-post","EndsWith":"Slutar med","EqualsStr":"Lika med","ExpandCollapse":"Visa/dölj","ExportFailed":"Exporten misslyckades","ExportToExcel":"Exportera till Excel","FileInUse":"Angiven fil används","FileInUseDetail":"Stäng filen i programmet där den används eller byt namn på den.","Filter":"Filter","FilterMenu":"Filtermeny","FilterOptions":"Filteralternativ","FilterWithinResults":"Filtrera resultatet","First":"Första","FirstView":"Första vyn","Folder":"Mapp","ForgotPassword":"Glömt lösenordet?","Forward":"Framåt","GetMoreRows":"Visa fler rader","GreaterThan":"Större än","GreaterThanOrEquals":"Större än eller lika med","GridSettings":"Rutnätsinställningar","GroupSelection":"Gruppval","Help":"Hjälp","HideColumn":"Dölj kolumn","IsEmpty":"Är tom","IsNotEmpty":"Är inte tom","Last":"Sista","LastView":"Sista vyn","LaunchActivate":"Starta/aktivera","LessThan":"Mindre än","LessThanOrEquals":"Mindre än eller lika med","Links":"Länkar","ListTabs":"Visa alla flikar","LoadingItem":"Läser in artikel ","Maintenance":"Underhåll","Menu":"Meny","New":"Nytt","Next":"Nästa","NextView":"Nästa vy","No":"Nej","NotChecked":"Inte kontrollerade","Notes":"Anteckningar","NotSelected":"Ej vald","Of":" av ","Ok":"OK","Open":"Öppna","Password":"Lösenord","Paste":"Klistra in","Phone":"Telefon","PleaseWait":"Vänta","Previous":"Föregående","PreviousView":"Föregående vy","Print":"Skriv ut","Queries":"Frågor","Redo":"Gör om","Refresh":"Uppdatera","Reject":"Avvisa","RememberMe":"Kom ihåg mig på den här datorn","Reports":"Rapporter","Reset":"Återställ","Review":"Granska","RunFilter":"Kör filter","RunJob":"Kör jobb","Save":"Spara","SaveBeforeClosing":"Spara innan stängning","SavedFilters":"Sparade filter","SaveSubmit":"Spara/skicka","ScreenDesign":"Skärmbildsdesign","Search":"Sök","SelectContents":"Välj innehåll","SelectDate":"Välj ett datum","SelectDeselect":"Markera/avmarkera allt","Selected":"Markerade: ","ServerName":"Servernamn","Settings":"Inställningar","ShowFilterRow":"Visa filterrad","SignIn":"Logga in","SortAscending":"Sortera stigande","SortDescending":"Sortera fallande","Spreadsheet":"Kalkylblad","StartsWith":"Börjar med","StatusIndicator":"Statusindikator","Tasks":"Uppgifter","Today":"Idag","Translate":"Översätt","UserID":"Användar-ID","Utilities":"Verktyg","Yes":"Ja","Page":"Sida","Rows":"Rader","ShowingAll":"Visa alla","SessionNavigation":"Sessionsnavigering","ListAllMenuItems":"Visa alla menyposter","NoRecordsFound":"Inga poster hittades","SearchTree":"Sök i träd","Clear":"Rensa","DrillDown":"Bryt ned","Required":"Fältet är obligatoriskt","Available":"Tillgängligt:","Add":"Lägg till","MoveDown":"Flytta ned","MoveUp":"Flytta upp","Remove":"Ta bort","LastYear":"Senaste året","NextMonth":"Nästa månad","NextWeek":"Nästa vecka","NextYear":"Nästa år","OneMonthAgo":"En månad sedan","OneWeekAgo":"En vecka sedan","SixMonthsAgo":"Sex månader sedan","Time":"Klockslag","CannotBeSelected":"Den här raden kan inte väljas.","ResetToDefault":"Återställ till standardlayouten","CloseOtherTabs":"Stäng andra flikar","EmailValidation":"Ange en giltig e-postadress","UrlValidation":"Ange en giltig URL","EndofResults":"Slut på resultaten","More":"Mer ...","RecordsPerPage":"Poster per sida","Maximize":"Maximera","Minimize":"Minimera","CloseAllTabs":"Stäng alla flikar","QuickDates":"Snabbdatum","Finish":"Slutför","SetTextColor":"Välj textfärg","AttachmentRules":"Kriterier för bilaga","AutoRefresh":"Automatisk uppdatering","BarChart":"Stapeldiagram","CopyMail":"Kopiera och skicka e-post","CopyUrl":"Kopiera URL","DistributeHorizontally":"Fördela horisontellt","ExpandAll":"Expandera alla","Generate":"Generera","GenerateScript":"Generera skript","NoAttachments":"Inga bilagor","PieChart":"Cirkeldiagram","QuickAccess":"Snabb åtkomst","RestoreUser":"Återställ användare","SaveConsolidate":"Spara med lokal konsolidering","Screen Design":"Skärmdesign","SelectAll":"Markera alla","SpellCheck":"Stavningskontroll","SubmitForApproval":"Skicka för godkännande","Timezone":"Tidszon","Loading":"Läser in ...","NewNode":"Ny nod","AboutText":"Copyright © 2014 Infor. Med ensamrätt. Ord- och figurmärken i den här publikationen är varumärken och/eller registrerade varumärken som tillhör Infor och/eller dess dotterbolag. Med ensamrätt. Alla andra varumärken i den här publikationen tillhör respektive ägare. www.infor.com."}
 });
 
 }( this ));
@@ -39589,7 +39324,7 @@ Globalize.addCultureInfo( "th-TH", "default", {
 			}
 		}
 	},
-  messages: {"AdditionalHelp":"ช่วยเหลือเพิ่มเติม","AddNewTab":"เพิ่มแท็บใหม่","Alerts":"แจ้งเตือน","ApplyFilter":"ใช้ตัวกรอง","Approve":"อนุมัติ","Attachments":"เอกสารแนบ","Back":"ย้อนกลับ","Basic":"พื้นฐาน","Between":"ระหว่าง","Book":"จอง","Cancel":"ยกเลิก","Checked":"ตรวจสอบแล้ว","ClearFilter":"ยกเลิกตัวกรอง","Close":"ปิด","CloseCancelChanges":"ปิดและยกเลิกการเปลี่ยนแปลง","CloseSaveChanges":"ปิดและบันทึกการเปลี่ยนแปลง","CloseTab":"ปิดแท็บ","ColumnPersonalization":"กำหนดค่าคอลัมน์เอง","Comments":"ความคิดเห็น","Confirmation":"การยืนยัน","Contains":"มี","CreateTab":"สร้างแท็บใหม่","Cut":"ตัด","Delete":"ลบ","DiscardUndo":"ยกเลิก/เลิกทำ","DisplayDropDownList":"แสดงรายการเลือกแบบเลื่อนลง","Displaying":"กำลังแสดง: ","DocWord":"เอกสาร","DoesNotContain":"ไม่มี","DoesNotEndWith":"ไม่จบลงด้วย","DoesNotEqual":"ไม่เท่ากับ","DoesNotStartWith":"ไม่เริ่มต้นด้วย","Download":"ดาวน์โหลด","Duplicate":"ซ้ำ","Edit":"แก้ไข","EitherSelectedorNotSelected":"ไม่ว่าจะเลือกหรือไม่เลือก","Email":"อีเมล","EndsWith":"จบด้วย","EqualsStr":"เท่ากับ","ExpandCollapse":"ขยาย/หด","ExportFailed":"ส่งออกล้มเหลว","ExportToExcel":"ส่งออกไปยัง Excel","FileInUse":"ไฟล์ที่ระบุกำลังใช้อยู่","FileInUseDetail":"ปิดไฟล์ในแอพพลิเคชั่นที่กำลังใช้อยู่ หรือระบุชื่อไฟล์ที่แตกต่างออกไป","Filter":"ตัวกรอง","FilterMenu":"เมนูตัวกรอง","FilterOptions":"ตัวเลือกตัวกรอง","FilterWithinResults":"ตัวกรองภายในผลลัพธ์","First":"ครั้งแรก","FirstView":"มุมมองครั้งแรก","Folder":"โฟลเดอร์","ForgotPassword":"ลืมรหัสผ่านของคุณหรือ","Forward":"ไปข้างหน้า","GetMoreRows":"เพิ่มแถวมากขึ้น","GreaterThan":"มากกว่า","GreaterThanOrEquals":"มากกว่าหรือเท่ากับ","GridSettings":"การตั้งค่ากริด","GroupSelection":"การเลือกกลุ่ม","Help":"วิธีใช้","HideColumn":"ซ่อนคอลัมน์","IsEmpty":"ว่าง","IsNotEmpty":"ไม่ว่าง","Last":"ครั้งสุดท้าย","LastView":"มุมองครั้งสุดท้าย","LaunchActivate":"เริ่ม/เปิดใช้งาน","LessThan":"น้อยกว่า","LessThanOrEquals":"น้อยกว่าหรือเท่ากับ","Links":"ลิงค์","ListTabs":"รายชื่อแท็บทั้งหมด","LoadingItem":"กำลังโหลดไอเท็ม ","Maintenance":"ซ่อมบำรุง","Menu":"เมนู","New":"ใหม่","Next":"ต่อไป","NextView":"มุมมองต่อไป","No":"ไม่","NotChecked":"ไม่ได้ตรวจสอบ","Notes":"หมายเหตุ","NotSelected":"ไม่ได้เลือก","Of":" ของ ","Ok":"ตกลง","Open":"เปิด","Password":"รหัสผ่าน","Paste":"วาง","Phone":"โทรศัพท์","PleaseWait":"กรุณารอ","Previous":"ก่อนหน้า","PreviousView":"มุมมองก่อนหน้า","Print":"พิมพ์","Queries":"คำถาม","Redo":"ทำซ้ำ","Refresh":"รีเฟรช","Reject":"ปฏิเสธ","RememberMe":"จำฉันในคอมพิวเตอร์เครื่องนี้","Reports":"รายงาน","Reset":"รีเซ็ท","Review":"ทบทวน","RunFilter":"รันตัวกรอง","RunJob":"รันจ็อบ","Save":"บันทึก","SaveBeforeClosing":"บันทึกก่อนปิด","SavedFilters":"ตัวกรองที่บันทึกแล้ว","SaveSubmit":"บันทึก/ส่ง","ScreenDesign":"ดีไซน์หน้าจอ","Search":"ค้นหา","SelectContents":"เลือกเนื้อหา","SelectDate":"เลือกวันที่","SelectDeselect":"เลือก/ไม่เลือก ทั้งหมด","Selected":"เลือกแล้ว: ","ServerName":"ชื่อเซิร์ฟเวอร์","Settings":"การตั้งค่า","ShowFilterRow":"แสดงแถวตัวกรอง","SignIn":"ลงชื่อเข้าใช้","SortAscending":"เรียงลำดับจากน้อยไปมาก","SortDescending":"เรียงลำดับจากมากไปน้อย","Spreadsheet":"สเปรดชีท","StartsWith":"เริ่มต้นด้วย","StatusIndicator":"ตัวชี้วัดสถานะ","Tasks":"งาน","Today":"วันนี้","Translate":"แปล","UserID":"User ID","Utilities":"อุปกรณ์","Yes":"ใช่","Page":"หน้า","Rows":"แถว","ShowingAll":"แสดงทั้งหมด","SessionNavigation":"เนวิเกชั่นเซสซั่น","ListAllMenuItems":"รายชื่อรายการต่าง ๆ ทั้งหมดในเมนู","NoRecordsFound":"ไม่พบบันทึก","SearchTree":"การค้นหาแบบต้นไม้","Clear":"ล้าง","DrillDown":"เจาะข้อมูล","Required":"ต้องกรอกช่องนี้","Available":"มี:","Add":"เพิ่ม","MoveDown":"เลื่อนลง","MoveUp":"เลื่อนขึ้น","Remove":"เอาออก","LastYear":"ปีที่แล้ว","NextMonth":"เดือนหน้า","NextWeek":"สัปดาห์หน้า","NextYear":"ปีหน้า","OneMonthAgo":"หนึ่งเดือนผ่านไป","OneWeekAgo":"หนึ่งสัปดาห์ผ่านไป","SixMonthsAgo":"หกเดือนผ่านไป","Time":"เวลา","CannotBeSelected":"ไม่สามารถเลือกแถวนี้ได้","ResetToDefault":"รีเซ็ทไปที่รูปแบบที่ตั้งค่าไว้","CloseOtherTabs":"ปิดแท็บอื่น","EmailValidation":"ใส่อีเมลที่ถูกต้อง","UrlValidation":"ใส่ URL ที่ถูกต้อง","EndofResults":"สิ้นสุดผลลัพธ์","More":"เพิ่มเติม...","RecordsPerPage":"จำนวนบันทึกต่อหน้า","Maximize":"เพิ่มขี้นสูงสุด","Minimize":"ลดลงต่ำสุด","CloseAllTabs":"ปิดรายชื่อแท็บทั้งหมด","QuickDates":"วันที่แบบเร็ว","Finish":"จบ","SetTextColor":"กำหนดสีข้อความ","AttachmentRules":"กฏเอกสารแนบ","AutoRefresh":"รีเฟรชอัตโนมัติ","BarChart":" แผนภูมิแท่ง","CopyMail":"คัดลอกและส่งเมล","CopyUrl":"คัดลอก URL","DistributeHorizontally":"กระจายแนวนอน","ExpandAll":"ขยายทั้งหมด","Generate":"สร้าง","GenerateScript":"สร้างสคริปต์","NoAttachments":"ไม่มีเอกสารแนบ","PieChart":"แผนภาพวงกลม","QuickAccess":"การเข้าถึงอย่างเร็ว","RestoreUser":"กู้คืนผู้ใช้","SaveConsolidate":"บันทึกการรวมในพื้นที่","Screen Design":"การออกแบบหน้าจอ","SelectAll":"เลือกทั้งหมด","SpellCheck":"ตรวจสอบการสะกด","SubmitForApproval":"ส่งเพื่ออนุมัติ","Timezone":"โซนเวลา","Loading":"กำลังโหลด....","NewNode":"โหนดใหม่","RememberSettings":"จำการตั้งค่าเหล่านี้","Company":"บริษัท","Environment":"สภาพแวดล้อม","DontHaveAccount":"ไม่มีบัญชีหรือ","ResetPassword":"ตั้งรหัสผ่านของฉันใหม่","SignUpNow":"สมัครใช้งานเดี๋ยวนี้","SelectMonthYear":"เลือกเดือนและปี"}
+	messages: {"AdditionalHelp":"ช่วยเหลือเพิ่มเติม","AddNewTab":"เพิ่มแท็บใหม่","Alerts":"แจ้งเตือน","ApplyFilter":"ใช้ตัวกรอง","Approve":"อนุมัติ","Attachments":"เอกสารแนบ","Back":"ย้อนกลับ","Basic":"พื้นฐาน","Between":"ระหว่าง","Book":"จอง","Cancel":"ยกเลิก","Checked":"ตรวจสอบแล้ว","ClearFilter":"ยกเลิกตัวกรอง","Close":"ปิด","CloseCancelChanges":"ปิดและยกเลิกการเปลี่ยนแปลง","CloseSaveChanges":"ปิดและบันทึกการเปลี่ยนแปลง","CloseTab":"ปิดแท็บ","ColumnPersonalization":"กำหนดค่าคอลัมน์เอง","Comments":"ความคิดเห็น","Confirmation":"การยืนยัน","Contains":"มี","CreateTab":"สร้างแท็บใหม่","Cut":"ตัด","Delete":"ลบ","DiscardUndo":"ยกเลิก/เลิกทำ","DisplayDropDownList":"แสดงรายการเลือกแบบเลื่อนลง","Displaying":"กำลังแสดง: ","DocWord":"เอกสาร","DoesNotContain":"ไม่มี","DoesNotEndWith":"ไม่จบลงด้วย","DoesNotEqual":"ไม่เท่ากับ","DoesNotStartWith":"ไม่เริ่มต้นด้วย","Download":"ดาวน์โหลด","Duplicate":"ซ้ำ","Edit":"แก้ไข","EitherSelectedorNotSelected":"ไม่ว่าจะเลือกหรือไม่เลือก","Email":"อีเมล","EndsWith":"จบด้วย","EqualsStr":"เท่ากับ","ExpandCollapse":"ขยาย/หด","ExportFailed":"ส่งออกล้มเหลว","ExportToExcel":"ส่งออกไปยัง Excel","FileInUse":"ไฟล์ที่ระบุกำลังใช้อยู่","FileInUseDetail":"ปิดไฟล์ในแอพพลิเคชั่นที่กำลังใช้อยู่ หรือระบุชื่อไฟล์ที่แตกต่างออกไป","Filter":"ตัวกรอง","FilterMenu":"เมนูตัวกรอง","FilterOptions":"ตัวเลือกตัวกรอง","FilterWithinResults":"ตัวกรองภายในผลลัพธ์","First":"ครั้งแรก","FirstView":"มุมมองครั้งแรก","Folder":"โฟลเดอร์","ForgotPassword":"ลืมรหัสผ่านของคุณหรือ","Forward":"ไปข้างหน้า","GetMoreRows":"เพิ่มแถวมากขึ้น","GreaterThan":"มากกว่า","GreaterThanOrEquals":"มากกว่าหรือเท่ากับ","GridSettings":"การตั้งค่ากริด","GroupSelection":"การเลือกกลุ่ม","Help":"วิธีใช้","HideColumn":"ซ่อนคอลัมน์","IsEmpty":"ว่าง","IsNotEmpty":"ไม่ว่าง","Last":"ครั้งสุดท้าย","LastView":"มุมองครั้งสุดท้าย","LaunchActivate":"เริ่ม/เปิดใช้งาน","LessThan":"น้อยกว่า","LessThanOrEquals":"น้อยกว่าหรือเท่ากับ","Links":"ลิงค์","ListTabs":"รายชื่อแท็บทั้งหมด","LoadingItem":"กำลังโหลดไอเท็ม ","Maintenance":"ซ่อมบำรุง","Menu":"เมนู","New":"ใหม่","Next":"ต่อไป","NextView":"มุมมองต่อไป","No":"ไม่","NotChecked":"ไม่ได้ตรวจสอบ","Notes":"หมายเหตุ","NotSelected":"ไม่ได้เลือก","Of":" ของ ","Ok":"ตกลง","Open":"เปิด","Password":"รหัสผ่าน","Paste":"วาง","Phone":"โทรศัพท์","PleaseWait":"กรุณารอ","Previous":"ก่อนหน้า","PreviousView":"มุมมองก่อนหน้า","Print":"พิมพ์","Queries":"คำถาม","Redo":"ทำซ้ำ","Refresh":"รีเฟรช","Reject":"ปฏิเสธ","RememberMe":"จำฉันในคอมพิวเตอร์เครื่องนี้","Reports":"รายงาน","Reset":"รีเซ็ท","Review":"ทบทวน","RunFilter":"รันตัวกรอง","RunJob":"รันจ็อบ","Save":"บันทึก","SaveBeforeClosing":"บันทึกก่อนปิด","SavedFilters":"ตัวกรองที่บันทึกแล้ว","SaveSubmit":"บันทึก/ส่ง","ScreenDesign":"ดีไซน์หน้าจอ","Search":"ค้นหา","SelectContents":"เลือกเนื้อหา","SelectDate":"เลือกวันที่","SelectDeselect":"เลือก/ไม่เลือก ทั้งหมด","Selected":"เลือกแล้ว: ","ServerName":"ชื่อเซิร์ฟเวอร์","Settings":"การตั้งค่า","ShowFilterRow":"แสดงแถวตัวกรอง","SignIn":"ลงชื่อเข้าใช้","SortAscending":"เรียงลำดับจากน้อยไปมาก","SortDescending":"เรียงลำดับจากมากไปน้อย","Spreadsheet":"สเปรดชีท","StartsWith":"เริ่มต้นด้วย","StatusIndicator":"ตัวชี้วัดสถานะ","Tasks":"งาน","Today":"วันนี้","Translate":"แปล","UserID":"User ID","Utilities":"อุปกรณ์","Yes":"ใช่","Page":"หน้า","Rows":"แถว","ShowingAll":"แสดงทั้งหมด","SessionNavigation":"เนวิเกชั่นเซสซั่น","ListAllMenuItems":"รายชื่อรายการต่าง ๆ ทั้งหมดในเมนู","NoRecordsFound":"ไม่พบบันทึก","SearchTree":"การค้นหาแบบต้นไม้","Clear":"ล้าง","DrillDown":"เจาะข้อมูล","Required":"ต้องกรอกช่องนี้","Available":"มี:","Add":"เพิ่ม","MoveDown":"เลื่อนลง","MoveUp":"เลื่อนขึ้น","Remove":"เอาออก","LastYear":"ปีที่แล้ว","NextMonth":"เดือนหน้า","NextWeek":"สัปดาห์หน้า","NextYear":"ปีหน้า","OneMonthAgo":"หนึ่งเดือนผ่านไป","OneWeekAgo":"หนึ่งสัปดาห์ผ่านไป","SixMonthsAgo":"หกเดือนผ่านไป","Time":"เวลา","CannotBeSelected":"ไม่สามารถเลือกแถวนี้ได้","ResetToDefault":"รีเร็ตไปที่เค้าโครงเริ่มต้น","CloseOtherTabs":"ปิดแท็บอื่น","EmailValidation":"ใส่อีเมลที่ถูกต้อง","UrlValidation":"ใส่ URL ที่ถูกต้อง","EndofResults":"สิ้นสุดผลลัพธ์","More":"เพิ่มเติม...","RecordsPerPage":"จำนวนบันทึกต่อหน้า","Maximize":"เพิ่มขี้นสูงสุด","Minimize":"ลดลงต่ำสุด","CloseAllTabs":"ปิดรายชื่อแท็บทั้งหมด","QuickDates":"วันที่แบบเร็ว","Finish":"จบ","SetTextColor":"กำหนดสีข้อความ","AttachmentRules":"กฏเอกสารแนบ","AutoRefresh":"รีเฟรชอัตโนมัติ","BarChart":" แผนภูมิแท่ง","CopyMail":"คัดลอกและส่งเมล","CopyUrl":"คัดลอก URL","DistributeHorizontally":"กระจายแนวนอน","ExpandAll":"ขยายทั้งหมด","Generate":"สร้าง","GenerateScript":"สร้างสคริปต์","NoAttachments":"ไม่มีเอกสารแนบ","PieChart":"แผนภาพวงกลม","QuickAccess":"การเข้าถึงอย่างเร็ว","RestoreUser":"กู้คืนผู้ใช้","SaveConsolidate":"บันทึกการรวมในพื้นที่","Screen Design":"การออกแบบหน้าจอ","SelectAll":"เลือกทั้งหมด","SpellCheck":"ตรวจสอบการสะกด","SubmitForApproval":"ส่งเพื่ออนุมัติ","Timezone":"โซนเวลา","Loading":"กำลังโหลด....","NewNode":"โหนดใหม่","RememberSettings":"จำการตั้งค่าเหล่านี้","Company":"บริษัท","Environment":"สภาพแวดล้อม","DontHaveAccount":"ไม่มีบัญชีหรือ","ResetPassword":"ตั้งรหัสผ่านของฉันใหม่","SignUpNow":"สมัครใช้งานเดี๋ยวนี้","SelectMonthYear":"เลือกเดือนและปี"}
 });
 
 }( this ));
@@ -39667,7 +39402,7 @@ Globalize.addCultureInfo( "tr-TR", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Ek Yardım","AddNewTab":"Yeni Sekme Ekle","Alerts":"Uyarılar","ApplyFilter":"Filtre Uygula","Approve":"Onayla","Attachments":"Eklentiler","Back":"Geri","Basic":"Temel","Between":"Arasında","Book":"Kitap","Cancel":"İptal","Checked":"Kontrol Edildi","ClearFilter":"Filtreyi Temizle","Close":"Kapat","CloseCancelChanges":"Kapat ve Değişiklikleri İptal Et","CloseSaveChanges":"Kapat ve Değişiklikleri Kaydet","CloseTab":"Sekmeyi Kapat","ColumnPersonalization":"Sütun Kişiselleştirme","Comments":"Yorumlar","Confirmation":"Onay","Contains":"Şunu İçerir","CreateTab":"Yeni bir Sekme Oluştur","Cut":"Kes","Delete":"Sil","DiscardUndo":"Vazgeç/Geri Al","DisplayDropDownList":"Açılır listeyi göster","Displaying":"Gösterilen: ","DocWord":"Belge","DoesNotContain":"Şunu İçermez","DoesNotEndWith":"Şununla Bitmez","DoesNotEqual":"Şuna Eşit Değil","DoesNotStartWith":"Şununla başlamaz","Download":"İndir","Duplicate":"Yinelenen","Edit":"Düzenle","EitherSelectedorNotSelected":"Seçili veya Seçili Değil","Email":"E-posta","EndsWith":"Şununla Biter","EqualsStr":"Şuna Eşit","ExpandCollapse":"Genişlet/Daralt","ExportFailed":"Dışarı Aktarma Başarısız","ExportToExcel":"Excel\u0027e Aktar","FileInUse":"Belirtilen Dosya Kullanımda","FileInUseDetail":"Dosyanın kullanımda olduğu uygulamayı kapatın veya farklı bir dosya adı belirtin.","Filter":"Filtrele","FilterMenu":"Filtreleme Menüsü","FilterOptions":"Filtreleme Seçenekleri","FilterWithinResults":"Sonuçlarda Filtrele","First":"Birinci","FirstView":"Birinci Görünüm","Folder":"Klasör","ForgotPassword":"Parolanızı mı Unuttunuz?","Forward":"İleri","GetMoreRows":"Daha Fazla Satır Al","GreaterThan":"Şundan Daha Fazla","GreaterThanOrEquals":"Şundan Daha Fazla veya Eşit","GridSettings":"Kılavuz Ayarları","GroupSelection":"Grup Seçimi","Help":"Yardım","HideColumn":"Sütunu Gizle","IsEmpty":"Boş","IsNotEmpty":"Boş Değil","Last":"Son","LastView":"Son Görünüm","LaunchActivate":"Başlat/Etkinleştir","LessThan":"Şundan Daha Az","LessThanOrEquals":"Şundan Daha Az veya Eşit","Links":"Bağlantılar","ListTabs":"Tüm Sekmeleri Listele","LoadingItem":"Öğe yükleniyor ","Maintenance":"Bakım","Menu":"Menü","New":"Yeni ","Next":"Sonraki","NextView":"Sonraki Görünüm","No":"Hayır","NotChecked":"Kontrol Edilmedi","Notes":"Notlar","NotSelected":"Seçilmedi","Of":" / ","Ok":"Tamam","Open":"Aç","Password":"Parola","Paste":"Yapıştır","Phone":"Telefon","PleaseWait":"Lütfen Bekleyin","Previous":"Önceki","PreviousView":"Önceki Görünüm","Print":"Yazdır ","Queries":"Sorgular","Redo":"Yinele","Refresh":"Yenile","Reject":"Reddet","RememberMe":"Bu bilgisayarda beni hatırla","Reports":"Raporlar","Reset":"Sıfırla","Review":"Gözden Geçir","RunFilter":"Filtreyi Çalıştır","RunJob":"İşi Çalıştır","Save":"Kaydet","SaveBeforeClosing":"Kapatmadan Önce Kaydet","SavedFilters":"Kaydedilen Filtreler","SaveSubmit":"Kaydet/Gönder","ScreenDesign":"Ekran Tasarımı","Search":"Ara","SelectContents":"İçeriği Seç","SelectDate":"Bir Tarih Seç","SelectDeselect":"Hepsini Seç / Seçimini Kaldır","Selected":"Seçilenler: ","ServerName":"Sunucu Adı","Settings":"Ayarlar","ShowFilterRow":"Filtre Satırını Göster","SignIn":"Oturum Aç","SortAscending":"Artan Şekilde Sırala","SortDescending":"Azalan Şekilde Sırala","Spreadsheet":"Elektronik tablo","StartsWith":"Şununla biter","StatusIndicator":"Durum Göstergesi","Tasks":"Görevler","Today":"Bugün","Translate":"Çevir","UserID":"Kullanıcı kimliği","Utilities":"Yardımcı uygulamalar","Yes":"Evet","Page":"Sayfa","Rows":"Satırlar","ShowingAll":"Hepsi Gösteriliyor","SessionNavigation":"Oturum Gezintisi","ListAllMenuItems":"Tüm Menü Öğelerini Listele","NoRecordsFound":"Kayıt Bulunmadı","SearchTree":"Arama Ağacı","Clear":"Temizle","DrillDown":"Detaya Git","Required":"Bu alan gerekli","Available":"Mevcut:","Add":"Ekle","MoveDown":"Aşağı Taşı","MoveUp":"Yukarı Taşı","Remove":"Kaldır","LastYear":"Geçen Yıl","NextMonth":"Sonraki Ay","NextWeek":"Sonraki Hafta","NextYear":"Sonraki Yıl","OneMonthAgo":"Bir Ay Önce","OneWeekAgo":"Bir Hafta Önce","SixMonthsAgo":"Altı Ay Önce","Time":"Saat","CannotBeSelected":"Bu satır seçilemez.","ResetToDefault":"Varsayılan Düzene sıfırla","CloseOtherTabs":"Diğer Sekmeleri Kapat","EmailValidation":"Geçerli bir e-posta adresi girin.","UrlValidation":"Geçerli bir URL girin","EndofResults":"Arama Sonuçları Sonu","More":"Daha Fazla...","RecordsPerPage":"Sayfa Başına Kayıt","Maximize":"Ekranı Kapla","Minimize":"Simge Durumuna Küçült","CloseAllTabs":"Tüm Sekmeleri Kapat","QuickDates":"Hızlı Tarihler","Finish":"Son","SetTextColor":"Metin rengini ayarla","AttachmentRules":"Eklenti Kuralları","AutoRefresh":"Otomatik Yenile","BarChart":"Çubuk Çizelge","CopyMail":"Kopyala ve Postala","CopyUrl":"Url\u0027yi Kopyala","DistributeHorizontally":"Yatay Olarak Dağıt","ExpandAll":"Tümünü Genişlet","Generate":"Oluştur","GenerateScript":"Komut Dizisi Oluştur","NoAttachments":"Eklenti Yok","PieChart":"Pasta Çizelge","QuickAccess":"Hızlı Erişim","RestoreUser":"Kullanıcıyı Geri Yükle","SaveConsolidate":"Yerel Birleştirmeyle kaydet","Screen Design":"Ekran Tasarımı","SelectAll":"Hepsini Seç ","SpellCheck":"Yazım Kontrolü","SubmitForApproval":"Onay için Gönder","Timezone":"Saat Dilimi","Loading":"Yükleniyor...","NewNode":"Yeni Düğüm","RememberSettings":"Bu ayarları anımsa","Company":"Şirket","Environment":"Ortam","DontHaveAccount":"Hesabınız yok mu?","ResetPassword":"Parolamı sıfırla","SignUpNow":"Hemen Kaydol","SelectMonthYear":"Ay ve Yıl Seçin"}
+	messages: {"SelectAll":"Hepsini Seç ","AdditionalHelp":"Ek Yardım","AddNewTab":"Yeni Sekme Ekle","Alerts":"Uyarılar","ApplyFilter":"Filtre Uygula","Approve":"Onayla","Attachments":"Eklentiler","Back":"Geri","Basic":"Temel","Between":"Arasında","Book":"Kitap","Cancel":"İptal","Checked":"Kontrol Edildi","ClearFilter":"Filtreyi Temizle","Close":"Kapat","CloseCancelChanges":"Kapat ve Değişiklikleri İptal Et","CloseSaveChanges":"Kapat ve Değişiklikleri Kaydet","CloseTab":"Sekmeyi Kapat","ColumnPersonalization":"Sütun Kişiselleştirme","Comments":"Yorumlar","Confirmation":"Onay","Contains":"Şunu İçerir","CreateTab":"Yeni bir Sekme Oluştur","Cut":"Kes","Delete":"Sil","DiscardUndo":"Vazgeç/Geri Al","DisplayDropDownList":"Açılır listeyi göster","Displaying":"Gösterilen: ","DocWord":"Belge","DoesNotContain":"Şunu İçermez","DoesNotEndWith":"Şununla Bitmez","DoesNotEqual":"Şuna Eşit Değil","DoesNotStartWith":"Şununla başlamaz","Download":"İndir","Duplicate":"Yinelenen","Edit":"Düzenle","EitherSelectedorNotSelected":"Seçili veya Seçili Değil","Email":"E-posta","EndsWith":"Şununla Biter","EqualsStr":"Şuna Eşit","ExpandCollapse":"Genişlet/Daralt","ExportFailed":"Dışarı Aktarma Başarısız","ExportToExcel":"Excel\u0027e Aktar","FileInUse":"Belirtilen Dosya Kullanımda","FileInUseDetail":"Dosyanın kullanımda olduğu uygulamayı kapatın veya farklı bir dosya adı belirtin.","Filter":"Filtrele","FilterMenu":"Filtreleme Menüsü","FilterOptions":"Filtreleme Seçenekleri","FilterWithinResults":"Sonuçlarda Filtrele","First":"Birinci","FirstView":"Birinci Görünüm","Folder":"Klasör","ForgotPassword":"Parolanızı mı Unuttunuz?","Forward":"İleri","GetMoreRows":"Daha Fazla Satır Al","GreaterThan":"Şundan Daha Fazla","GreaterThanOrEquals":"Şundan Daha Fazla veya Eşit","GridSettings":"Kılavuz Ayarları","GroupSelection":"Grup Seçimi","Help":"Yardım","HideColumn":"Sütunu Gizle","IsEmpty":"Boş","IsNotEmpty":"Boş Değil","Last":"Son","LastView":"Son Görünüm","LaunchActivate":"Başlat/Etkinleştir","LessThan":"Şundan Daha Az","LessThanOrEquals":"Şundan Daha Az veya Eşit","Links":"Bağlantılar","ListTabs":"Tüm Sekmeleri Listele","LoadingItem":"Öğe yükleniyor ","Maintenance":"Bakım","Menu":"Menü","New":"Yeni ","Next":"Sonraki","NextView":"Sonraki Görünüm","No":"Hayır","NotChecked":"Kontrol Edilmedi","Notes":"Notlar","NotSelected":"Seçilmedi","Of":" / ","Ok":"Tamam","Open":"Aç","Password":"Parola","Paste":"Yapıştır","Phone":"Telefon","PleaseWait":"Lütfen Bekleyin","Previous":"Önceki","PreviousView":"Önceki Görünüm","Print":"Yazdır ","Queries":"Sorgular","Redo":"Yinele","Refresh":"Yenile","Reject":"Reddet","RememberMe":"Bu bilgisayarda beni hatırla","Reports":"Raporlar","Reset":"Sıfırla","Review":"Gözden Geçir","RunFilter":"Filtreyi Çalıştır","RunJob":"İşi Çalıştır","Save":"Kaydet","SaveBeforeClosing":"Kapatmadan Önce Kaydet","SavedFilters":"Kaydedilen Filtreler","SaveSubmit":"Kaydet/Gönder","ScreenDesign":"Ekran Tasarımı","Search":"Ara","SelectContents":"İçeriği Seç","SelectDate":"Bir Tarih Seç","SelectDeselect":"Hepsini Seç / Seçimini Kaldır","Selected":"Seçilenler: ","ServerName":"Sunucu Adı","Settings":"Ayarlar","ShowFilterRow":"Filtre Satırını Göster","SignIn":"Oturum Aç","SortAscending":"Artan Şekilde Sırala","SortDescending":"Azalan Şekilde Sırala","Spreadsheet":"Elektronik tablo","StartsWith":"Şununla biter","StatusIndicator":"Durum Göstergesi","Tasks":"Görevler","Today":"Bugün","Translate":"Çevir","UserID":"Kullanıcı kimliği","Utilities":"Yardımcı uygulamalar","Yes":"Evet","Page":"Sayfa","Rows":"Satırlar","ShowingAll":"Hepsi Gösteriliyor","SessionNavigation":"Oturum Gezintisi","ListAllMenuItems":"Tüm Menü Öğeleri Gösteriliyor","NoRecordsFound":"Kayıt Bulunmadı","SearchTree":"Arama Ağacı","Clear":"Temizle","DrillDown":"Detaya Git","Required":"Bu alan gerekli","Available":"Kullanılabilir:","Add":"Ekle","MoveDown":"Aşağı Taşı","MoveUp":"Yukarı Taşı","Remove":"Kaldır","LastYear":"Geçen Yıl","NextMonth":"Sonraki Ay","NextWeek":"Sonraki Hafta","NextYear":"Sonraki Yıl","OneMonthAgo":"Bir Ay Önce","OneWeekAgo":"Bir Hafta Önce","SixMonthsAgo":"Altı Ay Önce","Time":"Saat","CannotBeSelected":"Bu satır seçilemez.","ResetToDefault":"Varsayılan düzene sıfırla","CloseOtherTabs":"Diğer Sekmeleri Kapat","EmailValidation":"Geçerli bir e-posta adresi girin.","UrlValidation":"Geçerli bir URL girin","EndofResults":"Arama Sonuçları Sonu","More":"Daha Fazla...","RecordsPerPage":"Sayfa Başına Kayıt","Maximize":"maksimuma çıkarmak","Minimize":"azaltmak"}
 });
 
 }( this ));
@@ -39741,7 +39476,7 @@ Globalize.addCultureInfo( "vi-VN", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"Trợ giúp bổ sung","AddNewTab":"Thêm tab mới","Alerts":"Cảnh báo","ApplyFilter":"Áp dụng bộ lọc","Approve":"Chấp thuận","Attachments":"Tệp đính kèm","Back":"Lùi","Basic":"Cơ bản","Between":"Giữa","Book":"Sách","Cancel":"Hủy bỏ","Checked":"Đã đánh dấu","ClearFilter":"Xóa bộ lọc","Close":"Đóng","CloseCancelChanges":"Đóng và hủy bỏ các thay đổi","CloseSaveChanges":"Đóng và lưu các thay đổi","CloseTab":"Đóng tab","ColumnPersonalization":"Cá nhân hóa cột","Comments":"Chú thích","Confirmation":"Xác nhận","Contains":"Có chứa","CreateTab":"Tạo tab mới","Cut":"Cắt","Delete":"Xóa","DiscardUndo":"Bỏ/Hoàn tác","DisplayDropDownList":"Hiển thị danh sách thả xuống","Displaying":"Đang hiển thị: ","DocWord":"Tài liệu","DoesNotContain":"Không chứa","DoesNotEndWith":"Không kết thúc bằng","DoesNotEqual":"Không bằng","DoesNotStartWith":"Không bắt đầu với","Download":"Tải xuống","Duplicate":"Trùng lặp","Edit":"Sửa","EitherSelectedorNotSelected":"Hoặc được chọn hoặc không được chọn","Email":"Email","EndsWith":"Kết thúc bằng","EqualsStr":"Bằng","ExpandCollapse":"Mở rộng/Thu gọn","ExportFailed":"Xuất không thành công","ExportToExcel":"Xuất sang Excel","FileInUse":"Tệp xác định đang được sử dụng","FileInUseDetail":"Đóng tệp trong ứng dụng nơi nó đang được sử dụng hoặc xác định một tên tệp khác.","Filter":"Lọc","FilterMenu":"Menu bộ lọc","FilterOptions":"Tùy chọn bộ lọc","FilterWithinResults":"Lọc trong các kết quả","First":"Đầu tiên","FirstView":"Dạng xem đầu tiên","Folder":"Thư mục","ForgotPassword":"Bạn quên mật khẩu?","Forward":"Chuyển tiếp","GetMoreRows":"Lấy thêm hàng","GreaterThan":"Lớn hơn","GreaterThanOrEquals":"Lớn hơn hoặc bằng","GridSettings":"Thiết đặt lưới","GroupSelection":"Lựa chọn nhóm","Help":"Trợ giúp","HideColumn":"Cột ẩn","IsEmpty":"Đang trống","IsNotEmpty":"Không trống","Last":"Cuối cùng","LastView":"Dạng xem cuối cùng","LaunchActivate":"Khởi chạy/Kích hoạt","LessThan":"Ít hơn","LessThanOrEquals":"Ít hơn hoặc bằng","Links":"Liên kết","ListTabs":"Liệt kê tất cả các tab","LoadingItem":"Đang tải mục ","Maintenance":"Bảo trì","Menu":"Menu","New":"Mới","Next":"Tiếp theo","NextView":"Dạng xem tiếp theo","No":"Không","NotChecked":"Không được đánh dấu","Notes":"Ghi chú","NotSelected":"Không được chọn","Of":" của ","Ok":"OK","Open":"Mở","Password":"Mật khẩu","Paste":"Dán","Phone":"Điện thoại","PleaseWait":"Vui lòng chờ","Previous":"Trước","PreviousView":"Dạng xem trước","Print":"In","Queries":"Truy vấn","Redo":"Làm lại","Refresh":"Làm mới","Reject":"Từ chối","RememberMe":"Ghi nhớ tôi trên máy tính này","Reports":"Báo cáo","Reset":"Đặt lại","Review":"Xem lại","RunFilter":"Chạy bộ lọc","RunJob":"Chạy tác vụ","Save":"Lưu","SaveBeforeClosing":"Lưu trước khi đóng","SavedFilters":"Bộ lọc đã lưu","SaveSubmit":"Lưu/Gửi","ScreenDesign":"Thiết kế màn hình","Search":"Tìm kiếm","SelectContents":"Chọn nội dung","SelectDate":"Chọn một ngày","SelectDeselect":"Chọn / Bỏ chọn tất cả","Selected":"Được chọn: ","ServerName":"Tên máy chủ","Settings":"Thiết đặt","ShowFilterRow":"Hiển thị dòng bộ lọc","SignIn":"Đăng nhập","SortAscending":"Sắp xếp tăng dần","SortDescending":"Sắp xếp giảm dần","Spreadsheet":"Bảng tính","StartsWith":"Bắt đầu với","StatusIndicator":"Chỉ báo trạng thái","Tasks":"Nhiệm vụ","Today":"Hôm nay","Translate":"Dịch","UserID":"ID người dùng","Utilities":"Tiện ích","Yes":"Có","Page":"Trang","Rows":"Hàng","ShowingAll":"Hiện tất cả","SessionNavigation":"Dẫn hướng theo phiên làm việc","ListAllMenuItems":"Liệt kê tất cả mục menu","NoRecordsFound":"Không tìm thấy bản ghi","SearchTree":"Tìm kiếm cây","Clear":"Xóa","DrillDown":"Truy sâu xuống","Required":"Trường này là bắt buộc","Available":"Sẵn có:","Add":"Thêm","MoveDown":"Di chuyển xuống","MoveUp":"Di chuyển lên","Remove":"Loại bỏ","LastYear":"Năm ngoái","NextMonth":"Tháng sau","NextWeek":"Tuần sau","NextYear":"Năm sau","OneMonthAgo":"Một tháng trước","OneWeekAgo":"Một tuần trước","SixMonthsAgo":"Sáu tháng trước","Time":"Thời gian","CannotBeSelected":"Không chọn được hàng này.","ResetToDefault":"Đặt lại về bố trí mặc định","CloseOtherTabs":"Đóng các tab khác","EmailValidation":"Hãy nhập địa chỉ e-mail hợp lệ","UrlValidation":"Hãy nhập URL hợp lệ","EndofResults":"Cuối kết quả","More":"Thêm...","RecordsPerPage":"Số bản ghi mỗi trang","Maximize":"Tối đa hóa","Minimize":"Giảm thiểu"}
+	messages: {"SelectAll" : "Chọn Tất cả", "AdditionalHelp":"Trợ giúp bổ sung","AddNewTab":"Thêm tab mới","Alerts":"Cảnh báo","ApplyFilter":"Áp dụng bộ lọc","Approve":"Chấp thuận","Attachments":"Tệp đính kèm","Back":"Lùi","Basic":"Cơ bản","Between":"Giữa","Book":"Sách","Cancel":"Hủy bỏ","Checked":"Đã đánh dấu","ClearFilter":"Xóa bộ lọc","Close":"Đóng","CloseCancelChanges":"Đóng và hủy bỏ các thay đổi","CloseSaveChanges":"Đóng và lưu các thay đổi","CloseTab":"Đóng tab","ColumnPersonalization":"Cá nhân hóa cột","Comments":"Chú thích","Confirmation":"Xác nhận","Contains":"Có chứa","CreateTab":"Tạo tab mới","Cut":"Cắt","Delete":"Xóa","DiscardUndo":"Bỏ/Hoàn tác","DisplayDropDownList":"Hiển thị danh sách thả xuống","Displaying":"Đang hiển thị: ","DocWord":"Tài liệu","DoesNotContain":"Không chứa","DoesNotEndWith":"Không kết thúc bằng","DoesNotEqual":"Không bằng","DoesNotStartWith":"Không bắt đầu với","Download":"Tải xuống","Duplicate":"Trùng lặp","Edit":"Sửa","EitherSelectedorNotSelected":"Hoặc được chọn hoặc không được chọn","Email":"Email","EndsWith":"Kết thúc bằng","EqualsStr":"Bằng","ExpandCollapse":"Mở rộng/Thu gọn","ExportFailed":"Xuất không thành công","ExportToExcel":"Xuất sang Excel","FileInUse":"Tệp xác định đang được sử dụng","FileInUseDetail":"Đóng tệp trong ứng dụng nơi nó đang được sử dụng hoặc xác định một tên tệp khác.","Filter":"Lọc","FilterMenu":"Menu bộ lọc","FilterOptions":"Tùy chọn bộ lọc","FilterWithinResults":"Lọc trong các kết quả","First":"Đầu tiên","FirstView":"Dạng xem đầu tiên","Folder":"Thư mục","ForgotPassword":"Bạn quên mật khẩu?","Forward":"Chuyển tiếp","GetMoreRows":"Lấy thêm hàng","GreaterThan":"Lớn hơn","GreaterThanOrEquals":"Lớn hơn hoặc bằng","GridSettings":"Thiết đặt lưới","GroupSelection":"Lựa chọn nhóm","Help":"Trợ giúp","HideColumn":"Cột ẩn","IsEmpty":"Đang trống","IsNotEmpty":"Không trống","Last":"Cuối cùng","LastView":"Dạng xem cuối cùng","LaunchActivate":"Khởi chạy/Kích hoạt","LessThan":"Ít hơn","LessThanOrEquals":"Ít hơn hoặc bằng","Links":"Liên kết","ListTabs":"Liệt kê tất cả các tab","LoadingItem":"Đang tải mục ","Maintenance":"Bảo trì","Menu":"Menu","New":"Mới","Next":"Tiếp theo","NextView":"Dạng xem tiếp theo","No":"Không","NotChecked":"Không được đánh dấu","Notes":"Ghi chú","NotSelected":"Không được chọn","Of":" của ","Ok":"OK","Open":"Mở","Password":"Mật khẩu","Paste":"Dán","Phone":"Điện thoại","PleaseWait":"Vui lòng chờ","Previous":"Trước","PreviousView":"Dạng xem trước","Print":"In","Queries":"Truy vấn","Redo":"Làm lại","Refresh":"Làm mới","Reject":"Từ chối","RememberMe":"Ghi nhớ tôi trên máy tính này","Reports":"Báo cáo","Reset":"Đặt lại","Review":"Xem lại","RunFilter":"Chạy bộ lọc","RunJob":"Chạy tác vụ","Save":"Lưu","SaveBeforeClosing":"Lưu trước khi đóng","SavedFilters":"Bộ lọc đã lưu","SaveSubmit":"Lưu/Gửi","ScreenDesign":"Thiết kế màn hình","Search":"Tìm kiếm","SelectContents":"Chọn nội dung","SelectDate":"Chọn một ngày","SelectDeselect":"Chọn / Bỏ chọn tất cả","Selected":"Được chọn: ","ServerName":"Tên máy chủ","Settings":"Thiết đặt","ShowFilterRow":"Hiển thị dòng bộ lọc","SignIn":"Đăng nhập","SortAscending":"Sắp xếp tăng dần","SortDescending":"Sắp xếp giảm dần","Spreadsheet":"Bảng tính","StartsWith":"Bắt đầu với","StatusIndicator":"Chỉ báo trạng thái","Tasks":"Nhiệm vụ","Today":"Hôm nay","Translate":"Dịch","UserID":"ID người dùng","Utilities":"Tiện ích","Yes":"Có","Page":"Trang","Rows":"Hàng","ShowingAll":"Hiện tất cả","SessionNavigation":"Dẫn hướng theo phiên làm việc","ListAllMenuItems":"Liệt kê tất cả mục menu","NoRecordsFound":"Không tìm thấy bản ghi","SearchTree":"Tìm kiếm cây","Clear":"Xóa","DrillDown":"Truy sâu xuống","Required":"Trường này là bắt buộc","Available":"Sẵn có:","Add":"Thêm","MoveDown":"Di chuyển xuống","MoveUp":"Di chuyển lên","Remove":"Loại bỏ","LastYear":"Năm ngoái","NextMonth":"Tháng sau","NextWeek":"Tuần sau","NextYear":"Năm sau","OneMonthAgo":"Một tháng trước","OneWeekAgo":"Một tuần trước","SixMonthsAgo":"Sáu tháng trước","Time":"Thời gian","CannotBeSelected":"Không chọn được hàng này.","ResetToDefault":"Đặt lại về bố trí mặc định","CloseOtherTabs":"Đóng các tab khác","EmailValidation":"Hãy nhập địa chỉ e-mail hợp lệ","UrlValidation":"Hãy nhập URL hợp lệ","EndofResults":"Cuối kết quả","More":"Thêm...","RecordsPerPage":"Số bản ghi mỗi trang","Maximize":"Tối đa hóa","Minimize":"Giảm thiểu"}
 });
 
 }( this ));
@@ -39815,7 +39550,191 @@ Globalize.addCultureInfo( "zh-CN", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"附加帮助","AddNewTab":"新增选项卡","Alerts":"警报","ApplyFilter":"应用筛选器","Approve":"批准","Attachments":"附件","Back":"后退","Basic":"基本","Between":"介于","Book":"账簿","Cancel":"取消","Checked":"已选中","ClearFilter":"清除筛选器","Close":"关闭","CloseCancelChanges":"关闭并取消更改","CloseSaveChanges":"关闭并保存更改","CloseTab":"关闭选项卡","ColumnPersonalization":"列个性化设置","Comments":"备注","Confirmation":"确认","Contains":"包含","CreateTab":"创建新选项卡","Cut":"剪切","Delete":"删除","DiscardUndo":"放弃/撤消","DisplayDropDownList":"显示下拉列表","Displaying":"显示内容: ","DocWord":"文档","DoesNotContain":"不包含","DoesNotEndWith":"结束值非","DoesNotEqual":"不等于","DoesNotStartWith":"起始值非","Download":"下载","Duplicate":"复制","Edit":"编辑","EitherSelectedorNotSelected":"选定项或非选定项","Email":"电子邮件","EndsWith":"结束值为","EqualsStr":"等于","ExpandCollapse":"展开/折叠","ExportFailed":"导出失败","ExportToExcel":"导出至 Excel","FileInUse":"指定的文件在使用中","FileInUseDetail":"请在相关的应用程序中关闭此文件，或者指定其他文件名。","Filter":"筛选器","FilterMenu":"筛选菜单","FilterOptions":"筛选选项","FilterWithinResults":"在结果中筛选","First":"第一个","FirstView":"第一个视图","Folder":"文件夹","ForgotPassword":"忘记密码?","Forward":"向前","GetMoreRows":"获取更多行","GreaterThan":"大于","GreaterThanOrEquals":"大于或等于","GridSettings":"网格设置","GroupSelection":"组选择","Help":"帮助","HideColumn":"隐藏列","IsEmpty":"为空","IsNotEmpty":"非空","Last":"最后一个","LastView":"最后一个视图","LaunchActivate":"启动/激活","LessThan":"小于","LessThanOrEquals":"小于或等于","Links":"链接","ListTabs":"列出所有选项卡","LoadingItem":"正在加载项目 ","Maintenance":"维护","Menu":"菜单","New":"新建","Next":"下一步","NextView":"下一个视图","No":"否","NotChecked":"未选中","Notes":"注释","NotSelected":"未选择","Of":" / ","Ok":"确定","Open":"打开","Password":"密码","Paste":"粘贴","Phone":"电话","PleaseWait":"请稍候","Previous":"上一步","PreviousView":"上一个视图","Print":"打印","Queries":"查询","Redo":"重做","Refresh":"刷新","Reject":"拒绝","RememberMe":"在本机记录我的登录信息","Reports":"报表","Reset":"重置","Review":"复查","RunFilter":"运行筛选器","RunJob":"运行作业","Save":"保存","SaveBeforeClosing":"先保存后关闭","SavedFilters":"保存的筛选器","SaveSubmit":"保存/提交","ScreenDesign":"屏幕设计","Search":"搜索","SelectContents":"选择内容","SelectDate":"选择日期","SelectDeselect":"全选/撤消全选","Selected":"选定: ","ServerName":"服务器名称","Settings":"设置","ShowFilterRow":"显示筛选行","SignIn":"登录","SortAscending":"升序排序","SortDescending":"降序排序","Spreadsheet":"电子表格","StartsWith":"起始值为","StatusIndicator":"状态指示符","Tasks":"任务","Today":"今天","Translate":"翻译","UserID":"用户 ID","Utilities":"实用工具","Yes":"是","Page":"第","Rows":"行","ShowingAll":"全部显示","SessionNavigation":"会话导航","ListAllMenuItems":"列出所有菜单项目","NoRecordsFound":"未找到记录","SearchTree":"搜索树形结构","Clear":"清除","DrillDown":"详查","Required":"需要该字段","Available":"可用:","Add":"添加","MoveDown":"下移","MoveUp":"上移","Remove":"删除","LastYear":"去年","NextMonth":"下月","NextWeek":"下周","NextYear":"明年","OneMonthAgo":"一个月前","OneWeekAgo":"一周前","SixMonthsAgo":"半年前","Time":"时间","CannotBeSelected":"不能选择这一行。","ResetToDefault":"重设为默认布局","CloseOtherTabs":"关闭其他选项卡","EmailValidation":"输入有效的电子邮件地址","UrlValidation":"输入有效的 URL","EndofResults":"结果末尾","More":"更多...","RecordsPerPage":"每页记录数","Maximize":"最大化","Minimize":"最小化","CloseAllTabs":"关闭所有选项卡","QuickDates":"快速日期","Finish":"完成","SetTextColor":"设置文本颜色","AttachmentRules":"附件规则","AutoRefresh":"自动刷新","BarChart":"条形图","CopyMail":"复制并发送邮件","CopyUrl":"复制 URL","DistributeHorizontally":"水平分布","ExpandAll":"全部展开","Generate":"生成","GenerateScript":"生成脚本","NoAttachments":"无附件","PieChart":"饼形图","QuickAccess":"快速访问","RestoreUser":"还原用户","SaveConsolidate":"保存时做本地合并","Screen Design":"屏幕设计","SelectAll":"全选","SpellCheck":"拼写检查","SubmitForApproval":"提交以便审批","Timezone":"时区","Loading":"正在加载...","NewNode":"新节点","AboutText":"版权所有 © 2015 Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。保留所有权利。在此所列举的其它商标则属于其各自拥有人的财产。", "SelectMonthYear":"选取月和年"}
+	messages: {
+    "AdditionalHelp": "附加帮助",
+    "AddNewTab": "新增选项卡",
+    "Alerts": "警报",
+    "ApplyFilter": "应用筛选器",
+    "Approve": "批准",
+    "Attachments": "附件",
+    "Back": "后退",
+    "Basic": "基本",
+    "Between": "介于",
+    "Book": "账簿",
+    "Cancel": "取消",
+    "Checked": "已选中",
+    "ClearFilter": "清除筛选器",
+    "Close": "关闭",
+    "CloseCancelChanges": "关闭并取消更改",
+    "CloseSaveChanges": "关闭并保存更改",
+    "CloseTab": "关闭选项卡",
+    "ColumnPersonalization": "列个性化设置",
+    "Comments": "备注",
+    "Confirmation": "确认",
+    "Contains": "包含",
+    "CreateTab": "创建新选项卡",
+    "Cut": "剪切",
+    "Delete": "删除",
+    "DiscardUndo": "放弃/撤消",
+    "DisplayDropDownList": "显示下拉列表",
+    "Displaying": "显示内容: ",
+    "DocWord": "文档",
+    "DoesNotContain": "不包含",
+    "DoesNotEndWith": "结束值非",
+    "DoesNotEqual": "不等于",
+    "DoesNotStartWith": "起始值非",
+    "Download": "下载",
+    "Duplicate": "复制",
+    "Edit": "编辑",
+    "EitherSelectedorNotSelected": "选定项或非选定项",
+    "Email": "电子邮件",
+    "EndsWith": "结束值为",
+    "EqualsStr": "等于",
+    "ExpandCollapse": "展开/折叠",
+    "ExportFailed": "导出失败",
+    "ExportToExcel": "导出至 Excel",
+    "FileInUse": "指定的文件在使用中",
+    "FileInUseDetail": "请在相关的应用程序中关闭此文件，或者指定其他文件名。",
+    "Filter": "筛选器",
+    "FilterMenu": "筛选菜单",
+    "FilterOptions": "筛选选项",
+    "FilterWithinResults": "在结果中筛选",
+    "First": "第一个",
+    "FirstView": "第一个视图",
+    "Folder": "文件夹",
+    "ForgotPassword": "忘记密码?",
+    "Forward": "向前",
+    "GetMoreRows": "获取更多行",
+    "GreaterThan": "大于",
+    "GreaterThanOrEquals": "大于或等于",
+    "GridSettings": "网格设置",
+    "GroupSelection": "组选择",
+    "Help": "帮助",
+    "HideColumn": "隐藏列",
+    "IsEmpty": "为空",
+    "IsNotEmpty": "非空",
+    "Last": "最后一个",
+    "LastView": "最后一个视图",
+    "LaunchActivate": "启动/激活",
+    "LessThan": "小于",
+    "LessThanOrEquals": "小于或等于",
+    "Links": "链接",
+    "ListTabs": "列出所有选项卡",
+    "LoadingItem": "正在加载项目 ",
+    "Maintenance": "维护",
+    "Menu": "菜单",
+    "New": "新建",
+    "Next": "下一步",
+    "NextView": "下一个视图",
+    "No": "否",
+    "NotChecked": "未选中",
+    "Notes": "注释",
+    "NotSelected": "未选择",
+    "Of": " / ",
+    "Ok": "确定",
+    "Open": "打开",
+    "Password": "密码",
+    "Paste": "粘贴",
+    "Phone": "电话",
+    "PleaseWait": "请稍候",
+    "Previous": "上一步",
+    "PreviousView": "上一个视图",
+    "Print": "打印",
+    "Queries": "查询",
+    "Redo": "重做",
+    "Refresh": "刷新",
+    "Reject": "拒绝",
+    "RememberMe": "在本机记录我的登录信息",
+    "Reports": "报表",
+    "Reset": "重置",
+    "Review": "复查",
+    "RunFilter": "运行筛选器",
+    "RunJob": "运行作业",
+    "Save": "保存",
+    "SaveBeforeClosing": "先保存后关闭",
+    "SavedFilters": "保存的筛选器",
+    "SaveSubmit": "保存/提交",
+    "ScreenDesign": "屏幕设计",
+    "Search": "搜索",
+    "SelectContents": "选择内容",
+    "SelectDate": "选择日期",
+    "SelectDeselect": "全选/撤消全选",
+    "Selected": "选定: ",
+    "ServerName": "服务器名称",
+    "Settings": "设置",
+    "ShowFilterRow": "显示筛选行",
+    "SignIn": "登录",
+    "SortAscending": "升序排序",
+    "SortDescending": "降序排序",
+    "Spreadsheet": "电子表格",
+    "StartsWith": "起始值为",
+    "StatusIndicator": "状态指示符",
+    "Tasks": "任务",
+    "Today": "今天",
+    "Translate": "翻译",
+    "UserID": "用户 ID",
+    "Utilities": "实用工具",
+    "Yes": "是",
+    "Page": "第",
+    "Rows": "行",
+    "ShowingAll": "全部显示",
+    "SessionNavigation": "会话导航",
+    "ListAllMenuItems": "列出所有菜单项目",
+    "NoRecordsFound": "未找到记录",
+    "SearchTree": "搜索树形结构",
+    "Clear": "清除",
+    "DrillDown": "详查",
+    "Required": "需要该字段",
+    "Available": "可用:",
+    "Add": "添加",
+    "MoveDown": "下移",
+    "MoveUp": "上移",
+    "Remove": "删除",
+    "LastYear": "去年",
+    "NextMonth": "下月",
+    "NextWeek": "下周",
+    "NextYear": "明年",
+    "OneMonthAgo": "一个月前",
+    "OneWeekAgo": "一周前",
+    "SixMonthsAgo": "半年前",
+    "Time": "时间",
+    "CannotBeSelected": "不能选择这一行。",
+    "ResetToDefault": "重设为默认布局",
+    "CloseOtherTabs": "关闭其他选项卡",
+    "EmailValidation": "输入有效的电子邮件地址",
+    "UrlValidation": "输入有效的 URL",
+    "EndofResults": "结果末尾",
+    "More": "更多...",
+    "RecordsPerPage": "每页记录数",
+    "Maximize": "最大化",
+    "Minimize": "最小化",
+    "CloseAllTabs": "关闭所有选项卡",
+    "QuickDates": "快速日期",
+    "Finish": "完成",
+    "SetTextColor": "设置文本颜色",
+    "AttachmentRules": "附件规则",
+    "AutoRefresh": "自动刷新",
+    "BarChart": "条形图",
+    "CopyMail": "复制并发送邮件",
+    "CopyUrl": "复制 URL",
+    "DistributeHorizontally": "水平分布",
+    "ExpandAll": "全部展开",
+    "Generate": "生成",
+    "GenerateScript": "生成脚本",
+    "NoAttachments": "无附件",
+    "PieChart": "饼形图",
+    "QuickAccess": "快速访问",
+    "RestoreUser": "还原用户",
+    "SaveConsolidate": "保存时做本地合并",
+    "Screen Design": "屏幕设计",
+    "SelectAll": "全选",
+    "SpellCheck": "拼写检查",
+    "SubmitForApproval": "提交以便审批",
+    "Timezone": "时区",
+    "Loading": "正在加载...",
+    "NewNode": "新节点",
+    "AboutText": "版权所有 © 2014 Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。保留所有权利。在此所列举的其它商标则属于其各自拥有人的财产。"
+  }
 });
 
 }( this ));
@@ -39915,8 +39834,7 @@ Globalize.addCultureInfo( "zh-TW", "default", {
 			}
 		}
 	},
-	messages: {"AdditionalHelp":"其他說明","AddNewTab":"新增索引標籤","Alerts":"警示","ApplyFilter":"套用篩選","Approve":"核准","Attachments":"附件","Back":"返回","Basic":"基本","Between":"介於","Book":"會計帳簿","Cancel":"取消","Checked":"已核取","ClearFilter":"清除篩選","Close":"關閉","CloseCancelChanges":"關閉並取消變更","CloseSaveChanges":"關閉並儲存變更","CloseTab":"關閉索引標籤","ColumnPersonalization":"直欄個人化","Comments":"註解","Confirmation":"確認","Contains":"包含","CreateTab":"建立新的索引標籤","Cut":"剪下","Delete":"刪除","DiscardUndo":"放棄/復原","DisplayDropDownList":"顯示下拉式清單","Displaying":"顯示: ","DocWord":"文件","DoesNotContain":"不包含","DoesNotEndWith":"結尾並非為","DoesNotEqual":"不等於","DoesNotStartWith":"開頭並非為","Download":"下載","Duplicate":"複製","Edit":"編輯","EitherSelectedorNotSelected":"已選取項或未選取項","Email":"電子郵件","EndsWith":"結尾為","EqualsStr":"等於","ExpandCollapse":"展開/折疊","ExportFailed":"匯出失敗","ExportToExcel":"匯出至 Excel","FileInUse":"指定的檔案處於使用中","FileInUseDetail":"關閉正在使用該檔案的應用程式或指定其他檔案名稱。","Filter":"篩選","FilterMenu":"篩選功能表","FilterOptions":"篩選選項","FilterWithinResults":"在結果內篩選","First":"第一個","FirstView":"第一個檢視","Folder":"資料夾","ForgotPassword":"忘記密碼？","Forward":"下一頁","GetMoreRows":"獲取更多列","GreaterThan":"大於","GreaterThanOrEquals":"大於或等於","GridSettings":"格線設定","GroupSelection":"群組選取","Help":"說明","HideColumn":"說明直欄","IsEmpty":"為空","IsNotEmpty":"不為空","Last":"最後一個","LastView":"最後一個檢視","LaunchActivate":"啟動/啟用","LessThan":"小於","LessThanOrEquals":"小於或等於","Links":"連結","ListTabs":"列出全部索引標籤","LoadingItem":"正在載入項目 ","Maintenance":"維護","Menu":"功能表","New":"新增","Next":"下一步","NextView":"下一個檢視","No":"否","NotChecked":"未核取","Notes":"附註","NotSelected":"未選取","Of":" / ","Ok":"確定","Open":"開啟","Password":"密碼","Paste":"貼上","Phone":"電話","PleaseWait":"請稍候","Previous":"上一步","PreviousView":"上一個檢視","Print":"列印","Queries":"查詢","Redo":"重做","Refresh":"重新整理","Reject":"拒絕","RememberMe":"請在電腦上記住我的資訊","Reports":"報表","Reset":"重設","Review":"檢閱","RunFilter":"執行篩選","RunJob":"執行工作","Save":"儲存","SaveBeforeClosing":"關閉前儲存","SavedFilters":"儲存的篩選","SaveSubmit":"儲存/送出","ScreenDesign":"螢幕設計","Search":"搜尋","SelectContents":"選取內容","SelectDate":"選取日期","SelectDeselect":"全選/取消全選","Selected":"已選取: ","ServerName":"伺服器名稱","Settings":"設定","ShowFilterRow":"顯示篩選列","SignIn":"登入","SortAscending":"遞增排序","SortDescending":"遞減排序","Spreadsheet":"試算表","StartsWith":"開頭為","StatusIndicator":"狀態指示器","Tasks":"任務","Today":"今天","Translate":"翻譯","UserID":"使用者 ID","Utilities":"公用程式","Yes":"是","Page":"頁","Rows":"列","ShowingAll":"顯示全部","SessionNavigation":"階段作業導覽","ListAllMenuItems":"列出全部功能表項目","NoRecordsFound":"未找到任何記錄","SearchTree":"搜尋樹狀目錄","Clear":"清除","DrillDown":"向下切入","Required":"此欄位為必要欄位。","Available":"可用:","Add":"新增","MoveDown":"下移","MoveUp":"上移","Remove":"移除","LastYear":"去年","NextMonth":"下個月","NextWeek":"下週","NextYear":"明年","OneMonthAgo":"一個月前","OneWeekAgo":"一週前","SixMonthsAgo":"六個月前","Time":"時間","CannotBeSelected":"此列無法選取。","ResetToDefault":"重設為預設版面配置","CloseOtherTabs":"關閉其他索引標籤","EmailValidation":"請輸入有效的電子郵件地址","UrlValidation":"請輸入有效的 URL","EndofResults":"結果結尾","More":"更多…","RecordsPerPage":"每頁記錄數","Maximize":"上限","Minimize":"下限","CloseAllTabs":"關閉全部索引標籤","QuickDates":"快速選取日期","Finish":"完成","SetTextColor":"設定文字色彩","AttachmentRules":"附件規則","AutoRefresh":"自動重新整理","BarChart":"橫條圖","CopyMail":"複製並郵寄","CopyUrl":"複製 URL","DistributeHorizontally":"水平均分","ExpandAll":"全部展開","Generate":"產生","GenerateScript":"產生指令碼","NoAttachments":"無附件","PieChart":"圓形圖","QuickAccess":"快速存取","RestoreUser":"還原使用者","SaveConsolidate":"儲存並執行本地合併","Screen Design":"螢幕設計","SelectAll":"全選","SpellCheck":"拼字檢查","SubmitForApproval":"送出以核准","Timezone":"時區","Loading":"正在載入...","NewNode":"新增節點","AboutText":"版權所有 © 2015 Infor。保留一切權利。本文所載之文字及設計標誌為 Infor 和/或其分支機構及子公司的商標和/或註冊商標。保留一切權利。本文列出的所有其他商標皆為各擁有者的財產。www.infor.com.", "SelectMonthYear":"選取月及年"}
+	messages: {"AdditionalHelp":"其他說明","AddNewTab":"新增索引標籤","Alerts":"警示","ApplyFilter":"套用篩選","Approve":"核准","Attachments":"附件","Back":"返回","Basic":"基本","Between":"介於","Book":"會計帳簿","Cancel":"取消","Checked":"已核取","ClearFilter":"清除篩選","Close":"關閉","CloseCancelChanges":"關閉並取消變更","CloseSaveChanges":"關閉並儲存變更","CloseTab":"關閉索引標籤","ColumnPersonalization":"直欄個人化","Comments":"註解","Confirmation":"確認","Contains":"包含","CreateTab":"建立新的索引標籤","Cut":"剪下","Delete":"刪除","DiscardUndo":"放棄/復原","DisplayDropDownList":"顯示下拉式清單","Displaying":"顯示: ","DocWord":"文件","DoesNotContain":"不包含","DoesNotEndWith":"結尾並非為","DoesNotEqual":"不等於","DoesNotStartWith":"開頭並非為","Download":"下載","Duplicate":"複製","Edit":"編輯","EitherSelectedorNotSelected":"已選取項或未選取項","Email":"電子郵件","EndsWith":"結尾為","EqualsStr":"等於","ExpandCollapse":"展開/折疊","ExportFailed":"匯出失敗","ExportToExcel":"匯出至 Excel","FileInUse":"指定的檔案處於使用中","FileInUseDetail":"關閉正在使用該檔案的應用程式或指定其他檔案名稱。","Filter":"篩選","FilterMenu":"篩選功能表","FilterOptions":"篩選選項","FilterWithinResults":"在結果內篩選","First":"第一個","FirstView":"第一個檢視","Folder":"資料夾","ForgotPassword":"忘記密碼？","Forward":"下一頁","GetMoreRows":"獲取更多列","GreaterThan":"大於","GreaterThanOrEquals":"大於或等於","GridSettings":"格線設定","GroupSelection":"群組選取","Help":"說明","HideColumn":"說明直欄","IsEmpty":"為空","IsNotEmpty":"不為空","Last":"最後一個","LastView":"最後一個檢視","LaunchActivate":"啟動/啟用","LessThan":"小於","LessThanOrEquals":"小於或等於","Links":"連結","ListTabs":"列出全部索引標籤","LoadingItem":"正在載入項目 ","Maintenance":"維護","Menu":"功能表","New":"新增","Next":"下一步","NextView":"下一個檢視","No":"否","NotChecked":"未核取","Notes":"附註","NotSelected":"未選取","Of":" / ","Ok":"確定","Open":"開啟","Password":"密碼","Paste":"貼上","Phone":"電話","PleaseWait":"請稍候","Previous":"上一步","PreviousView":"上一個檢視","Print":"列印","Queries":"查詢","Redo":"重做","Refresh":"重新整理","Reject":"拒絕","RememberMe":"請在電腦上記住我的資訊","Reports":"報表","Reset":"重設","Review":"檢閱","RunFilter":"執行篩選","RunJob":"執行工作","Save":"儲存","SaveBeforeClosing":"關閉前儲存","SavedFilters":"儲存的篩選","SaveSubmit":"儲存/送出","ScreenDesign":"螢幕設計","Search":"搜尋","SelectContents":"選取內容","SelectDate":"選取日期","SelectDeselect":"全選/取消全選","Selected":"已選取: ","ServerName":"伺服器名稱","Settings":"設定","ShowFilterRow":"顯示篩選列","SignIn":"登入","SortAscending":"遞增排序","SortDescending":"遞減排序","Spreadsheet":"試算表","StartsWith":"開頭為","StatusIndicator":"狀態指示器","Tasks":"任務","Today":"今天","Translate":"翻譯","UserID":"使用者 ID","Utilities":"公用程式","Yes":"是","Page":"頁","Rows":"列","ShowingAll":"顯示全部","SessionNavigation":"階段作業導覽","ListAllMenuItems":"列出全部功能表項目","NoRecordsFound":"未找到任何記錄","SearchTree":"搜尋樹狀目錄","Clear":"清除","DrillDown":"向下切入","Required":"此欄位為必要欄位。","Available":"可用:","Add":"新增","MoveDown":"下移","MoveUp":"上移","Remove":"移除","LastYear":"去年","NextMonth":"下個月","NextWeek":"下週","NextYear":"明年","OneMonthAgo":"一個月前","OneWeekAgo":"一週前","SixMonthsAgo":"六個月前","Time":"時間","CannotBeSelected":"此列無法選取。","ResetToDefault":"重設為預設版面配置","CloseOtherTabs":"關閉其他索引標籤","EmailValidation":"請輸入有效的電子郵件地址","UrlValidation":"請輸入有效的 URL","EndofResults":"結果結尾","More":"更多…","RecordsPerPage":"每頁記錄數","Maximize":"上限","Minimize":"下限","CloseAllTabs":"關閉全部索引標籤","QuickDates":"快速選取日期","Finish":"完成","SetTextColor":"設定文字色彩","AttachmentRules":"附件規則","AutoRefresh":"自動重新整理","BarChart":"橫條圖","CopyMail":"複製並郵寄","CopyUrl":"複製 URL","DistributeHorizontally":"水平均分","ExpandAll":"全部展開","Generate":"產生","GenerateScript":"產生指令碼","NoAttachments":"無附件","PieChart":"圓形圖","QuickAccess":"快速存取","RestoreUser":"還原使用者","SaveConsolidate":"儲存並執行本地合併","Screen Design":"螢幕設計","SelectAll":"全選","SpellCheck":"拼字檢查","SubmitForApproval":"送出以核准","Timezone":"時區","Loading":"正在載入...","NewNode":"新增節點","AboutText":"版權所有 © 2014 Infor。保留一切權利。本文所載之文字及設計標誌為 Infor 和/或其分支機構及子公司的商標和/或註冊商標。保留一切權利。本文列出的所有其他商標皆為各擁有者的財產。www.infor.com.", "SelectMonthYear":"選取月及年"}
 });
 
 }( this ));
-//# sourceURL=inforControlsCombined.js

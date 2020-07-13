@@ -6,16 +6,8 @@
   <meta charset="utf-8">
 
   <title>Landmark Dropdown Validation</title>
-
-<!-- jira: HFC-1512 -->
-
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-
-  <script src="../Release/jquery-1.11.1.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-
-<!--
+  
+<!-- jira: HFC-1475 -->
   <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
   <script src="../Release/jquery-1.11.1.min.js"></script>
@@ -23,10 +15,19 @@
   <script src="../Release/inforControlsCombined.js"></script>
   <script src="../inforDataGrid/js/sampleData.js"></script>
 
+	
+<!-- 
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.11.1.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+	<script src="../Controls/inforDataGrid/js/sampleData.js"></script>
+
 -->
 
 
-
+ 
   <script>
      $(function () {
       //Globalize.culture('ar-SA');
@@ -70,9 +71,10 @@
         });
 
       //Initialize all form controls
+	  $(".inforRadioButtonSet input").inforRadioButton();
       $('body').inforForm();
       $('.inforLookupField').inforLookupField();
-
+	  
 	  $("#dropDown2").data("dropdown").input.css('width', "25");
 
 
@@ -130,7 +132,7 @@
     }
   </script>
 </head>
-<body class=" inforApplicationPadding">
+<body class="inforHidden inforApplicationPadding">
 
   <form id="formExample">
     <div class="inforModuleContainer">
@@ -170,7 +172,15 @@
 					<span class="inforCheckboxLabel">Colleague requests sent to me</span>
 				</label>
 			</div>
-
+			<br>
+					
+<div class="inforRadioButtonSet required" id="radio1" >
+	<span class="inforTopLabel" id="groupLabel">Select Option</span><br>
+	<input type="radio" name="radio1_Group" class="inforRadioButton" id="radio1_1" value="1"><label for="radio1_1">Needs Improvement</label><br>
+	<input type="radio" name="radio1_Group" class="inforRadioButton" id="radio1_2" value="2"><label for="radio1_2">Meets Expectations</label><br>
+	<input type="radio" name="radio1_Group" class="inforRadioButton" id="radio1_3" value="3"><label for="radio1_3">Exceeds Expectations</label>
+</div>
+			
 			<br>
            <label for="dropDown1" class="inforLabel">Supplier</label>
            <select id="dropDown1" data-validate="required" class="dropdown required">

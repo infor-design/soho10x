@@ -36,10 +36,22 @@ $(function () {
   ko.bindingHandlers.dropdown = {
     init: function(element, valueAccessor) {
       var opts = ko.utils.unwrapObservable(valueAccessor()),
-        elem = $(element);
+        elem = $(element),
+		setDataOnInit = true,
+		triggerOnInit = true;
 
+	  if (opts.initData != undefined) {
+		setDataOnInit = ko.utils.unwrapObservable(opts.initData);
+	  }
+	  
+	  if (opts.triggerInit != undefined) {
+		triggerOnInit = ko.utils.unwrapObservable(opts.triggerInit);
+	  }
+	  
       //set the data
-      ko.bindingHandlers.dropdown.setData(elem, opts);
+	  if (setDataOnInit) {
+        ko.bindingHandlers.dropdown.setData(elem, opts);
+	  }
 
       //init the control
       if (opts.options) {
@@ -49,12 +61,11 @@ $(function () {
       }
 
       //set the value
-      if (opts.value) {
+      if (opts.value && triggerOnInit) {
         $(element).val(valueAccessor().value()).trigger('updated');
       }
 
       //Setup events
-
       ko.utils.registerEventHandler(element, 'change', function() {
         var value = valueAccessor().value;
         value($(this).val());
@@ -71,16 +82,28 @@ $(function () {
     },
     setData: function(elem, opts) {
       if (opts.data) {
-        var data = ko.utils.unwrapObservable(opts.data);
-        if (data.length === elem[0].options.length && elem[0].options[0].id === data[0].id) {
+        var data = ko.utils.unwrapObservable(opts.data),
+			triggerData = true,
+			options = "";
+        if (data.length === elem[0].options.length && elem[0].options[0].value === data[0].id) {
           return;
         }
+
         elem.empty();
-        for (var i=0; i < data.length; i++) {
-          var opt = $('<option></option').attr('value', (opts.optionsValue ? data[i][opts.optionsValue] : data[i].key)).html((opts.optionsText ? data[i][opts.optionsText] : data[i].name));
-          elem.append(opt);
+        for (var i=0, len=data.length; i < len; i++) {
+          options += '<option value=\"' + (opts.optionsValue ? data[i][opts.optionsValue] : data[i].key) + '\">' 
+		  + (opts.optionsText ? data[i][opts.optionsText] : data[i].name)
+		  + '</option>';
         }
-        elem.trigger('updated');
+		elem.append(options);	
+
+		if (opts.triggerData != undefined) {
+		  triggerData = ko.utils.unwrapObservable(opts.triggerData);
+		}
+
+		if (triggerData) {
+          elem.trigger('updated');
+		}
       }
     }
   };

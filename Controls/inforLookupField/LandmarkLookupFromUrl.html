@@ -13,8 +13,6 @@
   <script src="../inforDataGrid/js/sampleData.js"></script>
   <script src="js/inforLookupField.js"></script>
 
-
-
 	<script>
 		$(function ()
 		{
@@ -26,12 +24,32 @@
 				editable: true,
 				ajaxOptions:
 				{
-					url              : "./ExampleLookupGridFrag2.html",
+					url              : "ExampleLookupGridFrag.html" ,
 					cache            : false,
 					contentType      : "application/json; charset=utf-8",
 					success          : function(data, textStatus, jqXHR)
 					{
+					},
+					error : function(failure)
+					{
 
+					}
+				}
+			});
+
+			$("#Currency2").inforLookupField(
+			{
+				returnField: "employeeId.value",
+				height: "auto",
+				width: "450px", //"auto",
+				editable: true,
+				ajaxOptions:
+				{
+					url              : "ExampleLookupGridFrag2.html" ,
+					cache            : false,
+					contentType      : "application/json; charset=utf-8",
+					success          : function(data, textStatus, jqXHR)
+					{
 					},
 					error : function(failure)
 					{
@@ -49,6 +67,9 @@
 		<div class="column1">
 			<label class="inforLabel">Test Lookup</label>
 			<input class="inforLookupField" type="text" id="Currency" maxlength="5" size="5"><br>
+
+			<label class="inforLabel">Test Lookup2</label>
+			<input class="inforLookupField" type="text" id="Currency2" maxlength="5" size="5"><br>
 		</div>
 	</div>
 

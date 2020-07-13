@@ -17,24 +17,64 @@
     $(function () {
 
       $('#states-multi').multiselect({source: function (term, response) {
-        //make an ajax call
-        $.getJSON('http://www.randomtext.me/api/lorem/p-5/2', function(data) {
-          var items = data.text_out.split('</p>'),
-            resp = [];
-
-          $.each(items, function(key, value) {
-            resp.push({id: key.toString(), value: key.toString(), label: value.replace('<p>','')});
-          });
-
-          resp.push({id: 'long', value: 'long', label: 'Structure the data with val, label syntax is done on the server'});
-
-          //Structure the data with val, label syntax is done on the server
-          response(resp);
-        });
+		var resp = getEmptyData(response);
       }}).on('change', function () {
         console.log('Changed to :' + $(this).val());
       });
+
+	  $(".body").inforForm();
+
+	  $("#enablecontrol").click(function()
+		{
+			$('#states-multi').multiselect("enable");
+		});
+
+		$("#disablecontrol").click(function()
+		{
+			$('#states-multi').multiselect("disable");
+		});
+
+		$("#getdata").click(function()
+		{
+			var resp = [];
+			$.getJSON('http://www.randomtext.me/api/lorem/p-5/2', function(data)
+			{
+				var items = data.text_out.split('</p>');
+
+				for (var index=0, len=items.length; index<len; index++)
+				{
+					var id = index.toString();
+					var label = items[index].replace("<p>","");
+					var selected = (index % 2) ? "selected" : undefined;
+
+					if ($.trim(label).length > 0)
+						resp.push({ id:id, value:id, label:label, selected:selected});
+				}
+
+				var elem = $("#states-multi");
+				elem.empty();
+				for (var i=0; i < resp.length; i++)
+				{
+					var opt = $('<option></option>').attr({value: resp[i].value, selected: resp[i]["selected"]}).html(resp[i].label);
+					elem.append(opt);
+					if (resp[i]["selected"])
+						elem.multiselect('addTag', $(opt));
+				}
+
+
+			});
+		});
     });
+
+	function getEmptyData(response)
+	{
+		var resp = [];
+		resp.push({id: "", value: "", label: ""});
+		response(resp);
+	}
+
+
+
   </script>
 
 </head>
@@ -43,6 +83,11 @@
     <label for="states-multi" class="label">Multiple States</label>
     <select multiple id="states-multi" name="states" class="multiselect">
     </select>
+	<br>
+	<button type="button" class="inforFormButton" id="enablecontrol">Enable</button>
+	<button type="button" class="inforFormButton" id="disablecontrol">Disable</button>
+	<button type="button" class="inforFormButton" id="getdata">Get Data</button>
+
   </div>
 </body>
 </html>

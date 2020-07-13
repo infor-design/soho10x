@@ -4,7 +4,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('rating', ['jquery'], factory);
+      define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
       //Support for Atom/CommonJS
       module.exports = factory;

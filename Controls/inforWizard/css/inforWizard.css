@@ -107,7 +107,8 @@
 	height: 22px;
 	padding: 20px 0;
 	position: absolute;
-	width: 100%;
+	right: 0;
+	width: auto;
 }
 
 .inforWizardBottomButtonBar .inforFormButton{

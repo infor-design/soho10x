@@ -645,7 +645,7 @@
         thousandSepartor = Globalize.culture().numberFormat[","];
 
             if (e.charCode != null) {
-        chrCode = e.charCode;
+              chrCode = e.charCode;
             }
             else if (e.which != null) {
               chrCode = e.which;
@@ -659,18 +659,28 @@
             }
 
             chrTyped = String.fromCharCode(chrCode);
+
+            var isTextSelected = function (input) {
+              if (typeof input.selectionStart == "number") {
+                return input.selectionStart == 0 && input.selectionEnd == input.value.length;
+              } else if (typeof document.selection != "undefined") {
+                input.focus();
+                return document.selection.createRange().text == input.value;
+              }
+            };
+
             //Allow one , and one .
             if (decimalSeparator == chrTyped && allowDecimal) {
-              if ($input.val().indexOf(decimalSeparator) > -1) {
-                // if the input is not hightlight
-                if ($input[0].selectionEnd - $input[0].selectionStart != $input.val().length)
-                  e.preventDefault();
-
+              if (isTextSelected($input[0])) {
                 return;
+              }
+
+              if ($input.val().indexOf(decimalSeparator) > -1) {
+                 e.preventDefault();
+                 return;
               }
               return;
             }
-
 
             if (thousandSepartor == chrTyped  && allowDecimal) {
                 //Once a decimal separator has been entered, no thousand separators are allowed.

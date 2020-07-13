@@ -41,31 +41,25 @@
 				};
 
 			//Define a function to do whats needed to get the page. This is called in two places: source (initial Page) and onPageRequested
-			var baseqry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?";
+			var baseqry  = "http://localhost:4000/api/compressors?";
 
 			//initialize the control options - the source function is called when a user requests by typing or clicking the button
 			$("#inforLookupFieldRemote").inforLookupField({
 				gridOptions: options, 	//set the grid options (columns and settings). dataset will be empty.
-				returnField: "city",
+				returnField: "id",
 				width: 400,
 				height: "auto",
 				editable: true,
 				typeAheadSearch: true,
 				onPageRequested: function (e, args) {
-					alert();
-          //get a new page:
-					var qry = baseqry + "&$inlinecount=allpages&$top="+args.pageSize+"&$skip="+(args.pageNum*args.pageSize)+"&$select=city,state,numberEmployees,officeId";
+						//get a new page:
+					var qry = baseqry + "&pageSize="+args.pageSize+"&pageNum="+(args.pageNum);
 
-					if (args.filters)
-						qry += "&$filter=substringof('"+args.filters["officeId"].value+"',city) eq true";
-
-					//add sort condition
-					qry += "&$orderby="+(args.sortColumnId ? args.sortColumnId : "city")+(args.sortAsc ? " asc" : " desc");
 
 					$.getJSON(qry,
 					 function (jsonResult) {
-						var newData = jsonResult.d.results;
-						e.datagrid.mergeData(newData, args.pageNum, parseInt(jsonResult.d.__count));
+						var newData = jsonResult.data;
+						e.datagrid.mergeData(newData, args.pageNum, parseInt(jsonResult.data.length));
 					 });
 				},
 				source: function (request, response) {
@@ -80,9 +74,8 @@
 					//Set the idProperty using set options or any other grid property
 
 					//get first page:
-					var qry = baseqry + "&$inlinecount=allpages&$top="+options.pageSize+"&$skip=0&$select=city,state,numberEmployees,officeId";
+					var qry = baseqry + "&pageNum=1&pageSize="+options.pageSize;
 					//add initial sort condition
-					qry += "&$orderby=city asc";
 
 					if (request.term)
 						qry += "&$filter=substringof('"+request.term+"', city) eq true";
@@ -92,22 +85,18 @@
 
 					   //Pass in the grid columns We want to see. This could come from the Json Request as well.
 					   var columns = [];
-					   columns.push({ id: "city", name: "City", field: "city", width: 135, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
-					   columns.push({ id: "state", name: "State", field: "state",  formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"]});
-					   columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, headerCssClass : "alignRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
+					   columns.push({ id: "id", name: "id", field: "id", width: 135, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+					   columns.push({ id: "activity", name: "activity", field: "activity",  formatter: TextCellFormatter, editor: SelectCellEditor, options: ["New Jersey", "California", "Nevada", "Virginia", "Missouri"]});
+					   columns.push({ id: "productName", name: "productName", field: "productName", width: 80, headerCssClass : "alignRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
 
 					   //set various control properties retrieved after the request
 
-					   //set sort indicator on the grid. Future: Pull this out of the cookie
-					   self.inforLookupField("option", "sortColumnId", "city");
-					   self.inforLookupField("option", "sortAsc", true);
-
 					   //cache for later
-					   cache[ request.term ] = {data: jsonResult.d.results, columns : columns, totalCount : jsonResult.d.__count};
+					   cache[ request.term ] = {data: jsonResult.data, columns : columns, totalCount : jsonResult.data.length};
 
 					   //pass in total count and options
-					   options.idProperty ='officeId';
-					   response(jsonResult.d.results, columns, jsonResult.d.__count, options);
+					   options.idProperty ='id';
+					   response(jsonResult.data, columns, jsonResult.data, options);
 					 });
 				}
 			});

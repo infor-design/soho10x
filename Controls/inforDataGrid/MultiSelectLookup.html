@@ -19,8 +19,8 @@
 <body>
 	<div>
 	   <span class="inforToolbar">
-			<button type="button" class="inforIconButton submit" title="Serialize" onclick='console.log(data[0])'></button>
-		</span>
+			<button type="button" class="inforIconButton submit" title="Serialize" onclick='console.log(grid.getSelectedRows())'></button>
+		</span>data[0]
 		<div id="inforDataGrid" ></div>
 	</div>
 	<script>
@@ -48,15 +48,14 @@
       showFooter: true
 		};
 
-		var lookupFilter = function (request, response, isFormatter, dataContext) {
-      var result = [];
-			result[0]= {officeId: 6, city: "test 1"};
-			result[1]= {officeId: 7, city: "test 2"};
-			result[2]= {officeId: 8, city: "test 3"};
-			result[3]= {officeId: 9, city: "test 4"};
-			result[4]= {officeId: 11, city: "test 5"};
-			result[5]= {officeId: 14, city: "test 6"};
-
+		var lookupFilter = function (request, response) {
+			var result = [];
+			result.push({officeId: 6, city: "test 1"});
+			result.push({officeId: 7, city: "test 2"});
+			result.push({officeId: 8, city: "test 3"});
+			result.push({officeId: 9, city: "test 4"});
+			result.push({officeId: 11, city: "test 5"});
+			result.push({officeId: 14, city: "test 6"});
 			return response(result);
 		}
 
@@ -78,7 +77,6 @@
 			showFilter: true
 		};
 		grid = $("#inforDataGrid").inforDataGrid(options);
-    grid.validateAll();
 
 	</script>
 </body>

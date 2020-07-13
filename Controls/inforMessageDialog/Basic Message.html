@@ -13,6 +13,7 @@
 	<script src="js/modal.js"></script>
 	<script src="js/message.js"></script>
 	<link href="css/modal.css" rel="stylesheet">
+	<link href="css/message.css" rel="stylesheet">
 
 	<script>
 		$(function () {
@@ -22,15 +23,7 @@
 				detailedMessage: '',
 				dialogType: 'Information'
 			});
-		}).on('beforeOpen', function () {
-          console.log('About to open.');
-          //Could return false to not close
-          //return false;
-        }).on('open', function () {
-          console.log('Open.');
-          //Could return false to not close
-          //return false;
-        });
+		});
 	</script>
 </head>
 <body>

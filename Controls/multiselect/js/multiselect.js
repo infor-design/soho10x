@@ -4,7 +4,7 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('multiselect', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -53,7 +53,7 @@
         this.trigger = $('<button type="button" class="icon"><i></i></button>').insertAfter(this.input);
 
         //Add selected items
-        var selOpts = this.element[0].selectedOptions;
+        var selOpts = this.element.find('option:selected');
         $.each(selOpts, function (i, item) {
           self.addTag($(item));
         });
@@ -105,7 +105,7 @@
         items = this.element[0].options;
         this.list.empty();
 
-        $(items).each(function (i, item) {
+        $.each(items, function (i, item) {
           var isDisabled = false,
             label = (typeof item === 'string' ? item : item.text),
             value = (typeof item === 'string' ? null : item.value),
@@ -255,9 +255,10 @@
           return;
         }
 
-        if (this.input.prop('disabled')) {
-          return;
-        }
+        //HFC-3237
+        //if (this.input.prop('disabled')) {
+        //  return;
+        //}
 
         this.input.attr('aria-activedescendant', li.attr('id'));
 

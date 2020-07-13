@@ -6,7 +6,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('dropdown', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -19,8 +19,7 @@
     var pluginName = 'dropdown',
         defaults = {
           editable: 'false',
-          source: null,  //A function that can do an ajax call.
-          keydown: null
+          source: null  //A function that can do an ajax call.
         },
         settings = $.extend({}, defaults, options);
 
@@ -95,10 +94,6 @@
         //Keep a list generated and append it when we need to.
         self.list = $('<ul id="dropdown-list" class="dropdown-list" tabindex="-1" aria-expanded="true"></ul>');
 
-        if ($(self.input).hasClass('alignRight')) {
-          self.list.addClass('alignRight');
-        }
-		
         self.element.find('option').each(function(i) {
           var option = $(this),
               listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.html() + '</li>');
@@ -153,9 +148,6 @@
        if (this.isHidden) {
         this.input.hide().prev('label').hide();
        }
-       if (this.element.css('text-align') === 'right') {
-        this.input.addClass('alignRight');
-       }
       },
       bindEvents: function() {
         var self = this,
@@ -166,19 +158,24 @@
           if (self.element.is(':disabled') || self.input.hasClass('is-readonly')) {
             return;
           }
-
-          if(typeof settings.keydown === 'function') {
-            settings.keydown(e);
+          if (e.which === 8) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
           }
 
-          if(e.isImmediatePropagationStopped() === false) {
-            self.handleKeyDown($(this), e);
-          }
+          self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           var charCode = e.which;
           //Needed for browsers that use keypress events to manipulate the window.
           if (e.altKey && (charCode === 38 || charCode === 40)) {
             e.stopPropagation();
+            return false;
+          }
+          // Prevent Backspace from returning to the previous page.
+          if (charCode === 8) {
+            e.stopPropagation();
+            e.preventDefault();
             return false;
           }
 
@@ -228,27 +225,12 @@
           }, 1);
         });
       },
-
       activate: function () {
         this.input.focus();
         if (this.input[0].setSelectionRange&& !this.input[0].readOnly) {
           this.input[0].setSelectionRange(0, 0);  //scroll to left
         }
       },
-
-      selectBlank: function() {
-
-        var blank = this.element.find('option').filter(function() {
-          return !this.value || $.trim(this.value).length === 0;
-        });
-
-        if (blank.length > 0) {
-          blank[0].selected = true;
-          this.element.trigger('updated').trigger('change');
-        }
-
-      },
-
       open: function() {
         //Prep for opening list,make ajax call ect...
         var self = this;
@@ -280,7 +262,7 @@
             'left': '-9999px'
           }).show().focus().click();
 
-          self.element.trigger('dropdownopen');
+          this.element.trigger('dropdownopen');
 
           self.element.off('change.dropdown').one('change.dropdown', function() {
             var idx = self.element.find('option:selected').index(),
@@ -303,6 +285,7 @@
 
         this.scrollToOption(current);
         this.input.addClass('is-open');
+
         this.element.trigger('dropdownopen');
 
         self.list.on('click.list', 'li', function () {
@@ -333,6 +316,7 @@
         });
 
         $('#validation-errors').css('left', '-999px');
+
       },
       position: function() {
         var isFixed = false, isAbs = false,
@@ -373,8 +357,8 @@
         }
 
         // If the menu is off the bottom of the screen, cut up the size
-        var newHeight = $(window).height() - this.list.offset().top - 5;
-        if (this.list.offset().top + this.list.outerHeight() >  $(window).height() && newHeight > 100) {
+        if (this.list.offset().top + this.list.outerHeight() >  $(window).height()) {
+          var newHeight = $(window).height() - this.list.offset().top - 5;
           this.list.height(newHeight);
         }
 
@@ -434,17 +418,9 @@
           return false;
         }
         switch (e.keyCode) {
-          case 37: //backspace
-          case 8: //del & backspace
+          case 8:    //backspace could clear
           case 46: { //del
-
-            if (!self.isOpen()) {
-              self.selectBlank();
-            }
-
-            // Prevent Backspace from returning to the previous page.
             e.stopPropagation();
-            e.preventDefault();
             return false;
           }
           case 9: {  //tab - save the current selection
@@ -462,13 +438,12 @@
             if (self.isOpen()) {
               // Close the option list
               self.closeList(true);
-			  e.stopPropagation();
-			  return false;
-			}
-			break;
+            }
+
+            e.stopPropagation();
+            return false;
           }
           case 13: {  //enter
-
             if (self.isOpen()) {
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
@@ -479,9 +454,6 @@
             return false;
           }
           case 38: {  //up
-            if (e.shiftKey) {
-              return;
-            }
 
             if (selectedIndex > 0) {
               var prev = $(options[selectedIndex - 1]);
@@ -493,9 +465,7 @@
             return false;
           }
           case 40: {  //down
-            if (e.shiftKey) {
-              return;
-            }
+
             if (selectedIndex < options.length - 1) {
               var next = $(options[selectedIndex + 1]);
               this.selectOption(next);

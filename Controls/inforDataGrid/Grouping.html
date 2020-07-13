@@ -40,24 +40,6 @@
     columns.push({ id: 'jul', name: 'Jul', field: 'jul', width: 80, headerCssClass: 'alignHeaderRight', formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter, groupTotalsFormatter: sumTotalsFormatter});
     columns.push({ id: 'aug', name: 'Aug', field: 'aug', width: 80, headerCssClass: 'alignHeaderRight', formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter, groupTotalsFormatter: sumTotalsFormatter});
     columns.push({ id: 'sep', name: 'Sept', field: 'sep', width: 80, headerCssClass: 'alignHeaderRight', formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter, groupTotalsFormatter: sumTotalsFormatter});
-    columns.push({
-      id:"aug",
-      name:"Inventory Value (Percent of 5 Million)",
-      field:"aug",
-      sortable:false,
-      width:200,
-      selectable:true,
-      formatter:ProgressBarCellFormatter,
-      headerCssClass:"alignHeaderCenter",
-      meterRange:5000000,
-      showPercent: false,
-      ranges:
-      {
-        ruby: {start:0,end:500000,tooltip:"{0} is only worth {1}.",tooltipvars:["ManufacturerName","InventoryValue"]},
-        amber: {start:500001,end:2000000, tooltip:"{0} is worth {1}",tooltipvars:["ManufacturerName","InventoryValue"]},
-        emerald: {start:2000001,end:50000000, tooltip:"{0} is worth a whopping {1}",tooltipvars:["ManufacturerName","InventoryValue"]}
-      }
-    });
 
     var data = [];
     data.push({ rowid : '0', cust1: 'ABC', cust2: 'AA', cust3: 'A1', percAllocation:  null, jan: 10, feb: null, mar: 10, apr: 5, may: 8, jun: 30, jul: 1, aug: 5, sep: 30});

@@ -786,10 +786,7 @@ formatDate = function( value, format, culture ) {
 			case "N":
 				formatInfo = nf;
 				// fall through
-			case "T":
-        formatInfo = nf;
-        // fall through
-      case "C":
+			case "C":
 				formatInfo = formatInfo || nf.currency;
 				// fall through
 			case "P":
@@ -988,6 +985,8 @@ getEraYear = function( date, cal, era, sortable ) {
 					add = "(\\D*)";
 					break;
 				case "yyyy":
+					add = "(\\d\\d\\d?\\d?)";
+					break;
 				case "fff":
 				case "ff":
 				case "f":
@@ -1090,7 +1089,7 @@ getEraYear = function( date, cal, era, sortable ) {
 						break;
 					case "y": case "yy":
 					case "yyyy":
-						year = clength < 4 ? expandYear( cal, matchInt ) : matchInt;
+						year = matchInt.toString().length < 4 ? expandYear( cal, matchInt ) : matchInt;
 						if ( outOfRange(year, 0, 9999) ) return null;
 						break;
 					case "h": case "hh":
@@ -1173,7 +1172,8 @@ getEraYear = function( date, cal, era, sortable ) {
 				}
 			}
 		}
-		var result = new Date(), defaultYear, convert = cal.convert;
+		//LMCLIENT-24809 : Changing the default year to 2016 considering Feb 29 that only occurs during leap year; 
+		var result = new Date(2016, 0), defaultYear, convert = cal.convert;
 		defaultYear = convert ? convert.fromGregorian( result )[ 0 ] : result.getFullYear();
 		if ( year === null ) {
 			year = defaultYear;

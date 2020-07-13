@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>Infor Tree Sample - Using JSON Data</title>
@@ -22,18 +22,16 @@
 
 		//Initialize the Tree control
 		$("#inforTree1").inforTree({"ui": { "select_limit": 1,
-						   "initially_select": ["1"]
-						  },
-					"html_data": { "data": data },
-					"themes": { "theme": "default",
-						"url": $("#controlsPath").val() + "JSTree/themes/default/style.css",
-						"dots": true,
-						"icons": true
-					},
-          "crrm": "input_width_limit": 2
-          },
-						"plugins": ["themes", "html_data", "ui", "crrm"]
-					});
+										   "initially_select": ["1"]
+										  },
+									"html_data": { "data": data },
+									"themes": { "theme": "default",
+										"url": $("#controlsPath").val() + "JSTree/themes/default/style.css",
+										"dots": true,
+										"icons": true
+									},
+										"plugins": ["themes", "html_data", "ui", "crrm"]
+									});
 	});
 	</script>
 </head>

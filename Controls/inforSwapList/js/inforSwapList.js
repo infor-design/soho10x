@@ -7,6 +7,7 @@
       sortable: true,
       availableItemText: Globalize.localize('Available'), //Translated text for the top headers
       selectedItemText: Globalize.localize('Selected'),
+	  validator: null,
       available: [],
       selected: []
     },
@@ -68,6 +69,14 @@
         if (elem.hasClass('disabled')) {
           return;
         }
+		var items = [];
+		self.leftList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canAdd && !self.options.validator.canAdd(items))
+		{
+			return;
+		}
         self.rightList.next().find('ul').append(self.leftList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -78,6 +87,14 @@
         if (elem.hasClass('disabled')) {
           return;
         }
+		var items = [];
+		self.leftList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canRemove && !self.options.validator.canRemove(items))
+		{
+			return;
+		}
         self.leftList.next().find('ul').append(self.rightList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -88,6 +105,15 @@
         if (elem.hasClass('disabled')) {
           return;
         }
+
+		var items = [];
+		self.leftList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canAdd && !self.options.validator.canAdd(items))
+		{
+			return;
+		}
         self.rightList.next().find('ul').append(self.leftList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
@@ -97,6 +123,14 @@
         if (elem.hasClass('disabled')) {
           return;
         }
+		var items = [];
+		self.rightList.next().find('.isSelected').each(function () {
+			items.push($(this).find('a').attr('rel'));
+		});
+		if (self.options.validator && self.options.validator.canRemove && !self.options.validator.canRemove(items))
+		{
+			return;
+		}
         self.leftList.next().find('ul').append(self.rightList.next().find('.isSelected'));
         self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();

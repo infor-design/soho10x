@@ -5,7 +5,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('popupmenu', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -17,8 +17,9 @@
     // Settings and Options
     var pluginName = 'popupmenu',
       defaults = {
+        autoFocus: true,
         menuId: null,  //Menu's Id
-        trigger: 'click',  //click, rightClick, immediate
+        trigger: 'click',  //click, rightClick, immediate, ctrlRightClick
         event: null //Might pass in an event for immediate right clicking.
       },
       settings = $.extend({}, defaults, options);
@@ -124,8 +125,37 @@
           this.open(settings.event);
         }
 
+        if (settings.trigger === 'ctrlRightClick') {
+
+          this.menu.parent().on('contextmenu.popupmenu', function (e) {
+            if (e.ctrlKey) {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }
+          });
+
+          // Detch Ctrl+
+          this.element.on('contextmenu', function (e) {
+            if (e.ctrlKey) {
+              e.preventDefault();
+              return false;
+            }
+
+          }).on('mousedown.popupmenu', function (e) {
+            if (e.button === 2 && e.ctrlKey) {
+              self.open(e);
+            }
+            e.stopPropagation();
+          });
+        }
+
         this.element.on('keypress.popupmenu', function (e) {
           if (settings.trigger === 'rightClick' && e.shiftKey && e.keyCode === 121) {  //Shift F10
+            self.open(e, true);
+          }
+
+          if (settings.trigger === 'ctrlRightClick' && e.shiftKey && e.ctrlKey && e.keyCode === 121) {  //Shift + Ctrl + F10
             self.open(e, true);
           }
         });
@@ -149,17 +179,23 @@
             return;
           }
 
-		  self.close();
-		  
+		  if (self.element.is('.autocomplete')) {
+			self.close();
+
+		    //Not a very usefull call back use closed events
+		    if (callback && href) {
+			  callback(href.substr(1), self.element , self.menu.offset(), $(this));
+		    }
+			return;
+          }
+
           self.element.trigger('selected', [anchor]);
+
+          self.close();
 
           //Not a very usefull call back use closed events
           if (callback && href) {
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
-          }
-
-          if (self.element.is('.autocomplete')) {
-            return;
           }
 
           if (href && href.charAt(0) !== '#') {
@@ -193,7 +229,7 @@
           if (e.keyCode === 37) {
             e.preventDefault();
             if (focus.closest('.popupmenu').length > 0) {
-              focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
+              focus.closest('.popupmenu').removeClass('is-open').prev('a').focus();
             }
           }
 
@@ -245,7 +281,7 @@
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
-        if (settings.trigger === 'rightClick' || (e !== null && settings.trigger === 'immediate')) {
+        if (settings.trigger === 'rightClick' || settings.trigger === 'ctrlRightClick' || (e !== null && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
@@ -270,6 +306,14 @@
             var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
             menuHeight = menuHeight - differenceX - 32;
             this.menu.height(menuHeight);
+          }
+
+          if (this.element.is('.autocomplete')) {
+            var top = this.element.offset().top + this.element.outerHeight(),
+              h = menuHeight - top;
+
+            wrapper.css('top', top);
+            this.menu.height(h);
           }
         }
 
@@ -296,9 +340,8 @@
             }
 
             if ($(e.target).closest('.popupmenu').length === 0) {
-              self.close(true);
+              self.close();
             }
-
           });
 
           if (!($('html').hasClass('ie8'))) {
@@ -307,26 +350,43 @@
             });
           }
 
+          // attach window level events for every popupmenu instance. This will be detached when instance is destroyed.
+          // this event is used to close popupmenus on scroll (mouse wheel or via window scroll bar)
+          $(window)
+          .off('wheel.popupmenu mousedown.popupmenu')
+          .on('wheel.popupmenu mousedown.popupmenu', function (e) {
+            // filter event listeners to popupmenu namespace
+            if(e.handleObj.namespace === 'popupmenu') {
+              // filter events to mousedown and wheel
+              if(e.type === 'mousedown' || e.type === 'wheel') {
+                var className = "";
+                // not all targets has offsetParent/className
+                if(!!($(e.target).offsetParent().length > 0)) {
+                  className = $(e.target).offsetParent()[0].className;
+                }
+                // if the current target has NO popupmenu-wrapper and wrapper on its parent class, close the popupmenu 
+                if(!(className === 'popupmenu-wrapper' || className === 'wrapper')) {
+                  self.close();
+                }
+              }
+            }
+          });
+
           self.element.trigger('open', [self.menu]);
 
         }, 400);
 
-        //Hide on iFrame Clicks - only works if on same domain
-        $('iframe').each(function () {
-          var frame = $(this);
-          frame.ready(function () {
-
-            try {
-              frame.contents().find('body').on('click.popupmenu', function () {
-                self.close();
-              });
-            } catch (e)  {
-              //Ignore security errors on out of iframe
-            }
-
-          });
-        });
-
+        //Hide on iFrame Clicks
+		try {
+		  $('iframe').ready(function () {
+			$('iframe').contents().find('body').on('click.popupmenu', function () {
+			  self.close();
+			});
+		  });
+		} catch (e) {
+		  // Ignore security errors on out of iframe
+		}
+		
         this.handleKeys();
         this.element.attr('aria-expanded', 'true');
 
@@ -357,8 +417,12 @@
           clearTimeout(timeout);
         });
 
-       if (!settings.noFocus) {
-            self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        if (settings.autoFocus) {
+          self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        }
+
+        if (self.element.closest('.inforLookupGridBoxShadow').length === 1) {
+          self.menu.parent().css('z-index', '9001');
         }
       },
 
@@ -441,19 +505,18 @@
 
       detach: function () {
         $(document).off('click.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu');
+        $(window).off('scroll.popupmenu resize.popupmenu wheel.popupmenu mousedown.popupmenu');
         this.menu.off('click.popmenu');
-        $('iframe').each(function () {
-          var frame = $(this);
-          try {
-            frame.contents().find('body').off('click.popupmenu');
-          } catch (e) {
-            //Ignore security errors on out of iframe
-          }
-        });
+
+        try {
+          $('iframe').contents().find('body').off('click.popupmenu');
+        } catch (e) {
+          // Ignore security errors on out of iframe
+        }
+
       },
 
-      close: function (noFocus) {
+      close: function () {
         var wrapper = this.menu.parent('.popupmenu-wrapper');
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
         this.menu.css({'left': '-999px', 'top': '', 'height': ''});
@@ -472,10 +535,7 @@
           wrapper.remove();
         }
 
-        this.element.attr('aria-expanded', 'false');
-        if (!noFocus) {
-          this.element.focus();
-        }
+        this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 
         if (settings.trigger === 'immediate') {
@@ -513,7 +573,7 @@
     });
   };
 
-    //Migrate
+  //Migrate
   $.fn.inforContextMenu = $.fn.popupmenu;
   $.fn.inforMenuButton = $.fn.popupmenu;
 

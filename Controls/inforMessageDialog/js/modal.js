@@ -6,7 +6,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('modal', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -64,7 +64,6 @@
         if (settings.draggable) {
           this.element.draggable({handle: '.modal-title', containment: 'document', start: function() {
             self.revertTransition();
-            $('#dropdown-list').hide();
           }});
         }
 
@@ -218,9 +217,7 @@
         // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
         // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
         // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-        var x = this.overlay.width();
         $('body').addClass('modal-engaged');
-        x = null;
 
         //Handle Default button.
         $(this.element).on('keypress.modal keydown.modal', function (e) {

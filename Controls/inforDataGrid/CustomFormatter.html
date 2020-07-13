@@ -13,19 +13,7 @@
 
 	<!--Load a Flat file with JSON data-->
 	<script src="js/sampleData.js"></script>
-	<style>
-		.inforIcon.folder {
-				background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAJklEQVR42mNgIAMwAvF/HOI4ARM1bSIISNX0nyznDUdNZAc5fQAAthEFDDG95kIAAAAASUVORK5CYII=");
-				background-repeat: no-repeat;
-				 background-position: center 3px;
-			}
 
-		.inforIcon.file {
-			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANAQAAAABakNnRAAAAAnRSTlMAAQGU/a4AAAAWSURBVGjeY2jgYICg/S8YFmhgJxs4APVKDYSofwj1AAAAAElFTkSuQmCC");
-			background-repeat: no-repeat;
-			 background-position: center 3px;
-		}
-	</style>
 </head>
 <body>
 	<div>
@@ -37,27 +25,25 @@
 	<script>
 		var grid;
 
-		function UrlFormatter(row, cell, value, columnDef, dataContext) {
-      var formattedVal = value;
-      formattedVal = formattedVal.replace('&', '&amp;');
-
-			return (formattedVal === null || formattedVal === undefined) ? "" : formattedVal;
+		function HtmlFormatter(row, cell, value, columnDef, dataContext)
+		{
+			return value;
 		}
 
 		//Define Columns for the Grid.
 		var columns = [];
-		columns.push({ id: "folder", name: "Folder", field: "", width: 125, toolTip: "File/Folder", cssClass: "alignCenter", headerCssClass: "alignCenter", formatter: FileFolderFormatter });
-		columns.push({ id: "city", name: "City", field: "city", width: 125, tooltip:"This is an error", formatter:UrlFormatter, editorOptions: {gridOptions: options, returnField: "city", height: 400, width: 400, editable: true, typeAheadSearch: false }, filterType: TextFilter });
-		columns.push({ id: "phone", name: "Phone", cssClass: "alignCenter", field: "phone", width: 60, formatter:TextCellFormatter, editor: TextCellEditor, required: true, filterType: TextFilter });
-		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor,  formatter: DateCellFormatter, filterType: DateFilter });
-		columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
+		columns.push({ id: "html", name: "html", field: "html", formatter: HtmlFormatter });
+		columns.push({ id: "id", name: "id", field: "id", width: 125});
 
 		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
-		var data = getSampleData([]);
+		var data = [];
+    data.push({id: '1', html: '<b>Bold Stuff</b>'});
+    data.push({id: '2', html: '<b>Bold Stuff</b>'});
+    data.push({id: '3', html: '<b>Bold Stuff</b>'});
 
 		var options = {
 			columns: columns,
-			idProperty:'officeId',
+			idProperty: 'id',
 			dataset: data,
 			showFilter: true,
 			showDrillDown: true,

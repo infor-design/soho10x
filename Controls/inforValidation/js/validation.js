@@ -4,7 +4,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('validator', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(window.jQuery || window.Zepto);
@@ -20,13 +20,13 @@
   // Plugin Object
   Validator.prototype = {
     init: function() {
-      this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
+      var fields = 'input, textarea, select, div[data-validate], div[data-validation]';
 
       //If we initialize with a form find all inputs
-      this.inputs = this.element.find(this.fields);
+      this.inputs = this.element.find(fields);
 
       //Or Just use the current input
-      if (this.element.is(this.fields)) {
+      if (this.element.is(fields)) {
         this.inputs = $().add(this.element);
         if (this.element.is('select')) {
           this.inputs = $().add(this.element.nextAll('input.dropdown'));
@@ -78,7 +78,6 @@
         events = (attribs ? attribs : 'blur.validate change.validate');
 
         field.on(events, function () {
-
           var field = $(this);
           if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
             return;
@@ -133,9 +132,7 @@
       var self = this,
         deferreds = [];
 
-      self.inputs = this.element.find(self.fields);
-
-      self.inputs.filter(':visible').each(function () {
+      self.inputs.each(function () {
         var dfds = self.validate($(this), false);
         for (var i = 0; i < dfds.length; i++) {
           deferreds.push(dfds[i]);
@@ -192,7 +189,6 @@
           }
         };
 
-	  self.tabErrorCounts = {};
       self.removeError(field);
       field.removeData('data-errormessage');
 
@@ -230,29 +226,6 @@
     hasError: function(field) {
       return this.getField(field).hasClass('has-error');
     },
-	setErrorIconOnTab: function(loc) {
-	  var tabPanel = $(loc).closest('.ui-tabs-panel');
-	  var id = '';
-	  var errorCount = 0;
-	  if (tabPanel && tabPanel.length > 0) {
-		id = tabPanel.attr('id');
-		id = '#' + id;
-		errorCount = tabPanel.find('.has-error').length;
-	  }
-	  if (id) {
-		// override position, margin-left, and margin-top on icon-error class
-		var errorIcon = '<i style="position: static; margin-left:0px; margin-top:2px;" class="icon-error label">&nbsp;</i>';
-		var tab = $("a[href=" + id + "]").parent();
-		var isErrorIconOnTab = tab.children('.icon-error').length > 0;
-		if (errorCount > 0) {
-			if (!isErrorIconOnTab) {
-				tab.append(errorIcon);		
-			}
-		} else {
-			tab.children('.icon-error').remove();  
-		}
-	  }
-	},
     addError: function(field, message, showTooltip) {
       var loc = this.getField(field).addClass('has-error'),
         self = this,
@@ -260,15 +233,13 @@
         appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
       loc.data('data-errormessage', appendedMsg);
-	  
-      if (!loc.next().is('.icon-error') && !loc.is('input[type=checkbox]')) {
-        loc.after(icon);
-		self.setErrorIconOnTab(loc);
-      }
 
-      if (!loc.next().next().is('.icon-error') && loc.is('input[type=checkbox]')) {
+      if (loc.is('.inforRadioButtonSet')) {
+        loc.find('.inforTopLabel').append(icon);
+      } else if (!loc.next().is('.icon-error') && !loc.is('input[type=checkbox]')) {
+        loc.after(icon);
+      } else if (!loc.next().next().is('.icon-error') && loc.is('input[type=checkbox]')) {
         loc.next('.inforCheckboxLabel').after(icon);
-		self.setErrorIconOnTab(loc);
       }
 
       icon.data('field', loc);
@@ -283,7 +254,8 @@
         this.showTooltip(appendedMsg, field);
       }
 
-      this.inputs.filter('input, textarea').on('focus.validate', function () {
+
+        this.inputs.filter('input, textarea').on('focus.validate', function () {
         var field = $(this);
         setTimeout(function () {
           if (self.hasError(field)) {
@@ -326,11 +298,16 @@
         topPos += 6;
       }
 
+      if (field.is('.inforRadioButtonSet')) {
+        leftPos = field.find('.icon-error').offset().left - tooltipWidth + 36;
+        topPos += 6;
+      }
+
       if ($('#dropdown-list').is(':visible') || $('#lookupGridDivId').is(':visible')) {
         return;
       }
 
-      this.tooltip.css({left: leftPos, top: topPos, maxWidth: ''});
+      this.tooltip.css({left: leftPos, top: topPos});
 
       //Make sure its not off the left
       if (leftPos < 0) {
@@ -370,19 +347,12 @@
         $(document).on('scroll.validation', function () {
           self.hideTooltip();
         });
-
         $(window).on('resize.validation', function () {
           self.hideTooltip();
         });
-
         self.tooltip.on('click.validation', function () {
           self.hideTooltip();
         });
-
-        field.on('blur', function() {
-          self.hideTooltip();
-        });
-
       }, 100);
 
     },
@@ -393,9 +363,9 @@
       this.inputs.filter('input, textarea').off('focus.validate');
       loc.removeClass('has-error');
       loc.removeData('data-errormessage');
-	  self.setErrorIconOnTab(loc);
       loc.next('.icon-error').remove();
       loc.next('.inforCheckboxLabel').next('.icon-error').remove();
+      loc.find('.inforTopLabel .icon-error').remove();
 
       clearTimeout(this.timeout);
       this.timeout = setTimeout(function () {
@@ -454,10 +424,13 @@
   var Validation = function () {
     this.rules = {
       required: {
-        check: function (value) {
+        check: function (value, input) {
           this.message = Globalize.localize('Required');
           if (typeof value === 'string' && $.trim(value).length === 0) {
             return false;
+          }
+          if (input.is('.inforRadioButtonSet')) {
+            return (input.find('input:checked').length > 0);
           }
           return (value ? true : false);
         },

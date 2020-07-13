@@ -37,10 +37,18 @@
         console.log(ui, ' Tab Showing..');
       });
 
+      $('#noclose').on('click', function () {
+        var tabs = $('#inforTabContainer');
+        tabs.data('uiInforTabset').options.closable = false;
+        tabs.find('.inforTabCloseButton').remove();
+         tabs.find('li').popupmenu('destroy');
+      });
+
     });
   </script>
 </head>
 <body>
+  <button id="noclose">Make Not Closable</button>
   <div id="inforTabContainer" style="margin:10px">
     <ul class="inforTabset">
       <li><a href="#tab1">Overview</a></li>

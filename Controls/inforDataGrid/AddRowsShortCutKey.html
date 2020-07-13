@@ -52,14 +52,15 @@
 			savePersonalization: false
 		});
 
-		/*have the enter key create a row*/
+		/*have the enter key create a row
 		grid.onKeyDown.subscribe(function (e, args) {
-      if (e.which === 40) {	//enter can be used to create a new row.
-				//Do my own down key stuff
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+			if (e.which === 13) {	//enter can be used to create a new row.
+				setTimeout(function () {
+					grid.addRow({officeId: 999, addressLine1: "New"});
+				}, 10);
 			}
 		});
+		*/
 
 		//have the tab key on the last cell of the last row create a row.
 		grid.onKeyDown.subscribe(function (e, args) {

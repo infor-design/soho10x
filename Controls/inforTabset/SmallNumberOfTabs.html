@@ -21,12 +21,12 @@
 			//Example of doing something on tab select.
 			$('#inforTabContainer').tabs({
 				select: function (e, ui, newTab) {
-					console.log(ui);
+					alert('select(): e='+e+"; ui="+ui+"; newTab="+newTab);
 				}
 			});
 
 			//Example setting current tab to tab 3.
-		  $('#inforTabContainer').tabs('select', 1);
+			// $('#inforTabContainer').tabs('select', 1);
 
 			//Init some other controls used on this form for texting.
 			$(".inforFieldSet").inforFieldSet();
@@ -41,7 +41,8 @@
 
 			$('body').inforForm();
 			$("#add").click(function() {
-				   tabset.inforTabset( "add", "#"+"winName", "title", false);
+				  var tabs = $("#tabs").inforTabset({verticalTabs: true});
+          tabset.data('uiTabs').select(1);
 			});
 			$("#close").click(function() {
 				tabset.inforTabset( "remove", "#"+"winName");

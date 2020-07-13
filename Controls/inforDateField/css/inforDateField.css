@@ -300,23 +300,6 @@ div.inforDatePickerContainer {
     border-radius: 2px;
 }
 
-.inforNextMonthButton[disabled] {
-  border: none;
-  background-color: transparent;
-  opacity: .5;
-
-}
-
-.inforNextMonthButton[disabled]:hover {
-  border: none;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-.inforNextMonthButton[disabled]:hover i::after {
-  opacity: 0.65;
-}
-
 .inforNextMonthButton:hover, .inforPrevMonthButton:hover, .inforNextYearButton:hover, .inforPrevYearButton:hover {
   background-color: #D8D8D8;
   box-shadow: 0 1px #A2A2A2;

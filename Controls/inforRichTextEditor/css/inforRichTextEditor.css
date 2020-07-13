@@ -37,18 +37,18 @@
 }
 
 .inforRichTextHtmlView {
-	padding: 0;
+  padding: 0;
 }
 
 .inforRichTextEditor p {
-	margin: 0;
-	padding: 0;
-	font-size: 1em;
-	line-height: 18px;
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  line-height: 18px;
 }
 
 .inforRichTextEditor[readonly] {
-	border: 1px solid transparent;
+  border: 1px solid transparent;
 }
 
 .inforRTToolbar {
@@ -59,21 +59,22 @@
 }
 
 .inforRichTextEditor[disabled], .inforRichTextEditor[disabled]:focus {
-	border: 1px solid transparent;
-	cursor: default;
-	opacity: 0.5;
+  border: 1px solid transparent;
+  cursor: default;
+  opacity: 0.5;
 }
 
 .inforRichTextEditor:focus{
-	border: 1px solid #13A3F7;
+  border: 1px solid #13A3F7;
 }
+
 .inforRichTextEditor.has-error:focus {
   background-color: #FDF2F3 !important;
   border: 1px solid #d5000e !important;
 }
 
 .inforRichTextEditor a {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .inforIconButton.blockQuote {
@@ -92,7 +93,7 @@
 }
 
 .inforRTToolbar .inforDropdownContainer {
-		margin-left: 10px;
+    margin-left: 10px;
   margin-right: 10px;
   top: 3px;
   width: 100px;

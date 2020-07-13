@@ -1,21 +1,17 @@
 //Command: C:\projects\Html5Controls\Html5Controls\ControlSamples>grunt --force
 module.exports = function(grunt) {
 
-  grunt.file.defaultEncoding = 'utf-8';
-  grunt.file.preserveBOM = false;
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       options: {
         separator: '',
-        banner: '/*!\n Infor Html Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
-        footer: '//# sourceURL=<%= pkg.name %>Combined.js'
+        banner: '/*!\n Infor Html Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n '
       },
       basic_and_extras: {
         files: {
-          'Controls/Release/<%= pkg.name %>Combined.js': ['Controls/*inforShared*/js/*.js', 'Controls/*inforProgressIndicator*/js/*.js',  'Controls/multiselect/js/multiselect.js',  'Controls/autocomplete/js/autocomplete.js', 'Controls/rating/js/rating.js', 'Controls/charts/js/chart.js', 'Controls/*infor*/js/*.js', 'Controls/*inforShared*/js/cultures/*.js', '!**/js/sample*.js'],
-          'Controls/Release/<%= pkg.name %>Combined.css': ['Controls/inforCommon.css', 'Controls/*infor*/css/*.css',  'Controls/multiselect/css/multiselect.css',  'Controls/autocomplete/css/autocomplete.css',  'Controls/charts/css/chart.css']
+          'Controls/Release/<%= pkg.name %>Combined.js': ['Controls/*inforShared*/js/*.js', 'Controls/*inforProgressIndicator*/js/*.js',  'Controls/multiselect/js/multiselect.js',  'Controls/autocomplete/js/autocomplete.js', 'Controls/rating/js/rating.js',  'Controls/*infor*/js/*.js', 'Controls/*inforShared*/js/cultures/*.js', '!**/js/sample*.js'],
+          'Controls/Release/<%= pkg.name %>Combined.css': ['Controls/inforCommon.css', 'Controls/*infor*/css/*.css',  'Controls/multiselect/css/multiselect.css',  'Controls/autocomplete/css/autocomplete.css']
         }
       }
     },
@@ -101,7 +97,7 @@ module.exports = function(grunt) {
         authKey: 'host'
 			},
 			src: 'Controls/',
-			dest: '/Html5Controlsv3.6/'
+			dest: '/Html5Controlsv3.5/'
 		}
 	}
 });

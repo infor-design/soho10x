@@ -101,7 +101,7 @@
 			}
 		},
 		destroy: function () {
-      if (this.contentArea.closest('.modal').data('modal')) {
+			if (this.contentArea.closest('.modal').data('modal')) {
         this.contentArea.closest('.modal').data('modal').close();
       }
       this.root.remove();
