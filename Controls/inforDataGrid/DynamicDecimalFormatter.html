@@ -6,7 +6,7 @@
 	<title>Infor DataGrid - No Options</title>
 
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
@@ -23,14 +23,14 @@
 		var grid = null,
 			columns = []
 			data = [];
-        
+
         var formatLine = function(item, column) {
         	if (!item) {
 	        	return "n3";	//for the filter row return the higest decimals...
         	}
 			return "n"+item.nbr_of_dec;
         };
-        
+
         data.push({ id: 1, jrnl_line: 1, jrnl_amount: 1000.9900, jrnl_curr: 'USD', jrnl_amount_frmt: 'n2', nbr_of_dec: 2 });
         data.push({ id: 2, jrnl_line: 2, jrnl_amount: 1000.6600, jrnl_curr: 'GBP', jrnl_amount_frmt: 'n2', nbr_of_dec: 2 });
         data.push({ id: 3, jrnl_line: 3, jrnl_amount: 1000.0000, jrnl_curr: 'ISK', jrnl_amount_frmt: 'n0', nbr_of_dec:0 });

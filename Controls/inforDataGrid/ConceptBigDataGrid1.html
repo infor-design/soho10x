@@ -3,16 +3,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
     <title></title>
-  
+
  	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<!--Load a Flat file with JSON data-->
 	<script src="js/sampleData.js"></script>
 	<script src="js/inforDataGrid.js"></script>
-  
+
     <script type="text/javascript">
         var data1 = {
             NbrOfRows: 76,
@@ -100,7 +100,7 @@
             {key:'key9974',vendor_id:'99000-001 ',vendor_loc:'100',pmt_rqst_nbr:'WIM_01                ',pmt_rqst_date:'2/5/2013 12:00:00 AM',sched_pmt_nbr:'0',line_nbr: 9974,line_nbr1: 9974,line_nbr2: 9974,curr_code:'USD',curr_rate_type:'A',amount_field_1:'1000.0000',date_field_1:'20130207',ldr_key_1:'AAA            ',ldr_key_2:'BBB       ',ldr_key_3:'CCC     ',ldr_key_4:'DDD     ',ldr_key_5:'EEE     ',ldr_key_6:'',ldr_key_7:'',ldr_key_8:'',ldr_key_9:'',ldr_key_10:'',ldr_key_11:'',ldr_key_12:'',},
             {key:'key9975',vendor_id:'99000-001 ',vendor_loc:'100',pmt_rqst_nbr:'WIM_01                ',pmt_rqst_date:'2/5/2013 12:00:00 AM',sched_pmt_nbr:'0',line_nbr: 9975,line_nbr1: 9975,line_nbr2: 9975,curr_code:'USD',curr_rate_type:'A',amount_field_1:'1000.0000',date_field_1:'20130207',ldr_key_1:'AAA            ',ldr_key_2:'BBB       ',ldr_key_3:'CCC     ',ldr_key_4:'DDD     ',ldr_key_5:'EEE     ',ldr_key_6:'',ldr_key_7:'',ldr_key_8:'',ldr_key_9:'',ldr_key_10:'',ldr_key_11:'',ldr_key_12:'',},
             {key:'key9976',vendor_id:'99000-001 ',vendor_loc:'100',pmt_rqst_nbr:'WIM_01                ',pmt_rqst_date:'2/5/2013 12:00:00 AM',sched_pmt_nbr:'0',line_nbr: 9972,line_nbr1: 9972,line_nbr2: 9976,curr_code:'USD',curr_rate_type:'A',amount_field_1:'1000.0000',date_field_1:'20130207',ldr_key_1:'AAA            ',ldr_key_2:'BBB       ',ldr_key_3:'CCC     ',ldr_key_4:'DDD     ',ldr_key_5:'EEE     ',ldr_key_6:'',ldr_key_7:'',ldr_key_8:'',ldr_key_9:'',ldr_key_10:'',ldr_key_11:'',ldr_key_12:'',}
-            
+
             ]
             }
 
@@ -179,7 +179,7 @@
             var activeCell = grid.getActiveCell(),
 			data = grid.getDataItem(activeCell.row);
 
-            //Find out for which udak element 
+            //Find out for which udak element
             var cols = grid.getColumns();
             var column = cols[activeCell.cell];
 
@@ -246,7 +246,7 @@
             columns.push({ id: "amount_field_1", name: "amount_field_1", field: "amount_field_1", width: 200, editor: TextCellEditor });
             columns.push({ id: "ldr_key_1", name: "udak_1", field: "ldr_key_1", width: 200, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: { editable: true, typeAheadSearch: false, click: openLookup }, filterType: TextFilter });
             columns.push({ id: "ldr_key_2", name: "udak_2", field: "ldr_key_2", width: 200, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: { editable: true, typeAheadSearch: false, click: openLookup }, filterType: TextFilter });
-            columns.push({ id: "ldr_key_3", name: "udak_3", field: "ldr_key_3", width: 200, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: { editable: true, typeAheadSearch: false, click: openLookup }, filterType: TextFilter }); 
+            columns.push({ id: "ldr_key_3", name: "udak_3", field: "ldr_key_3", width: 200, formatter: TextCellFormatter, editor: LookupCellEditor, editorOptions: { editable: true, typeAheadSearch: false, click: openLookup }, filterType: TextFilter });
 
             options = {
                 columns: columns,
@@ -342,14 +342,14 @@
                 grid.mergeData(newData, args.pageNum);
                 alert('This should not happen !' + jsonArgs.pageNbr)
             }
-            
-            
-        }
-        
-        </script>
-        
 
-    
+
+        }
+
+        </script>
+
+
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -369,8 +369,8 @@
             </button>
             <button class="inforIconButton new" type="button" title="Add" id="toolbarNew" runat="server">
             </button>
-            
-             
+
+
         </div>
         <div id="inforTabContainer" class="inforTabContainer">
             <ul class="inforTabset">

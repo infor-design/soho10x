@@ -5,7 +5,7 @@
 	<title>Infor Tabsset - Vertical Tabs functionality</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js" ></script>
 	<script src="js/inforDropdownList.js" ></script>
@@ -19,21 +19,21 @@
 			addTestGrid();
 					var bindIdABCStates = "ABCStates";
 			var bindIdSelectedStates = "SelectedABCStates";
-			
+
 			// create form view model
 			var viewModel = {};
-			
+
 			var fieldsStateArray = [];
-			fieldsStateArray.push(new FieldState(" ", ""));		
-			
+			fieldsStateArray.push(new FieldState(" ", ""));
+
 			var stateDataValues = [];
-			stateDataValues.push("");	
-				
+			stateDataValues.push("");
+
 			viewModel[bindIdABCStates] = ko.observableArray(stateDataValues);
 			viewModel[bindIdSelectedStates] = ko.observableArray(fieldsStateArray);
 
 			$("#LRCEmployee_wid130").inforDropDownList({maxSelectedOptions: 5});
-			
+
 			// apply bindings
 			try
 			{
@@ -43,7 +43,7 @@
 			{
 				alert(e.message);
 			}
-					
+
 			var stateDataValues = ["2","8"];
 			var fieldsStateArray = [];
 			fieldsStateArray.push(new FieldState("1 Alabama", "1"));
@@ -56,7 +56,7 @@
 
 			viewModel[bindIdABCStates](fieldsStateArray);
 			viewModel[bindIdSelectedStates](stateDataValues);
-			
+
 			// Constructor for a "select bind" object with two properties
 			function FieldState(label, value)
 			{

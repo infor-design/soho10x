@@ -7,7 +7,7 @@
 	<title>Infor Tree Sample with Drag Drop</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTree.js"></script>
@@ -42,9 +42,9 @@
 						node = data.rslt.o,
 						oldParent = data.rslt.op,
 						parentNode = treeInstance._get_parent(node);
-				
+
 				console.log(oldParent, node);
-				
+
 				alert("Tree1 : nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
 			});
 
@@ -64,9 +64,9 @@
 						node = data.rslt.o,
 						oldParent = data.rslt.op,
 						parentNode = treeInstance._get_parent(node);
-				
+
 				console.log(oldParent, node);
-				
+
 				alert("Tree2 : nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
 			});
 

@@ -1,6 +1,6 @@
 /*!
  Infor Html Controls v3.6.0 
- Date: 21-05-2018 25:03:52 
+ Date: 24-02-2022 43:01:48 
  Revision: undefined 
  */ 
  /* Infor Common Css
@@ -8532,64 +8532,6 @@ ul.inforModuleTabs {
   height: auto;
 }
 
-/* Infor Text Button
-----------------------------------*/
-
-.inforTextButton ,.inforTextButton[disabled], .inforSplitButton{
-	background-color: #f2f2f2;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-	color: #444;
-	cursor: default;
-	height: 24px;
-	margin: 0 0px 0 5px;
-	outline: medium none;
-	overflow: hidden;
-	padding: 0 8px;
-	font-family: Helvetica, Arial, sans-serif;
-	cursor: pointer;
-}
-
-.inforTextButton {
-	padding: 3px 10px;
-}
-
-.inforTextButton[disabled], .inforTextButton.disabled {
-  opacity: 0.6;
-  filter: alpha(opacity=60) !important;
-	cursor: default;
-}
-
-.inforTextButton[disabled]:active, .inforTextButton.disabled:active {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc !important;
-  box-shadow: none;
-}
-
-.inforTextButton:hover {
-	background-color: #d8d8d8;
-	box-shadow: 0 1px #a2a2a2;
-	color: #1a1a1a;
-}
-
-.inforTextButton:hover[disabled], .inforTextButton.disabled:hover {
-	cursor: default;
-	background-color: #f2f2f2;
-  color: #444;
-	box-shadow: none;
-}
-
-.inforTextButton:active {
-  background-color: #bebebe;
-  box-shadow: 0 1px #7a7a7a inset;
-  color: #1a1a1a;
-  border: 1px solid transparent !important;
-}
-
-.inforTextButton:focus {
-	border: 1px solid #13A3F7;
-}
-
 /* Infor Text Input Field
 ----------------------------------*/
 
@@ -8683,6 +8625,64 @@ ul.inforModuleTabs {
 
 .inforTextbox.decimalOnly.has-error, .inforTextbox.numericOnly.has-error
 { padding-right: 20px; width: 179px; } 
+/* Infor Text Button
+----------------------------------*/
+
+.inforTextButton ,.inforTextButton[disabled], .inforSplitButton{
+	background-color: #f2f2f2;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	color: #444;
+	cursor: default;
+	height: 24px;
+	margin: 0 0px 0 5px;
+	outline: medium none;
+	overflow: hidden;
+	padding: 0 8px;
+	font-family: Helvetica, Arial, sans-serif;
+	cursor: pointer;
+}
+
+.inforTextButton {
+	padding: 3px 10px;
+}
+
+.inforTextButton[disabled], .inforTextButton.disabled {
+  opacity: 0.6;
+  filter: alpha(opacity=60) !important;
+	cursor: default;
+}
+
+.inforTextButton[disabled]:active, .inforTextButton.disabled:active {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc !important;
+  box-shadow: none;
+}
+
+.inforTextButton:hover {
+	background-color: #d8d8d8;
+	box-shadow: 0 1px #a2a2a2;
+	color: #1a1a1a;
+}
+
+.inforTextButton:hover[disabled], .inforTextButton.disabled:hover {
+	cursor: default;
+	background-color: #f2f2f2;
+  color: #444;
+	box-shadow: none;
+}
+
+.inforTextButton:active {
+  background-color: #bebebe;
+  box-shadow: 0 1px #7a7a7a inset;
+  color: #1a1a1a;
+  border: 1px solid transparent !important;
+}
+
+.inforTextButton:focus {
+	border: 1px solid #13A3F7;
+}
+
 /* Infor Tile Panels
 ----------------------------------*/
 .inforTilePanel {

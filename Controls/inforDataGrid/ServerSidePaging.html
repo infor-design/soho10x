@@ -7,7 +7,7 @@
 	<title>Infor DataGrid : Server Side Paging with Pager Button </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
@@ -59,7 +59,7 @@
 			pageSize: 25,
 			showFooter: true
 		}
-		
+
 		var grid = $("#inforDataGrid").inforDataGrid(options);
 		var dataView = grid.getData();
 
@@ -70,12 +70,12 @@
 		function getPage(args) {
 		  var newQry = baseqry + "&$inlinecount=allpages&$top="+args.pageSize+"&$skip="+(args.pageNum*args.pageSize);
 		   //TODO: Add caching Example.
-		   
+
 		   //add sort condition
 		   if (args.sortColumns) {
 				newQry += "&$orderby="+(args.sortColumns[0].columnId ? args.sortColumns[0].columnId : "city")+(args.sortColumns[0].sortAsc ? " asc" : " desc");
 		   }
-		   
+
 		   $.getJSON(newQry,
 				 function (jsonResult) {
 					var newData = jsonResult.d.results;
@@ -95,8 +95,8 @@
 		var savedSettings = grid.getGridPersonalizationInfo();
 		getPage({pageNum: 0, pageSize: (savedSettings.pageSize ? savedSettings.pageSize : options.pageSize), sortAsc: true, sortColumnId: "city" });
 		grid.setSortColumn("city", false);	//set sort indicator to match
-		grid.restorePersonalization({ filterInResults: false, columnInfo: [] }); 
-		
+		grid.restorePersonalization({ filterInResults: false, columnInfo: [] });
+
 		$('body').removeClass('inforHidden');
 	</script>
 </body>

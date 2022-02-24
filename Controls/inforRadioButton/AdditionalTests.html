@@ -6,7 +6,7 @@
 	<title>Infor Radio Button : Main Sample </title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforRadioButton.js"></script>
@@ -18,33 +18,33 @@
 			$("body").inforForm();
 		});
 
-		function toggleEnabled(value) 
+		function toggleEnabled(value)
 		{
 			var radios = $("#boozeOptions");
 			var checkbox = $("#setmutable");
-			
+
 			switch (value)
 			{
 				case "enable":
 					radios.enable();
 					checkbox.enable();
 					break;
-					
+
 				case "disable":
 					radios.disable();
 					checkbox.disable();
 					break;
-					
+
 				case "readonly":
 					radios.readOnly();
 					checkbox.readOnly();
 					break;
-					
+
 				case "show":
 					$("#boozeOptions").show();
 					checkbox.show();
 					break;
-					
+
 				case "hide":
 					$("#boozeOptions").hide();
 					checkbox.hide();

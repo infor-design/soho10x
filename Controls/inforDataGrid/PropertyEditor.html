@@ -3,19 +3,19 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=8" charset="UTF-8" />
 	<meta charset="utf-8">
-	
+
 	<link rel="stylesheet" href="InforControls/inforControlsCombined.css" />
 	<title>Periods - Example</title>
-	
+
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script src="js/inforDataGrid.js"></script>
 	<script src="js/sampleData.js"></script>
-	
+
 	<script>
 	    $(function () {
 	        //Globalize.culture("ar-SA");
@@ -43,10 +43,10 @@
                 enableCellRangeSelection: false,
                 showExport: false
             });
-			
-			//1.	The first 2 rows should always be selected                                                                           
+
+			//1.	The first 2 rows should always be selected
 			grid.setSelectedRows([0,1]);
-			
+
 			function getSampleData(data) {
 				data.push({ id: 1, levelName: "Total", format: null, settings: "{ DisplayName: 'Total Periods'}" });
 				data.push({ id: 2, levelName: "Year", format: "2002, ...", settings: "{ NumberOfYears: 1, StartDate: '1/1/2013', StartYear: 2013 }" });
@@ -59,18 +59,18 @@
 
 				return data;
 			}
-			
-			//2. The user can either select Month or Period but not both at the same time 
+
+			//2. The user can either select Month or Period but not both at the same time
 			grid.onCellChange.subscribe(function (e, args) {
 				var row =  args.row,
 					data ;
-				
+
 				if (args.item.levelName == "Month") {
 					data = grid.getDataItem(5);
 					data.format = "";
 					grid.updateCell(5,3);	//might want to disable sort or find a better way?
 				}
-				
+
 				if (args.item.levelName == "Period") {
 					data = grid.getDataItem(4);
 					data.format = "";
@@ -85,33 +85,33 @@
 				}
 				return false;
 			}
-			
+
 			//4.	I need different values in the combo boxes
 			function formatOptions(request, response, isFormatter, dataContext, column) {
 				//Make a variable and two items in every list
 				var options = [{label: "Option One", value: "Option One"} , {label: "Option Two", value: "Option Two"}];
-				
+
 				//Formatter just returns current value as if it was a drop down item
 				if (isFormatter) {
 					options = [];
 					options.push({label: dataContext.format, value: (dataContext.format=== null, "Option Two", dataContext.format)});
 					return response(options);
 				}
-				
+
 				//mkae a custom item for each list using your criteria
 				if (dataContext) {
 					options.push({label: "Option "+ dataContext.levelName, value: "Option " + dataContext.levelName});
 				}
 				return response(options);
 			}
-			
+
 			function showEditor(row) {
 				var popupContents = $("<p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>");
 				// We need to open the inforInlidePopup here.
 				// Each row will have different content in the inforPopover Control
 				switch (row.levelName) {
 					case "Total":
-						
+
 						break;
 
 					case "Year":
@@ -138,11 +138,11 @@
 
 					default:
 				}
-				
+
 				var node = $(grid.getCellNode(row.id-1,4));
 				node.inforPopover({content: popupContents, title: row.levelName, remove: true, trigger: "manual", placement: "right", position: {of: node}});
 			}
-	    
+
 		});
 	</script>
 </head>

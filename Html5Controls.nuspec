@@ -16,7 +16,7 @@
     <file src="Controls\Release\inforControlsCombined.min.css" target="content\Content\inforControlsCombined.min.css" />
     <file src="Controls\Release\inforControlsCombined.js" target="content\Scripts\inforControlsCombined.js" />
     <file src="Controls\Release\inforControlsCombined.min.js" target="content\Scripts\inforControlsCombined.min.js" />
-    <file src="Controls\Release\jquery-1.11.1.min.js" target="content\Scripts\jquery-1.11.1.min.js" />
+    <file src="Controls\Release\jquery-3.6.0.min.js" target="content\Scripts\jquery-3.6.0.min.js" />
 	<file src="Controls\Release\jquery-1.11.1.min.map" target="content\Scripts\jquery-1.11.1.min.map" />
 	<file src="Controls\Release\jquery-ui-1.10.4.custom.min.js" target="content\Scripts\jquery-ui-1.10.4.custom.min.js" />
   </files>

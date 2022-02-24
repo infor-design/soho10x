@@ -7,7 +7,7 @@
 	<title>Infor Xtreme Support</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
 
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
@@ -17,7 +17,7 @@
 			$("#tabContainer").inforTabset({fillToBottom: false}).tabs({select: function(e, ui) {
 				if ($(ui.tab).attr("href")) {
 					var url = $(ui.tab).data("href.tabs");
-					
+
 					if (url) {
 						location.href = href;
 						return false;
@@ -25,22 +25,22 @@
 					return true;
 				}
 			}});
-			
+
 			$("body").inforForm();
-			
+
 			 var popupContents = $("<p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>");
-				
+
 		   $(".recentIncidents a").inforPopover({content: popupContents, trigger: "hover", placement: "right", title: 'Popover Left <span class="alignRight">10/20/2013</span>'});
 		});
-		
+
 		function goToPage() {
 			//Some criteria and checking in here?
 			location.href = "http://www.inforxtreme.com";
 		}
 	</script>
-	
+
 	<style>
-		
+
 		.recentIncidents {
 			width: 40%;
 			font-size: 1.1em;
@@ -63,7 +63,7 @@
 			</button>
 		</div>
 	</div>
-	
+
 	<div id="inforApplicationNav" class="inforApplicationNav">
 		<ul>
 			<li><a href="#">Favorites</a></li>
@@ -103,7 +103,7 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<div class="inforApplicationPadding">
 		<h1 class="inforSectionLabel">Incidents</h1>
 		<div class="recentIncidents first">

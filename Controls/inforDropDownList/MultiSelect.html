@@ -5,23 +5,23 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 	<meta charset="utf-8">
-	
+
 	<title>Drop Down List - With Multi Select</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 	<link rel="stylesheet" href="css/inforDropDownList.css">
-	
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDropDownList.js"></script>
-	
+
 	<script>
 		$(function () {
 			$("#country1, #country2, #nfl").inforDropDownList();
 			$("body").inforForm();
 		});
 	</script>
-  
+
 </head>
 <body style="width: 100%" class="inforSingleColumnLayout autoLabelWidth">
 		<label for="country1" class="inforLabel">Country - Normal</label>
@@ -33,7 +33,7 @@
             <option value="Aland Islands">Aland Islands</option>
             <option value="Albania">Albania</option>
        	</select><br>
-       	
+
   		<label for="country2" class="inforLabel">Country - Multiselect</label>
        	<select id="country2" multiple >
             <option value=""></option>

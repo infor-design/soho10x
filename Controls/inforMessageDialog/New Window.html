@@ -7,7 +7,7 @@
 
   <title>Infor Message Dialog Box</title>
   <link href="../Release/inforControlsCombined.css" rel="stylesheet">
-  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-3.6.0.min.js"></script>
   <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
   <script src="../Release/inforControlsCombined.js"></script>
   <script src="js/modal.js"></script>
@@ -27,14 +27,14 @@
         alert();
       });
     });
-	
+
 	function showInforModal(title, body, closecallback) {
 		var modalcontent = $('<div class="modal-content">');
 		modalcontent.append('<div class="modal-header"><h1 class="modal-title" tabindex="0">' + title + '</h1></div>');
 		modalcontent.append($('<div class="modal-body">').append(body));
 		$('<div class="modal" id="modal-1">').append(modalcontent).modal().on('close', closecallback).inforForm();
 	}
-	
+
   </script>
 </head>
 <body style="height: 10000px;overflow:scroll">

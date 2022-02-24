@@ -6,23 +6,23 @@
 
 	<title>Landmark Decimal Validation</title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
-	
-<!-- 
+
+<!--
 	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
 	<script src="../Controls/lib/jquery-1.11.1.js"></script>
 	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Controls/lib/knockout-2.3.0.js"></script>
 	<script src="../Controls/Release/inforControlsCombined.js"></script>
 
-	
+
 -->
 
 <style>
-.landmarkScrollingContentArea 
+.landmarkScrollingContentArea
 {
 	overflow-y: auto !important;
 }
@@ -32,7 +32,7 @@
 	<script>
 $(function ()
 {
-	var fieldSpec = 
+	var fieldSpec =
 	{
 		size: 4,
 		decSize: 2,
@@ -40,7 +40,7 @@ $(function ()
 	}
 
 	$("#tabs").inforTabset({verticalTabs: true});
-	
+
 	$(".decimalfield")
 		.attr("data-validate", "validateDecimal")
 		.attr("data-validation-events", "change blur")
@@ -50,7 +50,7 @@ $(function ()
 		.attr("data-number-source-format", Globalize.cultureSelector)
 		.numericOnly(true, false)
 		.data("fieldSpec", fieldSpec);
-	
+
 	$("body").inforForm();
 
 	$("#LandmarkForm").setupValidation();
@@ -61,7 +61,7 @@ $.Validation.addRule("validateDate",
 	check: function(value, element)
 	{
 		element.removeError();
-		
+
 		if (value)
 		{
 			var dt = landmark.format.parseDate({value:value, format:Globalize.culture().calendar.patterns.d});
@@ -147,7 +147,7 @@ $.Validation.addRule("validateDecimal",
 	}
 });
 
-		
+
 	</script>
 </head>
 <body>
