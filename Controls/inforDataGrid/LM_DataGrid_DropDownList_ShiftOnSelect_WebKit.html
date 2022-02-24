@@ -8,13 +8,13 @@
 <!-- jira: HFC-1517   -->
 
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/sampleData.js"></script>
 
-	
-<!-- 
+
+<!--
 	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
 	<script src="../Controls/lib/jquery-1.10.2.js"></script>
 	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
@@ -23,13 +23,13 @@
 	<script src="../Controls/inforDataGrid/js/sampleData.js"></script>
 
 -->
-	
+
 	<script>
 		 $(function () {
 			$('#inforTabContainer').inforTabset();
 			$('#inforTabContainer2').inforTabset();
 		});
-	</script>	
+	</script>
 	<script>
 		$(function () {
 			$(".inforSplitButton").inforSplitButton({menuId: 'menu1'});
@@ -61,15 +61,15 @@
 				<button class="inforIconButton cut" title="Sample Tooltip"><span></span></button>
 				<button class="inforIconButton select" title="Sample Tooltip"><span></span></button>
 				<button type="button" class="inforSplitButton duplicate" title="Sample Tooltip"><span></span></button>
-				
+
 				<span class="inforToolbarSpacer"></span>
 				<button type="button" class="inforMenuButton new" title="Sample Tooltip"><span></span></button>
 				<button class="inforIconButton delete" title="Sample Tooltip"><span></span></button>
 				<button class="inforIconButton edit" title="Sample Tooltip"><span></span></button>
 				<button class="inforIconButton open" title="Sample Tooltip"><span></span></button>
-				
+
 				<span class="inforToolbarSpacer"></span>
-				
+
 				<button type="button" class="inforTextButton">Text Button</button>
 				<button type="button" class="inforSplitButton" id="splitButton">Split Button</button>
 				<button type="button" class="inforMenuButton" id="menuButton">Menu Button</button>
@@ -81,12 +81,12 @@
 				<li><a>Option Two</a></li>
 				<li><a>Option Three</a></li>
 			</ul>
-			
+
 			<div class="landmarkList">
 				<div style='height:40%;'>
 					<div id="inforDataGrid" style="height:180px;"></div>
 				</div>
-				
+
 				<div id="lowerPart" style='height:60%'>
 					<div id="inforTabContainer2">
 						<ul class="inforTabset">
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 </div>
 	<script>
 		var columns = [
@@ -158,7 +158,7 @@
 		grid.onCellChange.subscribe(function (e, args) {
 			console.log(args.cellValue);
 		});
-		
+
 	</script>
 </body>
 </html>

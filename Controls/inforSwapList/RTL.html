@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 	<link rel="stylesheet" href="css/inforSwapList.css"/>
 
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforSwapList.js"></script>
@@ -18,10 +18,10 @@
 	<script>
 		$(function () {
 			Globalize.culture("ar-SA");
-			
+
 			var selectedItems = [{value: "1" , label: "Option One"}, {value: "2" , label: "Option Two"}],
 				availableItems = [{value: "3" , label: "Option Three"}, {value: "4" , label: "Option Four"}, {value: "5" , label: "Option Five"}];
-			
+
 			$("#inforSwapList1").inforSwapList({selected: selectedItems, available: availableItems});
 		});
 	</script>

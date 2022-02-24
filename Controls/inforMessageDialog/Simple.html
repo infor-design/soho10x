@@ -6,7 +6,7 @@
 
 	<title>Infor Message Dialog Box</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforMessageDialog.js"></script>
@@ -14,12 +14,12 @@
 
 	<script>
 		$(function () {
-			
+
 			//Display a generic dialog -
 			$("#generalDialogButton").click(function () {
 				//First add the html to the page..
 				$("body").append('<div id="newCatalogDialog" style="display:none"><input class="inforTimeField"/></div>');
-				
+
 				//Invoke the dialog on it
 				$('#newCatalogDialog').inforMessageDialog({
 					title: "New Catalog",
@@ -48,9 +48,9 @@
 							$(this).inforDialog("close"); }
 					 }]
 				});
-			
+
 				$('#newCatalogDialog').inforForm();
-				
+
 			});
 		});
 	</script>

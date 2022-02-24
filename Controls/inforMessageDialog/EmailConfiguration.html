@@ -6,7 +6,7 @@
 
 	<title>Infor Message Dialog with 2 Column Layout</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/message.js"></script>
@@ -45,11 +45,11 @@
     self.close = function() {
         self.control.modal('close');
     };
-    
+
 
     return self;
 	};
-	
+
 	var confirmRunDialog = new Dialog($("#emailConfigurationDialog"));
     confirmRunDialog.shortMessage = 'Here is my short message';
     confirmRunDialog.detailedMessage = 'Where is my short message';
@@ -77,10 +77,10 @@
 			</tr>
 		</table>
 	</div>
-	
-	<div id="emailConfigurationDialog" class="">  
-		
+
+	<div id="emailConfigurationDialog" class="">
+
 	</div>
-		
+
 </body>
 </html>

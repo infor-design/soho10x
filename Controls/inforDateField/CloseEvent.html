@@ -8,7 +8,7 @@
   <title>Infor Validate Plugin: Form Validation</title>
   <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-1.11.1.min.js"></script>
+  <script src="../Release/jquery-3.6.0.min.js"></script>
   <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
   <script src="../Release/inforControlsCombined.js"></script>
 
@@ -83,7 +83,7 @@
 				};
 			return self;
 			}
-			
+
 			self.folder = 1;
 
 			//Display a generic dialogue -
@@ -121,12 +121,12 @@
 				dialog.setButtons(buttons);
 				dialog.setAutoFocus(false);
 				dialog.show();
-				
+
 				// When the dialog closes, delete it - and all the controls!
 				$("#createFolderDialog").on('close', function () {
 					$("#createFolderDialog").closest('.modal').remove();
 				});
-				
+
 				dialog.find(".inforDateField").inforDateField({ dateFormat: "DD/mm/YYYY", validateInput: false });
 				$('#timeField1').inforTimeField();
 			});
@@ -152,7 +152,7 @@
                 <input class="inforTextbox" type="text" id="createFolderInput" size="30" maxlength="40" />
 				<input id="dateField1" class="inforDateField" type="text" value="10/12/2011"  />
 				<input id="timeField1" class="inforTimeField" type="text" value="10/12/2011"  />
-				
+
                 <br />
             </div>
         </form>

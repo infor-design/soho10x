@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 	copy: {
 		main: {
 			files: [
-				{expand: true, flatten: true, src: ['Controls/lib/d3.min.js', 'Controls/lib/jquery-1.11.1.min.js', 'Controls/lib/jquery-1.11.1.min.map', 'Controls/lib/jquery-ui-1.10.4.custom.min.js', 'Controls/inforFavicon/favicon.ico'], dest: 'Controls/Release', filter: 'isFile'}
+				{expand: true, flatten: true, src: ['Controls/lib/d3.min.js', 'Controls/lib/jquery-3.6.0.min.js', 'Controls/lib/jquery-1.11.1.min.map', 'Controls/lib/jquery-ui-1.10.4.custom.min.js', 'Controls/inforFavicon/favicon.ico'], dest: 'Controls/Release', filter: 'isFile'}
 			]
 		}
 	},

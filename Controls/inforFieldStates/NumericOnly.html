@@ -7,19 +7,19 @@
 	<title>Infor DropDownList : Alternate Style</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
     <script>
         $(document).ready(function () {
             Globalize.culture("fr-FR");
-            $("#numericField").numericOnly();    
-            $("#decimalField").numericOnly(true);  
-            $("#numericField2").numericOnly(false, true);    
-            $("#decimalField2").numericOnly(true, true);  
-            $("body").inforForm();      
-        }); 
+            $("#numericField").numericOnly();
+            $("#decimalField").numericOnly(true);
+            $("#numericField2").numericOnly(false, true);
+            $("#decimalField2").numericOnly(true, true);
+            $("body").inforForm();
+        });
     </script>
 </head>
 <body>
@@ -32,7 +32,7 @@
         <input type="text" id="numericField2" class="inforTextbox" /><br>
         <label class="inforLabel" for="numericField2">Decimal Only (no negative)</label>
         <input type="text" id="decimalField2" class="inforTextbox" />
-        
+
     </form>
 </body>
 </html>

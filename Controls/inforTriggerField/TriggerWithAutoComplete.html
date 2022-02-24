@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 
 	<title>Infor Trigger Field Combined with Autocomplete</title>
-	
+
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
@@ -16,7 +16,7 @@
 			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAd0lEQVR42mNgYGDYTyQmH9DXBhBgA+KJQPweiN9B2Wz4DOgE4jVALA7EwkC8Dog78NkAMlkISR6k6Rk+G9A1gGx6g88GkPXrgVgSiEWgzjuHzx8giX4gfg3Er4D4LBD/B+INhDwPA6xAvBqqaQ2xQQ/StBCILwEAZLoq5fgx2jQAAAAASUVORK5CYII=");
 		}
 	</style>
-	
+
 	<script>
 
 		$(function ()
@@ -30,8 +30,8 @@
 						e.stopPropagation();
 	                }
 	            });
-				
-				
+
+
 			$(".inforTriggerField").autocomplete({
 	                source: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'],
 					select: function(e)

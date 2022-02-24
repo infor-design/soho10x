@@ -1,6 +1,6 @@
 /*!
  Infor Html Controls v3.5.0 
- Date: 18-02-2020 40:10:05 
+ Date: 24-02-2022 27:01:16 
  Revision: undefined 
  */ 
  /* Infor Common Css
@@ -4315,31 +4315,6 @@ html[dir="rtl"] .inforDatePicker-month {
 	margin-left: 5px;
 	margin-right: 5px;
 }
-/* Infor Tree
-----------------------------------*/
-
-.inforDotChart {
-	font: 12px Helvetica, Arial, sans-serif;
-	font-family: Helvetica, Arial, sans-serif;
-	fill: #aaaaaa;
-}
-
-.inforDotChart .heading {
-	font-family: Helvetica, Arial, sans-serif;
-	fill: #888A90;
-	font-size: 1.6em;
-	font-weight: lighter;
-}
-
-.inforDotChart line {
-	stroke: #d7d7d7;
-}
-
-.inforDotChart path {
-	stroke: #3dc6f4;
-	stroke-width: 2;
-	fill: none;
-}
 /* Infor Draggable List
 ----------------------------------*/
 .inforDraggableList{
@@ -8537,64 +8512,6 @@ ul.inforModuleTabs {
   height: auto;
 }
 
-/* Infor Text Button
-----------------------------------*/
-
-.inforTextButton ,.inforTextButton[disabled], .inforSplitButton{
-	background-color: #f2f2f2;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-	color: #444;
-	cursor: default;
-	height: 24px;
-	margin: 0 0px 0 5px;
-	outline: medium none;
-	overflow: hidden;
-	padding: 0 8px;
-	font-family: Helvetica, Arial, sans-serif;
-	cursor: pointer;
-}
-
-.inforTextButton {
-	padding: 3px 10px;
-}
-
-.inforTextButton[disabled], .inforTextButton.disabled {
-  opacity: 0.6;
-  filter: alpha(opacity=60) !important;
-	cursor: default;
-}
-
-.inforTextButton[disabled]:active, .inforTextButton.disabled:active {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc !important;
-  box-shadow: none;
-}
-
-.inforTextButton:hover {
-	background-color: #d8d8d8;
-	box-shadow: 0 1px #a2a2a2;
-	color: #1a1a1a;
-}
-
-.inforTextButton:hover[disabled], .inforTextButton.disabled:hover {
-	cursor: default;
-	background-color: #f2f2f2;
-  color: #444;
-	box-shadow: none;
-}
-
-.inforTextButton:active {
-  background-color: #bebebe;
-  box-shadow: 0 1px #7a7a7a inset;
-  color: #1a1a1a;
-  border: 1px solid transparent !important;
-}
-
-.inforTextButton:focus {
-	border: 1px solid #13A3F7;
-}
-
 /* Infor Text Input Field
 ----------------------------------*/
 
@@ -8688,6 +8605,64 @@ ul.inforModuleTabs {
 
 .inforLookupField.is-busy  {
   width: calc(100% - 13px) !important;
+}
+
+/* Infor Text Button
+----------------------------------*/
+
+.inforTextButton ,.inforTextButton[disabled], .inforSplitButton{
+	background-color: #f2f2f2;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	color: #444;
+	cursor: default;
+	height: 24px;
+	margin: 0 0px 0 5px;
+	outline: medium none;
+	overflow: hidden;
+	padding: 0 8px;
+	font-family: Helvetica, Arial, sans-serif;
+	cursor: pointer;
+}
+
+.inforTextButton {
+	padding: 3px 10px;
+}
+
+.inforTextButton[disabled], .inforTextButton.disabled {
+  opacity: 0.6;
+  filter: alpha(opacity=60) !important;
+	cursor: default;
+}
+
+.inforTextButton[disabled]:active, .inforTextButton.disabled:active {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc !important;
+  box-shadow: none;
+}
+
+.inforTextButton:hover {
+	background-color: #d8d8d8;
+	box-shadow: 0 1px #a2a2a2;
+	color: #1a1a1a;
+}
+
+.inforTextButton:hover[disabled], .inforTextButton.disabled:hover {
+	cursor: default;
+	background-color: #f2f2f2;
+  color: #444;
+	box-shadow: none;
+}
+
+.inforTextButton:active {
+  background-color: #bebebe;
+  box-shadow: 0 1px #7a7a7a inset;
+  color: #1a1a1a;
+  border: 1px solid transparent !important;
+}
+
+.inforTextButton:focus {
+	border: 1px solid #13A3F7;
 }
 
 /* Infor Tile Panels

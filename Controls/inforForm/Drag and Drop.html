@@ -4,7 +4,7 @@
 
 
 <!-- javascript -->
-<script src="../Release/jquery-1.11.1.min.js"></script>
+<script src="../Release/jquery-3.6.0.min.js"></script>
 <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 
 
@@ -25,9 +25,9 @@ jQuery(function ($) {
 
 	$(document).on('dragover', 'body', function(e) { console.log('dropover'); e.preventDefault(); e.stopPropagation(); });
 	$(document).on('dragenter', 'body', function(e) { console.log('dropenter');  e.preventDefault(); e.stopPropagation(); });
-	
+
 	$(document).on('drop', 'div', function(e){
-		console.log('drop'); 
+		console.log('drop');
 		e.preventDefault();
         e.stopPropagation();
         alert('drop')
@@ -36,10 +36,10 @@ jQuery(function ($) {
                 e.preventDefault();
                 e.stopPropagation();
                 upload(e.originalEvent.dataTransfer.files);
-            }   
+            }
         }
     });
-	
+
 	function upload(files){
 		alert('Upload '+files.length+' File(s).');
 	}

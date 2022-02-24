@@ -8,7 +8,7 @@
 	<title>Infor Progress Indicator - Basic Example</title>
 	<link href='../Release/inforControlsCombined.css' rel='stylesheet'>
 
-	<script src='../Release/jquery-1.11.1.min.js'></script>
+	<script src='../Release/jquery-3.6.0.min.js'></script>
 	<script src='../Release/jquery-ui-1.10.4.custom.min.js'></script>
 	<script src='../Release/inforControlsCombined.js'></script>
 	<script src='js/inforProgressIndicator.js'></script>
@@ -28,7 +28,7 @@
 		}
 
 		function openProgressIndicator(progress, max, text) {
-		
+
 			$('body').inforProgressIndicator({
 				value: 0,
 				max: max,
@@ -39,9 +39,9 @@
 				showCancel: false,
 				showTitleClose: false
 			});
-		
+
 			//Initialize the plugin with the initial value
-			/*$('body').inforProgressIndicator({progressText:text, 
+			/*$('body').inforProgressIndicator({progressText:text,
 											max: max,
 											modal: true,
 											detailText: text,
@@ -56,7 +56,7 @@
 																						 }],
 																				onCancel: function() {
 																					alert('x');
-																				}});*/	
+																				}});*/
 			//this loop similulates something happening...The key is to call the value update when you want the
 			//progress to update.
 			var i=0;

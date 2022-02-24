@@ -8,12 +8,12 @@
 <!-- jira: HFC-1512 -->
 
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/sampleData.js"></script>
 
-<!-- 
+<!--
 	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
 	<script src="../Controls/lib/jquery-1.10.2.js"></script>
 	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
@@ -41,15 +41,15 @@
 
 		var columns = [];
 		 columns.push({ id: "formName", name: "Form Name", field: "formName", width: 125, selectable: true, formatter:TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
-		
-         columns.push({ id: "state", required: true, name: "State", field: "state", width: 125, formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:true}, options: [" ", {label: 'Alabama', id: 15, value: 15}, {label: 'Alaska', id:16, value: 16}, {label: 'Iowa', id: 17, value: 17}] }); 
-		
+
+         columns.push({ id: "state", required: true, name: "State", field: "state", width: 125, formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:true}, options: [" ", {label: 'Alabama', id: 15, value: 15}, {label: 'Alaska', id:16, value: 16}, {label: 'Iowa', id: 17, value: 17}] });
+
 		var data = [];
 		data.push({id:1, formName:"FRMABOUT", secLevel: 15, state: 17 });
 		data.push({id:2, formName:"FRMACLBYOBJECT", secLevel: 16, state: 15 });
 		data.push({id:3, formName:"FRMACTION", secLevel: 17, state: 16  });
-		data.push({id:4, formName:"FRMACTIONWIP", secLevel: 15, state: 17  });		
-	
+		data.push({id:4, formName:"FRMACTIONWIP", secLevel: 15, state: 17  });
+
 		var options = {
 			columns: columns,
 			idProperty: 'id',
@@ -61,13 +61,13 @@
 		};
 		var grid = $("#inforDataGrid").inforDataGrid(options);
 		var dataView = grid.getData();
-		
+
 		var secLevel;
 		var filterFields = {};
-		filterFields["state"] = {		 	
-				value:   "17", 
+		filterFields["state"] = {
+				value:   "17",
 				operator: "equals",
-				filterType: SelectFilter()		
+				filterType: SelectFilter()
 		};
 
 //    grid.applyFilter(filterFields);

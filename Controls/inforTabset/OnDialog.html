@@ -6,7 +6,7 @@
 
 	<title>Infor Message Dialog Box</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTabset.js"></script>
@@ -32,10 +32,10 @@
 					isDefault: true
 				}]
 			});
-			
+
 			$("#reportDetailDialog").on('close', function() {});
-			
-        
+
+
         setTimeout(function() {
 			$("#reportDetailDialog #reportDetailTabContainer").inforTabset({ fillToBottom: false });
             $("#scheduledReportDetailForm").inforForm();
@@ -50,16 +50,16 @@
 	</script>
 </head>
 <body>
-           
-     
 
-           
-     
+
+
+
+
 
 <div id="reportDetailDialog" style="display:none">
 <form action="/ReportManager/" id="scheduledReportDetailForm" method="post">        <div id="reportDetails" data-report="/Example Reports/Process/FPTB1.srdl"></div>
         <div class="infor2ColumnLayout autoLabelWidth">
-                       
+
 <div class="column1">
     <label class="inforLabel" for="ScheduledReportName">Report Name</label>
     <input class="inforTextbox required" id="ScheduledReportName" name="ScheduledReportName" type="text" value="FPTB1" />
@@ -74,7 +74,7 @@
 <option value="610809c9-b347-4a03-add5-aa4a51b22e7d">SDR</option>
 </select>     <br/>
      <label class="inforLabel" for="UserDescription">User Description</label>
-    <input class="inforTextbox" id="UserDescription" name="UserDescription" readonly="readonly" type="text" value="System" />   
+    <input class="inforTextbox" id="UserDescription" name="UserDescription" readonly="readonly" type="text" value="System" />
 </div>
 <div class="column2">
     <label class="inforLabel" for="TargetReportName">Report Name</label>

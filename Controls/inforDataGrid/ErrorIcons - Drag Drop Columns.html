@@ -4,7 +4,7 @@
 
 	<title>Infor DataGrid : Nested Headers</title>
 
-    <script src="../Release/jquery-1.11.1.min.js"></script>
+    <script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
@@ -14,7 +14,7 @@
 
 	<!--Load a Flat file with JSON data-->
 	<script src="js/sampleData.js"></script>
-	
+
 </head>
 <body>
 	<div id="inforDatagrid1" class='inforDataGrid'></div>
@@ -32,17 +32,17 @@
 					result.msg = 'Value must not be greater than 100';
 				}
 			}
-			
+
 			return result;
 		}
-	
+
 		function sumTotalsFormatter(totals, columnDef) {
 			var sum = Math.round(totals.sum[columnDef.field]);
 			var show = "";
 			if(sum > 0)  show = sum;
 			return  "<span style='float: right'>" + show + "</span>";
 		}
-		
+
 		var columns1 = [];
 
 		columns1.push({ id: "cust1", name: "Cust1", field: "cust1", width: 80, editor: TextCellEditor});
@@ -68,7 +68,7 @@
 		data1.push({ rowid : '6', cust1: '08:30 AM', cust2: 'Wednesday', cust3: 'A1', percAllocation:  2, jan: 10, feb: 2, mar: 10, apr: 5, may: 8, jun: 30, jul: 1, aug: 5, sep: 30});
 		data1.push({ rowid : '7', cust1: '08:30 AM', cust2: 'Wednesday', cust3: 'A1', percAllocation: 2, jan: 10, feb: 20, mar: 2, apr: 5, may: 30, jun: 30, jul: 30, aug: 30, sep: 30});
 		data1.push({ rowid : '8', cust1: '08:30 AM', cust2: 'Wednesday', cust3: 'A2', percAllocation: 40, jan: 10, feb: 2, mar: 10, apr: 5, may: 30, jun: 30, jul: 30, aug: 5, sep: 30});
-		
+
 		var options1 = {
 			columns: columns1,
 			idProperty:'rowid',
@@ -91,7 +91,7 @@
 
 		$(document).ready(function () {
 			$('#inforDatagrid1').height(300);
-			
+
 			var grid1 = $("#inforDatagrid1").inforDataGrid(options1);
 			var dataView1= grid1.getData();
 			dataView1.groupBy(
@@ -115,7 +115,7 @@
 			], false);
 
 		});
-	
+
 	</script>
 
 </body>

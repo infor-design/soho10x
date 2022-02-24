@@ -7,7 +7,7 @@
 	<title>Infor Search Field - Simple</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-3.6.0.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTriggerField.js"></script>
@@ -15,13 +15,13 @@
 	<script>
 		 $(function () {
 			$("#trigger1").inforSearchField({click:function(event,a,b){
-				console.log("click was pressed");  
+				console.log("click was pressed");
 			}}).off("keypress.triggerfield").on("keypress",function(event) {
 				if (event.keyCode==13) {
-					console.log("enter was pressed");  
+					console.log("enter was pressed");
 				}
 			});
-			
+
 			$("#trigger4").validationMessage("show", "This field has an Error.");
 			$("body").inforForm();
 		});
