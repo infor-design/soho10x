@@ -5,7 +5,7 @@
 </head>
 <body style="background-color:#FFFFFF;margin: 0 auto;">
 <center>
-  <div style="margin-bottom:30px;">	
+  <div style="margin-bottom:30px;">
   <table style="border:1px solid #afb0b5;" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" width="800">
       <tbody><tr>
         <td colspan="3" style="border-collapse:collapse;" bgcolor="#FFFFFF"><img src="Hook%20and%20Loop%20Updates_files/controls-header.png" alt="" height="180" width="800"></td>
@@ -21,13 +21,13 @@
           <h1 style="color: #13A3F7; font-size: 30px; font-family: Arial, Helvetica; font-weight: bold; margin: 0; padding: 24px 0 0">HTML controls release 3.1 is now available</h1>
           <h2 style="color: #13A3F7; font-size: 17px; font-family: Arial, Helvetica;  margin-top: 13px; font-weight: bold;">Featuring controls, improved interactivity, and uniformity across all browsers and devices. </h2>
 <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:15px; color:#686b73; line-height:19px;">
- The Infor HTML controls release 3.1 is available now to all users, and 
-there's a lot to be excited about. For one, this latest release packs a 
-number of new controls, control style compliance with SoHo guidelines, 
-and breakthrough control changes that are all pre-built to greatly 
-simplify the development process and save you time. What's more, this 
+ The Infor HTML controls release 3.1 is available now to all users, and
+there's a lot to be excited about. For one, this latest release packs a
+number of new controls, control style compliance with SoHo guidelines,
+and breakthrough control changes that are all pre-built to greatly
+simplify the development process and save you time. What's more, this
 latest release also enables never-before-seen consistency and uniformity
- across all browsers and devices. In just a few clicks, you can access 
+ across all browsers and devices. In just a few clicks, you can access
 these latest controls and get started on your way to an easier, cleaner,
  and more enjoyable development process. </p>
 <table style="margin-top:20px; margin-bottom:20px" border="0" cellpadding="0" cellspacing="0">
@@ -91,8 +91,8 @@ these latest controls and get started on your way to an easier, cleaner,
         <td style=" border-collapse:collapse;" bgcolor="#f1f1f1" width="692"><h2 style="color:#13a3f7;  margin-top: 5px; font-family: Arial, Helvetica, sans-serif; font-weight:bold; font-size:22px">BREAKING CHANGES</h2>
           <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:17px; font-weight: bold; font-weight:normal;  color:#333333; line-height:19px;"><strong>inforFormButton and inforTextButton deprecated</strong></p>
           <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:15px; color:#686b73; padding-top: 4px;line-height:19px;">
-			inforFormButton and inforTextButton are javascript widgets, since they now work as css 
-			only. Just remove all calls such as $(something).inforFormButton() and 
+			inforFormButton and inforTextButton are javascript widgets, since they now work as css
+			only. Just remove all calls such as $(something).inforFormButton() and
 			$(something).inforTextButton()</p>
 		 </td>
 		 <td style="padding:20px 0; border-collapse:collapse;" bgcolor="#f1f1f1" width="54">&nbsp;</td>
@@ -113,17 +113,17 @@ these latest controls and get started on your way to an easier, cleaner,
 		            <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:17px; font-weight:normal;color:#333333; line-height:19px;"><strong>Lazy loading tree grid</strong></p>
           <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:15px; color:#686b73; line-height:19px;">
  The tree grid now supports lazy loading as well as sorting. However, in
- order to do this you need to change how you pass the data in. The 
+ order to do this you need to change how you pass the data in. The
 important columns to add are:<br>
             <br>
             <span style="font-family: Courier;font-weight:bold">depth:</span> This was the indent and should be a search and replace. Set this to the level of the node.<br>
             <span style="font-family: Courier;font-weight:bold">parent:</span> This is the id (idProperty value). Of the parent record.<br>
-            <span style="font-family: Courier;font-weight:bold">isParent:</span> If this is a parent set this to true (now 
-required) this is especially important for lazy loading so that it is 
+            <span style="font-family: Courier;font-weight:bold">isParent:</span> If this is a parent set this to true (now
+required) this is especially important for lazy loading so that it is
 known that there are children.<br>
             <span style="font-family: Courier;font-weight:bold">children:</span> Not used yet but can be added. Add the id's of all the children for the parent records.<br>
   <br>
-            Records now do not need to be in order and sorting will not 
+            Records now do not need to be in order and sorting will not
 hang, but a correction will follow on sorting within levels. <br>
   <br>
         Examples: <a style="color:#13a3f7; text-decoration:none" href="http://usmvvwdev67.infor.com:8000/Html5Controls/ControlSamples/inforDataGrid/LazyTreeGrid.html">here</a></p></td>
@@ -143,15 +143,15 @@ hang, but a correction will follow on sorting within levels. <br>
       <tr>
         <td style="border-collapse:collapse;" bgcolor="#f1f1f1" width="54"><a href="http://media.infor.com/marketing/webservices/email/campaigns/#.html"></a></td>
         <td style="border-collapse:collapse;" bgcolor="#f1f1f1" width="692"><p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:17px; color:#333333; line-height:19px; font-weight:bold">Updated versions of jQuery (1.10.2) and jQuery UI (1.10.2)</p>
-          <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:15px; color:#686b73; line-height:19px;"><span style="font-family: Courier;">&lt;script   src="../Release/jquery-1.10.2.min.js"&gt;&lt;/script&gt;</span><br>
+          <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:15px; color:#686b73; line-height:19px;"><span style="font-family: Courier;">&lt;script   src="../Release/jquery-3.7.1-min.js"&gt;&lt;/script&gt;</span><br>
 	  <span style="font-family: Courier;">&lt;script   src="../Release/jquery-ui-1.10.2.min.js"&gt;&lt;/script&gt;</span><br>
 	  <br>
 	  <br>
-				Please   include the jQuery UI from the release folder in 
-	order to save download bytes.   It has exactly what is needed for the 
+				Please   include the jQuery UI from the release folder in
+	order to save download bytes.   It has exactly what is needed for the
 	common controls. <br>
 	  <br>
-				This version of   jQuery introduces a number of breaking 
+				This version of   jQuery introduces a number of breaking
 	fixes which you should check for in your   code. It is outlined here. <br>
 	  <br>
 			We did not use jQuery Migrate instead we   fixed the recommendations. </p></td>
@@ -186,7 +186,7 @@ hang, but a correction will follow on sorting within levels. <br>
 		</td>
         <td style="border-collapse:collapse;" bgcolor="#f1f1f1">&nbsp;</td>
       </tr>
-	  
+
 	  <tr>
 		 <td style="border-collapse:collapse;" bgcolor="#f1f1f1">&nbsp;</td>
          <td style="border-collapse:collapse; border-bottom:1px solid #ACAEB2" bgcolor="#f1f1f1">&nbsp;</td>
@@ -237,7 +237,7 @@ hang, but a correction will follow on sorting within levels. <br>
         <td style="border-collapse:collapse;" bgcolor="#f1f1f1">&nbsp;</td>
         <td style="border-collapse:collapse;" bgcolor="#f1f1f1"><p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:17px; font-weight: normal; color:#333333; line-height:19px;"><strong>Tree Search Plugin </strong></p>
         <p style="font-family:Arial, Arial, Helvetica, sans-serif; font-size:15px; color:#686b73; line-height:19px;">The
- tree search plugin is no longer a default option. You will have to add 
+ tree search plugin is no longer a default option. You will have to add
 it to the list of plugins fed into the inforTree control.</p></td>
         <td style="border-collapse:collapse;" bgcolor="#f1f1f1">&nbsp;</td>
       </tr>
@@ -264,5 +264,5 @@ it to the list of plugins fed into the inforTree control.</p></td>
   </tbody></table>
   </div>
 </center>
- 
+
  </body></html>
