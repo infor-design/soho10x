@@ -1,6 +1,6 @@
 /*!
- Infor Html Controls v3.6.0 
- Date: 24-02-2022 43:01:48 
+ Infor Html Controls v3.7.1 
+ Date: 10-10-2023 21:02:04 
  Revision: undefined 
  */ 
  /*
