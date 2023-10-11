@@ -1,6 +1,6 @@
 /*!
  Infor Html Controls v3.7.1 
- Date: 10-10-2023 21:02:04 
+ Date: 11-10-2023 06:10:48 
  Revision: undefined 
  */ 
  /*
@@ -34723,15 +34723,15 @@ $.fn.extend({
 	};
 } (jQuery));
 /**
-* Validate Plugin
-*/
+ * Validate Plugin
+ */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
-      // AMD. Register as an anonymous module depending on jQuery.
-      define('validator', ['jquery'], factory);
+    // AMD. Register as an anonymous module depending on jQuery.
+    define('validator', ['jquery'], factory);
   } else {
-      // No AMD. Register plugin with global jQuery object.
-      factory(window.jQuery || window.Zepto);
+    // No AMD. Register plugin with global jQuery object.
+    factory(window.jQuery || window.Zepto);
   }
 }(function ($) {
 
@@ -34788,7 +34788,7 @@ $.fn.extend({
       //Attach required
       this.inputs.each(function () {
         var field = $(this),
-        attr = field.attr('data-validate') || field.attr('data-validation');
+          attr = field.attr('data-validate') || field.attr('data-validation');
 
         if (attr && attr.indexOf('required') > -1) {
           field.required();
@@ -34798,8 +34798,8 @@ $.fn.extend({
       //Link on to the current object and perform validation.
       this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
         var field = $(this),
-        attribs = field.attr('data-validation-events'),
-        events = (attribs ? attribs : 'blur.validate change.validate');
+          attribs = field.attr('data-validation-events'),
+          events = (attribs ? attribs : 'blur.validate change.validate');
 
         field.on(events, function () {
 
@@ -34916,7 +34916,7 @@ $.fn.extend({
           }
         };
 
-	  self.tabErrorCounts = {};
+      self.tabErrorCounts = {};
       self.removeError(field);
       field.removeData('data-errormessage');
 
@@ -34954,29 +34954,29 @@ $.fn.extend({
     hasError: function(field) {
       return this.getField(field).hasClass('has-error');
     },
-	setErrorIconOnTab: function(loc) {
-	  var tabPanel = $(loc).closest('.ui-tabs-panel');
-	  var id = '';
-	  var errorCount = 0;
-	  if (tabPanel && tabPanel.length > 0) {
-		id = tabPanel.attr('id');
-		id = '#' + id;
-		errorCount = tabPanel.find('.has-error').length;
-	  }
-	  if (id) {
-		// override position, margin-left, and margin-top on icon-error class
-		var errorIcon = '<i style="position: static; margin-left:0px; margin-top:2px;" class="icon-error label">&nbsp;</i>';
-		var tab = $("a[href=" + id + "]").parent();
-		var isErrorIconOnTab = tab.children('.icon-error').length > 0;
-		if (errorCount > 0) {
-			if (!isErrorIconOnTab) {
-				tab.append(errorIcon);		
-			}
-		} else {
-			tab.children('.icon-error').remove();  
-		}
-	  }
-	},
+    setErrorIconOnTab: function(loc) {
+      var tabPanel = $(loc).closest('.ui-tabs-panel');
+      var id = '';
+      var errorCount = 0;
+      if (tabPanel && tabPanel.length > 0) {
+        id = tabPanel.attr('id');
+        id = '#' + id;
+        errorCount = tabPanel.find('.has-error').length;
+      }
+      if (id) {
+        // override position, margin-left, and margin-top on icon-error class
+        var errorIcon = '<i style="position: static; margin-left:0px; margin-top:2px;" class="icon-error label">&nbsp;</i>';
+        var tab = $(`a[href="${id}"]`).parent();
+        var isErrorIconOnTab = tab.children('.icon-error').length > 0;
+        if (errorCount > 0) {
+          if (!isErrorIconOnTab) {
+            tab.append(errorIcon);
+          }
+        } else {
+          tab.children('.icon-error').remove();
+        }
+      }
+    },
     addError: function(field, message, showTooltip) {
       var loc = this.getField(field).addClass('has-error'),
         self = this,
@@ -34984,15 +34984,15 @@ $.fn.extend({
         appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
       loc.data('data-errormessage', appendedMsg);
-	  
+
       if (!loc.next().is('.icon-error') && !loc.is('input[type=checkbox]')) {
         loc.after(icon);
-		self.setErrorIconOnTab(loc);
+        self.setErrorIconOnTab(loc);
       }
 
       if (!loc.next().next().is('.icon-error') && loc.is('input[type=checkbox]')) {
         loc.next('.inforCheckboxLabel').after(icon);
-		self.setErrorIconOnTab(loc);
+        self.setErrorIconOnTab(loc);
       }
 
       icon.data('field', loc);
@@ -35059,7 +35059,7 @@ $.fn.extend({
       //Make sure its not off the left
       if (leftPos < 0) {
         var newWidth = parseInt(this.tooltip.outerWidth());
-          newWidth -= (Math.abs(parseInt(leftPos)) + 13);
+        newWidth -= (Math.abs(parseInt(leftPos)) + 13);
 
         this.tooltip.css({left: 10, maxWidth: newWidth + 'px'});
       }
@@ -35117,7 +35117,7 @@ $.fn.extend({
       this.inputs.filter('input, textarea').off('focus.validate');
       loc.removeClass('has-error');
       loc.removeData('data-errormessage');
-	  self.setErrorIconOnTab(loc);
+      self.setErrorIconOnTab(loc);
       loc.next('.icon-error').remove();
       loc.next('.inforCheckboxLabel').next('.icon-error').remove();
 
