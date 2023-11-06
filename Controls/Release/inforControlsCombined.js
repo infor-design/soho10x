@@ -1,6 +1,6 @@
 /*!
  Infor Html Controls v3.7.1 
- Date: 11-10-2023 06:10:48 
+ Date: 06-11-2023 26:02:36 
  Revision: undefined 
  */ 
  /*
@@ -30980,7 +30980,7 @@ $.fn.extend({
   // jQuery plugin wrapper
   $.fn.inforTree = function (settings) {
     var isMethodCall = (typeof settings == 'string'), // is this a method call like $().jstree("open_node")
-    args = Array.prototype.slice.call(arguments, 1),
+      args = Array.prototype.slice.call(arguments, 1),
       returnValue = this;
 
     // if a method call execute the method on all selected instances
@@ -30989,7 +30989,7 @@ $.fn.extend({
       this.each(function() {
         var instance = instances[$.data(this, "jstree_instance_id")],
           methodValue = (instance && $.isFunction(instance[settings])) ? instance[settings].apply(instance, args) : instance;
-          if(typeof methodValue !== "undefined" && (settings.indexOf("is_") === 0 || (methodValue !== true && methodValue !== false))) { returnValue = methodValue; return false; }
+        if(typeof methodValue !== "undefined" && (settings.indexOf("is_") === 0 || (methodValue !== true && methodValue !== false))) { returnValue = methodValue; return false; }
       });
     }
     else {
@@ -31052,10 +31052,10 @@ $.fn.extend({
       plugins : []
     },
     _focused : function () {
-        if ($("*:focus").length != 0) {
-          return;
-        }
-        return instances[focused_instance] || null; },
+      if ($("*:focus").length != 0) {
+        return;
+      }
+      return instances[focused_instance] || null; },
     _reference : function (needle) {
       // get by instance id
       if(instances[needle]) { return instances[needle]; }
@@ -31183,13 +31183,13 @@ $.fn.extend({
 
         this.get_container()
           .delegate("li > ins", "click.jstree", $.proxy(function (event) {
-              var trgt = $(event.target);
-              // if(trgt.is("ins") && event.pageY - trgt.offset().top < this.data.core.li_height) { this.toggle_node(trgt); }
-              this.toggle_node(trgt);
-            }, this))
+            var trgt = $(event.target);
+            // if(trgt.is("ins") && event.pageY - trgt.offset().top < this.data.core.li_height) { this.toggle_node(trgt); }
+            this.toggle_node(trgt);
+          }, this))
           .bind("mousedown.jstree", $.proxy(function () {
-              this.set_focus(); // This used to be setTimeout(set_focus,0) - why?
-            }, this))
+            this.set_focus(); // This used to be setTimeout(set_focus,0) - why?
+          }, this))
           .bind("dblclick.jstree", function (event) {
             var sel;
             if(document.selection && document.selection.empty) { document.selection.empty(); }
@@ -31206,33 +31206,33 @@ $.fn.extend({
         if(this._get_settings().core.notify_plugins) {
           this.get_container()
             .bind("load_node.jstree", $.proxy(function (e, data) {
-                var o = this._get_node(data.rslt.obj),
-                  t = this;
-                if(o === -1) { o = this.get_container_ul(); }
-                if(!o.length) { return; }
-                o.find("li").each(function () {
-                  var th = $(this);
-                  if(th.data("jstree")) {
-                    $.each(th.data("jstree"), function (plugin, values) {
-                      if(t.data[plugin] && $.isFunction(t["_" + plugin + "_notify"])) {
-                        t["_" + plugin + "_notify"].call(t, th, values);
-                      }
-                    });
-                  }
-                });
-              }, this));
+              var o = this._get_node(data.rslt.obj),
+                t = this;
+              if(o === -1) { o = this.get_container_ul(); }
+              if(!o.length) { return; }
+              o.find("li").each(function () {
+                var th = $(this);
+                if(th.data("jstree")) {
+                  $.each(th.data("jstree"), function (plugin, values) {
+                    if(t.data[plugin] && $.isFunction(t["_" + plugin + "_notify"])) {
+                      t["_" + plugin + "_notify"].call(t, th, values);
+                    }
+                  });
+                }
+              });
+            }, this));
         }
         if(this._get_settings().core.load_open) {
           this.get_container()
             .bind("load_node.jstree", $.proxy(function (e, data) {
-                var o = this._get_node(data.rslt.obj),
-                  t = this;
-                if(o === -1) { o = this.get_container_ul(); }
-                if(!o.length) { return; }
-                o.find("li.jstree-open:not(:has(ul))").each(function () {
-                  t.load_node(this, $.noop, $.noop);
-                });
-              }, this));
+              var o = this._get_node(data.rslt.obj),
+                t = this;
+              if(o === -1) { o = this.get_container_ul(); }
+              if(!o.length) { return; }
+              o.find("li.jstree-open:not(:has(ul))").each(function () {
+                t.load_node(this, $.noop, $.noop);
+              });
+            }, this));
         }
         this.__callback();
         this.load_node(-1, function () { this.loaded(); this.reload_nodes(); });
@@ -31264,8 +31264,8 @@ $.fn.extend({
           .undelegate(".jstree")
           .removeData("jstree_instance_id")
           .find("[class^='jstree']")
-            .andSelf()
-            .attr("class", function () { return this.className.replace(/jstree[^ ]*|$/ig,''); });
+          .addBack()
+          .attr("class", function () { return this.className.replace(/jstree[^ ]*|$/ig,''); });
         $(document)
           .unbind(".jstree-" + n)
           .undelegate(".jstree-" + n);
@@ -31507,7 +31507,7 @@ $.fn.extend({
         }
         else {
           original_obj = obj;
-          if(obj.is(".jstree-closed")) { obj = obj.find("li.jstree-closed").andSelf(); }
+          if(obj.is(".jstree-closed")) { obj = obj.find("li.jstree-closed").addBack(); }
           else { obj = obj.find("li.jstree-closed"); }
         }
         var _this = this;
@@ -31523,16 +31523,16 @@ $.fn.extend({
         var _this = this;
         obj = obj ? this._get_node(obj) : this.get_container();
         if(!obj || obj === -1) { obj = this.get_container_ul(); }
-        obj.find("li.jstree-open").andSelf().each(function () { _this.close_node(this, !do_animation); });
+        obj.find("li.jstree-open").addBack().each(function () { _this.close_node(this, !do_animation); });
         this.__callback({ "obj" : obj });
       },
       clean_node  : function (obj) {
         obj = obj && obj != -1 ? $(obj) : this.get_container_ul();
-        obj = obj.is("li") ? obj.find("li").andSelf() : obj.find("li");
+        obj = obj.is("li") ? obj.find("li").addBack() : obj.find("li");
         obj.removeClass("jstree-last")
           .filter("li:last-child").addClass("jstree-last").end()
           .filter(":has(li)")
-            .not(".jstree-open").removeClass("jstree-leaf").addClass("jstree-closed");
+          .not(".jstree-open").removeClass("jstree-leaf").addClass("jstree-closed");
         obj.not(".jstree-open, .jstree-closed").addClass("jstree-leaf").children("ul").remove();
         this.__callback({ "obj" : obj });
       },
@@ -31752,7 +31752,7 @@ $.fn.extend({
         if(!obj || !obj.o || obj.or[0] === obj.o[0]) { return false; }
         if(obj.op && obj.np && obj.op[0] === obj.np[0] && obj.cp - 1 === obj.o.index()) { return false; }
         obj.o.each(function () {
-          if(r.parentsUntil(".jstree", "li").andSelf().index(this) !== -1) { ret = false; return false; }
+          if(r.parentsUntil(".jstree", "li").addBack().index(this) !== -1) { ret = false; return false; }
         });
         return ret;
       },
@@ -31771,7 +31771,7 @@ $.fn.extend({
         var o = false;
         if(is_copy) {
           o = obj.o.clone(true);
-          o.find("*[id]").andSelf().each(function () {
+          o.find("*[id]").addBack().each(function () {
             if(this.id) { this.id = "copy_" + this.id; }
           });
         }
@@ -31818,78 +31818,78 @@ $.fn.extend({
     }
     else {
       e1 = $('<div />').css({ width: 100, height: 100, overflow: 'auto', position: 'absolute', top: -1000, left: 0 })
-          .prependTo('body').append('<div />').find('div').css({ width: '100%', height: 200 });
+        .prependTo('body').append('<div />').find('div').css({ width: '100%', height: 200 });
       scrollbar_width = 100 - e1.width();
       e1.parent().remove();
     }
   });
   $.jstree.plugin("ui", {
     __init : function () {
-      	var self = this;
-		this.scroll = 0;
-        this.data.ui.selected = $();
-        this.data.ui.last_selected = false;
-        this.data.ui.hovered = null;
-        this.data.ui.to_select = this.get_settings().ui.initially_select;
+      var self = this;
+      this.scroll = 0;
+      this.data.ui.selected = $();
+      this.data.ui.last_selected = false;
+      this.data.ui.hovered = null;
+      this.data.ui.to_select = this.get_settings().ui.initially_select;
 
-        this.get_container()
-          .delegate("a", "click.jstree", $.proxy(function (event) {
-              event.preventDefault();
-              event.currentTarget.blur();
-              if(!$(event.currentTarget).hasClass("jstree-loading")) {
-                this.select_node(event.currentTarget, true, event);
-              }
-  						self.get_container().scrollLeft(self.scroll);
-            }, this))
-          .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
-              if(!$(event.currentTarget).hasClass("jstree-loading")) {
-                this.hover_node(event.target);
-              }
-  						this.scroll = self.get_container().scrollLeft();
-            }, this))
+      this.get_container()
+        .delegate("a", "click.jstree", $.proxy(function (event) {
+          event.preventDefault();
+          event.currentTarget.blur();
+          if(!$(event.currentTarget).hasClass("jstree-loading")) {
+            this.select_node(event.currentTarget, true, event);
+          }
+          self.get_container().scrollLeft(self.scroll);
+        }, this))
+        .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
+          if(!$(event.currentTarget).hasClass("jstree-loading")) {
+            this.hover_node(event.target);
+          }
+          this.scroll = self.get_container().scrollLeft();
+        }, this))
         .delegate("a", "mouseleave.jstree", $.proxy(function (event) {
-            if(!$(event.currentTarget).hasClass("jstree-loading")) {
-              this.dehover_node(event.target);
-            }
-          }, this))
+          if(!$(event.currentTarget).hasClass("jstree-loading")) {
+            this.dehover_node(event.target);
+          }
+        }, this))
         .bind("reopen.jstree", $.proxy(function () {
-            this.reselect();
-          }, this))
+          this.reselect();
+        }, this))
         .bind("get_rollback.jstree", $.proxy(function () {
-            this.dehover_node();
-            this.save_selected();
-          }, this))
+          this.dehover_node();
+          this.save_selected();
+        }, this))
         .bind("set_rollback.jstree", $.proxy(function () {
-            this.reselect();
-          }, this))
+          this.reselect();
+        }, this))
         .bind("close_node.jstree", $.proxy(function (event, data) {
-            var s = this._get_settings().ui,
-              obj = this._get_node(data.rslt.obj),
-              clk = (obj && obj.length) ? obj.children("ul").find("a.jstree-clicked") : $(),
-              _this = this;
-            if(s.selected_parent_close === false || !clk.length) { return; }
-            clk.each(function () {
-              _this.deselect_node(this);
-              if(s.selected_parent_close === "select_parent") { _this.select_node(obj); }
-            });
-          }, this))
+          var s = this._get_settings().ui,
+            obj = this._get_node(data.rslt.obj),
+            clk = (obj && obj.length) ? obj.children("ul").find("a.jstree-clicked") : $(),
+            _this = this;
+          if(s.selected_parent_close === false || !clk.length) { return; }
+          clk.each(function () {
+            _this.deselect_node(this);
+            if(s.selected_parent_close === "select_parent") { _this.select_node(obj); }
+          });
+        }, this))
         .bind("delete_node.jstree", $.proxy(function (event, data) {
-            var s = this._get_settings().ui.select_prev_on_delete,
-              obj = this._get_node(data.rslt.obj),
-              clk = (obj && obj.length) ? obj.find("a.jstree-clicked") : [],
-              _this = this;
-            clk.each(function () { _this.deselect_node(this); });
-            if(s && clk.length) {
-              data.rslt.prev.each(function () {
-                if(this.parentNode) { _this.select_node(this); return false; /* if return false is removed all prev nodes will be selected */}
-              });
-            }
-          }, this))
+          var s = this._get_settings().ui.select_prev_on_delete,
+            obj = this._get_node(data.rslt.obj),
+            clk = (obj && obj.length) ? obj.find("a.jstree-clicked") : [],
+            _this = this;
+          clk.each(function () { _this.deselect_node(this); });
+          if(s && clk.length) {
+            data.rslt.prev.each(function () {
+              if(this.parentNode) { _this.select_node(this); return false; /* if return false is removed all prev nodes will be selected */}
+            });
+          }
+        }, this))
         .bind("move_node.jstree", $.proxy(function (event, data) {
-            if(data.rslt.cy) {
-              data.rslt.oc.find("a.jstree-clicked").removeClass("jstree-clicked");
-            }
-          }, this));
+          if(data.rslt.cy) {
+            data.rslt.oc.find("a.jstree-clicked").removeClass("jstree-clicked");
+          }
+        }, this));
     },
     defaults : {
       select_limit : -1, // 0, 1, 2 ... or -1 for unlimited
@@ -31952,10 +31952,10 @@ $.fn.extend({
       focus_node : function (obj) {
         obj = this._get_node(obj);
         if(!obj.length) { return false; }
-          //if(this.data.ui.hovered && obj.get(0) === this.data.ui.hovered.get(0)) { return; }
+        //if(this.data.ui.hovered && obj.get(0) === this.data.ui.hovered.get(0)) { return; }
         this.get_container().find('.jstree-focus').each(function () {
-            $(this).attr("tabIndex", "-1");
-            $(this).removeClass("jstree-focus");
+          $(this).attr("tabIndex", "-1");
+          $(this).removeClass("jstree-focus");
         });
 
         // get initial scroll value
@@ -32000,7 +32000,7 @@ $.fn.extend({
           switch(!0) {
             case (is_range):
               this.data.ui.last_selected.addClass("jstree-last-selected");
-              obj = obj[ obj.index() < this.data.ui.last_selected.index() ? "nextUntil" : "prevUntil" ](".jstree-last-selected").andSelf();
+              obj = obj[ obj.index() < this.data.ui.last_selected.index() ? "nextUntil" : "prevUntil" ](".jstree-last-selected").addBack();
               if(s.select_limit == -1 || obj.length < s.select_limit) {
                 this.data.ui.last_selected.removeClass("jstree-last-selected");
                 this.data.ui.selected.each(function () {
@@ -32105,7 +32105,7 @@ $.fn.extend({
         .bind("move_node.jstree", $.proxy(function (e, data) {
           if(this._get_settings().crrm.move.open_onmove) {
             var t = this;
-            data.rslt.np.parentsUntil(".jstree").andSelf().filter(".jstree-closed").each(function () {
+            data.rslt.np.parentsUntil(".jstree").addBack().filter(".jstree-closed").each(function () {
               t.open_node(this, false, true);
             });
           }
@@ -32130,37 +32130,37 @@ $.fn.extend({
           t = this.get_text(obj),
           h1 = $("<div />", { css : { "position" : "absolute", "top" : "-200px", "left" : (rtl ? "0px" : "-1000px"), "visibility" : "hidden" } }).appendTo("body"),
           h2 = obj.css("position","relative").append(
-          $("<input />", {
-            "value" : t,
-            "class" : "inforTextbox",
-            "css" : {
-              "position" : "absolute",
-              "left"  : (rtl ? "auto" : (w1 + w2 + 4) + "px"),
-              "right" : (rtl ? (w1 + w2 + 4) + "px" : "auto"),
-              "top" : "0px",
-              "width" : "150px" // will be set a bit further down
-            },
-            "blur" : $.proxy(function () {
-              var i = obj.children(".inforTextbox"),
-                v = i.val();
+            $("<input />", {
+              "value" : t,
+              "class" : "inforTextbox",
+              "css" : {
+                "position" : "absolute",
+                "left"  : (rtl ? "auto" : (w1 + w2 + 4) + "px"),
+                "right" : (rtl ? (w1 + w2 + 4) + "px" : "auto"),
+                "top" : "0px",
+                "width" : "150px" // will be set a bit further down
+              },
+              "blur" : $.proxy(function () {
+                var i = obj.children(".inforTextbox"),
+                  v = i.val();
 
-              if(v === "") { v = t; }
-              h1.remove();
-              i.remove(); // rollback purposes
-              this.set_text(obj,t); // rollback purposes
-              this.rename_node(obj, v);
-              callback.call(this, obj, v, t);
-              obj.css("position","");
-            }, this),
-            "keypress" : function(event) {
-              var key = event.keyCode || event.which;
-              if (key == 13) {
-                $(this).trigger("blur");
-                return false;
+                if(v === "") { v = t; }
+                h1.remove();
+                i.remove(); // rollback purposes
+                this.set_text(obj,t); // rollback purposes
+                this.rename_node(obj, v);
+                callback.call(this, obj, v, t);
+                obj.css("position","");
+              }, this),
+              "keypress" : function(event) {
+                var key = event.keyCode || event.which;
+                if (key == 13) {
+                  $(this).trigger("blur");
+                  return false;
+                }
               }
-            }
-          })
-        ).children(".inforTextbox");
+            })
+          ).children(".inforTextbox");
         this.set_text(obj, "");
 
         h2.val(t);
@@ -32260,18 +32260,18 @@ $.fn.extend({
     __init : function () {
       this.get_container()
         .bind("init.jstree", $.proxy(function () {
-            var s = this._get_settings().themes;
-            this.data.themes.dots = s.dots;
-            this.data.themes.icons = s.icons;
-            this.set_theme(s.theme, s.url);
-          }, this))
+          var s = this._get_settings().themes;
+          this.data.themes.dots = s.dots;
+          this.data.themes.icons = s.icons;
+          this.set_theme(s.theme, s.url);
+        }, this))
         .bind("loaded.jstree", $.proxy(function () {
-            // bound here too, as simple HTML tree's won't honor dots & icons otherwise
-            if(!this.data.themes.dots) { this.hide_dots(); }
-            else { this.show_dots(); }
-            if(!this.data.themes.icons) { this.hide_icons(); }
-            else { this.show_icons(); }
-          }, this));
+          // bound here too, as simple HTML tree's won't honor dots & icons otherwise
+          if(!this.data.themes.dots) { this.hide_dots(); }
+          else { this.show_dots(); }
+          if(!this.data.themes.icons) { this.hide_icons(); }
+          else { this.show_icons(); }
+        }, this));
     },
     defaults : {
       theme : "default",
@@ -32336,43 +32336,43 @@ $.fn.extend({
     }
   }
   $.jstree.plugin("hotkeys", {
-      __init: function () {
-          var self = this;
-            var container = this.get_container();
-          container.attr('tabIndex', '0');
-          container.on('focus', function () {
-              self.get_container().attr('tabIndex', '-1');
-              if (self.get_container().find('.jstree-focus').length == 0) {
-                  var firstNode = self.get_container().find('a:visible').first();
-                  self.focus_node(firstNode);
-              }
-          });
+    __init: function () {
+      var self = this;
+      var container = this.get_container();
+      container.attr('tabIndex', '0');
+      container.on('focus', function () {
+        self.get_container().attr('tabIndex', '-1');
+        if (self.get_container().find('.jstree-focus').length == 0) {
+          var firstNode = self.get_container().find('a:visible').first();
+          self.focus_node(firstNode);
+        }
+      });
       if(typeof $.hotkeys === "undefined") { throw "jsTree hotkeys: jQuery hotkeys plugin not included."; }
       if (!this.data.ui) { throw "jsTree hotkeys: jsTree UI plugin not included."; }
       var hook = function (node) {
-          var self = this;
-          node.off("keydown");
-          node.on("keydown", function (event) {
-              var i;
-                  switch (event.keyCode) {
-                      case $.ui.keyCode.LEFT:
-                          i = "left";
-                          break;
-                      case $.ui.keyCode.RIGHT:
-                          i = "right";
-                          break;
-                      case $.ui.keyCode.UP:
-                          i = "up";
-                          break;
-                      case $.ui.keyCode.DOWN:
-                          i = "down";
-                          break;
-                      case $.ui.keyCode.SPACE:
-                          i = "space";
-                          break;
-                  }
-                return exec.call(self, i, event);
-              });
+        var self = this;
+        node.off("keydown");
+        node.on("keydown", function (event) {
+          var i;
+          switch (event.keyCode) {
+            case $.ui.keyCode.LEFT:
+              i = "left";
+              break;
+            case $.ui.keyCode.RIGHT:
+              i = "right";
+              break;
+            case $.ui.keyCode.UP:
+              i = "up";
+              break;
+            case $.ui.keyCode.DOWN:
+              i = "down";
+              break;
+            case $.ui.keyCode.SPACE:
+              i = "space";
+              break;
+          }
+          return exec.call(self, i, event);
+        });
       };
       //$.each(this._get_settings().hotkeys, function (i, v) {
       //  if(v !== false && $.inArray(i, bound) == -1) {
@@ -32380,16 +32380,16 @@ $.fn.extend({
       this.get_container().bind("select_node.jstree", function (event, args) { return hook.call(self, $(args.args[0])); });
       this.get_container().bind("focus_node.jstree", function (event, args) { return hook.call(self, $(args.args[0])); });
       this.get_container().bind("defocus_node.jstree", function (event, args) { return $(args.args[0]).off("keydown"); });
-          //    bound.push(i);
+      //    bound.push(i);
       //  }
       //});
       this.get_container()
         .bind("lock.jstree", $.proxy(function () {
-            if(this.data.hotkeys.enabled) { this.data.hotkeys.enabled = false; this.data.hotkeys.revert = true; }
-          }, this))
+          if(this.data.hotkeys.enabled) { this.data.hotkeys.enabled = false; this.data.hotkeys.revert = true; }
+        }, this))
         .bind("unlock.jstree", $.proxy(function () {
-            if(this.data.hotkeys.revert) { this.data.hotkeys.enabled = true; }
-          }, this));
+          if(this.data.hotkeys.revert) { this.data.hotkeys.enabled = true; }
+        }, this));
       this.enable_hotkeys();
     },
     defaults : {
@@ -32834,8 +32834,8 @@ $.fn.extend({
         .one( ( this.data.ui ? "reselect" : "reopen" ) + ".jstree", $.proxy(function () {
           this.get_container()
             .bind("open_node.jstree close_node.jstree select_node.jstree deselect_node.jstree", $.proxy(function (e) {
-                if(this._get_settings().cookies.auto_save) { this.save_cookie((e.handleObj.namespace + e.handleObj.type).replace("jstree","")); }
-              }, this));
+              if(this._get_settings().cookies.auto_save) { this.save_cookie((e.handleObj.namespace + e.handleObj.type).replace("jstree","")); }
+            }, this));
         }, this));
     },
     defaults : {
@@ -32900,17 +32900,17 @@ $.fn.extend({
     __init : function () {
       this.get_container()
         .bind("load_node.jstree", $.proxy(function (e, data) {
-            var obj = this._get_node(data.rslt.obj);
-            obj = obj === -1 ? this.get_container().children("ul") : obj.children("ul");
-            this.sort(obj);
-          }, this))
+          var obj = this._get_node(data.rslt.obj);
+          obj = obj === -1 ? this.get_container().children("ul") : obj.children("ul");
+          this.sort(obj);
+        }, this))
         .bind("rename_node.jstree create_node.jstree create.jstree", $.proxy(function (e, data) {
-            this.sort(data.rslt.obj.parent());
-          }, this))
+          this.sort(data.rslt.obj.parent());
+        }, this))
         .bind("move_node.jstree", $.proxy(function (e, data) {
-            var m = data.rslt.np == -1 ? this.get_container() : data.rslt.np;
-            this.sort(m.children("ul"));
-          }, this));
+          var m = data.rslt.np == -1 ? this.get_container() : data.rslt.np;
+          this.sort(m.children("ul"));
+        }, this));
     },
     defaults : function (a, b) { return this.get_text(a) > this.get_text(b) ? 1 : -1; },
     _fn : {
@@ -33055,166 +33055,166 @@ $.fn.extend({
       //this.get_container().sortable({items: "li", forcePlaceHolder: true, axis: "y"});
       this.get_container()
         .bind("mouseenter.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              if(this.data.themes) {
-                m.attr("class", "jstree-" + this.data.themes.theme);
-                if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
-                $.inforTree.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme);
-              }
-              if(e.currentTarget === e.target && $.inforTree.dnd.user_data.obj && $($.inforTree.dnd.user_data.obj).length && $($.inforTree.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
-                var tr = $.jstree._reference(e.target), dc;
-                if(tr.data.dnd.foreign) {
-                  dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
-                  if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
-                    $.inforTree.dnd.helper.children("ins").attr("class","jstree-ok");
-                  }
-                }
-                else {
-                  tr.prepare_move(o, tr.get_container(), "last");
-                  if(tr.check_move()) {
-                    $.inforTree.dnd.helper.children("ins").attr("class","jstree-ok");
-                  }
-                }
-              }
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
+            if(this.data.themes) {
+              m.attr("class", "jstree-" + this.data.themes.theme);
+              if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
+              $.inforTree.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme);
             }
-          }, this))
-        .bind("mouseup.jstree", $.proxy(function (e) {
-            //if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree && $(e.currentTarget).find("> ul > li").length === 0) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree && e.currentTarget === e.target && $.inforTree.dnd.user_data.obj && $($.inforTree.dnd.user_data.obj).length && $($.inforTree.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
-              var tr = $.jstree._reference(e.currentTarget), dc;
+            if(e.currentTarget === e.target && $.inforTree.dnd.user_data.obj && $($.inforTree.dnd.user_data.obj).length && $($.inforTree.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
+              var tr = $.jstree._reference(e.target), dc;
               if(tr.data.dnd.foreign) {
                 dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
                 if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
-                  tr._get_settings().dnd.drag_finish.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
+                  $.inforTree.dnd.helper.children("ins").attr("class","jstree-ok");
                 }
               }
               else {
-                tr.move_node(o, tr.get_container(), "last", e[tr._get_settings().dnd.copy_modifier + "Key"]);
+                tr.prepare_move(o, tr.get_container(), "last");
+                if(tr.check_move()) {
+                  $.inforTree.dnd.helper.children("ins").attr("class","jstree-ok");
+                }
               }
             }
-          }, this))
+          }
+        }, this))
+        .bind("mouseup.jstree", $.proxy(function (e) {
+          //if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree && $(e.currentTarget).find("> ul > li").length === 0) {
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree && e.currentTarget === e.target && $.inforTree.dnd.user_data.obj && $($.inforTree.dnd.user_data.obj).length && $($.inforTree.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
+            var tr = $.jstree._reference(e.currentTarget), dc;
+            if(tr.data.dnd.foreign) {
+              dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
+              if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
+                tr._get_settings().dnd.drag_finish.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
+              }
+            }
+            else {
+              tr.move_node(o, tr.get_container(), "last", e[tr._get_settings().dnd.copy_modifier + "Key"]);
+            }
+          }
+        }, this))
         .bind("mouseleave.jstree", $.proxy(function (e) {
+          if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
+            return false;
+          }
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
+            if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+            if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+            if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
+            if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
+            if($.inforTree.dnd.helper.children("ins").hasClass("jstree-ok")) {
+              $.inforTree.dnd.helper.children("ins").attr("class","jstree-invalid");
+            }
+          }
+        }, this))
+        .bind("mousemove.jstree", $.proxy(function (e) {
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
+            var cnt = this.get_container()[0];
+
+            // Horizontal scroll
+            if(e.pageX + 24 > this.data.dnd.cof.left + this.data.dnd.cw) {
+              if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+              this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft += $.inforTree.dnd.scroll_spd; }, cnt), 100);
+            }
+            else if(e.pageX - 24 < this.data.dnd.cof.left) {
+              if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+              this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft -= $.inforTree.dnd.scroll_spd; }, cnt), 100);
+            }
+            else {
+              if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+            }
+
+            // Vertical scroll
+            if(e.pageY + 24 > this.data.dnd.cof.top + this.data.dnd.ch) {
+              if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+              this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop += $.inforTree.dnd.scroll_spd; }, cnt), 100);
+            }
+            else if(e.pageY - 24 < this.data.dnd.cof.top) {
+              if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+              this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop -= $.inforTree.dnd.scroll_spd; }, cnt), 100);
+            }
+            else {
+              if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+            }
+
+          }
+        }, this))
+        .bind("scroll.jstree", $.proxy(function (e) {
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree && m && ml) {
+            m.hide();
+            ml.hide();
+          }
+        }, this))
+        .delegate("a", "mousedown.jstree", $.proxy(function (e) {
+          if(e.which === 1) {
+            this.start_drag(e.currentTarget, e);
+            return false;
+          }
+        }, this))
+        .delegate("a", "mouseenter.jstree", $.proxy(function (e) {
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
+            this.dnd_enter(e.currentTarget);
+          }
+        }, this))
+        .delegate("a", "mousemove.jstree", $.proxy(function (e) {
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
+            if(!r || !r.length || r.children("a")[0] !== e.currentTarget) {
+              this.dnd_enter(e.currentTarget);
+            }
+            if(typeof this.data.dnd.off.top === "undefined") { this.data.dnd.off = $(e.target).offset(); }
+            this.data.dnd.w = (e.pageY - (this.data.dnd.off.top || 0)) % this.data.core.li_height;
+            if(this.data.dnd.w < 0) { this.data.dnd.w += this.data.core.li_height; }
+            this.dnd_show();
+          }
+        }, this))
+        .delegate("a", "mouseleave.jstree", $.proxy(function (e) {
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
             if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
               return false;
             }
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-              if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-              if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
-              if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
-              if($.inforTree.dnd.helper.children("ins").hasClass("jstree-ok")) {
-                $.inforTree.dnd.helper.children("ins").attr("class","jstree-invalid");
-              }
-            }
-          }, this))
-        .bind("mousemove.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              var cnt = this.get_container()[0];
+            if(m) { m.hide(); }
+            if(ml) { ml.hide(); }
 
-              // Horizontal scroll
-              if(e.pageX + 24 > this.data.dnd.cof.left + this.data.dnd.cw) {
-                if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-                this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft += $.inforTree.dnd.scroll_spd; }, cnt), 100);
-              }
-              else if(e.pageX - 24 < this.data.dnd.cof.left) {
-                if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-                this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft -= $.inforTree.dnd.scroll_spd; }, cnt), 100);
-              }
-              else {
-                if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-              }
-
-              // Vertical scroll
-              if(e.pageY + 24 > this.data.dnd.cof.top + this.data.dnd.ch) {
-                if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-                this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop += $.inforTree.dnd.scroll_spd; }, cnt), 100);
-              }
-              else if(e.pageY - 24 < this.data.dnd.cof.top) {
-                if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-                this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop -= $.inforTree.dnd.scroll_spd; }, cnt), 100);
-              }
-              else {
-                if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-              }
-
-            }
-          }, this))
-        .bind("scroll.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree && m && ml) {
-              m.hide();
-              ml.hide();
-            }
-          }, this))
-        .delegate("a", "mousedown.jstree", $.proxy(function (e) {
-            if(e.which === 1) {
-              this.start_drag(e.currentTarget, e);
-              return false;
-            }
-          }, this))
-        .delegate("a", "mouseenter.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              this.dnd_enter(e.currentTarget);
-            }
-          }, this))
-        .delegate("a", "mousemove.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              if(!r || !r.length || r.children("a")[0] !== e.currentTarget) {
-                this.dnd_enter(e.currentTarget);
-              }
-              if(typeof this.data.dnd.off.top === "undefined") { this.data.dnd.off = $(e.target).offset(); }
-              this.data.dnd.w = (e.pageY - (this.data.dnd.off.top || 0)) % this.data.core.li_height;
-              if(this.data.dnd.w < 0) { this.data.dnd.w += this.data.core.li_height; }
-              this.dnd_show();
-            }
-          }, this))
-        .delegate("a", "mouseleave.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
-                return false;
-              }
-                if(m) { m.hide(); }
-                if(ml) { ml.hide(); }
-
-              this.data.dnd.mto = setTimeout(
-                (function (t) { return function () { t.dnd_leave(e); }; })(this),
+            this.data.dnd.mto = setTimeout(
+              (function (t) { return function () { t.dnd_leave(e); }; })(this),
               0);
-            }
-          }, this))
+          }
+        }, this))
         .delegate("a", "mouseup.jstree", $.proxy(function (e) {
-            if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
-              this.dnd_finish(e);
-            }
-          }, this));
+          if($.inforTree.dnd.is_drag && $.inforTree.dnd.user_data.jstree) {
+            this.dnd_finish(e);
+          }
+        }, this));
 
       $(document)
         .bind("drag_stop.inforTree", $.proxy(function () {
-            if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
-            if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
-            if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-            if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-            this.data.dnd.after   = false;
-            this.data.dnd.before  = false;
-            this.data.dnd.inside  = false;
-            this.data.dnd.off   = false;
-            this.data.dnd.prepared  = false;
-            this.data.dnd.w     = false;
-            this.data.dnd.to1   = false;
-            this.data.dnd.to2   = false;
-            this.data.dnd.i1    = false;
-            this.data.dnd.i2    = false;
-            this.data.dnd.active  = false;
-            this.data.dnd.foreign = false;
-            if(m) { m.css({ "top" : "-2000px" }); }
-            if(ml) { ml.css({ "top" : "-2000px" }); }
-          }, this))
+          if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
+          if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
+          if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+          if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+          this.data.dnd.after   = false;
+          this.data.dnd.before  = false;
+          this.data.dnd.inside  = false;
+          this.data.dnd.off   = false;
+          this.data.dnd.prepared  = false;
+          this.data.dnd.w     = false;
+          this.data.dnd.to1   = false;
+          this.data.dnd.to2   = false;
+          this.data.dnd.i1    = false;
+          this.data.dnd.i2    = false;
+          this.data.dnd.active  = false;
+          this.data.dnd.foreign = false;
+          if(m) { m.css({ "top" : "-2000px" }); }
+          if(ml) { ml.css({ "top" : "-2000px" }); }
+        }, this))
         .bind("drag_start.inforTree", $.proxy(function (e, data) {
-            if(data.data.jstree) {
-              var et = $(data.event.target);
-              if(et.closest(".jstree").hasClass("jstree-" + this.get_index())) {
-                this.dnd_enter(et);
-              }
+          if(data.data.jstree) {
+            var et = $(data.event.target);
+            if(et.closest(".jstree").hasClass("jstree-" + this.get_index())) {
+              this.dnd_enter(et);
             }
-          }, this));
+          }
+        }, this));
 
       var s = this._get_settings().dnd;
       if(s.drag_target) {
@@ -33238,27 +33238,27 @@ $.fn.extend({
       if(s.drop_target) {
         $(document)
           .delegate(s.drop_target, "mouseenter.jstree-" + this.get_index(), $.proxy(function (e) {
-              if(this.data.dnd.active && this._get_settings().dnd.drop_check.call(this, { "o" : o, "r" : $(e.target), "e" : e })) {
-                $.inforTree.dnd.helper.children("ins").attr("class","jstree-ok");
-              }
-            }, this))
+            if(this.data.dnd.active && this._get_settings().dnd.drop_check.call(this, { "o" : o, "r" : $(e.target), "e" : e })) {
+              $.inforTree.dnd.helper.children("ins").attr("class","jstree-ok");
+            }
+          }, this))
           .delegate(s.drop_target, "mousemove.jstree-" + this.get_index(), $.proxy(function (e) {
             if (this.data.dnd.active && this._get_settings().dnd.drop_check.call(this, { "o": o, "r": $(e.target), "e": e })) {
               if (!$.inforTree.dnd.helper.children("ins").hasClass("jstree-ok")) {
                 $.inforTree.dnd.helper.children("ins").attr("class", "jstree-ok");
               }
             }
-            }, this))
+          }, this))
           .delegate(s.drop_target, "mouseleave.jstree-" + this.get_index(), $.proxy(function (e) {
-              if(this.data.dnd.active) {
-                $.inforTree.dnd.helper.children("ins").attr("class","jstree-invalid");
-              }
-            }, this))
+            if(this.data.dnd.active) {
+              $.inforTree.dnd.helper.children("ins").attr("class","jstree-invalid");
+            }
+          }, this))
           .delegate(s.drop_target, "mouseup.jstree-" + this.get_index(), $.proxy(function (e) {
-              if(this.data.dnd.active && $.inforTree.dnd.helper.children("ins").hasClass("jstree-ok")) {
-                this._get_settings().dnd.drop_finish.call(this, { "o" : o, "r" : $(e.target), "e" : e });
-              }
-            }, this));
+            if(this.data.dnd.active && $.inforTree.dnd.helper.children("ins").hasClass("jstree-ok")) {
+              this._get_settings().dnd.drop_finish.call(this, { "o" : o, "r" : $(e.target), "e" : e });
+            }
+          }, this));
       }
     },
     defaults : {
@@ -33441,7 +33441,7 @@ $.fn.extend({
             return false;
           })
           .appendTo("body");
-          ml = $("<div />").attr({ id : "jstree-marker-line" }).hide()
+        ml = $("<div />").attr({ id : "jstree-marker-line" }).hide()
           .bind("mouseup", function (e) {
             if(r && r.length) {
               r.children("a").trigger(e);
@@ -33503,24 +33503,24 @@ $.fn.extend({
 
       this.get_container()
         .bind("open_node.jstree create_node.jstree clean_node.jstree refresh.jstree", $.proxy(function (e, data) {
-            this._prepare_checkboxes(data.rslt.obj);
-          }, this))
+          this._prepare_checkboxes(data.rslt.obj);
+        }, this))
         .bind("loaded.jstree", $.proxy(function (e) {
-            this._prepare_checkboxes();
-          }, this))
+          this._prepare_checkboxes();
+        }, this))
         .delegate( (this.data.ui && this.data.checkbox.noui ? "a" : "ins.jstree-checkbox") , "click.jstree", $.proxy(function (e) {
-            e.preventDefault();
-            if(this._get_node(e.target).hasClass("jstree-checked")) { this.uncheck_node(e.target); }
-            else { this.check_node(e.target); }
-            if(this.data.ui && this.data.checkbox.noui) {
-              this.save_selected();
-              if(this.data.cookies) { this.save_cookie("select_node"); }
-            }
-            else {
-              e.stopImmediatePropagation();
-              return false;
-            }
-          }, this));
+          e.preventDefault();
+          if(this._get_node(e.target).hasClass("jstree-checked")) { this.uncheck_node(e.target); }
+          else { this.check_node(e.target); }
+          if(this.data.ui && this.data.checkbox.noui) {
+            this.save_selected();
+            if(this.data.cookies) { this.save_cookie("select_node"); }
+          }
+          else {
+            e.stopImmediatePropagation();
+            return false;
+          }
+        }, this));
     },
     defaults : {
       override_ui : false,
@@ -33547,7 +33547,7 @@ $.fn.extend({
         obj.each(function () {
           t = $(this);
           c = t.is("li") && (t.hasClass("jstree-checked") || (rc && t.children(":checked").length)) ? "jstree-checked" : "jstree-unchecked";
-          t.find("li").andSelf().each(function () {
+          t.find("li").addBack().each(function () {
             var $t = $(this), nm;
             $t.children("a" + (_this.data.languages ? "" : ":eq(0)") ).not(":has(.jstree-checkbox)").prepend("<ins class='jstree-checkbox'>&#160;</ins>").parent().not(".jstree-checked, .jstree-unchecked").addClass( ts ? "jstree-unchecked" : c );
             if(rc) {
@@ -33561,7 +33561,7 @@ $.fn.extend({
             }
             if(!ts) {
               if(c === "jstree-checked" || $t.hasClass("jstree-checked") || $t.children(':checked').length) {
-                $t.find("li").andSelf().addClass("jstree-checked").children(":checkbox").prop("checked", true);
+                $t.find("li").addBack().addClass("jstree-checked").children(":checkbox").prop("checked", true);
               }
             }
             else {
@@ -33592,13 +33592,13 @@ $.fn.extend({
         }
         else {
           if(state) {
-            coll = obj.find("li").andSelf();
+            coll = obj.find("li").addBack();
             if(!coll.filter(".jstree-checked, .jstree-undetermined").length) { return false; }
             coll.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked");
             if(rc) { coll.children(":checkbox").prop("checked", false); }
           }
           else {
-            coll = obj.find("li").andSelf();
+            coll = obj.find("li").addBack();
             if(!coll.filter(".jstree-unchecked, .jstree-undetermined").length) { return false; }
             coll.removeClass("jstree-unchecked jstree-undetermined").addClass("jstree-checked");
             if(rc) { coll.children(":checkbox").prop("checked", true); }
@@ -33609,8 +33609,8 @@ $.fn.extend({
             var $this = $(this);
             if(state) {
               if($this.children("ul").children("li.jstree-checked, li.jstree-undetermined").length) {
-                $this.parentsUntil(".jstree", "li").andSelf().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-                if(rc) { $this.parentsUntil(".jstree", "li").andSelf().children(":checkbox").prop("checked", false); }
+                $this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
+                if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
                 return false;
               }
               else {
@@ -33620,8 +33620,8 @@ $.fn.extend({
             }
             else {
               if($this.children("ul").children("li.jstree-unchecked, li.jstree-undetermined").length) {
-                $this.parentsUntil(".jstree", "li").andSelf().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-                if(rc) { $this.parentsUntil(".jstree", "li").andSelf().children(":checkbox").prop("checked", false); }
+                $this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
+                if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
                 return false;
               }
               else {
@@ -33685,7 +33685,7 @@ $.fn.extend({
         obj = this._get_node(obj);
         if(!obj.length) { return; }
         if(this._get_settings().checkbox.two_state) {
-          obj.find('li').andSelf().not('.jstree-checked').removeClass('jstree-undetermined').addClass('jstree-unchecked').children(':checkbox').prop('checked', true);
+          obj.find('li').addBack().not('.jstree-checked').removeClass('jstree-undetermined').addClass('jstree-unchecked').children(':checkbox').prop('checked', true);
           return;
         }
         var rc = this._get_settings().checkbox.real_checkboxes,
@@ -33696,8 +33696,8 @@ $.fn.extend({
         else if(a === 0 && b === 0) { this.change_state(obj, true); }
         else if(a === c) { this.change_state(obj, false); }
         else {
-          obj.parentsUntil(".jstree","li").andSelf().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-          if(rc) { obj.parentsUntil(".jstree", "li").andSelf().children(":checkbox").prop("checked", false); }
+          obj.parentsUntil(".jstree","li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
+          if(rc) { obj.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
         }
       },
       reselect : function () {
@@ -33745,7 +33745,7 @@ $.fn.extend({
         this.get_container()
           .bind("search.jstree", function (e, data) {
             $(this).children("ul").find("li").hide().removeClass("jstree-last");
-            data.rslt.nodes.parentsUntil(".jstree").andSelf().show()
+            data.rslt.nodes.parentsUntil(".jstree").addBack().show()
               .filter("ul").each(function () { $(this).children("li:visible").eq(-1).addClass("jstree-last"); });
           })
           .bind("clear_search.jstree", function () {
@@ -33790,11 +33790,11 @@ $.fn.extend({
           .attr("placeholder",Globalize.localize("SearchTree"))
           .addClass("noTrackDirty")
           .inforSearchField({click:function(event){
-            var term = searchField.val();
-            self.search(term);
-          },cancel:function(event){
-            self.search("");
-          }});
+              var term = searchField.val();
+              self.search(term);
+            },cancel:function(event){
+              self.search("");
+            }});
 
         searchField.closest(".inforTriggerField").find(".inforTriggerButton")
           .attr("title",Globalize.localize("Search"));
@@ -33862,7 +33862,7 @@ $.fn.extend({
           $.each(this.data.search.to_open, function (i, val) {
             if(val == "#") { return true; }
             if(_this._get_node(val)) { current.push(val); }
-              else { remaining.push(val); }
+            else { remaining.push(val); }
           });
           if(current.length) {
             this.data.search.to_open = remaining;
@@ -33891,7 +33891,7 @@ $.fn.extend({
       // this used to use html() and clean the whitespace, but this way any attached data was lost
       this.data.html_data.original_container_html = this.get_container().find(" > ul > li").clone(true);
       // remove white space from LI node - otherwise nodes appear a bit to the right
-      this.data.html_data.original_container_html.find("li").andSelf().contents().filter(function() { return this.nodeType == 3; }).remove();
+      this.data.html_data.original_container_html.find("li").addBack().contents().filter(function() { return this.nodeType == 3; }).remove();
     },
     defaults : {
       data : false,
@@ -34041,47 +34041,47 @@ $.fn.extend({
       this.data.types.attach_to = [];
       this.get_container()
         .bind("init.jstree", $.proxy(function () {
-            var types = s.types,
-              attr  = s.type_attr,
-              icons_css = "",
-              _this = this;
+          var types = s.types,
+            attr  = s.type_attr,
+            icons_css = "",
+            _this = this;
 
-            $.each(types, function (i, tp) {
-              $.each(tp, function (k, v) {
-                if(!/^(max_depth|max_children|icon|valid_children)$/.test(k)) { _this.data.types.attach_to.push(k); }
-              });
-              if(!tp.icon) { return true; }
-              if( tp.icon.image || tp.icon.position) {
-                if(i == "default")  { icons_css += '.jstree-' + _this.get_index() + ' a > .jstree-icon { '; }
-                else        { icons_css += '.jstree-' + _this.get_index() + ' li[' + attr + '="' + i + '"] > a > .jstree-icon { '; }
-                if(tp.icon.image) { icons_css += ' background-image:url(' + tp.icon.image + '); '; }
-                if(tp.icon.position){ icons_css += ' background-position:' + tp.icon.position + '; '; }
-                else        { icons_css += ' background-position:0 0; '; }
-                icons_css += '} ';
-              }
+          $.each(types, function (i, tp) {
+            $.each(tp, function (k, v) {
+              if(!/^(max_depth|max_children|icon|valid_children)$/.test(k)) { _this.data.types.attach_to.push(k); }
             });
-
-          }, this))
-        .bind("before.jstree", $.proxy(function (e, data) {
-            var s, t,
-              o = this._get_settings().types.use_data ? this._get_node(data.args[0]) : false,
-              d = o && o !== -1 && o.length ? o.data("jstree") : false;
-            if(d && d.types && d.types[data.func] === false) { e.stopImmediatePropagation(); return false; }
-            if($.inArray(data.func, this.data.types.attach_to) !== -1) {
-              if(!data.args[0] || (!data.args[0].tagName && !data.args[0].jquery)) { return; }
-              s = this._get_settings().types.types;
-              t = this._get_type(data.args[0]);
-              if(
-                (
-                  (s[t] && typeof s[t][data.func] !== "undefined") ||
-                  (s["default"] && typeof s["default"][data.func] !== "undefined")
-                ) && this._check(data.func, data.args[0]) === false
-              ) {
-                e.stopImmediatePropagation();
-                return false;
-              }
+            if(!tp.icon) { return true; }
+            if( tp.icon.image || tp.icon.position) {
+              if(i == "default")  { icons_css += '.jstree-' + _this.get_index() + ' a > .jstree-icon { '; }
+              else        { icons_css += '.jstree-' + _this.get_index() + ' li[' + attr + '="' + i + '"] > a > .jstree-icon { '; }
+              if(tp.icon.image) { icons_css += ' background-image:url(' + tp.icon.image + '); '; }
+              if(tp.icon.position){ icons_css += ' background-position:' + tp.icon.position + '; '; }
+              else        { icons_css += ' background-position:0 0; '; }
+              icons_css += '} ';
             }
-          }, this));
+          });
+
+        }, this))
+        .bind("before.jstree", $.proxy(function (e, data) {
+          var s, t,
+            o = this._get_settings().types.use_data ? this._get_node(data.args[0]) : false,
+            d = o && o !== -1 && o.length ? o.data("jstree") : false;
+          if(d && d.types && d.types[data.func] === false) { e.stopImmediatePropagation(); return false; }
+          if($.inArray(data.func, this.data.types.attach_to) !== -1) {
+            if(!data.args[0] || (!data.args[0].tagName && !data.args[0].jquery)) { return; }
+            s = this._get_settings().types.types;
+            t = this._get_type(data.args[0]);
+            if(
+              (
+                (s[t] && typeof s[t][data.func] !== "undefined") ||
+                (s["default"] && typeof s["default"][data.func] !== "undefined")
+              ) && this._check(data.func, data.args[0]) === false
+            ) {
+              e.stopImmediatePropagation();
+              return false;
+            }
+          }
+        }, this));
     },
     defaults : {
       // defines maximum number of root nodes (-1 means unlimited, -2 means disable max_children checking)
@@ -34289,7 +34289,7 @@ $.fn.extend({
         $('#inforTreeContextMenu').remove();
         obj = this._get_node(e.currentTarget);
         s = this.get_settings().contextmenu,
-        menuItems = s.items;
+          menuItems = s.items;
 
         if (typeof menuItems == "function") {
           menuItems = menuItems(obj);
@@ -34328,7 +34328,7 @@ $.fn.extend({
             a.after(ul);
             for (var sub in menuItems[key].submenu) {
               var aa = $('<a></a>').text(menuItems[key].submenu[sub].label)
-                        .attr("href","#"+key+"_"+sub);
+                .attr("href","#"+key+"_"+sub);
               ul.append($('<li></li>').append(aa));
             }
           }
@@ -34393,7 +34393,7 @@ $.fn.extend({
             this.menu.height(menuHeight);
           }
         }
-	  //Set focus to first item in menu
+        //Set focus to first item in menu
         wrapper.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
 
 
