@@ -1632,7 +1632,7 @@
               return false;
             }
             isDragging = true;
-            pageX = e.pageX;
+            pageX = dd.pageX;
 
             $(this).parent().addClass("slick-header-column-active").css("cursor", "col-resize");
             $(this).parent().next().addClass("slick-header-column-active").css("cursor", "col-resize");
@@ -1693,7 +1693,7 @@
             minPageX = pageX - Math.min(shrinkLeewayOnLeft, stretchLeewayOnRight);
           })
           .bind("drag", function(e, dd) {
-            var actualMinWidth, d = Math.min(maxPageX, Math.max(minPageX, e.pageX)) - pageX,
+            var actualMinWidth, d = Math.min(maxPageX, Math.max(minPageX, dd.pageX)) - pageX,
               x;
 
             if (d < 0) { // shrink column
@@ -10884,8 +10884,8 @@ function CellRangeSelector(options) {
   e.stopImmediatePropagation();
 
   var end = _grid.getCellFromPoint(
-    e.pageX - $(_canvas).offset().left,
-    e.pageY - $(_canvas).offset().top);
+    dd.pageX - $(_canvas).offset().left,
+    dd.pageY - $(_canvas).offset().top);
 
   if (!_grid.canCellBeSelected(end.row, end.cell)) {
     return;
