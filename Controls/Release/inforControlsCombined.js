@@ -1,6 +1,6 @@
 /*!
  Infor Html Controls v3.7.1 
- Date: 06-11-2023 26:02:36 
+ Date: 20-11-2023 00:08:13 
  Revision: undefined 
  */ 
  /*
@@ -2459,7 +2459,7 @@ drag = $special.drag = {
 			if ( type !== "dragend" && ia.cancelled )
 				continue;
 			// set the dragdrop properties on the event object
-			callback = drag.properties( event, dd, ia );
+			callback = drag.properties( orig.event, dd, ia );
 			// prepare for more results
 			ia.results = [];
 			// handle each element
@@ -2520,6 +2520,9 @@ drag = $special.drag = {
 		// starting mouse position
 		obj.startX = dd.pageX;
 		obj.startY = dd.pageY;
+    // current mouse position
+    obj.pageX = event.pageX;
+    obj.pageY = event.pageY;
 		// current distance dragged
 		obj.deltaX = event.pageX - dd.pageX;
 		obj.deltaY = event.pageY - dd.pageY;
@@ -9499,7 +9502,7 @@ $.fn.chart = function(options) {
               return false;
             }
             isDragging = true;
-            pageX = e.pageX;
+            pageX = dd.pageX;
 
             $(this).parent().addClass("slick-header-column-active").css("cursor", "col-resize");
             $(this).parent().next().addClass("slick-header-column-active").css("cursor", "col-resize");
@@ -9560,7 +9563,7 @@ $.fn.chart = function(options) {
             minPageX = pageX - Math.min(shrinkLeewayOnLeft, stretchLeewayOnRight);
           })
           .bind("drag", function(e, dd) {
-            var actualMinWidth, d = Math.min(maxPageX, Math.max(minPageX, e.pageX)) - pageX,
+            var actualMinWidth, d = Math.min(maxPageX, Math.max(minPageX, dd.pageX)) - pageX,
               x;
 
             if (d < 0) { // shrink column
@@ -12018,7 +12021,7 @@ $.fn.chart = function(options) {
       range.rightPx += viewportW;
 
       range.leftPx = Math.max(0, range.leftPx);
-      range.rightPx = Math.min(canvasWidth, range.rightPx);
+      range.rightPx = range.rightPx == 0 ? canvasWidth : Math.min(canvasWidth, range.rightPx);
 
       return range;
     }
@@ -18751,8 +18754,8 @@ function CellRangeSelector(options) {
   e.stopImmediatePropagation();
 
   var end = _grid.getCellFromPoint(
-    e.pageX - $(_canvas).offset().left,
-    e.pageY - $(_canvas).offset().top);
+    dd.pageX - $(_canvas).offset().left,
+    dd.pageY - $(_canvas).offset().top);
 
   if (!_grid.canCellBeSelected(end.row, end.cell)) {
     return;
