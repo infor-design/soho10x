@@ -4151,7 +4151,7 @@
       range.rightPx += viewportW;
 
       range.leftPx = Math.max(0, range.leftPx);
-      range.rightPx = Math.min(canvasWidth, range.rightPx);
+      range.rightPx = range.rightPx == 0 ? canvasWidth : Math.min(canvasWidth, range.rightPx);
 
       return range;
     }
