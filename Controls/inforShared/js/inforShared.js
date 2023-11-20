@@ -630,7 +630,7 @@ drag = $special.drag = {
 			if ( type !== "dragend" && ia.cancelled )
 				continue;
 			// set the dragdrop properties on the event object
-			callback = drag.properties( event, dd, ia );
+			callback = drag.properties( orig.event, dd, ia );
 			// prepare for more results
 			ia.results = [];
 			// handle each element
@@ -691,6 +691,9 @@ drag = $special.drag = {
 		// starting mouse position
 		obj.startX = dd.pageX;
 		obj.startY = dd.pageY;
+    // current mouse position
+    obj.pageX = event.pageX;
+    obj.pageY = event.pageY;
 		// current distance dragged
 		obj.deltaX = event.pageX - dd.pageX;
 		obj.deltaY = event.pageY - dd.pageY;
