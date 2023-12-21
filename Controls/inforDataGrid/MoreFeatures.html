@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -6,8 +6,8 @@
 	<title>Infor DataGrid Sample </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDataGrid.js"></script>
 
@@ -30,11 +30,13 @@
 	</div>
 	<script>
 		//Set the locale to get the grid translated.
-		Globalize.culture("fr-FR");
+		Globalize.culture("ja-JP");
 		// Globalize.culture("zh-CN");
-		Globalize.culture().calendar["/"]="/";	//no matter what the local does use this seperator.
-		Globalize.culture().numberFormat[","]=",";
-    Globalize.culture().numberFormat["."]=".";
+		//Globalize.culture().calendar["/"]="/";	//no matter what the local does use this seperator.
+		//Globalize.culture().numberFormat[","]="";
+		//Globalize.culture("nl-NL");
+		Globalize.culture().calendar.patterns.d = 'MM/dd/yyyy' ;
+		Globalize.culture().calendar["/"]="/";
 
 		//Store the Grid Obj For Later Api Calls..
 		var grid;
@@ -54,13 +56,13 @@
 		}
 
 		function updateFirstRow() {
-			var row1 = grid.getData().getItems()[1];
-			row1.city ='Test update';
-			grid.updateRow(1);
+			//var row1 = grid.getData().getItems()[1];
+			//row1.city ='Test update';
+			//grid.updateRow(1);
 
-			//var presetFilters  = {};
-			//presetFilters["city"] = {value: "virgin", operator: "contains", filterType: TextFilter()};
-			//grid.applyFilter(presetFilters);
+			var presetFilters  = {};
+			presetFilters["city"] = {value: "virgin", operator: "contains", filterType: TextFilter()};
+			grid.applyFilter(presetFilters);
 		}
 
 		//Example: Deleting rows - linked to the delete button
@@ -113,12 +115,12 @@
 		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, reorderable: false, editor: TextCellEditor, required: true, filterType: TextFilter});
 		columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: UneditableColumnFormatter, editor: TextCellEditor, filterType: TextFilter });
 		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
-		columns.push({ id: "state", required: true, name: "State", field: "state", editability: testEditability, formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:true}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
+		columns.push({ id: "state", required: true, name: "State", field: "state", editability: testEditability, formatter: TextCellFormatter, filterType: SelectFilter, editor: SelectCellEditor, editorOptions: {editable: false, disableSearchThreshold:0}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas" ]});
 		columns.push({ id: "officeType", name: "Type", field: "officeType", width: 60, headerCssClass: "alignHeaderCenter", cssClass: "alignCenter", formatter: TextCellFormatter, editor: TextCellEditor, filterType: ColumnContentsFilter, contentsFilterValues : ['Remote', 'Satellite', 'Headquarters' , 'Test']  });
 		columns.push({ id: "numberEmployees", name: "Employees", field: "numberEmployees", width: 80, headerCssClass: "alignHeaderRight", formatter: IntegerCellFormatter, editor: IntegerCellEditor, filterType: IntegerFilter});
 		columns.push({ id: "revenue", name: "Revenue", field: "revenue", width: 80, headerCssClass: "alignHeaderRight", formatter: DecimalCellFormatter, editor: DecimalCellEditor, filterType: DecimalFilter});
 		columns.push({ id: "isLeedCertified", cssClass : "alignCenter", editability: testEditability, headerCssClass : "alignHeaderCenter", name: "Leed", field: "isLeedCertified", width: 40, formatter:CheckboxCellFormatter, editability: testEditability , editor:CheckboxCellEditor, filterType: CheckboxFilter });
-		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor , editability: testEditability, formatter: DateCellFormatter, filterType: DateFilter,  DateShowFormat:Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.T,  editorOptions: {showTimeInput: true,  showQuickDates: true, dateFormat: Globalize.culture().calendar.patterns.d + " HH:mm", timeFormat: "HH:mm"} });
+		columns.push({ id: "establishedDate", name: "Established", field: "establishedDate", width: 80, required: true, editor: DateCellEditor , editability: testEditability, formatter: DateCellFormatter, filterType: DateFilter, editorOptions: {showTimeInput: true,  showQuickDates: true, dateFormat: Globalize.culture().calendar.patterns.d + " HH:mm", timeFormat: "HH:mm"} });
 		//Note: Use fx...  DateShowFormat: Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.T for date and time in current locale
 		columns.push({ id: "comments", name: "Comments", field: "comments", width: 140, formatter: TextCellFormatter, editor: LongTextCellEditor, filterType: TextFilter });
 		columns.push({ id: "country", name: "Country", field: "country", width: 60, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter});
@@ -152,17 +154,8 @@
 
 		//Example: Enable and Disable the Form Save and delete Buttons.
 		grid.onCellChange.subscribe(function (e, args) {
-			alert('change');
+			$("#submitButton").enable();
 		});
-
-    grid.trigger(grid.onCellChange, {
-                row: 1,
-                cell: 1,
-                item: {},
-                cellValue : 'new',
-                previousCellValue: 'old'
-              });
-
 
 		grid.onSelectedRowsChanged.subscribe(function (e, args) {
 			var rows = grid.getSelectedRows();
@@ -190,7 +183,7 @@
 			//presetFilters["establishedDate"] = {value: "03/07/1964" , operator: "equals", filterType: DateFilter()};
 
 			//Call the grid api to set the filter
-			//grid.applyFilter(presetFilters);
+			grid.applyFilter(presetFilters);
 
 		//Show the first row on submit.
 		$("#submitButton").click(function() {

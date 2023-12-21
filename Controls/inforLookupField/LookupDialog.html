@@ -9,13 +9,13 @@
 
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js" ></script>
 
 	<script src="../inforDataGrid/js/sampleData.js"></script>
 	<script src="js/inforLookupField.js"></script>
-
+	
 </head>
 <body>
 	<div>
@@ -64,11 +64,11 @@
 							var $lookup = $(grid.getActiveCellNode()).find("input");
 							$lookup.data("isChanged", true);
 						}
-
+						
 						if (data.city === "") {
 							grid.addValidationMessage(activeCell.row, grid.getColumnIndex("city"), "This field is required.");
 						}
-
+						
 						$(this).inforDialog("close");
 					},
 					isDefault: true
@@ -98,7 +98,7 @@
 
 		grid.onCellChange.subscribe(function (e, args) {
 			if (args.item.validationMessages) {
-				alert(args.item.validationMessages);
+				alert(args.item.validationMessages); 
 			}
 		});
 	</script>

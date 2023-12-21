@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head >
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -6,8 +6,8 @@
 
 	<title>Expenses Sample Page</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script>
@@ -28,14 +28,14 @@
 				<textarea id="bookingAgent" class="inforTextArea"></textarea>
 			</div>
 			<div class="inforVerticalColumnLayout">
-				<label class="inforTopLabel" for="depDate">Departure Date</label><br>
-				<input id="depDate" class="inforTextbox required"/><br>
+				<label class="inforTopLabel" for="bookingAgent">Departure Date</label><br>
+				<input id="bookingAgent" class="inforTextbox"/><br>
 				<label class="inforTopLabel" for="bookingAgent">Arrival Date</label><br>
 				<input id="bookingAgent" class="inforTextbox"/>
 			</div>
 			<div class="inforVerticalColumnLayout">
-				<label for="originType" class="inforTopLabel">Origin Type</label><br>
-					<select id="originType" class="inforDropDownList">
+				<label class="inforTopLabel">Origin Type</label><br>
+					<select class="inforDropDownList required">
 						<option value="a">All</option>
 						<option value="cc">Consolidated Consortiums</option>
 						<option value="mw">Major Widgets Inc</option>

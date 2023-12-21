@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -8,8 +8,8 @@
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 	<link href="css/inforTooltip.css" rel="stylesheet" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTooltip.js"></script>
 
@@ -18,12 +18,12 @@
 			//Globalize.culture("ar-SA");
 
 			//show a single validation message tooltip
-			$('#textBox1').validationMessage('show', 'Longer error message here.' , true);
-			$('#textBox2').validationMessage('show', 'This field is required.' , true);
-			$('#textBox3').validationMessage('show', 'I open on Top.' , true);
+			$("#textBox1").validationMessage("show", "Longer error message here." , true);
+			$("#textBox2").validationMessage("show", "This field is required." , true);
+			$("#textBox3").validationMessage("show", "I open on Top." , true);
 
 			//add normal tooltips to all elements with a title on them - All this does is translate strings we use the browser tooltips.
-			$('[title]').not('.inforErrorIcon').inforToolTip();
+			$('[title]').not(".inforErrorIcon").inforToolTip();
 		});
 	</script>
 </head>

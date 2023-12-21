@@ -1,55 +1,54 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta charset="utf-8">
-  <title>Infor Menu Button</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Menu Button</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforMenuButton.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforMenuButton.js"></script>
 
-  <script>
+	<script>
 
-    $(function () {
+		$(function ()
+		{
+			//Globalize.culture("ar-SA");
+			$("#button1").inforMenuButton({menuId: 'menu1', source: function(response){	//This function fires when the menu is opened..
+				//Make an ajax call - we add 2 second timer to show effect...
+				var qry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?&$top=10&$skip=0&#select=state";
+				setTimeout(function() {
+					$.getJSON(qry, function (jsonResult)
+					{
+						//clear the last ones.
+						var menu = $("#menu1");
+						menu.empty();
 
-      $('#button1').popupmenu({menuId: 'menu1', source: function(response){
+						//loop the results add the menu
+						$.map(jsonResult.d, function(val, i)
+						{
+							//add the option and maybe a generic click handler function...
+							var li = $("<li></li>");
+							var a = $("<a></a>").attr("href","#").text(val.state).attr("onclick","alert('"+val.state+"')");
 
-        //Make an ajax call - we add 2 second timer to show effect...
-        var qry  = 'http://www.randomtext.me/api/lorem/p-5/2';
-
-        setTimeout(function() {
-          $.getJSON(qry, function (jsonResult) {
-            //clear the last ones.
-            var menu = $('#menu1'),
-              temp = $(jsonResult.text_out);
-
-            menu.empty();
-
-            temp.each(function () {
-              var li = $('<li></li>');
-
-              $('<a></a>').appendTo(li).attr('href', '#').text($(this).text()).click(function (e) {
-                console.log($(e.currentTarget).text());
-              });
-              menu.append(li);
-            });
-
-            response(menu);
-          });
-        }, 1000); //lower this to under 500 for a delay
-      }});
-    });
-  </script>
+							li.append(a);
+							menu.append(li);
+						});
+						response(menu);
+					});
+				}, 1000);	//lower this to under 500 for a delay
+			}});
+		});
+	</script>
 </head>
 <body>
-  <div class="inforToolbar" >
-    <button type="button" class="inforMenuButton" id="button1">Dynamic Menu</button>
-  </div>
+	<div class="inforToolbar" >
+		<button type="button" class="inforMenuButton" id="button1">Dynamic Menu</button>
+	</div>
 
-  <!--The Menu That Gets Filled with Results..-->
-  <ul id="menu1" class="popupmenu"></ul>
+	<!--The Menu That Gets Filled with Results..-->
+	<ul id="menu1" class="inforContextMenu"></ul>
 </body>
 </html>

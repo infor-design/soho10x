@@ -1,6 +1,6 @@
-
+﻿
 	<div>
-		<div id='inforGridControl'></div>
+		<div id='inforGridControl' style="height:201px"></div>
 	</div>
 
 	<script>
@@ -29,13 +29,19 @@
 					columns: columns,
 					idProperty: '_rowIndex',
 					dataset: pages,
- 					editable: false,
+					editable: false,
 					multiSelect: false,
+					enableCellNavigation: false,
+					showDrillDown: false,
 					showCheckboxes: false,
 					showGridSettings: false,
 					savePersonalization: false,
+					showExport: false,
 					forceFitColumns: true,
-					showFooter: true
+					showFooter: true,
+					autoHeight: false,
+					fillHeight: false,
+					showCheckboxes: true
 				};
 
 				inforGridControl = $('#inforGridControl').inforDataGrid(options);

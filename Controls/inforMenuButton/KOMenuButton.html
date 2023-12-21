@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,8 +6,8 @@
 	<title>Infor Menu Button</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../lib/knockout-2.3.0.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
@@ -20,10 +20,10 @@
 					{key: 'D', name: 'All'},
 					{key: 'T', name: 'Other...'}
 				]),
-				buttonText: 'Filter'
+				buttonText: "Filter"
 			};
 
-			$('#button1').popupmenu({menuId: 'menu1'});
+			$("#button1").inforMenuButton({menuId: 'menu1'});
 			ko.applyBindings(viewModel);
 		});
 	</script>

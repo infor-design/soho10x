@@ -1,50 +1,70 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
-  <title>Infor Menu Button</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Infor Menu Button</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
-  <link href="css/menubutton.css" rel="stylesheet">
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/menubutton.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<link href="css/inforMenuButton.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforMenuButton.js"></script>
 
-  <script>
-     $(function () {
-      $('button').popupmenu({menuId: 'menu1'}).on('selected', function (e, args) {
-        console.log(args);
-      });
-      $('.inforToolbar').inforToolbar();
-    });
-  </script>
+	<script>
+		 $(function () {
+			//Globalize.culture("ar-SA");
+			$("#button1").inforMenuButton({menuId: 'menu1',callback: function(action, el, pos) {
+					alert('Action: ' + action);
+					$("#button3").enable();
+					$(".exportExcel").disable();
+					$(".print").disable();
+					$(".settings").disable();
+					$(".new").disable();
+					$(".save").disable();
+			}});
+
+			$("#button2").inforMenuButton({menuId: 'menu2',callback: function(action, el, pos) {
+					alert('Action: ' + action);
+			}});
+
+			//initialize the rest...With no menu.
+			$(".inforMenuButton").inforMenuButton({menuId: 'menu2'});
+		});
+	</script>
 </head>
-<body style="padding: 20px;">
-  <div class="inforToolbar">
-    <!--Icon Button Examples  -->
-    <button type="button" class="inforMenuButton exportExcel" >Export to Excel</button>
-    <button type="button" class="inforMenuButton print" ><span class="scr-only">Print</span></button>
-    <button type="button" class="inforMenuButton settings" ><span class="scr-only">Settings</span></button>
-    <button type="button" class="inforMenuButton new" title="Test Tooltip"><span class="scr-only">New</span></button>
-    <button type="button" class="inforMenuButton save" ><span class="scr-only">Save</span></button>
-    <button type="button" class="inforMenuButton help" ><span class="scr-only">Help</span></button>
-    <button type="button" class="inforMenuButton favorites" ><span class="scr-only">Favorites</span></button>
-    <button type="button" class="inforMenuButton maintenance" ><span class="scr-only">Maintenance</span></button>
+<body>
+	<div class="inforToolbar" >
 
-    <!--Regular, Default and Disabled button examples -->
-    <button type="button" class="inforMenuButton" id="button1">Button 1</button>
-    <button type="button" class="inforMenuButton" id="button2">Button 2</button>
-    <button type="button" class="inforMenuButton" id="button3" disabled>Disabled Button</button>
-    <button type="button" class="inforTextButton" id="button3" disabled>Disabled Button</button>
-  </div>
+		<!--Icon Button Examples  -->
+		<button type="button" class="inforMenuButton exportExcel" ></button>
+		<button type="button" class="inforMenuButton print" ></button>
+		<button type="button" class="inforMenuButton settings" ></button>
+		<button type="button" class="inforMenuButton new" title="Test Tooltip"></button>
+		<button type="button" class="inforMenuButton save" ></button>
+		<button type="button" class="inforMenuButton help" ></button>
+		<button type="button" class="inforMenuButton favorites" ></button>
+		<button type="button" class="inforMenuButton maintenance" ></button>
+		
+		<!--Regular, Default and Disabled button examples -->
+		<button type="button" class="inforMenuButton" id="button1">Button 1</button>
+		<button type="button" class="inforMenuButton" id="button2">Button 2</button>
+		<button type="button" class="inforMenuButton disabled" id="button3">Disabled Button</button>
 
-  <ul id="menu1" class="popupmenu">
-    <li><a href="#1">Option 1</a></li>
-    <li><a href="#2">Option 2</a></li>
-    <li><a href="#3">Option 3</a></li>
-  </ul>
+	</div>
+
+	<!--The Menu to Attach to the Buttons -->
+	<ul id="menu1" class="inforContextMenu">
+		<li class="option1"><a href="#s">Project Viewer</a></li>
+		<li class="option2"><a href="#a">Update Selected Items</a></li>
+		<li class="option3"><a href="#o">Delete Work Order(s)</a></li>
+	</ul>
+	<ul id="menu2" class="inforContextMenu">
+		<li class="option1"><a href="#1">Option 1</a></li>
+		<li class="option2"><a href="#2">Option 2</a></li>
+		<li class="option3"><a href="#3">Option 3</a></li>
+	</ul>
 </body>
 </html>

@@ -1,12 +1,13 @@
-/* Infor Module Container
+﻿/* Infor Module Container
 ----------------------------------*/
 .inforApplicationPadding {
-  margin-top: 10px;
-  padding: 0px 20px 0px 20px;
-  width: 100%;
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box;
+	margin: 0;
+	padding: 10px 20px;
+	width:100%;
+    height:100%;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 /* Fixed these here: http://jsfiddle.net/X9Ezn/ */
@@ -45,8 +46,8 @@
 
 .inforModuleHeaderRight > * {
 	float: left;
-	margin-left: -1px;
-	margin-top: -6px;
+	margin-left: -3px;
+	margin-top: -5px;
 	padding: 0 !important;
 }
 
@@ -67,7 +68,7 @@ html[dir="rtl"]  .inforModuleHeaderRight > * {
 /* The text Showing the Current Record Id */
 .inforModuleRecordIdText {
 	font-size: 1.4em;
-	color: #444;
+	color: #666666;
 	margin-left: 4px;
 	line-height: 27px;
 }
@@ -95,27 +96,22 @@ html[dir="rtl"]  .inforModuleHeaderRight > * {
 	text-indent: -9999px;
     position: relative;
 	border: 1px solid transparent;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
+	-webkit-user-select: none;  
+	-moz-user-select: none;    
+	-ms-user-select: none;      
 	user-select: none;
 }
 
 .inforModuleDropDownButton i:after, .inforCloseButton i:after, .inforModuleCloseButton i:after,  .inforModuleSettingsButton i:after, .inforPanelSettingsButton i:after, .inforMinimizeButton i:after, .inforMaximizeButton i:after {
-    height: 12px;
+    height: 11px;
     margin: -5.5px 0 0 -7px;
     width: 14px;
     content: "";
     display: block;
     left: 50%;
-    opacity: .65;
-    filter: alpha(opacity=65);
+    opacity: .4;
     position: absolute;
     top: 50%;
-}
-
-.inforModuleDropDownButton i:after, .inforCloseButton i:after, .inforModuleCloseButton i:after {
-	 margin: -6.5px 0 0 -7px !important;
 }
 
 .inforModuleSettingsButton i:after, .inforPanelSettingsButton i:after {
@@ -144,23 +140,23 @@ html[dir="rtl"]  .inforModuleHeaderRight > * {
 }
 
 .inforModuleDropDownButton:hover i:after , .inforCloseButton:hover i:after , .inforModuleCloseButton:hover i:after , .inforModuleSettingsButton:hover i:after , .inforPanelSettingsButton:hover i:after , .inforMaximizeButton:hover i:after , .inforMinimizeButton:hover i:after {
-  opacity: 0.80;
-  filter: alpha(opacity=80);
+    opacity: 0.65;
+	filter: alpha(opacity=65);
 }
 
 .inforModuleDropDownButton:active, .inforCloseButton:active , .inforModuleCloseButton:active, .inforModuleSettingsButton:active, .inforPanelSettingsButton:active, .inforMinimizeButton:active, .inforMaximizeButton:active {
-  background-color: #BEBEBE;
-  box-shadow: 0 1px #767676 inset;
+	background-color: #BEBEBE;
+    box-shadow: 0 1px #767676 inset;
 }
 
-.inforModuleDropDownButton:active i, .inforCloseButton:active i, .inforModuleCloseButton:active i, .inforModuleSettingsButton:active i, .inforPanelSettingsButton:active i, .inforMinimizeButton:active i, .inforMaximizeButton:active  i{
-  opacity: 0.90;
-  filter: alpha(opacity=90);
+.inforModuleDropDownButton:active i, .inforCloseButton:active i, .inforModuleCloseButton:active i, .inforModuleSettingsButton:active i, .inforPanelSettingsButton:active i, .inforMinimizeButton:active i, .inforMinimizeButton:active  i{
+	opacity: 0.8;
+	filter: alpha(opacity=80);
 }
 
-.inforModuleSettingsButton[disabled], .inforPanelSettingsButton[disabled], .inforCloseButton[disabled], .inforModuleCloseButton[disabled], .inforModuleDropDownButton[disabled], .inforMinimizeButton[disabled], .inforMaximizeButton[disabled] {
-	opacity: 0.4;
-	filter: alpha(opacity=40);
+.inforModuleSettingsButton[disabled], .inforPanelSettingsButton[disabled], .inforCloseButton[disabled], .inforModuleCloseButton[disabled], .inforModuleDropDownButton[disabled], .inforMinimizeButton[disabled], .inforMinimizeButton[disabled] {
+	opacity: 0.2;
+	filter: alpha(opacity=20);
 	cursor: default;
 	background-color: transparent;
 }
@@ -185,7 +181,7 @@ html[dir="rtl"]  .inforModuleHeaderRight > * {
 	padding: 0 10px;
 }
 
-.inforCloseButton:focus, .inforModuleCloseButton:focus, .inforMinimizeButton:focus, .inforMaximizeButton:focus, .inforModuleSettingsButton:focus, .inforModuleDropDownButton:focus {
+.inforCloseButton:focus, .inforMinimizeButton:focus, .inforMaximizeButton:focus, .inforModuleSettingsButton:focus, .inforModuleDropDownButton:focus {
     border: 1px solid #13a3f7;
     border-radius: 3px;
     outline: none;

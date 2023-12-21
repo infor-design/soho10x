@@ -7,16 +7,14 @@
 	<title>Infor Text Buttons - Small Number of Buttons </title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
-	<!--Redundent imports but allows me to change toolbar code without a recompile-->
-	<script src="js/inforToolbar.js"></script>
+
 	<script>
 		$(function () {
 			$("body").inforForm();
 			var tabs = $('#inforTabContainer').inforTabset();
-			$(".inforToolbar").inforToolbar();
 		});
 	</script>
 </head>
@@ -28,9 +26,9 @@
 			<span class="inforModuleRecordIdText">SL0090562</span>
         </div>
         <div class="inforModuleHeaderRight">
-			<button type="button" class="inforModuleDropDownButton" title="Menu"><i></i></button>
-			<button type="button" class="inforModuleSettingsButton" title="Settings"><i></i></button>
-			<button type="button" class="inforModuleCloseButton" disabled title="Close"><i></i></button>
+			<button type="button" class="inforModuleDropDownButton" title="Menu"></button>
+			<button type="button" class="inforModuleSettingsButton" title="Settings"></button>
+			<button type="button" class="inforModuleCloseButton" disabled title="Close"></button>
         </div>
     </div>
     <!-- Content -->
@@ -38,7 +36,6 @@
        <div class="inforToolbar" >
 			<button type="button" class="inforIconButton save"></button>
 			<button type="button" class="inforIconButton clear"></button>
-			<button type="button" class="inforIconButton open"></button>
 		</div>
        		<div id="inforTabContainer" class="inforTabset" >
 				  <ul class="inforTabset">
@@ -65,7 +62,7 @@
 					<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</p>
 				  </div>
 				</div>
-
+		
     </div>
 </body>
 </body>

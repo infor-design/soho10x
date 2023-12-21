@@ -1,45 +1,41 @@
-/* Infor Swap List
+﻿/* Infor Swap List
 ----------------------------------*/
 .inforSwapListLeft, .inforSwapListRight, .inforSwapListButtons {
-  display: table-cell;
-  float: left;
+	display: inline-block;
 }
 
 .inforSwapList .inforListBox {
 	display: block;
 }
 
-.inforSwapList label {
-  display: block;
-  float: none;
-  width: auto;
-  text-align: left;
+.inforSwapListButtons .inforIconButton {
+	display: block;
 }
 
 .inforSwapListButtons .inforIconButton {
-  display: block;
-  margin: 5px;
-  position: relative;
-  top: 65px;
-  width: 22px;
+    display: block;
+    margin-right: 5px;
+    position: relative;
+	top: -50px;
+	width: 22px;
 }
 
 .inforSwapList label {
-  margin: 5px 0;
+    margin: 5px 0;
 }
 
 .inforIconButton.moveLeft span {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAArSURBVHjaY3j8n+Hhf4YHQFTP8MCe4YE8wwN+hgfsYMQP5tqDpcDKHv8HABEiFema5bBnAAAAAElFTkSuQmCC");
-  left: -2px;
-  position: relative;
-  width: 18px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAArSURBVHjaY3j8n+Hhf4YHQFTP8MCe4YE8wwN+hgfsYMQP5tqDpcDKHv8HABEiFema5bBnAAAAAElFTkSuQmCC");
+	left: -2px;
+    position: relative;
+    width: 18px;
 }
 
 .inforIconButton.moveRight span {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAsSURBVGjeY/h/nOF/O8N/doZ/7Ax/2Bl+sDN8YGd4AEYfwNw/YCmgApCy4wDA1hJvCr/QugAAAABJRU5ErkJggg==");
-  left: -2px;
-  position: relative;
-  width: 18px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAsSURBVGjeY/h/nOF/O8N/doZ/7Ax/2Bl+sDN8YGd4AEYfwNw/YCmgApCy4wDA1hJvCr/QugAAAABJRU5ErkJggg==");
+	left: -2px;
+    position: relative;
+    width: 18px;
 }
 
 .inforIconButton.moveRight {
@@ -47,17 +43,17 @@
 }
 
 .inforListBox .dragHandle {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAALCAYAAAC+jufvAAAAEUlEQVR42mNgYGD4zwADRLMAm5sF+74G3FUAAAAASUVORK5CYII=");
-  background-position: center center;
-  background-repeat: no-repeat;
-  cursor: move;
-  display: inline-block;
-  height: 13px;
-  left: -3px;
-  margin-left: -4px;
-  position: relative;
-  top: 2px;
-  width: 9px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAALCAYAAAC+jufvAAAAEUlEQVR42mNgYGD4zwADRLMAm5sF+74G3FUAAAAASUVORK5CYII=");
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: move;
+    display: inline-block;
+    height: 13px;
+    left: -3px;
+    margin-left: -4px;
+    position: relative;
+    top: 2px;
+    width: 9px;
 }
 
 .inforListBox.disabled .dragHandle {
@@ -65,12 +61,12 @@
 }
 
 .inforListBox .inforSortPlaceHolder {
-  width: inherit;
-  height: 20px;
-  margin: 1px;
-  border-radius: 3px;
-  background-color: #FAFAFA;
-  border: 1px dashed #b8b8b8;
+	width: inherit;
+	height: 20px;
+	margin: 1px;
+	border-radius: 3px;
+	background-color: #FAFAFA;
+    border: 1px dashed #b8b8b8;
 }
 
 html[dir="rtl"] .inforListBox .dragHandle {

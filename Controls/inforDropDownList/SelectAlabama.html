@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
+
+	<title>Infor DropDownList : Main Example</title>
+  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+  <script src="../Release/jquery-1.10.2.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforDropDownList.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+
+			//The option select first will select the first if none are selected.
+			//Try to remove selected and toggle the selectFirst option.
+			$("#dropDown1").inforDropDownList({editable:false, selectFirst: true});
+			$("body").inforForm();
+		});
+	</script>
+</head>
+<body class="inforHidden">
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	   <label class="inforLabel" id="dropDown1Label">Ship To</label>
+	   <select class="inforDropDownList required" id="dropDown1" >
+			<option value="al">Alabama State</option>
+			<option value="al">Alabama</option>
+		</select><br>
+	</div>
+</body>
+</html>

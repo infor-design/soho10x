@@ -1,5 +1,5 @@
-/*
-	Infor Field Set
+﻿/* 
+	Infor Field Set 
 */
 
 .inforFieldSet {
@@ -24,22 +24,22 @@
 
 /*The Label*/
 .inforFieldSetLabel {
-  border-bottom: 1px solid #B3B3B3;
-  color: #444;
-  cursor: default;
-  display: block;
-  font-size: 1.4em;
-  height: 29px;
-  line-height: 32px;
-  margin-bottom: 19px;
-  margin-right: 10px;
-  padding-left: 10px;
-  padding-top: 0;
-  text-align: left;
-  text-indent: 0;
-  vertical-align: middle;
-  white-space: nowrap;
-  width: auto;
+	border-bottom: 1px solid #B3B3B3;
+    color: #666666;
+    cursor: default;
+    display: block;
+    font-size: 1.4em;
+    height: 29px;
+    line-height: 32px;
+    margin-bottom: 19px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-top: 0;
+    text-align: left;
+    text-indent: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -48,7 +48,7 @@
 }
 
 .hover .inforFieldSetLabel {
-	color: #444;
+	color: #333333;
 }
 
 .inforFieldSetLabel.hover {
@@ -59,8 +59,8 @@
 }
 
 /*Correct Padding if we are on a tab panel.*/
-.ui-tabs-panel .inforFieldSet {
-	margin-top: 15px !important;
+.ui-tabs-panel > .inforFieldSet {
+	margin: 4px 0px 0px 0px !important;
 	border-right: 0px solid #b4b4b4 !important;
 }
 
@@ -93,16 +93,9 @@
 .ui-tabs-panel .inforFieldSet2ColumnLayout {
 	width:100%;
 }
-
 .ui-tabs-panel .inforFieldSet2ColumnLayout > .inforFieldSet {
-	width: 50%;
-  margin: 20px;
+	width:50%;
 }
-
-.ui-tabs-panel .inforFieldSet2ColumnLayout > .inforFieldSet:first-child {
-	width: 50%;
-}
-
 
 .inforFieldSet2ColumnLayout > .inforFieldSet {
 	width: 50%;margin: 0 !important; padding: 0 !important;
@@ -197,17 +190,14 @@ html[dir="rtl"] .inforFieldSetLabel {
     margin: 10px 12px;
 }
 
-html[dir="rtl"] .content > p  {
-  margin: 10px 22px;
-}
-
 /*Sub Heading Styling */
 .ui-tabs-panel .inforSubHeading > .content {
+	margin-left: -10px !important;
 	padding: 0 !important;
 }
 
 .inforSubHeadingLabel {
-	color: #444;
+	color: #686B73;
 	font-size: 1.4em;
 }
 

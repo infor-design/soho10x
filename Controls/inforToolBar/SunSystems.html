@@ -1,27 +1,25 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
 	<meta charset="utf-8">
 
 	<title>Data Access Manager</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script>
 		 $(function () {
+			//Globalize.culture("ar-SA");
+			$('body').inforForm();
+			$('#tools').inforMenuButton({menuId: 'menu1', callback: function(action, el, pos, item) {
+				alert('Action: ' + action + '\n\n' );
 
-      Globalize.culture('ar-SA');
-      $('body').inforForm();
-
-      $('#tools').inforMenuButton({menuId: 'menu1', callback: function(action) {
-        console.log('Action: ' + action + '\n\n' );
-      }});
-
-    });
+			}});
+		});
 	 </script>
 
 </head>
@@ -37,14 +35,13 @@
 		 </div>
 		 <div class="inforModuleContentArea">
 			<div class="inforToolbar">
-				<button id="save" class="inforIconButton save" title="Save"><span></span></button>
-				<button id="undo" class="inforIconButton discard" title="Undo"><span></span></button>
-				<button id="redo" class="inforIconButton redo" title="Redo"><span></span></button>
+				<button id="save" class="inforIconButton save" title="Save"></button>
+				<button id="undo" class="inforIconButton discard" title="Undo"></button>
+				<button id="redo" class="inforIconButton redo" title="Redo"></button>
 				<span class="inforToolbarSpacer"></span>
-				<button id="submit" class="inforIconButton save" title="Submit"><span></span></button>
-				<button id="cancel" class="inforIconButton discard" title="Cancel"><span></span></button>
-				<div class="alignRight">
-          <input class="inforSearchField" type="text"></input>
+				<button id="submit" class="inforIconButton blank" title="Submit"></button>
+				<button id="cancel" class="inforIconButton discard" title="Cancel"></button>
+				<div class="alignRight" style="padding-right:0px">
 					<button id="tools" class="inforMenuButton">Tools</button>
 					<button id="help" class="inforIconButton help" title="help"></button>
 				</div>
@@ -52,5 +49,10 @@
 		 </div>
 	 </div>
 
+	 <ul id="menu1" class="inforContextMenu">
+		<li class="option1"><a href="#s">Selected</a></li>
+		<li class="option2"><a href="#a">All</a></li>
+		<li class="option3"><a href="#o">Other...</a></li>
+	</ul>
 </body>
 </html>

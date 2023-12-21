@@ -1,37 +1,45 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
 
-  <title>Infor Message Dialog - Minimizable</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<title>Infor Message Dialog - Minimizable</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforMessageDialog.js"></script>
 
-  <script>
-    $(function () {
-      $('#commentsButton').click(function () {
-        //Invoke the dialog on it
-        $('#minimizableDialog').message({
-          title: 'New Catalog',
-          dialogType: 'General',
-          minimizable: true,
-          modal: false
-        });
-      });
-    });
-  </script>
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$("#commentsButton").click(function () {
+				//Invoke the dialog on it
+				$('#minimizableDialog').inforMessageDialog({
+					title: "New Catalog",
+					dialogType: "General",
+					minimizable: true,
+					modal: false
+				});
+			});
+		});
+	</script>
 </head>
-<body class="inforApplicationPadding">
-    <p>This is a sample shows a minimizable dialog</p>
-    <button id="commentsButton" class="inforFormButton">Show</button>
+<body>
+		<div id="mainContentArea">
+			<p>This is a sample shows a minimizable dialog</p>
+			<table>
+				<tr>
+					<td><button id="commentsButton" class="inforFormButton">Show</button></td>
+				</tr>
+			</table>
+		</div>
 
-    <div id="minimizableDialog" style="display:none;">
-        <label style="width: 100px" class="inforLabel" for="catalogDescription">Catalog Description</label><br>
-        <textarea class="inforTextArea" id="catalogDescription" style="height: 83px;margin-bottom: 15px; padding-bottom: 40px; padding-right: 33px; width: 350px;"></textarea>
-    </div>
+		<div id="minimizableDialog" style="display:none;">
+				<label style="width: 100px" class="inforLabel" for="catalogDescription">Catalog Description</label><br>
+				<textarea class="inforTextArea" id="catalogDescription" style="height: 83px;margin-bottom: 15px; padding-bottom: 40px; padding-right: 33px; width: 350px;"></textarea>
+		</div>
 
 </body>
 </html>

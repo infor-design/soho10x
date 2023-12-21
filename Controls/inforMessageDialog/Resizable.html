@@ -1,80 +1,85 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-	<meta charset='utf-8'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
 
 	<title>Infor Resizable Dialog Box</title>
-	<link href='../Release/inforControlsCombined.css' rel='stylesheet'>
-	<script src='../Release/jquery-3.6.0.min.js'></script>
-	<script src='../Release/jquery-ui-1.10.4.custom.min.js'></script>
-	<script src='../Release/inforControlsCombined.js'></script>
-	<script src='js/inforMessageDialog.js'></script>
-
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforMessageDialog.js"></script>
+	
 	<style>
 		.ui-resizable-helper { border: 2px dotted #999999; }
 	</style>
 
 	<script>
 		$(function () {
-
-			$('#imageButton').click(function () {
+			
+			$("#imageButton").click(function () {
 				//First add the html to the page you want for the dialog
-				$('body').append('<div id="imageDialog" style="margin-bottom: 8px;display:none;"> <img src="http://placekitten.com/300/220" style="width: 99%;height:99%"></img></div>');
+				$("body").append('<div id="imageDialog" style="margin-bottom: 8px;display:none;"> <img src="http://placekitten.com/300/220" style="width: 99%;height:99%"></img></div>');
 				//Invoke the dialog on it
 				$('#imageDialog').inforMessageDialog({
-					title: 'View Image',
-					dialogType: 'General',
+					title: "View Image",
+					dialogType: "General",
 					width: 300,
 					height: 310,
-					maxWidth: 'auto',
+					maxWidth: "auto",
 					resizable: true,
 					modal: false,
-					close: function() {
+					beforeClose: function(event, ui) { 
 						$('#imageDialog').remove();	//remove the dialog html
 					}
 				});
 			});
-
-			$('#iframeButton').click(function () {
+			
+			$("#iframeButton").click(function () {
 				//First add the html to the page you want for the dialog
-				//$('body').append('<div id='imageDialog' style='margin-bottom: 8px;display:none;'> <iframe src='Icons.html' style='width:100%;height:100%;'></iframe></div>');
-				$('body').append('<div id="imageDialog" style="margin-bottom: 8px;display:none;"> <iframe src="Icons.html" style="width:100%;height:100%;"></iframe></div>');
+				//$("body").append('<div id="imageDialog" style="margin-bottom: 8px;display:none;"> <iframe src="Icons.html" style="width:100%;height:100%;"></iframe></div>');
+				$("body").append('<div id="imageDialog" style="margin-bottom: 8px;display:none;"> <iframe src="Icons.html" style="width:100%;height:100%;"></iframe></div>');
 				//Invoke the dialog on it
 				$('#imageDialog').inforMessageDialog({
-					title: 'Dialog Hosting IFrame',
+					title: "Dialog Hosting IFrame",
+					dialogType: "General",
 					width: 300,
+					height: 310,
 					resizable: true,
-					close: function() {
+					draggable: true,
+					modal: false,
+					beforeClose: function(event, ui) { 
 						$('#imageDialog').remove();	//remove the dialog html
-					},
-					resize: function(e,ui) {
-						console.log(e,ui);	//$('#imageDialog').remove();	//remove the dialog html
 					}
 				});
 			});
-
+			
 		});
 	</script>
 </head>
 <body>
-	<div id='mainContentArea'>
-		<p>This is a sample shows Resizing a Dialog.</p>
-			<table style='font-size:1.2em' role='presentation'>
-			<tr>
-			    <td>Resizable Image Dialog </td>
-			    <td><button id='imageButton' class='inforFormButton'>Show</button></td>
-			</tr>
-			<tr>
-			    <td>Resizable Iframe Dialog </td>
-			    <td><button id='iframeButton' class='inforFormButton'>Show</button></td>
-			</tr>
-			</table>
-		</div>
-
-		<div id='resizableDialog' style='display:none;'>
-		<label style='width: 100px' class='inforLabel' for='catalogDescription'>Catalog Description</label><br>
-		<textarea class='inforTextArea' id='catalogDescription' style='height: 100px; padding-bottom: 36px; padding-right: 33px; width: 350px;'></textarea>
+	<div id="mainContentArea">
+		 <p>This is a sample shows Resizing a Dialog.</p>
+            <table style="font-size:1.2em">
+                <tr>
+                    <td>Resizable Comments Dialog Example</td>
+                    <td><button id="commentsButton" class="inforFormButton">Show</button></td>
+                </tr>
+				<tr>
+                    <td>Resizable Image Dialog </td>
+                    <td><button id="imageButton" class="inforFormButton">Show</button></td>
+                </tr>
+				<tr>
+                    <td>Resizable Iframe Dialog </td>
+                    <td><button id="iframeButton" class="inforFormButton">Show</button></td>
+                </tr>
+            </table>
+        </div>
+				
+		<div id="resizableDialog" style="display:none;">
+				<label style="width: 100px" class="inforLabel" for="catalogDescription">Catalog Description</label><br>
+				<textarea class="inforTextArea" id="catalogDescription" style="height: 100px; padding-bottom: 36px; padding-right: 33px; width: 350px;"></textarea>
 		</div>
 </body>
 </html>

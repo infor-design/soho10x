@@ -1,38 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
 
 	<title>Infor ListBox Example</title>
-	<link href="css/inforListBox.css" rel="stylesheet"></script>
-  <link href="../Release/inforControlsCombined.css"  />
-
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforListBox.js"></script>
-
+	
 	<script>
 		 $(function () {
 			$(".inforListBox").inforListBox();
-
-      $("#1").on('click', function () {
-        $(".inforListBox").removeClass('inforListBoxDisabled').removeAttr('disabled');
-      });
-
-       $("#2").on('click', function () {
-        $(".inforListBox").addClass('inforListBoxDisabled').attr('disabled', 'disabled');
-      });
-
-
 		});
 	</script>
 </head>
 
 <body style="margin:10px">
-  <button id="1">Toggle Enabled</button>
-  <button id="2">Toggle Disabled</button>
-  <select multiple="multiple" class="inforListBox" id="listbox1" disabled>
+	<select multiple="multiple" class="inforListBox" id="listbox1" disabled>
 		<option value="1" >Option One</option>
 		<option value="2" selected>Option Two</option>
 		<option value="3">Option Three</option>

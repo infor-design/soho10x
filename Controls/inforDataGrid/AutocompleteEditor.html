@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+
+    <title>Infor DataGrid : Autocomplete Editor </title>
+    <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+    <link rel="stylesheet" href="css/inforDataGrid.css" />
+
+    <script src="../Release/jquery-1.10.2.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+
+    <script src="js/inforDataGrid.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <div id="inforDataGrid"></div>
+    </div>
+
+    <script>
+        var allStates = [{ value: 1, label: 'Alabama' }, { value: 2, label: 'Alaska' }, { value: 'AS', label: 'American Samoa' },
+          { value: 'AZ', label: 'Arizona' }, { value: 'AR', label: 'Arkansas' }, { value: 'CA', label: 'California' },
+          { value: 'CO', label: 'Colorado' }, { value: 'CT', label: 'Connecticut' }, { value: 'DE', label: 'Delaware' },
+          { value: 'DC', label: 'District Of Columbia' }, { value: 'FM', label: 'Federated States Of Micronesia' },
+          { value: 'FL', label: 'Florida' }, { value: 'GA', label: 'Georgia' }, { value: 'GU', label: 'Guam' }, { value: 'HI', label: 'Hawaii' },
+          { value: 'ID', label: 'Idaho' }, { value: 'IL', label: 'Illinois' }, { value: 'IN', label: 'Indiana' }, { value: 'IA', label: 'Iowa' },
+          { value: 'KS', label: 'Kansas' }, { value: 'KY', label: 'Kentucky' }, { value: 'LA', label: 'Louisiana' }, { value: 'ME', label: 'Maine' },
+          { value: 'MH', label: 'Marshall Islands' }, { value: 'MD', label: 'Maryland' }, { value: 'MA', label: 'Massachusetts' },
+          { value: 'MI', label: 'Michigan' }, { value: 'MN', label: 'Minnesota' }, { value: 'MS', label: 'Mississippi' }, { value: 'MO', label: 'Missouri' },
+          { value: 'MT', label: 'Montana' }, { value: 'NE', label: 'Nebraska' }, { value: 'NV', label: 'Nevada' }, { value: 'NH', label: 'New Hampshire' },
+          { value: 'NJ', label: 'New Jersey' }, { value: 'NM', label: 'New Mexico' }, { value: 'NY', label: 'New York' }, { value: 'NC', label: 'North Carolina' },
+          { value: 'ND', label: 'North Dakota' }, { value: 'MP', label: 'Northern Mariana Islands' }, { value: 'OH', label: 'Ohio' },
+          { value: 'OK', label: 'Oklahoma' }, { value: 'OR', label: 'Oregon' }, { value: 'PW', label: 'Palau' }, { value: 'PA', label: 'Pennsylvania' },
+          { value: 'PR', label: 'Puerto Rico' }, { value: 'RI', label: 'Rhode Island' }, { value: 'SC', label: 'South Carolina' },
+          { value: 'SD', label: 'South Dakota' }, { value: 'TN', label: 'Tennessee' }, { value: 'TX', label: 'Texas' }, { value: 'UT', label: 'Utah' },
+          { value: 'VT', label: 'Vermont' }, { value: 'VI', label: 'Virgin Islands' }, { value: 'VA', label: 'Virginia' }, { value: 'WA', label: 'Washington' },
+          { value: 'WV', label: 'West Virginia' }, { value: 'WI', label: 'Wisconsin' }, { value: 'WY', label: 'Wyoming' }];
+
+        var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'purple', 'sage'];
+
+
+        // The options property of the column can point to a function which could make an AJAX call to retrieve the values.
+        var getState = function (term, response) {
+            states = [];
+            for (var i in allStates) {
+                if (allStates[i].label.toLowerCase().indexOf(term) > -1) {
+                    states.push(allStates[i]);
+                }
+            }
+            setTimeout(function () { response(states) }, 100);
+            //response(states);
+        };
+
+        var columns = [];
+        columns.push({ id: "stateName", name: "State Name", field: "stateName", width: 120, formatter: TextCellFormatter, editor: AutocompleteCellEditor, options: allStates, filterType: TextFilter, editorOptions: { selectionRequired: false, selectLabel: true } });
+        columns.push({ id: "stateCode", name: "State Code", field: "stateCode", width: 120, formatter: TextCellFormatter, filterType: TextFilter });
+        columns.push({ id: "ajaxStateName", name: "Ajax State Name", field: "ajaxStateName", width: 120, formatter: TextCellFormatter, editor: AutocompleteCellEditor, filterType: TextFilter, options: getState, editorOptions: { selectionRequired: true, selectLabel: true } });
+        columns.push({ id: "color", name: "Color", field: "color", width: 120, formatter: TextCellFormatter, editor: AutocompleteCellEditor, filterType: TextFilter, options: colors, editorOptions: { selectionRequired: true } });
+
+        var data = [];
+        data.push({ id: 1, stateCode: "AZ", stateName: "Arizona", ajaxStateName: "Arizona", color: "red", itemCode: 10 });
+        data.push({ id: 2, stateCode: "ID", stateName: "Idaho", ajaxStateName: "Idaho", color: "orange", itemCode: 15 });
+        data.push({ id: 3, stateCode: "PR", stateName: "Puerto Rico", ajaxStateName: "Puerto Rico", color: "yellow", itemCode: 17 });
+        data.push({ id: 4, stateCode: "VT", stateName: "Vermont", ajaxStateName: "Vermont", color: "green", itemCode: 10 });
+        //    data.push({ id: 1, stateCode: "", stateName: "", ajaxStateName: "", color: "" });
+
+        var options = {
+            columns: columns,
+            idProperty: 'id',
+            dataset: data,
+            showFilter: true
+        };
+        var grid = $("#inforDataGrid").inforDataGrid(options);
+        var dataView = grid.getData();
+
+        grid.onCellChange.subscribe(function (e, args) {
+            if (!args.selectedElement)
+                return;
+            console.log('New value: ' + args.selectedElement.value);
+            args.grid.setDataItemValueForColumn(args.item, "stateCode", args.selectedElement.value);
+        });
+
+    </script>
+</body>
+</html>

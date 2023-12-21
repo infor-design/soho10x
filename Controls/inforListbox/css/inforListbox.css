@@ -1,4 +1,4 @@
-/* Infor ListBox
+﻿/* Infor ListBox
 ----------------------------------*/
 .inforListBox {
 	width: 185px;
@@ -14,16 +14,13 @@
 	border-radius: 3px 3px 3px 3px;
 }
 
-.inforListBox.has-error {
-	border: 1px solid #d5000e !important;
+.inforListBox.error {
+	border: 1px solid #D24A00 !important;
+	background-color: #FDF2F3;
 }
 
 .inforListBox:focus, .inforListBox.focus {
 	border: 1px solid #13A3F7;
-}
-
-.inforListBox.has-error:focus {
-  background-color: #fdf2f3 !important;
 }
 
 .inforListBoxOption:first-child {
@@ -35,17 +32,19 @@
 }
 
 /* Options */
-.inforListBoxOption, .inforListBoxOption LI, .inforListBoxOption LI A {
-  color: #1a1a1a;
-  display: block;
-  cursor: default;
-  padding: 0;
-  margin: 0;
-  padding: 0px;
+.inforListBoxOption,
+.inforListBoxOption LI,
+.inforListBoxOption LI A {
+	color: #1a1a1a;
+	display: block;
+	cursor: default;
+	padding: 0;
+	margin: 0;
+	padding: 0px;
 }
 
 .inforListBox[disabled] a, .inforListBox.disabled a {
-  color: #999999;
+	color: #999999;
 }
 
 .inforListBox[disabled] label, .inforListBox.disabled label {
@@ -53,15 +52,19 @@
 }
 
 .inforListBox[disabled] LI:hover {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .inforListBoxOption LI A {
-  line-height: 24px;
-  height: 24px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-indent: 10px;
+	line-height: 24px;
+	height: 24px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-indent: 10px;
+}
+
+.showCheckboxes .inforListBoxOption LI A {
+	text-indent: 1px;
 }
 
 .inforListBoxOption LI:hover {
@@ -69,7 +72,7 @@
 }
 
 .inforListBoxOption LI.inforListBoxDisabled A {
-	color: #777;
+	color: #999999;
 	background-color: transparent;
 }
 

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Infor Pie Chart (Donut)</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	
+	<script src="../Release/d3.v3.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../lib/jquery-ui-1.10.2.custom.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="js/inforPieChart.js"></script>
+
+	<script>
+		$(function () {
+			var chartData = [{label: "15%", value: 10, tooltip: "Ten Percent"},
+							 {label: "25%", value: 20, tooltip: "Twenty Percent"},
+							 {label: "45%", value: 30, tooltip: "Thirty Percent"},
+							 {label: "5%",  value: 10, tooltip: "Ten Percent"}];
+
+			$("#container").inforPieChart({data: chartData, title: "The Last 3 Months"});
+			
+			//Test updates
+			$("#update").click(function () {
+			
+				var chartData2 = [{"label": "0%", "value": 0},
+								{"label": "50%", "value": 50},
+								{"label": "40%", "value": 40},
+								{"label": "20%",  "value": 20}];
+								
+				$("#container").inforPieChart("update", chartData2, "Last 10 Months");
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="container" style="margin: 20px">
+	</div>
+	<button id="update" class="inforFormButton" style="left: 13%; position: relative;">Update</button>
+</body>
+</html>

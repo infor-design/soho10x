@@ -1,70 +1,70 @@
-/* Tags and Badges
+﻿/* 24x24 Icons that can be applied be class to tilepanel, message dialog and cardstack, accordian ect.
 ----------------------------------*/
-.tag {
-  background-color: #B3B3B3;
-  border-radius: 0 3px 3px 0;
-  color: white;
-  height: 11px;
-  padding: 4px 5px 4px 5px;
-  position: relative;
-  width: auto;
-  line-height: 10px;
-  margin-left: 13px;
-  margin-right: 20px;
+.inforTag {
+	background-color: #B3B3B3;
+    border-radius: 0 3px 3px 0;
+    color: white;
+    height: 11px;
+    padding: 4px 5px 4px 5px;
+    position: relative;
+    width: auto;
+	line-height: 10px;
+	margin-left: 13px;
+    margin-right: 20px;
 }
 
-.tag.lightAzure {
-  background-color: #61c5ff;
-  color: white;
+.inforTag.lightAzure {
+	background-color: #61c5ff;
+	color: white;
 }
 
-.tag.tourmaline {
-  background-color: #e63262;
-  color: white;
+.inforTag.tourmaline {
+	background-color: #e63262;
+	color: white;
 }
 
-.tag.amber {
-  background-color: #ffaa00;
-  color: white;
+.inforTag.amber {
+	background-color: #ffaa00;
+	color: white;
 }
 
-.tag.lightRuby {
-  background-color: #ff574d;
-  color: white;
+.inforTag.lightRuby {
+	background-color: #ff574d;
+	color: white;
 }
 
-.tag:before {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAIAAADZUCB4AAAABnRSTlMAAAAAAABupgeRAAAAiklEQVR42pWSOwrAIBAFc//rLBY2fkrBXhA8hCKYLjHmL26iU4kMu/h804QTY1RKQQGVrLWEEDhpGCEEKSW8qSXn3HNM29NaA8ItCSEA55A45/DJ/6TDM8ZUVzmzuXCFt3mU0srLxlLIh3EP25tSeu3tfccOY6zL68154N8GerDjvf/v1UBPm71fAfGAlVs5YHoyAAAAAElFTkSuQmCC");
-  content: " ";
-  height: 20px;
-  left: -13px;
-  position: absolute;
-  top: 0;
-  width: 13px;
+.inforTag:before {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAIAAADZUCB4AAAABnRSTlMAAAAAAABupgeRAAAAiklEQVR42pWSOwrAIBAFc//rLBY2fkrBXhA8hCKYLjHmL26iU4kMu/h804QTY1RKQQGVrLWEEDhpGCEEKSW8qSXn3HNM29NaA8ItCSEA55A45/DJ/6TDM8ZUVzmzuXCFt3mU0srLxlLIh3EP25tSeu3tfccOY6zL68154N8GerDjvf/v1UBPm71fAfGAlVs5YHoyAAAAAElFTkSuQmCC");
+    content: " ";
+    height: 20px;
+    left: -13px;
+    position: absolute;
+    top: 0;
+    width: 13px;
 }
 
-.tag.lightAzure:before {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAIkHv2vAsRbgPg/CBNSzAbENUD8HaYBryagpC4QX0BWjFMTUJARiAuB+Ac2DRiagAI8QLwal2IMTUCOBBBfIqQBrgnIkAHiG8RoAGsCEpzE2oCsqRWH5DYgloTibeiaXuPQJInkX0lyNEmga2rDoWkrVLE0lI2iiYvkgEAK8lskaSIrcpE08gLxGpI0ISXYYqITLJpmPSC+SJImpExYi24rAwnZHR5XADEWPi6gMx5UAAAAAElFTkSuQmCC");
+.inforTag.lightAzure:before {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAIkHv2vAsRbgPg/CBNSzAbENUD8HaYBryagpC4QX0BWjFMTUJARiAuB+Ac2DRiagAI8QLwal2IMTUCOBBBfIqQBrgnIkAHiG8RoAGsCEpzE2oCsqRWH5DYgloTibeiaXuPQJInkX0lyNEmga2rDoWkrVLE0lI2iiYvkgEAK8lskaSIrcpE08gLxGpI0ISXYYqITLJpmPSC+SJImpExYi24rAwnZHR5XADEWPi6gMx5UAAAAAElFTkSuQmCC");
 }
 
-.tag.tourmaline:before {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAI8M0pSAeItQPwfhAkpZgPiGiD+DtOAVxNQUheILyArxqkJKMgIxIVA/AObBgxNQAEeIF6NSzGGJiBHAogvEdIA1wRkyADxDWI0gDUBCU5ibUDW1IpDchsQS0LxNnRNr3FokkTyryQ5miTQNbXh0LQVqlgaykbRxEVyQCAF+S2SNJEVuUgaeYF4DUmakBJsMdEJFk2zHhBfJEkTUiasRbeVgYTsDo8rAHJVvd9RmCwCAAAAAElFTkSuQmCC");
+.inforTag.tourmaline:before {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAI8M0pSAeItQPwfhAkpZgPiGiD+DtOAVxNQUheILyArxqkJKMgIxIVA/AObBgxNQAEeIF6NSzGGJiBHAogvEdIA1wRkyADxDWI0gDUBCU5ibUDW1IpDchsQS0LxNnRNr3FokkTyryQ5miTQNbXh0LQVqlgaykbRxEVyQCAF+S2SNJEVuUgaeYF4DUmakBJsMdEJFk2zHhBfJEkTUiasRbeVgYTsDo8rAHJVvd9RmCwCAAAAAElFTkSuQmCC");
 }
 
-.tag.amber:before {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAL8X8WgAsRbgPg/CBNSzAbENUD8HaYBryagpC4QX0BWjFMTUJARiAuB+Ac2DRiagAI8QLwal2IMTUCOBBBfIqQBrgnIkAHiG8RoAGsCEpzE2oCsqRWH5DYgloTibeiaXuPQJInkX0lyNEmga2rDoWkrVLE0lI2iiYvkgEAK8lskaSIrcpE08gLxGpI0ISXYYqITLJpmPSC+SJImpExYi24rAwnZHR5XAEHU4R9LuLJUAAAAAElFTkSuQmCC");
+.inforTag.amber:before {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAL8X8WgAsRbgPg/CBNSzAbENUD8HaYBryagpC4QX0BWjFMTUJARiAuB+Ac2DRiagAI8QLwal2IMTUCOBBBfIqQBrgnIkAHiG8RoAGsCEpzE2oCsqRWH5DYgloTibeiaXuPQJInkX0lyNEmga2rDoWkrVLE0lI2iiYvkgEAK8lskaSIrcpE08gLxGpI0ISXYYqITLJpmPSC+SJImpExYi24rAwnZHR5XAEHU4R9LuLJUAAAAAElFTkSuQmCC");
 }
 
-.tag.emerald:before {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIALobtZUAeItQPwfhAkpZgPiGiD+DtOAVxNQUheILyArxqkJKMgIxIVA/AObBgxNQAEeIF6NSzGGJiBHAogvEdIA1wRkyADxDWI0gDUBCU5ibUDW1IpDchsQS0LxNnRNr3FokkTyryQ5miTQNbXh0LQVqlgaykbRxEVyQCAF+S2SNJEVuUgaeYF4DUmakBJsMdEJFk2zHhBfJEkTUiasRbeVgYTsDo8rAOIMaR96FATeAAAAAElFTkSuQmCC");
+.inforTag.emerald:before {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIALobtZUAeItQPwfhAkpZgPiGiD+DtOAVxNQUheILyArxqkJKMgIxIVA/AObBgxNQAEeIF6NSzGGJiBHAogvEdIA1wRkyADxDWI0gDUBCU5ibUDW1IpDchsQS0LxNnRNr3FokkTyryQ5miTQNbXh0LQVqlgaykbRxEVyQCAF+S2SNJEVuUgaeYF4DUmakBJsMdEJFk2zHhBfJEkTUiasRbeVgYTsDo8rAOIMaR96FATeAAAAAElFTkSuQmCC");
 }
 
-.tag.lightRuby:before {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAL8D/dVAeItQPwfhAkpZgPiGiD+DtOAVxNQUheILyArxqkJKMgIxIVA/AObBgxNQAEeIF6NSzGGJiBHAogvEdIA1wRkyADxDWI0gDUBCU5ibUDW1IpDchsQS0LxNnRNr3FokkTyryQ5miTQNbXh0LQVqlgaykbRxEVyQCAF+S2SNJEVuUgaeYF4DUmakBJsMdEJFk2zHhBfJEkTUiasRbeVgYTsDo8rAMhO3J/paysYAAAAAElFTkSuQmCC");
+.inforTag.lightRuby:before {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAUCAYAAABWMrcvAAAAsUlEQVR42mNgIAL8D/dVAeItQPwfhAkpZgPiGiD+DtOAVxNQUheILyArxqkJKMgIxIVA/AObBgxNQAEeIF6NSzGGJiBHAogvEdIA1wRkyADxDWI0gDUBCU5ibUDW1IpDchsQS0LxNnRNr3FokkTyryQ5miTQNbXh0LQVqlgaykbRxEVyQCAF+S2SNJEVuUgaeYF4DUmakBJsMdEJFk2zHhBfJEkTUiasRbeVgYTsDo8rAMhO3J/paysYAAAAAElFTkSuQmCC");
 }
 
-.tag .inforCloseButton {
-  background-color: rgba(0, 0, 0, 0);
+.inforTag .inforCloseButton {
+	background-color: rgba(0, 0, 0, 0);
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAIklEQVR42mP4DwQMWABcHF0BhgaYAC6TCEvgNJKgY5AVAACLWTPNEvlPdgAAAABJRU5ErkJggg==");
     border: medium none;
     height: 7px;
@@ -75,62 +75,62 @@
     width: 7px;
 }
 
-.tag .inforCloseButton:hover, .tag .inforCloseButton:active {
-  opacity: .90;
-  filter: alpha(opacity=90);
-  border: medium none !important;
+.inforTag .inforCloseButton:hover, .inforTag .inforCloseButton:active {
+	opacity: .90;
+	filter: alpha(opacity=90);
+	border: medium none !important;
     box-shadow: none !important;
 }
 
-.tag .inforCloseButton:active {
-  opacity: 1;
-  filter: alpha(opacity=100);
-  box-shadow: none;
+.inforTag .inforCloseButton:active {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	box-shadow: none;
 }
 
-.badge {
-  background-color: #B3B3B3;
-  border-radius: 2px;
-  color: #333333;
-  font-size: 1.1em;
-  line-height: 10px;
-  margin-right: 5px;
-  padding: 3px 5px 2px;
-  color: white;
+.inforBadge {
+	background-color: #B3B3B3;
+    border-radius: 2px;
+    color: #333333;
+    font-size: 1.1em;
+    line-height: 10px;
+    margin-right: 5px;
+    padding: 3px 5px 2px;
+	color: white;
 }
 
-.tag .badge {
-  left: 2px;
-  margin-left: 5px;
-  padding: 0 3px;
+.inforTag .inforBadge {
+    left: 2px;
+    margin-left: 5px;
+    padding: 0 3px;
 }
 
-.badge.deepTurqouise {
-  background-color: #00898c;
+.inforBadge.deepTurqouise {
+	background-color: #00c2b4;
 }
 
-.badge.ruby {
-  background-color: #d5000e;
+.inforBadge.ruby {
+	background-color: #d5000e;
 }
 
-.badge.deepRuby {
-  background-color: #b3000c;
+.inforBadge.deepRuby {
+	background-color: #b3000c;
 }
 
-.badge.lightAzure {
-  background-color: #61c5ff;
+.inforBadge.deepAzure {
+	background-color: #ff574d;
 }
 
-.badge.amber {
-  background-color: #ffaa00;
+.inforBadge.deepAmber {
+	background-color: #ffaa00;
 }
 
-.badge.tourmaline  {
-  background-color: #e63262;
-  color: white;
+.inforBadge.deepTourmaline  {
+	background-color: #e63262;
+	color: white;
 }
 
-.inforApplicationNav .badge {
-  font-size: 0.9em;
-  margin-left: 3px;
+.inforApplicationNav .inforBadge {
+    font-size: 0.9em;
+    margin-left: 3px;
 }

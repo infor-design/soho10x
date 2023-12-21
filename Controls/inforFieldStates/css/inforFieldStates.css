@@ -1,4 +1,4 @@
-/* Infor Field States and indicators.
+﻿/* Infor Field States and indicators.
 ----------------------------------*/
 .inforRequiredIndicator
 {
@@ -24,7 +24,7 @@ html[dir="rtl"] .inforRequiredIndicator
 	top: 1px;
 }
 
-.inforLabel .inforRequiredIndicator, .label .inforRequiredIndicator  {
+.inforLabel .inforRequiredIndicator {
 	left: 10px;
 	position: relative;
 	top: -6px;
@@ -46,15 +46,12 @@ html[dir="rtl"]  .inforTopLabel .inforRequiredIndicator {
 	top: 0;
 }
 
-.isDirty:not(.dropdown) {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAHklEQVR42mP4v4oBDaHz////j85HFYIBdD5MCBUAANUaT7GajJxwAAAAAElFTkSuQmCC") no-repeat scroll left top transparent;
+.isDirty {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAHklEQVR42mP4v4oBDaHz////j85HFYIBdD5MCBUAANUaT7GajJxwAAAAAElFTkSuQmCC") no-repeat scroll left top transparent;
 }
 
-.dropdown.isDirty {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAQAAADB7vUKAAAAGklEQVQY02NgGCQg8j8qJKCEgCkELGIYlAAA7Ioa4cFU1v4AAAAASUVORK5CYII="),
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAIAAABvrngfAAAAHklEQVR42mP4v4oBDaHz////j85HFYIBdD5MCBUAANUaT7GajJxwAAAAAElFTkSuQmCC");
-  background-position: right center, left top;
-  background-repeat: no-repeat;
+.inforDropDownList.isDirty {
+    background-position: left top !important;
 }
 
 html[dir="rtl"] input.isDirty {
@@ -65,36 +62,17 @@ html[dir="rtl"] .inforDropDownList.isDirty {
     background-position: right top !important;
 }
 
-.inforErrorIcon {
+.inforErrorIcon  {
 	background-color: #FDF2F3;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAfUlEQVR42pWSPQ6AIAxGO8HmBTijeEwGBnHwJDjopF9JNUj8gSZvKTxo2hJJzNQpYIEDUXCSU5QHEgaMYH+Bz0z+8u3yGYUUgGahL198EZiepM5awbGwNQhrqxAfS/oglWQbfrAsaGnZnzCltlYOLlyDK1ZjAB4sgpfctRoHLzgCpx+Q/QAAAAAASUVORK5CYII=");
-  background-repeat: no-repeat;
-  height: 12px;
-  left: -4px;
-  margin-left: -14px;
-  position: relative;
-  top: 2px;
-  width: 12px;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAfUlEQVR42pWSPQ6AIAxGO8HmBTijeEwGBnHwJDjopF9JNUj8gSZvKTxo2hJJzNQpYIEDUXCSU5QHEgaMYH+Bz0z+8u3yGYUUgGahL198EZiepM5awbGwNQhrqxAfS/oglWQbfrAsaGnZnzCltlYOLlyDK1ZjAB4sgpfctRoHLzgCpx+Q/QAAAAAASUVORK5CYII=");
+    background-repeat: no-repeat;
+    height: 12px;
+    left: -4px;
+    margin-left: -14px;
+    position: relative;
+    top: 2px;
+    width: 12px;
 }
-
-.icon-error {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAfUlEQVR42pWSPQ6AIAxGO8HmBTijeEwGBnHwJDjopF9JNUj8gSZvKTxo2hJJzNQpYIEDUXCSU5QHEgaMYH+Bz0z+8u3yGYUUgGahL198EZiepM5awbGwNQhrqxAfS/oglWQbfrAsaGnZnzCltlYOLlyDK1ZjAB4sgpfctRoHLzgCpx+Q/QAAAAAASUVORK5CYII=");
-  background-repeat: no-repeat;
-  height: 12px;
-  margin-left: -17px;
-  margin-top: 4px;
-  position: absolute;
-  width: 19px;
-}
-
-.inforTriggerField + .icon-error, .dropdown + .icon-error{
-  margin-left: -34px;
-}
-
-.inforCheckboxLabel + .icon-error {
-  margin-left: 4px;
-}
-
 
 html[dir="rtl"]  .inforErrorIcon {
 	 left: 16px;
@@ -103,16 +81,11 @@ html[dir="rtl"]  .inforErrorIcon {
 .ui-tabs-selected .inforErrorIcon{
 	background-color: #13A3F7;
 }
-
-.inforModuleTabs .ui-tabs-selected .inforErrorIcon{
-  background-color: transparent;
-}
-
 .inforTabset li:hover .inforErrorIcon{
 	background-color: rgba(104, 107, 115, 0.2);
 }
 
 /* Style the Placehodler (Inline Help)*/
-::-webkit-input-placeholder {font-size: 1.1em; color: #777; font-family:   Helvetica, Arial, sans-serif;  }
-:-moz-placeholder {font-size: 1em !important; color: #777; font-family:   Helvetica, Arial, sans-serif; }
-:-ms-input-placeholder {font-size:1.1em; color: #777; font-family:   Helvetica, Arial, sans-serif;  }
+::-webkit-input-placeholder {font-size: 1.1em; color: #999999; font-family:   Helvetica, Arial, sans-serif;  }
+:-moz-placeholder {font-size: 1em !important; color: #999999; font-family:   Helvetica, Arial, sans-serif; }
+:-ms-input-placeholder {font-size:1.1em; color: #999999; font-family:   Helvetica, Arial, sans-serif;  }

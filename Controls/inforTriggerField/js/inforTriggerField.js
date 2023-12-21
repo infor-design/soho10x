@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Infor Trigger Field - Handles the base functionality of DropDown/DatePicker and Other Trigger Fields.
 */
 (function ($) {
@@ -55,15 +55,8 @@
 			//attach click event
 			if (settings.click != undefined) {
 				if (!$input.hasClass("fileInputField")) {	//bound inside the file field control.
-					$input.on("keydown.triggerfield",function(event) {
-						if (event.keyCode == 13 && $input.hasClass("inforSearchField")) {//13: enter
-							$triggerButton.trigger("click");
-							event.stopPropagation();
-							event.preventDefault();
-							return false;
-						}
-
-						if (event.keyCode==40) {//40: down arrow
+					$input.on("keypress.triggerfield",function(event) {
+						if (event.keyCode==13 && $triggerButton.is('.inforSearchButton')) {
 							$triggerButton.trigger("click");
 							event.stopPropagation();
 							event.preventDefault();
@@ -116,7 +109,7 @@
 			var tooltip=$input.attr("title");
 			if (tooltip!=undefined) {
 				$triggerButton.attr("title",tooltip);
-				$input.removeAttr("title");
+				$input.attr("title","");
 			}
 
 			//handle absolute positioning.
@@ -183,9 +176,9 @@
 			if ($input.attr("placeholder")=="Search") {
 				$input.attr("placeholder", Globalize.localize("Search"));
 			}
-
+			
 			_displayCancelButton($(this), "Search");
-
+			
 		});
 
 		function _displayCancelButton(field, icon){
@@ -211,10 +204,10 @@
 			if (icon=="Search") {
 				cancelButton.hide();
 				if (field.val() !== "") {
-					cancelButton.show();
+					cancelButton.show();	
 				}
 			} else {
-				cancelButton.show();
+				cancelButton.show();	
 			}
 		}
 	};
@@ -239,19 +232,16 @@
 			//add another visable and styled textbox
 			var $fileInput = $("<input type='text' class='inforTextbox fileInputField'/></input>");
 			$input.after($fileInput);
-      if ($input.attr('value')) {
-        $fileInput.val($input.attr('value'));
-      }
 
 			//position the file input underneath the button and opace.
 			$input.attr("tabindex","-1").css({"position":"absolute"});
-
+			
 			$fileInput.blur(function() {
 				$(this).parent().removeClass("focus");
 			}).focus(function() {
 				$(this).parent().addClass("focus");
 			});
-
+			
 			var $button = $input.parent().find(".inforTriggerButton");
 
 			//attach visual events.
@@ -268,7 +258,7 @@
 					$button.removeClass("hover");
 				});
 			}
-
+			
 			$input.change(function (event) {
 				$fileInput.val($(this).val());
 			});
@@ -279,7 +269,7 @@
 				$fileInput.attr("disabled","");
 			}
 
-			if ($input.attr("readonly")) {
+			if (!$input.isReadOnly()) {
 				$fileInput.attr("readonly","").addClass("selectOnly");
 			}
 
@@ -293,27 +283,27 @@
 				$input.removeAttr("id").removeAttr("name").attr("style",css+";cursor: default;width: 10px !important");
 				$input.css("left" , "").prependTo($button.parent());
 			}
-
+			
 			//look for inline width and subtract 7 for the padding on the right
 			if ($input.attr("style")) {
 				$input.parent().width(parseInt($input.width(), 10) + 24);
 				$input.parent().find("input").width(parseInt($input.parent().width(), 10) - 24);
 				$input.parent().find("button").css("float", "right");
 			}
-
+	
 			$input.css("width", "25px");
 			$input.insertAfter($input.parent().find("button"));//.css("margin-left", $fileInput.width());
-
+			
 			//see if disabled and hide the parent..
 			if ($input.css("display") === "none") {
 				$input.parent().css("display","").hide();
 			}
-
+			
 			//make more compliant
 			$fileInput.uniqueId();
 			var id = $input.attr("id"),
 				label = $('label[for="' + id + '"]').text();
-
+			
 			$fileInput.before("<label class='inforScreenReaderText' for='" + $fileInput.attr("id") + "'>" + label + "</label>")
 						.attr("aria-labelledby", $fileInput.attr("id"));
 		});

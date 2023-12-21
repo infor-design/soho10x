@@ -1,67 +1,62 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
-  <title>Infor Lookup Field</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Infor Lookup Field</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js" ></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
 
-  <script src="../inforDataGrid/js/sampleData.js"></script>
-  <script src="js/inforLookupField.js"></script>
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+	<script src="js/inforLookupField.js"></script>
 
-  <script>
-     $(function () {
+	<script>
+		 $(function () {
 
-      //set columns
-      var columns = [];
-      columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, filterType: TextFilter});
-      columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true, filterType: TextFilter });
-      columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank", filterType: TextFilter});
-      columns.push({ id: "country", name: "Country", field: "country", width: 70, filterType: TextFilter});
-      columns.push({ id: "territory", name: "Territory", field: "territory", width: 70, filterType: TextFilter});
+			//set columns
+			var columns = [];
+			columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, filterType: TextFilter});
+			columns.push({ id: "city", name: "City", field: "city", width: 110, selectable: true, filterType: TextFilter });
+			columns.push({ id: "state", name: "State", field: "state", formatter: LinkFormatter, linkHref: "http://lmgtfy.com/?q=%dataContext.state%", linkTarget: "_blank", filterType: TextFilter});
+			columns.push({ id: "country", name: "Country", field: "country", width: 70, filterType: TextFilter});
+			columns.push({ id: "territory", name: "Territory", field: "territory", width: 70, filterType: TextFilter});
 
-      //get the data in JSON format - see datagrid example for more examples.
-      var data = getSampleData([]);
+			//get the data in JSON format - see datagrid example for more examples.
+			var data = getSampleData([]);
 
-      var options = {
-        dataset: data,
-        columns: columns,
-        idProperty: 'officeId',
-        editable: false,
-        showDrillDown: false,
-        showFilter: true,
-        showCheckboxes: false,
-        showStatusIndicators: false,
-        multiSelect: false,
-        savePersonalization: false,
-        showFooter: true
-      };
+			var options = {
+				dataset: data,
+				columns: columns,
+				idProperty: 'officeId',
+				editable: false,
+				showDrillDown: false,
+				showFilter: true,
+				showCheckboxes: false,
+				showStatusIndicators: false,
+				multiSelect: false,
+				savePersonalization: false
+			};
 
-      setInterval(function () {
-        data.splice(1,1);
-      }, 1000);
-
-       //if you want a custom lookup docan still do this...: $("#inforLookupField1").inforTriggerField({click:function(event){.....
-       //pass in the grid options and field to return into the lookup.
-       $(".inforLookupField").inforLookupField({
-          gridOptions: options,
-          returnField: "city",
-          height: 200,
-          width: 400
-        });
-
-      });
-  </script>
+		   //if you want a custom lookup docan still do this...: $("#inforLookupField1").inforTriggerField({click:function(event){.....
+		   //pass in the grid options and field to return into the lookup.
+		   $(".inforLookupField").inforLookupField({
+				gridOptions: options,
+				returnField: "city",
+				height: 200,
+				width: 400,
+				editable: false
+			});
+		  });
+	</script>
 </head>
 <body>
-  <div class="inforSingleColumnLayout autoLabelWidth">
-    <label class="inforLabel" for="lookupField1">Lookup Field</label>
-    <input class="inforLookupField" type="text" id="lookupField1"><br>
-  </div>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label class="inforLabel" for="lookupField1">Lookup Field</label>
+		<input class="inforLookupField" type="text" id="lookupField1"><br>
+	</div>
 </body>
 </html>

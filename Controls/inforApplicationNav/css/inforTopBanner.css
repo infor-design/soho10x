@@ -1,11 +1,10 @@
-/* Infor Top Banner - For Standalone Applications
+﻿/* Infor Top Banner - For Standalone Applications
 ----------------------------------*/
 .inforTopBanner{
-	background-color: #ebebeb;
+	background-color: #E6E6E6;
 	color: #B3B3B3;
 	height: 62px;
 	background-image: none;
-	border-bottom: 1px solid #cccccc;
 }
 
 .inforTopBannerRight {
@@ -26,22 +25,22 @@
 }
 
 .inforLogo {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAABvklEQVR42mO4wsBHU8QwasGoBaMWoFpwS1EXj9LHkUnvZs5/O2nGdQFZ0i1gEnheWPn7xUtc6p4kZv2HgRviKiRbcMfAGqjzz4ePuNS9X7gMqODD0lVAlVdZhEi24BqnOFDnHV1LXOo+bdgCtOB5QQWZcXBb3fj7hctfDx+7xisFZHw7eebTpm1/P33+/fwFMOjgFvx++gyoBsh94B4IZPz9+g2o4N3cRddFFIGCH1auA+r9sGz1rwePfly/iT2IgBEICeh/f/78ef8BzPp3U0YDYsGfd++/X7rywC3g/9+/IO7bd/9+/QIyvl+8cpVNBGg6RO/3cxeB7iNgwT0b92tc4r9fvgKy77v4IQfRlz0HgOy3k2deYeS/Ian2+9lzIPdhQBTEAmBKwxfJcAuusgoDxb+dOA3RjGzBr/sPQbY6eEH0fly1HiIFseBRcAxRFkDEvxw4jGnB5137QD6YMgvog5vSGsDEjewDIINSC+47+0Li4O/HT8CoAgX6hctAH+OzAC0VARFE/N2chUD2fUfvN/1TgYzH0SkQcaAdXw8eAaYCYLp6O23OdSF5eCoCKh4tTUctGLVg1ILBZgEAcDeURogYV6cAAAAASUVORK5CYII=") no-repeat scroll center center transparent;
-  color: transparent;
-  display: inline-block;
-  height: 32px;
-  left: 20px;
-  position: relative;
-  top: 13px;
-  width: 32px;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAABvklEQVR42mO4wsBHU8QwasGoBaMWoFpwS1EXj9LHkUnvZs5/O2nGdQFZ0i1gEnheWPn7xUtc6p4kZv2HgRviKiRbcMfAGqjzz4ePuNS9X7gMqODD0lVAlVdZhEi24BqnOFDnHV1LXOo+bdgCtOB5QQWZcXBb3fj7hctfDx+7xisFZHw7eebTpm1/P33+/fwFMOjgFvx++gyoBsh94B4IZPz9+g2o4N3cRddFFIGCH1auA+r9sGz1rwePfly/iT2IgBEICeh/f/78ef8BzPp3U0YDYsGfd++/X7rywC3g/9+/IO7bd/9+/QIyvl+8cpVNBGg6RO/3cxeB7iNgwT0b92tc4r9fvgKy77v4IQfRlz0HgOy3k2deYeS/Ian2+9lzIPdhQBTEAmBKwxfJcAuusgoDxb+dOA3RjGzBr/sPQbY6eEH0fly1HiIFseBRcAxRFkDEvxw4jGnB5137QD6YMgvog5vSGsDEjewDIINSC+47+0Li4O/HT8CoAgX6hctAH+OzAC0VARFE/N2chUD2fUfvN/1TgYzH0SkQcaAdXw8eAaYCYLp6O23OdSF5eCoCKh4tTUctGLVg1ILBZgEAcDeURogYV6cAAAAASUVORK5CYII=") no-repeat scroll center center transparent;
+    color: transparent;
+    display: inline-block;
+    height: 32px;
+    left: 20px;
+    position: relative;
+    top: 9px;
+    width: 32px;
 }
 
 .inforApplicationName {
-	color: #666666;
+	color: #686B73;
 	font-size: 1.6em;
 	left: 36px;
 	position: relative;
-	top: 17px;
+	top: 23px;
 }
 
 .inforTopBannerRight .inforIconButton.signOut {
@@ -51,7 +50,7 @@
 }
 
 .inforBannerText {
-	color: #666666;
+	color: #686B73;
 	line-height: 62px;
 	padding-right: 16px;
 	font-size: 1.2em;
@@ -96,9 +95,9 @@ html[dir="rtl"] .inforTopBannerLeft {
 }
 
 html[dir="rtl"] .inforLogo {
-  background-position: center center;
-  right: 20px;
-  top: 15px;
+	background-position: center center;
+    right: 20px;
+    top: 9px;
 }
 
 html[dir="rtl"] .inforApplicationName {

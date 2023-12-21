@@ -1,4 +1,4 @@
-/* Infor TabSet
+﻿/* Infor TabSet
 ----------------------------------*/
 .inforTabContainer {
    height: 100%;
@@ -11,14 +11,14 @@
 }
 
 .inforTabset {
- list-style: none;
- margin: 0px;
- padding: 0px;
- border-bottom: 1px solid #b3b3b3;
- height: 26px;
- position:relative;
- overflow: hidden;
- width: auto;
+   list-style: none;
+   margin: 0px;
+   padding: 0px;
+   border-bottom: 1px solid #b3b3b3;
+   height: 24px;
+   position:relative;
+   overflow: hidden;
+   width: auto;
 }
 
 .ui-tabs-panel > p {
@@ -27,12 +27,11 @@
 
 /*The Divider Between the Tabs */
 .inforTabset li {
-	color: #444;
-	background-color: #ebebeb;
+	color: #666666;
 	display: inline-block;
-	height: 21px;
+	height: 25px;
 	min-width: 45px;
-	padding-top: 5px;
+	padding-top: 3px;
 	border-radius: 3px 3px 0 0;
 	height: 19px;
 	border: 1px solid transparent;
@@ -46,7 +45,7 @@
 .inforTabset a {
    float: left;
    padding:  0px 10px 0px;
-   color: #444;
+   color: #666666;
    text-decoration: none;
    white-space: nowrap;
    margin-top: 1px;
@@ -115,18 +114,13 @@
 }
 
 .ui-state-disabled a{
-	color: #444 !important;
+	color: #666666 !important;
 }
 
 /* The Tab Panel Area*/
 .ui-tabs-panel {
    height: 100%;
-   background: #f7f7f7;
-}
-
-.inforModuleTabs .ui-tabs-panel {
-   height: 100%;
-   background: white;
+   background: #ffffff;
 }
 
 #rightPane .ui-tabs-panel {
@@ -135,14 +129,14 @@
 
 /* Tab Overflow Button */
 .inforTabButton {
-  background-color: #ebebeb;
-  border-left: 2px solid white;
-  border-radius: 3px 0 0;
-  float: right;
-  margin: 0 0 0 -75px;
-  position: relative;
-  right: 0;
-  top: -27px;
+	background: none repeat scroll 0 0 white;
+	float: right;
+	margin: 0;
+	position: relative;
+	right: 0;
+	top: -27px;
+	border-bottom: 1px solid #b3b3b3;
+	margin: 0 0 0 -75px;
 }
 
 .inforTabButton button {
@@ -157,18 +151,18 @@
 
 .inforMoreButton {
 	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAJklEQVR42mOcOXPmfwY8gBFE4FKUnp7OyAjjoCsCSWLoAClCVwgA5NgQYhsZMMMAAAAASUVORK5CYII=") no-repeat scroll 98% 12px transparent;
-	background-position: 89% 11px;
-	background-color: ##EBEBEB;
+    background-position: 94% 12px;
+	background-color: white;
 	border: medium none;
-	color: #444;
+	color: #666666;
 	height: 26px;
-	border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
 	padding: 0px 5px 0;
 	line-height: 27px;
 	cursor: pointer;
-	width: 54px;
+	width: 50px;
 	margin-right: 1px;
-	text-indent: -7px;
+	 text-indent: -7px;
 }
 
 .inforMoreButton:hover {
@@ -180,7 +174,7 @@
 }
 
 .inforModuleTabs > .inforTabButton > .inforMoreButton {
-	color: #333333;
+	color: #666666;
     font-size: 1.6em;
     height: 29px;
 	text-indent: -11px;
@@ -191,11 +185,11 @@
 }
 
 .inforModuleTabs > .inforTabButton > .inforMoreButton:hover {
-  border-bottom: 3px solid #444 !important;
+    border-bottom: 3px solid #666666 !important;
 }
 
 .inforModuleTabs > .inforTabButton > .inforMoreButton:hover a{
-    color: #333333;
+    color: #666666;
 }
 
 /* Tab Close Button */
@@ -261,9 +255,10 @@
 	margin-top: 0px;
 }
 
-.inforHiddenTab {
-	display: none !important;
+.inforHiddenTab{
+	display:none !important;
 }
+
 
 html[dir="rtl"] .inforTabset li {
 	float: right;
@@ -293,7 +288,7 @@ ul.inforModuleTabs {
 .inforModuleTabs > li a {
 	font-size: 1.6em;
 	font-family:  Helvetica, Arial, sans-serif;
-	color: #444 !important;
+	color: #666666 !important;
 	padding: 5px 8px 0 10px;
 }
 
@@ -324,11 +319,11 @@ ul.inforModuleTabs {
 
 .inforModuleTabs > .inforTabset li:hover, .inforModuleTabs > .inforTabset li.ui-state-focus {
 	background-color: transparent !important;
-	border-bottom: 3px solid #444;
+	border-bottom: 3px solid #666666;
 }
 
 .inforModuleTabs > .inforTabset li:hover a, .inforModuleTabs > .inforTabset li.ui-state-focus a {
-	color: #444 !important;
+	color: #333333 !important;
 }
 
 .inforModuleTabs > .ui-tabs-selected, .inforModuleTabs > .ui-tabs-selected:hover  {
@@ -343,7 +338,6 @@ ul.inforModuleTabs {
 
 .inforModuleTabs > ul > li {
 	border-bottom: 3px solid transparent;
-  background-color: transparent;
 	height: 30px;
 	padding: 0;
 	margin-left: 11px;
@@ -418,15 +412,14 @@ ul.inforModuleTabs {
 }
 
 .inforVerticalTabs > .ui-tabs-panel {
-  border: 1px solid #cccccc;
-  background-color: white;
-  border-radius: 0px 3px 3px 3px;
-  margin: 10px 3px;
-  z-index: 1;
-  left: -1px;
-  padding: 0 20px;
-  width: auto;
-  position: relative;
+	  border: 1px solid #cccccc;
+	  border-radius: 0px 3px 3px 3px;
+	  margin: 6px 3px;
+	  z-index: 1;
+	  left: -1px;
+	  padding: 0 20px;
+	  width: auto;
+	  position: relative;
 }
 
 .inforVerticalTabs > ul > .ui-tabs-selected  {
@@ -459,8 +452,9 @@ ul.inforModuleTabs {
 	height: 30px;
 }
 
-.inforVerticalTabs > ul > li {
+.inforVerticalTabs > ul > li:first-child {
 	 border-top: 1px solid #CCCCCC;
+	 margin-top: -4px;
 }
 
 .inforVerticalTabs > ul > li:hover {
@@ -478,7 +472,7 @@ ul.inforModuleTabs {
 }
 
 .inforVerticalTabs > ul > li a {
-	color: #444;
+	color: #666666;
 	float: left;
 	font-size: 1.3em;
 	line-height: 28px;
@@ -512,16 +506,8 @@ ul.inforModuleTabs {
 	border-bottom: none;
 }
 
-.inforTabset.inforNormalTabs.level3 li {
-	 height: 19px;
-}
-
-.inforTabset.inforNormalTabs.level3 li.ui-state-active {
-	 height: 20px;
-}
-
 .inforTabset.inforNormalTabs.level3 > .ui-tabs-selected > a{
-	color: #333333 !important;
+	color: #666666 !important;
 }
 
 .inforTabset.level3{
@@ -598,8 +584,4 @@ ul.inforModuleTabs {
 
 .ui-state-disabled > a {
     cursor: default;
-}
-
-.inforTabset .badge {
-    margin-left: 8px;
 }

@@ -1,37 +1,36 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>DropDown - Test on characters which need Encoding</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Test Characters Needing Encoding</title>
 
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
 
-  <script >
-    $().ready(function () {
-      $('.inforDropDownList').inforDropDownList();
-    });
-  </script>
+	<script >
+		$().ready(function () {
+			$(".inforDropDownList").inforDropDownList();
+		});
+	</script>
 
 </head>
 <body>
-  <form runat="server">
-    <label for="dd1">Chars</label>
-    <select ID="dd1" Class="inforDropDownList">
-      <option value=""></option>
-      <option value="\\myserver\path\">\\myserver\path\</option>
-      <option value="<"><</option>
-      <option value=">" selected>></option>
-      <option value="a&#039;z">A&#039;rizona</option>
-      <option value="<="><=</option>
-      <option value=">=">>=</option>
-      <option value="1">&lt;test&gt;</option>
-      <option value="7" >Customer &amp; Internal</option>
-      <option value="al" selected="selected">Apostraphe's</option>
-      <option value="a'z">papa john's pizza</option>
-    </select>
-  </form>
+	<form id="form1" runat="server">
+	<select ID="ddlSites2" Class="inforDropDownList">
+			<option value=""></option>
+			<option value="<"><</option>
+      <option value="/">/</option>
+			<option value=">" selected>></option>
+			<option value="a&#039;z">A&#039;rizona</option>
+			<option value="<="><=</option>
+			<option value=">=">>=</option>
+			<option value="1">&lt;test&gt;</option>
+		    <option value="7" >Customer &amp; Internal</option>
+		    <option value="al" selected="selected">Apostraphe's</option>
+			<option value="a'z">papa john's pizza</option>
+		</select>
+	</form>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <title>Infor DropDown List - Basic Functionality</title>
+<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+<script src="../Release/jquery-1.10.2.min.js"></script>
+<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+<script src="../Release/inforControlsCombined.js"></script>
+
+  <script>
+    $(function () {
+      $('body').inforForm();
+      $('#PreferredLocaleLookup').inforLookupField();
+    });
+  </script>
+
+  <style>
+    .equals-sign {
+      display: inline-block;
+      margin: 0 10px;
+    }
+  </style>
+
+</head>
+<body>
+
+<form action="/ReportManager/" id="preferredLocaleForm" method="post">
+    <div class="inforSingleColumnLayout autoLabelWidth">
+        <label class="inforLabel" for="UserName">User Name</label>
+        <select class="inforDropDownList" id="UserName" name="UserName"></select><br/>
+        <label class="inforLabel" for="FullName">Full Name</label>
+        <input class="inforTextbox" id="FullName" name="FullName" type="text" value="" /><br/>
+        <label class="inforLabel" for="PreferredLanguage">Operator Language</label>
+        <input class="inforTextbox" id="PreferredLanguage" name="PreferredLanguage" type="text" value="" />        <br/>
+        <label class="inforLabel" for="PreferredLocale">Preferred Locale</label>
+        <input class="inforLookupField" type="text" id="PreferredLocaleLookup"/><br/>
+        <label class="inforLabel" for="CalendarType">Calendar Type</label>
+        <select class="inforDropDownList" id="CalendarType" name="CalendarType"></select><br/>
+        <label class="inforLabel" for="NumeralVariant">Numeral Variant</label>
+        <select class="inforDropDownList" id="NumeralVariant" name="NumeralVariant"></select><br/>
+    </div>
+</form>
+
+</body>
+</html>

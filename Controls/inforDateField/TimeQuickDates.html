@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,40 +6,31 @@
 	<title>Infor Datefield Example</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDateField.js"></script>
 
 	<script>
 		$(function () {
-			//Set the current culture
-			//Globalize.culture("ar-SA");
 
-			//Using the Current Culture for date and time example
-			//$("#dateInput1").inforDateField({showTimeInput: true,
-			//								 showQuickDates: true,
-			//								 dateFormat: Globalize.culture().calendar.patterns.d + " "+ Globalize.culture().calendar.patterns.t,
-			//								 timeFormat: Globalize.culture().calendar.patterns.t});
-
-			//24 Hour Format Example..(With the current culture for time)
-			$("#dateInput1").inforDateField({showTimeInput: true,
+			$("#dateInput1").inforDateField({
 											 showQuickDates: true,
-											 dateFormat: Globalize.culture().calendar.patterns.d + " HH:mm",
-											 timeFormat: "HH:mm"});
-
-			$("#dateInput2").inforDateField();
+											 quickDateOptions: [
+                        {label: Globalize.localize('Today'), offset: 0, period: 'T' },
+                        {label: 'Never expires', offset: 100, period: 'Y' },
+                        {label: 'Date of Approval', offset: -1, period: 'M' }
+                      ]});
 
 			//initiate autolabel width plugin
 			$("body").inforForm();
 		});
 	</script>
 </head>
-<body style="height: 10000px; overflow: auto">
-	<div class="autoLabelWidth inforSingleColumnLayout" style="position: absolute; top: 1000px">
+<body>
+	<div class="autoLabelWidth inforSingleColumnLayout">
 		<label class="inforLabel">Time and Quick Dates Field</label>
 		<input class="inforDateField" id="dateInput1" type="text"  />
-		<input class="inforDateField" id="dateInput2" type="text"  />
 
 		<br>
 	</div>

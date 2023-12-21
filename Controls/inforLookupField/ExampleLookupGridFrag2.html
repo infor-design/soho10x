@@ -1,18 +1,13 @@
-
+﻿
 <div id='Currencies'>
 	<div id='Currencies_DataGrid' style="width:450px;"></div>
 </div>
 <script>
-
+	
 	(function($)
 	{
 		function getPeopleData() //ignore jslint
 		{
-			for (var index=0; index<1100000000; index++)
-			{
-				// wait
-			}
-
 			var data = [];
 			data.push({id:1, employeeId:{value:"1",mutable:false}, lastName:{value:"Asper",mutable:true},  firstName:{value:"David",mutable:true},   title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"Full Time", mutable:true}});
 			data.push({id:2, employeeId:{value:"2",mutable:false}, lastName:{value:"Baxter",mutable:true}, firstName:{value:"Michael",mutable:true}, title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"Full Time", mutable:true}});
@@ -21,7 +16,7 @@
 			data.push({id:5, employeeId:{value:"5",mutable:false}, lastName:{value:"Bronte",mutable:true}, firstName:{value:"Emily",mutable:true},   title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"HOURLY", mutable:true}});
 			return data;
 		}
-
+			
 		//Store the Grid Obj For Later Api Calls..
 		var grid = null, columns = [], data = getPeopleData([]);
 
@@ -48,7 +43,7 @@
 				showCheckboxes: false,
 				autoHeightToPageSize: true
 		});
-
+			
 	})(jQuery);
 </script>
 

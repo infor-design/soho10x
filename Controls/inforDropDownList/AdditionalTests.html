@@ -1,92 +1,93 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
 
-  <title>Infor DropDownList Example</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <link href="css/inforDropDownList.css" rel="stylesheet" />
+	<title>Infor DropDownList Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforDropDownList.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
-  <script>
-    $(function () {
-      //Globalize.culture('ar-SA');
-      $('body').inforForm();
-      $('.inforDropDownList').inforDropDownList();
-    });
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();
+			$(".inforDropDownList").inforDropDownList();
+		});
 
-    function serialize() {
-      console.log($('#dropDownTest').val());
-    }
-  </script>
+		function serialize() {
+			console.log($("#dropDownTest").val());
+		}
+	</script>
 </head>
 <body>
-   <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
-     <label class="inforLabel" for="dropDownSearch1">one value</label>
-     <select class="inforDropDownList" id="dropDownSearch1">
-      <OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
-     </select><br>
+   <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout" style="top: 101px; position:absolute;">
+	   <label class="inforLabel" for="dropDownSearch1">one value</label>
+	   <select class="inforDropDownList" id="dropDownSearch1">
+			<OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
+	   </select><br>
 
-     <label class="inforLabel" for="dropDownSearch2">two values</label>
-     <select class="inforDropDownList" id="dropDownSearch2" >
-      <OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
-      <OPTION selected value="NAME#|#30#|#ALPHALC#|##|#">Name</OPTION>
-    </select><br>
+	   <label class="inforLabel" for="dropDownSearch2">two values</label>
+	   <select class="inforDropDownList" id="dropDownSearch2" >
+			<OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
+			<OPTION selected value="NAME#|#30#|#ALPHALC#|##|#">Name</OPTION>
+		</select><br>
 
-     <label class="inforLabel" for="dropDownSearch3">three values</label>
-     <select class="inforDropDownList" id="dropDownSearch3" >
-      <OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
-      <OPTION selected value="NAME#|#30#|#ALPHALC#|##|#">Name</OPTION>
-      <OPTION selected value="ADDRESS#|#30#|#ALPHALC#|##|#">Address</OPTION>
-    </select><br>
+	   <label class="inforLabel" for="dropDownSearch3">three values</label>
+	   <select class="inforDropDownList" id="dropDownSearch3" >
+			<OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
+			<OPTION selected value="NAME#|#30#|#ALPHALC#|##|#">Name</OPTION>
+			<OPTION selected value="ADDRESS#|#30#|#ALPHALC#|##|#">Address</OPTION>
+		</select><br>
 
-     <label class="inforLabel"  for="dropDownSearch4">four values</label>
-     <select class="inforDropDownList" id="dropDownSearch4" >
-      <OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
-      <OPTION selected value="NAME#|#30#|#ALPHALC#|##|#">Name</OPTION>
-      <OPTION selected value="ADDRESS#|#30#|#ALPHALC#|##|#">Address</OPTION>
-      <OPTION selected value="ADDRESS#|#30#|#ALPHALC#|##|#">Address2</OPTION>
-    </select><br>
+	   <label class="inforLabel"  for="dropDownSearch4">four values</label>
+	   <select class="inforDropDownList" id="dropDownSearch4" >
+			<OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">* Company</OPTION>
+			<OPTION selected value="NAME#|#30#|#ALPHALC#|##|#">Name</OPTION>
+			<OPTION selected value="ADDRESS#|#30#|#ALPHALC#|##|#">Address</OPTION>
+			<OPTION selected value="ADDRESS#|#30#|#ALPHALC#|##|#">Address2</OPTION>
+		</select><br>
 
-     <label class="inforLabel" for="dropDownSearch5">Single Char</label>
-     <select class="inforDropDownList" id="dropDownSearch5"  style="width:19px !important">
-      <OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">M</OPTION>
-      <OPTION value="NAME#|#30#|#ALPHALC#|##|#">O</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">P</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff X123</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff X123</OPTION>
-      <OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff X123</OPTION>
-     </select><br>
+		 <label class="inforLabel" for="dropDownSearch5">Single Char</label>
+		 <select class="inforDropDownList" id="dropDownSearch5"  style="width:19px !important">
+			<OPTION value="COMPANY#|#4#|#NUMERIC#|##|#KEY">M</OPTION>
+			<OPTION value="NAME#|#30#|#ALPHALC#|##|#">O</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">P</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff X123</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff X123</OPTION>
+			<OPTION value="ADDRESS#|#30#|#ALPHALC#|##|#">T - Test Stuff X123</OPTION>
+		 </select><br>
 
-     <label class="inforLabel" for="dropDownSearch6">Options with * Char</label>
-     <select class="inforDropDownList" id="dropDownSearch6"  style="width:60px !important">
-      <OPTION id="           " selected></OPTION>
-      <OPTION id="********** ">**********</OPTION>
-      <OPTION id="ACTIVE ">ACTIVE</OPTION>
-      <OPTION id="HOLD ">HOLD</OPTION>
-      <OPTION id="INACTIVE ">INACTIVE</OPTION>
+		 <label class="inforLabel" for="dropDownSearch6">Options with * Char</label>
+		 <select class="inforDropDownList" id="dropDownSearch6"  style="width:60px !important">
+			<OPTION id="           " selected></OPTION>
+			<OPTION id="********** ">**********</OPTION>
+			<OPTION id="ACTIVE ">ACTIVE</OPTION>
+			<OPTION id="HOLD ">HOLD</OPTION>
+			<OPTION id="INACTIVE ">INACTIVE</OPTION>
 
-     </select><br>
+		 </select><br>
 
-     <button onclick="serialize()" class="inforFormButton">Serialize</button>
-     <label class="inforLabel"  for="dropDownTest" style="left:20px;top:190px;position:absolute;">Absolute Positioned</label>
-     <select class="inforDropDownList" id="dropDownTest" style="left:134px;width:75px;top:190px;position:absolute;">
-      <option value="red">Red</option>
-      <option value="green1">green</option>
-      <option value="green">Green</option>
-      <option value="blue" selected="selected">Blue</option>
-      <option value="white">White</option>
-      <option value="black">Black</option>
-    </select>
-  </div>
+		 <button onclick="serialize()" class="inforFormButton">Serialize</button>
+		 <label class="inforLabel"  for="dropDownTest" style="left:10px;top:190px;position:absolute;">Absolute Positioned</label>
+		 <select class="inforDropDownList" id="dropDownTest" style="left:112px;width:75px;top:192px;position:absolute;">
+			<option value="red">Red</option>
+			<option value="green1">green</option>
+			<option value="green">Green</option>
+			<option value="blue" selected="selected">Blue</option>
+			<option value="white">White</option>
+			<option value="black">Black</option>
+		</select>
+	</div>
 </body>
 </html>

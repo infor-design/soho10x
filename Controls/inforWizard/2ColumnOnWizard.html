@@ -3,21 +3,21 @@
 <head>
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
 	<meta charset="utf-8">
-
+	
 	<title>Infor Wizard - Basic Example</title>
     <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
 	<link rel="stylesheet" href="css/inforWizard.css" />
-
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforWizard.js"></script>
-
+	
 	<script>
 		$(function () {
-			//uncomment To Test RTL:
+			//uncomment To Test RTL: 
 			//Globalize.culture("ar-SA");
-
+			
 			var wiz = $('#wizard1').inforWizard({
 				sequential: true,
 				showTitleBar: true,
@@ -25,7 +25,7 @@
 					console.log('Done');
 				}
 			});
-
+			
 			//$(".inforWizardButton").unbind("click").css("cursor", "default");
 			$("body").inforForm();
 		});
@@ -105,7 +105,7 @@
 				<br>
 				<label class="inforLabel">Message Format</label>
 				<input class="inforTextbox" value="CCD R2" readonly/>
-
+			
 			</div>
 	   </li>
 	    <li class="inforWizardPage" data-title="Outbound Configuration">
@@ -124,7 +124,7 @@
 				<br>
 				<label class="inforLabel">Cloverleaf IP Address</label>
 				<input class="inforTextbox" value="Inbound" />
-
+				
 			</div>
 	   </li>
 	    <li class="inforWizardPage" data-title="Oid Mapping">
@@ -140,6 +140,6 @@
 			</div>
 	   </li>
 	</ul>
-
+	
 </body>
 </html>

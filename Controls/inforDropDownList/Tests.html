@@ -1,37 +1,43 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Dropdown - test serialization to main select</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>Infor DropDownList : Main Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforDropDownList.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+	<link href="css/inforDropDownList.css" rel="stylesheet" />
 
-  <script>
-     $(function () {
-      $('#test').dropdown();
-    });
-  </script>
+	<script>
+	   $(function () {
+			$("#example3").inforDropDownList({editable: true, displayCodeOnly: true, typeAheadSearch: false, validateCodeInput: true, selectFirst:false, maxLength:2});
+			
+			$("#example3").next().find("input").keyup(function(e) {
+				var field = $(this),
+					key = e.keyCode;
+				
+				if ((key > 48 && key < 57) || (key > 96 && key < 105)) {
+					$(this).val("0" + String.fromCharCode(e.keyCode));
+				}
+				
+			});
+		});
+	</script>
 </head>
 <body>
-  <button onclick="console.log($('#test')[0].selectedIndex, $('#test').val());">Show Value in Console</button>
-  <button onclick="$('#test').enable()">Enable</button>
-  <button onclick="$('#test').disable();">Disable</button>
+	<label>Hello Tim you rock!</label>
+	<select class="inforDropDownList" name="example3" id="example3" style="width:15px">
+	<option value="01">01 Weekly</option>
+	<option value="02">02 Biweekly</option>
+	<option value="03">03 Semimonthly</option>
+	<option value="04">04 Monthly</option>
+	<option value="05">05 UK Four-Weekly</option>
+	</select>
 
-  <div id="dropContainer" >
-    <label for="test" class="label">Test 123</label>
-    <select class="dropdown" id="test" style="width: 60px">
-      <option value="01">Option 01</option>
-      <option value="02">Option 02</option>
-      <option value="03">Option 03</option>
-      <option value="04">Option 04</option>
-      <option value="05">Option 05</option>
-    </select>
-  </div>
 </body>
 </html>

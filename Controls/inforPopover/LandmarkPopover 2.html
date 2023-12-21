@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor Popover</title>
+
+  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+  <script src="../Release/jquery-1.10.2.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+  <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/inforPopover.js"></script>
+<script>
+
+$(function ()  {
+	var popupContents = $('<p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>');
+
+	$("body").inforForm();
+
+	$("#displaymanual").on("click", function()
+	{
+		console.log("displaymanual button click event");
+		var node = $('#textbox');
+		makePopover(node);
+	});
+
+	function makePopover(node)
+	{
+		node.inforPopover(
+		{
+			content:   popupContents,
+			placement: 'right',
+			title:     'Popover manual',
+			width:     '350',
+			trigger:   'manual',
+			remove:    true,
+			draggable: false
+		});
+	}
+});
+
+	</script>
+</head>
+<body style="margin:15px;">
+	<button id="displaymanual" class="inforFormButton" >Display Popover</button><br><br>
+
+	<input type="text" class="inforTextBox" id="textbox" />
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>Infor DropDownList Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="..\Release\jquery-1.10.2.min.js"></script>
+	<script src="..\Release\jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="..\Release\inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$('input[onclick^="ProcessListPrompt"]').each(function() {
+				   //get the id's from the elements in the page
+				   var $this = $(this);
+				   var onClickStr = ($this.attr("onclick"));
+				   onClickStr = onClickStr.substring(18,onClickStr.length -1).split(",");
+
+				   //get ready to add the drop down to the page
+				   var dropDown = $("<select class='inforDropDownList' id='" + onClickStr[0]+"' </select>");
+				   //copy some attributes
+				   dropDown.width($this.width());
+				   dropDown.attr("onclick",onClickStr);
+
+					//loop through the maching span elements
+				   $("#" + onClickStr[1]+ " tr.listbox td").each(function()
+				   {
+						var $this = $(this);
+						var html = $this.html();
+						var value = $this.attr("InfValue");
+						//add them as options to the drop down so it ends up in the starting format:
+						/* <select class="inforDropDownList" >
+							<option value="a">A</option>
+							<option value="b" selected="selected">B</option>
+						</select>*/
+						 dropDown.append("<option value='" + value + "'>"+html+"</option>");
+				   });
+				   //add and initialize the drop down
+				   $this.after(dropDown);
+				   dropDown.inforDropDownList({displayCodeOnly:true});
+
+				   //remove unused/processed elements from the page and add the drop down.
+				   $this.remove();
+				   $("#" + onClickStr[1]).remove();
+			});
+		});
+	</script>
+</head>
+<body style="margin-left:10px">
+<!--
+We add this...
+<select class="inforDropDownList" df="t" ei="F|6|32" ffa="1.5em;" id="DSP01_GPOVER" maxlength="0001" mfo="t" name="GPOVER" onchange="_markDirty();_checkAutoEnter();" onclick="CaptureFieldCursor()" ondblclick="ProcessOptionWithDefault()" onfocus="CaptureFieldCursorOnFocus()" onkeypress="_checkLowerCase();" onpaste="_checkLowerCase();" osize="001" refCtlFormat="" refFormat="DSP01" size="0001"  type="text"/>
+-->
+<input HSPACE="1px" class="prompt" height="20" id="_listbox_DSP01_GPOVER" name="_prompt_GPOVER" onclick="ProcessListPrompt(DSP01_GPOVER,_listbox_DSP01_GPOVER_dec)" refCtlFormat="" refFormat="DSP01"  tabindex="-1" title="" type="image" width="200" />
+<span class="listboxspan" id="_listbox_DSP01_GPOVER_dec" name="_listbox_dec_" style="display:none; z-index: 2; left: 0px; position: absolute; top:18px">
+	<table border="0" cellpadding="0" cellspacing="0" class="listboxtable" onkeydown="ReturnToTabIndex()">
+		<tr class="listbox" i="" indFormat="DSP01" onmouseout="this.className='listbox'" onmouseover="this.className='listboxover'">
+			<td InfValue="0" class="listbox" id="_opt_values_" onclick="ProcessList(this,DSP01_GPOVER,_listbox_DSP01_GPOVER_dec)" onkeydown="ListKeyDown(oTable)" onmouseover="HighLightTableTag(this)">0=No Override</td>
+			</tr>
+			<tr class="listbox" i="" indFormat="DSP01" onmouseout="this.className='listbox'" onmouseover="this.className='listboxover'">
+			<td InfValue="1" class="listbox" id="_opt_values_" onclick="ProcessList(this,DSP01_GPOVER,_listbox_DSP01_GPOVER_dec)" onkeydown="ListKeyDown(oTable)" onmouseover="HighLightTableTag(this)">1=Override with warning</td>
+			</tr>
+			<tr class="listbox" i="" indFormat="DSP01" onmouseout="this.className='listbox'" onmouseover="this.className='listboxover'">
+			<td InfValue="2" class="listbox" id="_opt_values_" onclick="ProcessList(this,DSP01_GPOVER,_listbox_DSP01_GPOVER_dec)" onkeydown="ListKeyDown(oTable)" onmouseover="HighLightTableTag(this)">2=Override without warning</td>
+		</tr>
+	</table>
+</span>
+</body>
+</html>

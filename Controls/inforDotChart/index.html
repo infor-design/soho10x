@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Infor Line Chart with Dots</title>
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<link href="css/inforDotChart.css" rel="stylesheet" />
+
+	<script src="../Release/d3.v3.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="js/inforDotChart.js"></script>
+
+
+	<script>
+		$(function () {
+			var data = [['Year', 'Sales', 'Expenses'],
+						['2009',  800,     500      ],
+						['2010',  980,     1100     ],
+						['2011',  700,     800      ],
+						['2012',  800,     600      ],
+						['2013',  1000,    400      ],
+						['2014',  1200,    400      ]
+				       ];
+								
+			//data: chartData
+			$("#chart").inforDotChart({ data: data, onSelected: function(d, i, node){console.log(d, i, node);},
+										title: "Company Performance"});
+			//Test updates
+			$("#update").click(function () {
+				var newData =  [{date: "1-Jul-12", value: 28.13},
+								{date: "1-Aug-12", value: 33.98},
+								{date: "1-Sep-12", value: 47.00},
+								{date: "1-Oct-12", value: 0.70},
+								{date: "1-Nov-12", value: 29.00},
+								{date: "1-Dec-12", value: 80.28}];
+				
+				$("#chart").inforDotChart("update", newData);
+			});
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<button id="update" class="inforIconButton refresh" style="left: 267px; top: 22px; position: absolute;" title="Refresh"><span></span></button>
+	<div id="chart" role="img" aria-label="Consumption History For year 2013"></div>
+</body>
+</html>

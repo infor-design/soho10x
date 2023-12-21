@@ -1,103 +1,117 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Infor DropDownList With Images</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>Infor DropDownList With Images</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforDropDownList.js"></script>
-  <style>
-    /*For the First Drop Down*/
-    .dropdown-icon.excel {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAABYklEQVQoz42Q3UoCURSFzyP4OD1KF1EQSIFlqZmamVmUEQUZaqVRShf9GYUJXglTcyNUA4ImkiBYU9CUiGK3q7MPzWBgPwMfm5m91jlrDfP4/H1zgUUtuLqG32g2m4TEMbGra1npHxjCX2iapiOxUqkE86gFqqri7Pyi59T3OqxWq8E3v4BE8gC7e4me0+Z0gXQ6rFKpYNozK06I7sRQKBQwYrHCap8y5uCwGW6vT0B6ViwW4fUHuCGOrVgcy7y0iy/vy2WjT/c76ZmiKHC6Z3B8copQOIJIdBvjkw688tLq84sw1OuP6HQ+hIn0LJ/PY2zCLmKtb4RwmcmIJUVut9t4bzSEgcz0nfRMlmVxk47V5jAiPfGe9GjamxGV9CyXy6HVahnc3N59i7QZjoobKSqZSM+y2Sy62U8kRaeHatWIJP7ul4k0LJ1OSxzoHB4eYSm48iOkZ6lUysSROPgHpDN9AoO46R6AWkdeAAAAAElFTkSuQmCC");
-    }
-    .dropdown-icon.images {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAA7klEQVQoz5WQsUrEQBRF3yfk5xSU9XtWCxXctd0VbVOlyWLMMiFNqpAiRQIhgUBIkSZ/cJ37YAQL2XHgMO/OnIHLyLqugcVY4AG9QJZlMRb8AyPTNOHqZoPr27uL0KMvwzDogU89evSlbVsNf9V5e/9QONOjL3Vda5jnGZ9Jgu39A3jGTNwjzvR4J2VZaqiqCo9Pz4hPJ+z2r+i6DuM4/oIefSmKQsPheESWZej7HknyhZfdHk3TaHbQoy95ntuwAXf2daTn8081h/MkTVP9Sna9BD36EsexBl/oSxRFxgKfRY++hGEYWIwFHtALvgHwRRMiupdrrQAAAABJRU5ErkJggg==");
-    }
-    .dropdown-icon.pdf {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAABVElEQVQoU43QS0tCQRgG4PkJ/rkWkWWZQSWZdiEoSroQQgTRhRIkW0R0kVK7mKY0IaRCCOopcKUgx4VnI7hw4eJt5qsDc1pUi4dzvnfemXNh7XbbJnAB/yB7NmYYBhegGnK6LPMPnOm6DlWloqGv347HZMqSq1itVoPqmb/QpoOjoCVXsWq1ClXoOIzBERfG3R5LrmKapkG1vhnAxJSXnnZ3/2BZM7FisQjTay5H5VD4hK4e3yyisRjlao/l83mYdnb3qJxMPeH07JzuJbfHC/uwE765BeqxbDYL6fomSoUBhxOLy35Mz8zjTZw6+f2q0tLKKnVZJpPBxeUVnSQXHKNjuBXf0ul0UCqV0O12ob1/EL3ZhOyzRCIBu+Nrg39tA71eD+VyGTI3FQoFkk6naWbxeJwHtraxfxhEo9GAmP/CWSQSsbVaLaNeryMm/pSYf8Nl/xNkuBX/soYaSgAAAABJRU5ErkJggg==");
-    }
-    .dropdown-icon.powerpoint {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAABTUlEQVQoz5WRz0sCURDH50/Yf67IUBIqI5FEbdu1tPy5m9rF8M8QigXZk7CwHrSDHvIiKMKCF0UQUfD27c0DA+uyHj7MMPN5b4b3aLVaKQJHAB+wp9BisXBOAkHsOQteIHwVwW3sDomUivRTBvlCEZVqDfX6O9in2WyGYw6xT9PpFOv12jfs02g0wrHQcDhEr/eF8GVErveg62g0GhgMBuAe1zienoeg6WmZU7/fR0rVEAiFpeB2OjBNE6WyAe5tt9sDuEbdbhfRWByZl5x8hI9PC8/5Iq5vor+T2NlP4pxc10UsnkC+ZEJ7zCKbK0jiyXssl8t/sE/tdhuFkiFW1JErlgUGkmJds/rGfyInsbOfxDnZto1vsYbxWhW3qxKzUsN8PsdkMoHneQewT5ZlOa1WSwqbzQa73U7G8XgMrov+XxxqNpuKwBHAB+wpP0ZkAzx5LOOXAAAAAElFTkSuQmCC");
-    }
-    .dropdown-icon.text {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAt0lEQVQoz43KKw6DQBSF4buE2V0bwqM8N8Q2UBgUySQYFApDEVABBoND3s5pel3pIL4ccX7a910Z2uAL0Cnatk0bDFmW/d0vTcuyMCRp+pHn+c8FaWmaJoY4TqykpWEYGMIo5mVdT+GXlvq+ZwjCyEpa6rqOwQtCnufXKfzSUtu2DK7/sJKWmqZhcLyAn+N4Cr+0VNc1w931raSlqqoYbo5nJS2VZakNPo7DCh16KopCGdrgC9CpN1YX9CrG6zhUAAAAAElFTkSuQmCC");
-    }
-    .dropdown-icon.video {
-       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAA+0lEQVQoz5XRu2rDMBQG4PMIfrkOJYWSQiFQyFBIaUkJaUjbNBcoeQ5PXjwZBF48eTAGYzx48G0wxsYv8FdHkNCAhnj44CD9RxxJ1HWdIQkJV+CcQXVdCwkDCCqKAkNRmqZgh98j5ouPC7x22t/sDqqBa4rjGG3bYvY610qSBF8/O9zc3qGqKnCewjBE3/eYPs+0vrd71cDKsgTnyfd99TKTp6nW52Z7buLxOE+e56nxxo8TrSAIsFytVVOe5+A8ua6Lpmnw8vaO0f3DBV7jkzmzWK4QRZGqyXEcZFmm/RO+gxACnPmPbNvGUGRZlpAwgCDTNA1JSLgC54w/DK8L2P9KVcoAAAAASUVORK5CYII=");
-    }
-    .dropdown-icon.word {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAA9klEQVQoz5WQsUrEQBRF3yfk5ywWbEVU/AZB7EQEcVfsRDuJTZpUgdEUTppUYZdUyUJShUBIIEUIPOc+mIGtzAYOuTf3MAOhrus8gzLwAuB51DSNMvARKKrrmk9Wp3z/8MjfP7Fk++388tplCzoVRSFlGAaRkLe7nbx/dcLY53l2oFOe5yLoJHGnvb1/8M3tnZxqdws6ZVkm5eziip9fXt1Y7veMDYzj6ECnNE1FelpvuG1byZ/+l4zY7G5BJ60148GfsbmqKsmWaZoc6BTH8cFJ/wGfoijivu8XA5/CMDzqJvgUBIEqy5KXAp983/cMysALgOf9AXnVCF9EyLL6AAAAAElFTkSuQmCC");
-    }
-    .dropdown-icon.entity {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAlklEQVQoz2P4//8/A6kYTIRGxvwPi4qFYxCfoCaQQmRBZH59UwvYkMqauv9Eabpy9RpYAwzv2bvvP8maduzc9Z8k5+UUFP0nOiC2bNsO5s+cPQdVEy4M0wDDU6fP/I+hqW/CpP8gjO40GC4oLsXUBJPs7Z/4H5um/KISVE1xSSkoCmAacUZuWmYOigYYrqiq+Y9TE6kYAClXxtXMXIdbAAAAAElFTkSuQmCC");
-    }
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+	<style>
+		/*For the First Drop Down*/
+		.inforDropDownImage.excel {
+			background-position: 2px 12px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAABYklEQVQoz42Q3UoCURSFzyP4OD1KF1EQSIFlqZmamVmUEQUZaqVRShf9GYUJXglTcyNUA4ImkiBYU9CUiGK3q7MPzWBgPwMfm5m91jlrDfP4/H1zgUUtuLqG32g2m4TEMbGra1npHxjCX2iapiOxUqkE86gFqqri7Pyi59T3OqxWq8E3v4BE8gC7e4me0+Z0gXQ6rFKpYNozK06I7sRQKBQwYrHCap8y5uCwGW6vT0B6ViwW4fUHuCGOrVgcy7y0iy/vy2WjT/c76ZmiKHC6Z3B8copQOIJIdBvjkw688tLq84sw1OuP6HQ+hIn0LJ/PY2zCLmKtb4RwmcmIJUVut9t4bzSEgcz0nfRMlmVxk47V5jAiPfGe9GjamxGV9CyXy6HVahnc3N59i7QZjoobKSqZSM+y2Sy62U8kRaeHatWIJP7ul4k0LJ1OSxzoHB4eYSm48iOkZ6lUysSROPgHpDN9AoO46R6AWkdeAAAAAElFTkSuQmCC");
+		}
+		.inforDropDownImage.images {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAA7klEQVQoz5WQsUrEQBRF3yfk5xSU9XtWCxXctd0VbVOlyWLMMiFNqpAiRQIhgUBIkSZ/cJ37YAQL2XHgMO/OnIHLyLqugcVY4AG9QJZlMRb8AyPTNOHqZoPr27uL0KMvwzDogU89evSlbVsNf9V5e/9QONOjL3Vda5jnGZ9Jgu39A3jGTNwjzvR4J2VZaqiqCo9Pz4hPJ+z2r+i6DuM4/oIefSmKQsPheESWZej7HknyhZfdHk3TaHbQoy95ntuwAXf2daTn8081h/MkTVP9Sna9BD36EsexBl/oSxRFxgKfRY++hGEYWIwFHtALvgHwRRMiupdrrQAAAABJRU5ErkJggg==");
+		}
+		.inforDropDownImage.pdf {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAABVElEQVQoU43QS0tCQRgG4PkJ/rkWkWWZQSWZdiEoSroQQgTRhRIkW0R0kVK7mKY0IaRCCOopcKUgx4VnI7hw4eJt5qsDc1pUi4dzvnfemXNh7XbbJnAB/yB7NmYYBhegGnK6LPMPnOm6DlWloqGv347HZMqSq1itVoPqmb/QpoOjoCVXsWq1ClXoOIzBERfG3R5LrmKapkG1vhnAxJSXnnZ3/2BZM7FisQjTay5H5VD4hK4e3yyisRjlao/l83mYdnb3qJxMPeH07JzuJbfHC/uwE765BeqxbDYL6fomSoUBhxOLy35Mz8zjTZw6+f2q0tLKKnVZJpPBxeUVnSQXHKNjuBXf0ul0UCqV0O12ob1/EL3ZhOyzRCIBu+Nrg39tA71eD+VyGTI3FQoFkk6naWbxeJwHtraxfxhEo9GAmP/CWSQSsbVaLaNeryMm/pSYf8Nl/xNkuBX/soYaSgAAAABJRU5ErkJggg==");
+		}
+		.inforDropDownImage.powerpoint {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAABTUlEQVQoz5WRz0sCURDH50/Yf67IUBIqI5FEbdu1tPy5m9rF8M8QigXZk7CwHrSDHvIiKMKCF0UQUfD27c0DA+uyHj7MMPN5b4b3aLVaKQJHAB+wp9BisXBOAkHsOQteIHwVwW3sDomUivRTBvlCEZVqDfX6O9in2WyGYw6xT9PpFOv12jfs02g0wrHQcDhEr/eF8GVErveg62g0GhgMBuAe1zienoeg6WmZU7/fR0rVEAiFpeB2OjBNE6WyAe5tt9sDuEbdbhfRWByZl5x8hI9PC8/5Iq5vor+T2NlP4pxc10UsnkC+ZEJ7zCKbK0jiyXssl8t/sE/tdhuFkiFW1JErlgUGkmJds/rGfyInsbOfxDnZto1vsYbxWhW3qxKzUsN8PsdkMoHneQewT5ZlOa1WSwqbzQa73U7G8XgMrov+XxxqNpuKwBHAB+wpP0ZkAzx5LOOXAAAAAElFTkSuQmCC");
+		}
+		.inforDropDownImage.text {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAt0lEQVQoz43KKw6DQBSF4buE2V0bwqM8N8Q2UBgUySQYFApDEVABBoND3s5pel3pIL4ccX7a910Z2uAL0Cnatk0bDFmW/d0vTcuyMCRp+pHn+c8FaWmaJoY4TqykpWEYGMIo5mVdT+GXlvq+ZwjCyEpa6rqOwQtCnufXKfzSUtu2DK7/sJKWmqZhcLyAn+N4Cr+0VNc1w931raSlqqoYbo5nJS2VZakNPo7DCh16KopCGdrgC9CpN1YX9CrG6zhUAAAAAElFTkSuQmCC");
+		}
+		.inforDropDownImage.video {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAA+0lEQVQoz5XRu2rDMBQG4PMIfrkOJYWSQiFQyFBIaUkJaUjbNBcoeQ5PXjwZBF48eTAGYzx48G0wxsYv8FdHkNCAhnj44CD9RxxJ1HWdIQkJV+CcQXVdCwkDCCqKAkNRmqZgh98j5ouPC7x22t/sDqqBa4rjGG3bYvY610qSBF8/O9zc3qGqKnCewjBE3/eYPs+0vrd71cDKsgTnyfd99TKTp6nW52Z7buLxOE+e56nxxo8TrSAIsFytVVOe5+A8ua6Lpmnw8vaO0f3DBV7jkzmzWK4QRZGqyXEcZFmm/RO+gxACnPmPbNvGUGRZlpAwgCDTNA1JSLgC54w/DK8L2P9KVcoAAAAASUVORK5CYII=");
+		}
+		.inforDropDownImage.word {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAA9klEQVQoz5WQsUrEQBRF3yfk5ywWbEVU/AZB7EQEcVfsRDuJTZpUgdEUTppUYZdUyUJShUBIIEUIPOc+mIGtzAYOuTf3MAOhrus8gzLwAuB51DSNMvARKKrrmk9Wp3z/8MjfP7Fk++388tplCzoVRSFlGAaRkLe7nbx/dcLY53l2oFOe5yLoJHGnvb1/8M3tnZxqdws6ZVkm5eziip9fXt1Y7veMDYzj6ECnNE1FelpvuG1byZ/+l4zY7G5BJ60148GfsbmqKsmWaZoc6BTH8cFJ/wGfoijivu8XA5/CMDzqJvgUBIEqy5KXAp983/cMysALgOf9AXnVCF9EyLL6AAAAAElFTkSuQmCC");
+		}
+		.inforDropDownImage.entity {
+			background-position: 2px 13px;
+			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAlklEQVQoz2P4//8/A6kYTIRGxvwPi4qFYxCfoCaQQmRBZH59UwvYkMqauv9Eabpy9RpYAwzv2bvvP8maduzc9Z8k5+UUFP0nOiC2bNsO5s+cPQdVEy4M0wDDU6fP/I+hqW/CpP8gjO40GC4oLsXUBJPs7Z/4H5um/KISVE1xSSkoCmAacUZuWmYOigYYrqiq+Y9TE6kYAClXxtXMXIdbAAAAAElFTkSuQmCC");
+		}
+		/*For the Second Drop Down*/
+		.inforDropDownImage.gold {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendBarGold.gif");
+		}
+		.inforDropDownImage.blueDown {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendDownBlue.gif");
+		}
+		.inforDropDownImage.greenDown {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendDownGreen.gif");
+		}
+		.inforDropDownImage.redDown {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendDownRed.gif");
+		}
+		.inforDropDownImage.blueUp {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendUpBlue.gif");
+		}
+		.inforDropDownImage.greenUp {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendUpGreen.gif");
+		}
+		.inforDropDownImage.redUp {
+			background-position: 2px 13px;
+			background-image: url("images.example/TrendUpRed.gif");
+		}
+	</style>
+	<script>
+	   $(function () {
+			//Globalize.culture("ar-SA");
+			//set up a select only drop down list
+			$("#imageDropDown1, #imageDropDown2").inforDropDownList({editable:false, typeAheadSearch: false});
 
-    /* For the Second Drop Down*/
-    .dropdown-icon.gold {
-      background-image: url("images.example/TrendBarGold.gif");
-    }
-    .dropdown-icon.blueDown {
-      background-image: url("images.example/TrendDownBlue.gif");
-    }
-    .dropdown-icon.greenDown {
-      background-image: url("images.example/TrendDownGreen.gif");
-    }
-    .dropdown-icon.redDown {
-      background-image: url("images.example/TrendDownRed.gif");
-    }
-    .dropdown-icon.blueUp {
-      background-image: url("images.example/TrendUpBlue.gif");
-    }
-    .dropdown-icon.greenUp {
-      background-image: url("images.example/TrendUpGreen.gif");
-    }
-    .dropdown-icon.redUp {
-      background-image: url("images.example/TrendUpRed.gif");
-    }
-  </style>
-  <script>
-    $(function () {
-      //Use Normal Init for drop downs.
-      $('#imageDropDown1, #imageDropDown2').dropdown();
+			$("#imageDropDown2").inforDropDownList("setCode","greenUp");
 
-      //Use Normal Functions to Set a Value
-      $('#imageDropDown2').dropdown('setCode','greenUp');
-
-      //Label width ect...
-      $('body').inforForm();
-    });
-  </script>
+			$("#div1").find('.inforLabel').autoWidth();
+			$("body").removeClass("inforHidden");
+		});
+	</script>
 </head>
-<body>
-  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
-     <label class="label">Document Type</label>
-     <select style="width:200px" class="dropdown" id="imageDropDown1">
-      <option value="calendar" selected="selected" class="dropdown-icon excel">Excel</option>
-      <option value="shopping_cart" class="dropdown-icon images">Image</option>
-      <option value="cd" class="dropdown-icon pdf">Pdf</option>
-      <option value="email" class="dropdown-icon powerpoint">Powerpoint</option>
-      <option value="faq" class="dropdown-icon text">Text</option>
-      <option value="games" class="dropdown-icon video">Video</option>
-      <option value="music" class="dropdown-icon world">Word</option>
-      <option value="phone" class="dropdown-icon entity">Entity</option>
-    </select>
-    <br>
-    <label class="label">Trending (Icons not approved)</label>
-    <select style="width:200px" class="dropdown" id="imageDropDown2">
-      <option value="redUp" class="dropdown-icon redUp">Highest</option>
-      <option value="blueUp" class="dropdown-icon blueUp">Higher</option>
-      <option value="greenUp" class="dropdown-icon greenUp">High</option>
-      <option value="gold" selected="selected" class="dropdown-icon gold">Normal</option>
-      <option value="blueDown" class="dropdown-icon blueDown">Low</option>
-      <option value="greenDown" class="dropdown-icon greenDown">Lower</option>
-      <option value="redDown" class="dropdown-icon redDown">Lowest</option>
-    </select>
-  </div>
+<body class="inforHidden">
+	<div id="div1" class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	   <label class="inforLabel">Document Type</label>
+	   <select style="width:200px" class="inforDropDownList" id="imageDropDown1">
+		  <option value="calendar" selected="selected" class="inforDropDownImage excel">Excel</option>
+		  <option value="shopping_cart" class="inforDropDownImage images">Image</option>
+		  <option value="cd" class="inforDropDownImage pdf">Pdf</option>
+		  <option value="email" class="inforDropDownImage powerpoint">Powerpoint</option>
+		  <option value="faq" class="inforDropDownImage text">Text</option>
+		  <option value="games" class="inforDropDownImage video">Video</option>
+		  <option value="music" class="inforDropDownImage world">Word</option>
+		  <option value="phone" class="inforDropDownImage entity">Entity</option>
+		</select>
+		<br>
+		<label class="inforLabel">Trending (Icons not approved)</label>
+		<select style="width:200px" class="inforDropDownList" id="imageDropDown2">
+		  <option value="redUp" class="inforDropDownImage redUp">Highest</option>
+		  <option value="blueUp" class="inforDropDownImage blueUp">Higher</option>
+		  <option value="greenUp" class="inforDropDownImage greenUp">High</option>
+		  <option value="gold" selected="selected" class="inforDropDownImage gold">Normal</option>
+		  <option value="blueDown" class="inforDropDownImage blueDown">Low</option>
+		  <option value="greenDown" class="inforDropDownImage greenDown">Lower</option>
+		  <option value="redDown" class="inforDropDownImage redDown">Lowest</option>
+		</select>
+	</div>
 </body>
 </html>

@@ -1,93 +1,106 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 
-  <title>KO Landmark DropDownList2</title>
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<title>KO Landmark DropDownList2</title>
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../lib/knockout-2.3.0.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+	<script src="../inforShared/js/inforKnockout.js"></script>
 
+	<script>
+		$(function () 
+		{
+			var bindIdABCStates = "ABCStates";
+			var bindIdSelectedStates = "SelectedABCStates";
+			
+			// create form view model
+			var viewModel = {};
+			
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState(" ", ""));		
+			
+			var stateDataValues = [];
+			stateDataValues.push("");	
+				
+			viewModel[bindIdABCStates] = ko.observableArray(stateDataValues);
+			viewModel[bindIdSelectedStates] = ko.observableArray(fieldsStateArray);
 
-  <script>
-    $(function () {
+			$("#LRCEmployee_wid130").inforDropDownList({maxSelectedOptions: 5});
+			
+			// apply bindings
+			try
+			{
+				ko.applyBindings(viewModel);
+			}
+			catch(e)
+			{
+				alert(e.message);
+			}
+					
+			var stateDataValues = ["2","8"];
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState("1 Alabama", "1"));
+			fieldsStateArray.push(new FieldState("2 Alaska", "2"));
+			fieldsStateArray.push(new FieldState("3 Arizona", "3"));
+			fieldsStateArray.push(new FieldState("4 Arkansas", "4"));
+			fieldsStateArray.push(new FieldState("5 California", "5"));
+			fieldsStateArray.push(new FieldState("6 Colorado", "6"));
+			fieldsStateArray.push(new FieldState("7 Connecticut", "7"));
 
-      var bindIdABCStates = 'ABCStates',
-          bindIdSelectedStates = 'SelectedABCStates',
-          viewModel = {},
-          fieldsStateArray = [];
+			viewModel[bindIdABCStates](fieldsStateArray);
+			viewModel[bindIdSelectedStates](stateDataValues);
 
-      fieldsStateArray.push(new FieldState(' ', ''));
-      var stateDataValues = [];
-      stateDataValues.push('');
+			showData("loadData: loading " + bindIdABCStates + " with value of [" + stateDataValues + "]");
 
-      viewModel[bindIdABCStates] = ko.observableArray(stateDataValues);
-      viewModel[bindIdSelectedStates] = ko.observableArray(fieldsStateArray);
+			$("#clear").click(function()
+			{
+				$("#msg").text("");
+			});
 
-      $('#LRCEmployee_wid130').dropdown({maxSelectedOptions: 5});
+			$("#showData").click(function()
+			{
+				showData("showData");
+			});
 
-      // apply bindings
-      ko.applyBindings(viewModel);
+			function showData(name)
+			{
+				writeMsg(name + ":\t");
+				writeMsg("viewModel[\"" + bindIdABCStates + "\"]() = [" + (viewModel[bindIdSelectedStates]()) + "];");
+				writeMsg("LRCEmployee_wid130.val() = [" + $("#LRCEmployee_wid130").val() + "];");
+				writeMsg(" ");
+			}
 
-      var stateDataValues = ['2','8'],
-        fieldsStateArray = [];
-
-      fieldsStateArray.push(new FieldState('1 Alabama', '1'));
-      fieldsStateArray.push(new FieldState('2 Alaska', '2'));
-      fieldsStateArray.push(new FieldState('3 Arizona', '3'));
-      fieldsStateArray.push(new FieldState('4 Arkansas', '4'));
-      fieldsStateArray.push(new FieldState('5 California', '5'));
-      fieldsStateArray.push(new FieldState('6 Colorado', '6'));
-      fieldsStateArray.push(new FieldState('7 Connecticut', '7'));
-
-      viewModel[bindIdABCStates](fieldsStateArray);
-      viewModel[bindIdSelectedStates](stateDataValues);
-
-      showData('loadData: loading ' + bindIdABCStates + ' with value of [' + stateDataValues + ']');
-
-      $('#clear').click(function() {
-        $('#msg').text('');
-      });
-
-      $('#showData').click(function() {
-        showData('showData');
-      });
-
-      function showData(name) {
-        writeMsg(name + ':\t');
-        writeMsg('viewModel[\'' + bindIdABCStates + '\']() = [' + (viewModel[bindIdSelectedStates]()) + '];');
-        writeMsg('LRCEmployee_wid130.val() = [' + $('#LRCEmployee_wid130').val() + '];');
-        writeMsg(' ');
-      }
-
-      function writeMsg(message) {
-        var text = $('#msg').text();
-        text += message + '\n';
-        $('#msg').text(text);
-        $('#msg').scrollTop($('#msg')[0].scrollHeight);
-      }
-
-      // Constructor for a 'select bind' object with two properties
-      function FieldState(label, value) {
-        this.label = label;
-        this.value = value;
-      }
-
-    });
+			function writeMsg(message)
+			{
+				var text = $("#msg").text();
+				text += message + "\n";
+				$("#msg").text(text);
+				$("#msg").scrollTop($("#msg")[0].scrollHeight);
+			}
+			
+			// Constructor for a "select bind" object with two properties
+			function FieldState(label, value)
+			{
+				this.label = label;
+				this.value = value;
+			};
+			
+		});
 </script>
 </head>
 <body style="margin:10px">
-  <label for="dd1"> test</label>
-  <select id="dd1" class="dropdown" multiple data-bind="dropdown: {data: ABCStates, value:SelectedABCStates}">
-  </select>
-  <br>
-  <br>
-  <button type="button" class="inforFormButton" id="showData">Show Data</button>
-  <button type="button" class="inforFormButton" id="clear">Clear</button>
-  <br>
-  <textarea id="msg" style="height:400px;width:1000px;"></textarea>
+	<select class="inforDropDownList landmarkInput inforDirty" id="LRCEmployee_wid130" multiple data-bind="inforDropDownList: {data: ABCStates, value:SelectedABCStates, optionsText:'label', optionsValue:'value'}">
+	</select>
+	<br>
+	<br>
+	<button type="button" role="button" aria-disabled="false" class="inforFormButton" id="showData">Show Data</button>
+	<button type="button" role="button" aria-disabled="false" class="inforFormButton" id="clear">Clear</button>
+	<br>
+	<textarea id="msg" style="height:400px;width:1000px;"></textarea>
 </body>
 </html>
 

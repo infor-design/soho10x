@@ -1,0 +1,256 @@
+﻿/* Infor Context Menu
+----------------------------------*/
+.inforMenu {
+	cursor: default;
+	z-index: 99999;
+	display:none;
+	position: fixed;
+	border: 1px solid #cecece;
+	border-radius: 4px;
+	background: white;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+
+.inforMenuOptions {
+	color: #333333;
+	overflow-y: auto;
+	white-space: nowrap;
+	line-height: 16px;
+	display: none;
+	margin: 5px 0px;
+	padding: 0;
+	min-width: 70px;
+}
+
+/*Initial Display in the page...*/
+.inforContextMenu {
+	display: none;
+}
+
+.inforMenuOptions LI {
+	border: 1px solid transparent;
+    cursor: default;
+    line-height: 17px;
+    list-style: none outside none;
+    min-width: 50px;
+    padding-bottom: 2px;
+    padding-right: 4px;
+    padding-top: 2px;
+	text-indent: 6px;
+}
+
+.inforMenuOptions.hasImages LI {
+	text-indent: 10px;
+}
+
+/*The Image Padding*/
+.inforMenuOptions A {
+	background-repeat: no-repeat;
+    color: #4C4C4C;
+    display: block;
+    font-size: 1.2em;
+    margin-top: -10px;
+    outline: medium none;
+    padding: 12px 10px 1px 5px;
+    text-decoration: none;
+}
+
+.inforMenuOptions.hasImages {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP49OkTAAWwAtcirt1dAAAAAElFTkSuQmCC");
+	background-position: 36px center;
+	background-repeat: repeat-y;
+}
+
+.inforMenuOptions.hasImages A {
+	margin-left: 34px;
+}
+
+.inforMenuOptions li.focus, .inforMenuOptions li:focus {
+	border: 1px solid #13a3f7;
+}
+
+.inforMenuOptions LI.disabled:hover > a {
+	 color: #B4B4B4 !important;
+}
+
+.inforMenuOptions li.focus:hover {
+	border: 1px solid transparent;
+}
+
+.inforMenuOptions LI:hover a {
+	cursor: pointer;
+	color: #1A1A1A;
+}
+
+.inforMenuOptions LI:hover {
+	background-color: #f2f2f2;
+}
+
+.inforMenuOptions LI.disabled A {
+	color: #999999;
+	cursor: default;
+	background-color: transparent;
+}
+
+.inforMenuOptions LI.hover.disabled A {
+	background-color: transparent;
+}
+
+.inforMenuOptions LI.separator {
+	border-top: 1px solid #F2F2F2;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: inherit;
+}
+
+.inforMenuOptions.hasImages LI.separator {
+	left: 41px;
+	width: 67%;
+}
+
+.inforMenuOptions  LI.separator:hover, .inforMenuOptions LI.disabled:hover {
+	background-color: transparent  !important;
+}
+
+.inforMenuOptions LI.headerText A {
+	color: #808080;
+    cursor: default;
+    font-size: 1.1em;
+    margin-left: 3px;
+    padding-left: 0px;
+    padding-top: 10px;
+}
+
+.inforMenuOptions LI.headerText:hover {
+	background-color: transparent !important;
+}
+
+.inforMenuOptions LI.headerText a:hover {
+	background-color: transparent !important;
+	color: #808080  !important;
+}
+
+/*Checkbox Menus */
+.inforMenuOptions LI.checkbox{
+	cursor:default;
+	margin: 0;
+	padding: 0;
+	text-indent: 0;
+}
+
+.inforMenuOptions LI.checkbox a{
+	height: 20px;
+    margin-bottom: 0;
+    margin-left: 3px;
+    margin-top: -11px;
+    padding-top: 11px !important;
+}
+
+.inforMenuOptions LI.inforCheckboxLabel{
+	padding-left: 3px;
+}
+
+.inforMenuOptions label{
+	font-size: 1em;
+	left: 1px;
+	position: relative;
+}
+
+
+.inforMenuOptions LI .icon {
+	background-position: 1px 5px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    float: left;
+    height: 19px;
+    margin-left: 10px;
+    opacity: 0.4;
+    padding-left: 10px;
+    width: 12px;
+}
+
+.inforMenuOptions LI.disabled .icon {
+	opacity:0.2; filter:alpha(opacity=20);
+}
+
+.inforMenuOptions LI .icon.sortAsc { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAARElEQVR42mNgYGD4j4bRAS5xFAV4ASsBWzDE/pNqw38C7sXqB2RBgjYQ4wIUQ5ZhwQQ1YGMTjAdcJmMNcly24FRMtB8AKt4ylwbP1kYAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.sortDesc { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAARUlEQVR42mNgYGBYhgUjg/9QDAfLcLAJAlyKMWwg2RaS/UAy+I+GGUi14T8hDawEbMEQ+4/Dhv84MIqG/zj4WG35T4wfALpzMpeC7lCaAAAAAElFTkSuQmCC"); }
+.inforMenuOptions LI .icon.locked{ background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAZElEQVR42mNgwAQ+QHwJiH8C8WUg9mfAA4yA+A9U8WEg/gHE/4DYHJeGPCD+D8QOUL4dlF+MS0MFVAEjlM8M5VcQ0oAMQPx6bIrbgPg2VAE6vg/EPQxYTCKEh52G0wQUXwEpAgDxY07HZpy5BgAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.unlocked { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAXklEQVR42mNggIA5QPwJiJ8DcQUQMzLgAYuA+D8QXwLiB1B2Mj4NIJN3QU3lBuL7QLwdnwaQiXVI/KVAfJWQhgok/jQgfkhVDcjgLtQAbPgCLtvw4aGg4TYexddBCgCIgUL4fByXWgAAAABJRU5ErkJggg=="); }
+.inforMenuOptions LI .icon.current { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAABobHR9g7LZAAAAAXRSTlMAQObYZgAAADNJREFUaN5jYGBkYGBmYGBnYOBnYJBnYLBn4KhjkPnDYP+Dwf4Dg/wDBv4DDOwNICVgAACLwAbVeXVnTQAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.columns { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAZSURBVGjeY/j/gaFBgAEC8hMYMhPQyQYBAKGDCKfMfysuAAAAAElFTkSuQmCC");}
+.inforMenuOptions  LI .icon.export { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAPUlEQVR42mNggAB2IP7PgAD/sWAUgFMCmxwh03DKYTOdLA2kqsGu4T8JGGco/SclpAh6miINRDmJWI8zAAAcnk65pG3QRgAAAABJRU5ErkJggg==");}
+.inforMenuOptions  LI .icon.selected { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY2gQYGAwYGAoYBD4wGD5gMH+AIN8AwM/AwMbAxQ0CAAAdqIFjaOithMAAAAASUVORK5CYII=");}
+.inforMenuOptions  LI .icon.notSelected { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAVSURBVGjeY2gQYAAC+wPYERA0CAAAokAJGWgL+UAAAAAASUVORK5CYII=");}
+
+/*Grid Filter Menu Icons*/
+.inforMenuOptions LI .icon.greaterThan { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAkSURBVGjeY/j/geHwB4aHHxg+fGD4UcDwxwBEfgCLAMX/gxAAbzkUkmXZOJIAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.greaterThanOrEquals  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAlSURBVGjeYzj8geHhB4YPHxh+FDD8MQCRH8AiQPH/HxgOGAARAGHXEpRCGgXJAAAAAElFTkSuQmCC");}
+.inforMenuOptions LI .icon.lessThan { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAMUlEQVR42mNgIBEw4pH7j00tIymKcWn4j88VjKQoRhf4T4z/KLKBLD+QFUok+Yn6AABhcAkKlnipJQAAAABJRU5ErkJggg=="); }
+.inforMenuOptions LI .icon.lessThanOrEquals { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAlSURBVGjeY/hjwPCjgOHDB4aHHxgOg0kgGygCFP//geGAARABAFZ2Eg3Yixx4AAAAAElFTkSuQmCC");}
+.inforMenuOptions LI .icon.equals { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAHElEQVR42mNgoDVgBOL/pGhgItUGJoZBB0akpwHiogIJHgY8NwAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.doesNotEqual { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAaElEQVR42mNgwA3MgPg/FLMwEAGmQRXnokv8x4KRxfnR+FgVh6LxfxPSAGPbAjE7FnkUYIkkyUyMZ2GKKwgpAGEOJLYwjkBBcZsTlD0R6pyPhDTA2HoEghwMzPGFBDbQB8SfgLgAnyIAmipDkJMBg6cAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.contains { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAWElEQVR42mNggIAGKMYFUOQbSNDQgMv0m0D8AJct6BoCgPg/FEcSo+E/Giao4SUS+wMhDd5YbAjHpwGmqACKkZ2FVcMXIM5FcgaI/Y2QHwhGHskRR1LSAAD1VTB0nrHHcAAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.doesNotContain {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAhElEQVR42mNggIAGKEYGJkD8H4pPI0s04NAwH0nDBiS1WBWLAPE3qOLXQMyJrA6bhhIk07vRnY2ugQmI70AV/wViZUIavJBM34rFrxgatiBp8CakQQnqDJDiu1Dn4dXQhWR6KVpAYGjghAbhf2iQiuDTAALrkUxfgEMxSvCfRNJghst0ANiQOn3YNmSMAAAAAElFTkSuQmCC");}
+.inforMenuOptions LI .icon.isEmpty {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAu0lEQVR42m2STQ6CMBBGa9jhIZRLkegBFG8iyk4Tw3E0+BNFQlhp5CoGp+ZVa+0kb/PN688UlPpWKEyEu9DBjayvnBoIV6SDkMGO7CxERtarGxpj9V8lvYpbqIQg9shz4SkUOFMdtsLFI2+QFkIg7HHfYerIOfnaypZkn11MrchyZ5PMLGh5mYCTOq7jG/5hD10wYOqRY5yZedaKoHTEnjCi19gfcCicaGwZUN/5SFbj/FTIO7u/RmLv/AIL8j/vTf2pyAAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.isNotEmpty { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAApUlEQVR42o2SzQnCQBSEPzy6RWgNOcVCIiQFmFhKjG2ph0SQnJSkl/Uyq491RQeGhZlheX/wxhLYAQ/Ai3dpjggr4KrQGTiKF2k3YB3CDhhlVHyikjeqChoJhQnlYkChTA0wA70xO9NDZ/ReWTzQSsxMODCTdwD8gt/wel/ZGRj+KGkAJtv01pgbMW56H4+1TJRUmrG61OJOKuXr4uxp1InTaOzPTyQIPAGzqlMJAAAAAElFTkSuQmCC");}
+.inforMenuOptions LI .icon.startsWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAANElEQVR42mNgGPSgAY3PBMT/kTBWDcia/qOx/yMrQsfoConSgOwUrM7CZTpeDegAXdNgAwAabh3uQJENIwAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.doesNotStartWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAdElEQVR42mNgIB7kAvENEtQz7AHiTmIVCwLxLyC2RJf4j8ZnBOIGIF4LxJ+BmAmbBmRNDVB6FRCfhfH/48Aw0AzEP4F4KTEaGqAKP0M1NhDjpLNQJzXg0oAMmKCmr0XzE05gAQ1OAWLDvwMaYUSD69AkAQcAHQUo9qfs/1QAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.endsWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAANUlEQVR42mNgGJSACYj/I2F00IAu8B+N/R9NcQM2W/5jsaUBB0ZRRJEGopzEgMXjDQyDGwAAoGkd7jfBcIAAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.doesNotEndWith { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAdElEQVR42mNgQAW5QHyDgQSwB4g7iVUsCMS/gNiSkEJGIG4A4rVA/BmImdDk/6NraIDSq4D4LBIfpvg/NluagfgnEC9F0vAfBwYrWAp1TjOxGs5CndRAjJOYoKavRfMTTk9bQINTgNjw74BGGNHgOjRJEAUAG2Ao9r2ZoXoAAAAASUVORK5CYII=");  }
+.inforMenuOptions LI .icon.checked  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY2gQYGAwYGAoYBD4wGD5gMH+AIN8AwM/AwMbAxQ0CAAAdqIFjaOithMAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.notChecked { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAVSURBVGjeY2gQYAAC+wPYERA0CAAAokAJGWgL+UAAAAAASUVORK5CYII=");}
+.inforMenuOptions LI .icon.eitherSelectedorNotSelected { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAoSURBVHjaY2gQYAAC+wMM9g0M9gwMdgwMNgwMFgwMBgwMCiAZhgYBAFh6BCDrtR+xAAAAAElFTkSuQmCC");}
+.inforMenuOptions LI .icon.between { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAdSURBVGjeY/j5gQEZHTBgeFDA8AHMjl8AQv8/AAB08BOEXUnF3wAAAABJRU5ErkJggg==");}
+.inforMenuOptions LI .icon.today { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAVUlEQVR42mNgwA72QzFOgK6AEB8usB+PYShyLGiC8lCMrIEFl/Oygfg/FGcRcr80kmIYlkRXh6xBihgN6CADSXEmLneje1oGiGXxeZrkYCU54ohOGgAl0y9dzqOs0wAAAABJRU5ErkJggg==");}
+
+.inforMenuOptions LI.arrow > A {
+   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAOElEQVQYV2Po6en5DwQM6JghLS3tPwhv2rQJRQFcAiRZUFAAl0SRgOnevHnzf8I6QKqQHcCAy1UAAX9vzbZ/ha0AAAAASUVORK5CYII=");
+   background-position: right 17px;
+   margin-right: 5px;
+   padding-right: 12px;
+}
+
+html[dir="rtl"] .inforMenuOptions LI.arrow > A  {
+   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAANklEQVQI12P4//8/Azru6elBFdi8efP/tLQ0MIYLFhQUwAXBEsiqUCRw6kC2Y9OmTdglkF0FAIjrb81nIGqUAAAAAElFTkSuQmCC");
+   background-position: left center;
+   margin-right:0;
+   margin-left: 5px;
+}
+
+html[dir="rtl"] .inforMenuOptions LI  {
+	text-indent: 2px;
+	padding: 2px 0 2px 10px;
+}
+
+html[dir="rtl"]  .inforMenuOptions {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+html[dir="rtl"] .inforMenuOptions A {
+	padding: 12px 3px 1px 5px;
+}
+
+html[dir="rtl"] .inforMenuOptions div.inforCheckbox {
+	float: right;
+}
+
+html[dir="rtl"] .inforMenuOptions LI.checkbox{
+	margin-right: 0px;
+}
+
+html[dir="rtl"] .inforMenuOptions LI .icon {
+	float: right;
+	margin-left: 13px;
+}
+
+html[dir="rtl"] .inforMenuOptions.hasImages {
+	 background-position: 0 0;
+}
+
+html[dir="rtl"] .inforContextMenu  .inforCheckboxLabel {
+	padding-right: 7px;
+}

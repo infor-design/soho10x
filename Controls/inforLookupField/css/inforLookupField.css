@@ -1,7 +1,7 @@
-/* Infor Lookup Field
+﻿/* Infor Lookup Field
 ----------------------------------*/
 .inforLookupGrid {
-	z-index: 10000;
+	z-index: 10000;	/*So it's higher than the overlay*/
 }
 
 .inforLookupGridBoxShadow {
@@ -52,9 +52,5 @@
 	border-radius: 0;
 }
 
-.inforTriggerField.alignRight.has-error input, .inforTextbox.alignRight.has-error {
-  padding-right: 20px;
-  width: 179px;
-}
 
 

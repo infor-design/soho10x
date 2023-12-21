@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor DropDown List - Basic Functionality</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/inforDropDownList.css">
+
+	<script src="../lib/jquery-1.10.2.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+
+	<script>
+		$(function () {
+			$("#country,#ddlDynamic").inforDropDownList();
+			$("#divDynamic").html("<select id='ddlDynamic'  class='inforDropDownList' style='width: 210px'>  <option value=''>Select</option><option value='United States'>United States</option><option value='United Kingdom'>United Kingdom</option></select>");
+      $("#ddlDynamic").inforDropDownList();
+		});
+	</script>
+
+</head>
+<body style="width: 100%;height: 2000px;overflow:visible;" class="inforApplicationPadding">
+
+		<label for="country1" class="inforLabel" >Normal Dropdown</label>
+       	<select id="country1" data-placeholder="Select..." class="inforDropDownList" style="width: 210px">
+            <option value="">Select</option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+
+       	</select>
+
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+      <label for="country" class="inforLabel" >Dynamic Dropdown</label>
+  		<div id="divDynamic"></div>
+
+</body>
+</html>

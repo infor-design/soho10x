@@ -1,69 +1,70 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>2 Column Layout Sample</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <title>2 Column Layout Sample</title>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-
-  <script>
-    $().ready(function () {
-      //Globalize.culture("ar-SA");
-      $('body').inforForm();  //the inforForm plugin initializes all controls on this form.
-      $('#dropdown1, #soldTo').validationMessage('show', 'This field is required.' , true);
-    });
-  </script>
+	<script>
+		$().ready(function ()
+		{
+			//Globalize.culture("ar-SA");
+			$("body").inforForm();	//the inforForm plugin initializes all controls on this form.
+			$("#dropdown1, #soldTo").validationMessage("show", "This field is required." , true);
+		});
+	</script>
 </head>
-<body class="inforHidden">  <!--Prevent FOUC-->
-  <div class="infor2ColumnLayout autoLabelWidth">
-    <div class="column1">
-      <label class="inforLabel" for="orderNumber">Order Number</label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
-      <label class="inforLabel" for="soldTo">Sold To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
-      <label class="inforLabel" for="location">Order Location</label> <input type="text" id="location" class="inforTextbox"/><br>
-      <label class="inforLabel" for="textarea1">Comments</label>
-      <textarea class="inforTextArea required" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
-      <label class="inforLabel noColon">&nbsp;</label><input type="checkbox" class="inforCheckbox "  checked="checked" id="test"/><label class="inforCheckboxLabel" for="test">Internal</label><br>
-      <label class="inforLabel" >DropDown List</label>
-      <select class="inforDropDownList required" id="dropdown1">
-        <option value="a">All</option>
-        <option value="cc">Consolidated Consortiums</option>
-        <option value="mw">Major Widgets Inc</option>
-        <option value="me">Metrolitan Electric</option>
-        <option value="sp">Speed Services Inc</option>
-      </select><br>
-      <button type="button" class="inforFormButton" >Example button</button>
-    </div>
-    <div class="column2">
-      <label class="inforLabel" for="orderNumber">Bill Number</label><input type="text" id="orderNumber" class="inforTextbox "/><br>
-      <label class="inforLabel" for="soldTo">Bill To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
-      <label class="inforLabel" for="location">Bill Location</label> <input type="text" id="location" class="inforTextbox"/><br>
-      <label class="inforLabel">Supplier</label>
-      <select class="inforDropDownList required">
-        <option value="a">All</option>
-        <option value="cc">Consolidated Consortiums</option>
-        <option value="mw">Major Widgets Inc</option>
-        <option value="me">Metrolitan Electric</option>
-        <option value="sp">Speed Services Inc</option>
-      </select><br>
-      <label class="inforLabel noColon">&nbsp;</label><input type="checkbox" class="inforCheckbox required" checked="checked" id="test"/><label class="inforCheckboxLabel" for="test">Checkbox</label><br>
-      <label class="inforLabel" for="textarea1">Internal</label>
-      <textarea class="inforTextArea required" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
-      <div class="inforRadioButtonSet">
-        <label ID="lblDeploymentMode" Class="inforLabel" >Deployment Mode</label>
-        <input type="radio" id="rbBoth" class="inforRadioButton" name="rbDeploymentMode"
-          value="0" /><label>Both</label>
-        <input type="radio" id="rbWorkSpace" disabled class="inforRadioButton" name="rbDeploymentMode"
-          value="1" /><label>WorkSpace</label>
-        <input type="radio" id="rbStandalone" class="inforRadioButton" name="rbDeploymentMode"
-          value="2" /><label>Standalone</label>
-      </div>
+<body class="inforHidden">	<!--Prevent FOUC-->
+	<div class="infor2ColumnLayout autoLabelWidth">
+		<div class="column1">
+			<label class="inforLabel" for="orderNumber">Order Number</label><input type="text" id="orderNumber" class="inforTextbox required"/><br>
+			<label class="inforLabel" for="soldTo">Sold To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+			<label class="inforLabel" for="location">Order Location</label> <input type="text" id="location" class="inforTextbox"/><br>
+			<label class="inforLabel" for="textarea1">Comments</label>
+			<textarea class="inforTextArea required" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+			<label class="inforLabel noColon">&nbsp;</label><input type="checkbox" class="inforCheckbox "  checked="checked" id="test"/><label class="inforCheckboxLabel" for="test">Internal</label><br>
+			<label class="inforLabel" >DropDown List</label>
+			<select class="inforDropDownList required" id="dropdown1">
+				<option value="a">All</option>
+				<option value="cc">Consolidated Consortiums</option>
+				<option value="mw">Major Widgets Inc</option>
+				<option value="me">Metrolitan Electric</option>
+				<option value="sp">Speed Services Inc</option>
+			</select><br>
+			<button type="button" class="inforFormButton" >Example button</button>
+		</div>
+		<div class="column2">
+			<label class="inforLabel" for="orderNumber">Bill Number</label><input type="text" id="orderNumber" class="inforTextbox "/><br>
+			<label class="inforLabel" for="soldTo">Bill To</label><input type="text" id="soldTo" class="inforTextbox"/><br>
+			<label class="inforLabel" for="location">Bill Location</label> <input type="text" id="location" class="inforTextbox"/><br>
+			<label class="inforLabel">Supplier</label>
+			<select class="inforDropDownList required">
+				<option value="a">All</option>
+				<option value="cc">Consolidated Consortiums</option>
+				<option value="mw">Major Widgets Inc</option>
+				<option value="me">Metrolitan Electric</option>
+				<option value="sp">Speed Services Inc</option>
+			</select><br>
+			<label class="inforLabel noColon">&nbsp;</label><input type="checkbox" class="inforCheckbox required" checked="checked" id="test"/><label class="inforCheckboxLabel" for="test">Checkbox</label><br>
+			<label class="inforLabel" for="textarea1">Internal</label>
+			<textarea class="inforTextArea required" id="textarea1">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque ullamcorper. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus ac metus. Nunc non tortor. Nunc ullamcorper, tellus vitae vestibulum sodales, elit tortor volutpat ipsum, sed ornare massa lacus nec sem. In vitae nisl et ipsum venenatis interdum. Mauris ultrices ligula eget orci. Maecenas hendrerit sodales ipsum. Vestibulum est ante, luctus et, lobortis quis, eleifend sit amet, justo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Vivamus erat.</textarea><br>
+			<div class="inforRadioButtonSet">
+				<label ID="lblDeploymentMode" Class="inforLabel" >Deployment Mode</label>
+				<input type="radio" id="rbBoth" class="inforRadioButton" name="rbDeploymentMode"
+					value="0" /><label>Both</label>
+				<input type="radio" id="rbWorkSpace" disabled class="inforRadioButton" name="rbDeploymentMode"
+					value="1" /><label>WorkSpace</label>
+				<input type="radio" id="rbStandalone" class="inforRadioButton" name="rbDeploymentMode"
+					value="2" /><label>Standalone</label>
+			</div>
 
-  </div>
-  </div>
+	</div>
+	</div>
 </body>

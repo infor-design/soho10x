@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>Infor DropDownList : Use Internal Auto Complete on a Text Field</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+
+	<script>
+		$(function () {
+			//Setup a Normal Drop Down to Compare
+			$(".inforDropDownList").inforDropDownList({editable:true, openOnEnter: true});
+
+			//Setup a text box as auto complete. Use the source method to do an ajax call (or just return data suggestions here)
+			$("#autoComplete").autocomplete({
+				minLength: 0,
+				delay: 50,
+				source: function (request, response) {
+					$.ajax({
+						url: "http://ws.geonames.org/searchJSON",
+						data: {
+							featureClass: "P",
+							style: "full",
+							maxRows: 25,
+							name_startsWith: request.term
+						},
+						//jsonp: "jsoncallback",
+						dataType: "jsonp",
+						timeout: 5000,
+						success: function(data) {
+							var result = $.map(data.geonames, function(item) {
+							return {
+								label: item.name + ", " + item.countryName,
+								value: item.name,
+								id: item.geonameId
+							}});
+							response(result);
+						},
+						error: function (req, status, error) {
+							alert(error);
+							response(null);
+						}
+					});
+				},
+				autoFocus: false,
+				select: function (event, ui) {
+					$(this).val(ui.item.value);
+				}
+			});
+		
+			$("body").inforForm();	//auto label width
+	});
+	</script>
+</head>
+<body>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	   <label class="inforLabel" id="dropDown1Label">Editable</label>
+	   <select class="inforDropDownList" id="dropDown1">
+			<option value="al">Alabama</option>
+			<option value="al">&lt;test&gt;</option>
+			<option value="az"><b>Arizona</b></option>
+			<option value="ar">Arkansas</option>
+			<option value="Ca">California</option>
+			<option value="Co">Colorado</option>
+			<option value="Co">Connecticut</option>
+			<option value="De">Delaware</option>
+			<option value="Fl">Florida</option>
+			<option value="Ge">Georgia</option>
+			<option value="Ha">Hawaii</option>
+			<option value="Id">Idaho</option>
+			<option value="Il">Illinois</option>
+			<option value="In">Indiana</option>
+			<option value="Io">&lt;script&gt;alert('")&lt;/script&gt;</option>
+			<option value="Ka">Kansas</option>
+			<option value="Ke">Kentucky</option>
+			<option value="Lo">Louisiana</option>
+			<option value="Ma">Maine</option>
+			<option value="Ma">Maryland</option>
+			<option value="Ma">Massachusetts</option>
+			<option value="Mi">Michigan</option>
+			<option value="Mi">Minnesota</option>
+			<option value="Mi">Mississippi</option>
+			<option value="Mi">Missouri</option>
+			<option value="Mo">Montana</option>
+			<option value="Ne">Nebraska</option>
+			<option value="Ne">Nevada</option>
+			<option value="Ne">New Hampshire</option>
+			<option value="Ne">New Jersey</option>
+			<option value="Ne">New Mexico</option>
+			<option value="Ne">New York</option>
+			<option value="No">North Carolina</option>
+			<option value="No">North Dakota</option>
+			<option value="Oh">Ohio</option>
+			<option value="Ok">Oklahoma</option>
+			<option value="Or">Oregon</option>
+			<option value="Pe">Pennsylvania</option>
+			<option value="Rh">Rhode Island</option>
+			<option value="So">South Carolina</option>
+			<option value="So">South Dakota</option>
+			<option value="Te">Tennessee</option>
+			<option value="Te">Texas</option>
+			<option value="Ut">Utah</option>
+			<option value="Ve">Vermont</option>
+			<option value="Vi">Virginia</option>
+			<option value="Wa">Washington</option>
+			<option value="We">West Virginia</option>
+			<option value="Wi">Wisconsin</option>
+			<option value="Wy">Wyoming</option>
+		</select><br>
+	   <label class="inforLabel">Auto Complete</label>
+	   <input class="inforTextbox" id="autoComplete"><br>
+	</div>
+</body>
+</html>

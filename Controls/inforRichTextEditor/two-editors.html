@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Infor Rich Text Editor</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+
+	<link rel="stylesheet" href="css/inforRichTextEditor.css" />
+	<script src="js/inforRichTextEditor.js"></script>
+
+	<script>
+		$(function () {
+			//Globalize.culture("es-ES");
+			$('#richTextEditor').inforRichTextEditor();
+			$('#richTextEditor2').inforRichTextEditor();
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<p class="inforSectionLabel">Comments</p>
+	<div id="richTextEditor" class="inforRichTextEditor" ></div>
+	<br><br><br>
+	<p class="inforSectionLabel">Comments2</p>
+	<div id="richTextEditor2" class="inforRichTextEditor" ></div>
+</body>
+</html>

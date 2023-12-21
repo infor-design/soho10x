@@ -5,11 +5,11 @@
 
 	<title>Infor DataGrid - Basic </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDataGrid.js"></script>
-
+	
 	<!--Load a Flat file with JSON data-->
 	<script src="js/sampleData.js"></script>
 
@@ -52,14 +52,14 @@
 			enableCellRangeSelection: false,
 			showExport: true
 		});
-
+		
 		grid.setRowStatus(1, "info", "Some Informational Message");
 		grid.setRowStatus(2, "ok", "This row is ok");
 		grid.setRowStatus(3, "alert", "This row has an alert");
 		grid.setRowStatus(4, "error", "This row is in error");
 		grid.setRowStatus(5, "pending", "This row is pending");
 		grid.setRowStatus(6, "incomplete", "This row is incomplete");
-
+		
 	});
 	</script>
 

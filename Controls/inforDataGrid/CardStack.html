@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -6,10 +6,9 @@
 
 	<title>Infor DataGrid - Card Stack With Images</title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
-  <link rel="stylesheet" href="test.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDataGrid.js"></script>
 
@@ -50,15 +49,15 @@
 
 		grid = $("#inforDataGrid").inforDataGrid(options);
 		grid.onSelectedRowsChanged.subscribe(function (e, args) {
-			console.log('Rows Changed');
+			debugger;
 		});
 		$("body").inforForm();
 	});
 	</script>
-
+	
 </head>
 <body>
-
+	
 		<div class="inforSplitter">
 			<div id="leftPane" style="width:15%;overflow:hidden;">
 				<div>

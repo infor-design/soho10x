@@ -5,13 +5,13 @@
 	<title>KO Landmark State Values 2</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../lib/knockout-2.3.0.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script>
-		$(function ()
+		$(function () 
 		{
 			// initialize debug controls
 			$("#preload").inforForm();
@@ -19,20 +19,20 @@
 			var bindIdGender = "Gender";
 			var bindIdGenderStates = "GenderStates";
 			var bindIdSpecific = "SMART_specific";
-
+			
 			// create form view model
 			var viewModel = {};
 			var fieldsStateArray = [];
-			fieldsStateArray.push(new FieldState(" ", ""));
-
+			fieldsStateArray.push(new FieldState(" ", ""));		
+			
 			viewModel[bindIdGender] = ko.observable("");
 			viewModel[bindIdGenderStates] = ko.observableArray(fieldsStateArray);
 			viewModel[bindIdSpecific] = ko.observable("");
 
 			// apply attributes
-
+			
 			// initialize controls not initialized by inforForm()
-
+		
 			// apply bindings
 			try
 			{
@@ -42,7 +42,7 @@
 			{
 				alert(e.message);
 			}
-
+					
 			loadData();
 
 
@@ -107,15 +107,15 @@
 				$("#msg").text(text);
 				$("#msg").scrollTop($("#msg")[0].scrollHeight);
 			}
-
+			
 			// Constructor for a "select bind" object with two properties
 			function FieldState(label, value)
 			{
 				this.label = label;
 				this.value = value;
 			};
-
-
+			
+			
 
 		});
 </script>

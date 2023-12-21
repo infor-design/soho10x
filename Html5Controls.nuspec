@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>InforHtmlControls</id>
-    <version>3.6.0-alpha</version>
-    <title>Infor Html Controls version next (trunk)</title>
-    <authors>Hook and Loop</authors>
+	<version>3.3.</version> 
+	<title>Infor Html Controls v 3.3</title> 
+    <authors>tmcconechy</authors>
     <owners>Hook and Loop</owners >
     <projectUrl>http://soho.infor.com</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -16,8 +16,8 @@
     <file src="Controls\Release\inforControlsCombined.min.css" target="content\Content\inforControlsCombined.min.css" />
     <file src="Controls\Release\inforControlsCombined.js" target="content\Scripts\inforControlsCombined.js" />
     <file src="Controls\Release\inforControlsCombined.min.js" target="content\Scripts\inforControlsCombined.min.js" />
-    <file src="Controls\Release\jquery-3.6.0.min.js" target="content\Scripts\jquery-3.6.0.min.js" />
-	<file src="Controls\Release\jquery-1.11.1.min.map" target="content\Scripts\jquery-1.11.1.min.map" />
-	<file src="Controls\Release\jquery-ui-1.10.4.custom.min.js" target="content\Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <file src="Controls\Release\jquery-1.10.2.min.js" target="content\Scripts\jquery-1.10.2.min.js" />
+	<file src="Controls\Release\jquery-1.10.2.min.map" target="content\Scripts\jquery-1.10.2.min.map" />
+	<file src="Controls\Release\jquery-ui-1.10.2.custom.min.js" target="content\Scripts\jquery-ui-1.10.2.custom.min.js" />
   </files>
 </package>

@@ -1,0 +1,26 @@
+- Needs a text description of the chart
+- SVG
+	http://www.w3.org/TR/SVG/access.html
+- Think about color blind users
+	- use different hashing or marks
+	- show as a table as well for color blind user.
+	- blue and yellow are the safest...
+	
+- If its not used by some users state that in docs (like sharepoint admin)
+- Provide another way to input this.
+- Svg vs Canvas?
+- need to use hashing patterns for charts
+- when we tab into a chart pop out the alt text for keyboard users
+- Charts with alt text and tables
+	or show a Link to html table
+- For org chart see if you can use ol and li markup
+
+http://docs.kendoui.com/tutorials/accessibility/five-tips-for-accessible-charts-with-dataviz
+
+TODO
+	- Hidden Table - use the title with the Last 3 Months.
+	- Link to the table (that pops up)
+	- aria-label
+	- alt text
+	
+

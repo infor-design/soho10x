@@ -1,74 +1,69 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
-
-  <title>Infor Sign In Dialog</title>
-  <link href="css/inforSignInDialog.css" rel="stylesheet" />
-
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforSignInDialog.js"></script>
-
-  <script>
-    $(function () {
-      $('body').inforSignInDialog({login: doLogin});
-     });
-
-     function doLogin() {
-      //Do something to login - just faking things here...
-      var loginOk = true;
-      if (loginOk) {
-        //Go to the page you want...return true
-        window.location.assign('http://www.infor.com');
-        return true;
-      } else {
-        //Show an error in the status area.
-        $('body').inforSignInDialog('showError', 'The username or password is incorrect. please contact your system admin');
-
-        setTimeout(function () {
-          $('body').inforSignInDialog('clearError');
-        }, 1000);
-        return false;
-      }
-    }
-  </script>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor Sign In Dialog</title>
+	<link href="css/inforSignInDialog.css" rel="stylesheet" />
+	
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforSignInDialog.js"></script>
+	
+	<script>
+		$(function () {
+			$("body").inforSignInDialog({login: doLogin});
+		 });
+		 
+		 function doLogin(userId, password, rememberPassword) {
+			//Do something to login - just faking things here...
+			var loginOk = false;
+			if (loginOk) {
+				//Go to the page you want...return true 
+				window.location.assign("http://www.infor.com");
+				return true;
+			} else {
+				//Show an error in the status area.
+				$("body").inforSignInDialog("showError", "The username or password is incorrect. please contact your system admin");
+				return false;	
+			}
+		}
+	</script>
 </head>
 
-  <body class="inforSignInDialog">
-    <form class="inforSignInDialogControls" autocomplete="off">
-
-      <div class="inforLogo"></div>
-      <p class="inforApplicationName">Infor Ming.le</p>
-
-      <label class="scr-only label" for="userId" data-localizedText="text:UserID"></label>
-      <input type="text" name="userId" id="userId" class="inforTextbox" data-localizedText="placeholder:UserID" /><br>
-
-      <label class="scr-only label" for="password" data-localizedText="text:Password"></label>
-      <input type="password" name="password" id="password" data-localizedText="placeholder:Password" class="inforTextbox"/><br>
-
-      <label class="scr-only label" for="serverName" data-localizedText="text:ServerName"></label>
-      <select class="inforDropDownList" name="serverName" id="serverName" data-localizedText="placeholder:ServerName">
-        <option value="a">Server A</option>
-        <option value="b">Server B</option>
-        <option value="c">Server C is a longer yes very long option</option>
-        <option value="d"> </option>
-      </select>
-      <br>
-
-      <!--Submit Can possibly be used ? -->
-      <button type="button" class="inforFormButton default inforSignInButton" disabled data-localizedText="text:SignIn"></button>
-      <br>
-
-      <input type="checkbox" class="inforCheckbox" id="rememberPassword" />
-        <label for="rememberPassword" class="inforCheckboxLabel noColon" data-localizedText="RememberMe"></label>
-      <br>
-      <a class="inforHyperlink" id="resetPassword" data-localizedText="text:ResetPassword" href="#"></a>
-
-    </form>
-  </body>
+	<body class="inforSignInDialog">
+		<form class="inforSignInDialogControls">
+			
+			<div class="inforLogo"></div>
+			<p class="inforApplicationName">Infor Ming.le</p>
+			
+			<label class="inforScreenReaderText" for="userId" data-localizedText="text:UserID"></label>
+			<input type="text" name="userId" id="userId" autocomplete="on" class="inforTextbox" data-localizedText="placeholder:UserID" /><br>
+			
+			<label class="inforScreenReaderText" for="password" data-localizedText="text:Password"></label>
+			<input type="password" name="password" id="password" autocomplete="on" data-localizedText="placeholder:Password" class="inforTextbox"/><br>
+			
+			<label class="inforScreenReaderText" for="serverName" data-localizedText="text:ServerName"></label>
+			<select class="inforDropDownList" name="serverName" id="serverName" data-localizedText="placeholder:ServerName">
+				<option value="a">Server A</option>
+				<option value="b">Server B</option>
+				<option value="c">Server C is a longer yes very long option</option>
+				<option value="d"> </option>
+			</select>
+			<br>
+			
+			<!--Submit Can possibly be used ? -->
+			<button type="button" class="inforFormButton default inforSignInButton" disabled data-localizedText="text:SignIn"></button>
+			<br>
+			
+			<input type="checkbox" class="inforCheckbox" id="rememberPassword" /><label for="rememberPassword" class="inforCheckboxLabel" data-localizedText="RememberMe"></label>
+			<br>
+			<a class="inforHyperlink" id="resetPassword" data-localizedText="text:ResetPassword" href="#"></a>
+			
+		</form>
+	</body>
 </html>

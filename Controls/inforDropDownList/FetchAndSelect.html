@@ -1,29 +1,90 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Dropdown - Call Triggered to Force Update</title>
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<title>Infor DropDownList : Main Example</title>
+	<link href="http://usmvvwdev67.infor.com:8000/Html5Controls/ControlSamples/Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/dropdown.js"></script>
+	<script src="http://usmvvwdev67.infor.com:8000/Html5Controls/ControlSamples/Release/jquery-1.10.2.min.js"></script>
+	<script src="http://usmvvwdev67.infor.com:8000/Html5Controls/ControlSamples/Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="http://usmvvwdev67.infor.com:8000/Html5Controls/ControlSamples/Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
-  <script>
-    $(function () {
-      var ddl = $('#dropDown2').inforDropDownList();
-      ddl.append('<option value="UK">UK</option><option value="USA">USA</option>').trigger('updated');
-    });
-  </script>
+	<script>
+	  $(function () {
+			//Option 1 - Uses an ajax call which fires on each query. Id use this if you have a really large drop down content
+			//that changes a lot and is always searched.  Something along the lines of a google search that auto completes.
+			//Or a huge list of items.
+
+			var cache = {};
+			$("#dropDown1").inforDropDownList({source: function (request, response) {
+					if ( request.term in cache ) {
+						response( cache[ request.term ] );
+						return;
+					}
+					$.ajax({
+						url: "http://ws.geonames.org/searchJSON",
+						data: {
+							featureClass: "P",
+							style: "full",
+							maxRows: 25,
+							name_startsWith: request.term
+						},
+						dataType: "jsonp",
+						timeout: 5000,
+						success: function(data) {
+							var result = $.map(data.geonames, function(item) {
+							return {
+								label: item.name + ", " + item.countryName,
+								value: item.name,
+								id: item.geonameId
+							}});
+							cache[ request.term ] = result;
+							response(result);
+						}
+					});
+			}});
+			$("#dropDown1").setValue("Amsterdam");
+
+			//Option 2 - oes a onetime fetch of the data and then populates the select options.
+			//I would do this if your list is rather small and you only want one request.
+
+			$("#dropDown2").inforDropDownList().bind("change", function() {
+				alert("Changed to "+$(this).val());
+			});
+
+			$.ajax({
+				url: "http://ws.geonames.org/searchJSON",
+				data: {
+					featureClass: "P",
+					style: "full",
+					maxRows: 25,
+					name_startsWith: "A"
+				},
+				dataType: "jsonp",
+				timeout: 5000,
+				success: function(data) {
+					//populate the drop down with the ajax results.
+					$.map(data.geonames, function(item) {
+						$("#dropDown2").append("<option value='"+item.name+"'>"+item.name+"</option>");
+					});
+					//set the value
+					$("#dropDown2").inforDropDownList("setCode","Amsterdam");
+				}
+			});
+		});
+	</script>
 </head>
 <body>
-  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
-     <label class="inforLabel" id="dropDown2Label">Populated</label>
-     <select class="inforDropDownList" id="dropDown2">
-     </select>
-  </div>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	   <label class="inforLabel" id="dropDown1Label">Remote Ajax Call</label>
+	   <select class="inforDropDownList" id="dropDown1">
+	   </select><br>
+	   <label class="inforLabel" id="dropDown2Label">One Time Populate</label>
+	   <select class="inforDropDownList" id="dropDown2">
+	   </select>
+	</div>
 </body>
 </html>

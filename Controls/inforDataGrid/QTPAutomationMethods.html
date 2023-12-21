@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html >
 
 	<head id="Head1"><title>
@@ -7,8 +7,8 @@
 
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<style>
@@ -39,7 +39,6 @@
 		<button type="button" class="inforTextButton" onclick="console.log(grid1.getChildItem(3,10))">GetChildItem Button</button>
 		<button type="button" class="inforTextButton" onclick="console.log(grid1.getChildItemCount(3,8))">ChildItemCount</button>
 		<button type="button" class="inforTextButton" onclick="console.log(grid1.getRowWithCellText('JOSEPH'))">GetRowWithCellText</button>
-    <button type="button" class="inforTextButton" onclick="console.log(grid1.moveRow(1,0))">Move Rows</button>
 	</div>
 	<div id="grid1"></div>
 </body>
@@ -119,22 +118,13 @@
 			return $(dataSet).text();
 		}
 		gridObj.getChildItem = function (row,column) {
-			return gridObj.getCellNode(row,column);
+			return gridObj.getCellNode(row,column)[];
 		}
 		gridObj.getChildItemCount = function (row,column) {
 			var dataSet = this.getData().getItems(),
 				columnDef = this.getColumns()[column];
 			return (columnDef.options ? columnDef.options.length : 0);
 		}
-    gridObj.moveRow = function (fromRow, toRow) {
-      var dataSet = this.getData().getItems();
-      dataSet.move(fromRow, toRow);
-      gridObj.updateData(dataSet);
-      return true;
-    }
-    Array.prototype.move = function(from, to) {
-      this.splice(to, 0, this.splice(from, 1)[0]);
-    };
 		gridObj.getRowWithCellText  = function (text, column , startFromRow) {
 			var data = this.getData().getItems(),
 				cols = this.getColumns();
@@ -154,7 +144,7 @@
 				}
 			}
 
-			return;
+			return [];
 		}
 	}
 </script>

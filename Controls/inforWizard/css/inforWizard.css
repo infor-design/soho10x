@@ -1,4 +1,4 @@
-/* Infor Wizard */
+﻿/* Infor Wizard */
 
 .inforWizardTitleBar {
 	height: 32px;
@@ -54,7 +54,7 @@
 	background-repeat: no-repeat;
 	background-position: right center;
 	border: medium none;
-	color: #444;
+	color: #333333;
 	height: 44px;
 	padding-right: 40px;
 	text-indent: 17px;
@@ -66,12 +66,13 @@
 .inforWizardButton > span {
 	display: inline-block;
 	float: left;
+	max-width: 90px;
 	text-align: center;
 }
 
 .inforWizardButton[disabled], .inforWizardButton.disabled {
    background-color: #e6e6e6;
-   color: #777;
+   color: #808080;
    cursor: default;
 }
 
@@ -107,7 +108,8 @@
 	height: 22px;
 	padding: 20px 0;
 	position: absolute;
-	width: 100%;
+	right: 0;
+	width: auto;
 }
 
 .inforWizardBottomButtonBar .inforFormButton{

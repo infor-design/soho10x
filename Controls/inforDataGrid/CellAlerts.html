@@ -7,8 +7,8 @@
 	<title>Infor DataGrid : Using a Custom Formatter  </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<!--Load a Flat file with JSON data-->
@@ -30,11 +30,11 @@
 				isReadonly = false,
 				icon = "info";	//can be error, alert, info or ok.
 			console.log(html);
-
+			
 			if (columnDef.editability && columnDef.editability(row, cell, value, columnDef, dataContext)) {
 				isReadonly = true;
 			}
-
+			
 			if (text.indexOf("<div") > -1) {
 				text = $(html).text();
 			}

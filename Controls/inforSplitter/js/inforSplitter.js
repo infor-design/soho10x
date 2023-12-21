@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Infor Splitter
 *
 * Based on original code by http://krikus.com/js/splitter but now completely overhauled.
@@ -28,14 +28,18 @@
       var $splitter = $(this.element),
         self = this,
         o = this.options,
-        opts, perc, elementId, reinit, cookieId, cookieVal, rtl;
+        opts, perc, elementId, reinit, storageId, cookieVal, rtl;
 
       this._windowHeight = $(window).height();
       this._windowWidth = $(window).width();
-      $splitter.addClass("inforSplitter");
+      $splitter.addClass("inforSplitter").css({ "position": "relative" });
 
       this._perc = 0.20;
-
+      if (o.initialSplitPerc) {
+        this._perc = o.initialSplitPerc;
+      }
+      this._perc = this._perc * 100;
+      
       // Default opts
       o.direction = (o.splitHorizontal ? 'h' : 'v');
       opts = $.extend({
@@ -58,34 +62,30 @@
       }[o.direction], this.options);
 
       this.options = opts;
+      //Create splitbar and setup elements
+      this._splitBar = $("<div><span class='inforSplitButtonTop'></span><span class='inforSplitButtonMiddle'></span></div>");
 
       if (o.direction == 'v') {
         this._sideA = $('#leftPane');
         this._sideB = $('#rightPane');
         if (this._sideA.length === 0 && this._sideB.length === 0) {
-          this._sideA = $splitter.find('.leftPane:first');
-          this._sideB = $splitter.find('.rightPane:first');
+          this._sideA = $splitter.find('>.leftPane');
+          this._sideB = $splitter.find('>.rightPane');
         }
-        if (o.initialSplitPerc) {
-          this._sideA.css("width", o.initialSplitPerc * 100 + "%");
-          this._sideB.css("width", "75%");
-        }
+        this._sideA.css("width", this._perc + "%");
+        this._sideB.css("width", (100 - this._perc) + "%");
+        this._splitBar.css({ "left": "calc( " + this._perc + "% - 20px)"});
       } else {
         this._sideA = $('#topPane');
         this._sideB = $('#bottomPane');
         if (this._sideA.length === 0 && this._sideB.length === 0) {
-          this._sideA = $splitter.find('.topPane:first');
-          this._sideB = $splitter.find('.bottomPane:first');
+          this._sideA = $splitter.find('>.topPane');
+          this._sideB = $splitter.find('>.bottomPane');
         }
-        if (o.initialSplitPerc) {
-          this._sideA.css("height", o.initialSplitPerc * 100 + "%");
-          this._sideB.css("height", "75%");
-        }
+        this._sideA.css("height", this._perc + "%");
+        this._sideB.css("height", (100 - this._perc) + "%");
+        this._splitBar.css({ "top": this._perc + "%" });
       }
-
-      //Create splitbar and setup elements
-      this._splitBar = $("<div><span class='inforSplitButtonTop'></span><span class='inforSplitButtonMiddle'></span></div>");
-      //this._splitBar = $("<div></div>");
 
       this._sideA.after(this._splitBar);
       this._splitBar.attr({
@@ -94,7 +94,8 @@
       }).css({
         "user-select": "none",
         "-webkit-user-select": "none",
-        "-moz-user-select": "none"
+        "-moz-user-select": "none",
+        "position": "absolute"
       }).draggable({
         iframeFix: true,
         scroll: false,
@@ -105,7 +106,7 @@
           self._endDrag(event, ui);
           self._splitBar.removeClass("dragging right left up down");
           $('body').enableSelection();
-          //$('iframe').contents().enableSelection();
+          $('iframe').contents().enableSelection();
         },
         drag: function (event, ui) {
           var thisX, lastX;
@@ -137,12 +138,12 @@
           self._splitDrag(event, ui);
         },
         start: function (event, ui) {
-          self._splitBar.css('z-index', '250').css("-webkit-user-select", "none");
+          self._splitBar.css("-webkit-user-select", "none");
           $splitter._initPos = self._splitBar.position();
           $splitter._initPos[opts.moving] -= self._splitBar[opts.sizing]();
           self._splitBar.addClass("dragging");
           $('body').disableSelection();
-          //$('iframe').contents().disableSelection();
+          $('iframe').contents().disableSelection();
         }
       });
 
@@ -167,19 +168,18 @@
         });
       }
 
-      //set size saved in the cookie
+      //set size saved in the localStorage
       if (o.savePosition) {
         elementId = $splitter.attr("id");
         rtl = (Globalize.culture().isRTL ? "rtl" : "");
 
-        cookieId = window.location.pathname + 'inforSplitter' + rtl + '/#' + (!elementId ? "inforSplitter" + o.direction : elementId);
-        cookieVal = $.cookie(cookieId);
-        if (cookieVal) {
-          perc = cookieVal;
+        storageId = window.location.pathname + 'inforSplitter' + rtl + '/#' + (!elementId ? "inforSplitter" + o.direction : elementId);
+        storageVal = localStorage.getItem(storageId);
+        if (storageVal) {
+          perc = storageVal;
+          this.splitTo(perc);
         }
       }
-
-      this.splitTo(perc);
 
       reinit = function () {
         self.splitTo(self._perc);
@@ -268,7 +268,7 @@
     splitTo: function (perc) {
       var o = this.options,
       $splitter = $(this.element),
-      percpx, children, savePerc, rtl, elementId, cookieId, barsize, splitsize, sizeA, sizeB;
+      percpx, children, savePerc, rtl, elementId, storageId, barsize, splitsize, sizeA, sizeB;
 
       savePerc = perc;
       if (typeof Globalize != "undefined" && Globalize.culture().isRTL && o.direction === "v") {
@@ -284,11 +284,10 @@
           elementId = $splitter.attr("id"),
           rtl = (Globalize.culture().isRTL ? "rtl" : "");
 
-          cookieId = window.location.pathname + 'inforSplitter' + rtl + '/#' + (!elementId ? "inforSplitter" + o.direction : elementId);
-
-          $.cookie(cookieId, savePerc, {
-            expires: 3650
-          });
+          storageId = window.location.pathname + 'inforSplitter' + rtl + '/#' + (!elementId ? "inforSplitter" + o.direction : elementId);
+          if (typeof localStorage !== "undefined") {
+            localStorage.setItem(storageId, savePerc);
+          }
         }
       }, 600);
 
@@ -316,12 +315,8 @@
         }
       }
 
-      sizeA = Math.max(0, (percpx));
-      if (o.direction == 'h') {
-        sizeB = Math.max(0, (splitsize - (percpx === 0 ? 15 : percpx)) - barsize + 5);
-      } else {
-        sizeB = Math.max(0, (splitsize - (percpx === 0 ? 15 : percpx)) - barsize - 5);
-      }
+      sizeA = Math.max(0, (perc== 100 ? (percpx - barsize - 5) : percpx));
+      sizeB = Math.max(0, (splitsize - (percpx)) - barsize - 5);
 
       this._sideA.show().css(o.sizing, sizeA + 'px');
       this._sideB.show().css(o.sizing, sizeB + 'px');
@@ -331,12 +326,12 @@
         this._splitBar.css("position", "absolute");
       }
       if (o.direction == 'h') {
-        this._splitBar.css("top", this._sideA.height() + this._sideA.offset().top + 1);
+        this._splitBar.css("top", this._sideA.height());
       } else {
         if (Globalize.culture().isRTL) {
-          this._splitBar.css("left", this._sideB.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideB.offset().left + 15));
+          this._splitBar.css("left", this._sideB.width() + 22);
         } else {
-          this._splitBar.css("left", this._sideA.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideA.offset().left + 5));
+          this._splitBar.css("left", this._sideA.width() + (this.element.closest('.inforVerticalTabs').length === 1 ? 0 : this._sideA.offset().left));
         }
       }
 

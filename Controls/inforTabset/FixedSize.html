@@ -7,8 +7,8 @@
 	<title>Infor Tab Set : Basic Features </title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
 	<link href="css/inforTabset.css" rel="stylesheet">
-	<script src="../lib/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../lib/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTabset.js"></script>
 
@@ -22,14 +22,14 @@
 			$("#inforTabContainer").tabs({
                 select: function (event, ui)
                 { TabClicked(ui.index) }
-            });
+            }); 
 
 			$("body").removeClass("inforHidden");
 		});
 	</script>
 </head>
 <body class="inforHidden">
-	<div style="margin:10px;height: 420px;position: absolute; top:20px; max-width: 688px;">
+	<div style="margin:10px;height: 420px;position: absolute; top:20px; max-width: 688px;"> 
 		<div id="inforTabContainer" >
 			  <ul class="inforTabset">
 				<li><a href="#tab1">Overview</a></li>

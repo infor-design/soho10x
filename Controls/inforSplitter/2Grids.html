@@ -1,70 +1,65 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Infor Splitter - Split Two Grids top and Bottom</title>
+	<title>Infor Splitter - Split Two Grids top and Bottom</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
 
-  <script src="../inforDataGrid/js/sampleData.js"></script>
-  <script src="js/inforSplitter.js"></script>
+	<script src="../inforDataGrid/js/sampleData.js"></script>
+	<script src="js/inforSplitter.js"></script>
 
-  <script>
-    $(function () {
-      $(".inforHorizontalSplitter").inforSplitter({
-        splitHorizontal:true
-      });
+	<script>
+		$(function () {
+			$(".inforHorizontalSplitter").inforSplitter({
+				splitHorizontal:true
+			});
 
-      var columns = [];
-      columns.push({ id: "city", name: "City", field: "city", width: 125, selectable: true, formatter:TextCellFormatter,editor: TextCellEditor, filterType: TextFilter });
-      columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, filterType: TextFilter });
-      columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
-      columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
+			var columns = [];
+			columns.push({ id: "city", name: "City", field: "city", width: 125, selectable: true, formatter:TextCellFormatter,editor: TextCellEditor, filterType: TextFilter });
+			columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, editor: TextCellEditor, filterType: TextFilter });
+			columns.push({ id: "addressLine1", name: "Address 1", field: "addressLine1", width: 140, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+			columns.push({ id: "state", required: true, name: "State", field: "state", formatter: TextCellFormatter, editor: SelectCellEditor, editorOptions: {editable: false, typeAheadSearch:false}, options: [" ", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming" ]});
 
-      var data = [];
-      data = getSampleData(data);
+			var data = [];
+			data = getSampleData(data);
 
-      var options = {
-        columns: columns,
-        idProperty:'officeId',
-        dataset: data,
-        showDrillDown: true,
-        showFooter: true,
-        pagingMode: PagingModes.PagerClientSide,
-        pageSize: 25,
-        forceFitColumns: true,
-        autoCellEditCommit: true
-      };
-      grid = $("#inforDataGrid").inforDataGrid(options);
-      grid2 = $("#inforDataGrid2").inforDataGrid(options);
+			var options = {
+				columns: columns,
+				idProperty:'officeId',
+				dataset: data,
+				showDrillDown: true,
+				showFooter: true,
+				pagingMode: PagingModes.PagerClientSide,
+				pageSize: 25,
+				forceFitColumns: true,
+				autoCellEditCommit: true
+			};
+			grid = $("#inforDataGrid").inforDataGrid(options);
+			grid2 = $("#inforDataGrid2").inforDataGrid(options);
 
-    });
-  </script>
+		});
+	</script>
 </head>
 
 <body>
-  <div class="inforHorizontalSplitter" >
-    <div id="topPane" style="overflow:hidden">
-      <div class="inforToolbar">
-        <button class="inforIconButton delete" ></button>
-        <button class="inforIconButton new"></button>
-        <button class="inforIconButton settings" ></button>
-      </div>
-      <div id="inforDataGrid"></div>
-    </div>
-    <div id="bottomPane" style="overflow:hidden">
-      <div class="inforToolbar">
-        <button class="inforIconButton delete" ></button>
-        <button class="inforIconButton new"></button>
-        <button class="inforIconButton settings" ></button>
-      </div>
-      <div id="inforDataGrid2"></div>
-    </div>
-  </div>
+	<div class="inforToolbar">
+		<button class="inforIconButton delete" ></button>
+		<button class="inforIconButton new"></button>
+		<button class="inforIconButton settings" ></button>
+	</div>
+	<div class="inforHorizontalSplitter" >
+		<div id="topPane" style="margin-bottom:5px;overflow:hidden">
+			 <div id="inforDataGrid"></div>
+		</div>
+		<div id="bottomPane" style="margin-top:15px;overflow:hidden">
+			 <div id="inforDataGrid2"></div>
+		</div>
+	</div>
 </body>
 </html>

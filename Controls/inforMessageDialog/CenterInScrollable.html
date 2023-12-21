@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,27 +6,32 @@
 
 	<title>Infor Message Dialog Box</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforMessageDialog.js"></script>
 	<link href="css/inforMessageDialog.css" rel="stylesheet">
 
 	<script>
 		$(function () {
+			//Globalize.culture("ar-SA");
 
 			//Display a generic dialog -
-			$('#generalDialogButton').click(function () {
+			$("#generalDialogButton").click(function () {
 
-				//First add the dialog html to the page..
-				$('body').append('<div id="newCatalogDialog" style="display:none"><label style="width: 100px;" for="catalogName" class="inforLabel">Name</label><input type="text" name="catalogName" id="catalogName" class="inforTextbox" style="width: 312px;margin-bottom:4px"/><br><label style="width: 100px;" class="inforLabel" for="catalogDescription">Description</label><textarea class="inforTextArea" id="catalogDescription" style="height: 40px;width: 300px;"></textarea></div>');
+				//First add the html to the page..
+				$("body").append('<div id="newCatalogDialog" style="display:none"><label style="width: 100px;" for="catalogName" class="inforLabel">Name</label><input type="text" name="catalogName" id="catalogName" class="inforTextbox" style="width: 210px;margin-bottom:4px"/><br><label style="width: 100px;" class="inforLabel" for="catalogDescription">Description</label><textarea class="inforTextArea" id="catalogDescription" style="height: 40px;width: 214px;"></textarea></div>');
 
 				//Invoke the dialog on it
-				$('#newCatalogDialog').message({
-					title: 'New Catalog',
-					width: 525
-				}).on('close', function () {
-					$('#newCatalogDialog').remove();
+				var dialog = $('#newCatalogDialog').inforMessageDialog({
+					title: "New Catalog",
+					dialogType: "General",
+					width: 640,
+					height: 480,
+					modal: true,
+					close: function(event, ui) {
+						$('#newCatalogDialog').remove();
+					}
 				});
 
 			});

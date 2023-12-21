@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Collection of Plugins Shared across multiple plugins....
 */
 (function($) {
@@ -75,6 +75,16 @@ $special = $event.special.throttledresize = {
 };
 
 })(jQuery);
+
+/*
+* hoverIntent r6 // 2011.02.26 // $ 1.5.1+
+* <http://cherne.net/brian/resources/$.hoverIntent.html>
+*
+* @param  f  onMouseOver function || An object with configuration options
+* @param  g  onMouseOut function  || Nothing (use configuration options object)
+* @author    Brian Cherne brian(at)cherne(dot)net
+*/
+(function($){$.fn.hoverIntent=function(f,g){var cfg={sensitivity:7,interval:100,timeout:0};cfg=$.extend(cfg,g?{over:f,out:g}:f);var cX,cY,pX,pY;var track=function(ev){cX=ev.pageX;cY=ev.pageY};var compare=function(ev,ob){ob.hoverIntent_t=clearTimeout(ob.hoverIntent_t);if((Math.abs(pX-cX)+Math.abs(pY-cY))<cfg.sensitivity){$(ob).unbind("mousemove",track);ob.hoverIntent_s=1;return cfg.over.apply(ob,[ev])}else{pX=cX;pY=cY;ob.hoverIntent_t=setTimeout(function(){compare(ev,ob)},cfg.interval)}};var delay=function(ev,ob){ob.hoverIntent_t=clearTimeout(ob.hoverIntent_t);ob.hoverIntent_s=0;return cfg.out.apply(ob,[ev])};var handleHover=function(e){var ev=$.extend({},e);var ob=this;if(ob.hoverIntent_t){ob.hoverIntent_t=clearTimeout(ob.hoverIntent_t)}if(e.type=="mouseenter"){pX=ev.pageX;pY=ev.pageY;$(ob).bind("mousemove",track);if(ob.hoverIntent_s!=1){ob.hoverIntent_t=setTimeout(function(){compare(ev,ob)},cfg.interval)}}else{$(ob).unbind("mousemove",track);if(ob.hoverIntent_s==1){ob.hoverIntent_t=setTimeout(function(){delay(ev,ob)},cfg.timeout)}}};return this.bind('mouseenter',handleHover).bind('mouseleave',handleHover)}})($);
 
 /*
 * $ Hotkeys Plugin
@@ -257,12 +267,12 @@ $special = $event.special.throttledresize = {
 	expires='; expires='+date.toUTCString();}
 	var path=options.path?'; path='+options.path:'';var domain=options.domain?'; domain='+options.domain:'';var secure=options.secure?'; secure':'';document.cookie=[name,'=',encodeURIComponent(value),expires,path,domain,secure].join('');}else{var cookieValue=null;if(document.cookie&&document.cookie!=''){var cookies=document.cookie.split(';');for(var i=0;i<cookies.length;i++){var cookie=$.trim(cookies[i]);if(cookie.substring(0,name.length+1)==(name+'=')){cookieValue=decodeURIComponent(cookie.substring(name.length+1));break;}}}
 	return cookieValue;}};
-
+	
 	/*
 	* Local Storage Get and Setters...
 	*/
-
-	if (typeof(Storage)!=="undefined") {	// Non-IE8
+	
+	if (typeof(Storage)!=="undefined") {	// Non-IE8 
 		Storage.prototype.setObject = function(key, value) {
 			this.setItem(key, JSON.stringify(value));
 		}
@@ -272,7 +282,7 @@ $special = $event.special.throttledresize = {
 			return value && JSON.parse(value);
 		}
 	}
-
+	
 	/*
 	* Make an Iframe (or anything fx tabset) Fill from the top offset to bottom and handle the resize. Used in App nav for now.
 	*/
@@ -748,6 +758,28 @@ drag.callback.prototype = {
 	}
 };
 
+// event fix hooks for touch events...
+var touchHooks =
+$event.fixHooks.touchstart =
+$event.fixHooks.touchmove =
+$event.fixHooks.touchend =
+$event.fixHooks.touchcancel = {
+	props: "clientX clientY pageX pageY screenX screenY".split( " " ),
+	filter: function( event, orig ) {
+		if ( orig ){
+			var touched = ( orig.touches && orig.touches[0] )
+				|| ( orig.changedTouches && orig.changedTouches[0] )
+				|| null;
+			// iOS webkit: touchstart, touchmove, touchend
+			if ( touched )
+				$.each( touchHooks.props, function( i, prop ){
+					event[ prop ] = touched[ prop ];
+				});
+		}
+		return event;
+	}
+};
+
 // share the same special event configuration with related events...
 $special.draginit = $special.dragstart = $special.dragend = drag;
 
@@ -1069,15 +1101,7 @@ $special.dropinit = $special.dropstart = $special.dropend = drop;
 	if (navigator.appVersion.indexOf("MSIE 8.0") > -1) {
 		$("html").addClass("ie8");
 	}
-
-	if (navigator.userAgent.indexOf("MSIE 8.0") > -1) {
-		$("html").addClass("ie8");
-	}
-
-  if (document.documentMode === 8) {
-    $("html").addClass("ie8");
-  }
-
+	
 	if (navigator.appVersion.indexOf("MSIE 9.0") > -1) {
 		$("html").addClass("ie9");
 	}

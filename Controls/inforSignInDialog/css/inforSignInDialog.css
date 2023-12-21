@@ -1,182 +1,144 @@
-/* Infor Sign In Dialog
+﻿/* Infor Sign In Dialog
 ----------------------------------*/
 .inforSignInDialog {
-  background-color: #F3F3F3;
-  overflow: auto;
+    background-color: #F3F3F3;
+	overflow: auto;
 }
 
 .inforSignInDialogControls {
-  margin: 0 auto;
-  text-align: center;
-  width: 100%;
+	margin: 0 auto;
+    text-align: center;
+    width: 100%;
 }
 
 .inforSignInDialogControls .inforTextbox{
-  height: 26px;
-  margin-bottom: 12px;
-  background-position: 10px center;
-  background-repeat: no-repeat;
-  padding-left: 40px;
-  line-height: 26px;
-  display: inline-block;
-  width: 159px;
+    height: 26px;
+	margin-bottom: 12px;
+	background-position: 10px center;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+	line-height: 14px;
+	width: 159px;
 }
 
 .inforSignInDialogControls  .inforTriggerButton {
-  height: 29px;
-  width: 24px;
+	height: 29px;
+	width: 24px;
 }
 
 .inforSignInDialogControls  .inforTriggerButton input {
-  line-height: 25px;
+	line-height: 25px;
 }
 
 .inforSignInDialogControls .inforSignInButton {
-  height: 30px;
-  margin-bottom: 18px;
-  width: 206px;
+	height: 30px;
+    margin-bottom: 18px;
+    width: 206px;
 }
 
 .inforSignInDialogControls .selectedSingle {
-  height: 30px !important;
+	height: 30px !important;
 }
 
 .inforSignInDialogControls .selectedSingle > div {
-  height: 29px !important;
+    height: 29px !important;
 }
 
 .inforSignInDialogControls .selectedSingle span {
-  margin-top: 6px;
-  text-indent: 36px;
-  text-align: left;
+	margin-top: 6px;
+    text-indent: 36px;
+    text-align: left;
 }
 
-.inforSignInDialogControls .dropdown {
-  height: 30px;
-  margin-bottom: 10px;
-  padding-left: 36px;
-  text-align: left;
-  text-indent: 5px;
-  line-height: 30px;
-  width: 144px !important;
+.inforSignInDialogControls .inforDropdownContainer {
+	margin-bottom: 6px;
+}
+
+.inforSignInDialogControls .inforDropdownList {
+	margin-left: 32px;
+	text-align: left;
+    text-indent: 5px;
+    width: 173px !important;
 }
 
 .inforSignInDialogControls #password {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQCAYAAAD9L+QYAAAAmElEQVQ4y+2UsQrAIAxE+//fpi4KCoKI4OAnOKVcoINDW7UWOnQI4e7CczBkI6LtjRJCtEbOmbTWpJTiDr0Ebq0lGMYYCiFwh4b/CF5KYVCMsQFBw0c+DffeM6TW2kCg4SOfhjvnGHI2hPx7cGwEtgPirJCPbg7DpZSX4KMwNwzvAR/1w9fAez90Cp5SorsHkGPu0VVcfXJ3c5iH3sYEe3kAAAAASUVORK5CYII=");
-}
-
-html[dir="rtl"] .inforSignInDialogControls #password {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAQCAQAAAAyy97sAAAAcUlEQVR4Ae3QMQqDUBBF0fMtXILFB5GAoKCNzv534J6SOijCJJAq7/aneI7n4btuCY1qtVlVjevdEYpZWDwswqzkiU4YFBSD0OWJUWgBrTDmiUkAIEy/J1SbeGtTc8QuTu05Iq76E5/e2dtPQJ8hEr0ANMPmAju1M8kAAAAASUVORK5CYII=");
-  background-position: right center;
-  padding-left: 0px;
-  padding-right: 45px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQCAYAAAD9L+QYAAAAmElEQVQ4y+2UsQrAIAxE+//fpi4KCoKI4OAnOKVcoINDW7UWOnQI4e7CczBkI6LtjRJCtEbOmbTWpJTiDr0Ebq0lGMYYCiFwh4b/CF5KYVCMsQFBw0c+DffeM6TW2kCg4SOfhjvnGHI2hPx7cGwEtgPirJCPbg7DpZSX4KMwNwzvAR/1w9fAez90Cp5SorsHkGPu0VVcfXJ3c5iH3sYEe3kAAAAASUVORK5CYII=");
 }
 
 .inforSignInDialogControls #userId {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAQCAYAAAAMJL+VAAAAs0lEQVR42rWU3QqCQBCFhRKKyKAy6qZAK/Mif/L932DfSc/ACDIs1NZJ+Bg84n6sM2sU/fFyzvW+fAPuoAY3kDAFC1CCbkKpOUWwAy8jaMGWJTiYxUdSliD17EDu9yyBNLgygkpziiAGhREUmtPG9DT5TFKP7HOwAk8VSF0yBHOw1jG9gEYFUs+ay/PZNwI5qbmnuRbZTaaiIMHjzcKdp+lBgiZQUIcKrvrSp+S/ThH1dz0A84RJNIB6vb0AAAAASUVORK5CYII=");
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAQCAYAAAAMJL+VAAAAs0lEQVR42rWU3QqCQBCFhRKKyKAy6qZAK/Mif/L932DfSc/ACDIs1NZJ+Bg84n6sM2sU/fFyzvW+fAPuoAY3kDAFC1CCbkKpOUWwAy8jaMGWJTiYxUdSliD17EDu9yyBNLgygkpziiAGhREUmtPG9DT5TFKP7HOwAk8VSF0yBHOw1jG9gEYFUs+ay/PZNwI5qbmnuRbZTaaiIMHjzcKdp+lBgiZQUIcKrvrSp+S/ThH1dz0A84RJNIB6vb0AAAAASUVORK5CYII=");
 }
 
-html[dir="rtl"] .inforSignInDialogControls #userId {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAQCAQAAADZ/GXvAAAAmElEQVR4AaXOwQqCQBSF4R9KMEIHmozaFGRlLtRp7vu/ge9UMAshEOPezr//OIzvkX/7gVByZ+CBY2lLCDktkmrJrciOF5KKeCtSIVMHK7InTk8qK+LokVSPsyIZDZJqyCxIiiMRIXICO7KhQ+jYmhBWFHjOBITABU/BWoVQcKVDvuqpKTVIg8z21CADMlvQIDXDbDcFousDpc/skAYZZjcAAAAASUVORK5CYII=");
-  background-position: right center;
-  padding-left: 0px;
-  padding-right: 45px;
+.inforSignInDialogControls #serverNameContainer a {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAQAQMAAAA26i3WAAAABlBMVEUAAADMzMzIT8AyAAAAAXRSTlMAQObYZgAAAB5JREFUeNpjYGBgZKj/wcjw/w8Cg8SQ+djEQHqAYgDkwhbNYhkFGQAAAABJRU5ErkJggg==");
+    background-position: 8px 7px;
+    background-repeat: no-repeat;
 }
 
-.inforSignInDialogControls #serverName-shdo {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAQAQMAAAA26i3WAAAABlBMVEUAAADMzMzIT8AyAAAAAXRSTlMAQObYZgAAAB5JREFUeNpjYGBgZKj/wcjw/w8Cg8SQ+djEQHqAYgDkwhbNYhkFGQAAAABJRU5ErkJggg==")  no-repeat scroll 8px 7px ,
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAJklEQVQoz2NgGAVwMHPmzP/Y8KxZs8A0RYaQ7RKQ7RR5ZzRiiQMA1Ek3z+guqYYAAAAASUVORK5CYII=") no-repeat scroll right center #fff;
+.inforSignInDialogControls #languageContainer a {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAQCAYAAAAS7Y8mAAAAiElEQVR42mNgoAE4c+bMfwa6GQwULAfi3VBcTk2D34EkoPgdVQwGCqQhGQrDadQweDfUsJlQDGLvpshgIEcJyZWhUAzjK1FicAd6uCKFdwclBmMYgs0ykgxGi7QzSMntDDmRiGzwbiypAR3vJslgtEgDpQQXNNxBaiTCDMarEc3ijsFXVgx6gwF9jTDvV7djFgAAAABJRU5ErkJggg==");
+	background-position: 8px 7px;
+    background-repeat: no-repeat;
 }
 
-html[dir="rtl"] .inforSignInDialogControls #serverName-shdo {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAQCAQAAADZ/GXvAAAAL0lEQVQ4y2M485+BcoDdkDP/sUMSDMFlBE5jBrchVAnYYRYmowFLszChQgYkFQAAs2dCzFAhVXEAAAAASUVORK5CYII=")  no-repeat scroll right 7px ,
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAJklEQVQoz2NgGAVwMHPmzP/Y8KxZs8A0RYaQ7RKQ7RR5ZzRiiQMA1Ek3z+guqYYAAAAASUVORK5CYII=") no-repeat scroll 4px center #fff;
-}
-
-
-.inforSignInDialogControls #language-shdo {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAQCAYAAAAS7Y8mAAAAiElEQVR42mNgoAE4c+bMfwa6GQwULAfi3VBcTk2D34EkoPgdVQwGCqQhGQrDadQweDfUsJlQDGLvpshgIEcJyZWhUAzjK1FicAd6uCKFdwclBmMYgs0ykgxGi7QzSMntDDmRiGzwbiypAR3vJslgtEgDpQQXNNxBaiTCDMarEc3ijsFXVgx6gwF9jTDvV7djFgAAAABJRU5ErkJggg==")  no-repeat scroll 8px 7px ,
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAJklEQVQoz2NgGAVwMHPmzP/Y8KxZs8A0RYaQ7RKQ7RR5ZzRiiQMA1Ek3z+guqYYAAAAASUVORK5CYII=") no-repeat scroll right center #fff;
-}
-
-.inforSignInDialogControls #company-shdo , .inforSignInDialogControls #company-shdo {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQAQMAAADH4XZbAAAABlBMVEUAAADMzMzIT8AyAAAAAXRSTlMAQObYZgAAACBJREFUeNpjYGBgYqj/AcEpMyAYF7vmBwL//8PEANQLADYXEjzaZMydAAAAAElFTkSuQmCC")  no-repeat scroll 8px 7px ,
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAJklEQVQoz2NgGAVwMHPmzP/Y8KxZs8A0RYaQ7RKQ7RR5ZzRiiQMA1Ek3z+guqYYAAAAASUVORK5CYII=") no-repeat scroll right center #fff;
+.inforSignInDialogControls #company, .inforSignInDialogControls #companyContainer a {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQAQMAAADH4XZbAAAABlBMVEUAAADMzMzIT8AyAAAAAXRSTlMAQObYZgAAACBJREFUeNpjYGBgYqj/AcEpMyAYF7vmBwL//8PEANQLADYXEjzaZMydAAAAAElFTkSuQmCC");
+	background-position: 8px 7px;
+    background-repeat: no-repeat;
 }
 
 .inforSignInDialogControls .inforCheckboxLabel {
-  float: none;
-  display: inline-block;
-  padding-left: 0;
-  text-align: center;
-  vertical-align: center;
-  width: auto;
+	padding-left: 8px;
 }
 
-.inforSignInDialogControls #environment-shdo {
-   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQCAAAAADYRLvEAAAAAnRSTlMAAHaTzTgAAAAlSURBVHgBY8AOzpAsfgYFECOO0E17cbLcSTgcwEoxxRFmEDQHAOs5UUmcEr9uAAAAAElFTkSuQmCC")  no-repeat scroll 8px 7px ,
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAAJklEQVQoz2NgGAVwMHPmzP/Y8KxZs8A0RYaQ7RKQ7RR5ZzRiiQMA1Ek3z+guqYYAAAAASUVORK5CYII=") no-repeat scroll right center #fff;
+html[dir="rtl"] .inforSignInDialogControls .inforCheckboxLabel {
+	line-height: 17px;
+	padding-right: 8px;
+}
+
+.inforSignInDialogControls #environmentContainer a {
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAQCAYAAAAS7Y8mAAAAiElEQVR42mNgoAE4c+bMfwa6GQwULAfi3VBcTk2D34EkoPgdVQwGCqQhGQrDadQweDfUsJlQDGLvpshgIEcJyZWhUAzjK1FicAd6uCKFdwclBmMYgs0ykgxGi7QzSMntDDmRiGzwbiypAR3vJslgtEgDpQQXNNxBaiTCDMarEc3ijsFXVgx6gwF9jTDvV7djFgAAAABJRU5ErkJggg==");
+	background-position: 8px 7px;
+    background-repeat: no-repeat;
 }
 
 .inforSignInDialogControls #resetPassword {
-  display: inline-block !important;
-  margin-top: 10px;
+    display: block;
+    margin-top: 10px;
 }
 
 .inforSignInDialog .inforLogo {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAA+VBMVEXUAA7////++/v99fbbKTXaIi7ncnr99PXtkpj87u/bJzP409X++fn86+zXER7++vr41tjWDRr2x8rbKDTpf4b//f3WDhvxrrL98fLVAxHWCxjsjJL88PHpfYT1wsX53d/2zM/jWmP++Pjnb3fWChf41Nb41dfskZfYGSb75+jsjpTvn6T419n0wMP1xMfpeoH+9/ffQkzlYmv76uv63+HkYGnumJ72y87fRE7ncHjncXn98/TXEh/cMDvaIS352tzod37ZICzri5HWDBnsjZPlZG3VCBbUAQ/30tTcLzrVBhT1xcjum6DaIy/xrbLxq7D30dTodHzoeH/i491VAAABNklEQVR4Xu2T5W7EMBCEvQ7nmKHMzMzM3Pd/mK6da5xrNzor/Vd5NYp3VqNPySZhpoyMjP6fppfIcafY1QPYOfg93Bz3AEALsGMRwQkA0AWQwepfAYGY5o9Y5ioh4Dg9oH9b+llxOV0sW9byZfEHILzOed7snK3S8/52iQBMTYKsmWYf4IBHYz7ynXYW0BKAWGuxxYCr5ue99AoMAKwmAE4ej6DVCtDxUOXWKYDlbtTF+rcSgCH0VdxKcxTtbg+wt3/FKMAhujq6RmIH7+hPRGNjMxblziroKcAFOkdaBRgGaEe5Qky+YSmAW3R3jcEAJw0gLe+392gfRBOqR3hMAxBWLvEJl1gRS3xWOW3Ai3yNr28FPHgtA4B9QFyfLAuAuepTzgZgNR//sbJvqzRVRkZGRkamvgBaQxF8NowOUgAAAABJRU5ErkJggg==");
-  background-position: center center;
-  height: 64px;
-  left: 0;
-  margin: 64px auto 24px;
-  position: relative;
-  width: 64px;
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAA+VBMVEXUAA7////++/v99fbbKTXaIi7ncnr99PXtkpj87u/bJzP409X++fn86+zXER7++vr41tjWDRr2x8rbKDTpf4b//f3WDhvxrrL98fLVAxHWCxjsjJL88PHpfYT1wsX53d/2zM/jWmP++Pjnb3fWChf41Nb41dfskZfYGSb75+jsjpTvn6T419n0wMP1xMfpeoH+9/ffQkzlYmv76uv63+HkYGnumJ72y87fRE7ncHjncXn98/TXEh/cMDvaIS352tzod37ZICzri5HWDBnsjZPlZG3VCBbUAQ/30tTcLzrVBhT1xcjum6DaIy/xrbLxq7D30dTodHzoeH/i491VAAABNklEQVR4Xu2T5W7EMBCEvQ7nmKHMzMzM3Pd/mK6da5xrNzor/Vd5NYp3VqNPySZhpoyMjP6fppfIcafY1QPYOfg93Bz3AEALsGMRwQkA0AWQwepfAYGY5o9Y5ioh4Dg9oH9b+llxOV0sW9byZfEHILzOed7snK3S8/52iQBMTYKsmWYf4IBHYz7ynXYW0BKAWGuxxYCr5ue99AoMAKwmAE4ej6DVCtDxUOXWKYDlbtTF+rcSgCH0VdxKcxTtbg+wt3/FKMAhujq6RmIH7+hPRGNjMxblziroKcAFOkdaBRgGaEe5Qky+YSmAW3R3jcEAJw0gLe+392gfRBOqR3hMAxBWLvEJl1gRS3xWOW3Ai3yNr28FPHgtA4B9QFyfLAuAuepTzgZgNR//sbJvqzRVRkZGRkamvgBaQxF8NowOUgAAAABJRU5ErkJggg==");
+	background-position: center center;
+    height: 64px;
+    left: 0;
+    margin: 64px auto 24px;
+    position: relative;
+    width: 64px;
 }
 
 .inforSignInDialog .inforApplicationName {
-  color: #1A1A1A;
-  font-size: 3.2em;
-  position: inherit;
-  margin-bottom: 28px;
+	color: #1A1A1A;
+    font-size: 3.2em;
+    position: inherit;
+    margin-bottom: 28px;
 }
 
 .inforSignInDialog .errorText {
-  color: #D5000E;
-  display: inline-block;
-  font-size: 12px;
-  left: 9px;
-  line-height: 16px;
-  max-width: 300px;
-  padding: 10px 0;
-  position: relative;
-  text-align: center;
-  top: -3px;
-}
-
-.inforSignInDialog .inforHyperlink {
-  display: inline-block !important;
+	color: #D5000E;
+    display: inline-block;
+    font-size: 12px;
+    left: 9px;
+    line-height: 16px;
+    max-width: 300px;
+    padding: 10px 0;
+    position: relative;
+    text-align: center;
+    top: -3px;
 }
 
 html[dir="rtl"] .inforSignInDialogControls .inforLogo {
-  margin: 70px auto 40px;
-  background-position: center center;
-  right: 0;
+	margin: 70px auto 40px;
+	background-position: center center;
 }
 
-html[dir="rtl"] .inforSignInDialogControls .dropdown {
-  padding: 0 30px;
-}
-
-html[dir="rtl"] .inforSignInDialogControls .inforLabel, html[dir="rtl"] .inforSignInDialogControls .label {
-  float: none;
-}
-
-html[dir="rtl"] .inforSignInDialogControls .dropdown {
-  padding-left: 19px;
-  padding-right: 42px;
-  text-align: right;
-}
-
-html[dir="rtl"] .inforSignInDialogControls + .dropdown-list {
-  width: 205px !important;
-}

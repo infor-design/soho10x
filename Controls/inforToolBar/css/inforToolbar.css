@@ -1,4 +1,4 @@
-/* Infor ToolBar
+﻿/* Infor ToolBar
 ----------------------------------*/
 .inforToolbar {
 	height: 34px;
@@ -8,7 +8,7 @@
 	background-color: #ebebeb;
 	box-shadow: 0 1px #d4d4d4;
 	height: auto;
-  min-height: 34px;
+    min-height: 34px;
 }
 
 .inforToolbar.topLine {
@@ -25,8 +25,8 @@
 
 /* So All Children Get Centered assuming they are 20 pixels high */
 .inforToolbar > * {
-	margin-top: 6px !important;
-	display: inline-block;
+	margin-top: 5px !important;
+  display: inline-block;
   vertical-align: top;
 	margin-bottom: 5px !important;	/* Push anything  below it down out of sight */
 }
@@ -41,7 +41,7 @@
 }
 
 .inforToolbar > .inforSplitButtonContainer {
-	margin-top: 6px !important;
+	margin-top: 5px !important;
 	margin-left: 5px;
 }
 
@@ -77,7 +77,6 @@
 
 .inforToolbar > .alignRight {
 	float:right;
-  padding-right: 10px;
 }
 
 .inforToolbar > .alignRight > *{
@@ -120,19 +119,6 @@
     top: 2px;
 }
 
-/*Adjust the Toolbar a little */
-.inforToolbar .inforSearchFieldContainer {
-  padding-top: 4px;
-}
-
-.inforToolbar .inforSearchField {
-  padding: 1px 5px;
-}
-
-.inforToolbar .inforSearchFieldContainer .inforTriggerButton {
-  margin-top: -2px;
-}
-
 /*RTL*/
 html[dir="rtl"] .inforToolbar > .alignRight {
 	float: left;
@@ -148,12 +134,4 @@ html[dir="rtl"] .inforToolbar > * {
 
 html[dir="rtl"]  .inforToolbar > *:first-child {
 	margin-right: 10px;
-}
-
-html[dir="rtl"] .inforToolbar > .alignRight > * {
-  float: right;
-}
-
-html[dir="rtl"] .inforToolbar .inforSearchFieldContainer{
-  margin-left: 5px;
 }

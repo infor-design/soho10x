@@ -1,46 +1,114 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 
-  <title>Dropdown - test that the drop down opens up when not enough room.</title>
+	<title>KO Landmark DropDownList2</title>
+	
+<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<link rel="stylesheet" href="css/inforDataGrid.css"/>
 
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
-  <link rel="stylesheet" href="css/inforDataGrid.css"/>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+	
+	<script>	
+		
+		$(function () 
+		{
+			/* var bindIdGender = "Gender";
+			var bindIdGenderStates = "GenderStates";
+			
+			// create form view model
+			var viewModel = {};
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState(" ", ""));		
+				
+			viewModel[bindIdGender] = ko.observable("");
+			viewModel[bindIdGenderStates] = ko.observableArray(fieldsStateArray);
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/dropdown.js"></script>
+			// apply bindings
+			try
+			{
+				ko.applyBindings(viewModel);
+			}
+			catch(e)
+			{
+				alert(e.message);
+			}
+					
+			var genderDataValue = "3";
+			var fieldsStateArray = [];
+			fieldsStateArray.push(new FieldState("&nbsp;", "0"));		
+			fieldsStateArray.push(new FieldState("1 Withhold", "1"));
+			fieldsStateArray.push(new FieldState("2 Female", "2"));
+			fieldsStateArray.push(new FieldState("3 Male", "3"));
 
-  <script>
-    $(function () {
-      $('#country').dropdown();
-    });
-  </script>
+			viewModel[bindIdGenderStates](fieldsStateArray);
+			viewModel[bindIdGender](genderDataValue);
+ */
+			/* showData("loadData: loading " + bindIdGender + " with value of [" + genderDataValue + "]");
 
+			$("#clear").click(function()
+			{
+				$("#msg").text("");
+			});
+
+			$("#showData").click(function()
+			{
+				showData("showData");
+			});
+			 */
+			$(function () {
+				$("#country, #country1").inforDropDownList();
+			});
+
+			function showData(name)
+			{
+				writeMsg(name + ":\t");
+				writeMsg("viewModel[\"" + bindIdGender + "\"]() = [" + (viewModel[bindIdGender]()) + "];");
+				writeMsg("LRCEmployee_wid130.val() = [" + $("#LRCEmployee_wid130").val() + "];");
+				writeMsg(" ");
+			}
+
+			function writeMsg(message)
+			{
+				var text = $("#msg").text();
+				text += message + "\n";
+				$("#msg").text(text);
+				$("#msg").scrollTop($("#msg")[0].scrollHeight);
+			}
+			
+			// Constructor for a "select bind" object with two properties
+			function FieldState(label, value)
+			{
+				this.label = label;
+				this.value = value;
+			};
+			
+		});
+</script>
 </head>
-<body style="margin-top:20px; overflow: scroll">
-<!-- <body style="margin-top:20px;height: 10000px; overflow: scroll"> -->
-<!-- <body style="margin-top:20px; overflow: scroll"> -->
-
-    <label for="msg" class="label">Message</label>
-    <textarea id="msg" class="inforTextArea" style="height:400px;width:1000px;"></textarea>
-    <br>
-    <br>
-    <label for="country" class="label">Country</label>
-    <select id="country" class="dropdown">
-      <option value=""></option>
-      <option selected value="United States">United States</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="Afghanistan">Afghanistan</option>
-      <option value="Aland Islands">Aland Islands</option>
-      <option value="Albania">Albania</option>
-      <option value="Algeria">Algeria</option>
-      <option value="American Samoa">American Samoa</option>
-      <option value="Andorra">Andorra</option>
-      <option value="Angola">Angola</option>
-      <option value="Anguilla">Anguilla</option>
-  </select>
+<body style="margin:10px">
+	
+	<textarea id="msg" style="height:400px;width:1000px;"></textarea>
+		<br>       	
+  		<label for="country" class="inforLabel">Country</label>
+       	<select id="country" data-placeholder="Select..." class="inforDropDownList">
+            <option value=""></option>
+            <option selected value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Afghanistan">Afghanistan</option>
+            <option value="Aland Islands">Aland Islands</option>
+            <option value="Albania">Albania</option>
+            <option value="Algeria">Algeria</option>
+            <option value="American Samoa">American Samoa</option>
+            <option value="Andorra">Andorra</option>
+            <option value="Angola">Angola</option>
+            <option value="Anguilla">Anguilla</option>           
+             
+          </select>
 </body>
 </html>
 

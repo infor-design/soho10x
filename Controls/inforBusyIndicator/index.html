@@ -1,28 +1,28 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
-
+	
 	<title>Infor Loading Indicator</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script>
 		$(function () {
-			$(".isLoading:first").inforBusyIndicator({delay:300, modal: true});
+			$(".isLoading:first").inforBusyIndicator({delay:300, modal: false, text: "Please wait"});
 		});
 	</script>
-
+	
 	<style>
 		.isLoading {
 			height: 150px;
 		}
 	</style>
-
+	
 </head>
 <body class="inforApplicationPadding">
 	<section class="inforSection">

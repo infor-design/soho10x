@@ -1,4 +1,4 @@
-/* Infor Form Button
+﻿/* Infor Form Button
 ----------------------------------*/
 .inforFormButton {
 	background-color: #999999;
@@ -70,9 +70,4 @@
 .inforFormButton.default:active{
 	background-color: #118bd1;
 	box-shadow: 0 1px #0c6091 inset;
-}
-
-/*Reset Firefox*/
-td .inforFormButton {
-    font-size: 1em;
 }

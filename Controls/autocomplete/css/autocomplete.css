@@ -1,7 +1,26 @@
 /* AutoComplete Control
 ----------------------------------*/
-#autocomplete-list {
+
+#autocomplete-list.is-open.popupmenu{
   border-radius: 0 0 4px 4px;
+  display: table;
+}
+
+#autocomplete-list li{
+  display: table-row-group;
+}
+
+#autocomplete-list li a{
+  display: table-row;
+}
+
+#autocomplete-list li a:focus {
+    background-color: #e0e0e0;
+}
+
+#autocomplete-list li a span{
+  display: table-cell;
+  padding: 1px 15px;
 }
 
 .autocomplete.is-open {

@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -845,8 +845,32 @@
     <value>Ny nod</value>
     <comment>Create a New tree Node</comment>
   </data>
-  <data name="AboutText" xml:space="preserve">
-    <value>Copyright © 2014 Infor. Med ensamrätt. Ord- och figurmärken i den här publikationen är varumärken och/eller registrerade varumärken som tillhör Infor och/eller dess dotterbolag. Med ensamrätt. Alla andra varumärken i den här publikationen tillhör respektive ägare. www.infor.com.</value>
-    <comment>Text in the Page About Dialog</comment>
+  <data name="RememberSettings" xml:space="preserve">
+    <value>Spara inställningarna</value>
+    <comment>Sign in Page Help</comment>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Företag</value>
+    <comment>Which company do we want to login to? AKA Tenant</comment>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Miljö</value>
+    <comment>Which Environment do we want to login to? Fx Test/Prod</comment>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>Har du inget konto?</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Återställ lösenordet</value>
+    <comment>Change Password Text</comment>
+  </data>
+  <data name="SignUpNow" xml:space="preserve">
+    <value>Registrera dig</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="SelectMonthYear" xml:space="preserve">
+    <value>Välj månad och år</value>
+    <comment>Date Picker Text</comment>
   </data>
 </root>

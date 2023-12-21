@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 
 	<title>Infor Checkbox Examples</title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script>
@@ -51,7 +51,10 @@
 	<input type="checkbox" class="inforCheckbox" checked="checked" id="dirtyTrackedCheckBox" /><label for="dirtyTrackedCheckBox" class="inforCheckboxLabel">Dirty Tracking</label><br>
 	<input type="checkbox" class="inforCheckbox" id="disabledUncheckedCheckBox" disabled /><label for="disabledUncheckedCheckBox" class="inforCheckboxLabel">Disabled and Unchecked</label><br>
 	<input type="checkbox" class="inforCheckbox" id="disabledCheckedCheckBox" checked="checked" disabled /><label for="disabledCheckedCheckBox" class="inforCheckboxLabel">Disabled and Checked</label><br>
-		<input type="checkbox" class="inforCheckbox partial" id="partialCheckedCheckBox" /><label for="partialCheckedCheckBox" class="inforCheckboxLabel">Partial</label><br>
+	<input type="checkbox" class="inforCheckbox" id="readonlyUncheckedCheckBox" readonly /><label for="readonlyUncheckedCheckBox" class="inforCheckboxLabel">Read Only and Unchecked</label><br>
+	<input type="checkbox" class="inforCheckbox" id="readonlyCheckedCheckBox" checked="checked" readonly /><label for="readonlyCheckedCheckBox" class="inforCheckboxLabel">Read Only and Checked</label><br>
+	<input type="checkbox" class="inforCheckbox partial" id="partialCheckedCheckBox" /><label for="partialCheckedCheckBox" class="inforCheckboxLabel">Partial</label><br>
+	<input type="checkbox" class="inforCheckbox partial" id="partialROCheckedCheckBox" readonly /><label for="partialROCheckedCheckBox" class="inforCheckboxLabel">Partial Read Only</label><br>
 	<input type="checkbox" class="inforCheckbox partial" id="partialDCheckedCheckBox" disabled /><label for="partialDCheckedCheckBox" class="inforCheckboxLabel">Partial Disabled</label><br>
 	<br>
 	<button type="button" id="showFirstCheckVal" class="inforFormButton">Show CheckBox Value</button>

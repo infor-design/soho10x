@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 	<title>Infor Application Navigation</title>
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforApplicationNav.js"></script>
 
@@ -25,7 +25,8 @@
 					}
 
 					//Use the dynamic element to make sure that it is not loaded already.
-					if (submenu.find("#placeholder").length==0) {
+					if (submenu.find("#placeholder").length==0)
+					{
 						response(submenu, currentmenu);
 						return;
 					}

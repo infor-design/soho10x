@@ -1,29 +1,29 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
+	<meta charset="utf-8">
 
-  <title>Dropdown - Tooltips on list items.</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>Infor DropDownList : Main Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforDropDownList.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
-  <script>
-     $(function () {
-      //Globalize.culture("ar-SA");
-      $('#reportlist').inforDropDownList();
-    });
-  </script>
+	<script>
+	   $(function () {
+			//Globalize.culture("ar-SA");
+			$("#reportlist").inforDropDownList();
+		});
+	</script>
 </head>
 <body>
-  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
-     <label class="inforLabel" id="dropDown1Label">Ship To</label>
-     <select id="reportlist" name="reportlist" class="inforDropDownList" title=""><option value="All" selected pagesize="25" history="PUBLICATIONS">All</option><option value="History" pagesize="50" history="THISWEEK">History</option><option value="Favorites" pagesize="50" history="PUBLICATIONS">Favorites</option><option value="Unsubscribed Email" pagesize="50" history="UNSUBSCRIBED EMAIL">Unsubscribed Email</option><option value="BackOffice" listowner="15137" pagesize="50" history="PUBLICATIONS" title="">BackOffice</option><option value="EPR" listowner="15137" pagesize="50" history="PUBLICATIONS" title="">EPR</option><option value="LBI-1642" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Report historical instance name">LBI-1642</option><option value="LBI-2368" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Range paramter missing from Maintain Parameters">LBI-2368</option><option value="LBI-3384" listowner="15137" pagesize="50" history="PUBLICATIONS" title="ERS9040: Use Current UserID and Password option in Data Settings not working for refresh">LBI-3384</option><option value="LBI-4560" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Login prompt when running report with 2 data sources and subreport">LBI-4560</option><option value="LBI-5028" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Getting prompted when using LawsonCurrentUser variable via parameter from RS.">LBI-5028</option><option value="LBI-5226" listowner="15137" pagesize="50" history="PUBLICATIONS" title="LBI Report Events doesn't appear to be working">LBI-5226</option><option value="LBI-5244" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Scheduling a report with saved parameters generates wrong SQL query">LBI-5244</option><option value="LBI-5261" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Email unsubscribe not working for role">LBI-5261</option><option value="LBI-5397" listowner="15137" pagesize="50" history="PUBLICATIONS" title="DB logon prompt for historical instances on sub-reports">LBI-5397</option><option value="LBI-6106" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Selection formula added in report paramters duplicated in report">LBI-6106</option><option value="LBI-6217" listowner="15137" pagesize="50" history="PUBLICATIONS" title="View with saved parameters returns no data.">LBI-6217</option><option value="LBI-6296" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Reports with report content bursting create blank instances when scheduled">LBI-6296</option><option value="LBI-6463" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Oracle Reports with Dynamic parameters prompt for id on override">LBI-6463</option><option value="LBI-6543" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Multiple bursting rights not applied">LBI-6543</option><option value="LBI-6723" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Override data source SQl server 2812 error">LBI-6723</option><option value="LBI-6762" listowner="15137" pagesize="50" history="PUBLICATIONS" title="&quot;Not used' in bursting details">LBI-6762</option><option value="LBI-6871" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Unable to burst a large number of reports via email">LBI-6871</option><option value="LBP" listowner="15137" pagesize="50" history="PUBLICATIONS" title="">LBP</option><option value="test" listowner="15137" pagesize="10" history="PUBLICATIONS" title="">test</option></select>
-  </div>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	   <label class="inforLabel" id="dropDown1Label">Ship To</label>
+	   <select id="reportlist" name="reportlist" class="inforDropDownList" title=""><option value="All" selected pagesize="25" history="PUBLICATIONS">All</option><option value="History" pagesize="50" history="THISWEEK">History</option><option value="Favorites" pagesize="50" history="PUBLICATIONS">Favorites</option><option value="Unsubscribed Email" pagesize="50" history="UNSUBSCRIBED EMAIL">Unsubscribed Email</option><option value="BackOffice" listowner="15137" pagesize="50" history="PUBLICATIONS" title="">BackOffice</option><option value="EPR" listowner="15137" pagesize="50" history="PUBLICATIONS" title="">EPR</option><option value="LBI-1642" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Report historical instance name">LBI-1642</option><option value="LBI-2368" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Range paramter missing from Maintain Parameters">LBI-2368</option><option value="LBI-3384" listowner="15137" pagesize="50" history="PUBLICATIONS" title="ERS9040: Use Current UserID and Password option in Data Settings not working for refresh">LBI-3384</option><option value="LBI-4560" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Login prompt when running report with 2 data sources and subreport">LBI-4560</option><option value="LBI-5028" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Getting prompted when using LawsonCurrentUser variable via parameter from RS.">LBI-5028</option><option value="LBI-5226" listowner="15137" pagesize="50" history="PUBLICATIONS" title="LBI Report Events doesn't appear to be working">LBI-5226</option><option value="LBI-5244" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Scheduling a report with saved parameters generates wrong SQL query">LBI-5244</option><option value="LBI-5261" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Email unsubscribe not working for role">LBI-5261</option><option value="LBI-5397" listowner="15137" pagesize="50" history="PUBLICATIONS" title="DB logon prompt for historical instances on sub-reports">LBI-5397</option><option value="LBI-6106" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Selection formula added in report paramters duplicated in report">LBI-6106</option><option value="LBI-6217" listowner="15137" pagesize="50" history="PUBLICATIONS" title="View with saved parameters returns no data.">LBI-6217</option><option value="LBI-6296" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Reports with report content bursting create blank instances when scheduled">LBI-6296</option><option value="LBI-6463" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Oracle Reports with Dynamic parameters prompt for id on override">LBI-6463</option><option value="LBI-6543" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Multiple bursting rights not applied">LBI-6543</option><option value="LBI-6723" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Override data source SQl server 2812 error">LBI-6723</option><option value="LBI-6762" listowner="15137" pagesize="50" history="PUBLICATIONS" title="&quot;Not used' in bursting details">LBI-6762</option><option value="LBI-6871" listowner="15137" pagesize="50" history="PUBLICATIONS" title="Unable to burst a large number of reports via email">LBI-6871</option><option value="LBP" listowner="15137" pagesize="50" history="PUBLICATIONS" title="">LBP</option><option value="test" listowner="15137" pagesize="10" history="PUBLICATIONS" title="">test</option></select>
+	</div>
 </body>
 
 </html>

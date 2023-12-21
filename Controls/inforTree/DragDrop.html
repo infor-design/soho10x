@@ -7,8 +7,8 @@
 	<title>Infor Tree Sample with Drag Drop</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTree.js"></script>
 
@@ -25,7 +25,7 @@
 			//AInitialize the Split panes.
 			$(".inforSplitter").inforSplitter();
 
-			//Initialize the Tree controls
+			//Initialize the Tree control
 			$("#inforTree1").inforTree({
 				"json_data": getSampleJson(),
 				"dnd": {
@@ -42,32 +42,10 @@
 						node = data.rslt.o,
 						oldParent = data.rslt.op,
 						parentNode = treeInstance._get_parent(node);
-
+				
 				console.log(oldParent, node);
-
-				alert("Tree1 : nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
-			});
-
-			$("#inforTree2").inforTree({
-				"json_data": getSampleJson2(),
-				"dnd": {
-					"drop_finish": function (data) {
-						data.r.text($.trim(data.o.text()));
-					},
-					"drag_finish": function (data) {
-						this.create_node(data.r[0], "after", $.trim(data.o.value), false);
-					 }
-				}
-				 , "plugins": ["json_data", "themes", "ui", "dnd"]
-			}).bind("move_node.jstree", function(e, data){
-				var treeInstance = data.inst,
-						node = data.rslt.o,
-						oldParent = data.rslt.op,
-						parentNode = treeInstance._get_parent(node);
-
-				console.log(oldParent, node);
-
-				alert("Tree2 : nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
+				
+				//alert("nodeId=" + node.context.id + "  and parentId=" + parentNode.context.id + "  and oldParentId=" + oldParent.context.id);
 			});
 
 			$("body").inforForm();
@@ -92,14 +70,7 @@
 			</div>
 			<div class="inforSplitter">
 				<div id="leftPane" style="width:40%">
-					<div class="inforScrollableArea" style="overflow:auto;">
-				    <div class="inforSingleColumnLayout autoLabelWidth">
-
-						<div id="inforTree1" class="inforTree"></div>
-						<h2>Tree 2 below</h2>
-						<div id="inforTree2" class="inforTree"></div>
-					</div>
-					</div>
+					<div id="inforTree1" class="inforTree"></div>
 				</div>
 				<div id="rightPane" style="width:60%; height:">
 					 <div class="inforSingleColumnLayout autoLabelWidth">
