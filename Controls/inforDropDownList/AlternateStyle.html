@@ -1,93 +1,89 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Infor DropDownList : Alternate Style</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>Infor DropDownList : Alternate Style</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforDropDownList.js"></script>
-  <link href="css/inforDropDownList.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
+	<link href="css/inforDropDownList.css" rel="stylesheet" />
 
-  <script>
+	<script>
 
-     $(function () {
-      $('body').inforForm();
+	   $(function () {
+			$("body").inforForm();
 
-      $('#toggleEnable').click(function() {
-        var dd = $('#dropDown0');
-        if (dd.next().next().is(':disabled')) {
-          $('#dropDown0').enable();
-        } else {
-          $('#dropDown0').disable();
-        }
-      });
+			$("#toggleEnable").click(function() {
+				var dd = $("#dropDown0");
+				if (dd.next().hasClass("isDisabled")) {
+					$("#dropDown0").enable()
+				} else {
+					$("#dropDown0").disable();
+				}
+			});
 
-      $('#toggleReadonly').click(function(){
-        var dd = $('#dropDown0');
-        if (dd.next().next().hasClass('is-readonly')) {
-          $('#dropDown0').enable();
-        } else {
-          $('#dropDown0').readOnly();
-        }
-      });
-    });
-  </script>
+			$("#toggleReadonly").click(function(){
+				var dd = $("#dropDown0");
+				if (dd.next().hasClass("isReadOnly")) {
+					$("#dropDown0").enable()
+				} else {
+					$("#dropDown0").readOnly();
+				}
+			});
+		});
+	</script>
 </head>
 <body class="inforApplicationPadding">
-  <div class="inforModuleContentArea autoLabelWidth">
-     <label class="inforLabel" style="width: 246px;">Disabled Field with Back Color</label>
-    <input id="disabledField" class="inforTextbox disabled backgroundColor" type="text" value="Disabled Value" disabled="" name="disabledField">
-    <br>
+	<div class="inforModuleContentArea autoLabelWidth">
+	   <label class="inforLabel" for="dropDown0">Ship To</label>
+	   <select class="inforDropDownList required backgroundColor" id="dropDown0">
+			<option value="ar">Arkansas</option>
+			<option value="Ca">California</option>
+			<option value="Co">Colorado</option>
+		</select><br>
 
-      <label class="inforLabel" for="dropDown0">Ship To</label>
-     <select class="inforDropDownList required" id="dropDown0">
-      <option value="ar">Arkansas</option>
-      <option value="Ca">California</option>
-      <option value="Co">Colorado</option>
-    </select><br>
+	   <label class="inforLabel" for="dropDown1">Read-Only</label>
+	   <select class="inforDropDownList" id="dropDown1" readonly>
+			<option value="a">A</option>
+			<option value="b" >B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+			<option value="e" selected="selected">E</option>
+		</select><br>
+		<label class="inforLabel" for="dropDown2">Read-Only - Alternate</label>
+		<select class="inforDropDownList backgroundColor" id="dropDown2" readonly>
+			<option value="a">A</option>
+			<option value="b" >B</option>
+			<option value="c">C</option>
+			<option value="d">D</option>
+			<option value="e" selected="selected">E</option>
+		</select><br>
+		<label class="inforLabel" for="dropDown3">Disabled</label>
+		<select class="inforDropDownList"  id="dropDown3" disabled>
+			<option value="a">AA</option>
+			<option value="b">BB</option>
+			<option value="c" selected="selected">CC</option>
+			<option value="d">DD</option>
+			<option value="e">EE</option>
+		</select><br>
+		<label class="inforLabel" for="dropDown4">Disabled - Alternate</label>
+		<select class="inforDropDownList backgroundColor" id="dropDown4" disabled>
+			<option value="a">AA</option>
+			<option value="b">BB</option>
+			<option value="c" selected="selected">CC</option>
+			<option value="d">DD</option>
+			<option value="e">EE</option>
+		</select><br>
+		<p>
+			<button type="button" class="inforFormButton" id="toggleEnable">Enable/Disable</button>
+			<button type="button" class="inforFormButton" id="toggleReadonly">Enable/Readonly</button>
+		</p>
 
-     <label class="inforLabel" for="dropDown1">Read-Only</label>
-     <select class="inforDropDownList" id="dropDown1" readonly>
-      <option value="a">A</option>
-      <option value="b" >B</option>
-      <option value="c">C</option>
-      <option value="d">D</option>
-      <option value="e" selected="selected">E</option>
-    </select><br>
-    <label class="inforLabel" for="dropDown2">Read-Only - Alternate</label>
-    <select class="inforDropDownList backgroundColor" id="dropDown2" readonly>
-      <option value="a">A</option>
-      <option value="b" >B</option>
-      <option value="c">C</option>
-      <option value="d">D</option>
-      <option value="e" selected="selected">E</option>
-    </select><br>
-    <label class="inforLabel" for="dropDown3">Disabled</label>
-    <select class="inforDropDownList"  id="dropDown3" disabled>
-      <option value="a">AA</option>
-      <option value="b">BB</option>
-      <option value="c" selected="selected">CC</option>
-      <option value="d">DD</option>
-      <option value="e">EE</option>
-    </select><br>
-    <label class="inforLabel" for="dropDown4">Disabled - Alternate</label>
-    <select class="inforDropDownList backgroundColor" id="dropDown4" disabled>
-      <option value="a">AA</option>
-      <option value="b">BB</option>
-      <option value="c" selected="selected">CC</option>
-      <option value="d">DD</option>
-      <option value="e">EE</option>
-    </select><br>
-    <p>
-      <button type="button" class="inforFormButton" id="toggleEnable">Enable/Disable</button>
-      <button type="button" class="inforFormButton" id="toggleReadonly">Enable/Readonly</button>
-    </p>
-
-  </div>
+	</div>
 </body>
 </html>

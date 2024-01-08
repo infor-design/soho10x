@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html >
 <head>
 	<title>Infor Context Menu - Using Delegates</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script >
@@ -33,9 +33,33 @@
 					// invoke the context menu control the clicked item
 					$(this).inforContextMenu({
 						menu: 'iconMenuOptions',
-						invokeMethod: 'immediate'
+						invokeMethod: 'immediate',
+						positionBelowElement: true
 					}, function (action, el, pos) {
-						  alert('Do ' + action);
+						switch (action) {
+							case ContextMenu.Delete:
+								deleteRelation();
+								break;
+							case ContextMenu.Edit:
+								edit();
+								break;
+							case ContextMenu.Copy:
+								copy();
+								break;
+							case NavigationItemType.Node:
+								Editor.New(NavigationItemType.Node, nodeElement);
+								break;
+							case NavigationItemType.Page:
+								Editor.New(NavigationItemType.Page, nodeElement);
+								break;
+							case NavigationItemType.Dynamic:
+								alert('Not Yet Implemented');
+								break;
+							default:
+								TopLevelDialog.ShowAlertDialog('', '', '', '');
+								hideEditor();
+								break;
+						}
 					});
 					// #endRegion
 
@@ -45,9 +69,10 @@
 
 			};
 
-			(function () {
+			var F = (function () {
 
 				var appendUs = [];
+				var o = $('<div>');
 
 				function d(number) {
 
@@ -67,10 +92,6 @@
 				}
 				$('.stuff').append(appendUs);
 				$('.stuff').on('mouseup', 'div.a', NameText.NameTextMouseClick);
-        $('.stuff').on('contextmenu', 'div.a', function (e) {
-          e.preventDefault();
-          return false;
-        });
 
 			} ());
 		});

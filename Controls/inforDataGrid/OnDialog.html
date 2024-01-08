@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 
 	<title>Infor Message Dialog Box</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDataGrid.js"></script>
 	<script src="../inforMessageDialog/js/inforMessageDialog.js"></script>
@@ -49,30 +49,24 @@
 				showFilter: true,
 				enableCellNavigation: true,
 				fillHeight: false
-			};
-
+			}
 			grid = $('#grid1').inforDataGrid(options);
 
-			var dialog = $('#dialog');
+			var dialog = $("#dialog");
 
-			dialog.message({
-				title: 'Grid on a Dialog',
-				dialogType: 'General',
+			dialog.inforMessageDialog({
+				title: "Grid on a Dialog",
+				dialogType: "General",
 				innerPadding: false,
 				width:650,
 				autoFocus: false,
 				buttons: [{
-					text: Globalize.localize('Ok'),
+					text: Globalize.localize("Ok"),
 					click: function () {
-						$(this).modal('close');
+						$(this).inforDialog("close");
 					},
 					isDefault: true
 				}]
-			});
-
-			dialog.on('close', function() {
-				alert('close on dialog called');
-        console.log(this)
 			});
 
 			//Focus first editable cell
@@ -80,7 +74,7 @@
 		}
 
 		$(function () {
-			$('.inforFormButton').click(function () {
+			$(".inforFormButton").click(function () {
 				openDialog();
 			});
 		});

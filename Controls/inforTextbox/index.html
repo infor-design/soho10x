@@ -1,34 +1,33 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
 
-  <title>Infor Textbox Example</title>
+	<title>Infor Textbox Example</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
 
-  <script >
-     $(function($) {
-      $('body').inforForm();
-      $('#field2').focus();
-      console.log($('#field2').attr('readonly'))
-    });
-  </script>
+	<script >
+		 $(function($) {
+			$('body').inforForm();
+			$("#field2").focus();
+		});
+	</script>
 </head>
 
 <body>
-  <div class="inforSingleColumnLayout autoLabelWidth">
-    <label class="inforLabel" for="field1">Label</label>
-    <input type="text" class="inforTextbox" id="field1" name="field1" style="width: 82px" value="Data"><br>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+	  <label class="inforLabel" for="field1">Label</label>
+	  <input type="text" class="inforTextbox" id="field1" name="field1" style="width: 82px" value="Data"><br>
 
-    <label class="inforLabel" for="field2">Field in Focus</label>
-    <input type="text" class="inforTextbox required" id="field2" readonly name="field2" value="Data"><br>
-  </div>
+	  <label class="inforLabel" for="field2">Field in Focus</label>
+	  <input type="text" class="inforTextbox required" id="field2" name="field2" value="Data"><br>
+	</div>
 </body>
 </html>

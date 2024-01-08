@@ -1,55 +1,50 @@
-/* Infor Text Button
+﻿/* Infor Text Button
 ----------------------------------*/
 
-.inforTextButton ,.inforTextButton[disabled], .inforSplitButton{
-	background-color: #f2f2f2;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-	color: #444;
+.inforTextButton ,.inforTextButton[disabled], .inforMenuButton, .inforSplitButton{
+	background: none;
+	border: none;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	color: #666666;
 	cursor: default;
-	height: 24px;
+	height: 22px;
 	margin: 0 0px 0 5px;
 	outline: medium none;
 	overflow: hidden;
-	padding: 0 8px;
+	padding: 0 4px;
 	font-family: Helvetica, Arial, sans-serif;
 	cursor: pointer;
 }
 
 .inforTextButton {
-	padding: 3px 10px;
+	padding: 3px 7.5px;
 }
 
-.inforTextButton[disabled], .inforTextButton.disabled {
-  opacity: 0.6;
-  filter: alpha(opacity=60) !important;
+.inforTextButton[disabled], .inforTextButton.disabled{
+	color: #999999;
 	cursor: default;
-}
-
-.inforTextButton[disabled]:active, .inforTextButton.disabled:active {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc !important;
-  box-shadow: none;
 }
 
 .inforTextButton:hover {
 	background-color: #d8d8d8;
 	box-shadow: 0 1px #a2a2a2;
 	color: #1a1a1a;
+	border: 1px solid transparent !important;
 }
 
 .inforTextButton:hover[disabled], .inforTextButton.disabled:hover {
+	color: #999999;
 	cursor: default;
-	background-color: #f2f2f2;
-  color: #444;
+	background-color: transparent;
 	box-shadow: none;
 }
 
 .inforTextButton:active {
-  background-color: #bebebe;
-  box-shadow: 0 1px #7a7a7a inset;
-  color: #1a1a1a;
-  border: 1px solid transparent !important;
+	background-color: #bebebe;
+    box-shadow: 0 1px #7a7a7a inset;
+	color: #1a1a1a;
+	border: 1px solid transparent !important;
 }
 
 .inforTextButton:focus {

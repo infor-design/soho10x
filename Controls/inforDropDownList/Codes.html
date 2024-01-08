@@ -1,58 +1,61 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
 
-  <title>Infor DropDown List : Using Codes </title>
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<title>Infor DropDown List : Using Codes </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<link rel="stylesheet" href="css/inforDataGrid.css"/>
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
 </head>
-  <script>
-    $(function () {
-      $('#submitButton').click(function() {
-        console.log($('#dropDown1').val(), $('#dropDown1').getCode());
-        console.log($('#dropDown2').val(), $('#dropDown2').getCode());
-      });
+	<script>
+		$(function () {
+			$("#submitButton").click(function() {
+				console.log($("#dropDown1").getCode(), $("#dropDown2").getCode());
+			});
 
-      //Initialize the Drop Downs.
+			//Initialize the Drop Downs.
 
-      var securityOptions = [{label: ' ',value: '', id: ''} ,{label: 'red',value: '8',id: '8'}, {label: 'orange',value: '9',id: '9'},{label: 'yellow',value: '10',id: '10'},{label: 'green',value: '11',id: '11'},{label: 'blue',value: '12',id: '12'}, {label: 'indigo',value: '13',id: '13'},{label: 'violet',value: '14',id: '14'}, {label: 'black',value: '33',id: '33'},{label: 'purple',value: '3',id: '3' }, {label: 'sage',value: '0033',id: '0033'}];
+			var securityOptions = [{label: ' ',value: '', id: ''} ,{label: 'red',value: '8',id: '8'}, {label: 'orange',value: '9',id: '9'},{label: 'yellow',value: '10',id: '10'},{label: 'green',value: '11',id: '11'},{label: 'blue',value: '12',id: '12'}, {label: 'indigo',value: '13',id: '13'},{label: 'violet',value: '14',id: '14'}, {label: 'black',value: '33',id: '33'},{label: 'purple',value: '3',id: '3' }, {label: 'sage',value: '0033',id: '0033'}];
 
-      function filterDropDown(request, response){
-        var filteredOptions = securityOptions;
-        setTimeout(function () {
-          response(filteredOptions);
-        }, 100);
-      }
+			function filterDropDown(request, response){
+				var filteredOptions = securityOptions;
+				return response(filteredOptions);
+			}
 
-      $('#dropDown1').dropdown({source: filterDropDown});
-      $('#dropDown1').dropdown('setCode','12');
-      $('body').inforForm();
-    });
-  </script>
+			$("#dropDown1").inforDropDownList({source: filterDropDown, disableSearchThreshold: 1});
+			$("#dropDown2").inforDropDownList({source: filterDropDown, displayCodeOnly: true});
+			$("body").inforForm();
+		});
+	</script>
 <body>
-  <div>
-    <span class="inforToolbar">
-      <button type="button" id="submitButton" class="inforIconButton save" title="Show Serialized Value" ></button>
-    </span>
-    <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
-      <label class="inforLabel" id="dropDown1Label">Store Code / Show Label</label>
-      <select class="inforDropDownList" id="dropDown1" >
-      </select>
-      <br>
-      <label class="inforLabel" id="dropDown1Label">Regular</label>
-      <select class="inforDropDownList" id="dropDown2" >
-        <option>Option 1</option>
-        <option value="o2">Option 2</option>
-        <option value="o3">Option 3</option>
-        <option value="o4">Option 4</option>
-      </select>
-    </div>
-  </div>
+	<div>
+		<span class="inforToolbar">
+			<button type="button" id="submitButton" class="inforIconButton save" title="Show Serialized Value" ></button>
+		</span>
+		<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+			<label class="inforLabel" id="dropDown1Label">Store Code / Show Label</label>
+			<select class="inforDropDownList" id="dropDown1" >
+			</select>
+			<br>
+			<label class="inforLabel" id="dropDown1Label">Store Code / Show Code</label>
+			<select class="inforDropDownList" id="dropDown2" >
+			</select>
+			<br>
+			<label class="inforLabel" id="dropDown1Label">Regular</label>
+			<select class="inforDropDownList" id="dropDown2" >
+				<option>Option 1</option>
+				<option>Option 2</option>
+				<option>Option 3</option>
+				<option>Option 4</option>
+			</select>
+		</div>
+	</div>
 </body>
 </html>

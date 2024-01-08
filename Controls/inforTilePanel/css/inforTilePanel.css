@@ -1,4 +1,4 @@
-/* Infor Tile Panels
+﻿/* Infor Tile Panels
 ----------------------------------*/
 .inforTilePanel {
 	background-color: #f2f2f2;
@@ -65,7 +65,7 @@
 }
 
 .inforPanelHeaderText{
-	color: #444;
+	color: #333333;
 	font-family: Helvetica,Arial,sans-serif !important;
 	font-size: 1.6em;
 	padding-left: 7px;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,8 +9,8 @@
 
   <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/jquery-1.10.2.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
   <script src="../Release/inforControlsCombined.js"></script>
 
   <script>
@@ -36,44 +36,61 @@
       {value:'VT', label:'Vermont'}, {value:'VI', label:'Virgin Islands'}, {value:'VA', label:'Virginia'}, {value:'WA', label:'Washington'},
       {value:'WV', label:'West Virginia'}, {value:'WI', label:'Wisconsin'}, {value:'WY', label:'Wyoming'}];
 
-
-      //Initialize
-      $('#input-autocomplete').autocomplete({source: function (term, response) {
+      var source = function (term, response, elem) {
+        console.log('Finding source for ' + elem.id);
         /*
-        //You Could make an ajax call
+        //You could make an ajax call
 
           $.getJSON('http://107.170.15.202:4000/api/states?term='+term, function(data) {
-          //Structure the data with val, label syntax is done on the server
+          //Structure the data with value, label syntax is done on the server
             response(data);
           });
 
         */
 
         //Filter and simulate
-          states = [];
-          for (var i in allStates) {
-            if (allStates[i].label.toLowerCase().indexOf(term) > -1) {
-              states.push(allStates[i]);
-            }
+        states = [];
+        for (var i in allStates) {
+          if (allStates[i].label.toLowerCase().indexOf(term) > -1) {
+            states.push(allStates[i]);
           }
+        }
 
-          response(states);
+        setTimeout(function () { response(states); }, 200);
+      };
 
-      }}).on('change', function () {
-        console.log('Changed to :' + $(this).val());
-      }).on('selected', function (e, args) {
+      var logResponse = function (e, args) {
+        if (args.value) {
+          console.log('Selected value : ' + args.value);
+        }
         console.log('Selected to :' + $(this).val(), args);
-      });
+      };
+
+      //Initialize
+      $('#input-autocomplete').autocomplete({source: source}).on('change', function () {
+        console.log('Changed to: ' + $(this).val());
+      }).on('selected', logResponse);
+
+      $('#required-autocomplete').autocomplete({ source: source, selectionRequired: true }).on('change', function () {
+        console.log('Changed to: ' + $(this).val());
+      }).on('selected', logResponse);
+
+      $('#label-autocomplete').autocomplete({ source: source, selectionRequired: true, selectLabel: true }).on('change', function () {
+        console.log('Changed to: ' + $(this).val());
+      }).on('selected', logResponse);
 
     });
   </script>
 </head>
 <body class="inforApplicationPadding">
-
   <div class="field">
-    <label class="label" for="input-autocomplete">Label</label>
-    <input class="inforTextbox" data-init="false" type="text" data-autocomplete="source" placeholder="Type to Search" id="input-autocomplete">
+    <label class="label" for="input-autocomplete">Default Autocomplete</label>
+    <input class="inforTextbox autocomplete" data-init="false" type="text" data-autocomplete="source" placeholder="Type to Search" id="input-autocomplete"><br />
+    <label class="label" for="required-autocomplete">Selection Required</label>
+    <input class="inforTextbox autocomplete" data-init="false" type="text" data-autocomplete="source" placeholder="Type to Search" id="required-autocomplete"><br />
+    <label class="label" for="label-autocomplete">Select Label</label>
+    <input class="inforTextbox autocomplete" data-init="false" type="text" data-autocomplete="source" placeholder="Type to Search" id="label-autocomplete">
+    <button onclick="console.log('value: ' + $('#label-autocomplete').attr('data-value'));">Log value</button><br />
   </div>
-
 </body>
 </html>

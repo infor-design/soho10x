@@ -4,14 +4,14 @@
 
 	<title>Using KnockOut with Drop Downs.</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../lib/knockout-2.3.0.debug.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
-
+	
 	<script src="../inforShared/js/inforKnockout.js"></script>
-
+	
 	<script>
 		$(function () {
 			var viewModel = {
@@ -21,7 +21,7 @@
 				isEnabled: ko.observable(true),
 				isReadOnly: ko.observable(false)
 			};
-
+			
 			ko.applyBindings(viewModel);
 
 			//show the value...
@@ -52,7 +52,7 @@
 <body >
 	<label class="inforLabel" for="dateInput1">Date Field</label>
 	<input class="inforDateField" id="dateInput1" data-bind="inforDateField: {value: dateVal, visible: isVisible, readOnly: isReadOnly, enable: isEnabled}" type="text">
-
+		  
 	<br>
 	<button type="button" class="inforFormButton"  id="showValue">Show Value</button>
 	<button type="button" class="inforFormButton" id="changeValue">Change Value</button>

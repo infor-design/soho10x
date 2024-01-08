@@ -1,81 +1,86 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Dropdown: Select First</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>Infor DropDownList : Main Example</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
-  <script>
-    $(function () {
-      //selectFirst was an option but now it is not needed. The control will automatically select
-      //the first element if none are selected
-      $('#dropDown1').dropdown(); ///{editable:false, selectFirst: true}
-      $('body').inforForm();
-    });
-  </script>
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
 
+			//The option select first will select the first if none are selected.
+			//Try to remove selected and toggle the selectFirst option.
+			$("#dropDown1").inforDropDownList({editable:false, selectFirst: true});
+			$("body").inforForm();
+		});
+	</script>
 </head>
 <body class="inforHidden">
-  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
-     <label class="inforLabel" id="dropDown1Label">Ship To</label>
-     <select class="inforDropDownList required" id="dropDown1" >
-      <option value="al">Alabama</option>
-      <option value="ar">Arkansas</option>
-      <option value="Ca">California</option>
-      <option value="Co">Colorado</option>
-      <option value="Co">Connecticut</option>
-      <option value="De">Delaware</option>
-      <option value="Fl">Florida</option>
-      <option value="Ge">Georgia </option>
-      <option value="Ha">Hawaii</option>
-      <option value="Id" >Idaho</option>
-      <option value="Il">Illinois</option>
-      <option value="In">Indiana</option>
-      <option value="Ka">Kansas</option>
-      <option value="Ke">Kentucky</option>
-      <option value="Lo">Louisiana</option>
-      <option value="Ma">Maine</option>
-      <option value="Ma">Maryland</option>
-      <option value="Ma" >Massachusetts</option>
-      <option value="Mi">Michigan</option>
-      <option value="Mi">Minnesota</option>
-      <option value="Mi">Mississippi</option>
-      <option value="Mi">Missouri</option>
-      <option value="Mo">Montana</option>
-      <option value="Ne">Nebraska</option>
-      <option value="Ne">Nevada</option>
-      <option value="Ne">New Hampshire</option>
-      <option value="Ne">New Jersey</option>
-      <option value="Ne">New Mexico</option>
-      <option value="Ne">New York</option>
-      <option value="No">North Carolina</option>
-      <option value="No">North Dakota</option>
-      <option value="Oh">Ohio</option>
-      <option value="Ok">Oklahoma</option>
-      <option value="Or">Oregon</option>
-      <option value="Pe">Pennsylvania</option>
-      <option value="Rh">Rhode Island</option>
-      <option value="So">South Carolina</option>
-      <option value="So">South Dakota</option>
-      <option value="Te">Tennessee</option>
-      <option value="Te">Texas</option>
-      <option value="Ut">Utah</option>
-      <option value="Ve">Vermont</option>
-      <option value="Vi">Virginia</option>
-      <option value="Wa">Washington</option>
-      <option value="We">West Virginia</option>
-      <option value="Wi">Wisconsin</option>
-      <option value="Wy">Wyoming</option>
-    </select><br>
-    <p>
-    <strong>Alabama</strong> should be selected</p>
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	   <label class="inforLabel" id="dropDown1Label">Ship To</label>
+	   <select class="inforDropDownList required" id="dropDown1" >
+			<option value="al">Alabama</option>
+			<option value="al">&lt;test&gt;</option>
+			<option value="a'z"><b>A'rizona</b></option>
+			<option value="ar">Arkansas</option>
+			<option value="Ca">California</option>
+			<option value="Co">Colorado</option>
+			<option value="Co">Connecticut</option>
+			<option value="De">Delaware</option>
+			<option value="Fl">Florida</option>
+			<option value="Ge">Georgia </option>
+			<option value="Ha">Hawaii</option>
+			<option value="Id" >Idaho</option>
+			<option value="Il">Illinois</option>
+			<option value="In">Indiana</option>
+			<option value="Io">&lt;script&gt;alert('")&lt;/script&gt;</option>
+			<option value="Ka">Kansas</option>
+			<option value="Ke">Kentucky</option>
+			<option value="Lo">Louisiana</option>
+			<option value="Ma">Maine</option>
+			<option value="Ma">Maryland</option>
+			<option value="Ma" >Massachusetts</option>
+			<option value="Mi">Michigan</option>
+			<option value="Mi">Minnesota</option>
+			<option value="Mi">Mississippi</option>
+			<option value="Mi" >Missouri</option>
+			<option value="Mo">Montana</option>
+			<option value="Ne">Nebraska</option>
+			<option value="Ne">Nevada</option>
+			<option value="Ne">New Hampshire</option>
+			<option value="Ne">New Jersey</option>
+			<option value="Ne">New Mexico</option>
+			<option value="Ne">New York</option>
+			<option value="No">North Carolina</option>
+			<option value="No">North Dakota</option>
+			<option value="Oh">Ohio</option>
+			<option value="Ok">Oklahoma</option>
+			<option value="Or">Oregon</option>
+			<option value="Pe">Pennsylvania</option>
+			<option value="Rh">Rhode Island</option>
+			<option value="So">South Carolina</option>
+			<option value="So">South Dakota</option>
+			<option value="Te">Tennessee</option>
+			<option value="Te">Texas</option>
+			<option value="Ut">Utah</option>
+			<option value="Ve">Vermont</option>
+			<option value="Vi">Virginia</option>
+			<option value="Wa">Washington</option>
+			<option value="We">West Virginia</option>
+			<option value="Wi">Wisconsin</option>
+			<option value="Wy">Wyoming</option>
+		</select><br>
+	   <p>
+	   <strong>Indiana</strong> should be selected</p>
 
-  </div>
+	</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,24 +6,19 @@
 
 	<title>Infor Message Dialog Box</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTabset.js"></script>
 
 	<script>
 		//Handle the dialog
 		function openDialog() {
+			 var templateWizard = $("#linkedReportDetail")
 
-			 $("#reportDetailDialog").message({
-				title: "Add Schedule",
+			 templateWizard.inforMessageDialog({
+				title: "Tabs on a Dialog",
 				dialogType: "General",
-				width: "800",
-				height: "auto",
-				dialogType: "General",
-				shortMessage: "",
-				detailedMessage: "",
-				autoFocus: false,
 				buttons: [{
 					text: Globalize.localize("Ok"),
 					click: function () {
@@ -32,14 +27,47 @@
 					isDefault: true
 				}]
 			});
+			$("#linkedReportTabContainer").inforTabset({fillToBottom:false});
 
-			$("#reportDetailDialog").on('close', function() {});
 
+		var ctl04_TestGrid1_data = [];
+		var ctl04_TestGrid1_columns = [];
+		ctl04_TestGrid1_data.push({ ROWORDER: '1', ROWID: '1', FIRSTNAME: 'JAMES', LASTNAME: 'SMITH', AGE: '20', HEIGHT: '5', STARTDATE: '1/1/2001 12:00:00 AM', STATE: 'AL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '2', ROWID: '2', FIRSTNAME: 'JOHN', LASTNAME: 'JOHNSON', AGE: '21', HEIGHT: '5.1', STARTDATE: '1/2/2001 12:00:00 AM', STATE: 'AK', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '3', ROWID: '3', FIRSTNAME: 'ROBERT', LASTNAME: 'WILLIAMS', AGE: '22', HEIGHT: '5.2', STARTDATE: '1/3/2001 12:00:00 AM', STATE: 'AZ', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '4', ROWID: '4', FIRSTNAME: 'MICHAEL', LASTNAME: 'BROWN', AGE: '23', HEIGHT: '5.3', STARTDATE: '1/4/2001 12:00:00 AM', STATE: 'AR', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '5', ROWID: '5', FIRSTNAME: 'WILLIAM', LASTNAME: 'JONES', AGE: '24', HEIGHT: '5.4', STARTDATE: '1/5/2001 12:00:00 AM', STATE: 'CA', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '6', ROWID: '6', FIRSTNAME: 'DAVID', LASTNAME: 'MILLER', AGE: '25', HEIGHT: '5.5', STARTDATE: '1/6/2001 12:00:00 AM', STATE: 'CO', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '7', ROWID: '7', FIRSTNAME: 'RICHARD', LASTNAME: 'DAVIS', AGE: '26', HEIGHT: '5.6', STARTDATE: '1/7/2001 12:00:00 AM', STATE: 'CT', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '8', ROWID: '8', FIRSTNAME: 'CHARLES', LASTNAME: 'GARCIA', AGE: '27', HEIGHT: '5.7', STARTDATE: '1/8/2001 12:00:00 AM', STATE: 'DE', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '9', ROWID: '9', FIRSTNAME: 'JOSEPH', LASTNAME: 'RODRIGUEZ', AGE: '28', HEIGHT: '5.8', STARTDATE: '1/9/2001 12:00:00 AM', STATE: 'DC', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '10', ROWID: '10', FIRSTNAME: 'THOMAS', LASTNAME: 'WILSON', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
+		ctl04_TestGrid1_data.push({ ROWORDER: '11', ROWID: '11', FIRSTNAME: 'SADAT', LASTNAME: 'X', AGE: '29', HEIGHT: '5.9', STARTDATE: '1/10/2001 12:00:00 AM', STATE: 'FL', NOTES: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce dictum massa eget porttitor aliquam turpis eros auctor enim vitae auctor sem tellus et massa. Quisque ac pulvinar odio. Etiam est turpis egestas eu iaculis ut condimentum vel velit. Sed eu' });
 
-        setTimeout(function() {
-			$("#reportDetailDialog #reportDetailTabContainer").inforTabset({ fillToBottom: false });
-            $("#scheduledReportDetailForm").inforForm();
-        }, 1000);
+		ctl04_TestGrid1_columns.push({ id: 'ROWORDER', name: 'Order', field: 'ROWORDER', maxWidth: 20, width: 100, formatter: TextCellFormatter, filterType: IntegerFilter });
+		ctl04_TestGrid1_columns.push({ id: 'LASTNAME', name: 'Last Name', field: 'LASTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+		ctl04_TestGrid1_columns.push({ id: 'FIRSTNAME', name: 'First Name', field: 'FIRSTNAME', width: 100, formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter });
+
+			var options = {
+				columns: ctl04_TestGrid1_columns,
+				dataset: ctl04_TestGrid1_data,
+				idProperty: 'ROWORDER',
+				editable: true,
+				showCheckboxes: true,
+				showDrillDown: false,
+				showStatusIndicators: true,
+				showGridSettings: true,
+				showFilter: false,
+				forceFitColumns: true,
+				multiSelect: true,
+				showHeaderContextMenu: true,
+				showSavedFilters: false,
+				showFilterWithinResults: true,
+				enableRowReordering: true,
+				enableCellNavigation: true
+			}
+			ctl04_TestGrid1 = $('#grid1').inforDataGrid(options);
+
 		}
 
 		$(function () {
@@ -50,381 +78,322 @@
 	</script>
 </head>
 <body>
+	<div id="linkedReportDetail" style="display:none">
+	  <fieldset class="inforFieldSet" id="reportDetails" style="border-right:none !important">
+		<div class="content">
+		  <div class="infor2ColumnLayout">
+			<div class="column1">
+			  <label class="inforLabel" for="Name">Name</label> <input class="inforTextbox" id="Name" name="Name" type="text" value="1212"><br>
+			  <label class="inforLabel" for="Description">Description</label> <input class="inforTextbox" id="Description" name="Description" type="text" value="2121"><br>
+			  <div>
+				<label class="inforLabel" for="Destination">Destination</label>
+				<div class="inforTriggerField">
+				  <table class="inforTriggerFieldTable">
+					<tbody>
+					  <tr>
+						<td>
+						  <input class="inforLookupField inforTextbox" id="destinationLookup" name="Destination" type="text" value="/personalFolder_Theo Harper">
+						</td>
+						<td></td>
+					  </tr>
+					</tbody>
+				  </table>
+				</div>
+			  </div><br>
+			</div>
+			<div class="column2">
+			  <label class="inforLabel" for="LastModified">LastModified</label> <input class="inforTextbox" id="LastModified" name="LastModified" readonly="readonly" type="text" value="21/05/2012 16:44:53"><br>
+			  <label class="inforLabel" for="BusinessUnit">BusinessUnit</label> <input class="inforTextbox" id="BusinessUnit" name="BusinessUnit" readonly="readonly" type="text" value="PK1"><br>
+			  <br>
+			</div>
+		  </div>
+		</div>
+	  </fieldset>
+		 <div id="linkedReportTabContainer" class="inforTabContainer" style="height:200px;width:746px; overflow: hidden; margin:0 10px 10px; ">
+		  <ul class="inforTabset" >
+			<li>
+			  <a href="#tab0">Data Selection</a>
+			</li>
+			<li>
+			  <a href="#tab1">Report Output</a>
+			</li>
+		  </ul>
+			<div id="tab0" class="ui-tabs-panel" style="padding:0">
+				<div style="height: 178px" id="grid1" ></div>
+			</div>
+			<div id="tab1" class="inforScrollableArea ui-tabs-panel ui-tabs-hide" style="z-index:10000">
+			  <table>
+				<tbody>
+				  <tr id="outputFormat_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Output Format</label>
+					</td>
+					<td>
+					  <label class="inforLabel noColon">=</label>
+					</td>
+					<td>
 
-
-
-
-
-
-<div id="reportDetailDialog" style="display:none">
-<form action="/ReportManager/" id="scheduledReportDetailForm" method="post">        <div id="reportDetails" data-report="/Example Reports/Process/FPTB1.srdl"></div>
-        <div class="infor2ColumnLayout autoLabelWidth">
-
-<div class="column1">
-    <label class="inforLabel" for="ScheduledReportName">Report Name</label>
-    <input class="inforTextbox required" id="ScheduledReportName" name="ScheduledReportName" type="text" value="FPTB1" />
-    <br />
-    <label class="inforLabel" for="Description">Report Description</label>
-    <input class="inforTextbox required" id="Description" name="Description" type="text" value="Trial Balance" />
-    <br/>
-    <label class="inforLabel" for="ScheduledReportRunAs">User Name</label>
-<select class="inforDropDownList" id="ScheduledReportRunAs" name="ScheduledReportRunAs"><option selected="selected" value="4ba51a1b-5729-4217-b8dd-3b2f1a8433a9">ZZZ</option>
-<option value="fde9f1e3-7681-4f66-a088-5c8b2f458e01">PK1</option>
-<option value="afa727f7-92fa-425c-8355-6c4b874d5fab">Theo Harper</option>
-<option value="610809c9-b347-4a03-add5-aa4a51b22e7d">SDR</option>
-</select>     <br/>
-     <label class="inforLabel" for="UserDescription">User Description</label>
-    <input class="inforTextbox" id="UserDescription" name="UserDescription" readonly="readonly" type="text" value="System" />
-</div>
-<div class="column2">
-    <label class="inforLabel" for="TargetReportName">Report Name</label>
-    <input class="inforTextbox" id="TargetReportName" name="TargetReportName" readonly="readonly" type="text" value="FPTB1" />
-    <br/>
-    <label class="inforLabel" for="TargetReportType">Type</label>
-    <input class="inforTextbox" id="TargetReportType" name="TargetReportType" readonly="readonly" type="text" value="Report" />
-    <br/>
-    <label class="inforLabel" for="TargetReportDescription">Report Description</label>
-    <input class="inforTextbox" id="TargetReportDescription" name="TargetReportDescription" readonly="readonly" type="text" value="Trial Balance" />
-    <br/>
-    <label class="inforLabel" for="TargetReportLocation">Location</label>
-    <input class="inforTextbox" id="TargetReportLocation" name="TargetReportLocation" readonly="readonly" type="text" value="/Example Reports/Process" />
-    <br/>
-    <label class="inforLabel" for="TargetReportBusinessUnit">Business Unit</label>
-    <input class="inforTextbox" id="TargetReportBusinessUnit" name="TargetReportBusinessUnit" readonly="readonly" type="text" value="Core" />
-</div>
-        </div>
-        <br />
-<input id="ScheduleId" name="ScheduleId" type="hidden" value="be2950ee-8830-4675-b388-47a8bb097078" /><input id="ScheduledReportId" name="ScheduledReportId" type="hidden" value="" /><input id="TargetReportPath" name="TargetReportPath" type="hidden" value="/Example Reports/Process/FPTB1.srdl" /><input data-val="true" data-val-number="The field ScheduledReportUpdateCount must be a number." data-val-required="The ScheduledReportUpdateCount field is required." id="ScheduledReportUpdateCount" name="ScheduledReportUpdateCount" type="hidden" value="0" />        <div id="reportDetailTabContainer" class="inforTabContainer" style="height: 300px; width: 100%; overflow: hidden">
-            <ul class="inforTabset">
-                    <li class=""><a href="#tab0">Data Selection</a></li>
-                    <li class=""><a href="#tab1">Report Output</a></li>
-                    <li class=""><a href="#tab2">System</a></li>
-            </ul>
-                <div id="tab0" class="inforScrollableArea ui-tabs-panel">
-                    <table>
-<tr id="businessUnit_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Business Unit</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforLookupField required" data-validation="required" id="businessUnitCtrl" name="businessUnit" type="text" value="PK1" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="identifier_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Identifier</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="identifierCtrl" name="identifier" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>                    </table>
-                </div>
-                <div id="tab1" class="inforScrollableArea ui-tabs-panel">
-                    <table>
-<tr id="outputFormat_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Output Format</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><select class="inforDropDownList required" data-validation="required" id="outputFormatCtrl" name="outputFormat"><option value="XML">XML file with report data</option><option value="CSV">CSV (comma delimited)</option><option value="PDF">PDF</option><option selected="selected" value="HTML4.0">HTML 4.0</option><option value="MHTML">MHTML (web archive)</option><option value="EXCELOPENXML">Excel</option><option value="IMAGE">TIFF file</option><option value="WORDOPENXML">Word</option></select></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="viewOutput_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input class="inforCheckbox" id="viewOutputCtrl" name="viewOutput" onclick="parametersValidation.handleOutputActions(&#39;view&#39;);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="viewOutputCtrl">View Output</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="storeOutput_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input checked="checked" class="inforCheckbox" id="storeOutputCtrl" name="storeOutput" onclick="parametersValidation.enableRenderFormats(!this.checked); parametersValidation.handleOutputActions(&#39;store&#39;);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="storeOutputCtrl">Store Output</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="outputPath_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Output Path</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox required" data-validation="required" id="outputPathCtrl" name="outputPath" type="text" value="/My Reports/Output" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="outputFileName_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Output Filename</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox required" data-validation="required" id="outputFileNameCtrl" name="outputFileName" type="text" value="FPTB1-$Timestamp" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="printOutput_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input class="inforCheckbox" id="printOutputCtrl" name="printOutput" onclick="parametersValidation.handleOutputActions(&#39;print&#39;);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="printOutputCtrl">Print Output</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="outputPrinter_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Printer</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforLookupField" id="outputPrinterCtrl" name="outputPrinter" type="text" value="UKFAPDEV4" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="printCopies_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Number of copies</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="printCopiesCtrl" name="printCopies" type="text" value="1" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="Locale_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Locale</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforLookupField" id="LocaleCtrl" name="Locale" type="text" value="en-GB" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="calendar_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="calendar" type="hidden" value="Gregorian" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="direction_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="direction" type="hidden" value="LTR" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="numeralVariant_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="numeralVariant" type="hidden" value="1" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>                    </table>
-                </div>
-                <div id="tab2" class="inforScrollableArea ui-tabs-panel">
-                    <table>
-<tr id="reportExecutable_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input fixed="true" name="reportExecutable" type="hidden" value="FPTB1" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="Z_SALFLDG_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input fixed="true" name="Z_SALFLDG" type="hidden" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="ReportExecutionId_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="ReportExecutionId" type="hidden" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="endUserLocale_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="endUserLocale" type="hidden" value="en-GB" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="SScurrentPeriod_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input fixed="true" name="SScurrentPeriod" type="hidden" value="009/2005" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="SSCurrentDate_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Current Date</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforDateField" id="SSCurrentDateCtrl" name="SSCurrentDate" onchange="parametersValidation.handleOnChangeValue(this);" type="text" /></td>
-<td></td>
-<td></td>
-<td><input allcheckbox="true" checked="checked" class="inforCheckbox" hasAllCheckBox="true" id="SSCurrentDate_allCtrl" name="SSCurrentDate_all" onchange="parametersValidation.handleOnChangeCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SSCurrentDate_allCtrl">All</label></td>
-<td></td>
-</tr><tr id="SSLedgerCode_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Ledger Code</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="SSLedgerCodeCtrl" name="SSLedgerCode" onchange="parametersValidation.handleOnChangeValue(this);" type="text" /></td>
-<td></td>
-<td></td>
-<td><input allcheckbox="true" checked="checked" class="inforCheckbox" hasAllCheckBox="true" id="SSLedgerCode_allCtrl" name="SSLedgerCode_all" onchange="parametersValidation.handleOnChangeCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SSLedgerCode_allCtrl">All</label></td>
-<td><input class="inforCheckbox" id="SSLedgerCode_blankCtrl" includeblanks="true" name="SSLedgerCode_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SSLedgerCode_blankCtrl">Include Blanks</label></td>
-</tr><tr id="SSOperatorGroup_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="SSOperatorGroup" type="hidden" /></td>
-<td></td>
-<td></td>
-<td><input name="SSOperatorGroup_all" type="hidden" value="True" /></td>
-<td></td>
-</tr><tr id="SSOperatorID_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="SSOperatorID" type="hidden" /></td>
-<td></td>
-<td></td>
-<td><input name="SSOperatorID_all" type="hidden" value="True" /></td>
-<td></td>
-</tr><tr id="SSComment_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Comment</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="SSCommentCtrl" name="SSComment" onchange="parametersValidation.handleOnChangeValue(this);" type="text" /></td>
-<td></td>
-<td></td>
-<td><input allcheckbox="true" checked="checked" class="inforCheckbox" hasAllCheckBox="true" id="SSComment_allCtrl" name="SSComment_all" onchange="parametersValidation.handleOnChangeCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SSComment_allCtrl">All</label></td>
-<td></td>
-</tr><tr id="printFrontSheet_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Print Front Sheet</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="printFrontSheetCtrl" name="printFrontSheet" onchange="parametersValidation.handleOnChangeValue(this);" type="text" /></td>
-<td></td>
-<td></td>
-<td><input allcheckbox="true" checked="checked" class="inforCheckbox" hasAllCheckBox="true" id="printFrontSheet_allCtrl" name="printFrontSheet_all" onchange="parametersValidation.handleOnChangeCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="printFrontSheet_allCtrl">All</label></td>
-<td></td>
-</tr><tr id="Reprint_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="Reprint" type="hidden" /></td>
-<td></td>
-<td></td>
-<td><input name="Reprint_all" type="hidden" value="True" /></td>
-<td></td>
-</tr><tr id="testPrint_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Print Test Page</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="testPrintCtrl" name="testPrint" onchange="parametersValidation.handleOnChangeValue(this);" type="text" /></td>
-<td></td>
-<td></td>
-<td><input allcheckbox="true" checked="checked" class="inforCheckbox" hasAllCheckBox="true" id="testPrint_allCtrl" name="testPrint_all" onchange="parametersValidation.handleOnChangeCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="testPrint_allCtrl">All</label></td>
-<td></td>
-</tr><tr id="SSSuppOption_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="SSSuppOption" type="hidden" /></td>
-<td></td>
-<td></td>
-<td><input name="SSSuppOption_all" type="hidden" value="True" /></td>
-<td></td>
-</tr><tr id="SSDocumentType_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="SSDocumentType" type="hidden" /></td>
-<td></td>
-<td></td>
-<td><input name="SSDocumentType_all" type="hidden" value="True" /></td>
-<td></td>
-</tr><tr id="userName_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="userName" type="hidden" value="ZZZ" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="PeriodFrom_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Period From</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="PeriodFromCtrl" name="PeriodFrom" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="PeriodFrom_blankCtrl" includeblanks="true" name="PeriodFrom_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="PeriodFrom_blankCtrl">Include Blanks</label></td>
-</tr><tr id="PeriodTo_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Period To</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="PeriodToCtrl" name="PeriodTo" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="PeriodTo_blankCtrl" includeblanks="true" name="PeriodTo_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="PeriodTo_blankCtrl">Include Blanks</label></td>
-</tr><tr id="SelectBy_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Select By</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="SelectByCtrl" name="SelectBy" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="SelectBy_blankCtrl" includeblanks="true" name="SelectBy_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SelectBy_blankCtrl">Include Blanks</label></td>
-</tr><tr id="ValueBasis_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Value Basis</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="ValueBasisCtrl" name="ValueBasis" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="ValueBasis_blankCtrl" includeblanks="true" name="ValueBasis_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="ValueBasis_blankCtrl">Include Blanks</label></td>
-</tr><tr id="SumDebtors_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input class="inforCheckbox" id="SumDebtorsCtrl" name="SumDebtors" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SumDebtorsCtrl">Summarize Debtor Balances</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="SumCreditors_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input class="inforCheckbox" id="SumCreditorsCtrl" name="SumCreditors" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SumCreditorsCtrl">Summarize Creditor Balances</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="SumClients_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input class="inforCheckbox" id="SumClientsCtrl" name="SumClients" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SumClientsCtrl">Summarize Client Balances</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="SelectTransactions_rowCtrl" parameterRow="true"><td></td>
-<td></td>
-<td><input class="inforCheckbox" id="SelectTransactionsCtrl" name="SelectTransactions" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="SelectTransactionsCtrl">Select Transactions</label></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="Currency_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Currency</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforTextbox" id="CurrencyCtrl" name="Currency" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="Currency_blankCtrl" includeblanks="true" name="Currency_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="Currency_blankCtrl">Include Blanks</label></td>
-</tr><tr id="TransactionDateFrom_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Transaction Date From</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforDateField" id="TransactionDateFromCtrl" name="TransactionDateFrom" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="TransactionDateFrom_blankCtrl" includeblanks="true" name="TransactionDateFrom_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="TransactionDateFrom_blankCtrl">Include Blanks</label></td>
-</tr><tr id="TransactionDateTo_rowCtrl" parameterRow="true"><td><label class="inforLabel noColon">Transaction Date To</label></td>
-<td><label class="inforLabel noColon">=</label></td>
-<td><input class="inforDateField" id="TransactionDateToCtrl" name="TransactionDateTo" type="text" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td><input class="inforCheckbox" id="TransactionDateTo_blankCtrl" includeblanks="true" name="TransactionDateTo_blank" onclick="parametersValidation.handleIncludeBlanksCheckBox(this);" type="checkbox" value="true" /><label class="inforCheckboxLabel" for="TransactionDateTo_blankCtrl">Include Blanks</label></td>
-</tr><tr id="endUserCalendar_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="endUserCalendar" type="hidden" value="Gregorian" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="endUserDirection_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="endUserDirection" type="hidden" value="LTR" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr><tr id="endUserNumeralVariant_rowCtrl" parameterRow="true" style="display:none"><td></td>
-<td></td>
-<td><input name="endUserNumeralVariant" type="hidden" value="1" /></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>                    </table>
-                </div>
-        </div>
-</form></div>
-
-
-
+					 <select class="inforDropDownList required" data-validation="required" id="outputFormatCtrl" name="outputFormat" style="display: none;">
+						<option value="XML">
+						  XML file with report data
+						</option>
+						<option value="CSV">
+						  CSV (comma delimited)
+						</option>
+						<option value="PDF">
+						  PDF
+						</option>
+						<option selected="selected" value="HTML4.0">
+						  HTML 4.0
+						</option>
+						<option value="MHTML">
+						  MHTML (web archive)
+						</option>
+						<option value="EXCELOPENXML">
+						  Excel
+						</option>
+						<option value="IMAGE">
+						  TIFF file
+						</option>
+						<option value="WORDOPENXML">
+						  Word
+						</option>
+					  </select>
+					  <div class="inforTriggerField">
+						<table class="inforTriggerFieldTable">
+						  <tbody>
+							<tr>
+							  <td>
+								<input class="ui-autocomplete-input inforDropDownList inforTextbox selectOnly" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"  readonly="readonly" style="">
+							  </td>
+							  <td></td>
+							</tr>
+						  </tbody>
+						</table>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="Locale_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Report Locale</label>
+					</td>
+					<td>
+					  <label class="inforLabel noColon">=</label>
+					</td>
+					<td>
+					  <input class="inforTextbox required" data-validation="required" id="LocaleCtrl" name="Locale" type="text" value="en-GB">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="viewOutput_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">View Output</label>
+					</td>
+					<td></td>
+					<td>
+					  <div class="inforCheckbox">
+						<span class="checked"><input checked="checked" class="inforCheckbox" id="viewOutputCtrl" name="viewOutput" type="checkbox" value="true" style="opacity: 0;"></span>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="storeOutput_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Store Output</label>
+					</td>
+					<td></td>
+					<td>
+					  <div class="inforCheckbox">
+						<span><input class="inforCheckbox" id="storeOutputCtrl" name="storeOutput"  type="checkbox" value="true" style="opacity: 0;"></span>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="printOutput_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Print Output</label>
+					</td>
+					<td></td>
+					<td>
+					  <div class="inforCheckbox">
+						<span><input class="inforCheckbox" id="printOutputCtrl" name="printOutput"  type="checkbox" value="true" style="opacity: 0;"></span>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="outputPrinter_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Printer</label>
+					</td>
+					<td>
+					  <label class="inforLabel noColon">=</label>
+					</td>
+					<td>
+					  <div class="inforTriggerField disabled">
+						<table class="inforTriggerFieldTable">
+						  <tbody>
+							<tr>
+							  <td>
+								<input class="inforLookupField ui-autocomplete-input inforTextbox disabled" id="outputPrinterCtrl" name="outputPrinter" type="text" value="AAAAA" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" disabled="disabled">
+							  </td>
+							  <td></td>
+							</tr>
+						  </tbody>
+						</table>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="printCopies_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Output Copies</label>
+					</td>
+					<td>
+					  <label class="inforLabel noColon">=</label>
+					</td>
+					<td>
+					  <input class="inforTextbox required disabled" data-validation="required" id="printCopiesCtrl" name="printCopies" type="text" value="1" disabled="disabled">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="outputFileName_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Output Filename</label>
+					</td>
+					<td>
+					  <label class="inforLabel noColon">=</label>
+					</td>
+					<td>
+					  <input class="inforTextbox required disabled" data-validation="required" id="outputFileNameCtrl" name="outputFileName" type="text" value="1212" disabled="disabled">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="outputPath_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Output Path</label>
+					</td>
+					<td>
+					  <label class="inforLabel noColon">=</label>
+					</td>
+					<td>
+					  <div class="inforTriggerField disabled">
+						<table class="inforTriggerFieldTable">
+						  <tbody>
+							<tr>
+							  <td>
+								<input class="inforLookupField required ui-autocomplete-input inforTextbox disabled" data-validation="required" id="outputPathCtrl" name="outputPath" type="text" value="/My Reports/Output" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" disabled="disabled">
+							  </td>
+							  <td></td>
+							</tr>
+						  </tbody>
+						</table>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="printFrontSheet_rowCtrl"  style="">
+					<td>
+					  <label class="inforLabel noColon">Print Front Sheet</label>
+					</td>
+					<td></td>
+					<td>
+					  <div class="inforCheckbox">
+						<span class="checked"><input checked="checked" class="inforCheckbox" id="printFrontSheetCtrl" name="printFrontSheet" type="checkbox" value="true" style="opacity: 0;"></span>
+					  </div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+			<div id="tab2" class="inforScrollableArea" style="z-index:10000">
+			  <table>
+				<tbody>
+				  <tr id="ReportExecutionId_rowCtrl"  style="display:none">
+					<td></td>
+					<td></td>
+					<td><input class=" required" data-validation="required" name="ReportExecutionId" type="hidden">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="endUserLocale_rowCtrl"  style="display:none">
+					<td></td>
+					<td></td>
+					<td>
+					  <input name="endUserLocale" type="hidden" value="en-GB">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				  <tr id="userName_rowCtrl"  style="display:none">
+					<td></td>
+					<td></td>
+					<td>
+					  <input class=" required" data-validation="required" name="userName" type="hidden" value="Theo Harper">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+			<div id="tab3" class="inforScrollableArea">
+			  <table>
+				<tbody>
+				  <tr id="sun5_language_code_rowCtrl"  style="display:none">
+					<td></td>
+					<td></td>
+					<td>
+					  <input class=" required" data-validation="required" name="sun5_language_code" type="hidden" value="1">
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+		</div>
+	</div>
 	<button style="margin:20px" id="generalDialogButton" class="inforFormButton">Show Dialog</button>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -6,8 +6,8 @@
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
 	<title>Infor Application Navigation Control - Sessions Drop Down</title>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforApplicationNav.js"></script>
 
@@ -23,6 +23,7 @@
 				showSessionMenu:true,
 				onSessionMenuOpen: function (sessionInfo) {
 					//the current session info. fires before opening
+					debugger;
 					return sessionInfo;
 				}
 			});

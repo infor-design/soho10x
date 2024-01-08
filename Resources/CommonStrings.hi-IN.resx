@@ -290,7 +290,7 @@
     <comment>Error Message</comment>
   </data>
   <data name="FileInUseDetail" xml:space="preserve">
-    <value>अनुप्रयोग में यह फ़ाइल जहाँ उपयोग में है, वहाँ उसे बंद करें या एक अलग फ़ाइल नाम निर्दिष्ट करें|</value>
+    <value>अनुप्रयोग में यह फ़ाइल जहाँ उपयोग में है, वहाँ उसे बंद करें या एक अलग फ़ाइल नाम निर्दिष्ट करें</value>
     <comment>Error Message</comment>
   </data>
   <data name="Filter" xml:space="preserve">
@@ -758,7 +758,7 @@
     <comment>Button on the Wizard Pattern</comment>
   </data>
   <data name="SetTextColor" xml:space="preserve">
-    <value>टेक्स्ट रंग सेट करें</value>
+    <value>पाठ रंग सेट करें</value>
     <comment>Color Picker / Text Editor</comment>
   </data>
   <data name="AttachmentRules" xml:space="preserve">

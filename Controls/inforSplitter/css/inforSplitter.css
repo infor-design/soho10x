@@ -1,4 +1,4 @@
-/* Infor Splitter
+﻿/* Infor Splitter
 ----------------------------------*/
 
 /* Vertical Splitter */
@@ -76,7 +76,7 @@
 	display: block;
 	height: 100px;
 	margin-bottom: -200px;
-	width: 10px;
+	width: 100%;
 }
 
 .inforSplitBarVertical:hover .inforSplitButtonTop , .inforSplitBarVertical.dragging  .inforSplitButtonTop {
@@ -119,9 +119,7 @@
 }
 
 .inforHorizontalSplitter >  #bottomPane, .inforHorizontalSplitter > .bottomPane{
-	width:100%;
-  overflow:auto;
-  margin-top: 5px;
+	width:100%;overflow:auto;
 }
 
 .inforSplitBarHorizontal {
@@ -130,7 +128,6 @@
 	line-height:0px;
 	font-size:0px;
 	width: inherit;
-  margin-top: -6px;
 }
 
 .inforSplitBarHorizontal:hover{
@@ -211,7 +208,7 @@ html[dir="rtl"]  .inforSplitBarVertical{
 
 html[dir="rtl"]  .inforSplitButtonVertical{
 	left: 0;
-	right: 7px;
+	right: 6px;
 }
 
 html[dir="rtl"]  .inforSplitter > #leftPane, html[dir="rtl"]  .inforSplitter > .leftPane {

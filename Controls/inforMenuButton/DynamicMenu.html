@@ -1,68 +1,74 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta charset="utf-8">
-  <title>Infor Menu Button</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<title>Infor Menu Button</title>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet">
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
 
-  <script>
-    $(function () {
-      //Globalize.culture('ar-SA');
-      $('#button1').on('click', function(e) {
-        var $button = $(e.currentTarget);
-        //make an ajax call...
+	<script>
+		$(function () {
+			//Globalize.culture("ar-SA");
+			$("#button1").inforMenuButton().on("click", function(e) {
+				var $button = $(e.currentTarget);
+				//make an ajax call...
 
-        var qry  = 'http://www.randomtext.me/api/lorem/p-5/2';
+				var qry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?&$top=10&$skip=0&#select=state";
+				$.getJSON(qry,
+					 function (jsonResult) {
+						//clear the last ones.
+						var menu = $("#menu1");
+						menu.empty();
 
-        $.getJSON(qry,
-           function (jsonResult) {
-            //clear the last ones.
-            var temp = $(jsonResult.text_out),
-              menu = $('#menu1');
+						//loop the results add the menu
+						$.map( jsonResult.d, function(val, i) {
+							//add the option and maybe a generic click handler function...
+							var li = $("<li></li>"),
+								a = $("<a></a>").appendTo(li).attr("href", "#").text(val.state).click(function (e) {
+									alert($(e.currentTarget).text());
+								});
+							menu.append(li);
+						});
 
-            menu.empty();
+						//show the menu...
+						$button.inforContextMenu({
+								menu: 'menu1',
+								invokeMethod: 'immediate',
+								event: e,
+								position: {
+									my: "center top",
+									at: "center bottom",
+									of: $button,
+									offset: "-3 1",
+									collision: "fit flip"
+								}
+						});
+				});
+			});
 
-            temp.each(function () {
-              var li = $('<li></li>');
-
-              $('<a></a>').appendTo(li).attr('href', '#').text($(this).text()).click(function (e) {
-                console.log($(e.currentTarget).text());
-              });
-              menu.append(li);
-            });
-
-            //show the menu...
-            $button.popupmenu({
-                menu: 'menu1',
-                trigger: 'immediate'
-            });
-        });
-      });
-
-      $('#button2').popupmenu({menuId: 'menu2',callback: function(action) {
-          console.log('Action: ' + action);
-      }});
-    });
-  </script>
+			$("#button2").inforMenuButton({menuId: 'menu2',callback: function(action, el, pos) {
+					alert('Action: ' + action);
+			}});
+		});
+	</script>
 </head>
 <body>
-  <div class="inforToolbar" >
-    <button type="button" class="inforMenuButton" id="button1">Dynamic Menu</button>
-    <button type="button" class="inforMenuButton" id="button2">Normal Menu</button>
-  </div>
+	<div class="inforToolbar" >
+		<button type="button" class="inforMenuButton" id="button1">Dynamic Menu</button>
+		<button type="button" class="inforMenuButton" id="button2">Checked Menu</button>
+	</div>
 
-  <!--The Menu That Gets Filled with Results..-->
-  <ul id="menu1" class="popupmenu">
-  </ul>
+	<!--The Menu That Gets Filled with Results..-->
+	<ul id="menu1" class="inforContextMenu">
+	</ul>
 
-  <ul id="menu2" class="popupmenu">
-    <li class="checked"><a>Option 1</a></li>
-    <li class="notChecked"><a>Option 2</a></li>
-  </ul>
+	<ul id="menu2" class="inforContextMenu">
+		<li class="checked"><a>Option 1</a></li>
+		<li class="notChecked"><a>Option 2</a></li>
+	</ul>
 </body>
 </html>

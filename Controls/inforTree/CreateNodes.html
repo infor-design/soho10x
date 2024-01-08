@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +8,8 @@
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 	<link href="css/inforTree.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTree.js"></script>
 
@@ -19,40 +19,20 @@
 	$(function () {
 
 		//Initialize the Tree control
-		var tree = $("#inforTree1").inforTree({
+		$("#inforTree1").inforTree({
 				"json_data": {
 								"data": [{
 												"data": "Temp Node",
-												"attr": { "id": "tn" },
-												"state": "open"
+												"attr": { "id": "tn" }
 								}]
-				},
-				"plugins": ["themes", "json_data", "ui", "crrm", "contextmenu", "sort"]
-
+				}
 		});
 
-		var children = [];
-		var i = 300;
+		i = 10;
 		while (i--) {
-			//$("#inforTree1").inforTree("create_node", "#tn", "last", { "data": "temp" + i, "attr": { "id": "tn" + i} });
-		  children.push( { "data": "temp" + i, "attr": { "id": "tn" + i} });
-    }
+			$("#inforTree1").inforTree("create_node", "#tn", "after", { "data": "temp" + i, "attr": { "id": "tn" + i} });
+		}
 
-    tree.inforTree({"json_data": {
-      "data": [
-          {//Project
-            "data": {
-              "title": "Root",
-              "attr" : { "id" : "project"},
-              "icon": "folder"  // icon class added to the <ins> node
-            },
-            "metadata": { id: 21 },
-            "state": "open",
-            "state": "checked",
-            "children": children
-          }]
-    }});
-    tree.inforTree("refresh");
 	});
 	</script>
 </head>

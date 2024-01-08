@@ -1,37 +1,30 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Infor ToolTip - Basic Examples</title>
 
-  <title>ToolTip - Basic Examples</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforTooltip.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforTooltip.js"></script>
 
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <link href="css/tooltip.css" rel="stylesheet" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/tooltip.js"></script>
-
-  <script>
-      $(function () {
-      //add normal tooltips to all elements with a title on them - All this does is translate strings we use the browser tooltips.
-      $('button').not('.inforErrorIcon').tooltip();
-
-      //Show immediately
-      //$('[title]').not('.inforErrorIcon').tooltip('open');
-    });
-  </script>
+	<script>
+		  $(function () {
+			//add normal tooltips to all elements with a title on them - All this does is translate strings we use the browser tooltips.
+			$("[title]").not(".inforErrorIcon").inforToolTip();
+			$("[title]").not(".inforErrorIcon").inforToolTip("open");
+		});
+	</script>
 </head>
-<body style="margin: 30px;">
-  <div class="inforToolbar">
-    <button type="button" class="inforIconButton edit" title="">
-      <span>Label 1</span>
-    </button>
-    <button type="button" class="inforIconButton new" title="Tooltip 2">
-      <span>Label 2</span>
-    </button>
-  </div>
+<body style="margin: 30px">
+	<div class="inforToolbar">
+		<button type="button" class="inforIconButton edit" title="Sample Button 1" onclick="console.log('clicked')"><span></span></button>
+	</div>
 </body>
 </html>

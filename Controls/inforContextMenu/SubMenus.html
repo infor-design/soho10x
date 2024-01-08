@@ -1,51 +1,51 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
-	<title>Context/Popup Menu - Sub Menus</title>
+	<title>Infor Context Menu - Sub Menus</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
-	<script src="js/popupmenu.js"></script>
+	<script src="js/inforContextMenu.js"></script>
 
 	<script>
 		 $(function () {
-
-			$('#button1').inforMenuButton({menuId: 'menu1', callback: function(action) {
-				console.log('Do Action: ' + action);
+			//Globalize.culture("ar-SA");
+			$("#button1").inforMenuButton({menuId: 'menu1', callback: function(action, el, pos) {
+				alert('Do Action: ' + action);
 			}});
 
-			$('#button2').inforMenuButton({menuId: 'menu2', callback: function(action) {
-				console.log('Do Action: ' + action);
+			$("#button2").inforMenuButton({menuId: 'menu2', callback: function(action, el, pos) {
+				alert('Do Action: ' + action);
 			}});
 
-			$('#button3').inforMenuButton({menuId: 'menu3', callback: function(action) {
-				console.log('Do Action: ' + action);
+			$("#button3").inforMenuButton({menuId: 'menu3', callback: function(action, el, pos) {
+				alert('Do Action: ' + action);
 			}});
 
-			$('#button4').inforMenuButton({menuId: 'menu2', callback: function(action) {
-				console.log('Do Action: ' + action);
+			$("#button4").inforMenuButton({menuId: 'menu2', callback: function(action, el, pos) {
+				alert('Do Action: ' + action);
 			}});
 		});
 	</script>
 </head>
 <body style="overflow:auto">
-  <div class="inforToolbar" >
-    <button type="button" class="inforMenuButton" id="button1">Example 1</button>
-    <button type="button" class="inforMenuButton" id="button2">Example 2</button>
-    <button type="button" class="inforMenuButton" id="button3">Three Levels</button>
+	<div class="inforToolbar" >
+		<button type="button" class="inforMenuButton" id="button1">Example 1</button>
+		<button type="button" class="inforMenuButton" id="button2">Example 2</button>
+		<button type="button" class="inforMenuButton" id="button3">Three Levels</button>
 
-    <button type="button" style="position:fixed;bottom:20px" class="inforMenuButton" id="button4">On Bottom</button>
-  </div>
+		<button type="button" style="position:fixed;bottom:20px" class="inforMenuButton" id="button4">On Bottom</button>
+   </div>
 
-	<ul id="menu1" class="popupmenu">
+	<ul id="menu1" class="inforContextMenu">
 		<li><a href="#option1">Change Available Number</a></li>
 		<li>
 			<a href="#">Sub Menu</a>
-			<ul class="popupmenu">
+			<ul class="inforContextMenu">
 				<li><a href="#option1.1">Sub Menu 1</a></li>
 				<li><a href="#option1.2">Sub Menu 2</a></li>
 			</ul>
@@ -58,10 +58,10 @@
 		<li><a href="#option7">Check Funds</a></li>
 	</ul>
 
-	<ul id="menu2" class="popupmenu">
+	<ul id="menu2" class="inforContextMenu">
 		<li>
 			<a href="#keys">Account Keys</a>
-			<ul id="keysMenu" class="popupmenu">
+			<ul id="keysMenu" class="inforContextMenu">
 				<li><a href="#keyBrowser">Accounting Key Browse</a></li>
 				<li><a href="#copyKeys">Copy Accounting Key</a></li>
 				<li class="disabled"><a href="#pasteKeys">Paste Accounting Key</a></li>
@@ -78,7 +78,7 @@
 		<li class="separator"></li>
 		<li>
 			<a href="#editorOptions">Edit Options</a>
-			<ul id="editOptionsMenu" class="popupmenu">
+			<ul id="editOptionsMenu" class="inforContextMenu">
 				<li><a href="#option1">Option 1</a></li>
 				<li><a href="#option2">Option 2</a></li>
 				<li><a href="#option3">Option 3</a></li>
@@ -95,41 +95,19 @@
 				<li><a href="#option14">Option 14</a></li>
 				<li><a href="#option15">Option 15</a></li>
 				<li><a href="#option16">Option 16</a></li>
-				<li><a href="#option17">Option 17</a></li>
-				<li><a href="#option18">Option 18</a></li>
-				<li><a href="#option19">Option 19</a></li>
-				<li><a href="#option20">Option 20</a></li>
-				<li><a href="#option21">Option 21</a></li>
-				<li><a href="#option22">Option 22</a></li>
-				<li><a href="#option23">Option 23</a></li>
-				<li><a href="#option24">Option 24</a></li>
-				<li><a href="#option25">Option 25</a></li>
-				<li><a href="#option26">Option 26</a></li>
-				<li><a href="#option27">Option 27</a></li>
-				<li><a href="#option28">Option 28</a></li>
-				<li><a href="#option29">Option 29</a></li>
-				<li><a href="#option30">Option 30</a></li>
-				<li>
-					<a href="#option31">Option 31</a>
-					<ul id="testMenu" class="popupmenu">
-						<li><a href="#test1">Test 1</a></li>
-						<li><a href="#test2">Test 2</a></li>
-						<li><a href="#test3">Test 3</a></li>
-					</ul>
-				</li>
 			</ul>
 		</li>
 		<li><a href="#review">Review Approval Status</a></li>
 		<li  class="disabled"><a href="#directAdjustment">Direct Adjustment</a></li>
 	</ul>
 
-	<ul id="menu3" class="popupmenu">
+	<ul id="menu3" class="inforContextMenu">
 		<li>
 			<a href="#item1">Menu Item 1</a>
-			<ul id="subMenu1" class="popupmenu">
+			<ul id="subMenu1" class="inforContextMenu">
 				<li>
 					<a href="#subMenuItem1">Sub Menu Item 1</a>
-					<ul id="subMenu1_1" class="popupmenu">
+					<ul id="subMenu1_1" class="inforContextMenu">
 						<li><a href="#subMenuItem1_1">Sub Menu Item 1.1</a></li>
 						<li><a href="#subMenuItem2_2">Sub Menu Item 1.2</a></li>
 					</ul>

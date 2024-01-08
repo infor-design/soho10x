@@ -7,8 +7,8 @@
 	<title>Infor DataGrid - Button Cell Formatters </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script src="js/inforDataGrid.js"></script>
@@ -37,8 +37,9 @@
 		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter: UneditableColumnFormatter });
 		//Text In header
 		//columns.push({ id: "commentsColumn", name: "Comments", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "gridCommentsIcon", buttonClick: function (row) { console.log(row) }, cssClass: " non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
-		<!--columns.push({ id: "additionalInfo", name: "Additional info", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon drilldown", buttonClick: function (row) { console.log(row) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
-		-->
+		columns.push({ id: "additionalInfo", name: "Additional info", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon drilldown", buttonClick: function (row) {
+      console.log(row, grid.getActiveCell()); }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
+
 		columns.push({ id: "edit", name: "Edit", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon edit", buttonClick: function (row) { console.log(row) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
 		columns.push({ id: "approve", name: "Approve", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "inforIconButton gridIcon approve", buttonClick: function (row) { console.log(row) }, cssClass: "non-data-cell alignCenter", headerCssClass: "alignHeaderCenter" });
 		columns.push({ id: "city", name: "City", field: "city", width: 125, filterType: TextFilter, selectable: true});

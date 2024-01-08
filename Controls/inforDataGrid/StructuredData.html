@@ -5,11 +5,11 @@
 	<title>Structured Data Example - Grid Can use dotted notation.</title>
 
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforDataGrid.js"></script>
-
+	
 </head>
 <body>
 	<div id="inforDataGrid">
@@ -25,7 +25,7 @@
 			data.push({id:5, employeeId:{value:"5",mutable:false}, lastName:{value:"Bronte",mutable:true}, firstName:{value:"Emily",mutable:true},   title:{value:"Engineer",mutable:true}, anniversary:{value:"06/02/2012",mutable:true}, salary:{value:"75000.00154", precision:2,mutable:true}, employmentType:{value:"HOURLY", mutable:true}});
 			return data;
 		}
-
+			
 		//Store the Grid Obj For Later Api Calls..
 		var grid = null, columns = [], data = getPeopleData([]);
 
@@ -50,22 +50,22 @@
 			/*
 			dataItemColumnValueExtractor: function(data, field, gridControl) {
 				if (!field) {
-					return undefined;
+					return undefined;	
 				}
-
+				
 				var columnDef = gridControl.getColumns()[gridControl.getColumnIndex(field)];
 
 				if (columnDef.builtin) {
 					return undefined;
 				}
-
+				
 				if (columnDef.cellTemplate) {
 					return columnDef.cellTemplate;
 				}
-
+				
 				return data[columnDef.field].value;
 			},
-			// seems like we need a setter so the editor value
+			// seems like we need a setter so the editor value 
 			// will make it back into our data.
 			dataItemColumnValueSetter: function(data, field, value) {
 				data[field].value = value;

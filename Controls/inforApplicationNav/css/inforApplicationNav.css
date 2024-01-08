@@ -1,17 +1,13 @@
-/* Infor Application Navigation
+﻿/* Infor Application Navigation
 ----------------------------------*/
 .inforApplicationNav {
 	font-size: 1.2em;
-	background: repeat scroll 0 0 #e0e0e0;
+	background: repeat scroll 0 0 #FFFFFF;
 	width: 100%;
 	z-index: 1;
-	min-height: 33px;
-	max-height: 33px;
-	border-bottom: 1px solid #D4D4D4;
-}
-
-.inforApplicationNav > ul > li:first-child {
-    padding-left: 15px;
+	min-height: 34px;
+	max-height: 34px;
+	padding-left: 15px;
 }
 
 .inforApplicationNav ul{
@@ -19,14 +15,14 @@
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
-  padding-left: 19px;
+	padding-left: 19px;
 	padding-right: 19px;
 	margin: 0 0 0 -14px;
 }
 
 .inforApplicationNav ul:first-child{
 	padding-left: 6px;
-		padding-right: 20px;
+    padding-right: 20px;
 }
 
 /*Top level list items*/
@@ -39,7 +35,7 @@
 .inforApplicationNav > ul > li {
 	height: 32px;
 	z-index: 4;
-	background-color: #e0e0e0;
+	background-color: white;
 }
 
 .inforApplicationNav ul li.activeHeader{
@@ -58,23 +54,22 @@
 }
 
 /*Top level menu link items style*/
-.inforApplicationNav ul li a{
+.inforApplicationNav ul  li  a{
 	display: block;
 	background: transparent;
 	padding-top: 6px;
 	padding-bottom:3px;
-	color: #444;
+	color: #666666;
 	text-decoration: none;
 	outline:none;
-  overflow: hidden;
 	padding: 5px 15px;
-	height: 21px;
+	height: 20px;
 	line-height: 20px;
 	border: 1px solid transparent;
 }
 
 .inforApplicationNav ul li a:link, .inforApplicationNav ul li a:visited{
-	color: #444;
+	color: #666666;
 }
 
 .inforApplicationNav ul li a:hover:link, .inforApplicationNav ul li a:hover:visited{
@@ -108,7 +103,7 @@
 }
 
 .inforMegaMenuColumn .inforFormButton {
-		font-size: 1em;
+    font-size: 1em;
 }
 
 .inforApplicationNav .inforMegaMenuColumn:nth-child(2) {
@@ -144,7 +139,7 @@
 }
 
 .inforApplicationNav .downArrow{
-	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEAQMAAAB4CLc+AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAAAAAApWe5zwAAAAJ0Uk5TAKZJJsvlAAAAEElEQVQI12P4x1DDYMEgAAAKHgHDGrfkbwAAAABJRU5ErkJggg==") no-repeat scroll right center !important;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAIAAAAmzuBxAAAABnRSTlMAAAAAAABupgeRAAAAG0lEQVR42mNgoBfYjBsQUETAJALWEXATw0AAAOTuNHK5WbLVAAAAAElFTkSuQmCC") no-repeat scroll right center transparent !important;
 	display: inline-block;
 	height: 11px;
 	left: 2px;
@@ -157,7 +152,7 @@
 }
 
 .inforApplicationNav .activeHeader .downArrow {
-	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEAQMAAAB4CLc+AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA////pdmf3QAAAAF0Uk5TAEDm2GYAAAAQSURBVAjXY/jHUMNgwSAAAAoeAcMat+RvAAAAAElFTkSuQmCC") no-repeat right center !important;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALAQAAAACB10qLAAAAAnRSTlMAAHaTzTgAAAAbSURBVHjaY2CAgfoDDPYNDPIMDHwMDCxwUQYALXUCMH6xyBkAAAAASUVORK5CYII=") no-repeat right center !important;
 }
 
 .inforApplicationNav .rightArrow {
@@ -250,11 +245,11 @@ html[dir="rtl"] .inforApplicationNav ul li ul {
 
 #sessionNavMenu .downArrow  {
 	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAcAQAAAABXaJJ+AAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY/j///8BBtKJfwzyQBaDPZBoqAcSB0ASD0HEZ7LMAxEAJj9jpqsVecAAAAAASUVORK5CYII=") no-repeat scroll 0 0 transparent !important;
-		border: medium none;
-		height: 26px;
-		margin-left: 0;
-		margin-top: -6px;
-		width: 25px;
+    border: medium none;
+    height: 26px;
+    margin-left: 0;
+    margin-top: -6px;
+    width: 25px;
 	opacity: .40;
 	filter: alpha(opacity=40);
 }
@@ -321,9 +316,9 @@ html[dir="rtl"] .inforApplicationNavRight  > * {
 
 .inforApplicationNavRight {
 	display: block;
-		margin: 0;
-		position: relative;
-		top: -8px;
+    margin: 0;
+    position: relative;
+    top: -8px;
 }
 
 .inforApplicationNavRight input {
@@ -336,17 +331,17 @@ html[dir="rtl"] .inforApplicationNavRight  > * {
 }
 
 .inforMegaMenuTitle {
-  color: #444;
-  display: block;
-  font-size: 1.4em;
-  line-height: 38px;
-  margin-bottom: 4px;
-  padding-left: 0;
-  font-weight: lighter;
+	color: #333333;
+    display: block;
+    font-size: 1.4em;
+    line-height: 38px;
+    margin-bottom: 4px;
+    padding-left: 0;
+    font-weight: lighter;
 }
 
 .inforMegaMenuSubTitle {
-	color: #444;
+	color: #666666;
 	font-size: 1.4em;
 	line-height: 40px;
 	padding-left: 18px;
@@ -357,9 +352,9 @@ html[dir="rtl"] .inforApplicationNavRight  > * {
 }
 
 .inforMegaMenuItem {
-		height: 18px !important;
-		padding-top: 7px !important;
-		text-indent: -4px;
+    height: 18px !important;
+    padding-top: 7px !important;
+    text-indent: -4px;
 }
 
 .inforApplicationNav .inforMegaMenuColumn  li:hover a{
@@ -376,7 +371,7 @@ html[dir="rtl"] .inforApplicationNavRight  > * {
 
 .inforMegaMenuColumn li {
 	margin: 0 !important;
-	height: 32px;
+	height: 30px;
 }
 
 .inforMegaMenuDescription {
@@ -413,5 +408,5 @@ html[dir="rtl"] .inforApplicationNavRight  > * {
 }
 
 .inforApplicationNav + .inforApplicationPadding > .inforModuleTabs {
-		margin-top: 13px;
+    margin-top: 13px;
 }

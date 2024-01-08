@@ -1,4 +1,4 @@
-/* Infor Tree
+﻿/* Infor Tree
 ----------------------------------*/
 .jstree {
 	margin-top: 3px;
@@ -181,8 +181,8 @@ li.jstree-closed > ul {
 }
 
 .jstree-default .jstree-open > ins > span{
-	opacity: .50;
-	filter: alpha(opacity=50);
+	opacity: .40;
+	filter: alpha(opacity=40);
 	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHAQAAAAAZ1+HOAAAAAnRSTlMAAQGU/a4AAAAdSURBVHjaY97/kEGOgfnvL+YqBsYDDEyKDExCDABI7AUxjpsRQAAAAABJRU5ErkJggg==");
 }
 
@@ -215,8 +215,8 @@ li.jstree-closed > ul {
 
 .jstree-default .jstree-closed > ins > span {
 	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAKAQAAAABQt3mgAAAAAnRSTlMAAQGU/a4AAAAaSURBVHjaY5jHwMfQxnCI4QEQHgKy+BjmAQA4pAWpty8c5wAAAABJRU5ErkJggg==");
-	filter: alpha(opacity=50);
-	opacity: .50;
+	filter: alpha(opacity=40);
+	opacity: .40;
 }
 
 .jstree-default .jstree-closed > ins:hover {
@@ -257,19 +257,20 @@ li.jstree-closed > ul {
 
 /*The Default Node Icon*/
 .jstree-default a .jstree-icon {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANAQAAAABakNnRAAAAAnRSTlMAAQGU/a4AAAAWSURBVGjeY2jgYICg/S8YFmhgJxs4APVKDYSofwj1AAAAAElFTkSuQmCC");
+	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANAQAAAABakNnRAAAAAnRSTlMAAQGU/a4AAAAWSURBVGjeY2jgYICg/S8YFmhgJxs4APVKDYSofwj1AAAAAElFTkSuQmCC");
   background-position: 1px 1px;
   width: 13px;
+
 }
 
 .jstree-default a .jstree-icon {
-  opacity: 0.65;
-  filter: alpha(opacity=65);
+  opacity: 0.4;
+  filter: alpha(opacity=40);
 }
 
 .jstree-default .jstree-hovered .jstree-icon {
-	opacity: 0.80;
-	filter: alpha(opacity=80);
+	opacity: 0.65;
+	filter: alpha(opacity=65);
 }
 
 .jstree-default a.jstree-loading .jstree-icon {
@@ -286,8 +287,8 @@ li.jstree-closed > ul {
 
 /*Icon for no dots. Open*/
 .jstree-default .jstree-no-dots .jstree-open > ins {
-	opacity: .50;
-	filter: alpha(opacity=50);
+	opacity: .40;
+	filter: alpha(opacity=40);
 	background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHAQAAAAAZ1+HOAAAAAnRSTlMAAQGU/a4AAAAdSURBVHjaY97/kEGOgfnvL+YqBsYDDEyKDExCDABI7AUxjpsRQAAAAABJRU5ErkJggg==");
 }
 

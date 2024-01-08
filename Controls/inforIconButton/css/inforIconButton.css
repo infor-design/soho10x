@@ -1,18 +1,19 @@
-/* Infor Icon Button
+﻿/* Infor Icon Button
 ----------------------------------*/
 .inforIconButton{
 	padding: 0;
 	cursor: default;
-	height: 24px;
-	width: 28px;
+	height: 23px;
+	width: 24px;
 	outline: none;
 	border: none;
-	border: solid 1px #ccc;
-	margin-left: 4px;
-	padding:  0 2px;
-	border-radius: 2px;
+	border: 1px solid transparent;
+	margin-left: 5px;
+	padding-right: 1px;
+	padding-left: 1px;
+	border-radius: 3px;
 	cursor: pointer;
-	background-color: #f2f2f2;
+	background-color: transparent;
 }
 
 .inforIconButton:hover {
@@ -20,45 +21,35 @@
 	box-shadow: 0 1px #a2a2a2;
 }
 
-.inforIconButton:hover span {
+.inforIconButton:hover span{
+	opacity: .65;
+	filter: alpha(opacity=65);
+}
+
+.inforIconButton:active {
+    background-color: #bebebe;
+    box-shadow: 0 1px #767676 inset;
+}
+
+.inforIconButton:active span{
 	opacity: .80;
 	filter: alpha(opacity=80);
 }
 
-.inforIconButton:active {
-  background-color: #bebebe;
-  box-shadow: 0 1px #767676 inset;
-}
-
-.inforIconButton:active span {
-	opacity: .90;
-	filter: alpha(opacity=90);
-}
-
 .inforIconButton[disabled]:hover {
-	background-color: #f2f2f2;
+	background-color: transparent;
 }
 
 .inforIconButton[disabled] {
-  border: solid 1px #ccc;
-  cursor: default;
-  box-shadow: none;
-  background-color: #f2f2f2;
+	border: 1px solid transparent;
+	cursor: default;
+	box-shadow: none;
+	background-color: transparent;
 }
 
-.inforIconButton[disabled] {
-	opacity: .6;
-	filter: alpha(opacity=60);
-}
-
-.inforIconButton[disabled]:hover span {
-  opacity: 1;
-  filter: alpha(opacity=100);
-}
-
-.inforIconButton[disabled]:hover span {
-  opacity: 0.80;
-  filter: alpha(opacity=80);
+.inforIconButton[disabled] span{
+	opacity: .2;
+	filter: alpha(opacity=20);
 }
 
 .inforIconButton[disabled]:after {
@@ -75,16 +66,15 @@
 
 .inforIconButton span {
 	background-position: center center;
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
 	background-color: transparent;
-	color: transparent;
-	display: inline-block;
-	height: 22px;
+    display: inline-block;
+    height: 22px;
 	margin: 0 auto;
-	padding: 0;
-	width: 16px;
-	opacity: .65;
-	filter: alpha(opacity=65);
+    padding: 0;
+    width: 16px;
+	opacity: .4;
+	filter: alpha(opacity=40);
 }
 
 .inforIconButton.accountScope span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVR42mNgoDIIAOKtQPwGiP8A8QMgngXEGoQ0cgHxWiD+D8SfgHgLEC8A4iNQg34DcRY+A9ZBNc8AYgE0OS0gPgWVzwDi/VDx/TC2L1RyNh4L+IH4JhC/hrJRwCYg/gzEQugmo7GDoRblI8mBwUsg3k5EALMD8U+oN1HALyBeQsB2GP0eiFegy98H4pNEuEAM6oU+dAlQ4P0FYh08NoNAJdSAiehyqlBvnAFiQRy2WwHxV2hg82JTkAk1/R4QRwMxH1RcFohrgPgbVB6EDwIxNzZDQBpfISn8g8T+isSGGcKFzRAeII4B4ulAvAyIu4HYAyp+EM2Q3aRmNG40Q3aSk1tBhuwB4gOwwAQAFotVlbiWm6sAAAAASUVORK5CYII=");}
@@ -103,7 +93,6 @@
 .inforIconButton.attachmentRules  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABU0lEQVR42oWTPyhGURjGj4QYMJCU0coiZXXLKsNnYSRFGcSglExYRf5k/RgMymLyZ7BQJgNKWXxFJgbJ5XP9jp5b773f9Xnr1z23zvOc5z3vvc6Vr2rIad0IO/AOBZj4R+sqIA9F6IRzCGEbTiGCkXIGq9o0CQfwCf3G/BCu/xLPSrysFN8wnNozpUQlNSbBhgwiGfpahA4lOIKbtNhH/FLkOZPC14Lep2FN60SqXniDYxhVirxOG5dg3bS3ZMU+1gtcwZAuzKeogkGl2pORN96S8W+1wAPcQSvcwwXUQQAfSpUz7VXa0zfhFdr1HqrfLqW6hAG1dyLjRBU087h21WNRqQLTXkPW2ELNNK4amNHIekx7bTJ26eetvvF0NUv4bNqLRZExcfO69T6zqUkX6aN3Z4gT61pdlDfZ14ge9dcFGclKEviqhxV40tjO1H+WOPH8AX3bbLpHBjpkAAAAAElFTkSuQmCC");}
 .inforIconButton.noAttachments  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHElEQVR42mNgYGD4D8XYABsQh0DZAkC8FIi/A/ETIM6CKfqPwxBGIF4CxH+BWA+ITwDxLyCeDcT7oeqT8RkyGcrPBeKNQPwbiP2QDN8GxNeQbcRmSAfUFf+AOBrNhYVQFzEQMgTEroCy24BYF+qCPUB8HVvA4QqTBqhYMRBPgbJRXOVIhEumQV0DYrcjawY56wMQXyJgSCY0PGZCvQEG4kD8GIhvA7EkEN8jYAgoRpiRbZ8BxB+BWAXK/wX1L6EwgYMn0DiHgWVQxX+JNeQXNE5hgB2IS6BRZkGMITegaRwdiELD5RUhQ+qgydQVSUwEiE9CY8aUUDrhBOIzUEPWQaPoOTTXOeEINwxD+IB4IhC/AOKfQHwYzf84DQEApnRteh1WzRIAAAAASUVORK5CYII=");}
 .inforIconButton.book  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAbklEQVR42mNgGCzgPxqOAGIWJHk2IE7Aog4MFKAckCJpII5DUqAPxDZoBktA1YL4AgzopiGBWCS5QDyuxmkA0XKjBgwmA0ApLRyIlfAYoA7EkWipEiN5IqdCGNscjzoGXIb8QmL/xaeZmEyGEwAA531mt/MwAGUAAAAASUVORK5CYII=");}
-.inforIconButton.back  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAuSURBVGjeY/j/n+FfPcMfe4Yf9Qwf/jM8/M9w+D9DAwMIAMnDYBGg+A+wmn/1ACv9Fn/VgqSTAAAAAElFTkSuQmCC");}
 .inforIconButton.calculate  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAeSURBVGjeYzjAzNDAyDD/JwgBGUA0cyYIYWUcYAYAb60O6emnyMcAAAAASUVORK5CYII=");}
 .inforIconButton.chartPie  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtklEQVR42mNgIAy+A/EZIK4BYgFCinmAuBSq4TtU7D8Sfg3Ecbg0GwPxQzQN6AbAcD26Zm0g/oRFIS4D/iO7hAWIL+FQhM+AD0AsAlIQg0cRPgNAuA6kYDMFBpwDKXhGgQHgmPpHwACC4AMBW3DhjzAD9pFpwCmYAZlkGlACM4ALiB+QqPkREPMih4M5EH8lUvM7INbHFphWRLgE5G81fDHCCcT5QHwM6qKfUENXALEfEDOiawAAfJCt4WuxOYkAAAAASUVORK5CYII=");}
 .inforIconButton.chartBar  span { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVR42mNgIA38R8JkgUFswBckTJYBxDptiBlArNioAdQyAFtK/ICE8RrwnwLMAACeHXEgCpv1PQAAAABJRU5ErkJggg==");}
@@ -135,8 +124,8 @@
 .inforIconButton.exit span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAApSURBVHjaY2iwZ2CQZ7CfD0bTGew/M9h/ZLBjACEgA8SdDpUFKmuwBwAhIQwhaQ49oQAAAABJRU5ErkJggg==");}
 .inforIconButton.expandAll span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAA1SURBVGjeY/j/n6HBnoFBnsF+PoP9fwYLZgYDRgbjnwzGO0FIiJNh8k6Gz0D0k+EDI8MPZgBXow9UeZ5qngAAAABJRU5ErkJggg==");}
 .inforIconButton.export span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAkSURBVGjeY3jDz3CMnaH5MAPjQYbjB8DoDxb0/w/DAQaGB4wACfkW0BsSWZIAAAAASUVORK5CYII=");}
-.inforIconButton.exportExcel span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAuSURBVGjeY2BgZygvByEIo/4/Aw8jQ/U/hiolBm42huo+EAIyfikx/P7H8IcRAAiqDL8Xyo+KAAAAAElFTkSuQmCC");}
 .inforIconButton.exportPdf span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAySURBVAhbY3yjzHjMkbHZgZHxAOPxn2Bkyvj/L+MBB8YzDIyn7jGeecB4AogYQCIPFAHURBO0rYDz5wAAAABJRU5ErkJggg==");}
+.inforIconButton.exportExcel span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAuSURBVGjeY2BgZygvByEIo/4/Aw8jQ/U/hiolBm42huo+EAIyfikx/P7H8IcRAAiqDL8Xyo+KAAAAAElFTkSuQmCC");}
 .inforIconButton.favorites span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArUlEQVR42mNgwA+coJhscAyKyQK+QPwfin1J1cwIxBeQDACxmUgxIBxJMwyH41I8BYjfoeGfWAz4iUXddJABXEB8HosGQvgEELPBXKEAxK9I0PwSiGXQveICxH+I0AxSY48rPIqIMKAIX+hrEGEAHz4DfIgwwBSfAflEGBCHz4DJSAofQF0UCsRPkcTb8RmwHRrK/UDMgyTODzX8LxBvwGfAKiA2wSNvBsQrkAUA17pvrfHndooAAAAASUVORK5CYII=");}
 .inforIconButton.filter span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAfSURBVHjaY2CAgQZGhgPMDA/YGT7wM/yQZ/hjjxUBAPzzDhomoQLYAAAAAElFTkSuQmCC");}
 .inforIconButton.noFilter span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAA4SURBVHjaY1BgYBBgYOhgYDjCyPCImeEjO8OPfoY/8Qz/7Bn+yjP8AbLdGf4oM/wxZPhjwfDHBgBDiRAcRkUQJAAAAABJRU5ErkJggg==");}
@@ -155,7 +144,6 @@
 .inforIconButton.lastView span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAnSURBVHjaY2D+z8D4n4EBiBgZIIDHgIHPgIEfiDaASCAbKAIBDYwArJIFtfU/JGcAAAAASUVORK5CYII=");}
 .inforIconButton.launch span, .inforIconButton.activate span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVR42mNgwARaQNwHxNeB+AcUX4OKaTHgAWxAPAWI/wLxfxwYJDcDiDmxad6NRyM63gvVAwdTSdAMw1NgmrWB+A8WBSA//8NjwB+oXoZ+HApAIAiIP+IxBKQXHNq4DAABVSA+j0MNSC/DTwIGMEBDfT4WNT+JNYADiOdhUfOZUi9cIRSIAQQCcQJIkQ4F0ahDSUKaStWkTHFmQgba0MC5AcS/gPgLNLQnIPsZBgAMILRASje+NQAAAABJRU5ErkJggg==");}
 .inforIconButton.links  span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABE0lEQVR42o2TvwtBURTHr/yKxWxTDBYlJbu/wuYvkP/AoIyIVWIxWSgrxYrVYjAoA6W3MuD76nvrdLneO/V579zz69137zlK+ZM8GIEtWIIaiPjMVRXwAG+DNYh7JZdF8gW0wUwUaf5LLgCHgUeQFL4B7SdbcgZcGXQGacNfpe9hK7BnwA3kDF8AzOk/2ArorZe4dv+7Qb0vzqCuE0KgA1qiwIt6jMF3EKXdXU9BUPExFUGKb4d6gj697vI2wvrrdbGlHm3udifUS0aBLzkwYMEDkpIVt7G3FdCNUjXsKV7hm0UytgInBg2FLcnm0Vsv/uu4pjiDGQ/oIhql7NXv7kBsfgzLk4PkSyIc0RXYgTFH2FM+rnZcKHclB4gAAAAASUVORK5CYII=");}
-.inforIconButton.lock  span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAcklEQVR42mNgwA5cgPgYEP+D4mNQMaJAGBD/BeL/aBgkFkqMAZehGu4BcRQQJ0DZ/6FyBMFPqGJNJDEDqNhvYgwAKfyCJsaG5BWiDPiAQ/wvIc2CBAz4CFWDFWzBEvK48DZcTicFjxowKA3YQILmTTBNAHM+i140HcX5AAAAAElFTkSuQmCC");}
 .inforIconButton.maintenance span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxUlEQVR42mNgwARGQPwBiP8A8W0g7gJiQQYSQQUQ/0fCN0k1hBGIl6AZ0k6qK9iA+CSSAY9wKTTCY8hcNFeIYVP0BYgLcRjwAM0AbWyKYJLTgJgZSdwYTTMIy2Mz4B2Sgu1APBGIr2HRDMJa2AyYh0MxNvwciDXRDZAC4oeUGiIEdfpbSgwBASYgVgdiOyDWB2I5IL6MxxAVYhKUKBBfxWHIUWJTpTiOmHlGStKWAOLrSJp/AXEkqflDEoh3APFHII4FCQAAjLtn0NPUBA8AAAAASUVORK5CYII=");}
 .inforIconButton.map span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZ0lEQVR42mNgYGA4A8RpQMzDgB3YA/F+KBur2v9Q/BmIZwKxMZpGmDxOtf+xYAYixf4PIwMYqOEC5FghywUg8JXSMGAYwdFIkQHG0IzxGYfiA0DsABXDpRYMeKBZ9QyUj6wRHcDVAgDOV705n5ctmQAAAABJRU5ErkJggg==");}
 .inforIconButton.move span  { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQAAAAA3iMLMAAAAAnRSTlMAAQGU/a4AAAAzSURBVHjaY/j/n6GHnYGDmcHyIYPlAwbLBAZLGwZ7GQYFHhACMoBcyxoGyz8MHAwMPYwAE+kJ4AlZ77AAAAAASUVORK5CYII=");}

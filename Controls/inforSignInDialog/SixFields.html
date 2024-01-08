@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -6,10 +6,10 @@
 
 		<title>Infor Sign In Dialog - Additional Fields</title>
 		<link href="css/inforSignInDialog.css" rel="stylesheet" />
-
+		
 		<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-		<script src="../Release/jquery-3.6.0.min.js"></script>
-		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+		<script src="../Release/jquery-1.10.2.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 		<script src="../Release/inforControlsCombined.js"></script>
 		<script src="js/inforSignInDialog.js"></script>
 
@@ -24,13 +24,13 @@
 		<div class="inforSignInDialogControls" >
 			<div class="inforLogo"></div>
 			<p class="inforApplicationName">Infor Ming.le</p>
-			<label class="scr-only" for="userId" data-localizedText="text:UserID"></label>
+			<label class="inforScreenReaderText" for="userId" data-localizedText="text:UserID"></label>
 			<input type="text" name="userId" id="userId" class="inforTextbox" data-localizedText="placeholder:UserID" /><br>
-
-			<label class="scr-only" for="password" data-localizedText="text:Password"></label>
+			
+			<label class="inforScreenReaderText" for="password" data-localizedText="text:Password"></label>
 			<input type="password" name="password" id="password" data-localizedText="placeholder:Password" class="inforTextbox"/><br>
-
-			<label class="scr-only" for="serverName" data-localizedText="text:ServerName"></label>
+			
+			<label class="inforScreenReaderText" for="serverName" data-localizedText="text:ServerName"></label>
 			<select class="inforDropDownList" name="serverName" id="serverName" data-localizedText="placeholder:ServerName">
 				<option value="a">Server A</option>
 				<option value="b">Server B</option>
@@ -38,8 +38,8 @@
 				<option value="d">&nbsp;</option>
 			</select>
 			<br>
-
-			<label class="scr-only" for="language" data-localizedText="text:Language"></label>
+			
+			<label class="inforScreenReaderText" for="language" data-localizedText="text:Language"></label>
 			<select class="inforDropDownList" name="language" id="language" data-localizedText="placeholder:Language">
 				<option value="a">English</option>
 				<option value="b">French</option>
@@ -47,8 +47,8 @@
 				<option value="d">&nbsp;</option>
 			</select>
 			<br>
-
-			<label class="scr-only" for="company" data-localizedText="text:Company"></label>
+			
+			<label class="inforScreenReaderText" for="company" data-localizedText="text:Company"></label>
 			<!--<input type="text" name="company" id="company" data-localizedText="placeholder:Company" class="inforTextbox"/><br>
 			-->
 			<select class="inforDropDownList" name="company" id="company" data-localizedText="placeholder:Company">
@@ -58,8 +58,8 @@
 				<option value="d">&nbsp;</option>
 			</select>
 			<br>
-
-			<label class="scr-only" for="environment" data-localizedText="text:Environment"></label>
+			
+			<label class="inforScreenReaderText" for="environment" data-localizedText="text:Environment"></label>
 			<select class="inforDropDownList" name="environment" id="environment" data-localizedText="placeholder:Environment">
 				<option value="a">Production</option>
 				<option value="b">Test</option>
@@ -67,14 +67,15 @@
 				<option value="d">&nbsp;</option>
 			</select>
 			<br>
-
-			<!--Submit Can possibly be used ? -->
-      <button type="button" class="inforFormButton default inforSignInButton" disabled data-localizedText="text:SignIn"></button>
-      <br>
-
-      <input type="checkbox" class="inforCheckbox" id="rememberPassword" /><label for="rememberPassword" class="inforCheckboxLabel" data-localizedText="RememberMe"></label>
-      <br>
-      <a class="inforHyperlink" id="resetPassword" data-localizedText="text:ResetPassword" href="#"></a>
+			
+			<button type="button" class="inforFormButton default inforSignInButton" disabled data-localizedText="text:SignIn"></button>
+			<br>
+			
+			<input type="checkbox" class="inforCheckbox" id="rememberPassword" /><label for="rememberPassword" class="inforCheckboxLabel" data-localizedText="RememberSettings"></label>
+			<br>
+			<a class="inforHyperlink" id="resetPassword" data-localizedText="text:ResetPassword" href="#"></a>
+			
+			
 	</div>
 	</body>
 </html>

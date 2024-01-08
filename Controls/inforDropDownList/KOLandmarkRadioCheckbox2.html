@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+	<title>KO Landmark Radio Checkbox 2</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../lib/knockout-2.3.0.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () 
+		{
+			var bindIdGender = "Gender";
+			var bindIdSpecific = "SMART_specific";
+			
+			// create form view model
+			var viewModel = {};		
+			viewModel[bindIdGender] = ko.observable("3");
+			viewModel[bindIdSpecific] = ko.observable(true);
+
+			// apply attributes
+			
+			// initialize controls not initialized by inforForm()
+
+			// apply bindings
+			try
+			{
+				ko.applyBindings(viewModel);
+			}
+			catch(e)
+			{
+				alert(e.message);
+			}
+					
+			loadData();
+
+			function loadData()
+			{
+				var genderDataValue = "3";
+				viewModel[bindIdGender](genderDataValue);
+				viewModel[bindIdSpecific](true);
+				showData("loadData: loading " + bindIdGender + " with value of [" + genderDataValue + "]");
+			}
+
+			function showData(name)
+			{
+				writeMsg(name + ":\t");
+				writeMsg("viewModel[\"" + bindIdGender + "\"]() = [" + (viewModel[bindIdGender]()) + "];");
+				writeMsg("viewModel[\"" + bindIdSpecific + "\"]() = [" + (viewModel[bindIdSpecific]()) + "];");
+
+				writeMsg("radio button: .val() = [" + $("input:radio[name=LRCEmployee_wid132_Group]:checked").val() + "]; prop('checked') = [" + $("input:radio[name=LRCEmployee_wid132_Group]:checked").prop("checked") + "];");
+				writeMsg("checkbox: .val() = [" + $("#LRCEmployee_wid101").val() + "]; .prop('checked') = [" + $("#LRCEmployee_wid101").prop('checked') + "];");
+
+				writeMsg(" ");
+			}
+
+			function writeMsg(message)
+			{
+				var text = $("#msg").text();
+				text += message + "\n";
+				$("#msg").text(text);
+				$("#msg").scrollTop($("#msg")[0].scrollHeight);
+			}
+
+			$("#clear").click(function()
+			{
+				$("#msg").text("");
+			});
+
+			$("#showData").click(function()
+			{
+				showData("showData");
+			});
+
+		});
+</script>
+</head>
+<body style="margin:10px">
+	<table cellpadding="2" cellspacing="2" border="0">
+		<tr>
+			<td style="vertical-align:top;">
+				<div class="inforRadioButtonSet" data-bind="inforRadioButton: {value:Gender}" id="LRCEmployee_wid132">
+					<input type="radio" name="LRCEmployee_wid132_Group" class="inforRadioButton" id="LRCEmployee_1_Option" value="1" /><label for="LRCEmployee_1_Option">1 Withhold</label><br>
+					<input type="radio" name="LRCEmployee_wid132_Group" class="inforRadioButton" id="LRCEmployee_2_Option" value="2" /><label for="LRCEmployee_2_Option">2 Female</label><br>
+					<input type="radio" name="LRCEmployee_wid132_Group" class="inforRadioButton" id="LRCEmployee_3_Option" value="3" /><label for="LRCEmployee_3_Option">3 Male</label><br>
+				</div>
+			</td>
+			<td style="vertical-align:top;">
+				<input type="checkbox" class="inforCheckbox specific" id="LRCEmployee_wid101" typ="specific"  data-bind="checked: SMART_specific" /><label for="LRCEmployee_wid101" class="inforCheckboxLabel">Specific</label><br>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<button type="button" class="inforFormButton" id="showData">Show Data</button>
+	<button type="button" class="inforFormButton" id="clear">Clear</button>
+	<br>
+	<textarea id="msg" style="height:370px;width:1000px;"></textarea>
+</body>
+</html>
+

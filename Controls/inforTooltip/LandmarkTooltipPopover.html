@@ -1,22 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 
 	<title>Lmrk Tooltip Popover</title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
-	<script src="../Release/jquery-3.6.0.min.js"></script>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
 	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../lib/knockout-2.3.0.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
-<!--
+<!-- 
 	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
 	<script src="../Controls/lib/jquery-1.11.1.js"></script>
 	<script src="../Controls/Release/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="../Controls/lib/knockout-2.3.0.js"></script>
 	<script src="../Controls/Release/inforControlsCombined.js"></script>
-
-
+	
+	
 -->
 
 <style>
@@ -89,13 +89,14 @@ html,body {
 </style>
 
 <script>
-$(function ()
+$(function () 
 {
 	var popoverContent       = $("<div id='notificationPopover'></div>").addClass("notificationPane");
 	var viewAllNotifications = "View All Notifications";
 	var unreadNotifications  = "Unread Notifications";
 	var title                = unreadNotifications +
-							   "<span class='alignRight'><button type='button' id='viewAllNotifications' class='inforTextButton'>" +
+							   "<span class='alignRight'>" +
+							   "<button type='button' id='viewAllNotifications' class='inforTextButton'>" +
 							   viewAllNotifications +
 							   "</button></span>";
 
@@ -108,22 +109,9 @@ $(function ()
 		width     : "500",
 		draggable : false
 	});
-
-	var hoverContent = $("<div id=\"imagePopover\"><div><a class=\"inforHyperlink\" href=\"javascript:void(0)\">Browse</a></div><div><a class=\"inforHyperlink\" href=\"javascript:void(0)\">Clear</a></div></div>");
-	$(".inforTextButton.hovercontent").popover(
-	{
-		content   : hoverContent,
-		trigger   : "hover",
-		placement : "bottom",
-    isPopover: true,
-    width     : "500",
-		draggable : false
-	});
-
+	
 	$('.inforBannerText').text("Jason Ayers (emp123)").attr("title", "Jason Ayers (emp123)");
 	$('.inforBannerText').inforToolTip();
-
-	$("body").inforForm();
 });
 
 
@@ -132,11 +120,6 @@ $(function ()
 <body>
 	<div class="inforTopBannerRight">
 		<ul class="landmarkBannerInner" aria-role="menu">
-			<li>
-				<button class="inforTextButton hovercontent" title="" type="button" aria-label="hover popover">
-					hover popover
-				</button>
-			</li>
 			<li>
 				<button class="inforIconButton download" title="" type="button" aria-label="Notifications">
 					<span></span>
@@ -153,6 +136,5 @@ $(function ()
 			</li>
 		</ul>
 	</div>
-
 </body>
 </html>

@@ -5,7 +5,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define('popupmenu', ['jquery'], factory);
+      define(['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -149,17 +149,23 @@
             return;
           }
 
-		  self.close();
+		  if (self.element.is('.autocomplete')) {
+			self.close();
+
+		    //Not a very usefull call back use closed events
+		    if (callback && href) {
+			  callback(href.substr(1), self.element , self.menu.offset(), $(this));
+		    }
+			return;
+          }
 		  
           self.element.trigger('selected', [anchor]);
+
+          self.close();
 
           //Not a very usefull call back use closed events
           if (callback && href) {
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
-          }
-
-          if (self.element.is('.autocomplete')) {
-            return;
           }
 
           if (href && href.charAt(0) !== '#') {
@@ -296,9 +302,8 @@
             }
 
             if ($(e.target).closest('.popupmenu').length === 0) {
-              self.close(true);
+              self.close();
             }
-
           });
 
           if (!($('html').hasClass('ie8'))) {
@@ -311,19 +316,10 @@
 
         }, 400);
 
-        //Hide on iFrame Clicks - only works if on same domain
-        $('iframe').each(function () {
-          var frame = $(this);
-          frame.ready(function () {
-
-            try {
-              frame.contents().find('body').on('click.popupmenu', function () {
-                self.close();
-              });
-            } catch (e)  {
-              //Ignore security errors on out of iframe
-            }
-
+        //Hide on iFrame Clicks
+        $('iframe').ready(function () {
+          $('iframe').contents().find('body').on('click.popupmenu', function () {
+            self.close();
           });
         });
 
@@ -443,14 +439,7 @@
         $(document).off('click.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
         this.menu.off('click.popmenu');
-        $('iframe').each(function () {
-          var frame = $(this);
-          try {
-            frame.contents().find('body').off('click.popupmenu');
-          } catch (e) {
-            //Ignore security errors on out of iframe
-          }
-        });
+        $('iframe').contents().find('body').off('click.popupmenu');
       },
 
       close: function (noFocus) {
@@ -512,9 +501,4 @@
       }
     });
   };
-
-    //Migrate
-  $.fn.inforContextMenu = $.fn.popupmenu;
-  $.fn.inforMenuButton = $.fn.popupmenu;
-
 }));

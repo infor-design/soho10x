@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Infor Line Chart with Dots</title>
+
+	<link href="../inforTooltip/css/inforTooltip.css" rel="stylesheet" />
+	
+	<script src="../Release/d3.v3.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="js/inforDotChart.js"></script>
+
+	<style>
+		body {
+			font-size: 62.5%;
+		}
+		
+		.inforDotChart {
+			font: 12px Helvetica, Arial, sans-serif;
+			font-family: Helvetica, Arial, sans-serif;
+			fill: #aaaaaa;
+		}
+		
+		.inforDotChart .heading {
+			font-family: Helvetica, Arial, sans-serif;
+			fill: #7f7f7f;
+			font-size: 16px;
+			text-transform: uppercase;
+		}
+		
+		.inforDotChart line {
+			stroke: #e8e8e8;
+		}
+		
+		.inforDotChart path {
+			stroke: #40b8ea;
+			stroke-width: 2;
+			fill: none;
+		}
+	</style>
+
+	<script>
+		$(function () {
+		
+			var data = [['Month', 'MWATER1', 'MSEWER1', 'MWATER2'],
+						['Jan'  ,  33.98,     40.1,    60.1      ],
+						['Feb'  ,  44.10,     46,      70.2      ],
+						['Mar'  ,  50,        12,      70.23     ],
+						['Apr'  ,  100,       54,      60.1      ],
+						['May'  ,  110,       54,      43.23     ],
+						['Jun'  ,  120,       54,      70.12     ],
+						['Jul'  ,  40,        54,      90        ],
+						['Aug'  ,  50,        54,      70        ],
+						['Sep'  ,  70,        54,      13.3      ],
+						['Oct'  ,  60,        54,      60        ],
+						['Nov'  ,  50,        54,      50        ],
+						['Dec'  ,  80,        62,      50        ]
+				       ];
+				       
+				       /*var data = [['Month', 'BBWater'],
+						['Jan', 290 ],
+                        ['Feb', 140 ],
+                        ['Mar', 0 ],
+                        ['Apr', 0 ],
+                        ['May', 100 ],
+                        ['Jun', 0 ],
+                        ['Jul', 0 ],
+                        ['Aug', 0 ],
+                        ['Sep', 0 ],
+                        ['Oct', 0 ],
+                        ['Nov', 0 ],
+                        ['Dec', 60 ],
+                        ['Jan', 0 ]];
+                        */
+								
+			//data: chartData
+			$("#chart").inforDotChart({ data: data, onSelected: function(d, i, node){console.log(d, i, node);},
+										title: "Consumption History (Cubic Feet)", colorRange: ["#f5995b", "#40b8ea", "#98c53d"]});
+										
+			//Test updates
+			$("#update").click(function () {
+				var newData = [['Month', 'MWATER2', 'MSEWER2', 'MWATER1'],
+							['Jan'  ,  13.98,     140.1,    160.1    ],
+							['Feb'  ,  144.10,     146,      170.2   ],
+							['Mar'  ,  150,        112,      170.23  ],
+							['Apr'  ,  100,       154,      160.1   ],
+							['May'  ,  110,        154,      143.23  ],
+							['Jun'  ,  120,        154,      170.12  ],
+							['Jul'  ,  140,        154,      190     ],
+							['Aug'  ,  150,        154,      170     ],
+							['Sep'  ,  170,        154,      13.3    ],
+							['Oct'  ,  160,        154,      160     ],
+							['Nov'  ,  150,        154,      150     ],
+							['Dec'  ,  180,        162,      150     ]
+					       ];
+				
+				$("#chart").inforDotChart("update", newData);
+			});
+
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+		<div id="chart" role="img" aria-label="Consumption History For year 2013"></div>
+		<button id="update"  style="left: 327px; top: 1px; position: absolute;" title="Refresh">Update</button>
+		
+</body>
+</html>

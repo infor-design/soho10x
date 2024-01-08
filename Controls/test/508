@@ -1,0 +1,11 @@
+Unit Tests
+-check for "image of" in alt tags
+-labels and form fields
+-every img needs an alt attribute
+-dont use longdesc
+-validate html?
+-h elements out of order
+-detect tables without td's
+-Make sure lang is set on the document
+-multiple labels with the same value
+-multiple labels linked to same field

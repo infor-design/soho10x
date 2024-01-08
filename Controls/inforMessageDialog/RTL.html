@@ -1,136 +1,138 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
 
-		<title>Infor Message Dialog Box</title>
-		<link href="../Release/inforControlsCombined.css" rel="stylesheet">
-		<script src="../Release/jquery-3.6.0.min.js"></script>
-		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-		<script src="../Release/inforControlsCombined.js"></script>
+	<title>Infor Message Dialog Box</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforMessageDialog.js"></script>
+	<link href="css/inforMessageDialog.css" rel="stylesheet">
 
-		<script>
-				$(function () {
-						Globalize.culture('ar-SA');
+	<script>
+		$(function () {
+			Globalize.culture("ar-SA");
 
-						//Display a generic dialog -
-						$('#generalDialogButton').click(function () {
-								//First add the html to the page..
-								$('body').append('<div id="newCatalogDialog" style="display:none"><label style="width: 100px;" for="catalogName" class="inforLabel">Name</label><input type="text" name="catalogName" id="catalogName" class="inforTextbox" style="width: 226px;margin-bottom:4px"/><br><label style="width: 100px;" class="inforLabel" for="catalogDescription">Description</label><textarea class="inforTextArea" id="catalogDescription" style="height: 40px;width: 214px;"></textarea></div>');
+			//Display a generic dialog -
+			$("#generalDialogButton").click(function () {
+				//First add the html to the page..
+				$("body").append('<div id="newCatalogDialog" style="display:none"><label style="width: 100px;" for="catalogName" class="inforLabel">Name</label><input type="text" name="catalogName" id="catalogName" class="inforTextbox" style="width: 210px;margin-bottom:4px"/><br><label style="width: 100px;" class="inforLabel" for="catalogDescription">Description</label><textarea class="inforTextArea" id="catalogDescription" style="height: 40px;width: 214px;"></textarea></div>');
+				//$("#somediv").load(url).dialog({modal:true});
 
-								//Invoke the dialog on it
-								$('#newCatalogDialog').message({
-										title: 'New Catalog',
-										dialogType: 'General',
-										width: 400,
-										height: 'auto',
-										modal: true,
-										beforeClose: function() {
-												//do something and return false to cancel closing
-										},
-										close: function() {
-												$('#newCatalogDialog').remove();
-										},
-										buttons: [{
-												id: 'okButton',
-												text: Globalize.localize('Ok'),
-												click: function() {
-														$('#okButton').addClass('active');
-														alert('You Typed: '+$(this).find('#catalogName').val());
-														$(this).inforDialog('close');
-														},
-														isDefault: true
-												},{
-												text: Globalize.localize('Cancel'),
-												click: function() { alert('cancelled...');
-														$(this).inforDialog('close'); }
-												}]
-								});
-						});
-
-						//Display an Error message when that button is clicked..
-						$('#errorMessageButton').click(function () {
-										$('body').inforMessageDialog({
-												title: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis',
-												shortMessage: 'An Error Occured',
-												detailedMessage: 'Et iusto odio dignissimos ducimus qui blanditiis praesentium <br/>Iusto odio dignissimos ducimus qui blanditiis praesentium ',
-												dialogType: 'Error'
-										});
-						});
-
-						//Display an Alert message when that button is clicked..
-						$('#alertMessageButton').click(function () {
-										$('body').inforMessageDialog({
-												title: 'Alert Dialog',
-												shortMessage: 'An Alert Occured',
-												detailedMessage: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi',
-												dialogType: 'Alert'
-										});
-						});
-
-						//Display a confirmation message when that button is clicked..
-						$('#confirmationMessageButton').click(function () {
-										$('body').inforMessageDialog({
-												title: 'Delete Data Models',
-												shortMessage: 'Are you sure you want to delete the following data?',
-												detailedMessage: 'The data will be permanently removed and is not recoverable.',
-												dialogType: 'Confirmation',
-												showTitleClose: false,
-												buttons: [{
-																		text: Globalize.localize('Yes'),
-																		click: function() {
-																				alert('Yes was clicked');
-																				$(this).inforDialog('close'); },
-																		isDefault: true
-																},{
-																		text: Globalize.localize('No'),
-																		click: function() { $(this).inforDialog('close'); }
-																},{
-																		text: Globalize.localize('Cancel'),
-																		click: function() { $(this).inforDialog('close'); }
-																}]
-										});
-						});
-
-						//Display an Information message when that button is clicked..
-						$('#informationMessageButton').click(function () {
-										$('body').message({
-												title: 'Connectivity',
-												shortMessage: 'Test Connection Succeeded.',
-												detailedMessage: '',
-												dialogType: 'Information'
-										});
-						});
+				//Invoke the dialog on it
+				$('#newCatalogDialog').inforMessageDialog({
+					title: "New Catalog",
+					dialogType: "General",
+					width: 400,
+					height: "auto",
+					modal: true,
+					beforeClose: function() {
+						//do something and return false to cancel closing
+					},
+					close: function(event, ui) {
+						$('#newCatalogDialog').remove();
+					},
+					buttons: [{
+						id: 'okButton',
+						text: Globalize.localize("Ok"),
+						click: function() {
+							$("#okButton").addClass("active");
+							alert("You Typed: "+$(this).find("#catalogName").val());
+							$(this).inforDialog("close");
+							},
+							isDefault: true
+					 },{
+						text: Globalize.localize("Cancel"),
+						click: function() { alert("cancelled...");
+							$(this).inforDialog("close"); }
+					 }]
 				});
-		</script>
+			});
+
+			//Display an Error message when that button is clicked..
+			$("#errorMessageButton").click(function () {
+					$('body').inforMessageDialog({
+						title: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis",
+						shortMessage: "An Error Occured",
+						detailedMessage: "Et iusto odio dignissimos ducimus qui blanditiis praesentium <br/>Iusto odio dignissimos ducimus qui blanditiis praesentium ",
+						dialogType: "Error"
+					});
+			});
+
+			//Display an Alert message when that button is clicked..
+			$("#alertMessageButton").click(function () {
+					$('body').inforMessageDialog({
+						title: "Alert Dialog",
+						shortMessage: "An Alert Occured",
+						detailedMessage: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi",
+						dialogType: "Alert"
+					});
+			});
+
+			//Display a confirmation message when that button is clicked..
+			$("#confirmationMessageButton").click(function () {
+					$('body').inforMessageDialog({
+						title: "Delete Data Models",
+						shortMessage: "Are you sure you want to delete the following data?",
+						detailedMessage: "The data will be permanently removed and is not recoverable.",
+						dialogType: "Confirmation",
+						showTitleClose: false,
+						buttons: [{
+									text: Globalize.localize("Yes"),
+									click: function() {
+										alert('Yes was clicked');
+										$(this).inforDialog("close"); },
+									isDefault: true
+								},{
+									text: Globalize.localize("No"),
+									click: function() { $(this).inforDialog("close"); }
+								},{
+									text: Globalize.localize("Cancel"),
+									click: function() { $(this).inforDialog("close"); }
+								}]
+					});
+			});
+
+			//Display an Information message when that button is clicked..
+			$("#informationMessageButton").click(function () {
+					$('body').inforMessageDialog({
+						title: "Connectivity",
+						shortMessage: "Test Connection Succeeded.",
+						detailedMessage: "",
+						dialogType: "Information"
+					});
+			});
+		});
+	</script>
 </head>
 <body>
-
 		<div id="mainContentArea">
-				<p>This is a sample shows implementing the various types of pop-up message and dialogs available.</p>
-				<table style="font-size:1.2em">
-						<tr>
-							<td>General Custom Dialog</td>
-							<td><button id="generalDialogButton" class="inforFormButton">Show</button></td>
-							</tr>
-							<tr>
-							<td>Error Messages</td>
-							<td><button id="errorMessageButton" class="inforFormButton">Show</button></td>
-							</tr>
-							<tr>
-							<td>Alert Messages</td>
-							<td><button id="alertMessageButton" class="inforFormButton">Show</button></td>
-							</tr>
-							<tr>
-							<td>Confirmation Messages</td>
-							<td><button id="confirmationMessageButton" class="inforFormButton">Show</button></td>
-							</tr>
-							<tr>
-							<td>Information Messages</td>
-							<td><button id="informationMessageButton" class="inforFormButton">Show</button></td>
-						</tr>
-				</table>
+		 <p>This is a sample shows implementing the various types of pop-up message and dialogs available.</p>
+			<table style="font-size:1.2em">
+				<tr>
+					<td>General Custom Dialog</td>
+					<td><button id="generalDialogButton" class="inforFormButton">Show</button></td>
+				</tr>
+				<tr>
+					<td>Error Messages</td>
+					<td><button id="errorMessageButton" class="inforFormButton">Show</button></td>
+				</tr>
+				<tr>
+					<td>Alert Messages</td>
+					<td><button id="alertMessageButton" class="inforFormButton">Show</button></td>
+				</tr>
+				<tr>
+					<td>Confirmation Messages</td>
+					<td><button id="confirmationMessageButton" class="inforFormButton">Show</button></td>
+				</tr>
+				<tr>
+					<td>Information Messages</td>
+					<td><button id="informationMessageButton" class="inforFormButton">Show</button></td>
+				</tr>
+			</table>
 		</div>
 
 </body>

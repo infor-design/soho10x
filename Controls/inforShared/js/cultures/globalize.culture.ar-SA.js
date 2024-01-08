@@ -254,7 +254,7 @@ Globalize.addCultureInfo( "ar-SA", "default", {
 			eras: [{"name":"بعد الهجرة","start":null,"offset":0}],
 			twoDigitYearMax: 1451,
 			patterns: {
-				d: "yyyy/MM/dd",
+				d: "dd/MM/yyyy",
 				D: "dd/MMMM/yyyy",
 				t: "hh:mm tt",
 				T: "hh:mm:ss tt",
@@ -282,7 +282,7 @@ Globalize.addCultureInfo( "ar-SA", "default", {
 			eras: [{"name":"بعد الهجرة","start":null,"offset":0}],
 			twoDigitYearMax: 1451,
 			patterns: {
-				d: "yyyy/MM/dd",
+				d: "dd/MM/yyyy",
 				D: "dd/MMMM/yyyy",
 				t: "hh:mm tt",
 				T: "hh:mm:ss tt",

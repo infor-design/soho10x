@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>Infor Bar Chart - Basic Vertical</title>
+
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../lib/d3.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+
+	<script>
+		$(function () {
+			var w = 350,
+			h = 450,
+			p = [10, 50, 20, 20],
+			barWidth = 50,
+			stackArr = ["wounds", "other", "disease"],
+			x = d3.scale.ordinal().rangeRoundBands([0, w - p[1] - p[3]]),
+			y = d3.scale.linear().range([0, h - p[0] - p[2]]),
+			z = d3.scale.ordinal().range(["#ff6400", "#61c5ff", "#9ed927", "#7533a6", "#00898c", 
+										  "#ff574d", "#bf2951", "#13a3f7", "#2db329", "#b3b3b3", "#ff80a2", "#005ce6", "#ffaa00" ]);
+			
+		var svg = d3.select("body").append("svg:svg")
+			.attr("width", w)
+			.attr("height", h)
+			.style({"shape-rendering": "crispEdges", "font-size": "1.2em", "font-family": "Helvetica,Arial" , "fill":"#666666"})
+			.append("svg:g")
+			.attr("transform", "translate(" + p[3] + "," + (h - p[2]) + ")");
+
+		  var dataPoints = [{"label": "Jan", disease: 11, other: 21, wounds: 31},
+						{"label": "Feb", disease: 8, other: 12, wounds: 13},
+						{"label": "Mar", disease: 9, other: 12, wounds: 13},
+						{"label": "Apr", disease: 10, other: 12, wounds: 13}];
+
+		  // Transpose the data into layers by cause.
+		  var stacks = d3.layout.stack()(stackArr.map(function(cause) {
+			return dataPoints.map(function(d) {
+				return {x: d.label, y: +d[cause]};
+			});
+		  }));
+
+		  // Compute the x-domain (by date) and y-domain (by top).
+		  x.domain(stacks[0].map(function(d) { return d.x; }));
+		  y.domain([0, d3.max(stacks[stacks.length - 1], function(d) { return d.y0 + d.y; })]);
+		  
+		  // Add y-axis rules.
+		  var rule = svg.selectAll("g.rule")
+			  .data(y.ticks(5))
+			.enter().insert("g")
+			  .attr("class", "rule")
+			  .attr("transform", function(d) { return "translate(0," + -y(d) + ")"; });
+
+		  rule.append("line")
+			  .attr("x2", w - p[1] - p[3])
+			  .style("stroke", function(d) { return d ? "#e8e8e8" : "#c0c0c0"; });
+
+		  rule.append("text")
+			  .attr("x", w - p[1] - p[3] + 6)
+			  .attr("dy", ".35em")
+			  .text(d3.format(",d"));
+		
+		  // Add a label per date.
+		  var label = svg.selectAll("text.labels")
+			  .data(x.domain())
+			.enter().append("svg:text")
+			  .attr("x", function(d) { return x(d) + barWidth / 2; })
+			  .attr("y", 10)
+			  .attr("text-anchor", "middle")
+			  .attr("dy", ".71em")
+			   .attr("class", "labels")
+			  .text(function (d) {return d;});
+
+		  // Add a group for each cause.
+		  var stack = svg.selectAll("g.bar")
+			  .data(stacks)
+			.enter().append("g")
+			  .attr("class", "bar")
+			  .style("fill", function(d, i) { return z(i); })
+			  .style("stroke", function(d, i) { return d3.rgb(z(i)).brighter(); });
+	
+		  // Add a rect for each date.
+		  var rect = stack.selectAll("rect")
+			  .data(Object)
+			.enter().append("rect")
+			  .attr("x", function(d) { return x(d.x); })
+			  .attr("y", function(d) { return -y(d.y0) - y(d.y); })
+			  .attr("height", function(d) { return y(d.y); })
+			  .attr("width", barWidth);
+
+		});
+	</script>
+</head>
+<body class="inforApplicationPadding">
+	<div id="container" style="margin: 20px">
+	</div>
+</body>
+</html>

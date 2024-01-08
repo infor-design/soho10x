@@ -1,47 +1,53 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset="utf-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+	<meta charset="utf-8">
 
-  <title>Infor Tooltip - On Fields</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-  <link href="css/tooltip.css" rel="stylesheet" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/tooltip.js"></script>
+	<title>Infor ToolTip - Basic Examples</title>
+	<link href="http://hookandlooplabs.com/controls/Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="http://hookandlooplabs.com/controls/Release/jquery-1.10.2.min.js"></script>
+	<script src="http://hookandlooplabs.com/controls/Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="http://hookandlooplabs.com/controls/Release/inforControlsCombined.js"></script>
 
-
-  <script>
-      $(function () {
-
-        //Fixed Tooltip
-        $('input.fixed').tooltip();
-
-        //Changes Based on Content
-        $('input.dynamic').attr('title', 'dummy').tooltip({content: function() {
-          var $self = $(this),
-          val = $self.val(),
-          len = val.length,
-          size = parseInt($self.attr('size'), 10);
-          return len > size ? val : '';
-        }}).data('currentTitle', '');
-
-    });
-  </script>
+	<script>
+		  $(function () {
+		  
+			//$("[title]").not(".inforErrorIcon").inforToolTip();
+			$('input.fixedTip').inforToolTip();
+			
+			$('input.dynamicTip').attr("title","dummy").inforToolTip({content: function() {
+				var $self = $(this),
+					//title = $self.attr("title")
+					//curTitle = $self.data("currentTitle"),
+					val = $self.val(),
+					len = val.length,
+					size = parseInt($self.attr('size'), 10);
+				/*
+				if (title.length)
+					return title;
+				else if (curTitle.length)
+					return curTitle;
+				else*/
+				// if text in input is larger than it's size, set the value as the tooltip
+					return len > size ? val : "";
+			}}).data("currentTitle", "");
+			
+			$('body').inforForm();
+		});
+	</script>
 </head>
 <body>
-  <div class="inforToolbar" role="toolbar">
-    <button class="inforTextButton" onclick="$('input').val('')">Clear Form</button>
-    <button class="inforTextButton" onclick="$('input').val('Long text')">Fill Values</button>
-  </div>
-  <div class="inforSingleColumnLayout autoLabelWidth">
-    <label for="i1" class="inforLabel">This is a label</label>
-    <input id="i1" type="text" size="5" maxlength="20" class="inforTextbox fixed" title="Title, not label">
-    <br />
-    <label for="i2" class="inforLabel">No title</label>
-    <input id="i2" type="text" size="5" maxlength="20" class="inforTextbox dynamic">
-  </div>
+	<div class="inforToolbar" role="toolbar">
+		<button class="inforTextButton" onclick="$('input').val('')">Clear Form</button>
+		<button class="inforTextButton" onclick="$('input').val('Long text')">Fill Values</button>
+	</div>
+	<div class="inforSingleColumnLayout autoLabelWidth">
+		<label for="i1" class="inforLabel">Starts with title, never alter it</label>
+		<input id="i1" type="text" size="5" maxlength="20" class="inforTextbox fixedTip" title="test">
+		<br />
+		<label for="i2" class="inforLabel">No title</label>
+		<input id="i2" type="text" size="5" maxlength="20" class="inforTextbox dynamicTip">
+	</div>
 </body>
 </html>

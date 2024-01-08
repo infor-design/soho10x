@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+
+	<title>3.3.64 Landmark Date Validation</title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
+	<script src="../Release/jquery-1.11.1.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+<!-- 
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.10.2.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="lib/knockout-2.3.0.debug.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+
+	
+-->
+
+
+	<script>
+
+		$(function()
+		{
+			//Make the click open the dialog
+			$(".inforFormButton").click(function ()
+			{
+				$().showResponseRequiredDialog(function(result)
+				{
+					if (result.status == 'OK')
+						alert("Date Picked: " + result.effectiveDate);
+				});
+
+				$("body").inforForm();
+			});
+		});
+
+		(function($)
+		{
+			$.fn.showResponseRequiredDialog = function(callback)
+			{
+				var html = "";
+				html += '<div id="ResponseRequiredDialog" style="display:none;">';
+				html += '<form id="ResponseRequiredDialogForm">'
+				html += '<label style="width: 100px;" for="effectiveDate" class="inforLabel">Effective Date</label>';
+				html += '<input class="inforDateField" id="EffectiveDateField" type="text" data-validation="required validateDate"/>';
+				html += '</form/></div>';
+
+				//First add the html to the page..
+				$("body").append(html);
+
+				$("#EffectiveDateField").inforDateField({validateInput:false});
+				//$("#ResponseRequiredDialog").inforForm();
+
+				$.Validation.addRule("validateDate",
+				{
+					check: function(value, element)
+					{
+						if (value)
+						{
+							var dt = landmark.format.parseDate({value:value, format:Globalize.culture().calendar.patterns.d});
+
+							if (dt)
+							{
+								element.val(Globalize.format(dt, Globalize.culture().calendar.patterns.d));
+								return true;
+							}
+						}
+
+						this.msg = "Invalid Date";		// Globalize.localize("InvalidDate");
+						return false;
+					}
+				});
+
+
+				//Setup the form Validation
+				var dialogForm = $("#ResponseRequiredDialogForm");
+				dialogForm.setupValidation(function (valid)
+				{
+					if (valid)
+					{
+						var parsedDate = Globalize.parseDate($("#EffectiveDateField").val());
+						var dateString = Globalize.format(parsedDate,'yyyyMMdd');
+						var result =
+						{
+							status: 'OK',
+							effectiveDate: dateString
+						};
+
+						callback(result);
+						$('#ResponseRequiredDialog').inforDialog("close");
+
+						//Note: $('#templateForm').trigger('submit');	Will infinitely loop
+					}
+				});
+
+				//Invoke the dialog on it
+				$('#ResponseRequiredDialog').inforMessageDialog(
+				{
+					title: "Response Required",
+					dialogType: "General",
+					width: 500,
+					height: 294,
+					modal: true,
+					close: function(event, ui)
+					{
+						$('#ResponseRequiredDialog').remove();
+					},
+					buttons:
+					[{
+						text: Globalize.localize("Ok"),
+						click: function()
+						{
+							$('#ResponseRequiredDialogForm').trigger('submit');  // <-- that will end up on line #VALID
+						},
+						isDefault: true
+					},
+					{
+						text: Globalize.localize("Cancel"),
+						click: function()
+						{
+							callback({status: 'CANCEL'});
+							$(this).inforDialog("close");
+						}
+					}]
+				});
+			};
+		})(jQuery);
+
+(function(landmark, $)
+{
+	"use strict";
+
+	landmark.format = landmark.format || {};
+
+	landmark.format.isDate = function(params)
+	{
+		// params = date
+		var dt = params.date;
+
+		if (!dt || (dt && dt.toString().toLowerCase() === "invalid date"))
+		{
+			return false;
+		}
+
+		return true;
+	};
+	landmark.format.parseDate = function(params)
+	{
+		// params = value, format, longFormat
+		var value = params.value;
+		var format = params.format;
+		var longFormat = params.longFormat || format;
+
+		var dt = Globalize.parseDate(value, format);
+
+		if (!landmark.format.isDate({date:dt}))
+		{
+			// try removing the separators and parse again
+
+			// remove date separators
+			var re = new RegExp("\\" + Globalize.culture().calendar["/"], "g");
+			var format = longFormat.replace(re, "");
+
+			// remove time separator
+			re = new RegExp("\\" + Globalize.culture().calendar[":"], "g");
+			format = format.replace(re, "");
+
+			dt = Globalize.parseDate(value, format);
+
+			if (!landmark.format.isDate({date:dt}))
+			{
+				return null;
+			}
+		}
+
+		return dt;
+	};
+}(window.landmark = window.landmark || {}, jQuery));
+	
+		
+	</script>
+</head>
+<body>
+	  <button style="margin:20px" id="generalDialogButton" class="inforFormButton">Show Dialog With Date Field</button>
+</body>
+</html>

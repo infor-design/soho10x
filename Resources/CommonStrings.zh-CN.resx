@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -845,8 +845,32 @@
     <value>新节点</value>
     <comment>Create a New tree Node</comment>
   </data>
-  <data name="AboutText" xml:space="preserve">
-    <value>版权所有 © 2014 Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。保留所有权利。在此所列举的其它商标则属于其各自拥有人的财产。</value>
-    <comment>Text in the Page About Dialog</comment>
+  <data name="RememberSettings" xml:space="preserve">
+    <value>记住这些设置</value>
+    <comment>Sign in Page Help</comment>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>公司</value>
+    <comment>Which company do we want to login to? AKA Tenant</comment>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>环境</value>
+    <comment>Which Environment do we want to login to? Fx Test/Prod</comment>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>没有帐号?</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>重置我的密码</value>
+    <comment>Change Password Text</comment>
+  </data>
+  <data name="SignUpNow" xml:space="preserve">
+    <value>现在登录</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="SelectMonthYear" xml:space="preserve">
+    <value>选择月和年</value>
+    <comment>Date Picker Text</comment>
   </data>
 </root>

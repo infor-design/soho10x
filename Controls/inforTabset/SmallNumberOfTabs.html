@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -7,8 +7,8 @@
 	<title>Infor Tab Set : Small Number of Tabs</title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 	<script src="js/inforTabset.js"></script>
 
@@ -21,12 +21,12 @@
 			//Example of doing something on tab select.
 			$('#inforTabContainer').tabs({
 				select: function (e, ui, newTab) {
-					console.log(ui);
+					alert('select(): e='+e+"; ui="+ui+"; newTab="+newTab);
 				}
 			});
 
 			//Example setting current tab to tab 3.
-		  $('#inforTabContainer').tabs('select', 1);
+			// $('#inforTabContainer').tabs('select', 1);
 
 			//Init some other controls used on this form for texting.
 			$(".inforFieldSet").inforFieldSet();

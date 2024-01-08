@@ -1,31 +1,31 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
-
+	
 	<title>Infor Tab Set : Basic Features </title>
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet">
 	<link href="css/inforTabset.css" rel="stylesheet">
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script>
 		$(function($) {
 			var tabs = $('#inforTabContainer').inforTabset();
-      console.log(tabs.data('uiTabs').options.selected);
 		});
 	</script>
 </head>
 <body>
 	<div id="inforTabContainer" style="margin:10px">
 	  <ul class="inforTabset">
-  		<li><a href="#tab1">Overview</a></li>
-  		<li><a href="#tab2">Items</a></li>
-  		<li><a href="#tab3">Notes</a></li>
+		<li><a href="#tab1">Overview</a></li>
+		<li><a href="#tab2">Items</a></li>
+		<li><a href="#tab3">Notes</a></li>
+		<li><a href="#tab4">Exceptions</a></li>
 	  </ul>
 
 	  <div id="tab1">

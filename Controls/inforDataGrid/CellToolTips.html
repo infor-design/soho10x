@@ -6,8 +6,8 @@
 	<title>Infor DataGrid Sample </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<!--Redundent imports but allows me to change grid code without a recompile-->
@@ -26,23 +26,23 @@
 	<script>
 		var grid;
 		var columns = [];
-
-
+	
+	
 		 function renderToolTip(cellNode, row, dataContext, colDef) {
 			$(cellNode).find("div").inforToolTip();
 		 }
-
+		
 		 function ToolTipFormatter(row, cell, value, columnDef, dataContext) {
 			var cellHtml = "<div title='"+ dataContext.city +"'>"+ value + "</div>";
 			return cellHtml;
 		}
-
+		 
 		//Define Columns for the Grid.
 		columns.push({ id: "officeId", name: "Office Id", field: "officeId", width: 40, sortable: true, formatter:UneditableColumnFormatter});
 		columns.push({ id: "city",  maxLength: 10, cssClass: "uppercase", filterExcludeList: ".equals,.doesNotEqual", name: "City", field: "city", width: 125,ormatter: TextCellFormatter, editor: TextCellEditor, editorOptions: {gridOptions: options, returnField: "city", height: 400, width: 400, editable: false, typeAheadSearch: false }, filterType: TextFilter });
 		columns.push({ id: "phone", name: "Phone", field: "phone", width: 60, required: true, filterType: TextFilter});
 		columns.push({ id: "addressLine2", name: "Address 2", field: "addressLine2", toolTip: "test123", width: 140, formatter: ToolTipFormatter,  asyncPostRender: renderToolTip });
-
+		
 		// This Sample uses a flat JS Sample Data file. Ajax could also be used. See other samples.
 		var data = getSampleData([]);
 

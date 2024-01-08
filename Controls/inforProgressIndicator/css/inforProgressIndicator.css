@@ -1,8 +1,8 @@
-/* Infor Progress Indicator Dialog
+﻿/* Infor Progress Indicator Dialog
 ----------------------------------*/
 .inforProgressIndicatorTextArea{
-	margin-top: -18px;
-	padding-left: 27px;
+	padding-left: 38px;
+	margin-top: -12px;
 }
 
 .inforProgressIndicatorBar{
@@ -32,21 +32,18 @@
 }
 
 .inforProgressIndicatorStatusText{
-	font-size: 1.6em !important;
+	font-size: 1.6em;
 	font-weight: normal;
-	margin: 27px 10px !important;
+	margin: 27px 0;
 	padding: 0;
 	position: relative;
-	text-align: left !important;
-	top: 14px;
+	top: 18px;
 }
 
 .inforProgressIndicatorDetailText{
-	font-size: 1.2em !important;
+	font-size: 1.2em;
 	font-weight: normal;
-	margin-bottom: 25px !important;
-	padding-top: 15px;
-	text-align: left !important;
+	margin-bottom: 25px;
 }
 
 /*Form Based Status Indicators*/
@@ -65,8 +62,3 @@
 	background: none repeat scroll 0 0 blue;
 	height: inherit;
 }
-
-.inforProgressIndicatorDetailText {
-    margin: -22px 24px 25px 10px !important;
-}
-

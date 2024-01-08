@@ -1,12 +1,13 @@
-/*
+﻿/*
 * Infor Date Field Control.
 *
 */
 (function ($) {
 	$.fn.inforDateField = function (options) {
 		var settings = {
+			buttonText: Globalize.localize('SelectDate'),
 			dateFormat: Globalize.culture().calendar.patterns.d,	//use current short date format unless its set by the control prefs.
-			openOnEnter: false,	//If the user hits enter the drop down will open when in the field.
+			openOnEnter: true,	//If the user hits enter the drop down will open when in the field.
 			showQuickDates: false, //Changes the Today button to a Menu Button with additional input options
 			quickDateOptions: [
 				{label: Globalize.localize('Today'), offset: 0, period: 'T' },
@@ -110,6 +111,7 @@
 			defaultDate: null, // Used when field is blank: actual date,
 			// +/-number for offset from today, null for today
 			appendText: '', // Display text following the input box, e.g. showing the format
+			buttonText: '...', // Text for trigger button
 			buttonImage: '', // URL for trigger button image
 			buttonImageOnly: true, // True if the image appears alone, false if it appears on a button
 			hideIfNoPrevNext: false, // True to hide next/previous month links
@@ -263,10 +265,13 @@
 			if (showOn == 'focus' || showOn == 'both') // pop-up date picker when in the marked field
 				input.focus(this._showDatepicker);
 			if (showOn == 'button' || showOn == 'both') { // pop-up date picker when button clicked
+				var buttonText = this._get(inst, 'buttonText');
 				var buttonImage = this._get(inst, 'buttonImage');
 				inst.trigger = $(inst.input).closest(".inforTriggerField").find(".inforTriggerButton");
-				inst.trigger.addClass(this._triggerClass).attr("tabIndex", -1);
+				inst.trigger.addClass(this._triggerClass).attr("tabIndex", -1).
+					attr({ src: buttonImage, alt: buttonText, title: buttonText });
 
+				inst.trigger.inforToolTip();
 				input.parent().after(inst.trigger.parent());	//move the td
 				input.focus(function () {
 					if ($.datepicker._datepickerShowing && $.datepicker._lastInput != input[0]) {
@@ -432,9 +437,7 @@
 					return;
 				}
 
-				if (event.keyCode == $.ui.keyCode.ENTER && inst.settings.openOnEnter) {
-					$.datepicker._showDatepicker(event.target);
-				} else if (event.keyCode == $.ui.keyCode.DOWN && !inst.settings.openOnEnter)  {
+				if (inst.settings.openOnEnter) {
 					$.datepicker._showDatepicker(event.target);
 				} else {
 					handled = false;
@@ -468,7 +471,7 @@
 			$.map( options, function (opt) {
 				//add the option and maybe a generic click handler function...
 				var li = $("<li></li>"),
-					a = $("<a></a>").attr("href","javascript:void(0);").text(opt.label).attr("onclick",
+					a = $("<a></a>").attr("href","#").text(opt.label).attr("onclick",
 						'DP_jQuery_' + dpuuid + '.datepicker._quickDateSelect(\'#' +inst.id + '\',' + opt.offset + ',\'' + opt.period + '\')');
 
 				li.append(a);
@@ -496,21 +499,10 @@
 				return;
 			}
 
-      if (!inst.selectedDay || inst.selectedDay === 0) {
-        //Day should only be 0 if not set
-        this._selectToday(target);
-      }
+			this._selectToday(target);
 			this._adjustDate(id, offset, period);
 			this._selectDate(id);
 		},
-
-        //close quickdates (if applicable)
-        _closeQuickDates: function() {
-            if ($('#quickDates').length > 0 && $('#quickDates').data('popupmenu')) {
-                $('#quickDates').data('popupmenu').close();
-            }
-        },
-
 		selectToday: function (target){
 			this._selectToday(target);
 		},
@@ -602,9 +594,6 @@
 		event - if triggered by focus */
 		_showDatepicker: function (input) {
 			$(".inforMenu").hide();
-
-            this._closeQuickDates();
-
 			input = input.target || input;
 			if (input.nodeName.toLowerCase() != 'input') // find from button/image trigger
 				input = $('input', input.parentNode)[0];
@@ -624,8 +613,6 @@
 			//position beside.
 			if (!$.datepicker._pos) {
 				var pos = $(input).offset();
-        pos.left -= ($(input).closest('.modal').length === 1 ? $(window).scrollLeft() : 0);
-        pos.top -= ($(input).closest('.modal').length === 1 ? $(window).scrollTop() : 0);
 				$.datepicker._pos = [pos.left, pos.top-1];//$.datepicker._findPos(input);
 				$.datepicker._pos[0] += input.offsetWidth+14; // add the width + trigger width
 			}
@@ -679,13 +666,9 @@
 						});
 					}
 				};
+				inst.dpDiv.zIndex($(input).zIndex() + 3000);
 
-        //zIndex cannot be > 4000 since Quick Dates popup is 4001
-        var inputZIndex = $(input).zIndex() <= 1000 ? $(input).zIndex() : 1000;
-        inst.dpDiv.zIndex(inputZIndex + 3000);
-
-        $.datepicker._datepickerShowing = true;
-
+				$.datepicker._datepickerShowing = true;
 				if ($.effects && $.effects[showAnim]) {
 					inst.dpDiv.show(showAnim, $.datepicker._get(inst, 'showOptions'), duration, postProcess);
 				} else {
@@ -710,8 +693,8 @@
 
 			//hide any tooltips
 			setTimeout(function () {
-				$("#tooltip, #validation-errors").addClass('is-hidden');
-			},400);
+				$("#inforTooltip").hide();
+			},200);
 		},
 		_updateYearPanel: function (table,inst, centerYear) {
 			//Add the formatted years in - 5 up and down from the current selected year
@@ -851,7 +834,7 @@
 			//add and animate..
 			inst.dpDiv.append(table);
 			inst.dpDiv.show();
-			inst.dpDiv.find('[title]').tooltip();
+			inst.dpDiv.find('[title]').inforToolTip();
 		},
 		_selectMonthYear: function (inst, month, year) {
 
@@ -876,7 +859,7 @@
 
 			instActive = inst; // for delegate hover events
 			inst.dpDiv.empty().append(this._generateHTML(inst));
-			inst.dpDiv.find('[title]').tooltip();
+			inst.dpDiv.find('[title]').inforToolTip();
 
 			inst.dpDiv.find(".inforDatePickerPanelButton").show().click(function ()
 			{
@@ -1001,9 +984,6 @@
 			var inst = this._curInst;
 			if (!inst || (input && inst != $.data(input, PROP_NAME)))
 				return;
-
-            this._closeQuickDates();
-
 			if (this._datepickerShowing) {
 				var showAnim = this._get(inst, 'showAnim');
 				var duration = this._get(inst, 'duration');
@@ -1060,11 +1040,6 @@
 			if ($target.closest(".inforMenu").length == 1) {	//ignore click on drop down.
 				return;
 			}
-
-            //triggers the option from within a popupmenu and continues to hide the datepicker afterward
-            if ($target.parents('.popupmenu').length > 0) {
-                $target.trigger('click');
-            }
 
 			if ($target[0].id != $.datepicker._mainDivId &&
 				$target.parents('#' + $.datepicker._mainDivId).length == 0 &&
@@ -1563,9 +1538,8 @@
 			'<a class="inforDatePicker-prev l" onclick="DP_jQuery_' + dpuuid +
 			'.datepicker._adjustDate(\'#' + inst.id + '\', -' + stepMonths + ', \'M\');"' +
 			' title="' + prevText + '"><button type="button" class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '" title="' + prevText  + '"><i></i></button></a>' :
-			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-prev inforDatePicker-state-disabled" title="' + prevText + '"><button type="button" class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '" disabled>' + '<i></i></button></a>'));	//prevText - may need for screen reader
-
-      var nextText = this._get(inst, 'Next');
+			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-prev inforDatePicker-state-disabled" title="' + prevText + '"><span class="' + (isRTL ? 'inforNextMonthButton' : 'inforPrevMonthButton') + '">' + '</span></a>'));	//prevText - may need for screen reader
+			var nextText = this._get(inst, 'Next');
 			nextText = (!navigationAsDateFormat ? nextText : this.formatDate(nextText,
 			this._daylightSavingAdjust(new Date(drawYear, drawMonth + stepMonths, 1)),
 			this._getFormatConfig(inst)));
@@ -1573,7 +1547,7 @@
 			'<a class="inforDatePicker-next " onclick="DP_jQuery_' + dpuuid +
 			'.datepicker._adjustDate(\'#' + inst.id + '\', +' + stepMonths + ', \'M\');"' +
 			' title="' + nextText + '"><button type="button"  class="' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '" title="' + nextText + '"><i></i></button></a>' :
-			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-next inforDatePicker-state-disabled" title="' + nextText + '"><button type="button" class="inforIconButton ' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '" disabled>' + '<i></i></button></a>')); //nextText - may need for screen reader
+			(hideIfNoPrevNext ? '' : '<a class="inforDatePicker-next inforDatePicker-state-disabled" title="' + nextText + '"><span class="inforIconButton ' + (isRTL ? 'inforPrevMonthButton' : 'inforNextMonthButton') + '">' + '</span></a>')); //nextText - may need for screen reader
 			var currentText = this._get(inst, 'Today');
 			var gotoDate = (this._get(inst, 'gotoCurrent') && inst.currentDay ? currentDate : today);
 			currentText = (!navigationAsDateFormat ? currentText :
@@ -1701,7 +1675,7 @@
 
 				if (showTime) {
 					var curTime = Globalize.format(selectedDate, this._get(inst, 'timeFormat'));
-					todayBar += '<div class="dateTimePanel"><label for="inforTimeInput" class="inforLabel" style="float:none;width:auto;">'+Globalize.localize('Time')+'</label><input id="inforTimeInput" class="inforTextbox" style="width:80px" value="'+curTime+'"/>';
+					todayBar += '<div class="dateTimePanel"><label class="inforLabel" style="float:none;width:auto;">'+Globalize.localize('Time')+'</label><input id="inforTimeInput" class="inforTextbox" style="width:80px" value="'+curTime+'"/>';
 
 					if (showTimezone) {
 						var zones = this._get(inst, 'timezones'),
@@ -1711,7 +1685,7 @@
 							options += "<option value='" + zones[i].offset +"'"+ (inst.selectedTimezone === zones[i].offset  ? "selected" : "" ) +">" + zones[i].label +"</option>";
 						}
 
-						todayBar += '<br><label class="inforLabel" for="inforTimezone" style="float:none;width:auto;">'+Globalize.localize('Timezone')+'</label><select id="inforTimezone" class="inforDropdownlist" style="width:80px" >' + options + '</select>';
+						todayBar += '<br><label class="inforLabel" style="float:none;width:auto;">'+Globalize.localize('Timezone')+'</label><select id="inforTimezone" class="inforDropdownlist" style="width:80px" >' + options + '</select>';
 					}
 					todayBar += (this._get(inst, 'showUTCTime') ? " UTC" : "") +'</div>';
 				}
@@ -1779,15 +1753,10 @@
 
 			// month selection
 			monthHtml += '<span class="inforDatePicker-month">' + display[0] + '</span>';
-			var isRTL = this._get(inst, 'isRTL');
-			if (isRTL) {
-				html += '<button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
-				html += '<span class="inforDatePicker-year">' + display[1] + '</span>&#xa0;' + monthHtml + '</div>';
-			} else {
-				html += monthHtml + '&#xa0;';
-				html += '<span class="inforDatePicker-year">' + display[1] + '</span><button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
-				html += '</div>';
-			}
+
+			html += monthHtml + '&#xa0;';
+			html += '<span class="inforDatePicker-year">' + display[1] + '</span><button type="button" title="'+ Globalize.localize("SelectMonthYear") +'" class="inforIconButton settings inforDatePickerPanelButton"><span></span></button>';
+			html += '</div>';
 			return html;
 		},
 
@@ -2044,7 +2013,7 @@
 
 		/* Initialise the date picker. */
 		if (!$.datepicker.initialized) {
-			$(document).mouseup($.datepicker._checkExternalClick).
+			$(document).mousedown($.datepicker._checkExternalClick).
 			find('body').append($.datepicker.dpDiv);
 			$.datepicker.initialized = true;
 		}

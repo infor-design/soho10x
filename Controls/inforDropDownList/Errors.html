@@ -1,44 +1,45 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
-  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
+	<meta charset="utf-8">
 
-  <title>DropDown : Test Validation Errors</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<title>Infor DropDownList : Error State Testing</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
-  <script>
-     $(function () {
-      $('#example3, #example4').inforDropDownList(); //maxlength wont work : http://jira.infor.com/browse/HFC-1612
-      $('#example3').validationMessage('show', 'This field is required.' , false);
-    });
-  </script>
+	<script>
+	   $(function () {
+			$("#example3, #example4").inforDropDownList({editable: true, displayCodeOnly: true, typeAheadSearch: false, validateCodeInput: true, selectFirst:false, maxLength:1});
+			$("#example3").validationMessage("show", "This field is required." , false);
+		});
+	</script>
 </head>
 <body>
-  <div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
+	<div class="inforModuleContentArea autoLabelWidth inforSingleColumnLayout">
 
-    <label class="inforLabel" id="example4Label">Type Input</label>
-    <select class="inforDropDownList" name="example4" id="example4" style="width:20px">
-      <option value="1">1 Weekly</option>
-      <option value="2">2 Biweekly</option>
-      <option value="3">3 Semimonthly</option>
-      <option value="4">4 Monthly</option>
-      <option value="5">5 UK Four-Weekly</option>
-    </select>
-    <br>
-    <label class="inforLabel" id="example3Label">Type Input</label>
-    <select class="inforDropDownList" name="example3" id="example3" data-tooltip-maxwidth="200" style="width:10px">
-      <option value="1">1 Weekly</option>
-      <option value="2">2 Biweekly</option>
-      <option value="3">3 Semimonthly</option>
-      <option value="4">4 Monthly</option>
-      <option value="5">5 UK Four-Weekly</option>
-    </select>
-  </div>
+		<label class="inforLabel" id="example4Label">Type Input</label>
+		<select class="inforDropDownList" name="example4" id="example4" style="width:11.7px">
+		  <option value="1">1 Weekly</option>
+		  <option value="2">2 Biweekly</option>
+		  <option value="3">3 Semimonthly</option>
+		  <option value="4">4 Monthly</option>
+		  <option value="5">5 UK Four-Weekly</option>
+		</select>
+		<br>
+		<label class="inforLabel" id="example3Label">Type Input</label>
+		<select class="inforDropDownList" name="example3" id="example3" data-tooltip-maxwidth="200" style="width:11.7px">
+		  <option value="1">1 Weekly</option>
+		  <option value="2">2 Biweekly</option>
+		  <option value="3">3 Semimonthly</option>
+		  <option value="4">4 Monthly</option>
+		  <option value="5">5 UK Four-Weekly</option>
+		</select>
+	</div>
 </body>
 
 </html>

@@ -7,8 +7,8 @@
 	<title>Infor DataGrid : Client Side Paging with Pager Button </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<script src="js/inforDataGrid.js"></script>
@@ -68,29 +68,20 @@
 			filterMenuOptions: [{label: Globalize.localize("RunFilter"), href: "#rf" },
 								{label: Globalize.localize("ClearFilter"), href: "#cf"}]
 		};
-		var grid = $("#inforDataGrid").inforDataGrid(options);
+		var grid2 = $("#inforDataGrid").inforDataGrid(options);
 
 		/* Make an Ajax call and get the data */
 		var qry  = "http://usmvvwdev67.infor.com:8000/Html5Controls/Services/InforSampleDBService.svc/Offices?$format=json&$callback=?&$orderby=city";
 		$.getJSON(qry,
 			 function (jsonResult) {
 				var newData = jsonResult.d;
-				grid.updateData(newData);
+				grid2.updateData(newData);
 		});
 
-		grid.getData().onPageRequested.subscribe(function (e, args) {
+		grid2.getData().onPageRequested.subscribe(function (e, args) {
 			if (args.operation=="filter")
 				console.log(args.filters);
 		});
-
-    //Trigger to Show the loading indicator
-    grid.trigger(grid.getData().onDataLoading);
-
-    //Sometime Later Hide it
-    setTimeout(function () {
-      grid.trigger(grid.getData().onDataLoaded);
-
-    }, 3000); //To Simulate Later...
 
 		//preset the filterWithinResults
 		//grid.restorePersonalization({filterInResults: false, columnInfo:[]});

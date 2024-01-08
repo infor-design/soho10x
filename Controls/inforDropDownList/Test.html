@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor DropDown List - Basic Functionality</title>
+	<link href="http://usmawsoab.infor.com:8080/ci/job/Html5Controlsv3.3/lastSuccessfulBuild/artifact/3.3/Controls/Release//inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="http://usmawsoab.infor.com:8080/ci/job/Html5Controlsv3.3/lastSuccessfulBuild/artifact/3.3/Controls/Release/jquery-1.10.2.min.js"></script>
+    <script src="http://usmawsoab.infor.com:8080/ci/job/Html5Controlsv3.3/lastSuccessfulBuild/artifact/3.3/Controls/Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="http://usmawsoab.infor.com:8080/ci/job/Html5Controlsv3.3/lastSuccessfulBuild/artifact/3.3/Controls/Release/inforControlsCombined.js"></script>
+
+	<script>
+		$(function () {
+			$('#country3').inforDropDownList();
+
+      $('button').click(function () {
+        alert($("#country3").val());
+      });
+
+		});
+	</script>
+
+</head>
+<body >
+
+  <label for="country3" class="inforLabel" >Country</label>
+   	<select id="country3" data-placeholder="Select..." class="inforDataGridDropDownList" style="width: 210px">
+      <option value="" selected>&nbsp;</option>
+      <option value="United States" >United States</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="Afghanistan">Afghanistan</option>
+      <option value="Aland Islands">Aland Islands</option>
+      <option value="Albania">Albania</option>
+   	</select><br>
+    <button> Show the Result of .getValue()</button>
+</body>
+</html>

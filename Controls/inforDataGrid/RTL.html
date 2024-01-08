@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -7,8 +7,8 @@
 	<title>Infor DataGrid - RTL Sample </title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<!--Redundent imports but allows me to change grid code without a recompile-->
@@ -21,12 +21,12 @@
 <body>
 	<div>
 	   <div class="inforToolbar">
-		   <button id="newButton"  class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1, city: 'New City', establishedDate:''})"><span></span></button>
-		   <button id="submitButton" class="inforIconButton save" disabled="disabled" title="Click to Save Modified Rows" ><span></span></button>
+		   <button id="newButton"  class="inforIconButton new" title="Click to add a new row" onclick="grid.addRow({ officeId: grid.getData().getMaxId()+ 1, city: 'New City', establishedDate:''})"></button>
+		   <button id="submitButton" class="inforIconButton save" disabled="disabled" title="Click to Save Modified Rows" ></button>
 		   <span class="inforToolbarSpacer"></span>
-		   <button id="deleteButton"  class="inforIconButton delete" disabled="disabled" title="Click to remove selected rows" onclick="deleteRows()"><span></span></button>
+		   <button id="deleteButton"  class="inforIconButton delete" disabled="disabled" title="Click to remove selected rows" onclick="deleteRows()"></button>
 		   <span class="inforToolbarSpacer"></span>
-		   <button id="refreshButton"  class="inforIconButton refresh" title="Click to reload the data" onclick="refreshData()"><span></span></button>
+		   <button id="refreshButton"  class="inforIconButton refresh" title="Click to reload the data" onclick="refreshData()"></button>
 	   </div>
 		<div id="inforDataGrid"></div>
 	</div>

@@ -7,8 +7,8 @@
 	<title>Infor DataGrid - Panel Formatter (Inline Form)</title>
 	<link rel="stylesheet" href="../Release/inforControlsCombined.css"/>
 
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js"></script>
 
 	<!--Redundent imports but allows me to change grid code without a recompile-->
@@ -44,7 +44,7 @@
 			if (!dataContext.rowHeight) {
 				return;
 			}
-
+			
 			$(cellNode).find(".inforLoadingIndicator").remove();
 			//Define Columns for the Grid.
 			var columns2 = [];
@@ -67,15 +67,15 @@
 						editable: false,
 					};
 			//$("#inforDataGrid" + row).inforDataGrid(options2);
-
+			
 			//Fade In
 			$(cellNode).find(".inforDetailTemplate").css('opacity', 1).parent().css('opacity', 1);
 		}
 
 		//Define Columns for the Grid.
 		var columns = [];
-		columns.push({ id: "edit", name: "hey", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "tree-expand inforIconButton closed",
-						buttonClick: function (row, gridObj) {
+		columns.push({ id: "edit", name: "hey", sortable: false , width: 40, formatter:ButtonCellFormatter , buttonCssClass : "tree-expand inforIconButton closed", 
+						buttonClick: function (row, gridObj) { 
 							if (row.rowHeight == 0) {
 								row.rowHeight = 200;
 								this.buttonCssClass = "tree-expand inforIconButton open";

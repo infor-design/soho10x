@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<title>Infor DataGrid - Basic </title>
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDataGrid.js"></script>
+
+	<!--Load a Flat file with JSON data-->
+	<script src="js/sampleData.js"></script>
+
+	<script>
+	$(function () {
+      var grid;
+      var data = [];
+      var columns = [];
+      var i
+      for (i = 1; i < 9; i++) {
+          data.push({ Uniqueid: i, Product: "Product " + i, ExpiryDate: new Date(2, i, 2015)});
+      }
+
+      columns.push({ id: "Uniqueid", name: "Id", field: "Uniqueid", width: 280, filterType: TextFilter });
+      columns.push({ id: "Product", name: "Product", field: "Product", width: 280, filterType: TextFilter });
+      columns.push({ id: "ExpiryDate", name: "Expiry Date", field: "ExpiryDate", width: 300, formatter: DateCellFormatter, filterType: DateFilter, DateShowFormat: "M/d/yyyy" });
+
+      var options = {
+          columns: columns,
+          idProperty: "Uniqueid",
+          dataset: data,
+          showDrillDown: false,
+          showCheckboxes: false,
+          showGridSettings: false,
+          showFilter: true,
+          enableCellRangeSelection: false,
+          enableColumnReorder: false,
+          forceFitColumns: false,
+          showFooter: true,
+          showExport: false,
+          savePersonalization: false
+      };
+      grid = $("#inforDataGrid").inforDataGrid(options);
+	});
+
+  </script>
+
+</head>
+<body>
+	<div class="inforToolbar">
+		<button type="button" class="inforIconButton new" title="New" onclick='test()'><span></span></button>
+		<button type="button" class="inforIconButton save" title="save" onclick='console.log(data[0].isLeedCertified)'><span></span></button>
+	</div>
+	<div id="inforDataGrid">
+	</div>
+</body>
+</html>

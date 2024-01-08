@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Infor Swap List
 */
 (function ($) {
@@ -17,11 +17,11 @@
 
       //Append Structure
       self.leftList = $('<select multiple="multiple" size="5" class="inforListBox" ></select>').uniqueId();
-      leftLabel = $('<label class="inforLabel noColon">' + self.options.availableItemText + '</label>').attr('for', self.leftList.attr('id'));
+      leftLabel = $('<label class="inforLabel noColon">' + Globalize.localize('Available') + '</label><br>').attr('for', self.leftList.attr('id'));
       elem.append($('<div class="inforSwapListLeft"></div>').append(leftLabel, self.leftList));
 
       self.rightList = $('<select multiple="multiple" size="5" class="inforListBox"></select>').uniqueId();
-      rightLabel = $('<label class="inforLabel noColon">' + self.options.selectedItemText + '</label>').attr('for', self.rightList.attr('id'));
+      rightLabel = $('<label class="inforLabel noColon">' + Globalize.localize('Selected') + '</label><br>').attr('for', self.rightList.attr('id'));
       elem.append($('<div class="inforSwapListRight"></div>').append(rightLabel, self.rightList));
 
       //Add buttons functionality
@@ -33,8 +33,8 @@
       elem.find('.inforListBox').inforListBox({showCheckboxes:false});
 
       //Clear inline css from listbox control
-      elem.find('div.inforListBox:first').css({'height': '', 'width': '', 'display': 'inline-block'});
-      elem.find('div.inforListBox:last').css({'height': '', 'width': '', 'display': 'inline-block'});
+      elem.find('div.inforListBox:first').css({'height': '', 'width': '', 'display': 'block'});
+      elem.find('div.inforListBox:last').css({'height': '', 'width': '', 'display': 'block'});
 
       //Set Items
       for (i=0; i < self.options.available.length; i++) {
@@ -69,7 +69,6 @@
           return;
         }
         self.rightList.next().find('ul').append(self.leftList.next().find('.isSelected'));
-        self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
       });
 
@@ -79,7 +78,6 @@
           return;
         }
         self.leftList.next().find('ul').append(self.rightList.next().find('.isSelected'));
-        self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
       });
 
@@ -89,7 +87,6 @@
           return;
         }
         self.rightList.next().find('ul').append(self.leftList.next().find('.isSelected'));
-        self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
       });
       self.moveRight.on('click', function() {
@@ -98,39 +95,12 @@
           return;
         }
         self.leftList.next().find('ul').append(self.rightList.next().find('.isSelected'));
-        self.element.trigger('selected', {selectedItems: self.getSelectedItems()});
         self.refreshButtons();
       });
 
     },
-    getSelectedItems: function () {
-      var ul = this.rightList.next().find('ul'),
-        self = this;
-
-      this.selectedItems = [];
-
-      ul.find('a').each(function () {
-        self.selectedItems.push($(this).attr('rel'));
-      });
-      return this.selectedItems;
-    },
-    getAvailableItems: function () {
-      var ul = this.leftList.next().find('ul'),
-        self = this;
-
-      this.availableItems = [];
-
-      ul.find('a').each(function () {
-        self.availableItems.push($(this).attr('rel'));
-      });
-      return this.availableItems;
-    },
     refreshButtons: function() {
       var self = this;
-      if (this.element.hasClass('disabled')) {
-        return;
-      }
-
       if (self.leftList.next().find('.isSelected').length) {
         self.moveLeft.enable();
       } else {

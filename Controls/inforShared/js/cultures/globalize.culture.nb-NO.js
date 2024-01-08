@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Globalize Culture nb-NO
 *
 * http://github.com/jquery/globalize
@@ -29,7 +29,7 @@ Globalize.addCultureInfo( "nb-NO", "default", {
 	name: "nb-NO",
 	englishName: "Norwegian, Bokmål (Norway)",
 	nativeName: "norsk, bokmål (Norge)",
-	language: "no",
+	language: "nb",
 	numberFormat: {
 		",": " ",
 		".": ",",

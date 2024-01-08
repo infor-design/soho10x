@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -8,8 +8,8 @@
 		<link rel="shortcut icon" type="image/icon" href="css/images/favicon.ico" />
 		<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
 
-		<script src="../Release/jquery-3.6.0.min.js"></script>
-		<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+		<script src="../Release/jquery-1.10.2.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 		<!---We can use header and footer symatics if we include this...-->
 		<script src="../lib/modernizr.2.5.2.custom.js"></script>
 
@@ -22,7 +22,8 @@
 				//init the menu and iFrame
 				$("#inforApplicationNav").inforApplicationNav();
 				$('#contentArea').fillToBottom();
-
+				
+				
 				//Simulate opening something...
 				$("#inforApplicationNav").find("a").click(function() {
 					var $this = $(this);
@@ -38,7 +39,7 @@
 <body>
 	<header class="inforTopBanner">
 		<div class="inforTopBannerLeft">
-			<span class="inforLogo">Infor Logo</span>
+			<a href="http://www.infor.com" target="_blank_" class="inforLogo">infor.com</a>
 			<span class="inforApplicationName">Lawson Budgeting & Planning v10</span>
 		</div>
 		<div class="inforTopBannerRight">

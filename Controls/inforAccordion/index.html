@@ -1,74 +1,86 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
-  <meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+		
+	<title>Infor Accordion Control</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforAccordion.css" rel="stylesheet" />
 
-  <title>Infor Accordion Control</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="../inforFieldSet/js/inforFieldSet.js" ></script>
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js" ></script>
-
-  <script>
-    $().ready(function () {
-      //Globalize.culture("ar-SA");
-      $(".inforAccordion").inforAccordion({onExpand: function(e, ui) {
-        console.log(e, $(ui).parent());
-      }});
-    });
-  </script>
+	<script>
+		$().ready(function () {
+			//Globalize.culture("ar-SA");
+			$(".inforAccordion").inforAccordion({onExpand: function(e, ui) {
+				console.log(e, $(ui).parent());
+			}});
+			
+			//Do something when you select a sub menu item
+			$(".inforAccordionSubmenu").click(function (e) {
+				//do something
+			});
+		});
+	</script>
 </head>
 <body>
-  <div class="inforAccordion" style="width: 250px">
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title One</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
+	<div class="inforAccordion" style="width: 50%" role="navigation">	<!--Can have an explict width or flow to size fx..style="width: 250px;" -->
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon book" aria-label="book" title="Book" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Title One</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton open" aria-expanded="true"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
 
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title Two</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon check" aria-label="check" title="Check" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Title Two</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
 
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title Three</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon chart" aria-label="chart" title="chart" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Title Three</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
 
-    <fieldset class="inforFieldSet" >
-      <legend>
-        <span class="inforFieldSetLabel">Title Four</span>
-      </legend>
-      <button type="button" role="button" class="inforExpandButton closed"></button>
-      <div class="content">
-        <a class="inforAccordionSubmenu" href="#">Option One</a>
-        <a class="inforAccordionSubmenu" href="#">Option Two</a>
-        <a class="inforAccordionSubmenu" href="#">Option Three</a>
-      </div>
-    </fieldset>
-  </div>
+		<fieldset class="inforFieldSet" >
+			<div class="inforIcon event" aria-label="event" title="event" ></div>
+			<legend>
+				<span class="inforFieldSetLabel">Title Four</span>
+			</legend>
+			<button type="button" role="button" class="inforExpandButton closed" aria-expanded="false"></button>
+			<div class="content">
+				<a class="inforAccordionSubmenu" href="#">Option One</a>
+				<a class="inforAccordionSubmenu" href="#">Option Two</a>
+				<a class="inforAccordionSubmenu" href="#">Option Three</a>
+			</div>
+		</fieldset>
+	</div>
 </body>
 </html>

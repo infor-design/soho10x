@@ -1,4 +1,4 @@
-/* Infor Date Field - Field styling is in the inforTriggerField
+﻿/* Infor Date Field - Field styling is in the inforTriggerField
 ----------------------------------*/
 .inforDateField {
    width: 135px;
@@ -117,14 +117,14 @@
 /*Week day block css. To remove the border and change background color*/
 #inforDatePicker-week-day {
 	border : 0;
-	color: #444;
+	color: #666666;
 	font-size: 1.1em;
 }
 
 /*week end block css. To remove the border*/
 #inforDatePicker-week-end {
 	border : 0;
-	color: #444;
+	color: #666666;
 	font-size: 1.1em;
 	text-align: center;
 }
@@ -300,31 +300,14 @@ div.inforDatePickerContainer {
     border-radius: 2px;
 }
 
-.inforNextMonthButton[disabled] {
-  border: none;
-  background-color: transparent;
-  opacity: .5;
-
-}
-
-.inforNextMonthButton[disabled]:hover {
-  border: none;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-.inforNextMonthButton[disabled]:hover i::after {
-  opacity: 0.65;
-}
-
 .inforNextMonthButton:hover, .inforPrevMonthButton:hover, .inforNextYearButton:hover, .inforPrevYearButton:hover {
   background-color: #D8D8D8;
   box-shadow: 0 1px #A2A2A2;
 }
 
 .inforNextMonthButton:hover i:after, .inforPrevMonthButton:hover i:after, .inforNextYearButton:hover i:after, .inforPrevYearButton:hover i:after {
-    opacity: 0.80;
-    filter: alpha(opacity=80);
+    opacity: 0.65;
+    filter: alpha(opacity=65);
 }
 
 .inforNextMonthButton i:after, .inforPrevMonthButton i:after, .inforNextYearButton i:after, .inforPrevYearButton i:after  {
@@ -344,8 +327,8 @@ div.inforDatePickerContainer {
     content: "";
     display: block;
     left: 50%;
-    opacity: 0.65;
-    filter: alpha(opacity=65);
+    opacity: 0.4;
+    filter: alpha(opacity=40);
     position: absolute;
     top: 50%;
 }
@@ -443,7 +426,7 @@ html[dir="rtl"] .inforDatePicker-month {
 }
 
 .inforDatePicker-other-month a{
-	color: #777 !important;
+	color: #b2b2b2 !important;
 }
 
 .inforDatePicker .dateTimePanel {

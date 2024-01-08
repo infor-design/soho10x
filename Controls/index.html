@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -13,7 +13,7 @@
 		body {
 			margin-bottom: 80px;
 		}
-
+		
 		* {
 			margin: 0;
 			padding: 0;
@@ -54,8 +54,8 @@
 		.one-of-three { width: 30.36%; }
 		.two-of-three { width: 63.666666666%; }
 
-		.one-of-four {
-			width: 21.05%;
+		.one-of-four { 
+			width: 21.05%; 
 		}
 		.three-of-four { width: 72%; }
 
@@ -84,7 +84,7 @@
 		}
 
 		h1 {
-			color: #444;
+			color: #333333;
 			font-size: 42px;
 			font-size: 4.2rem;
 			line-height: 112px;
@@ -140,7 +140,7 @@
 			background-color: #f2f2f2;
 			height: 120px;
 		}
-
+		
 		.span-grid > a {
 			display: inline-block;
 			float: right;
@@ -149,7 +149,7 @@
 			right: 23px;
 			top: -88px;
 		}
-
+		
 		a {
 			border: 1px solid rgba(0, 0, 0, 0);
 			color: #13A3F7;
@@ -161,26 +161,26 @@
 			margin: 10px;
 			display: inline-block;
 		}
-
+		
 		a[disabled] {
-			color: #666;
+			color: #999999;
 		}
-
+		
 		a[disabled]:hover {
-			color: #666;
+			color: #999999;
 			cursor: default;
 			text-decoration: none;
 		}
-
+		
 		a:hover {
 			color: #FF6400;
 			text-decoration: underline;
 		}
-
+		
 		h3 + a {
 			margin-top: 10px;
 		}
-		.doc-icon  {
+		.doc-icon  { 
 			background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAAAAAB+AHN8AAAAMklEQVR4AU3L0Q0AIAgD0Tpz15Cd9dCENkDeB11bHZeHgs9DNV0MtIq95Aon8yFrP8kDr+AVg+JNBIMAAAAASUVORK5CYII=");
 		    background-position: center center;
 		    background-repeat: no-repeat;
@@ -217,15 +217,6 @@
 		.updated:hover {
 			color: #ff574d;
 		}
-    .badge {
-      background-color: #b3b3b3;
-      border-radius: 2px;
-      color: white;
-      font-size: 11px;
-      line-height: 10px;
-      margin-left: 15px;
-      padding: 3px 5px 2px;
-  }
 	</style>
 
 </head>
@@ -234,18 +225,17 @@
 		<h1 class="container">HTML Controls Examples</h1>
 		<a target="_blank" href="http://soho.infor.com">Visit SoHo Experience Site</a><br>
 	</header>
-
-	<div  class="container">
+	
+	<div  class="container">   
 		<section class="main-topic">
 			<h2>Navigation</h2>
 			<div class="grid p">
 				<div class="unit one-of-four">
 					<h3>Navigating a Application</h3>
+					<!--<a href="inforApplicationNav/index.html">Fly out Nav Menu </a><a ref="#" class="doc-icon" title="See Docs"></a><a ref="#" class="new">New</a></a><a ref="#" class="updated">Updated</a><br>-->
 					<a href="inforApplicationNav/index.html">Fly out Nav Menu </a><br>
 					<a href="inforApplicationNav/MegaMenus.html">Mega Menu</a><br>
 					<a href="inforTabset/ModuleTabs.html">Module Tabs</a><br>
-          <a href="inforTabset/Vertical.html">Vertical Tabs</a><br>
-
 				</div>
 				<div class="unit one-of-four">
 					<h3>Navigating a Workflow</h3>
@@ -254,8 +244,8 @@
 				</div>
 			</div>
 	</div>
-
-	<div  class="container">
+	
+	<div  class="container">   
 		<section class="main-topic">
 			<h2>Organizing Content</h2>
 			<div class="grid p">
@@ -298,24 +288,22 @@
 					<a href="inforTextbox/index.html">Text Box</a><br>
 					<a href="inforTextArea/index.html">Scrollable Text Area</a><br>
 					<a href="inforRichTextEditor/index.html">Rich text Editor</a><br>
-
+					
 					<a href="inforTextbox/ForgivingInput.html">Forgiving/Smart Input</a><br>
 					<a href="inforTextbox/StructuredInput.html">Structure Input</a><br>
 					<a href="inforSpinner/index.html">Spinner</a><br>
-					<a href="inforTextbox/States.html">Field States (dirty/required ect)</a><br>
-
+					<a href="inforSpinner/index.html">Field States (dirty/required ect)</a><br>
+					
 				</div>
-
+				
 				<div class="unit one-of-four">
 					<h3>Selecting Text</h3>
-					<a href="autocomplete/index.html">Auto Complete <span class="badge">New</span></a><br>
-          <a href="inforRadioButton/index.html">Radio Button</a><br>
+					<a href="inforRadioButton/index.html">Radio Button</a><br>
 					<a href="inforCheckbox/index.html">Checkboxes</a><br>
 					<a href="inforListBox/index.html">List Box</a><br>
 					<a href="inforDropDownList/index.html">DropDown List</a><br>
-					<a href="multiselect/index.html">Multiselect <span class="badge">New</span></a><br>
-
-
+					<!--Dont promote <a href="inforDropDownList/MultiSelect.html">Multiselect (Tags)</a><br>-->
+					
 					<a href="inforLookupField/index.html">Lookup</a><br>
 					<a href="inforSwapList/index.html">Swap List</a><br>
 					<a href="inforSwitch/index.html">Switch</a><br>
@@ -323,9 +311,9 @@
 					<a href="inforSlider/index.html">Slider</a><br>
 					<a href="inforTriggerField/Search.html">Search Field</a><br>
 					<a href="inforTriggerField/FileField.html">File File (Deprecated)</a><br>
-
+					
 				</div>
-
+				
 				<div class="unit one-of-four">
 					<h3>Special Data Types</h3>
 					<a href="inforDateField/index.html">Date Picker</a><br>
@@ -334,20 +322,20 @@
 					<a href="inforTriggerField/FileField.html">File Picker Field</a><br>
 					<a href="inforColorPicker/index.html">Color Picker</a><br>
 					<a href="inforLookupField/index.html">Lookup Field</a><br>
-					<a href="inforCalculatorField/index.html">Calculator Field  (Deprecated)</a><br>
+					<a href="inforCalculatorField/index.html">Calculator Field</a><br>
 				</div>
-
+				
 				<div class="unit one-of-four">
 					<h3>Performing Actions</h3>
 					<a href="inforFormButton/index.html">Form button</a><br>
 					<a href="inforToolbar/index.html">Toolbars</a><br>
 					<a href="inforContextMenu/index.html">Context Menu</a><br>
-					<a href="inforToolbar/index.html">Toolbars</a><br>
-					<a href="inforIconButton/index.html">Toolbar Icon Button</a><br>
-					<a href="inforTextButton/index.html">Toolbar Text Button</a><br>
-					<a href="inforMenuButton/index.html">Toolbar Menu Button</a><br>
-					<a href="inforSplitButton/index.html">Toolbar Split Button</a><br>
-
+					<a href="inforContextMenu/index.html">Toolbars</a><br>
+					<a href="inforContextMenu/index.html">Toolbar Icon Button</a><br>
+					<a href="inforContextMenu/index.html">Toolbar Text Button</a><br>
+					<a href="inforContextMenu/index.html">Toolbar Menu Button</a><br>
+					<a href="inforContextMenu/index.html">Toolbar Split Button</a><br>
+					
 				</div>
 			</div>
 		</section>
@@ -368,11 +356,11 @@
 					<a href="inforAboutDialog/index.html">About Dialog</a><br>
 					<a href="inforToolTip/index.html">Tooltip</a><br>
 					<a href="inforValidation/index.html">Validation Messages</a><br>
-
+					
 				</div>
 			</div>
 		</section>
-
+		
 		<section class="main-topic">
 			<h2>Visual Elements</h2>
 			<div class="grid p">
@@ -384,9 +372,12 @@
 				</div>
 				<div class="unit one-of-four">
 					<h3>Charting</h3>
+					<a href="inforDotChart/index.html">Dot Chart</a><br>
+					<a href="inforBarChart/index.html">Bar Chart</a><br>
 					<a href="inforBulletChart/index.html">Bullet Chart</a><br>
 					<a href="inforFormStatusBar/index.html">Status Chart</a><br>
-
+					<a href="inforPieChart/index.html">Pie Chart</a><br>
+					
 				</div>
 				<div class="unit one-of-four">
 					<h3>Special Interactions</h3>
@@ -395,13 +386,11 @@
 					<a href="inforSplitter/index.html">Splitter</a><br>
 					<a href="inforTilePanel/index.html">Tile Panel</a><br>
 					<a href="inforWizard/index.html">Wizard</a><br>
-          <a href="rating/index.html">Rating <span class="badge">New</span></a><br>
-
 				</div>
 			</div>
 
 		</section>
 	</div>
-
+	
 </body>
 </html>

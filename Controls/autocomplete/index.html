@@ -9,23 +9,19 @@
 
   <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../Release/jquery-1.10.2.min.js"></script>
+  <script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
   <script src="../Release/inforControlsCombined.js"></script>
+  <script src="js/autocomplete.js"></script>
 
   <script>
     $(function () {
 
       //Sample data
-      var randomStates = [{ value: 1, label: 'Alabama' }, { value: 2, label: 'Alaska' }, { value: 'AS', label: 'American Samoa' },
-           { value: 'AZ', label: 'Arizona' }, { value: 'AR', label: 'Arkansas' }, { value: 'CA', label: 'California' },
-           { value: 'CO', label: 'Colorado' }, { value: 'CT', label: 'Connecticut' }, { value: 'DE', label: 'Delaware' },
-           { value: 'DC', label: 'District Of Columbia' }];
+      var randomStates = ['Alabama','FS-0001\\0001', 'Alaska','Arizona','California','Connecticut','Maryland'];
 
       //Initialize
-      $('#input-autocomplete').autocomplete({source: randomStates}).on('selected', function (e, a) {
-        console.log($(a).parent().attr('data-value'));
-      });
+      $('#input-autocomplete').autocomplete({source: randomStates});
     });
   </script>
 </head>

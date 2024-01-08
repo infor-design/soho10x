@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
 <head>
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
@@ -6,8 +6,8 @@
 	<title>Infor Lookup Field</title>
 
 	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
-	<script src="../Release/jquery-3.6.0.min.js"></script>
-	<script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
 	<script src="../Release/inforControlsCombined.js" ></script>
 	<script src="../inforTriggerField/js/inforTriggerField.js" ></script>
 
@@ -83,14 +83,8 @@
 
 		   //remove class which hides the page for smoother loading and size fields...Not necessary specifically for this control.
 		   $("body").inforForm();
-
+		   
 		   $("#lookupField2").inforLookupField("setCode", 2);
-
-       $("#lookupField2").disable();
-       $('#toggleReadonly').on('click', function () {
-          $("#lookupField2").enable();
-       });
-
 		  })
 	</script>
 </head>
@@ -98,12 +92,12 @@
 	<div class="inforSingleColumnLayout autoLabelWidth">
 		<div class="column1">
 			<label class="inforLabel">Lookup Field Editable</label>
-			<input class="inforLookupField" type="text" id="lookupField2" ><br>
+			<input class="inforLookupField" type="text" id="lookupField2" style="text-align:right"><br>
 			<label class="inforLabel">Input</label>
 			<input class="inforTextbox" type="text" id="field2" style="text-align:right"><br>
 		</div>
 	</div>
-	<button class="inforFormButton" id="toggleReadonly">Disable/Enable</button>
+	<button class="inforFormButton" id="toggleReadonly">Readonly/Enable</button>
 
 </body>
 </html>

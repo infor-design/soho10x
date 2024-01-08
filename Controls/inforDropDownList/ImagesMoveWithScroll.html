@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Problem where images move around when scrolled.</title>
+
+   <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+
+	<style>
+		.outerDiv
+		{
+			background-color: Gray;
+			height: 100px;
+			width: 200px;
+			overflow: auto
+		}
+		.innerDiv
+		{
+			background-color: Silver;
+			height: 200px;
+			width: 150px;
+			overflow: auto
+		}
+
+	.inforDropDownImage.TrendBarGold {
+		 background-image: url("images.example/TrendBarGold.gif") !important;
+	}
+	.inforDropDownImage.TrendDownBlue {
+		 background-image: url("images.example/TrendDownBlue.gif") !important;
+	}
+	.inforDropDownImage.TrendDownGreen {
+		 background-image: url("images.example/TrendDownGreen.gif") !important;
+	}
+	.inforDropDownImage.TrendDownRed {
+		 background-image: url("images.example/TrendDownRed.gif") !important;
+	}
+	.inforDropDownImage.TrendUpBlue {
+		 background-image: url("images.example/TrendUpBlue.gif") !important;
+	}
+	.inforDropDownImage.TrendUpGreen {
+		 background-image: url("images.example/TrendUpGreen.gif") !important;
+	}
+	.inforDropDownImage.TrendUpRed {
+		 background-image: url("images.example/TrendUpRed.gif") !important;
+	}
+	</style>
+	<script>
+		$(function () {
+			$('#rangeMeasureImageDropdown').inforDropDownList({ editable: false, typeAhead: false });
+			$('#rangeMeasureImageDropdown').inforDropDownList('setCode', 'TrendUpGreen.gif');
+		});
+	</script>
+	</head>
+<body>
+	<br />
+	<br />
+	<div class="outerDiv">
+		<div class="innerDiv">
+		<select id="rangeMeasureImageDropdown" class="inforDropDownList" style="width: 110px;">
+			<option value=""></option>
+			<option class="inforDropDownImage TrendBarGold" value="TrendBarGold.gif">TrendBarGold</option>
+			<option class="inforDropDownImage TrendDownBlue" value="TrendDownBlue.gif">TrendDownBlue</option>
+			<option class="inforDropDownImage TrendDownGreen" value="TrendDownGreen.gif">TrendDownGreen</option>
+			<option class="inforDropDownImage TrendDownRed" value="TrendDownRed.gif">TrendDownRed</option>
+			<option class="inforDropDownImage TrendUpBlue" value="TrendUpBlue.gif">TrendUpBlue</option>
+			<option class="inforDropDownImage TrendUpGreen" value="TrendUpGreen.gif">TrendUpGreen</option>
+			<option class="inforDropDownImage TrendUpRed" value="TrendUpRed.gif">TrendUpRed</option>
+		</select>
+		</div>
+	</div>
+</body>
+</html>

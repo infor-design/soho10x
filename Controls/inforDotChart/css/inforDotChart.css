@@ -1,0 +1,25 @@
+/* Infor Tree
+----------------------------------*/
+
+.inforDotChart {
+	font: 12px Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
+	fill: #aaaaaa;
+}
+
+.inforDotChart .heading {
+	font-family: Helvetica, Arial, sans-serif;
+	fill: #888A90;
+	font-size: 1.6em;
+	font-weight: lighter;
+}
+
+.inforDotChart line {
+	stroke: #d7d7d7;
+}
+
+.inforDotChart path {
+	stroke: #3dc6f4;
+	stroke-width: 2;
+	fill: none;
+}

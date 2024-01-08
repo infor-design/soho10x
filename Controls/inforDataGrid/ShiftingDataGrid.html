@@ -6,15 +6,11 @@
 
 	<title>Shifting Data Grid 1</title>
 
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforDataGrid.js"></script>
-
-  <!--Load a Flat file with JSON data-->
-  <script src="js/sampleData.js"></script>
-
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/sampleData.js"></script>
 </head>
 
 <body>
@@ -39,18 +35,20 @@
 	</div>
 	<script>
 
-		var securityOptions = [{ label: ' ', value: '', id: '' }, { label: 'red', value: '8', id: '8' }, { label: 'orange', value: '9', id: '9' }, { label: 'yellow', value: '10', id: '10' }, { label: 'green', value: '11', id: '11' }, { label: 'blue', value: '12', id: '12' }, { label: 'indigo', value: '13', id: '13' }, { label: 'violet', value: '14', id: '14' }, { label: 'black', value: '33', id: '33' }, { label: 'purple', value: '3', id: '3' }, { label: 'sage', value: '0033', id: '0033'}];
-		function filterSecurityOptionsDropDown(request, response) {
-			var filteredOptions = securityOptions;
- 			setTimeout(function()
-			{
-				return response(filteredOptions);
-			}, 100);
-		}
+		var securityOptions = [];
+
+ 		setTimeout(function()
+		{
+			securityOptions = [{ label: ' ', value: '', id: '' }, { label: 'red', value: '8', id: '8' }, { label: 'orange', value: '9', id: '9' }, { label: 'yellow', value: '10', id: '10' }, { label: 'green', value: '11', id: '11' }, { label: 'blue', value: '12', id: '12' }, { label: 'indigo', value: '13', id: '13' }, { label: 'violet', value: '14', id: '14' }, { label: 'black', value: '33', id: '33' }, { label: 'purple', value: '3', id: '3' }, { label: 'sage', value: '0033', id: '0033'}];
+   }, 100);
+		
+    var getColumnValues = function(req, res) {
+      return res(securityOptions);
+    }
 
 		var columns = [];
 		columns.push({ id: "A",        name: "A",              field: "A",        width: 125, formatter: TextCellFormatter, filterType: TextFilter });
-		columns.push({ id: "secLevel", name: "Security Level", field: "secLevel", width: 200, formatter: TextCellFormatter, editor: SelectCellEditor, filterType: SelectFilter, editorOptions: {editable: false, source:filterSecurityOptionsDropDown}, options: []});
+		columns.push({ id: "secLevel", name: "Security Level", field: "secLevel", width: 200, formatter: TextCellFormatter, editor: SelectCellEditor, filterType: SelectFilter, editorOptions: {source:getColumnValues}, options: []});
 
 		var data = [];
 		data.push({id:1, A:"a",    secLevel: 8 });
@@ -66,7 +64,7 @@
 			showFilter: true,
 			showFooter: true,
 		};
-		var grid = $("#inforDataGrid").inforDataGrid(options);
+		grid = $("#inforDataGrid").inforDataGrid(options);
 
 		$('#inforTabContainer').inforTabset();
 		$('body').inforForm();

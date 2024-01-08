@@ -1,4 +1,4 @@
-/* Infor Hyperlink
+﻿/* Infor Hyperlink
 ----------------------------------*/
 .inforHyperlink {
 	color: #13A3F7;
@@ -7,13 +7,14 @@
 	text-decoration: none;
 	font-size: 1.2em;
 	cursor: pointer;
+	padding: 1px;
 }
 
 .inforHyperlink.heading{
 	font-size: 1.3em;
 	line-height: 14px;
 }
-
+		
 .inforHyperlink:visited {
 	color: #13A3F7;
 }
@@ -24,13 +25,8 @@
 	text-decoration: underline;
 }
 
-.inforHyperlink:focus  {
-  outline: thin dotted #1293DE;
-  outline-offset: 2px;
-}
-
 .inforHyperlink[disabled]:hover  {
-	color:  #777;
+	color:  #666666;
 	cursor: default;
 	text-decoration: none;
 }
@@ -40,7 +36,9 @@
 }
 
 .inforHyperlink[disabled] {
-  color:  #777;
+  color:  #666666;
+  opacity: .5;
+  filter: alpha(opacity = 50);
 }
 
 .inforHyperlink .inforLabel {

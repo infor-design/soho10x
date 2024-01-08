@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8,chrome=IE8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <title>Drop Down List - With Multi Select</title>
+    <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/inforDropDownList.css">
+    <script src="../Release/jquery-1.10.2.min.js"></script>
+    <script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="../Release/inforControlsCombined.js"></script>
+    <script src="js/inforDropDownList.js"></script>
+    <script>
+        $(function () {
+            $("#example3, #country2").inforDropDownList();
+            $("body").inforForm();
+        });
+	</script>
+</head>
+<body style="overflow: auto !important;">
+<br/>
+<br/>
+<br/>
+<br/>
+    <label for="country2" class="inforLabel">
+        Multiselect: </label>
+    <select name="country2" class="inforDropDownList"
+        id="country2"  multiple="multiple">
+        <option value="109592">Infor BI for SyteLine</option>
+        <option value="65979">Inovis</option>
+        <option value="114256">SaaS - Syteline Administration Services</option>
+        <option value="66749">SL7 - Accounting</option>
+        <option value="66629">SL7 - Administration</option>
+        <option value="65079">SL7 - APS</option>
+        <option value="67019">SL7 - Bus Interface</option>
+        <option value="64559">SL7 - Configuration</option>
+        <option value="62059">SL7 - Customer Orders - Purchase Orders</option>
+        <option value="64509">SL7 - Data Collection</option>
+        <option value="61779">SL7 - EDI</option>
+        <option value="65539">SL7 - Manufacturing</option>
+        <option value="90973">SL7 - Payroll</option>
+        <option value="91373">SL7 - Projects</option>
+        <option value="67869">SL7 - Report Source Code</option>
+        <option value="67879">SL7 - Source Code</option>
+        <option value="63069">SL7 - Supply Web</option>
+        <option value="64389">SL7 - Technical</option>
+        <option value="65259">SL7 - Workflow</option>
+        <option value="61509">SL8 - Accounting</option>
+    </select>
+<br/>
+<br/>
+<br/>
+<br/>
+<div style="height: 200px; width: 800px;">
+very large block
+</div>
+
+<label class="inforLabel" id="example3Label">single select: </label>
+	<select class="inforDropDownList" name="example3" id="example3" data-tooltip-maxwidth="200" style="width:11.7px">
+		  <option value="1">1 Weekly</option>
+		  <option value="2">2 Biweekly</option>
+		  <option value="3">3 Semimonthly</option>
+		  <option value="4">4 Monthly</option>
+		  <option value="5">5 UK Four-Weekly</option>
+	</select>
+<br/>
+<br/>
+<br/>
+<br/>
+<div style="height: 800px; width: 800px;">
+very large block
+</div>
+ 
+
+</body>
+</html>

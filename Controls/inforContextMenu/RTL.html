@@ -1,83 +1,135 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<head>
+	<head>
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+		<meta charset="utf-8">
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
+		<title>Infor Context Menu - Basic Examples</title>
+		<script src="../Release/jquery-1.10.2.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="../Release/inforControlsCombined.js"></script>
+		<script src="js/inforContextMenu.js"></script>
 
-  <title>Infor Context Menu - Basic Examples</title>
-  <script src="../Release/jquery-1.11.1.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
+		<link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
+		<link href="css/inforContextMenu.css" rel="stylesheet"/>
 
-  <script>
-    $(function () {
-       Globalize.culture('ar-SA');
-      //Easiest based on popmenu being the next item and/or data-toggle
-      $('#iconMenuButton').popupmenu()
-        .on('close', function (e) {
-           console.log('Has Closed', e);
-        }).on('selected', function (e, anchor) {
-           console.log('Has Selected', e, anchor);
-        });
+		<script>
+			$().ready( function() {
+				Globalize.culture("ar-SA");
 
-      //Another way be a linked menu by ID (old school)
-      $('#checkboxMenuButton').popupmenu({
-        menu: 'checkboxMenu'
-      });
+				$(".inforCheckbox").click(function(e) {
+					//do something with the value...
+					e.stopPropagation();	//do this if you DO not want the click on the checkbox to close the menu
+				});
 
-      //Right Click Menu by ID, with old school call back. New Events are better.
-      $('#rightClickMenuButton').inforContextMenu({
-        menu: 'rightClickMenu',
-        trigger: 'rightClick'
-      },
-      function(action, el, pos) {
-        console.log('Action: ' + action + '\n\n' +
-        'Element ID: ' + $(el).attr('id') + '\n\n' +
-        'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
-        'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-        );
-      });
+				// Show menu when #menuArea is clicked or right clicked depending on invoke method.
+				$("#iconMenu").inforContextMenu({
+					menu: 'iconMenuOptions',
+					invokeMethod: 'click',
+					positionBelowElement: true
+				},
+				 function(action, el, pos) {
+						alert('Do Action: '+action);
+				 });
 
-    });
-  </script>
-</head>
-<body>
+				$("#noIconMenu").inforContextMenu({
+					menu: 'noIconMenuOptions'
+				},
+					function(action, el, pos) {
+						alert(
+							'Action: ' + action + '\n\n' +
+							'Element ID: ' + $(el).attr('id') + '\n\n' +
+							'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
+							'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+							);
+				});
 
-  <div class='inforApplicationPadding'>
+				$("#gridFilterMenu").inforContextMenu({
+					menu: 'gridFilterMenuOptions',
+					invokeMethod: 'click'
+				},
+					function(action, el, pos) {
+						alert(
+							'Action: ' + action + '\n\n' +
+							'Element ID: ' + $(el).attr('id') + '\n\n' +
+							'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' +
+							'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+							);
+				});
 
-    <button id="iconMenuButton" data-toggle="popupmenu" class="inforFormButton">Click Me - Context Menu with Icons</button>
-    <ul class="popupmenu divider">
-      <li><span class="icon sortAsc"></span><a href="#sortAsc">Sort Ascending</a></li>
-      <li><span class="icon sortDesc"></span><a href="#sortDesc">Sort Descending</a></li>
-      <li class="popupmenu-seperator"></li>
-      <li><span class="icon locked"></span><a href="#locked">Lock Column</a></li>
-      <li class="is-disabled"><span class="icon unlocked"></span><a href="#unlocked">Unlock Column</a></li>
-      <li class="popupmenu-seperator"></li>
-      <li><span class="icon columns"></span><a href="#columns">Columns</a></li>
-    </ul>
+				$("#checkboxMenu").inforContextMenu({
+					menu: 'checkboxMenuOptions',
+					invokeMethod: 'click'
+				});
 
-    <button id="checkboxMenuButton" class="inforFormButton">CheckBoxes</button>
-    <ul id="checkboxMenu" class="popupmenu">
-      <li class="checkbox"><a href="#"><input type="checkbox" id="check1" class="inforCheckbox"/><label for="check1" class="inforCheckboxLabel">Option One</label></a></li>
-      <li class="checkbox"><a href="#"><input type="checkbox" id="check2" class="inforCheckbox"/><label for="check2" class="inforCheckboxLabel">Option Two</label></a></li>
-      <li class="checkbox"><a href="#"><input type="checkbox" id="check3" class="inforCheckbox"/><label for="check3" class="inforCheckboxLabel">Option Three</label></a></li>
-    </ul>
+			});
+		</script>
+	</head>
 
-    <button id="rightClickMenuButton" class="inforFormButton">
-      Right Click Me - Context Menu With no Icons
-    </button>
-    <ul id="rightClickMenu" class="popupmenu">
-      <li class="popupmenu-group ">Open Tabs</li>
-      <li><a href="#tab1">Tab 1 - Available</a></li>
-      <li><a href="#tab2">Tab 2 - Available</a></li>
-      <li class="popupmenu-seperator"></li>
-      <li class="popupmenu-group ">Closed Tabs</li>
-      <li><a href="#tab3">Tab 3 - Available</a></li>
-      <li><a href="#tab4">Tab 4 - Available</a></li>
-    </ul>
-  </div>
-</body>
+	<body style='margin:20px'>
+		<button id="iconMenu" class="inforFormButton">
+			Click Me - Context Menu with Icons
+		</button>
+		<ul id="iconMenuOptions" class="inforContextMenu">
+			<li><span class="icon sortAsc"></span><a href="#sortAsc">Sort Ascending</a></li>
+			<li><span class="icon sortDesc"></span><a href="#sortDesc">Sort Descending</a></li>
+			<li class="separator"></li>
+			<li><span class="icon locked"></span><a href="#locked">Lock Column</a></li>
+			<li class="disabled"><span class="icon unlocked"></span><a href="#unlocked">Unlock Column</a></li>
+			<li class="separator"></li>
+			<li><span class="icon columns"></span><a href="#columns">Columns</a></li>
+		</ul>
+
+		<button id="noIconMenu" class="inforFormButton">
+			Right Click Me - Context Menu With no Icons
+		</button>
+		<ul id="noIconMenuOptions" class="inforContextMenu">
+			<li class="headerText"><a href="#headerText">Open Tabs</a></li>
+			<li class="tab1"><a href="#tab1">Tab 1 - Available</a></li>
+			<li class="tab2"><a href="#tab2">Tab 2 - Available</a></li>
+			<li class="separator"></li>
+			<li class="headerText"><a href="#headerText">Closed Tabs</a></li>
+			<li class="tab3"><a href="#tab3">Tab 3 - Available</a></li>
+			<li class="tab4"><a href="#tab4">Tab 4 - Available</a></li>
+		</ul>
+
+		<button id="checkboxMenu" class="inforFormButton">
+			CheckBoxes
+		</button>
+		<ul id="checkboxMenuOptions" class="inforContextMenu">
+			<li class="checkbox"><a href="#opt1"><input type="checkbox" class="inforCheckbox"/><label class="inforCheckboxLabel">Option One</label></a></li>
+			<li class="checkbox"><a href="#opt2"><input type="checkbox" class="inforCheckbox"/><label class="inforCheckboxLabel">Option Two</label></a></li>
+			<li class="checkbox"><a href="#opt3"><input type="checkbox" class="inforCheckbox"/><label class="inforCheckboxLabel">Option Three</label></a></li>
+		</ul>
+
+		<button id="gridFilterMenu" class="inforFormButton">
+			 Grid Filter Button
+		</button>
+		<ul id="gridFilterMenuOptions" class="inforContextMenu">
+			<li><span class="icon greaterThan"></span><a href="#greaterThan">Greater Than</a></li>
+			<li><span class="icon greaterThanOrEquals"></span><a href="#greaterThanOrEquals">Greater Than or Equals</a></li>
+			<li><span class="icon lessThan"></span><a href="#lessThan">Less Than</a></li>
+			<li><span class="icon lessThanOrEquals"></span><a href="#lessThanOrEquals">Less Than or Equals</a></li>
+			<li><span class="icon equals"></span><a href="#equals">Equals</a></li>
+			<li><span class="icon doesNotEqual"></span><a href="#doesNotEqual">Does Not Equal</a></li>
+			<li class="separator"></li>
+			<li><span class="icon contains"></span><a href="#contains">Contains</a></li>
+			<li><span class="icon doesNotContain"></span><a href="#doesNotContain">Does Not Contain</a></li>
+			<li class="separator"></li>
+			<li><span class="icon isEmpty"></span><a href="#isEmpty">Is Empty</a></li>
+			<li><span class="icon isNotEmpty"></span><a href="#isNotEmpty">Is Not Empty</a></li>
+			<li class="separator"></li>
+			<li><span class="icon startsWith"></span><a href="#startsWith">Starts With</a></li>
+			<li><span class="icon doesNotStartWith"></span><a href="#doesNotStartWith">Does Not Start With</a></li>
+			<li><span class="icon endsWith"></span><a href="#endsWith">Ends With</a></li>
+			<li><span class="icon doesNotEndWith"></span><a href="#doesNotEndWith">Does Not End With</a></li>
+			<li class="separator"></li>
+			<li><span class="icon eitherSelectedorNotSelected"></span><a href="#eitherSelectedorNotSelected">Either Selected or Not Selected</a></li>
+			<li><span class="icon checked"></span><a href="#selected">Selected</a></li>
+			<li><span class="icon notChecked"></span><a href="#notSelected">Not Selected</a></li>
+			<li class="separator"></li>
+			<li><span class="icon between"></span><a href="#between">Between</a></li>
+			<li><span class="icon today"></span><a href="#today">Today</a></li>
+		</ul>
+	</body>
 </html>

@@ -1,4 +1,4 @@
-/* Infor Common Css
+﻿/* Infor Common Css
 ----------------------------------*/
 html {
 	height: 100%;
@@ -41,8 +41,8 @@ p > button {
 }
 
 /* A Field Label */
-.inforLabel, .label, .inforDataLabel, .inforDescriptiveText {
-	color: #444;
+.inforLabel, .inforDataLabel, .inforDescriptiveText {
+	color: #666666;
 	display: inline-block;
 	float: left;
 	min-width: 1%;
@@ -54,20 +54,8 @@ p > button {
 	line-height: 20px;
 }
 
-/* Table Layouts */
-table .label, table .inforLabel {
-  float: right;
-  padding: 0 3px 0 0;
-  vertical-align: middle;
-  width: auto;
-}
-
-table .dropdown, table .inforTriggerField {
-  margin-bottom: 0px;
-}
-
 .inforDataLabel, .inforDescriptiveText {
-	color: #444;
+	color: #666666;
 	width: auto;
 	font-style: italic;
 	float: none;
@@ -76,47 +64,31 @@ table .dropdown, table .inforTriggerField {
 }
 
 .inforTriggerField + .inforDataLabel, .inforTriggerField + .inforDescriptiveText {
-  left: 7px;
-  position: relative;
-  top: -5px;
+	left: 7px;
+	position: relative;
+	top: -5px;
 }
 
-.inforSingleColumnLayout .inforDataLabel, .inforSingleColumnLayout .inforDescriptiveText {
-  top: 6px !important;
-}
-
-.inforLabel:after, .inforTopLabel:after, .label:after {
+.inforLabel:after, .inforTopLabel:after {
 	content: ":";
 }
 
-html[lang="fr-FR"] .inforLabel:after, html[lang="fr-FR"] .label:after, html[lang="fr-FR"] .inforTopLabel:after {
+html[lang="fr-FR"] .inforLabel:after, html[lang="fr-FR"] .inforTopLabel:after {
   content: " :";
 }
 
-html[lang="fr-CA"] .inforLabel:after, html[lang="fr-CA"] .label:after, html[lang="fr-CA"] .inforTopLabel:after {
-  content: " :";
-}
-
-.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang="fr-FR"] .inforLabel.noColon:after, html[lang="fr-FR"] .inforTopLabel.noColon:after  {
+.inforLabel.noColon:after, .inforTopLabel.noColon:after {
 	content: "";
 }
 
-.inforLabel.noColon:after, .inforTopLabel.noColon:after, html[lang="fr-CA"] .inforLabel.noColon:after, html[lang="fr-CA"] .inforTopLabel.noColon:after  {
-	content: "";
-}
-
-.label.noColon:after {
-    content: "";
-}
-
-html[dir="rtl"] .inforLabel, html[dir="rtl"] .label {
+html[dir="rtl"] .inforLabel {
 	float: right;
 	text-align: left;
 	padding: 0 8px;
 }
 
 .inforTopLabel {
-	color: #444;
+	color: #666666;
 	padding: 4px 8px 0px 0px;
 	text-align: right;
 	min-width: 5%;
@@ -187,14 +159,25 @@ button::-moz-focus-inner {
     padding: 15px 0;
 }
 
+/* Text Formatting */
+.inforScreenReaderText {
+	border: 0 none;
+    clip: rect(0px, 0px, 0px, 0px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
 small {
-	color: #777;
+	color: #999;
 	font-size: 1.1em;
 }
 
-/* Accessibility */
-.inforScreenReaderText, .scr-only, .audible, .sr-only  {
-	border: 0 none;
+.inforScreenReaderText, .scr-only  {
+  border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;
   margin: -1px;
@@ -202,13 +185,4 @@ small {
   padding: 0;
   position: absolute;
   width: 1px;
-}
-
-::selection {
-  background: #005ce6;
-  color: white;
-}
-::-moz-selection {
-  background: #005ce6;
-  color: white;
 }

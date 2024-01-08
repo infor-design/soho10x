@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -146,7 +146,7 @@
     <comment>Button Tooltip</comment>
   </data>
   <data name="Basic" xml:space="preserve">
-    <value>Обычное</value>
+    <value>Обычный</value>
     <comment>Switch to a Basic View</comment>
   </data>
   <data name="Between" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>Button Text on Dialog</comment>
   </data>
   <data name="Checked" xml:space="preserve">
-    <value>Отмечено</value>
+    <value>Отмеченные</value>
     <comment>Menu Filter Option</comment>
   </data>
   <data name="ClearFilter" xml:space="preserve">
@@ -258,7 +258,7 @@
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="EitherSelectedorNotSelected" xml:space="preserve">
-    <value>Выбрано или не выбрано</value>
+    <value>Выделенный или не выделенный</value>
     <comment>Menu Filter Option</comment>
   </data>
   <data name="Email" xml:space="preserve">
@@ -310,7 +310,7 @@
     <comment>Grid Data Filtering Option</comment>
   </data>
   <data name="First" xml:space="preserve">
-    <value>Перв.</value>
+    <value>Первая</value>
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="FirstView" xml:space="preserve">
@@ -326,7 +326,7 @@
     <comment>Login Dialog Text</comment>
   </data>
   <data name="Forward" xml:space="preserve">
-    <value>Вперед</value>
+    <value>Переадресовать</value>
     <comment>Arrow button tooltip</comment>
   </data>
   <data name="GetMoreRows" xml:space="preserve">
@@ -366,7 +366,7 @@
     <comment>Grid Data Filtering Option</comment>
   </data>
   <data name="Last" xml:space="preserve">
-    <value>Последн.</value>
+    <value>Последняя</value>
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="LastView" xml:space="preserve">
@@ -410,7 +410,7 @@
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Далее</value>
+    <value>Следующий</value>
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="NextView" xml:space="preserve">
@@ -422,7 +422,7 @@
     <comment>Dialog Text</comment>
   </data>
   <data name="NotChecked" xml:space="preserve">
-    <value>Не отмечено</value>
+    <value>Снят</value>
     <comment>Grid Data Filtering Option</comment>
   </data>
   <data name="Notes" xml:space="preserve">
@@ -430,7 +430,7 @@
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="NotSelected" xml:space="preserve">
-    <value>Не выбрано</value>
+    <value>Не выделено</value>
     <comment>Grid Data Filtering Option</comment>
   </data>
   <data name="Of" xml:space="preserve">
@@ -438,7 +438,7 @@
     <comment>Grid Footer Text</comment>
   </data>
   <data name="Ok" xml:space="preserve">
-    <value>OК</value>
+    <value>OK</value>
     <comment>Dialog Text</comment>
   </data>
   <data name="Open" xml:space="preserve">
@@ -462,7 +462,7 @@
     <comment>Progress Dialog Text</comment>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value>Назад</value>
+    <value>Предыдущий</value>
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="PreviousView" xml:space="preserve">
@@ -510,7 +510,7 @@
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="RunJob" xml:space="preserve">
-    <value>Запустить задание</value>
+    <value>Выполнить задание</value>
     <comment>Icon Button Tooltip</comment>
   </data>
   <data name="Save" xml:space="preserve">
@@ -626,7 +626,7 @@
     <comment>Grid Row Status Area.</comment>
   </data>
   <data name="SessionNavigation" xml:space="preserve">
-    <value>Навигация по сеансу</value>
+    <value>Навигация сеанса</value>
     <comment>Tooltip for a button that opens session navigation</comment>
   </data>
   <data name="ListAllMenuItems" xml:space="preserve">
@@ -845,8 +845,32 @@
     <value>Создать узел</value>
     <comment>Create a New tree Node</comment>
   </data>
-  <data name="AboutText" xml:space="preserve">
-    <value>Авторские права © Infor, 2014. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев. www.infor.com.</value>
-    <comment>Text in the Page About Dialog</comment>
+  <data name="RememberSettings" xml:space="preserve">
+    <value>Запомнить эти настройки</value>
+    <comment>Sign in Page Help</comment>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Компания</value>
+    <comment>Which company do we want to login to? AKA Tenant</comment>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Среда</value>
+    <comment>Which Environment do we want to login to? Fx Test/Prod</comment>
+  </data>
+  <data name="DontHaveAccount" xml:space="preserve">
+    <value>Еще не зарегестрировались?</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Сбросить пароль</value>
+    <comment>Change Password Text</comment>
+  </data>
+  <data name="SignUpNow" xml:space="preserve">
+    <value>Вверх</value>
+    <comment>Sign In Text</comment>
+  </data>
+  <data name="SelectMonthYear" xml:space="preserve">
+    <value>Выбрать месяц и год</value>
+    <comment>Date Picker Text</comment>
   </data>
 </root>

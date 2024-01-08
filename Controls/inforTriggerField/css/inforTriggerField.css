@@ -1,4 +1,4 @@
-/* Infor Trigger Fields
+﻿/* Infor Trigger Fields
 ----------------------------------*/
 .inforTriggerField {
 	height: 18px;
@@ -11,12 +11,9 @@
 }
 
 /*add extra border for error states*/
-.inforTriggerField.has-error {
+.inforTriggerField.error {
 	border-color: #d5000e !important;
-}
-
-.inforTriggerField.has-error input:focus {
-  background-color: #FDF2F3 !important;
+	background-color: #FDF2F3;
 }
 
 .inforTriggerField.focus {
@@ -31,10 +28,6 @@
     background-color: #EAF7FF;
 }
 
-.inforTriggerField.has-error.focus .inforTriggerButton {
-  background-color: #fdf2f3 !important;
-}
-
 .inforTriggerField.focus  .inforTriggerButton:hover {
 	background-color: #d8d8d8 !important;
 }
@@ -43,12 +36,28 @@
 	background-color: #BEBEBE !important;
 }
 
+.inforTriggerField.error  .inforTextbox{
+	background-color: #FDF2F3;
+}
+
+.inforTriggerField.error  .inforTriggerButton{
+	background-color: #FDF2F3;
+}
+
+.inforTriggerField.error  .inforTriggerButton:hover {
+	background-color: #d8d8d8 !important;
+}
+
+.inforTriggerField.error  .inforTriggerButton:active {
+	background-color: #BEBEBE !important;
+}
+
 .inforTriggerField.readonly,  .inforTriggerField.disabled{
 	border: none !important;
 }
 
 .inforTriggerField.readonly, .inforTriggerField.disabled {
-	background-color: transparent !important;
+	background: none repeat scroll 0 0 white !important;
 	border: 1px solid transparent !important;
 }
 
@@ -129,16 +138,11 @@ table.inforTriggerFieldTable  td{
 
 .inforTriggerField .inforTextbox {
 	border: none !important;
-	width: 192px;
+	width: 174px;
 	border: none;
 	border-radius: 3px;
 	padding-right: 7px;
 	float: left;
-}
-
-.inforTriggerField .inforTextbox.alignRight {
-	margin-left: -12px;
-	padding-right: 20px;
 }
 
 .inforTriggerField.readonly .inforTriggerButton, .inforTriggerField.disabled .inforTriggerButton  {
@@ -164,13 +168,13 @@ html[dir="rtl"] .inforTriggerField .inforTextbox {
 /* Trigger Field Buttons */
 .inforTriggerButton span {
 	background-repeat: no-repeat;
-	display: inline-block;
-	height: 19px;
-	opacity: 0.65;
-	filter: alpha(opacity=65);
+    display: inline-block;
+    height: 19px;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
 	padding: 0;
-	text-align: center;
-	width: 12px;
+    text-align: center;
+    width: 12px;
 	background-position: center center;
 }
 
@@ -180,19 +184,19 @@ html[dir="rtl"] .inforTriggerField .inforTextbox {
 }
 
 .inforTriggerButton .hover span , .inforTriggerButton:hover  span {
-  opacity: .80;
-  filter: alpha(opacity=80);
+	opacity: .65;
+	filter: alpha(opacity=65);
 }
 
 .inforTriggerButton:active {
-  background-color: #bebebe;
-  box-shadow: 0 1px #767676 inset;
-  height: 18px;
+    background-color: #bebebe;
+    box-shadow: 0 1px #767676 inset;
+	height: 18px;
 }
 
 .inforTriggerButton:active  span {
-	opacity: .90;
-	filter: alpha(opacity=90);
+	opacity: .80;
+	filter: alpha(opacity=80);
 }
 
 .inforDropDownListButton span {
@@ -244,9 +248,9 @@ html[dir="rtl"] .inforTriggerField .inforTextbox {
 
 .inforCancelButton {
 	background-color: transparent;
-	left: -3px;
-	margin-left: -19px;
-	position: relative;
+    left: -3px;
+    margin-left: -19px;
+    position: relative;
 	border-radius: 2px;
 	height: 18px;
 	top: -1px;
@@ -254,22 +258,22 @@ html[dir="rtl"] .inforTriggerField .inforTextbox {
 
 .inforCancelButton span {
 	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMAQAAAAB+DmFKAAAAAnRSTlMAAQGU/a4AAAAmSURBVGjeY/j/geH+BoZ+AYZjBgwPChg+fAAhIAPIBQoCpf5/AAArYhCHJltC9gAAAABJRU5ErkJggg==") no-repeat scroll 1px 2px transparent;
-	border: medium none;
-	cursor: pointer;
-	display: inline-block;
-	height: 14px;
-	width: 17px;
+    border: medium none;
+    cursor: pointer;
+    display: inline-block;
+    height: 14px;
+    width: 17px;
 }
 
 .inforTextbox[size] + .inforCancelButton {
 	left: 0;
-	margin-right: -7px;
+    margin-right: -7px;
 }
 
 html[dir="rtl"] .inforCancelButton {
 	left: 5px;
-	margin-left: 0;
-	margin-right: -19px;
+    margin-left: 0;
+    margin-right: -19px;
 }
 
 .inforUrlButton span{

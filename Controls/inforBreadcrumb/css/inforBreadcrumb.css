@@ -1,4 +1,4 @@
-/* Infor Breadcrumb
+﻿/* Infor Breadcrumb
 ----------------------------------*/
 .inforBreadcrumb {
 	line-height: 27px;
@@ -13,7 +13,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	text-decoration: none;
-
+	
 	-webkit-transition: width .4s ease-in-out;
 	-moz-transition: width .4s ease-in-out;
 	transition: width .4s ease-in-out;
@@ -21,7 +21,7 @@
 
 .inforBreadcrumb .inforPageTitleText:hover, .inforBreadcrumb .inforPageTitleText:focus {
 	cursor: pointer;
-	color: #FF6400;
+	color: #FF6400;	
 	text-decoration: underline;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .inforBreadcrumb a:last-child {
-  color: #444;
+    color: #333333;
 }
 
 .inforBreadcrumb a:hover, .inforBreadcrumb a:focus {
@@ -46,7 +46,7 @@
 	margin-right: 7px;
 	left: -1px;
 	position: relative;
-	color: #444;
+	color: #333333;
 }
 
 .inforBreadcrumb a:first-child {

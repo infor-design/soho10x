@@ -1,78 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
+	
+	<title>Select Box Plugin</title>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
 
-  <title>Select Box Plugin</title>
-  <link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
 
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/inforDropDownList.js"></script>
 
-  <script src="js/inforDropDownList.js"></script>
-
-
-  <script>
-    $(function () {
-
-      $('#country1, #country2, #country3').dropdown();
-      $('#country2, #country3').enable();
-      $('#country3').disable();
-      $('#country2').readOnly();
-
-      $('#country1').val('Algeria').trigger('updated');
-
-      $('body').inforForm();
-    });
-  </script>
-
+	
+	<script>
+		$(function () {
+			$("#country1, #country2, #country3").inforDropDownList();
+		});
+	</script>
+  
 </head>
-<body style="inforApplicationPadding ">
-  <div class="inforSingleColumnWidth autoLabelWidth">
-
-    <label for="country11" class="label">Normal</label>
-    <select id="country1" class="inforDropDownList">
-      <option value=""></option>
-      <option selected value="United States">United States</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="Afghanistan">Afghanistan</option>
-      <option value="Aland Islands">Aland Islands</option>
-      <option value="Albania">Albania</option>
-      <option value="Algeria">Algeria</option>
-      <option value="American Samoa">American Samoa</option>
-      <option value="Andorra">Andorra</option>
-      <option value="Angola">Angola</option>
-    </select><br>
-
-    <label for="country2" class="label">Read-Only</label>
-    <select id="country2" class="inforDropDownList" readonly>
-      <option value=""></option>
-      <option selected value="United States">United States</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="Afghanistan">Afghanistan</option>
-      <option value="Aland Islands">Aland Islands</option>
-      <option value="Albania">Albania</option>
-      <option value="Algeria">Algeria</option>
-      <option value="American Samoa">American Samoa</option>
-      <option value="Andorra">Andorra</option>
-      <option value="Angola">Angola</option>
-    </select><br>
-
-    <label for="country3" class="label">Disabled</label>
-    <select id="country3" class="inforDropDownList" disabled>
-      <option value=""></option>
-      <option selected value="United States">United States</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="Afghanistan">Afghanistan</option>
-      <option value="Aland Islands">Aland Islands</option>
-      <option value="Albania">Albania</option>
-      <option value="Algeria">Algeria</option>
-      <option value="American Samoa">American Samoa</option>
-      <option value="Andorra">Andorra</option>
-      <option value="Angola">Angola</option>
-    </select>
-  </div>
+<body style="width: 100%">
+		<label for="country1">Rest - Tracking Dirty</label>
+		<select id="country1" class="inforDropDownList" width="221px">
+			<option value=""></option>
+			<option selected value="United States">United States</option>
+			<option value="United Kingdom">United Kingdom</option>
+			<option value="Afghanistan">Afghanistan</option>
+			<option value="Aland Islands">Aland Islands</option>
+			<option value="Albania">Albania</option>
+			<option value="Algeria">Algeria</option>
+			<option value="American Samoa">American Samoa</option>
+			<option value="Andorra">Andorra</option>
+			<option value="Angola">Angola</option>
+		</select><br>
+          
+		<label for="country2">Read-Only</label>
+		<select id="country2" class="inforDropDownList" readonly>
+			<option value=""></option>
+			<option selected value="United States">United States</option>
+			<option value="United Kingdom">United Kingdom</option>
+			<option value="Afghanistan">Afghanistan</option>
+			<option value="Aland Islands">Aland Islands</option>
+			<option value="Albania">Albania</option>
+			<option value="Algeria">Algeria</option>
+			<option value="American Samoa">American Samoa</option>
+			<option value="Andorra">Andorra</option>
+			<option value="Angola">Angola</option>
+		</select><br>
+          
+		<label for="country3">Disabled</label>
+		<select id="country3" class="inforDropDownList" disabled>
+			<option value=""></option>
+			<option selected value="United States">United States</option>
+			<option value="United Kingdom">United Kingdom</option>
+			<option value="Afghanistan">Afghanistan</option>
+			<option value="Aland Islands">Aland Islands</option>
+			<option value="Albania">Albania</option>
+			<option value="Algeria">Algeria</option>
+			<option value="American Samoa">American Samoa</option>
+			<option value="Andorra">Andorra</option>
+			<option value="Angola">Angola</option>
+		</select>
 </body>
 </html>

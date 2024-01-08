@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<meta charset='utf-8'>
 
-  <title>Infor Message Dialog Box</title>
-  <link href='../Release/inforControlsCombined.css' rel='stylesheet'>
-  <script src='../Release/jquery-3.6.0.min.js'></script>
-  <script src='../Release/jquery-ui-1.10.4.custom.min.js'></script>
-  <script src='../Release/inforControlsCombined.js'></script>
-  <script src='js/message.js'></script>
+	<title>Infor Message Dialog Box</title>
+	<link href='../Release/inforControlsCombined.css' rel='stylesheet'>
+	<script src='../Release/jquery-1.11.1.min.js'></script>
+	<script src='../Release/jquery-ui-1.10.4.custom.min.js'></script>
+	<script src='../Release/inforControlsCombined.js'></script>
+	<script src='js/message.js'></script>
   <script src='js/modal.js'></script>
 
-  <script>
-    $(function () {
+	<script>
+		$(function () {
 
-      //Display a generic dialog -
-      $('button').click(function () {
-        //First add the html to the page..
+			//Display a generic dialog -
+			$('button').click(function () {
+				//First add the html to the page..
+				$('body').append('<div id="dialog1" style="display:none"><p>Dialog Stuff that is interesting</p></div>');
 
-        var dialog = $('#dialog1');
-        if (dialog.length === 0) {
-         $('body').append('<div id="dialog1" style="display:none"><p>Dialog Stuff that is interesting</p></div>');
-        }
-
-        //Invoke the dialog on it
-        $('#dialog1').message({
-          title: 'New Catalog',
-          dialogType: 'General',
-          modal: true,
-          buttons: [{
-                 text: "YES",
-                 isDefault: true,
-                 click: function () {
-                     $(this).inforDialog("close");
-                }
-             }, {
-                 text: "NO",
-                 click: function () {
-                     //$(this).inforDialog("close");
-                 }
-             }]
-        }).on('beforeOpen', function () {
+				//Invoke the dialog on it
+				$('#dialog1').message({
+					title: 'New Catalog',
+					dialogType: 'General',
+					modal: true,
+					buttons: [{ 
+                       text: "YES", 
+                       click: function () { 
+                           $(this).inforDialog("close"); 
+                      } 
+                   }, { 
+                       text: "NO", 
+                       click: function () { 
+                           $(this).inforDialog("close"); 
+                       } 
+                   }] 
+				}).on('opening', function () {
           console.log('About to open.');
           //Could return false to not close
           //return false;
-        }).on('beforeClose', function () {
+        }).on('closing', function () {
           console.log('About to close.');
           //Could return false to not close
           //return false;
@@ -53,16 +48,16 @@
           console.log('Done Opening');
         }).on('close', function () {
           console.log('Done closing');
-          alert("Close");
+		  alert("Close");
         });
 
-        $('#newCatalogDialog').inforForm();
+				$('#newCatalogDialog').inforForm();
 
-      });
-    });
-  </script>
+			});
+		});
+	</script>
 </head>
 <body>
-    <button class='inforFormButton'>Show</button>
+		<button class='inforFormButton'>Show</button>
 </body>
 </html>

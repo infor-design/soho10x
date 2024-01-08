@@ -1,93 +1,80 @@
-/* Infor Text Input Field
+﻿/* Infor Text Input Field
 ----------------------------------*/
 
 .inforTextbox {
-  line-height: 14px;
-  width: 195px;
-  border-radius: 3px;
-  border: 1px solid #b3b3b3;
-  padding: 2px 4px;
-  color: #1a1a1a;
-  height: 14px;
-  background-color: white;
-  transition: border 0.2s linear 0s, border-color 0.2s linear 0s;
+	line-height: 14px;
+	width: 195px;
+	border-radius: 3px;
+	border: 1px solid #b3b3b3;
+	padding: 2px 4px;
+	color: #1a1a1a;
+	height: 14px;
+	background-color: white;
+	transition: border 0.2s linear 0s, border-color 0.2s linear 0s;
 }
 
 
-.inforTextbox[readonly], .inforTextbox[disabled], .inforTextbox.disabled, .inforTextbox[disabled]:focus , .inforTextbox.disabled:focus , .inforTextbox[disabled]:focus , .inforTextbox.disabled:focus {
-  border: 1px solid transparent;
-  background-color: transparent;
+.inforTextbox[readonly], .inforTextbox[disabled], .inforTextbox.disabled, .inforTextbox[disabled]:focus , .inforTextbox.disabled:focus , .inforTextbox[disabled]:focus , .inforTextbox.disabled:focus
+{
+	border: 1px solid transparent;
+	background-color: transparent;
 }
 
 /*Is permissible to use optional e5e5e5 for disabled fields*/
 .inforTextbox.backgroundColor[readonly], .inforTextbox.backgroundColor[disabled], .inforTextbox.backgroundColor.disabled, .inforTextbox.backgroundColor[disabled]:focus , .inforTextbox.backgroundColor.disabled:focus , .inforTextbox.backgroundColor[disabled]:focus , .inforTextbox.backgroundColor.disabled:focus
 {
-  border: 1px solid transparent;
-  background-color: #e5e5e5 !important;
+	border: 1px solid transparent;
+	background-color: #e5e5e5 !important;
 }
 
 .inforTextbox[disabled], .inforTextbox.disabled {
-  background-color: transparent;
-  color: #777;
-  -webkit-text-fill-color:#777;
+	background-color: transparent;
+	opacity: .5;
+	filter:alpha(opacity=50);
 }
 
 .inforTextbox.decimalOnly, .inforTextbox.numericOnly {
-  text-align: right;
+	text-align: right;
 }
 
 .inforTextbox.decimalOnly[readonly], .inforTextbox.numericOnly[readonly],.inforTextbox.decimalOnly[disabled], .inforTextbox.numericOnly[disabled]  {
-  text-align: left;
-}
-
-.inforLookupField.decimalOnly, .inforLookupField.numericOnly {
-  text-align: right !important;
+	text-align: left;
 }
 
 .inforTextbox.backgroundColor.decimalOnly[readonly], .inforTextbox.backgroundColor.numericOnly[readonly],.inforTextbox.backgroundColor.decimalOnly[disabled], .inforTextbox.backgroundColor.numericOnly[disabled]  {
-  text-align: right;
+	text-align: right;
 }
 
 .inforTextbox.alignRight.decimalOnly[readonly], .inforTextbox.alignRight.numericOnly[readonly],.inforTextbox.alignRight.decimalOnly[disabled], .inforTextbox.alignRight.numericOnly[disabled]  {
-  text-align: right;
+	text-align: right;
 }
 
-.inforTextbox:focus {
-  outline: none;
-  border: 1px solid #13A3F7;
-  background-color: #EAF7FF;
+.inforTextbox.error {
+   border: 1px solid #d5000e;
+   background-color: #FDF2F3;
 }
 
-.inforTextbox.has-error {
-  border: 1px solid #d5000e;
-}
-
-.inforTextbox.has-error:focus {
-  background-color: #FDF2F3 !important;
-  border: 1px solid #d5000e !important;
-}
-
-.inforTextbox.has-error[readonly]:focus, .inforTextbox.has-error[readonly] {
+.inforTextbox.error[readonly]:focus, .inforTextbox.error[readonly] {
    border: 1px solid transparent;
 }
 
+.inforTextbox:focus {
+	outline: none;
+	border: 1px solid #13A3F7;
+	background-color: #EAF7FF;
+}
+
 .inforTextbox[readonly]:focus {
-  outline: none;
-  border: 1px solid transparent;
+	outline: none;
+	border: 1px solid transparent;
 }
 
 /*Allow size attribute to work*/
 .inforTextbox[size] {
-  width: auto !important;
+	width: auto !important;
 }
 
 .inforTriggerField .inforTextbox[size] {
-  margin-right: 18px;
+	margin-right: 18px;
 }
 
-.inforLookupField.is-busy  + .inforTriggerButton {
-  display:none;
-}
-
-.inforTextbox.decimalOnly.has-error, .inforTextbox.numericOnly.has-error
-{ padding-right: 20px; width: 179px; } 

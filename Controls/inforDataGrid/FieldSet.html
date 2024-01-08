@@ -1,25 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
 	<meta charset="utf-8" />
 
 	<title>Infor Fieldset Example</title>
-  <link rel="stylesheet" href="../Release/inforControlsCombined.css" />
-  <script src="../Release/jquery-3.6.0.min.js"></script>
-  <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../Release/inforControlsCombined.js"></script>
-  <script src="js/inforDataGrid.js"></script>
+	<link href="../Release/inforControlsCombined.css" rel="stylesheet" />
+	<link href="css/inforFieldset.css" rel="stylesheet" >
 
-  <!--Load a Flat file with JSON data-->
-  <script src="js/sampleData.js"></script>
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js" ></script>
+	<script src="js/sampleData.js" ></script>
 
 	<script>
-	    $(function () {
-	        $(".inforFieldSet").inforFieldSet();
-	        loadGrid();
-	    });
-            function loadGrid(){
+		$(function () {
+			$(".inforFieldSet").inforFieldSet();
+
 			//Define Columns for the Grid.
 			var columns = [];
 			var grid;
@@ -45,22 +42,12 @@
 				enableCellRangeSelection: false,
 				forceFitColumns: true,
 				showExportButton: true,
-				showFooter: true,
-				pageSize: 15,
-				pagingMode: PagingModes.PagerClientSide,
-				showPageSizeSelector: true,
 				showStatusIndicator: false
 			};
 			grid = $("#inforDataGrid1").inforDataGrid(options);
-			//grid = $("#inforDataGrid2").inforDataGrid(options);
-			grid.pager.setPageSize(15);
-     }
-     $(document).ready(function () {
-         $("#btnLoadAgain").click(function () {
-            var grid = $("#inforDataGrid1").data('gridInstance');
-            grid.pager.setPageSize(30);
-         });
-     });
+			grid = $("#inforDataGrid2").inforDataGrid(options);
+
+		});
 	</script>
 </head>
 <body >
@@ -71,8 +58,7 @@
 		<button type="button" role="button" class="inforExpandButton open"></button>
 		<div class="content">
 			<div id="inforDataGrid1" class="inforDataGrid" style="width:600px;height:200px"></div>
-		</div><br /><br />
-        <button ID="btnLoadAgain" runat ="server" type ="button" class ="inforFormButton">Load GridData</button>
+		</div>
 	</fieldset>
 
 	<fieldset id="fs2" class="inforFieldSet">

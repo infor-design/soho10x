@@ -1,37 +1,38 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta charset="utf-8">
+	<head>
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge'><![endif]-->
+		<meta charset="utf-8">
 
-    <title>Infor Popup Menu - Basic Attached to Button</title>
-    <link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
+		<title>Infor Context Menu - Basic</title>
+		<link href="../Release/inforControlsCombined.css" rel="stylesheet"/>
 
-    <script src="../Release/jquery-3.6.0.min.js"></script>
-    <script src="../Release/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="../Release/inforControlsCombined.js"></script>
-    <script src="js/inforContextMenu.js"></script>
+		<script src="../Release/jquery-1.10.2.min.js"></script>
+		<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="../Release/inforControlsCombined.js"></script>
+		<script src="js/inforContextMenu.js"></script>
 
-    <script>
-      $(function () {
-
-        $('#iconMenu').popupmenu().on('selected', function(e){
-          console.log('Selected', e);
-        });
-
-      });
-    </script>
+		<script>
+			$().ready( function() {
+				$("#iconMenu").inforContextMenu({
+					menu: 'iconMenuOptions',
+					invokeMethod: 'click',
+					positionBelowElement: true
+				},
+				function(action, el, pos) {
+						alert('Do Action: '+action);
+				});
+			});
+		</script>
 </head>
 
 <body class="inforApplicationPadding">
-
-    <button id="iconMenu" class="inforFormButton">Show Menu</button>
-    <ul class="popupmenu">
-      <li><a href="#opt1">Option One</a></li>
-      <li><a href="#opt2">Option Two</a></li>
-      <li><a href="#opt3">Option Three</a></li>
-      <li><a href="#opt4">Option Four</a></li>
-    </ul>
-
+	<button id="iconMenu" class="inforFormButton">Show Menu</button>
+	<ul id="iconMenuOptions" class="inforContextMenu">
+		<li><a href="#opt1">Option One</a></li>
+		<li><a href="#opt2">Option Two</a></li>
+		<li><a href="#opt3">Option Three</a></li>
+		<li><a href="#opt4">Option Four</a></li>
+	</ul>
 </body>
 </html>

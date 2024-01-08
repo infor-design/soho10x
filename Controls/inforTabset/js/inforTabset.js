@@ -1,4 +1,4 @@
-/*
+﻿/*
 * jQuery UI Tabs 1.8.11
 *
 * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
@@ -469,6 +469,8 @@
         this.select(index + (index + 1 < this.anchors.length ? 1 : -1));
       }
 
+      $li.add($('.inforMenu')).off('contextmenu.inforcontextmenu').unbind();
+
       o.disabled = $.map(
       $.grep(o.disabled, function (n, i) {
         return n != index;
@@ -640,7 +642,7 @@
       close: null,
       sort: null,
       showLoadingIndicator: false,
-      animate: false, //add a cross fade animation.
+      animate: true, //add a cross fade animation.
       fillToBottom: true, //if true the control will stretch to the bottom of the page in height automatically.
       toolTips: {
         addButton: null,
@@ -686,7 +688,8 @@
       }
 
       $tabs.tabs({
-        spinner: (o.showLoadingIndicator ? "<div class='inforBusyIndicator large'></div>" : "")
+        spinner: (o.showLoadingIndicator ? "<div class='inforBusyIndicator large'></div>" : ""),
+        selected: o.selected
       });
 
       if ($(this.element).hasClass("inforModuleTabs")) {
@@ -697,9 +700,7 @@
 
       //hide any visibile tooltips..
       $tabs.bind('tabsselect', function () {
-        $("#inforTooltip, #validation-errors, #tooltip").addClass('is-hidden');
-        $('#dropdown-list, #multiselect-list').remove();
-        $(".slick-columnpicker").hide();
+        $("#inforTooltip").hide();
 
         if (o.editable) {
           $("input.inforTabHeaderEditor").trigger("blur");
@@ -739,7 +740,6 @@
             if (o.sort) {
               o.sort(this, ui, o);
             }
-			self._refreshScroll($tabs);
           }
         }).disableSelection();
       }
@@ -829,11 +829,12 @@
 
           $(ui.panel).find('.autoLabelWidth').each(function() {
             var container = $(this);
-            container.find('.inforLabel, .label').autoWidth();
+            container.find('.inforLabel').autoWidth();
           });
 
           self._scrollTabIntoView($tabs, $tabs.find("ul.inforTabset:first"));
           self._sizeInternalElements($(ui.panel), $tabs);
+          $(this).trigger("tabselected", $(ui.panel));
         }
       });
 
@@ -868,8 +869,10 @@
           a = menu.prev();
 
         menu.parent().addClass("downArrow");  // ui-state-disabled
-        a.popupmenu({
+        a.inforContextMenu({
           menu: menu.attr("id"),
+          invokeMethod: 'toggle',
+          positionBelowElement: false,
           beforeOpening: function() {
             $(a.attr("href")).find(".inforTabSection").hide();
           },
@@ -994,18 +997,13 @@
     _addMenuToPage: function ($tabs, o) {
       var list = $tabs.find('ol,ul').eq(0),
         lis = $('li:has(a[href])', list),
-        tabName = 'tabs-menu-' + $('.inforTabset').index(list), //used to be $('.inforTabset').lengthh,
+        ul = $("<ul id='inforTabMenu' class='inforContextMenu'></ul>"),
         i = 0,
-        ul, text, tabLi, originalIndex;
+        text, tabLi, originalIndex;
 
-      // If the menu already exists, reuse it, but empty it.
-      if ($('#'+tabName).length > 0) {
-        ul = $('#'+tabName);
-        ul.empty();
-      } else {
-        ul = $("<ul class='popupmenu'></ul>").attr('id',tabName);
-        $tabs.after(ul);
-      }
+      $("#inforTabMenu").parent(".inforMenu").remove();
+
+      $tabs.after(ul);
 
       lis.each(function () {
         var $this = $(this),
@@ -1050,14 +1048,9 @@
             } else {
               list.children().eq(ui.item.index()).after(elem); //dragged down
             }
-			if (o.sort) {
-              o.sort(this, ui, o);
-            }
           }
         });
       }
-
-      return tabName;
     },
     closeTab: function (tabLi) {
       var tabIndex = tabLi.children('a').attr('href'),
@@ -1107,8 +1100,7 @@
 
           //add right click menu.
           $thisLi.inforContextMenu({
-            menu: 'inforTabContextMenu',
-            trigger: 'rightClick'
+            menu: 'inforTabContextMenu'
           },
 
           function (action, el, pos) {
@@ -1145,10 +1137,10 @@
         index = anchors.index(anchors.filter("[href$=" + tabId + "]"));
 
         $tabs.tabs('remove', index);
-      } else {
-        $tabs.tabs('remove', tabId);
+        return;
       }
 
+      $tabs.tabs('remove', tabId);
       this._refreshScroll($tabs);
     },
     add: function (tabId, label, enterEditMode, callback) {
@@ -1190,7 +1182,6 @@
       if (callback) { //execute the callback
         callback(callbackEvent, callbackUi);
       }
-      $tabs.data('uiInforTabset')._addMenuToPage($tabs, o);
     },
     _addButtons: function ($tabs, o) {
       var content = $tabs.find("ul.inforTabset:first"),
@@ -1215,14 +1206,37 @@
         content.after(moduleButtons);
       }
 
-      var menuName = self._addMenuToPage($tabs, o);
-      chevron.popupmenu({menu: menuName})
-        .on('selected', function (e, el) {
-          var action = el.attr('href').substr(1);
-          $tabs.tabs('select', parseInt(action, 10));
-          if (!self.options.moduleTabs) {
-            self._scrollTabIntoView($tabs, content);
+      chevron.find('button').bind("click", function (e) {
+        self._addMenuToPage($tabs, o);
+        var $button = $(this).parent();
+        $("body").inforContextMenu({
+          menu: 'inforTabMenu',
+          invokeMethod: 'immediate',
+          positionBelowElement: true,
+          offsetTop: -2,
+          position: {
+            my: "right top",
+            at: "right bottom",
+            of: $button,
+            collision: "fit"
+          },
+          event: e,
+          onClose: function () {
+            $("#inforTabMenu").parent().remove();
           }
+        },
+
+        function (action, el, pos, obj) {
+          if (obj.hasClass("hiddenTab")) {
+            var tabId = obj.attr("id");
+            $tabs.inforTabset('add', tabId, obj.html(), false);
+          } else { //reopen the tab.
+            $tabs.tabs('select', parseInt(action, 10));
+            if (!self.options.moduleTabs) {
+              self._scrollTabIntoView($tabs, content);
+            }
+          }
+        });
       });
 
       chevron.hide().addClass("inforHiddenTab");
@@ -1253,14 +1267,15 @@
       $tabs.find("li a").parent().css("width", "auto");
 
       var self = this,
-        tabWidth = $tabs.find("li:not(.inforHiddenTab)").first().width() + 28,
+        tabWidth = $tabs.find("li:first").width() + 28,
         ul, width;
 
       if (self.options.verticalTabs) {
         ul = $tabs.find("ul:first");
-        width = $(window).width() - (ul.width() + ul.position().left + 74);
+        width = $(window).width() - (ul.width() + ul.position().left + 84);
 
-        $tabs.find("ul:first > li > a").each(function () {
+        //$tabs.find(".ui-tabs-panel").width(width);
+        $tabs.find("li a").each(function () {
           var lia = $(this);
           lia.width(tabWidth);
           lia.parent().width(tabWidth);
@@ -1309,8 +1324,6 @@
         overFlowButton = $tabs.find(".inforMoreButton"),
         maxWidth = content.parent().css("max-width");
 
-      this._addMenuToPage($tabs, self.options);
-
       //calculate tabs width
       content.find("li").each(function () {
         headerWidth += $(this).outerWidth();
@@ -1318,7 +1331,6 @@
 
       if (headerWidth < tabsWidth) {
         overFlowButton.parent().hide();
-        $tabs.find('ol,ul').eq(0).css("max-width",maxWidth);
         content.css({
           "width": "auto",
           "left": "0"

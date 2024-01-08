@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+
+	<title>LM DataGrid DropDownList Shift On Select WebKit</title>
+<!-- jira:    -->
+
+	<link rel="stylesheet" href="../Release/inforControlsCombined.css" />
+	<script src="../Release/jquery-1.10.2.min.js"></script>
+	<script src="../Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Release/inforControlsCombined.js"></script>
+	<script src="js/sampleData.js"></script>
+
+	
+<!-- 
+	<link href="../Controls/Release/inforControlsCombined.css" rel="stylesheet">
+	<script src="../Controls/lib/jquery-1.10.2.js"></script>
+	<script src="../Controls/Release/jquery-ui-1.10.2.custom.min.js"></script>
+	<script src="../Controls/lib/knockout-2.3.0.js"></script>
+	<script src="../Controls/Release/inforControlsCombined.js"></script>
+	<script src="../Controls/inforDataGrid/js/sampleData.js"></script>
+
+-->
+	
+	<script>
+		 $(function () {
+			$('#inforTabContainer').inforTabset();
+			$('#inforTabContainer2').inforTabset();
+		});
+	</script>	
+	<script>
+		$(function () {
+			$(".inforSplitButton").inforSplitButton({menuId: 'menu1'});
+			$(".inforMenuButton").inforMenuButton({menuId: 'menu1'});
+			$("[title]").inforToolTip();
+		});
+	</script>
+
+	<style>
+		.landmarkList {
+			height:100%;
+		}
+	</style>
+</head>
+
+<body>
+
+<div style="height:243px;background-color:#f6f6f6;">
+	<h2>Top Content</h2>
+</div>
+
+	<div id="inforTabContainer" class="ui-tabs inforScrollableArea">
+		 <ul class="inforTabset">
+			<li><a href="#tab1">Tabset One</a></li>
+		 </ul>
+
+		<div id="tab1" class="ui-tabs-panel">
+			<div class="inforToolbar" role="toolbar">
+				<button class="inforIconButton cut" title="Sample Tooltip"><span></span></button>
+				<button class="inforIconButton select" title="Sample Tooltip"><span></span></button>
+				<button type="button" class="inforSplitButton duplicate" title="Sample Tooltip"><span></span></button>
+				
+				<span class="inforToolbarSpacer"></span>
+				<button type="button" class="inforMenuButton new" title="Sample Tooltip"><span></span></button>
+				<button class="inforIconButton delete" title="Sample Tooltip"><span></span></button>
+				<button class="inforIconButton edit" title="Sample Tooltip"><span></span></button>
+				<button class="inforIconButton open" title="Sample Tooltip"><span></span></button>
+				
+				<span class="inforToolbarSpacer"></span>
+				
+				<button type="button" class="inforTextButton">Text Button</button>
+				<button type="button" class="inforSplitButton" id="splitButton">Split Button</button>
+				<button type="button" class="inforMenuButton" id="menuButton">Menu Button</button>
+			</div>
+
+			<!--Example Menu for All Menu/Split Buttons-->
+			<ul id="menu1" class="inforContextMenu">
+				<li><a>Option One</a></li>
+				<li><a>Option Two</a></li>
+				<li><a>Option Three</a></li>
+			</ul>
+			
+			<div class="landmarkList">
+				<div style='height:40%;'>
+					<div id="inforDataGrid" style="height:180px;"></div>
+				</div>
+				
+				<div id="lowerPart" style='height:60%'>
+					<div id="inforTabContainer2">
+						<ul class="inforTabset">
+							<li><a href="#tab1">Tabset Two</a></li>
+						 </ul>
+						<div id="tab1" class="ui-tabs-panel">
+							Tabset two content
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+</div>
+	<script>
+		var columns = [
+		{ id: "formName", selectable: true, name: "Form Name",      field: "formName", formatter: TextCellFormatter, editor: TextCellEditor, filterType: TextFilter },
+		{ id: "state",    required: true,   name: "State",          field: "state",    formatter: TextCellFormatter, editor: SelectCellEditor, filterType: SelectFilter, editorOptions: {editable: false}, options: [" ", {label: 'Alabama',value: 15}, {label: 'Alaska',value: 16}, {label: 'Iowa',value: 17}] },
+		{ id: "code",                       name: "Code",           field: "code",     formatter: TextCellFormatter, editor: SelectCellEditor, filterType: SelectFilter, editorOptions: {editable: false, source: filterCodeOptionsDropDown}, options: [{label: '', value: '',id: ''}] },
+		{
+		  name: "New Merit Pool",
+		  id: "nmp",
+		  children: [
+			{id: "budgeted", name: "Budgeted", field: "budgeted"},
+			{id: "budgetedHourly", name: "BudgetedHourly", field: "budgetedHourly"},
+			{id: "reccomended", name: "Reccomended", field: "reccomended"},
+		  ]
+		}
+		];
+
+		function filterCodeOptionsDropDown(request, response) {
+			$.ajax({
+				url: "http://api.geonames.org/postalCodeLookupJSON?formatted=true&country=US&adminCode1=MN&username=pwpatton&maxRows=20&style=SHORT",
+				success: function(result) {
+					var options = [{ label: ' ', value: '', id: '' }];
+					for (var i = 0; i < result.postalcodes.length; i++) {
+						var postalCode = result.postalcodes[i];
+						options.push({label:postalCode.postalcode, value:i, id:i});
+					}
+					return response(options);
+				}
+			});
+		}
+
+		var data = [];
+		data.push({id:1, formName:"FRMABOUT", secLevel: 8, state: "Iowa", code: 55016 });
+		data.push({id:2, formName:"FRMACLBYOBJECT", secLevel: 9, state: "New York", code: 55025  });
+		data.push({id:3, formName:"FRMACTION", secLevel: 10, state: "Iowa", code: 55101  });
+		data.push({id:4, formName:"FRMACTIONWIP", secLevel: 11, state: "Iowa", code: 55004  });
+		data.push({id:5, formName:"FRMACTIONWIP", secLevel: 12, state: "Iowa", code: 55005  });
+		data.push({id:6, formName:"FRMACTIONWIP", secLevel: 13, state: "Iowa", code: 55006  });
+		data.push({id:7, formName:"FRMACTIONWIP", secLevel: 33, state: "Iowa", code: 55007  });
+		data.push({id:8, formName:"FRMACTIONWIP", secLevel: 8, state: "Iowa", code: 55008  });
+		data.push({id:9, formName:"FRMACTIONWIP", secLevel: 10, state: "Iowa", code: 55009  });
+
+		var options = {
+			columns: columns,
+			idProperty: 'id',
+			dataset: data,
+			showCheckboxes: false,
+			enableCellNavigation : true,
+			showFilter: false,
+			forceFitColumns: true,
+			showFooter: true
+		};
+		var grid = $("#inforDataGrid").inforDataGrid(options);
+		var dataView = grid.getData();
+
+		grid.onCellChange.subscribe(function (e, args) {
+			console.log(args.cellValue);
+		});
+		
+	</script>
+</body>
+</html>
