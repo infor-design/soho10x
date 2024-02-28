@@ -1,3 +1,9 @@
 .DS_Store
 package-lock.json
 node_modules
+/.idea/.idea.soho10x.dir/.idea/.gitignore
+/.idea/.idea.soho10x.dir/.idea/aws.xml
+/.idea/.idea.soho10x.dir/.idea/encodings.xml
+/.idea/.idea.soho10x.dir/.idea/GitLink.xml
+/.idea/.idea.soho10x.dir/.idea/indexLayout.xml
+/.idea/.idea.soho10x.dir/.idea/vcs.xml

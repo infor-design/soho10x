@@ -1,6 +1,6 @@
 {
   "name": "inforControls",
-  "version": "3.6.0",
+  "version": "3.7.1",
   "description": "Infor Html Controls",
   "main": "index.js",
   "scripts": {
@@ -16,22 +16,23 @@
   "license": "Infor",
   "readmeFilename": "README.txt",
   "devDependencies": {
-    "grunt": "~1.4.1",
-    "grunt-contrib-concat": "~2.0.0",
+    "grunt": "~1.6.1",
+    "grunt-contrib-concat": "~2.1.0",
     "grunt-contrib-copy": "~1.0.0",
-    "grunt-contrib-cssmin": "~4.0.0",
+    "grunt-contrib-cssmin": "~5.0.0",
     "grunt-contrib-jshint": "~3.2.0",
-    "grunt-contrib-uglify": "~5.0.1",
+    "grunt-contrib-uglify": "~5.2.2",
     "grunt-contrib-watch": "~1.1.0",
     "grunt-ftp-deploy": "^0.2.0",
     "grunt-preprocess": "~5.1.0",
     "grunt-remove-logging": "~0.2.0",
     "grunt-replace": "~2.0.2",
-    "grunt-trimtrailingspaces": "~5.0.0",
+    "grunt-trimtrailingspaces": "~6.0.0",
     "jsonfromresx": "^1.0.1",
     "string": "~3.3.3"
   },
   "dependencies": {
-    "grunt-ftp-deploy": "^0.1.10"
+    "grunt-ftp-deploy": "^0.2.0",
+    "gulp": "^4.0.2"
   }
 }
