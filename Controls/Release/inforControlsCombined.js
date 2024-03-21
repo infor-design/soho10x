@@ -1,6 +1,6 @@
 /*!
  Infor Html Controls v3.7.1 
- Date: 20-11-2023 00:08:13 
+ Date: 21-03-2024 08:28:03 
  Revision: undefined 
  */ 
  /*
@@ -24775,6 +24775,9 @@ $.fn.extend({
       var maxHeight= $(window).height()-top;
       //take into account the next thing below it
       var next = $area.next().not(".popupmenu, div.transparentOverlay, script").height();
+      if (next === undefined) {
+        next = null;
+      }
       maxHeight = maxHeight-next;
 
       if ($area.parent().attr("id") === "bottomPane") {

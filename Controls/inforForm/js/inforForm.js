@@ -209,6 +209,9 @@
       var maxHeight= $(window).height()-top;
       //take into account the next thing below it
       var next = $area.next().not(".popupmenu, div.transparentOverlay, script").height();
+      if (next === undefined) {
+        next = null;
+      }
       maxHeight = maxHeight-next;
 
       if ($area.parent().attr("id") === "bottomPane") {
